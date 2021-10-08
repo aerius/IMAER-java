@@ -369,6 +369,9 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
           offroadConversions.put(helper.oldCode, new Conversion(helper.newCode, true));
         });
     legacyCodes.put(GMLLegacyCodeType.OFF_ROAD_MOBILE_SOURCE, offroadConversions);
+    final Map<String, Conversion> sectorConversions = new HashMap<>();
+    sectorConversions.put("3230", new Conversion("3220", false));
+    legacyCodes.put(GMLLegacyCodeType.SECTOR, sectorConversions);
     return legacyCodes;
   }
 
