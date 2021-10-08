@@ -18,9 +18,9 @@ package nl.overheid.aerius.gml.v4_0.togml;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map.Entry;
 
 import nl.overheid.aerius.gml.v4_0.source.TimeUnit;
-import nl.overheid.aerius.gml.v4_0.source.road.AbstractVehicle;
 import nl.overheid.aerius.gml.v4_0.source.road.CustomVehicle;
 import nl.overheid.aerius.gml.v4_0.source.road.RoadEmissionSource;
 import nl.overheid.aerius.gml.v4_0.source.road.RoadSideBarrierProperty;
@@ -43,6 +43,8 @@ import nl.overheid.aerius.shared.domain.v2.source.road.SRM1LinearReference;
 import nl.overheid.aerius.shared.domain.v2.source.road.SRM2LinearReference;
 import nl.overheid.aerius.shared.domain.v2.source.road.SpecificVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.StandardVehicles;
+import nl.overheid.aerius.shared.domain.v2.source.road.ValuesPerVehicleType;
+import nl.overheid.aerius.shared.domain.v2.source.road.VehicleType;
 import nl.overheid.aerius.shared.domain.v2.source.road.Vehicles;
 
 /**
@@ -102,19 +104,15 @@ class Road2GML extends SpecificSource2GML<nl.overheid.aerius.shared.domain.v2.so
     final List<VehiclesProperty> vehiclesList = new ArrayList<>(vehicleGroups.size());
 
     for (final Vehicles vehicleGroup : vehicleGroups) {
-      final AbstractVehicle vehicle;
       if (vehicleGroup instanceof StandardVehicles) {
-        vehicle = toVehicleEmissionSource((StandardVehicles) vehicleGroup, isFreeway);
+        addVehicleEmissionSource(vehiclesList, (StandardVehicles) vehicleGroup, isFreeway);
       } else if (vehicleGroup instanceof SpecificVehicles) {
-        vehicle = toVehicleEmissionSource((SpecificVehicles) vehicleGroup);
+        addVehicleEmissionSource(vehiclesList, (SpecificVehicles) vehicleGroup);
       } else if (vehicleGroup instanceof CustomVehicles) {
-        vehicle = toVehicleEmissionSource((CustomVehicles) vehicleGroup);
+        addVehicleEmissionSource(vehiclesList, (CustomVehicles) vehicleGroup);
       } else {
         throw new IllegalArgumentException("EmissionCategory for traffic not allowed to be null: " + vehicleGroup);
       }
-      vehicle.setVehiclesPerTimeUnit(vehicleGroup.getVehiclesPerTimeUnit());
-      vehicle.setTimeUnit(TimeUnit.from(vehicleGroup.getTimeUnit()));
-      vehiclesList.add(new VehiclesProperty(vehicle));
     }
     return vehiclesList;
   }
@@ -177,30 +175,37 @@ class Road2GML extends SpecificSource2GML<nl.overheid.aerius.shared.domain.v2.so
     returnSource.setSpeedProfile(emissionSource.getRoadSpeedType());
   }
 
-  private AbstractVehicle toVehicleEmissionSource(final StandardVehicles vse, final boolean isFreeway) {
-    final StandardVehicle sv = new StandardVehicle();
-
-    sv.setStagnationFactor(vse.getStagnationFraction());
-    sv.setVehicleType(vse.getStandardVehicleType());
-    sv.setMaximumSpeed(vse.getMaximumSpeed());
-    if (isFreeway) {
-      sv.setStrictEnforcement(vse.getStrictEnforcement());
+  private void addVehicleEmissionSource(final List<VehiclesProperty> vehiclesList, final StandardVehicles vse, final boolean isFreeway) {
+    for (final Entry<VehicleType, ValuesPerVehicleType> entry : vse.getValuesPerVehicleTypes().entrySet()) {
+      final StandardVehicle sv = new StandardVehicle();
+      sv.setVehiclesPerTimeUnit(entry.getValue().getVehiclesPerTimeUnit());
+      sv.setStagnationFactor(entry.getValue().getStagnationFraction());
+      sv.setVehicleType(entry.getKey());
+      sv.setMaximumSpeed(vse.getMaximumSpeed());
+      if (isFreeway) {
+        sv.setStrictEnforcement(vse.getStrictEnforcement());
+      }
+      sv.setTimeUnit(TimeUnit.from(vse.getTimeUnit()));
+      vehiclesList.add(new VehiclesProperty(sv));
     }
-    return sv;
   }
 
-  private AbstractVehicle toVehicleEmissionSource(final SpecificVehicles vse) {
+  private void addVehicleEmissionSource(final List<VehiclesProperty> vehiclesList, final SpecificVehicles vse) {
     final SpecificVehicle sv = new SpecificVehicle();
 
     sv.setCode(vse.getVehicleCode());
-    return sv;
+    sv.setVehiclesPerTimeUnit(vse.getVehiclesPerTimeUnit());
+    sv.setTimeUnit(TimeUnit.from(vse.getTimeUnit()));
+    vehiclesList.add(new VehiclesProperty(sv));
   }
 
-  private AbstractVehicle toVehicleEmissionSource(final CustomVehicles vce) {
+  private void addVehicleEmissionSource(final List<VehiclesProperty> vehiclesList, final CustomVehicles vce) {
     final CustomVehicle cv = new CustomVehicle();
     cv.setDescription(vce.getDescription());
     cv.setEmissions(getEmissions(vce.getEmissionFactors(), Substance.NOX));
-    return cv;
+    cv.setVehiclesPerTimeUnit(vce.getVehiclesPerTimeUnit());
+    cv.setTimeUnit(TimeUnit.from(vce.getTimeUnit()));
+    vehiclesList.add(new VehiclesProperty(cv));
   }
 
   private List<SRM2RoadLinearReferenceProperty> getSrm2DynamicSegments(final SRM2RoadEmissionSource emissionSource) {

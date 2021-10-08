@@ -18,31 +18,27 @@ package nl.overheid.aerius.shared.domain.v2.source.road;
 
 import java.io.Serializable;
 
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
-
-import nl.overheid.aerius.shared.domain.v2.base.TimeUnit;
-
-@JsonTypeInfo(property = "vehicleType", use = Id.NAME)
-@JsonSubTypes({
-    @Type(value = CustomVehicles.class, name = "CUSTOM"),
-    @Type(value = SpecificVehicles.class, name = "SPECIFIC"),
-    @Type(value = StandardVehicles.class, name = "STANDARD"),
-})
-public abstract class Vehicles implements Serializable {
+public class ValuesPerVehicleType implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
-  private TimeUnit timeUnit = TimeUnit.DAY;
+  private double vehiclesPerTimeUnit;
+  private double stagnationFraction;
 
-  public TimeUnit getTimeUnit() {
-    return timeUnit;
+  public double getVehiclesPerTimeUnit() {
+    return vehiclesPerTimeUnit;
   }
 
-  public void setTimeUnit(final TimeUnit timeUnit) {
-    this.timeUnit = timeUnit;
+  public void setVehiclesPerTimeUnit(final double vehiclesPerTimeUnit) {
+    this.vehiclesPerTimeUnit = vehiclesPerTimeUnit;
+  }
+
+  public double getStagnationFraction() {
+    return stagnationFraction;
+  }
+
+  public void setStagnationFraction(final double stagnationFraction) {
+    this.stagnationFraction = stagnationFraction;
   }
 
 }

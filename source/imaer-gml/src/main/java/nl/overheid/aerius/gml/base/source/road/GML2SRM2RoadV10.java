@@ -16,8 +16,13 @@
  */
 package nl.overheid.aerius.gml.base.source.road;
 
+import java.util.List;
+
 import nl.overheid.aerius.gml.base.GMLConversionData;
+import nl.overheid.aerius.shared.domain.v2.base.TimeUnit;
 import nl.overheid.aerius.shared.domain.v2.source.road.StandardVehicles;
+import nl.overheid.aerius.shared.domain.v2.source.road.ValuesPerVehicleType;
+import nl.overheid.aerius.shared.domain.v2.source.road.Vehicles;
 
 /**
  * Version of GML2SRM2Road that works on IsGmlSRM2RoadOld,
@@ -34,13 +39,21 @@ public class GML2SRM2RoadV10<T extends IsGmlSRM2RoadOld> extends GML2SRM2RoadV11
   }
 
   @Override
-  protected StandardVehicles getEmissionValues(final T source, final IsGmlStandardVehicle sv) {
-    final StandardVehicles vse = new StandardVehicles();
-    vse.setStagnationFraction(sv.getStagnationFactor());
-    vse.setStandardVehicleType(sv.getVehicleType());
-    vse.setMaximumSpeed(source.getMaximumSpeed());
-    vse.setStrictEnforcement(source.isStrictEnforcement());
-    return vse;
+  protected void addEmissionValues(final List<Vehicles> addToVehicles, final T source, final IsGmlStandardVehicle sv,
+      final List<StandardVehicles> mergingStandardVehicles) {
+    final StandardVehicles standardVehicle = findExistingMatch(sv, mergingStandardVehicles).orElseGet(() -> {
+      final StandardVehicles vse = new StandardVehicles();
+      vse.setMaximumSpeed(source.getMaximumSpeed());
+      vse.setStrictEnforcement(source.isStrictEnforcement());
+      vse.setTimeUnit(TimeUnit.valueOf(sv.getTimeUnit().name()));
+      mergingStandardVehicles.add(vse);
+      addToVehicles.add(vse);
+      return vse;
+    });
+    final ValuesPerVehicleType valuesPerVehicleType = new ValuesPerVehicleType();
+    valuesPerVehicleType.setStagnationFraction(sv.getStagnationFactor());
+    valuesPerVehicleType.setVehiclesPerTimeUnit(sv.getVehiclesPerTimeUnit());
+    standardVehicle.getValuesPerVehicleTypes().put(sv.getVehicleType(), valuesPerVehicleType);
   }
 
 }

@@ -25,8 +25,17 @@ public class CustomVehicles extends Vehicles {
 
   private static final long serialVersionUID = 1L;
 
+  private double vehiclesPerTimeUnit;
   private String description;
   private final Map<Substance, Double> emissionFactors = new HashMap<>();
+
+  public double getVehiclesPerTimeUnit() {
+    return vehiclesPerTimeUnit;
+  }
+
+  public void setVehiclesPerTimeUnit(final double vehiclesPerTimeUnit) {
+    this.vehiclesPerTimeUnit = vehiclesPerTimeUnit;
+  }
 
   public String getDescription() {
     return description;

@@ -35,6 +35,7 @@ import nl.overheid.aerius.shared.domain.v2.geojson.LineString;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceFeature;
 import nl.overheid.aerius.shared.domain.v2.source.SRM2RoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.road.StandardVehicles;
+import nl.overheid.aerius.shared.domain.v2.source.road.ValuesPerVehicleType;
 import nl.overheid.aerius.shared.domain.v2.source.road.VehicleType;
 import nl.overheid.aerius.shared.domain.v2.source.road.Vehicles;
 import nl.overheid.aerius.shared.exception.AeriusException;
@@ -63,12 +64,14 @@ public class GMLWriterPerformanceTest {
       es.setEmissions(Map.of(Substance.NOX, 123.4, Substance.PM10, 4.321));
       final List<Vehicles> traffic = es.getSubSources();
       final StandardVehicles tr = new StandardVehicles();
-      tr.setStagnationFraction(1.0);
+      final ValuesPerVehicleType valuePerVehicleType = new ValuesPerVehicleType();
+      valuePerVehicleType.setStagnationFraction(1.0);
+      valuePerVehicleType.setVehiclesPerTimeUnit(200);
+      tr.getValuesPerVehicleTypes().put(VehicleType.LIGHT_TRAFFIC, valuePerVehicleType);
       tr.setMaximumSpeed(120);
-      tr.setStandardVehicleType(VehicleType.LIGHT_TRAFFIC);
       tr.setStrictEnforcement(false);
       tr.setTimeUnit(TimeUnit.DAY);
-      tr.setVehiclesPerTimeUnit(200);
+
       traffic.add(tr);
 
       sourceFeature.setProperties(es);

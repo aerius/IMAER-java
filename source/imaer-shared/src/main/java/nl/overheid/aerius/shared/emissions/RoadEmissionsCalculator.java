@@ -20,6 +20,7 @@ import java.math.BigDecimal;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.OptionalDouble;
 
 import nl.overheid.aerius.shared.domain.Substance;
@@ -32,6 +33,7 @@ import nl.overheid.aerius.shared.domain.v2.source.road.RoadType;
 import nl.overheid.aerius.shared.domain.v2.source.road.SpecificVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.StandardVehicleMeasure;
 import nl.overheid.aerius.shared.domain.v2.source.road.StandardVehicles;
+import nl.overheid.aerius.shared.domain.v2.source.road.ValuesPerVehicleType;
 import nl.overheid.aerius.shared.domain.v2.source.road.VehicleType;
 import nl.overheid.aerius.shared.domain.v2.source.road.Vehicles;
 import nl.overheid.aerius.shared.exception.AeriusException;
@@ -117,7 +119,7 @@ public class RoadEmissionsCalculator {
 
   Map<Substance, BigDecimal> calculateEmissions(final CustomVehicles customVehicles) {
     final Map<Substance, BigDecimal> results = new EnumMap<>(Substance.class);
-    final BigDecimal numberOfVehiclesPerYear = getVehiclesPerYear(customVehicles);
+    final BigDecimal numberOfVehiclesPerYear = getVehiclesPerYear(customVehicles, customVehicles.getVehiclesPerTimeUnit());
     customVehicles.getEmissionFactors().forEach(
         (key, value) -> results.put(key, BigDecimal.valueOf(value).multiply(numberOfVehiclesPerYear)));
     return results;
@@ -125,7 +127,7 @@ public class RoadEmissionsCalculator {
 
   Map<Substance, BigDecimal> calculateEmissions(final SpecificVehicles specificVehicles, final RoadType roadType) {
     final Map<Substance, BigDecimal> results = new EnumMap<>(Substance.class);
-    final BigDecimal numberOfVehiclesPerYear = getVehiclesPerYear(specificVehicles);
+    final BigDecimal numberOfVehiclesPerYear = getVehiclesPerYear(specificVehicles, specificVehicles.getVehiclesPerTimeUnit());
     final Map<Substance, Double> emissionFactors = emissionFactorSupplier
         .getRoadSpecificVehicleEmissionFactors(specificVehicles.getVehicleCode(), roadType);
     emissionFactors.forEach(
@@ -136,16 +138,31 @@ public class RoadEmissionsCalculator {
 
   Map<Substance, BigDecimal> calculateEmissions(final StandardVehicles standardVehicles, final RoadType roadType, final RoadSpeedType roadSpeedType) {
     final Map<Substance, BigDecimal> results = new EnumMap<>(Substance.class);
-    final BigDecimal numberOfVehiclesPerYear = getVehiclesPerYear(standardVehicles);
+    for (final Entry<VehicleType, ValuesPerVehicleType> entry : standardVehicles.getValuesPerVehicleTypes().entrySet()) {
+      final Map<Substance, BigDecimal> emissionsForVehicles =
+          calculateEmissions(standardVehicles, entry.getKey(), entry.getValue(), roadType, roadSpeedType);
+      emissionsForVehicles.forEach(
+          (key, value) -> results.merge(key, value, (v1, v2) -> v1.add(v2)));
+    }
 
-    final Map<Substance, BigDecimal> emissions = calculateNonStagnatedEmissionsPerVehicle(standardVehicles, roadType, roadSpeedType);
-    final Map<Substance, BigDecimal> stagnatedEmissions = calculateStagnatedEmissionsPerVehicle(standardVehicles, roadType, roadSpeedType);
+    return results;
+  }
+
+  Map<Substance, BigDecimal> calculateEmissions(final StandardVehicles standardVehicles, final VehicleType vehicleType,
+      final ValuesPerVehicleType valuesPerVehicleType, final RoadType roadType, final RoadSpeedType roadSpeedType) {
+    final Map<Substance, BigDecimal> results = new EnumMap<>(Substance.class);
+    final BigDecimal numberOfVehiclesPerYear = getVehiclesPerYear(standardVehicles, valuesPerVehicleType.getVehiclesPerTimeUnit());
+
+    final Map<Substance, BigDecimal> emissions =
+        calculateNonStagnatedEmissionsPerVehicle(standardVehicles, vehicleType, valuesPerVehicleType, roadType, roadSpeedType);
+    final Map<Substance, BigDecimal> stagnatedEmissions =
+        calculateStagnatedEmissionsPerVehicle(standardVehicles, vehicleType, valuesPerVehicleType, roadType, roadSpeedType);
     stagnatedEmissions.forEach(
         (key, value) -> emissions.merge(key, value, (v1, v2) -> v1.add(v2)));
     final List<StandardVehicleMeasure> measures = standardVehicles.getMeasures();
     if (measures != null && !measures.isEmpty()) {
       emissions.forEach((substance, value) -> {
-        final BigDecimal measureFactor = determineMeasureFactor(measures, standardVehicles.getStandardVehicleType(), roadSpeedType,
+        final BigDecimal measureFactor = determineMeasureFactor(measures, vehicleType, roadSpeedType,
             substance);
         emissions.put(substance, value.multiply(measureFactor));
       });
@@ -165,32 +182,32 @@ public class RoadEmissionsCalculator {
         .max().orElse(1));
   }
 
-  private Map<Substance, BigDecimal> calculateNonStagnatedEmissionsPerVehicle(final StandardVehicles standardVehicles,
-      final RoadType roadType, final RoadSpeedType roadSpeedType) {
+  private Map<Substance, BigDecimal> calculateNonStagnatedEmissionsPerVehicle(final StandardVehicles standardVehicles, final VehicleType vehicleType,
+      final ValuesPerVehicleType valuesPerVehicleType, final RoadType roadType, final RoadSpeedType roadSpeedType) {
     final Map<Substance, BigDecimal> results = new EnumMap<>(Substance.class);
-    final BigDecimal nonStagnatedFraction = BigDecimal.ONE.subtract(BigDecimal.valueOf(standardVehicles.getStagnationFraction()));
+    final BigDecimal nonStagnatedFraction = BigDecimal.ONE.subtract(BigDecimal.valueOf(valuesPerVehicleType.getStagnationFraction()));
     final Map<Substance, Double> emissionFactorsNotStagnated = emissionFactorSupplier
-        .getRoadStandardVehicleEmissionFactors(standardVehicles.getStandardVehicleType(), roadType, roadSpeedType, standardVehicles.getMaximumSpeed(),
+        .getRoadStandardVehicleEmissionFactors(vehicleType, roadType, roadSpeedType, standardVehicles.getMaximumSpeed(),
             standardVehicles.getStrictEnforcement());
     emissionFactorsNotStagnated.forEach(
         (key, value) -> results.put(key, BigDecimal.valueOf(value).multiply(nonStagnatedFraction)));
     return results;
   }
 
-  private Map<Substance, BigDecimal> calculateStagnatedEmissionsPerVehicle(final StandardVehicles standardVehicles, final RoadType roadType,
-      final RoadSpeedType roadSpeedType) {
+  private Map<Substance, BigDecimal> calculateStagnatedEmissionsPerVehicle(final StandardVehicles standardVehicles, final VehicleType vehicleType,
+      final ValuesPerVehicleType valuesPerVehicleType, final RoadType roadType, final RoadSpeedType roadSpeedType) {
     final Map<Substance, BigDecimal> results = new EnumMap<>(Substance.class);
-    final BigDecimal stagnatedFraction = BigDecimal.valueOf(standardVehicles.getStagnationFraction());
+    final BigDecimal stagnatedFraction = BigDecimal.valueOf(valuesPerVehicleType.getStagnationFraction());
     final Map<Substance, Double> emissionFactorsStagnated = emissionFactorSupplier
-        .getRoadStandardVehicleStagnatedEmissionFactors(standardVehicles.getStandardVehicleType(), roadType, roadSpeedType,
+        .getRoadStandardVehicleStagnatedEmissionFactors(vehicleType, roadType, roadSpeedType,
             standardVehicles.getMaximumSpeed(), standardVehicles.getStrictEnforcement());
     emissionFactorsStagnated.forEach(
         (key, value) -> results.put(key, BigDecimal.valueOf(value).multiply(stagnatedFraction)));
     return results;
   }
 
-  private BigDecimal getVehiclesPerYear(final Vehicles vehicles) {
-    return BigDecimal.valueOf(vehicles.getTimeUnit().getPerYear(vehicles.getVehiclesPerTimeUnit()));
+  private BigDecimal getVehiclesPerYear(final Vehicles vehicles, final double vehiclesPerTimeUnit) {
+    return BigDecimal.valueOf(vehicles.getTimeUnit().getPerYear(vehiclesPerTimeUnit));
   }
 
 }

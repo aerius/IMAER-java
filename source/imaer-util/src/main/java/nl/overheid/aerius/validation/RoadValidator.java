@@ -22,10 +22,12 @@ import nl.overheid.aerius.shared.domain.v2.base.LinearReference;
 import nl.overheid.aerius.shared.domain.v2.source.RoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.SRM1RoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.SRM2RoadEmissionSource;
+import nl.overheid.aerius.shared.domain.v2.source.road.CustomVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.RoadSpeedType;
 import nl.overheid.aerius.shared.domain.v2.source.road.RoadType;
 import nl.overheid.aerius.shared.domain.v2.source.road.SpecificVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.StandardVehicles;
+import nl.overheid.aerius.shared.domain.v2.source.road.ValuesPerVehicleType;
 import nl.overheid.aerius.shared.domain.v2.source.road.VehicleType;
 import nl.overheid.aerius.shared.domain.v2.source.road.Vehicles;
 import nl.overheid.aerius.shared.exception.AeriusException;
@@ -96,10 +98,11 @@ class RoadValidator extends SourceValidator<RoadEmissionSource> {
   private boolean validateVehicles(final RoadEmissionSource source, final Vehicles vehicleEmissions, final String sourceLabel) {
     // check vehicles
     boolean valid = true;
-    if (vehicleEmissions.getVehiclesPerTimeUnit() < 0) {
+    final double totalVehiclesPerTimeUnit = determineTotalVehicles(vehicleEmissions);
+    if (totalVehiclesPerTimeUnit < 0) {
       getErrors().add(new AeriusException(ImaerExceptionReason.SRM2_SOURCE_NEGATIVE_VEHICLES, sourceLabel));
       valid = false;
-    } else if (Double.compare(vehicleEmissions.getVehiclesPerTimeUnit(), 0.0) == 0) {
+    } else if (Double.compare(totalVehiclesPerTimeUnit, 0.0) == 0) {
       getWarnings().add(new AeriusException(ImaerExceptionReason.SRM2_SOURCE_NO_VEHICLES, sourceLabel));
     }
 
@@ -111,22 +114,37 @@ class RoadValidator extends SourceValidator<RoadEmissionSource> {
     return valid;
   }
 
+  private double determineTotalVehicles(final Vehicles vehicleEmissions) {
+    double totalVehiclesPerTimeUnit = 0;
+    if (vehicleEmissions instanceof StandardVehicles) {
+      for (final ValuesPerVehicleType values : ((StandardVehicles) vehicleEmissions).getValuesPerVehicleTypes().values()) {
+        totalVehiclesPerTimeUnit += values.getVehiclesPerTimeUnit();
+      }
+    } else if (vehicleEmissions instanceof SpecificVehicles) {
+      totalVehiclesPerTimeUnit = ((SpecificVehicles) vehicleEmissions).getVehiclesPerTimeUnit();
+    } else if (vehicleEmissions instanceof CustomVehicles) {
+      totalVehiclesPerTimeUnit = ((CustomVehicles) vehicleEmissions).getVehiclesPerTimeUnit();
+    }
+    return totalVehiclesPerTimeUnit;
+  }
+
   private boolean validateStandardVehicles(final RoadEmissionSource source, final StandardVehicles vehicles, final String sourceLabel) {
     final RoadType roadType = RoadType.valueFromSectorId(source.getSectorId());
-    final VehicleType vehicleType = vehicles.getStandardVehicleType();
-    final Boolean strictEnforcement = vehicles.getStrictEnforcement();
-    final Integer maximumSpeed = vehicles.getMaximumSpeed();
-    final RoadSpeedType speedType;
-    if (source instanceof SRM1RoadEmissionSource) {
-      speedType = ((SRM1RoadEmissionSource) source).getRoadSpeedType();
-    } else {
-      speedType = null;
-    }
     boolean valid = true;
-    if (!validationHelper.isValidRoadStandardVehicleCombination(roadType, vehicleType, maximumSpeed, strictEnforcement, speedType)) {
-      getErrors().add(new AeriusException(ImaerExceptionReason.GML_UNKNOWN_ROAD_CATEGORY, sourceLabel, String.valueOf(source.getSectorId()),
-          String.valueOf(maximumSpeed), String.valueOf(strictEnforcement), String.valueOf(vehicleType)));
-      valid = false;
+    for (final VehicleType vehicleType : vehicles.getValuesPerVehicleTypes().keySet()) {
+      final Boolean strictEnforcement = vehicles.getStrictEnforcement();
+      final Integer maximumSpeed = vehicles.getMaximumSpeed();
+      final RoadSpeedType speedType;
+      if (source instanceof SRM1RoadEmissionSource) {
+        speedType = ((SRM1RoadEmissionSource) source).getRoadSpeedType();
+      } else {
+        speedType = null;
+      }
+      if (!validationHelper.isValidRoadStandardVehicleCombination(roadType, vehicleType, maximumSpeed, strictEnforcement, speedType)) {
+        getErrors().add(new AeriusException(ImaerExceptionReason.GML_UNKNOWN_ROAD_CATEGORY, sourceLabel, String.valueOf(source.getSectorId()),
+            String.valueOf(maximumSpeed), String.valueOf(strictEnforcement), String.valueOf(vehicleType)));
+        valid = false;
+      }
     }
     return valid;
   }
