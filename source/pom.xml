@@ -45,6 +45,17 @@
     <url>https://github.com/AERIUS/IMAER-java</url>
   </scm>
 
+  <distributionManagement>
+    <repository>
+      <id>aerius-nexus</id>
+      <url>https://nexus.aerius.nl/repository/maven-releases/</url>
+    </repository>
+    <snapshotRepository>
+      <id>aerius-nexus</id>
+      <url>https://nexus.aerius.nl/repository/maven-snapshots/</url>
+    </snapshotRepository>
+  </distributionManagement>
+
   <properties>
     <maven.compiler.source>11</maven.compiler.source>
     <maven.compiler.target>11</maven.compiler.target>
