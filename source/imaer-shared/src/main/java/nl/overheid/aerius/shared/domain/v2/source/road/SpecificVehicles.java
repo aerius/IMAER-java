@@ -20,7 +20,16 @@ public class SpecificVehicles extends Vehicles {
 
   private static final long serialVersionUID = 1L;
 
+  private double vehiclesPerTimeUnit;
   private String vehicleCode;
+
+  public double getVehiclesPerTimeUnit() {
+    return vehiclesPerTimeUnit;
+  }
+
+  public void setVehiclesPerTimeUnit(final double vehiclesPerTimeUnit) {
+    this.vehiclesPerTimeUnit = vehiclesPerTimeUnit;
+  }
 
   public String getVehicleCode() {
     return vehicleCode;

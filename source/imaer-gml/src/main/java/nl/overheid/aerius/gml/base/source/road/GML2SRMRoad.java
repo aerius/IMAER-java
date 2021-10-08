@@ -16,6 +16,10 @@
  */
 package nl.overheid.aerius.gml.base.source.road;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 import nl.overheid.aerius.gml.base.AbstractGML2Specific;
 import nl.overheid.aerius.gml.base.GMLConversionData;
 import nl.overheid.aerius.gml.base.GMLLegacyCodeConverter.GMLLegacyCodeType;
@@ -26,6 +30,7 @@ import nl.overheid.aerius.shared.domain.v2.source.RoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.road.CustomVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.SpecificVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.StandardVehicles;
+import nl.overheid.aerius.shared.domain.v2.source.road.ValuesPerVehicleType;
 import nl.overheid.aerius.shared.domain.v2.source.road.Vehicles;
 import nl.overheid.aerius.shared.exception.AeriusException;
 
@@ -46,7 +51,7 @@ abstract class GML2SRMRoad<T extends IsGmlRoadEmissionSource, S extends RoadEmis
   public S convert(final T source) throws AeriusException {
     final S emissionSource = construct();
     for (final IsGmlProperty<IsGmlVehicle> vp : source.getVehicles()) {
-      emissionSource.getSubSources().add(getVehicleEmissions(source, vp));
+      addVehicleEmissions(emissionSource.getSubSources(), source, vp);
     }
     emissionSource.setTrafficDirection(source.getTrafficDirection());
     emissionSource.setRoadManager(source.getRoadManager());
@@ -64,47 +69,64 @@ abstract class GML2SRMRoad<T extends IsGmlRoadEmissionSource, S extends RoadEmis
 
   protected abstract void setOptionalVariables(T source, S emissionSource) throws AeriusException;
 
-  protected Vehicles getVehicleEmissions(final T source, final IsGmlProperty<IsGmlVehicle> vp) throws AeriusException {
+  protected void addVehicleEmissions(final List<Vehicles> addToVehicles, final T source, final IsGmlProperty<IsGmlVehicle> vp) {
     final IsGmlVehicle av = vp.getProperty();
-    final Vehicles vehicleEmissions;
+    final List<StandardVehicles> mergingStandardVehicles = new ArrayList<>();
     if (av instanceof IsGmlStandardVehicle) {
-      vehicleEmissions = getEmissionValues(source, (IsGmlStandardVehicle) av);
+      addEmissionValues(addToVehicles, source, (IsGmlStandardVehicle) av, mergingStandardVehicles);
     } else if (av instanceof IsGmlSpecificVehicle) {
-      vehicleEmissions = getEmissionValues(source, (IsGmlSpecificVehicle) av);
+      addEmissionValues(addToVehicles, source, (IsGmlSpecificVehicle) av);
     } else if (av instanceof IsGmlCustomVehicle) {
-      vehicleEmissions = getEmissionValues((IsGmlCustomVehicle) av);
+      addEmissionValues(addToVehicles, (IsGmlCustomVehicle) av);
     } else {
       throw new IllegalArgumentException("Instance not supported:" + av.getClass().getCanonicalName());
     }
-    vehicleEmissions.setVehiclesPerTimeUnit(av.getVehiclesPerTimeUnit());
-    vehicleEmissions.setTimeUnit(TimeUnit.valueOf(av.getTimeUnit().name()));
-    return vehicleEmissions;
+
   }
 
-  protected StandardVehicles getEmissionValues(final T source, final IsGmlStandardVehicle sv) {
-    final StandardVehicles vse = new StandardVehicles();
-    vse.setStagnationFraction(sv.getStagnationFactor());
-    vse.setStandardVehicleType(sv.getVehicleType());
-    vse.setMaximumSpeed(sv.getMaximumSpeed());
-    vse.setStrictEnforcement(sv.isStrictEnforcement());
-    return vse;
+  protected void addEmissionValues(final List<Vehicles> addToVehicles, final T source, final IsGmlStandardVehicle sv,
+      final List<StandardVehicles> mergingStandardVehicles) {
+    final StandardVehicles standardVehicle = findExistingMatch(sv, mergingStandardVehicles).orElseGet(() -> {
+      final StandardVehicles vse = new StandardVehicles();
+      vse.setMaximumSpeed(sv.getMaximumSpeed());
+      vse.setStrictEnforcement(sv.isStrictEnforcement());
+      vse.setTimeUnit(TimeUnit.valueOf(sv.getTimeUnit().name()));
+      mergingStandardVehicles.add(vse);
+      addToVehicles.add(vse);
+      return vse;
+    });
+    final ValuesPerVehicleType valuesPerVehicleType = new ValuesPerVehicleType();
+    valuesPerVehicleType.setStagnationFraction(sv.getStagnationFactor());
+    valuesPerVehicleType.setVehiclesPerTimeUnit(sv.getVehiclesPerTimeUnit());
+    standardVehicle.getValuesPerVehicleTypes().put(sv.getVehicleType(), valuesPerVehicleType);
   }
 
-  protected SpecificVehicles getEmissionValues(final T source, final IsGmlSpecificVehicle sv) {
+  protected Optional<StandardVehicles> findExistingMatch(final IsGmlStandardVehicle sv, final List<StandardVehicles> mergingStandardVehicles) {
+    return mergingStandardVehicles.stream()
+        .filter(x -> x.getMaximumSpeed() == sv.getMaximumSpeed())
+        .filter(x -> x.getStrictEnforcement() == sv.isStrictEnforcement())
+        .filter(x -> x.getTimeUnit() == TimeUnit.valueOf(sv.getTimeUnit().name()))
+        .filter(x -> !x.getValuesPerVehicleTypes().containsKey(sv.getVehicleType()))
+        .findFirst();
+  }
+
+  protected void addEmissionValues(final List<Vehicles> addToVehicles, final T source, final IsGmlSpecificVehicle sv) {
     final SpecificVehicles vse = new SpecificVehicles();
     final String vehicleCode = getConversionData().getCode(GMLLegacyCodeType.ON_ROAD_MOBILE_SOURCE, sv.getCode(), source.getLabel());
     vse.setVehicleCode(vehicleCode);
-    return vse;
+    vse.setVehiclesPerTimeUnit(sv.getVehiclesPerTimeUnit());
+    addToVehicles.add(vse);
   }
 
-  protected CustomVehicles getEmissionValues(final IsGmlCustomVehicle cv) {
+  protected void addEmissionValues(final List<Vehicles> addToVehicles, final IsGmlCustomVehicle cv) {
     final CustomVehicles vce = new CustomVehicles();
     vce.setDescription(cv.getDescription());
     for (final IsGmlProperty<IsGmlEmission> e : cv.getEmissions()) {
       final IsGmlEmission emission = e.getProperty();
       vce.getEmissionFactors().put(emission.getSubstance(), emission.getValue());
     }
-    return vce;
+    vce.setVehiclesPerTimeUnit(cv.getVehiclesPerTimeUnit());
+    addToVehicles.add(vce);
   }
 
 }

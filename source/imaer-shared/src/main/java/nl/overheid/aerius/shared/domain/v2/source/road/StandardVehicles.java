@@ -17,7 +17,9 @@
 package nl.overheid.aerius.shared.domain.v2.source.road;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -25,28 +27,11 @@ public class StandardVehicles extends Vehicles {
 
   private static final long serialVersionUID = 1L;
 
-  private VehicleType standardVehicleType;
-  private double stagnationFraction;
   private Integer maximumSpeed;
   private Boolean strictEnforcement;
+  private Map<VehicleType, ValuesPerVehicleType> valuesPerVehicleTypes = new HashMap<>();
 
   private List<StandardVehicleMeasure> measures = new ArrayList<>();
-
-  public VehicleType getStandardVehicleType() {
-    return standardVehicleType;
-  }
-
-  public void setStandardVehicleType(final VehicleType standardVehicleType) {
-    this.standardVehicleType = standardVehicleType;
-  }
-
-  public double getStagnationFraction() {
-    return stagnationFraction;
-  }
-
-  public void setStagnationFraction(final double stagnationFraction) {
-    this.stagnationFraction = stagnationFraction;
-  }
 
   public Integer getMaximumSpeed() {
     return maximumSpeed;
@@ -62,6 +47,14 @@ public class StandardVehicles extends Vehicles {
 
   public void setStrictEnforcement(final Boolean strictEnforcement) {
     this.strictEnforcement = strictEnforcement;
+  }
+
+  public Map<VehicleType, ValuesPerVehicleType> getValuesPerVehicleTypes() {
+    return valuesPerVehicleTypes;
+  }
+
+  public void setValuesPerVehicleTypes(final Map<VehicleType, ValuesPerVehicleType> valuesPerVehicleTypes) {
+    this.valuesPerVehicleTypes = valuesPerVehicleTypes;
   }
 
   @JsonIgnore

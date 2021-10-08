@@ -22,20 +22,30 @@
     },
     "subSources" : [ {
       "vehicleType" : "STANDARD",
-      "vehiclesPerTimeUnit" : 980.0,
       "timeUnit" : "DAY",
-      "standardVehicleType" : "LIGHT_TRAFFIC",
-      "stagnationFraction" : 0.2,
       "maximumSpeed" : 100,
-      "strictEnforcement" : false
+      "strictEnforcement" : false,
+      "valuesPerVehicleTypes" : {
+        "LIGHT_TRAFFIC" : {
+          "vehiclesPerTimeUnit" : 980.0,
+          "stagnationFraction" : 0.2
+        },
+        "HEAVY_FREIGHT" : {
+          "vehiclesPerTimeUnit" : 400.0,
+          "stagnationFraction" : 0.0
+        }
+      }
     }, {
       "vehicleType" : "STANDARD",
-      "vehiclesPerTimeUnit" : 200.0,
       "timeUnit" : "DAY",
-      "standardVehicleType" : "HEAVY_FREIGHT",
-      "stagnationFraction" : 0.0,
       "maximumSpeed" : 80,
-      "strictEnforcement" : false
+      "strictEnforcement" : false,
+      "valuesPerVehicleTypes" : {
+        "HEAVY_FREIGHT" : {
+          "vehiclesPerTimeUnit" : 200.0,
+          "stagnationFraction" : 0.0
+        }
+      }
     } ],
     "tunnelFactor" : 1.0,
     "elevation" : "STEEP_DYKE",

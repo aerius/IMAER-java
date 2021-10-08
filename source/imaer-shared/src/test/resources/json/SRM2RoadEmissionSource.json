@@ -22,24 +22,34 @@
     },
     "subSources" : [ {
       "vehicleType" : "STANDARD",
-      "vehiclesPerTimeUnit" : 980.0,
       "timeUnit" : "DAY",
-      "standardVehicleType" : "LIGHT_TRAFFIC",
-      "stagnationFraction" : 0.2,
       "maximumSpeed" : 100,
-      "strictEnforcement" : false
+      "strictEnforcement" : false,
+      "valuesPerVehicleTypes" : {
+        "LIGHT_TRAFFIC" : {
+          "vehiclesPerTimeUnit" : 980.0,
+          "stagnationFraction" : 0.2
+        },
+        "HEAVY_FREIGHT" : {
+          "vehiclesPerTimeUnit" : 400.0,
+          "stagnationFraction" : 0.0
+        }
+      }
     }, {
       "vehicleType" : "STANDARD",
-      "vehiclesPerTimeUnit" : 200.0,
       "timeUnit" : "DAY",
-      "standardVehicleType" : "HEAVY_FREIGHT",
-      "stagnationFraction" : 0.0,
       "maximumSpeed" : 80,
-      "strictEnforcement" : false
+      "strictEnforcement" : false,
+      "valuesPerVehicleTypes" : {
+        "HEAVY_FREIGHT" : {
+          "vehiclesPerTimeUnit" : 200.0,
+          "stagnationFraction" : 0.0
+        }
+      }
     }, {
       "vehicleType" : "CUSTOM",
-      "vehiclesPerTimeUnit" : 3000.0,
       "timeUnit" : "YEAR",
+      "vehiclesPerTimeUnit" : 3000.0,
       "description" : "Oude eenden",
       "emissionFactors" : {
         "NOX" : 4.2,
@@ -47,8 +57,8 @@
       }
     }, {
       "vehicleType" : "SPECIFIC",
-      "vehiclesPerTimeUnit" : 500.0,
       "timeUnit" : "MONTH",
+      "vehiclesPerTimeUnit" : 500.0,
       "vehicleCode" : "BA-B-E3"
     } ],
     "tunnelFactor" : 1.0,

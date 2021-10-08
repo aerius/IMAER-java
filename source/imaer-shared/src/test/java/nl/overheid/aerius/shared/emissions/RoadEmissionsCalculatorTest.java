@@ -42,6 +42,7 @@ import nl.overheid.aerius.shared.domain.v2.source.road.RoadType;
 import nl.overheid.aerius.shared.domain.v2.source.road.SpecificVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.StandardVehicleMeasure;
 import nl.overheid.aerius.shared.domain.v2.source.road.StandardVehicles;
+import nl.overheid.aerius.shared.domain.v2.source.road.ValuesPerVehicleType;
 import nl.overheid.aerius.shared.domain.v2.source.road.VehicleType;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.geometry.GeometryCalculator;
@@ -142,7 +143,7 @@ class RoadEmissionsCalculatorTest {
     final StandardVehicles vehicles = createStandard();
 
     final StandardVehicleMeasure measure = new StandardVehicleMeasure();
-    measure.setVehicleType(vehicles.getStandardVehicleType());
+    measure.setVehicleType(VehicleType.NORMAL_FREIGHT);
     measure.setRoadSpeedType(TEST_ROAD_SPEED_TYPE);
 
     final EmissionReduction emissionReduction = new EmissionReduction();
@@ -172,6 +173,18 @@ class RoadEmissionsCalculatorTest {
     assertEquals(new BigDecimal("152400.000"), results.get(Substance.NH3));
   }
 
+  @Test
+  void testCalculateEmissionsMultipleStandardVehiclesSrm2() {
+    final StandardVehicles vehicles = createMultipleStandard();
+
+    final Map<Substance, BigDecimal> results = emissionsCalculator.calculateEmissions(vehicles, TEST_ROAD_TYPE, null);
+
+    // 30000 * 12.0 * 0.8 + 30000 * 16.0 * 0.2 + 2000 * 10.0 * 0.8 + 2000 * 14.0 * 0.2
+    assertEquals(new BigDecimal("405600.000"), results.get(Substance.NOX));
+    // 30000 * 4.2 * 0.8 + 30000 * 8.6 * 0.2 + 2000 * 5.3 * 0.8 + 2000 * 9.4 * 0.2
+    assertEquals(new BigDecimal("164640.000"), results.get(Substance.NH3));
+  }
+
   private CustomVehicles createCustom() {
     final CustomVehicles vehicles = new CustomVehicles();
     vehicles.getEmissionFactors().put(Substance.NOX, 12.34567);
@@ -195,11 +208,12 @@ class RoadEmissionsCalculatorTest {
 
   private StandardVehicles createStandard() {
     final StandardVehicles vehicles = new StandardVehicles();
-    vehicles.setVehiclesPerTimeUnit(30000);
     vehicles.setTimeUnit(TimeUnit.YEAR);
-    vehicles.setStagnationFraction(0.2);
+    final ValuesPerVehicleType valuesPerVehicleType = new ValuesPerVehicleType();
+    valuesPerVehicleType.setStagnationFraction(0.2);
+    valuesPerVehicleType.setVehiclesPerTimeUnit(30000);
     final VehicleType vehicleType = VehicleType.NORMAL_FREIGHT;
-    vehicles.setStandardVehicleType(vehicleType);
+    vehicles.getValuesPerVehicleTypes().put(vehicleType, valuesPerVehicleType);
     final boolean strictEnforcement = false;
     vehicles.setStrictEnforcement(strictEnforcement);
     final int maximumSpeed = 40;
@@ -219,6 +233,30 @@ class RoadEmissionsCalculatorTest {
         .getRoadStandardVehicleStagnatedEmissionFactors(vehicleType, TEST_ROAD_TYPE, TEST_ROAD_SPEED_TYPE, maximumSpeed, strictEnforcement))
             .thenReturn(stagnatedEmissionFactorsSrm1);
     final Map<Substance, Double> stagnatedEmissionFactorsSrm2 = Map.of(Substance.NOX, 16.0, Substance.NH3, 8.6);
+    lenient().when(emissionFactorSupplier
+        .getRoadStandardVehicleStagnatedEmissionFactors(vehicleType, TEST_ROAD_TYPE, null, maximumSpeed, strictEnforcement))
+            .thenReturn(stagnatedEmissionFactorsSrm2);
+
+
+    return vehicles;
+  }
+
+  private StandardVehicles createMultipleStandard() {
+    final StandardVehicles vehicles = createStandard();
+    final ValuesPerVehicleType valuesPerVehicleType = new ValuesPerVehicleType();
+    valuesPerVehicleType.setStagnationFraction(0.2);
+    valuesPerVehicleType.setVehiclesPerTimeUnit(2000);
+    final VehicleType vehicleType = VehicleType.HEAVY_FREIGHT;
+    vehicles.getValuesPerVehicleTypes().put(vehicleType, valuesPerVehicleType);
+    final boolean strictEnforcement = vehicles.getStrictEnforcement();
+    final int maximumSpeed = vehicles.getMaximumSpeed();
+
+    final Map<Substance, Double> emissionFactorsSrm2 = Map.of(Substance.NOX, 10.0, Substance.NH3, 5.3);
+    lenient().when(emissionFactorSupplier
+        .getRoadStandardVehicleEmissionFactors(vehicleType, TEST_ROAD_TYPE, null, maximumSpeed, strictEnforcement))
+            .thenReturn(emissionFactorsSrm2);
+
+    final Map<Substance, Double> stagnatedEmissionFactorsSrm2 = Map.of(Substance.NOX, 14.0, Substance.NH3, 9.4);
     lenient().when(emissionFactorSupplier
         .getRoadStandardVehicleStagnatedEmissionFactors(vehicleType, TEST_ROAD_TYPE, null, maximumSpeed, strictEnforcement))
             .thenReturn(stagnatedEmissionFactorsSrm2);
