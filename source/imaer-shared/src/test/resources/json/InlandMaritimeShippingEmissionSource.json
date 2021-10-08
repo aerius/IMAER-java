@@ -1,0 +1,42 @@
+{
+  "type" : "Feature",
+  "id" : "ES.7",
+  "geometry" : {
+    "type" : "LineString",
+    "coordinates" : [ [ 136558.0, 455251.0 ], [ 208413.0, 474162.0 ] ]
+  },
+  "properties" : {
+    "emissionSourceType" : "SHIPPING_MARITIME_INLAND",
+    "sectorId" : 1800,
+    "label" : "SomeMaritimeShipSource",
+    "emissions" : {
+      "NOX" : 1982661.3199265539
+    },
+    "subSources" : [ {
+      "maritimeShippingType" : "STANDARD",
+      "description" : "Motorboot",
+      "movementsPerTimeUnit" : 30000,
+      "timeUnit" : "YEAR",
+      "shipCode" : "OO100"
+    }, {
+      "maritimeShippingType" : "STANDARD",
+      "description" : "Puntertje",
+      "movementsPerTimeUnit" : 15000,
+      "timeUnit" : "YEAR",
+      "shipCode" : "OO1600"
+    }, {
+      "maritimeShippingType" : "CUSTOM",
+      "description" : "Dregboot",
+      "movementsPerTimeUnit" : 1000,
+      "timeUnit" : "YEAR",
+      "emissionProperties" : {
+        "emissionFactors" : {
+          "NOX" : 200.0
+        },
+        "heatContent" : 2.6,
+        "emissionHeight" : 3.1
+      },
+      "grossTonnage" : 20000
+    } ]
+  }
+}

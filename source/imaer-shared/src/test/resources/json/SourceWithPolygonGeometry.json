@@ -1,0 +1,23 @@
+{
+  "type" : "Feature",
+  "id" : "1",
+  "geometry" : {
+    "type" : "Polygon",
+    "coordinates" : [ [ [ -5000000.0, -1000000.0 ], [ -4000000.0, 1000000.0 ], [ -3000000.0, -1000000.0 ] ] ]
+  },
+  "properties" : {
+    "emissionSourceType" : "GENERIC",
+    "sectorId" : 4600,
+    "label" : "Label 4600",
+    "characteristics" : {
+      "type" : "OPS",
+      "heatContent" : 123.45,
+      "emissionHeight" : 5.0,
+      "spread" : 2.5
+    },
+    "emissions" : {
+      "NH3" : 10.0,
+      "NOX" : 11.0
+    }
+  }
+}

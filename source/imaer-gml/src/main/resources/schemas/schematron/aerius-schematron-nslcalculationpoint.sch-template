@@ -1,0 +1,7 @@
+<sch:pattern id="NSLCalculationPoint">
+  <sch:rule context="imaer:NSLCalculationPoint">
+    <sch:let name="pointId" value="@gml:id" />
+    
+    <sch:assert test="count(imaer:GM_Point) = 1">Rekenpunt <sch:value-of select="$pointId"/> bevat geen punt geometrie</sch:assert>
+  </sch:rule>
+</sch:pattern>

@@ -1,0 +1,65 @@
+{
+  "type" : "Feature",
+  "id" : "ES.8",
+  "geometry" : {
+    "type" : "Polygon",
+    "coordinates" : [ [ [ 69422.14, 443595.6 ], [ 69516.22, 443575.44 ], [ 69522.94, 443696.4 ], [ 69435.58, 443689.68 ], [ 69422.14, 443595.6 ] ] ]
+  },
+  "properties" : {
+    "emissionSourceType" : "OFFROAD_MOBILE",
+    "sectorId" : 3210,
+    "label" : "Rondrij terrein",
+    "emissions" : {
+      "NOX" : 185.09332,
+      "NH3" : 0.8371
+    },
+    "subSources" : [ {
+      "offRoadMobileSourceType" : "CUSTOM",
+      "description" : "Eigen ontwerp traktor",
+      "characteristics" : {
+        "type" : "OPS",
+        "heatContent" : 100.0,
+        "emissionHeight" : 3.0,
+        "spread" : 2.0
+      },
+      "emissions" : {
+        "NOX" : 11.76
+      },
+      "vehicleSpecification" : {
+        "offRoadVehicleSpecificationType" : "CONSUMPTION",
+        "fuelCode" : "Diesel",
+        "consumption" : 70,
+        "energyEfficiency" : 50,
+        "emissionFactors" : {
+          "NOX" : 10.0
+        }
+      }
+    }, {
+      "offRoadMobileSourceType" : "STANDARD",
+      "description" : "Traktors",
+      "offRoadMobileSourceCode" : "S2F",
+      "literFuelPerYear" : 10000
+    }, {
+      "offRoadMobileSourceType" : "CUSTOM",
+      "description" : "tt",
+      "characteristics" : {
+        "type" : "OPS",
+        "emissionHeight" : 4.0,
+        "spread" : 4.0
+      },
+      "emissions" : {
+        "NOX" : 120.96
+      },
+      "vehicleSpecification" : {
+        "offRoadVehicleSpecificationType" : "OPERATING_HOURS",
+        "fuelCode" : "Diesel",
+        "load" : 70,
+        "power" : 120,
+        "operatingHours" : 120,
+        "emissionFactors" : {
+          "NOX" : 12.0
+        }
+      }
+    } ]
+  }
+}

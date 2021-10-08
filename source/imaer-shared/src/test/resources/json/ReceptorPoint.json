@@ -1,0 +1,18 @@
+{
+  "type" : "Feature",
+  "id" : "CP.1",
+  "geometry" : {
+    "type" : "Point",
+    "coordinates" : [ 137558.0, 456251.0 ]
+  },
+  "properties" : {
+    "calculationPointType" : "RECEPTOR",
+    "results" : {
+      "NH3_CONCENTRATION" : 95.8,
+      "NH3_DEPOSITION" : 8546.77,
+      "NOX_CONCENTRATION" : 3.001,
+      "NOX_DEPOSITION" : 968.3
+    },
+    "receptorId" : 1
+  }
+}

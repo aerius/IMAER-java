@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+  <system systemId="http://schemas.opengis.net/gml/3.2.1/gml.xsd" uri="gml/3.2.1/gml.xsd" />
+  <system systemId="http://schemas.opengis.net/gmlsfProfile/2.0/gmlsfLevels.xsd" uri="gmlsfProfile/2.0/gmlsfLevels.xsd" />
+</catalog>

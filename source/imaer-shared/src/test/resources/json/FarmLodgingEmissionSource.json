@@ -1,0 +1,69 @@
+{
+  "type" : "Feature",
+  "id" : "ES.1",
+  "geometry" : {
+    "type" : "Point",
+    "coordinates" : [ 136558.0, 455251.0 ]
+  },
+  "properties" : {
+    "emissionSourceType" : "FARM_LODGE",
+    "sectorId" : 4110,
+    "label" : "SomeSource",
+    "characteristics" : {
+      "type" : "OPS",
+      "heatContent" : 564.584,
+      "emissionHeight" : 5.0
+    },
+    "emissions" : {
+      "NH3" : 1816440.7917975
+    },
+    "subSources" : [ {
+      "farmLodgingType" : "STANDARD",
+      "numberOfAnimals" : 3,
+      "farmLodgingCode" : "D3.1",
+      "systemDefinitionCode" : "BWL2001.21.V1",
+      "fodderMeasures" : [ {
+        "fodderMeasureCode" : "PAS2015.01-01"
+      }, {
+        "fodderMeasureCode" : "PAS2015.05-01"
+      } ],
+      "additionalLodgingSystems" : [ {
+        "lodgingSystemType" : "ADDITIONAL",
+        "lodgingSystemCode" : "E6.1.a",
+        "numberOfAnimals" : 2
+      }, {
+        "lodgingSystemType" : "ADDITIONAL",
+        "lodgingSystemCode" : "E6.5.b",
+        "numberOfAnimals" : 1
+      } ],
+      "reductiveLodgingSystems" : [ {
+        "lodgingSystemType" : "REDUCTIVE",
+        "lodgingSystemCode" : "G2.1.2"
+      }, {
+        "lodgingSystemType" : "REDUCTIVE",
+        "lodgingSystemCode" : "A4.3"
+      } ]
+    }, {
+      "farmLodgingType" : "STANDARD",
+      "numberOfAnimals" : 100,
+      "farmLodgingCode" : "A3.100"
+    }, {
+      "farmLodgingType" : "CUSTOM",
+      "numberOfAnimals" : 324,
+      "animalCode" : "A",
+      "description" : "Koetje",
+      "emissionFactors" : {
+        "NOX" : 3000.0,
+        "NH3" : 1000.0
+      }
+    }, {
+      "farmLodgingType" : "CUSTOM",
+      "numberOfAnimals" : 908,
+      "description" : "Schaap",
+      "emissionFactors" : {
+        "NH3" : 2000.0
+      }
+    } ],
+    "established" : "2021-06-09"
+  }
+}

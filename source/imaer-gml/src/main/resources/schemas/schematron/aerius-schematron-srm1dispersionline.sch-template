@@ -1,0 +1,7 @@
+<sch:pattern id="SRM1RoadDispersionLine">
+  <sch:rule context="imaer:SRM1RoadDispersionLine">
+    <sch:let name="dispersionLineId" value="@gml:id" />
+
+    <sch:assert test="count(imaer:roadProfile) = 1">Overdrachtslijn <sch:value-of select="$dispersionLineId"/> bevat geen wegprofiel</sch:assert>
+  </sch:rule>
+</sch:pattern>

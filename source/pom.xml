@@ -1,0 +1,352 @@
+<!--
+
+    Copyright the State of the Netherlands
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see http://www.gnu.org/licenses/.
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>nl.aerius</groupId>
+  <artifactId>imaer-parent</artifactId>
+  <version>4.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <name>IMAER-java</name>
+  <url>https://www.aerius.nl</url>
+
+  <organization>
+    <name>State of the Netherlands</name>
+    <url>https://www.government.nl</url>
+  </organization>
+
+  <licenses>
+    <license>
+      <name>GNU Affero General Public License</name>
+      <url>http://www.gnu.org/licenses/agpl-3.0.txt</url>
+    </license>
+  </licenses>
+
+  <scm>
+    <connection>scm:git:ssh//git@gitlab.com:AERIUS/IMAER-java.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com:aerius/IMAER-java.git</developerConnection>
+    <url>https://github.com/AERIUS/IMAER-java</url>
+  </scm>
+
+  <properties>
+    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.target>11</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+    <com.google.gwt.version>2.9.0</com.google.gwt.version>
+    <jackson.version>2.11.3</jackson.version>
+    <org.codehaus.mojo.gwtmavenplugin.version>${com.google.gwt.version}</org.codehaus.mojo.gwtmavenplugin.version>
+
+    <aerius-tools.version>1.1.0-SNAPSHOT</aerius-tools.version>
+    <spotless.version>2.5.0</spotless.version>
+    <docker.maven.plugin.version>0.30.0</docker.maven.plugin.version>
+
+    <sonar.language>java</sonar.language>
+    <sonar.maven.plugin.version>3.7.0.1746</sonar.maven.plugin.version>
+    <sonar.projectKey>aerius_imaer-java</sonar.projectKey>
+    <sonar.moduleKey>${project.artifactId}</sonar.moduleKey>
+    <sonar.organization>aerius</sonar.organization>
+    <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+
+    <aggregate.report.dir>imaer-sonar-report/target/site/jacoco-aggregate/jacoco.xml</aggregate.report.dir>
+    <sonar.coverage.jacoco.xmlReportPaths>${basedir}/../${aggregate.report.dir}</sonar.coverage.jacoco.xmlReportPaths>
+  </properties>
+
+  <repositories>
+    <repository>
+      <id>aerius-nexus-public</id>
+      <name>AERIUS Nexus repository</name>
+      <url>https://nexus.aerius.nl/repository/maven-public/</url>
+      <snapshots>
+        <updatePolicy>always</updatePolicy>
+      </snapshots>
+    </repository>
+  </repositories>
+  <pluginRepositories>
+    <pluginRepository>
+      <id>aerius-nexus-public</id>
+      <name>AERIUS Nexus Repository</name>
+      <url>https://nexus.aerius.nl/repository/maven-public/</url>
+      <snapshots>
+        <updatePolicy>always</updatePolicy>
+      </snapshots>
+    </pluginRepository>
+  </pluginRepositories>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>1.7.30</version>
+      </dependency>
+      <dependency>
+        <groupId>ch.qos.logback</groupId>
+        <artifactId>logback-classic</artifactId>
+        <version>1.2.3</version>
+      </dependency>
+      <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter</artifactId>
+        <version>5.7.0</version>
+      </dependency>
+      <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-params</artifactId>
+        <version>5.7.0</version>
+      </dependency>
+      <dependency>
+        <groupId>org.mockito</groupId>
+        <artifactId>mockito-core</artifactId>
+        <version>3.6.0</version>
+      </dependency>
+      <dependency>
+        <groupId>org.mockito</groupId>
+        <artifactId>mockito-junit-jupiter</artifactId>
+        <version>3.6.0</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>2.22.2</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>2.4</version>
+          <configuration>
+            <archive>
+              <manifestEntries>
+                <Implementation-Version>${project.version}</Implementation-Version>
+              </manifestEntries>
+            </archive>
+          </configuration>
+        </plugin>
+
+        <plugin>
+          <artifactId>maven-war-plugin</artifactId>
+          <version>2.3</version>
+          <configuration>
+            <archive>
+              <manifestEntries>
+                <Implementation-Version>${project.version}_${buildDateTime}_${buildRevision}</Implementation-Version>
+              </manifestEntries>
+            </archive>
+          </configuration>
+        </plugin>
+
+        <plugin>
+          <artifactId>maven-dependency-plugin</artifactId>
+          <version>3.2.0</version>
+        </plugin>
+
+        <plugin>
+          <artifactId>maven-shade-plugin</artifactId>
+          <version>3.2.4</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>exec-maven-plugin</artifactId>
+          <version>1.6.0</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>build-helper-maven-plugin</artifactId>
+          <version>3.0.0</version>
+        </plugin>
+
+        <plugin>
+          <groupId>net.ltgt.gwt.maven</groupId>
+          <artifactId>gwt-maven-plugin</artifactId>
+          <version>1.0.0</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.sonarsource.scanner.maven</groupId>
+          <artifactId>sonar-maven-plugin</artifactId>
+          <version>${sonar.maven.plugin.version}</version>
+          <configuration>
+            <reuse>true</reuse>
+          </configuration>
+        </plugin>
+
+        <plugin>
+          <groupId>org.jacoco</groupId>
+          <artifactId>jacoco-maven-plugin</artifactId>
+          <version>0.8.6</version>
+        </plugin>
+
+        <plugin>
+          <groupId>com.diffplug.spotless</groupId>
+          <artifactId>spotless-maven-plugin</artifactId>
+          <version>${spotless.version}</version>
+          <configuration>
+            <formats>
+              <format>
+                <includes>
+                  <include>pom.xml</include>
+                </includes>
+                <licenseHeader>
+                  <file>pom-xml-header.txt</file>
+                  <delimiter>&lt;project</delimiter>
+                </licenseHeader>
+                <trimTrailingWhitespace />
+                <endWithNewline />
+                <eclipseWtp>
+                  <type>XML</type>
+                  <files>
+                    <file>pom-xml.prefs</file>
+                  </files>
+                </eclipseWtp>
+              </format>
+            </formats>
+            <java>
+              <includes>
+                <include>src/*/java/nl/overheid/aerius/**/*.java</include>
+              </includes>
+              <licenseHeader>
+                <file>checkstyle-header.txt</file>
+              </licenseHeader>
+              <eclipse>
+                <file>eclipse_code_formatter_profile.xml</file>
+              </eclipse>
+              <importOrder>
+                <file>eclipse.importorder</file>
+              </importOrder>
+            </java>
+          </configuration>
+
+          <dependencies>
+            <dependency>
+              <groupId>nl.aerius</groupId>
+              <artifactId>tools</artifactId>
+              <version>${aerius-tools.version}</version>
+            </dependency>
+          </dependencies>
+        </plugin>
+
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>buildnumber-maven-plugin</artifactId>
+          <version>1.1</version>
+          <executions>
+            <execution>
+              <id>generate-buildDateTime</id>
+              <phase>validate</phase>
+              <goals>
+                <goal>create</goal>
+              </goals>
+              <configuration>
+                <format>{0,date,yyyyMMdd}</format>
+                <items>
+                  <item>timestamp</item>
+                </items>
+                <buildNumberPropertyName>buildDateTime</buildNumberPropertyName>
+              </configuration>
+            </execution>
+            <execution>
+              <id>generate-buildRevision</id>
+              <phase>validate</phase>
+              <goals>
+                <goal>create</goal>
+              </goals>
+              <configuration>
+                <doCheck>true</doCheck>
+                <doUpdate>false</doUpdate>
+                <shortRevisionLength>10</shortRevisionLength>
+                <buildNumberPropertyName>buildRevision</buildNumberPropertyName>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+
+    <plugins>
+      <plugin>
+        <groupId>com.mycila</groupId>
+        <artifactId>license-maven-plugin</artifactId>
+        <version>3.0</version>
+        <configuration>
+          <header>license-header.txt</header>
+
+          <mapping>
+            <java>SLASHSTAR_STYLE</java>
+          </mapping>
+
+          <includes>
+            <include>**/*.java</include>
+            <include>**/pom.xml</include>
+          </includes>
+
+          <excludes>
+            <!-- External source code present in our source code -->
+            <exclude>**/src/main/java/com/**/*.java</exclude>
+            <exclude>**/src/main/resources/nl/overheid/aerius/super/java/time/LocalDate.java</exclude>
+          </excludes>
+        </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>nl.aerius</groupId>
+            <artifactId>tools</artifactId>
+            <version>${aerius-tools.version}</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+    </plugins>
+
+  </build>
+
+  <profiles>
+    <profile>
+      <id>default</id> <!-- contains all except the test modules -->
+
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <modules>
+        <module>imaer-shared</module>
+        <module>imaer-util</module>
+        <module>imaer-gml</module>
+        <module>imaer-xsd-server</module>
+        <module>imaer-xsd-server-standalone</module>
+      </modules>
+    </profile>
+
+    <!-- Profile to perform SonarQube run and collect coverage reports -->
+    <profile>
+      <id>sonar</id>
+      <modules>
+        <module>imaer-shared</module>
+        <module>imaer-util</module>
+        <module>imaer-gml</module>
+        <module>imaer-xsd-server</module>
+        <module>imaer-xsd-server-standalone</module>
+        <module>imaer-sonar-report</module>
+      </modules>
+    </profile>
+  </profiles>
+</project>

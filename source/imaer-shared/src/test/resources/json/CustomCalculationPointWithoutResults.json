@@ -1,0 +1,13 @@
+{
+  "type" : "Feature",
+  "id" : "CP.2",
+  "geometry" : {
+    "type" : "Point",
+    "coordinates" : [ 207403.0, 475102.0 ]
+  },
+  "properties" : {
+    "calculationPointType" : "CUSTOM_CALCULATION_POINT",
+    "label" : "DB-team 2e depositie",
+    "customPointId" : 235
+  }
+}

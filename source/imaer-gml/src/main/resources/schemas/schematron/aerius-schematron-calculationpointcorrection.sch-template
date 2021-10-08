@@ -1,0 +1,5 @@
+<sch:pattern id="CalculationPointCorrection">
+  <sch:rule context="imaer:CalculationPointCorrection">
+    <sch:assert test="count(imaer:value) = 1">Correctie bevat geen waarde</sch:assert>
+  </sch:rule>
+</sch:pattern>

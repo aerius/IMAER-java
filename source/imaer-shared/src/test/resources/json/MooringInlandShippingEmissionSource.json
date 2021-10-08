@@ -1,0 +1,56 @@
+{
+  "type" : "Feature",
+  "id" : "ES.9",
+  "geometry" : {
+    "type" : "LineString",
+    "coordinates" : [ [ 208413.0, 474162.0 ], [ 208513.0, 474062.0 ] ]
+  },
+  "properties" : {
+    "emissionSourceType" : "SHIPPING_INLAND_DOCKED",
+    "sectorId" : 1800,
+    "label" : "SomeMooringInlandShipSource",
+    "emissions" : {
+      "NOX" : 1720.929304,
+      "PM10" : 374.561032695
+    },
+    "subSources" : [ {
+      "mooringInlandShippingType" : "STANDARD",
+      "description" : "Vliegende Hollander",
+      "shipsPerTimeUnit" : 4000,
+      "timeUnit" : "YEAR",
+      "percentageLaden" : 23,
+      "averageResidenceTime" : 5,
+      "shorePowerFactor" : 0.1,
+      "shipCode" : "BI"
+    }, {
+      "mooringInlandShippingType" : "STANDARD",
+      "description" : "Neeltje Jacoba",
+      "shipsPerTimeUnit" : 312,
+      "timeUnit" : "YEAR",
+      "percentageLaden" : 55,
+      "averageResidenceTime" : 3,
+      "shorePowerFactor" : 0.2,
+      "shipCode" : "BII-1"
+    }, {
+      "mooringInlandShippingType" : "CUSTOM",
+      "description" : "HMS de Majesteit",
+      "shipsPerTimeUnit" : 240,
+      "timeUnit" : "YEAR",
+      "percentageLaden" : 65,
+      "averageResidenceTime" : 5,
+      "shorePowerFactor" : 0.8,
+      "emissionProperties" : {
+        "emissionFactorsEmpty" : {
+          "NOX" : 20.0
+        },
+        "emissionFactorsLaden" : {
+          "NOX" : 70.0
+        },
+        "heatContentEmpty" : 1.3,
+        "heatContentLaden" : 0.5,
+        "emissionHeightEmpty" : 2.3,
+        "emissionHeightLaden" : 2.1
+      }
+    } ]
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type" : "Feature",
+  "id" : "1",
+  "geometry" : {
+    "type" : "LineString",
+    "coordinates" : [ [ 30000.0, -500000.0 ], [ 50000.0, 200000.0 ] ]
+  },
+  "properties" : {
+    "roadGmlId" : "ES.1",
+    "calculationPointGmlId" : "CP.1",
+    "jurisdictionId" : 5,
+    "label" : "Some dispersion line",
+    "roadProfile" : "ONE_SIDE_BUILDINGS",
+    "treeProfile" : "SEPARATED",
+    "description" : "this is optional"
+  }
+}

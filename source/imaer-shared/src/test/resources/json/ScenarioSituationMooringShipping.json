@@ -1,0 +1,221 @@
+{
+  "id" : "eac8155d-bc6b-42f2-9096-9ab3b88c6e8e",
+  "year" : 2030,
+  "name" : "Voorbeeld situatie",
+  "type" : "PROPOSED",
+  "buildings" : {
+    "type" : "FeatureCollection",
+    "crs" : {
+      "type" : "name",
+      "properties" : {
+        "name" : "EPSG:28992"
+      }
+    }
+  },
+  "emissionSources" : {
+    "type" : "FeatureCollection",
+    "crs" : {
+      "type" : "name",
+      "properties" : {
+        "name" : "EPSG:28992"
+      }
+    },
+    "features" : [ {
+      "type" : "Feature",
+      "id" : "ES.9",
+      "geometry" : {
+        "type" : "LineString",
+        "coordinates" : [ [ 208413.0, 474162.0 ], [ 208513.0, 474062.0 ] ]
+      },
+      "properties" : {
+        "emissionSourceType" : "SHIPPING_INLAND_DOCKED",
+        "sectorId" : 1800,
+        "label" : "SomeMooringInlandShipSource",
+        "emissions" : {
+          "NOX" : 1720.929304,
+          "PM10" : 374.561032695
+        },
+        "subSources" : [ {
+          "mooringInlandShippingType" : "STANDARD",
+          "description" : "Vliegende Hollander",
+          "shipsPerTimeUnit" : 4000,
+          "timeUnit" : "YEAR",
+          "percentageLaden" : 45,
+          "averageResidenceTime" : 5,
+          "shorePowerFactor" : 0.1,
+          "shipCode" : "BI"
+        }, {
+          "mooringInlandShippingType" : "STANDARD",
+          "description" : "Neeltje Jacoba",
+          "shipsPerTimeUnit" : 312,
+          "timeUnit" : "YEAR",
+          "percentageLaden" : 74,
+          "averageResidenceTime" : 3,
+          "shorePowerFactor" : 0.2,
+          "shipCode" : "BII-1"
+        } ]
+      }
+    }, {
+      "type" : "Feature",
+      "id" : "ES.4",
+      "geometry" : {
+        "type" : "LineString",
+        "coordinates" : [ [ 136558.0, 455251.0 ], [ 208413.0, 474162.0 ] ]
+      },
+      "properties" : {
+        "emissionSourceType" : "SHIPPING_MARITIME_DOCKED",
+        "sectorId" : 1800,
+        "label" : "SomeMooringMaritimeShipSource",
+        "emissions" : {
+          "NOX" : 1.0449567039263006E7
+        },
+        "subSources" : [ {
+          "mooringMaritimeShippingType" : "STANDARD",
+          "description" : "Motorboot",
+          "averageResidenceTime" : 100,
+          "shorePowerFactor" : 0.1,
+          "shipsPerTimeUnit" : 30000,
+          "timeUnit" : "YEAR",
+          "shipCode" : "OO100"
+        }, {
+          "mooringMaritimeShippingType" : "STANDARD",
+          "description" : "Puntertje",
+          "averageResidenceTime" : 200,
+          "shorePowerFactor" : 0.2,
+          "shipsPerTimeUnit" : 15000,
+          "timeUnit" : "YEAR",
+          "shipCode" : "OO1600"
+        } ]
+      }
+    }, {
+      "type" : "Feature",
+      "id" : "ES.8",
+      "geometry" : {
+        "type" : "LineString",
+        "coordinates" : [ [ 208413.0, 474162.0 ], [ 208413.0, 474262.0 ] ]
+      },
+      "properties" : {
+        "emissionSourceType" : "SHIPPING_INLAND",
+        "sectorId" : 1800,
+        "label" : "SomeInlandShipSource",
+        "emissions" : {
+          "NOX" : 16324.082417331447,
+          "PM10" : 503.23704106652923
+        },
+        "subSources" : [ {
+          "inlandShippingType" : "STANDARD",
+          "description" : "Vliegende Hollander",
+          "timeUnitAtoB" : "YEAR",
+          "timeUnitBtoA" : "YEAR",
+          "movementsAtoBPerTimeUnit" : 4000,
+          "movementsBtoAPerTimeUnit" : 4000,
+          "percentageLadenAtoB" : 20,
+          "percentageLadenBtoA" : 40,
+          "shipCode" : "BI"
+        }, {
+          "inlandShippingType" : "STANDARD",
+          "description" : "Neeltje Jacoba",
+          "timeUnitAtoB" : "YEAR",
+          "timeUnitBtoA" : "YEAR",
+          "movementsAtoBPerTimeUnit" : 312,
+          "movementsBtoAPerTimeUnit" : 312,
+          "percentageLadenAtoB" : 80,
+          "percentageLadenBtoA" : 82,
+          "shipCode" : "BII-1"
+        } ],
+        "waterway" : {
+          "waterwayCode" : "CEMT_Vb"
+        },
+        "mooringAId" : "ES.9"
+      }
+    }, {
+      "type" : "Feature",
+      "id" : "ES.7",
+      "geometry" : {
+        "type" : "LineString",
+        "coordinates" : [ [ 208413.0, 474162.0 ], [ 136558.0, 474162.0 ] ]
+      },
+      "properties" : {
+        "emissionSourceType" : "SHIPPING_MARITIME_INLAND",
+        "sectorId" : 1800,
+        "label" : "SomeMaritimeShipSource",
+        "emissions" : {
+          "NOX" : 1982661.3199265539
+        },
+        "subSources" : [ {
+          "maritimeShippingType" : "STANDARD",
+          "description" : "Motorboot",
+          "movementsPerTimeUnit" : 60000,
+          "timeUnit" : "YEAR",
+          "shipCode" : "OO100"
+        }, {
+          "maritimeShippingType" : "STANDARD",
+          "description" : "Puntertje",
+          "movementsPerTimeUnit" : 30000,
+          "timeUnit" : "YEAR",
+          "shipCode" : "OO1600"
+        } ],
+        "mooringAId" : "ES.4"
+      }
+    }, {
+      "type" : "Feature",
+      "id" : "ES.7",
+      "geometry" : {
+        "type" : "LineString",
+        "coordinates" : [ [ 136558.0, 474162.0 ], [ 208413.0, 474162.0 ] ]
+      },
+      "properties" : {
+        "emissionSourceType" : "SHIPPING_MARITIME_MARITIME",
+        "sectorId" : 1800,
+        "label" : "SomeMaritimeShipSource",
+        "emissions" : {
+          "NOX" : 1982661.3199265539
+        },
+        "subSources" : [ {
+          "maritimeShippingType" : "STANDARD",
+          "description" : "Motorboot",
+          "movementsPerTimeUnit" : 40000,
+          "timeUnit" : "YEAR",
+          "shipCode" : "OO100"
+        }, {
+          "maritimeShippingType" : "STANDARD",
+          "description" : "Puntertje",
+          "movementsPerTimeUnit" : 20000,
+          "timeUnit" : "YEAR",
+          "shipCode" : "OO1600"
+        } ]
+      }
+    }, {
+      "type" : "Feature",
+      "id" : "ES.7.1",
+      "geometry" : {
+        "type" : "LineString",
+        "coordinates" : [ [ 136558.0, 474162.0 ], [ 208413.0, 473162.0 ] ]
+      },
+      "properties" : {
+        "emissionSourceType" : "SHIPPING_MARITIME_MARITIME",
+        "sectorId" : 1800,
+        "label" : "SomeMaritimeShipSource",
+        "emissions" : {
+          "NOX" : 1982661.3199265539
+        },
+        "subSources" : [ {
+          "maritimeShippingType" : "STANDARD",
+          "description" : "Motorboot",
+          "movementsPerTimeUnit" : 20000,
+          "timeUnit" : "YEAR",
+          "shipCode" : "OO100"
+        }, {
+          "maritimeShippingType" : "STANDARD",
+          "description" : "Puntertje",
+          "movementsPerTimeUnit" : 10000,
+          "timeUnit" : "YEAR",
+          "shipCode" : "OO1600"
+        } ]
+      }
+    } ]
+  },
+  "nslDispersionLines" : {
+    "type" : "FeatureCollection"
+  }
+}

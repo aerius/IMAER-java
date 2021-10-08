@@ -1,0 +1,74 @@
+{
+  "type" : "Feature",
+  "id" : "ES.8",
+  "geometry" : {
+    "type" : "LineString",
+    "coordinates" : [ [ 208413.0, 455251.0 ], [ 208513.0, 455151.0 ] ]
+  },
+  "properties" : {
+    "emissionSourceType" : "SHIPPING_INLAND",
+    "sectorId" : 1800,
+    "label" : "SomeInlandShipSource",
+    "emissions" : {
+      "NOX" : 16324.082417331447,
+      "PM10" : 503.23704106652923
+    },
+    "subSources" : [ {
+      "inlandShippingType" : "STANDARD",
+      "description" : "Duikboot",
+      "timeUnitAtoB" : "YEAR",
+      "timeUnitBtoA" : "YEAR",
+      "movementsAtoBPerTimeUnit" : 50,
+      "movementsBtoAPerTimeUnit" : 150,
+      "percentageLadenAtoB" : 20,
+      "percentageLadenBtoA" : 40,
+      "shipCode" : "BI"
+    }, {
+      "inlandShippingType" : "STANDARD",
+      "description" : "Veerpont",
+      "timeUnitAtoB" : "YEAR",
+      "timeUnitBtoA" : "YEAR",
+      "movementsAtoBPerTimeUnit" : 300,
+      "movementsBtoAPerTimeUnit" : 280,
+      "percentageLadenAtoB" : 80,
+      "percentageLadenBtoA" : 82,
+      "shipCode" : "BII-1"
+    }, {
+      "inlandShippingType" : "CUSTOM",
+      "description" : "Marineboot",
+      "timeUnitAtoB" : "YEAR",
+      "timeUnitBtoA" : "YEAR",
+      "movementsAtoBPerTimeUnit" : 400,
+      "movementsBtoAPerTimeUnit" : 600,
+      "percentageLadenAtoB" : 10,
+      "percentageLadenBtoA" : 22,
+      "emissionPropertiesAtoB" : {
+        "emissionFactorsEmpty" : {
+          "NOX" : 500.0
+        },
+        "emissionFactorsLaden" : {
+          "NOX" : 750.0
+        },
+        "heatContentEmpty" : 1.2,
+        "heatContentLaden" : 0.9,
+        "emissionHeightEmpty" : 2.3,
+        "emissionHeightLaden" : 2.1
+      },
+      "emissionPropertiesBtoA" : {
+        "emissionFactorsEmpty" : {
+          "NOX" : 400.0
+        },
+        "emissionFactorsLaden" : {
+          "NOX" : 650.0
+        },
+        "heatContentEmpty" : 1.1,
+        "heatContentLaden" : 0.8,
+        "emissionHeightEmpty" : 2.2,
+        "emissionHeightLaden" : 2.0
+      }
+    } ],
+    "waterway" : {
+      "waterwayCode" : "CEMT_Vb"
+    }
+  }
+}

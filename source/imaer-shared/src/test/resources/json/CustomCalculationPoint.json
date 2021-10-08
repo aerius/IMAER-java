@@ -1,0 +1,22 @@
+{
+  "type" : "Feature",
+  "id" : "CP.2",
+  "geometry" : {
+    "type" : "Point",
+    "coordinates" : [ 207413.0, 475162.0 ]
+  },
+  "properties" : {
+    "calculationPointType" : "CUSTOM_CALCULATION_POINT",
+    "label" : "DB-team 1e depositie",
+    "results" : {
+      "NH3_CONCENTRATION" : 1574.4,
+      "NH3_DEPOSITION" : 787.2,
+      "NOX_CONCENTRATION" : 98.4,
+      "NOX_DEPOSITION" : 49.2,
+      "PM10_CONCENTRATION" : 50380.8,
+      "NO2_CONCENTRATION" : 12595.2,
+      "PM25_CONCENTRATION" : 201523.2
+    },
+    "customPointId" : 234
+  }
+}
