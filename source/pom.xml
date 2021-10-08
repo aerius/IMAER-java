@@ -21,7 +21,7 @@
 
   <groupId>nl.aerius</groupId>
   <artifactId>imaer-parent</artifactId>
-  <version>4.0</version>
+  <version>4.1-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>IMAER-java</name>
