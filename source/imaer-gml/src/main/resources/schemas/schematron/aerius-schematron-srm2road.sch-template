@@ -1,0 +1,36 @@
+<sch:pattern id="SRM2Road">
+  <sch:rule context="imaer:SRM2Road">
+    <sch:let name="sourceId" value="@gml:id" />
+
+    <sch:assert test="count(imaer:tunnelFactor) = 0 or number(imaer:tunnelFactor) >= 0">Tunnelfactor is niet positief (<sch:value-of select="imaer:tunnelFactor"/>) bij SRM2 bron <sch:value-of select="$sourceId"/></sch:assert>
+    <sch:assert test="count(imaer:elevationHeight) = 0 or (number(imaer:elevationHeight) >= -30.0 and number(imaer:elevationHeight) &lt;= 30.0)">Hoogte van de weg is geen getal tussen -30 en 30 (<sch:value-of select="imaer:elevationHeight"/>) bij SRM2 bron <sch:value-of select="$sourceId"/></sch:assert>
+  </sch:rule>
+</sch:pattern>
+
+<sch:pattern id="SRM2Road_Left_RoadSideBarrier">
+  <sch:rule context="imaer:SRM2Road/imaer:barrierLeft/imaer:RoadSideBarrier">
+    <sch:let name="sourceId" value="../../@gml:id" />
+
+    <sch:assert test="number(imaer:height) >= 0">Hoogte van scherm aan linkerkant is negatief (<sch:value-of select="imaer:height"/>) bij SRM2 bron <sch:value-of select="$sourceId"/></sch:assert>
+    <sch:assert test="number(imaer:distance) >= 0">Afstand tot scherm aan linkerkant is negatief (<sch:value-of select="imaer:distance"/>) bij SRM2 bron <sch:value-of select="$sourceId"/></sch:assert>
+  </sch:rule>
+</sch:pattern>
+
+<sch:pattern id="SRM2Road_Right_RoadSideBarrier">
+  <sch:rule context="imaer:SRM2Road/imaer:barrierRight/imaer:RoadSideBarrier">
+    <sch:let name="sourceId" value="../../@gml:id" />
+
+    <sch:assert test="number(imaer:height) >= 0">Hoogte van scherm aan rechterkant is negatief (<sch:value-of select="imaer:height"/>) bij SRM2 bron <sch:value-of select="$sourceId"/></sch:assert>
+    <sch:assert test="number(imaer:distance) >= 0">Afstand tot scherm aan rechterkant is negatief (<sch:value-of select="imaer:distance"/>) bij SRM2 bron <sch:value-of select="$sourceId"/></sch:assert>
+  </sch:rule>
+</sch:pattern>
+
+<sch:pattern id="SRM2Road_StandardVehicle">
+  <sch:rule context="imaer:SRM2Road/imaer:vehicles/imaer:StandardVehicle">
+    <sch:let name="sourceId" value="../../@gml:id" />
+
+    <sch:assert test="count(imaer:maximumSpeed) = 0 or (number(imaer:maximumSpeed) >= 0 and number(imaer:maximumSpeed) &lt;= 130)">Maximumsnelheid is geen getal tussen 0 en 130 (<sch:value-of select="imaer:maximumSpeed"/>) bij SRM2 bron <sch:value-of select="$sourceId"/></sch:assert>
+    <sch:assert test="number(imaer:vehiclesPerTimeUnit) >= 0">Aantal voertuigen is negatief (<sch:value-of select="imaer:vehiclesPerTimeUnit"/>) bij SRM2 bron <sch:value-of select="$sourceId"/></sch:assert>
+    <sch:assert test="number(imaer:stagnationFactor) >= 0.0 and number(imaer:stagnationFactor) &lt;= 1.0">Stagnatiefactor is geen getal tussen 0 en 1 (<sch:value-of select="imaer:stagnationFactor"/>) bij SRM2 bron <sch:value-of select="$sourceId"/></sch:assert>
+  </sch:rule>
+</sch:pattern>

@@ -1,0 +1,47 @@
+{
+  "type" : "Feature",
+  "id" : "ES.4",
+  "geometry" : {
+    "type" : "LineString",
+    "coordinates" : [ [ 136558.0, 455251.0 ], [ 208413.0, 474162.0 ] ]
+  },
+  "properties" : {
+    "emissionSourceType" : "SHIPPING_MARITIME_DOCKED",
+    "sectorId" : 1800,
+    "label" : "SomeMooringMaritimeShipSource",
+    "emissions" : {
+      "NOX" : 1.0449567039263006E7
+    },
+    "subSources" : [ {
+      "mooringMaritimeShippingType" : "STANDARD",
+      "description" : "Motorboot",
+      "averageResidenceTime" : 100,
+      "shorePowerFactor" : 0.1,
+      "shipsPerTimeUnit" : 30000,
+      "timeUnit" : "YEAR",
+      "shipCode" : "OO100"
+    }, {
+      "mooringMaritimeShippingType" : "STANDARD",
+      "description" : "Puntertje",
+      "averageResidenceTime" : 200,
+      "shorePowerFactor" : 0.2,
+      "shipsPerTimeUnit" : 15000,
+      "timeUnit" : "YEAR",
+      "shipCode" : "OO1600"
+    }, {
+      "mooringMaritimeShippingType" : "CUSTOM",
+      "description" : "Berenboot",
+      "averageResidenceTime" : 210,
+      "shorePowerFactor" : 0.7,
+      "shipsPerTimeUnit" : 2,
+      "timeUnit" : "YEAR",
+      "emissionProperties" : {
+        "emissionFactors" : {
+          "NOX" : 50.0
+        },
+        "heatContent" : 1.9,
+        "emissionHeight" : 2.6
+      }
+    } ]
+  }
+}

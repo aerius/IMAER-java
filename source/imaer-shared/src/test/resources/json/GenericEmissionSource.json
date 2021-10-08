@@ -1,0 +1,22 @@
+{
+  "type" : "Feature",
+  "id" : "1",
+  "geometry" : {
+    "type" : "Point",
+    "coordinates" : [ 130.12, -123.99 ]
+  },
+  "properties" : {
+    "emissionSourceType" : "GENERIC",
+    "sectorId" : 4600,
+    "label" : "Label 4600",
+    "characteristics" : {
+      "type" : "OPS",
+      "heatContent" : 123.45,
+      "emissionHeight" : 5.0
+    },
+    "emissions" : {
+      "NH3" : 10.0,
+      "NOX" : 11.0
+    }
+  }
+}

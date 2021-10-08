@@ -1,0 +1,120 @@
+{
+  "id" : "eac8155d-bc6b-42f2-9096-9ab3b88c6e8e",
+  "year" : 2030,
+  "name" : "Voorbeeld situatie",
+  "type" : "PROPOSED",
+  "buildings" : {
+    "type" : "FeatureCollection",
+    "crs" : {
+      "type" : "name",
+      "properties" : {
+        "name" : "EPSG:28992"
+      }
+    }
+  },
+  "emissionSources" : {
+    "type" : "FeatureCollection",
+    "crs" : {
+      "type" : "name",
+      "properties" : {
+        "name" : "EPSG:28992"
+      }
+    },
+    "features" : [ {
+      "type" : "Feature",
+      "id" : "1",
+      "geometry" : {
+        "type" : "Point",
+        "coordinates" : [ 0.0, 0.0 ]
+      },
+      "properties" : {
+        "emissionSourceType" : "GENERIC",
+        "sectorId" : 4600,
+        "label" : "Label 4600",
+        "characteristics" : {
+          "type" : "OPS",
+          "heatContent" : 123.45,
+          "emissionHeight" : 5.0
+        },
+        "emissions" : {
+          "NH3" : 10.0,
+          "NOX" : 11.0
+        }
+      }
+    }, {
+      "type" : "Feature",
+      "id" : "2",
+      "geometry" : {
+        "type" : "LineString",
+        "coordinates" : [ [ 4000000.0, -2000000.0 ], [ 8000000.0, 2000000.0 ] ]
+      },
+      "properties" : {
+        "emissionSourceType" : "GENERIC",
+        "sectorId" : 4120,
+        "label" : "Label 4120",
+        "emissions" : {
+          "NH3" : 20.0,
+          "NOX" : 21.0
+        }
+      }
+    }, {
+      "type" : "Feature",
+      "id" : "3",
+      "geometry" : {
+        "type" : "LineString",
+        "coordinates" : [ [ 4000000.0, 2000000.0 ], [ 8000000.0, -2000000.0 ] ]
+      },
+      "properties" : {
+        "emissionSourceType" : "GENERIC",
+        "sectorId" : 1800,
+        "label" : "Label 1800",
+        "emissions" : {
+          "NH3" : 30.0,
+          "NOX" : 31.0
+        }
+      }
+    }, {
+      "type" : "Feature",
+      "id" : "4",
+      "geometry" : {
+        "type" : "Polygon",
+        "coordinates" : [ [ [ -5000000.0, -1000000.0 ], [ -4000000.0, 1000000.0 ], [ -3000000.0, -1000000.0 ] ] ]
+      },
+      "properties" : {
+        "emissionSourceType" : "GENERIC",
+        "sectorId" : 1800,
+        "label" : "Label 1234",
+        "emissions" : {
+          "NH3" : 40.0,
+          "NOX" : 41.0
+        }
+      }
+    } ]
+  },
+  "nslDispersionLines" : {
+    "type" : "FeatureCollection",
+    "crs" : {
+      "type" : "name",
+      "properties" : {
+        "name" : "EPSG:28992"
+      }
+    },
+    "features" : [ {
+      "type" : "Feature",
+      "id" : "1",
+      "geometry" : {
+        "type" : "LineString",
+        "coordinates" : [ [ 30000.0, -500000.0 ], [ 50000.0, 200000.0 ] ]
+      },
+      "properties" : {
+        "roadGmlId" : "ES.1",
+        "calculationPointGmlId" : "CP.1",
+        "jurisdictionId" : 5,
+        "label" : "Some dispersion line",
+        "roadProfile" : "ONE_SIDE_BUILDINGS",
+        "treeProfile" : "SEPARATED",
+        "description" : "this is optional"
+      }
+    } ]
+  }
+}

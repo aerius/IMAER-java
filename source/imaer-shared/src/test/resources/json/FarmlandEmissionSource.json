@@ -1,0 +1,32 @@
+{
+  "type" : "Feature",
+  "id" : "ES.1",
+  "geometry" : {
+    "type" : "Point",
+    "coordinates" : [ 136558.0, 455251.0 ]
+  },
+  "properties" : {
+    "emissionSourceType" : "FARMLAND",
+    "sectorId" : 4150,
+    "label" : "Bron 1",
+    "characteristics" : {
+      "type" : "OPS",
+      "heatContent" : 0.0,
+      "emissionHeight" : 0.0
+    },
+    "emissions" : {
+      "NH3" : 1000.0
+    },
+    "subSources" : [ {
+      "activityCode" : "PASTURE",
+      "emissions" : {
+        "NH3" : 500.0
+      }
+    }, {
+      "activityCode" : "MANURE",
+      "emissions" : {
+        "NH3" : 500.0
+      }
+    } ]
+  }
+}

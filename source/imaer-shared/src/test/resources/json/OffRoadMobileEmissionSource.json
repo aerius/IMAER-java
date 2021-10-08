@@ -1,0 +1,33 @@
+{
+  "type" : "Feature",
+  "id" : "ES.5",
+  "geometry" : {
+    "type" : "Point",
+    "coordinates" : [ 136558.0, 455251.0 ]
+  },
+  "properties" : {
+    "emissionSourceType" : "OFFROAD_MOBILE",
+    "sectorId" : 1800,
+    "label" : "SomeOffRoadMobileSource",
+    "emissions" : {
+      "NOX" : 102671.334
+    },
+    "subSources" : [ {
+      "offRoadMobileSourceType" : "CUSTOM",
+      "description" : "My Big Custom Bike",
+      "characteristics" : {
+        "type" : "OPS",
+        "heatContent" : 20.0,
+        "emissionHeight" : 1.0
+      },
+      "emissions" : {
+        "NOX" : 101010.0
+      }
+    }, {
+      "offRoadMobileSourceType" : "STANDARD",
+      "description" : "My Little Offroader",
+      "offRoadMobileSourceCode" : "P1980",
+      "literFuelPerYear" : 30000
+    } ]
+  }
+}

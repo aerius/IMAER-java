@@ -1,0 +1,56 @@
+{
+  "type" : "Feature",
+  "id" : "ES.2",
+  "geometry" : {
+    "type" : "LineString",
+    "coordinates" : [ [ 136558.0, 455251.0 ], [ 208413.0, 474162.0 ] ]
+  },
+  "properties" : {
+    "emissionSourceType" : "SRM1_ROAD",
+    "sectorId" : 3113,
+    "label" : "SomeRoadSource",
+    "characteristics" : {
+      "type" : "OPS",
+      "heatContent" : 0.28,
+      "emissionHeight" : 0.0
+    },
+    "emissions" : {
+      "NH3" : 1042.1482509823302,
+      "NOX" : 32843.505487667666,
+      "PM10" : 1353.463403522267,
+      "NO2" : 4972.615007349745
+    },
+    "subSources" : [ {
+      "vehicleType" : "STANDARD",
+      "vehiclesPerTimeUnit" : 980.0,
+      "timeUnit" : "DAY",
+      "standardVehicleType" : "LIGHT_TRAFFIC",
+      "stagnationFraction" : 0.2,
+      "strictEnforcement" : false
+    }, {
+      "vehicleType" : "STANDARD",
+      "vehiclesPerTimeUnit" : 200.0,
+      "timeUnit" : "DAY",
+      "standardVehicleType" : "HEAVY_FREIGHT",
+      "stagnationFraction" : 0.0,
+      "strictEnforcement" : false
+    }, {
+      "vehicleType" : "CUSTOM",
+      "vehiclesPerTimeUnit" : 3000.0,
+      "timeUnit" : "YEAR",
+      "description" : "Oude eenden",
+      "emissionFactors" : {
+        "NOX" : 4.2,
+        "NH3" : 0.2
+      }
+    }, {
+      "vehicleType" : "SPECIFIC",
+      "vehiclesPerTimeUnit" : 500.0,
+      "timeUnit" : "MONTH",
+      "vehicleCode" : "BA-B-E3"
+    } ],
+    "tunnelFactor" : 1.0,
+    "trafficDirection" : "BOTH",
+    "roadSpeedType" : "URBAN_TRAFFIC_NORMAL"
+  }
+}

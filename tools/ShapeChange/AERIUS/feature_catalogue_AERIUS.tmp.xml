@@ -1,0 +1,2381 @@
+<?xml version="1.0" encoding="Windows-1252"?><?xml-stylesheet type='text/xsl' href='./html.xsl'?><!--Feature catalogue created using ShapeChange--><FeatureCatalogue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="FC.xsd">
+  <name> 'IMAER'</name>
+  <scope>IMAER, het informatiemodel voor AERIUS, is een toepassing van Basismodel Geo-Informatie (NEN 3610) voor het beleidsveld van stikstofdepositieberekeningen. Het is hiermee één van de bestaande toepassingen van deze norm. In IMAER wordt, zoals ook bij NEN3610, voor het uitwisselingsformaat van bestanden (het technische formaat voor uitwisseling) gerefereerd aan GML 3.2.1 Simple Features Profile 2 (GML-SF2).</scope>
+  <versionNumber>2.1</versionNumber>
+  <versionDate>2018</versionDate>
+  <producer>AERIUS</producer>
+  <ApplicationSchema id="_P10">
+    <name>IMAER</name>
+    <definition>Dit model beschrijft het InformatieModel AERius (IMAER). IMAER is het standaard gegevens uitwisselingsformaat van AERIUS en wordt gebruikt voor het importeren, exporteren en uitwisselen van gegevens met en tussen de verschillende AERIUS producten (o.a. Calculator, Monitor en Register).</definition>
+    <definition/>
+    <definition>In IMAER zijn de objecten opgenomen die nodig zijn voor het berekenen van emissie en depositie van verschillende stoffen. In het model zijn de beschrijvingen van de objecten, de relaties tussen de objecten en de attributen opgenomen.</definition>
+    <versionNumber>2.1.0</versionNumber>
+    <taggedValues/>
+  </ApplicationSchema>
+  <FeatureType id="_C221">
+    <name>AdditionalLodgingSystem</name>
+    <definition>Extra staltechniek beschrijving.</definition>
+    <description>Deze klasse beschrijft een extra staltechniek die bij een bestaande stal gebruikt kan worden, gebruik makend van een voorgedefinieerde code. Dit kan voor een gedeelte van de aangegeven dieren gelden.</description>
+    <subtypeOf idref="_C222">LodgingSystem</subtypeOf>
+    <characterizedBy idref="_A221_381"/>
+    <package idref="_P10"/>
+    <type>Data Type</type>
+    <taggedValues/>
+  </FeatureType>
+  <FeatureAttribute id="_A221_381">
+    <name>numberOfAnimals</name>
+    <cardinality>1</cardinality>
+    <definition>Aantal dieren waarvoor deze extra techniek geldt. Zou niet meer moeten zijn dan het totaal aantal dieren van de FarmLodging waarbij deze techniek gebruikt wordt.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C55">Integer</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureType id="_C228">
+    <name>Address</name>
+    <definition>Een adres (bijvoorbeeld voor inrichtingslocatie).</definition>
+    <description>Dit data type bevat de standaard onderdelen van een adres.</description>
+    <characterizedBy idref="_A228_388"/>
+    <characterizedBy idref="_A228_389"/>
+    <characterizedBy idref="_A228_390"/>
+    <package idref="_P10"/>
+    <type>Data Type</type>
+    <taggedValues/>
+  </FeatureType>
+  <FeatureAttribute id="_A228_388">
+    <name>streetAddress</name>
+    <cardinality>1</cardinality>
+    <definition>Straat en huisnummer.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C54">CharacterString</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A228_389">
+    <name>postcode</name>
+    <cardinality>1</cardinality>
+    <definition>Postcode.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C54">CharacterString</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A228_390">
+    <name>city</name>
+    <cardinality>1</cardinality>
+    <definition>Plaats.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C54">CharacterString</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureType id="_C108">
+    <name>AeriusCalculatorMetadata</name>
+    <definition>Metadata over de AERIUS calculator die de GML geproduceerd heeft en het vastgelegde project.</definition>
+    <description>Met behulp van deze metadata wordt vastgelegd met welke versies van software en onderliggende basisgegevens het GML bestand is gegenereerd. Tevens kan er projectinformatie over de emissiebronnen vastgelegd worden,</description>
+    <characterizedBy idref="_A108_252"/>
+    <characterizedBy idref="_A108_233"/>
+    <characterizedBy idref="_A108_117"/>
+    <characterizedBy idref="_A108_118"/>
+    <package idref="_P10"/>
+    <type>Data Type</type>
+    <taggedValues/>
+  </FeatureType>
+  <FeatureAttribute id="_A108_252">
+    <name>project</name>
+    <cardinality>1</cardinality>
+    <definition>Metadata over het beschreven project.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="data type" idref="_C234">ProjectMetadata</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A108_233">
+    <name>situation</name>
+    <cardinality>0..1</cardinality>
+    <definition>Metadata over de beschreven situatie.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="data type" idref="_C235">SituationMetadata</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A108_117">
+    <name>calculation</name>
+    <cardinality>0..1</cardinality>
+    <definition>Metadata over de berekening.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="data type" idref="_C236">CalculationMetadata</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A108_118">
+    <name>version</name>
+    <cardinality>0..1</cardinality>
+    <definition>Metadata over de gebruikte versies.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="data type" idref="_C233">VersionMetadata</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureType id="_C236">
+    <name>CalculationMetadata</name>
+    <definition>Metadata over de berekening / rekenresultaten.</definition>
+    <description>Met behulp van dit metadata object kan er informatie over de berekening vastgelegd worden.</description>
+    <characterizedBy idref="_A236_419"/>
+    <characterizedBy idref="_A236_420"/>
+    <characterizedBy idref="_A236_426"/>
+    <characterizedBy idref="_A236_421"/>
+    <characterizedBy idref="_A236_422"/>
+    <package idref="_P10"/>
+    <type>Data Type</type>
+    <taggedValues/>
+  </FeatureType>
+  <FeatureAttribute id="_A236_419">
+    <name>type</name>
+    <cardinality>1</cardinality>
+    <definition>Gebruikte berekeningtype.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="enumeration">CalculationType</ValueDataType>
+    <ValueDomainType>1</ValueDomainType>
+    <enumeratedBy idref="_A238_427"/>
+    <enumeratedBy idref="_A238_428"/>
+    <enumeratedBy idref="_A238_429"/>
+    <enumeratedBy idref="_A238_430"/>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A236_420">
+    <name>substance</name>
+    <cardinality>1..*</cardinality>
+    <definition>Berekende stoffen.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="enumeration">Substance</ValueDataType>
+    <ValueDomainType>1</ValueDomainType>
+    <enumeratedBy idref="_A113_120"/>
+    <enumeratedBy idref="_A113_121"/>
+    <enumeratedBy idref="_A113_311"/>
+    <enumeratedBy idref="_A113_292"/>
+    <enumeratedBy idref="_A113_312"/>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A236_426">
+    <name>resultType</name>
+    <cardinality>1..*</cardinality>
+    <definition>Berekende resultat types.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="enumeration">ResultType</ValueDataType>
+    <ValueDomainType>1</ValueDomainType>
+    <enumeratedBy idref="_A220_374"/>
+    <enumeratedBy idref="_A220_375"/>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A236_421">
+    <name>maximumRange</name>
+    <cardinality>0..1</cardinality>
+    <definition>Maximum straal in km waarbinnen berekend is.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C58">Real</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A236_422">
+    <name>researchArea</name>
+    <cardinality>0..1</cardinality>
+    <definition>Indicatie of het om een onderzoeksgebied berekening ging.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C60">Boolean</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureType id="_C122">
+    <name>CalculationPoint</name>
+    <definition>Zelfgedefinieerd rekenpunt.</definition>
+    <description>Deze klasse beschrijft een zelfgedefinieerd rekenpunt.</description>
+    <subtypeOf idref="_C121">CalculationPointType</subtypeOf>
+    <characterizedBy idref="_A122_139"/>
+    <package idref="_P10"/>
+    <type>Feature Type</type>
+    <taggedValues/>
+  </FeatureType>
+  <FeatureAttribute id="_A122_139">
+    <name>label</name>
+    <cardinality>0..1</cardinality>
+    <definition>Een optioneel label voor het rekenpunt.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C54">CharacterString</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureType id="_C121">
+    <name>CalculationPointType</name>
+    <definition>Abstracte basisklasse voor de beschrijving van rekenpunten.</definition>
+    <description>Er zijn verschillende soorten rekenpunten in het model aanwezig. Deze abstracte basisklasse is een generalisatie van de verschillende typen in dit model.</description>
+    <isAbstract>1</isAbstract>
+    <subtypeOf idref="_C20">GeoObject</subtypeOf>
+    <characterizedBy idref="_A121_201"/>
+    <characterizedBy idref="_A121_175"/>
+    <characterizedBy idref="_A121_231"/>
+    <characterizedBy idref="_A121_198"/>
+    <package idref="_P10"/>
+    <type>Feature Type</type>
+    <taggedValues/>
+  </FeatureType>
+  <FeatureAttribute id="_A121_201">
+    <name>identifier</name>
+    <title>identificatie</title>
+    <cardinality>1</cardinality>
+    <definition>Unieke identificatie van het object binnen het domein van NEN 3610.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="data type" idref="_C80">NEN3610ID</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A121_175">
+    <name>GM_Point</name>
+    <cardinality>1</cardinality>
+    <definition>Geometrie van het rekenpunt.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C43">GM_Point</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A121_231">
+    <name>representation</name>
+    <cardinality>0..1</cardinality>
+    <definition>Geometrische representatie van het rekenpunt.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C45">GM_Surface</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A121_198">
+    <name>result</name>
+    <cardinality>0..*</cardinality>
+    <definition>Deposities van het rekenpunt.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="data type" idref="_C219">Result</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureType id="_C231">
+    <name>ConsumptionOffRoadVehicleSpecification</name>
+    <definition>Klasse voor een specificatie voor de emissie van een eigen gedefinieerde mobiele werktuig bron aan de hand van het verbruik.</definition>
+    <description>Voor het bepalen van de emissie van mobiel werktuig kan gekeken worden naar het gebruik van dat voertuig. De karakteristieken in dit type worden daarbij gebruikt.</description>
+    <subtypeOf idref="_C230">OffRoadVehicleSpecification</subtypeOf>
+    <characterizedBy idref="_A231_401"/>
+    <characterizedBy idref="_A231_402"/>
+    <characterizedBy idref="_A231_403"/>
+    <package idref="_P10"/>
+    <type>Data Type</type>
+    <taggedValues/>
+  </FeatureType>
+  <FeatureAttribute id="_A231_401">
+    <name>emissionFactor</name>
+    <cardinality>1</cardinality>
+    <definition>De emissiefactor NOx van het voertuig, in g/kWh.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C58">Real</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A231_402">
+    <name>energyEfficiency</name>
+    <cardinality>1</cardinality>
+    <definition>Rendement: brandstof in grammen brandstof per geleverde kilowattuur , in g/kWh.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C55">Integer</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A231_403">
+    <name>consumption</name>
+    <cardinality>1</cardinality>
+    <definition>Brandstofverbruik, in liters per jaar.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C55">Integer</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureType id="_C142">
+    <name>CustomFarmLodging</name>
+    <definition>Zelfgedefinieerde stal.</definition>
+    <description>Deze klasse beschrijft een zelfgedefinieerde stal.</description>
+    <subtypeOf idref="_C140">FarmLodging</subtypeOf>
+    <characterizedBy idref="_A142_170"/>
+    <characterizedBy idref="_A142_171"/>
+    <package idref="_P10"/>
+    <type>Data Type</type>
+    <taggedValues/>
+  </FeatureType>
+  <FeatureAttribute id="_A142_170">
+    <name>description</name>
+    <cardinality>1</cardinality>
+    <definition>Beschrijving van de stal.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C54">CharacterString</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A142_171">
+    <name>emissionFactor</name>
+    <cardinality>1..*</cardinality>
+    <definition>De emissiefactor(en) per dierplaats per jaar die gehanteerd moet worden.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="data type" idref="_C134">Emission</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureType id="_C171">
+    <name>CustomOffRoadMobileSource</name>
+    <definition>Eigen gedefinieerd mobiele werktuig bron.</definition>
+    <description>Deze klasse beschrijft een eigen gedefinieerde mobiel werktuig bron, met gesommeerd de emissie en de verdere eigenschappen die van belang zijn voor de verschillende berekeningen.</description>
+    <subtypeOf idref="_C179">OffRoadMobileSource</subtypeOf>
+    <characterizedBy idref="_A171_240"/>
+    <characterizedBy idref="_A171_250"/>
+    <characterizedBy idref="_A171_405"/>
+    <package idref="_P10"/>
+    <type>Data Type</type>
+    <taggedValues/>
+  </FeatureType>
+  <FeatureAttribute id="_A171_240">
+    <name>emission</name>
+    <cardinality>1..*</cardinality>
+    <definition>Totale emissie van een mobiele werktuig bron in een jaar.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="data type" idref="_C134">Emission</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A171_250">
+    <name>emissionSourceCharacteristics</name>
+    <cardinality>1</cardinality>
+    <definition>Karakteristieken van een mobiele werktuig bron.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="data type" idref="_C130">EmissionSourceCharacteristics</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A171_405">
+    <name>offRoadVehicleSpecification</name>
+    <cardinality>0..1</cardinality>
+    <definition>Eigenschappen gebruikt om tot de emissie van deze bron te komen.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="data type" idref="_C230">OffRoadVehicleSpecification</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureType id="_C200">
+    <name>CustomVehicle</name>
+    <definition>Karakteristieken van een emissietype zelfgedefinieerd wegvervoer.</definition>
+    <description>Ieder wegvervoer emissietype wordt beschreven aan de hand van een aantal karakteristieken, die in dit separate datatype zijn vastgelegd.</description>
+    <subtypeOf idref="_C137">Vehicle</subtypeOf>
+    <characterizedBy idref="_A200_316"/>
+    <characterizedBy idref="_A200_317"/>
+    <package idref="_P10"/>
+    <type>Data Type</type>
+    <taggedValues/>
+  </FeatureType>
+  <FeatureAttribute id="_A200_316">
+    <name>description</name>
+    <cardinality>1</cardinality>
+    <definition>Karakteristieken van de eigen gespecficieerd voertuigen.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C54">CharacterString</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A200_317">
+    <name>emission</name>
+    <cardinality>1..*</cardinality>
+    <definition>De emissie in g/km per voertuig.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="data type" idref="_C134">Emission</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureType id="_C134">
+    <name>Emission</name>
+    <definition>Karakteristieken van een depositie waarde.</definition>
+    <description>De depositieresulaten beschrijving van een rekenpunt.</description>
+    <subtypeOf idref="_C158">EmissionValueType</subtypeOf>
+    <characterizedBy idref="_A134_156"/>
+    <characterizedBy idref="_A134_205"/>
+    <package idref="_P10"/>
+    <type>Data Type</type>
+    <taggedValues/>
+  </FeatureType>
+  <FeatureAttribute id="_A134_156">
+    <name>substance</name>
+    <cardinality>1</cardinality>
+    <definition>Emissiestof.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="enumeration">Substance</ValueDataType>
+    <ValueDomainType>1</ValueDomainType>
+    <enumeratedBy idref="_A113_120"/>
+    <enumeratedBy idref="_A113_121"/>
+    <enumeratedBy idref="_A113_311"/>
+    <enumeratedBy idref="_A113_292"/>
+    <enumeratedBy idref="_A113_312"/>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A134_205">
+    <name>value</name>
+    <cardinality>1</cardinality>
+    <definition>Emissiewaarde.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C58">Real</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureType id="_C131">
+    <name>EmissionSource</name>
+    <definition>Generieke emissiebron.</definition>
+    <description>Deze klasse beschrijft een generieke emissiebron inclusief geometrie.</description>
+    <subtypeOf idref="_C128">EmissionSourceType</subtypeOf>
+    <characterizedBy idref="_A131_295"/>
+    <package idref="_P10"/>
+    <type>Feature Type</type>
+    <taggedValues/>
+  </FeatureType>
+  <FeatureAttribute id="_A131_295">
+    <name>emission</name>
+    <cardinality>1..*</cardinality>
+    <definition>Emissietypen van de emissiebron.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="data type" idref="_C134">Emission</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureType id="_C130">
+    <name>EmissionSourceCharacteristics</name>
+    <definition>Dit datatype beschrijft de karakteristieken van een emissiebron.</definition>
+    <description>Iedere emissiebron wordt beschreven aan de hand van een aantal karakteristieken, die in dit separate datatype zijn vastgelegd.</description>
+    <characterizedBy idref="_A130_146"/>
+    <characterizedBy idref="_A130_147"/>
+    <characterizedBy idref="_A130_232"/>
+    <characterizedBy idref="_A130_148"/>
+    <characterizedBy idref="_A130_149"/>
+    <characterizedBy idref="_A130_396"/>
+    <package idref="_P10"/>
+    <type>Data Type</type>
+    <taggedValues/>
+  </FeatureType>
+  <FeatureAttribute id="_A130_146">
+    <name>heatContent</name>
+    <cardinality>1</cardinality>
+    <definition>Warmteinhoud van de emissiebron in Megawatt.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C58">Real</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A130_147">
+    <name>emissionHeight</name>
+    <cardinality>1</cardinality>
+    <definition>Gemiddelde uitstoothoogte van de emissiebron in meters.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C58">Real</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A130_232">
+    <name>buildingHeight</name>
+    <cardinality>0..1</cardinality>
+    <definition>Gemiddelde gebouwhoogte van de emissiebron in meters.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C58">Real</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A130_148">
+    <name>spread</name>
+    <cardinality>0..1</cardinality>
+    <definition>Spreiding van de emissiebron in meters. Alleen te gebruiken bij puntbronnen met een hoogte.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C58">Real</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A130_149">
+    <name>diurnalVariation</name>
+    <cardinality>0..1</cardinality>
+    <definition>Temporele variatie van de emissie van de bron.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C54">CharacterString</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A130_396">
+    <name>heatContentSpecification</name>
+    <cardinality>0..1</cardinality>
+    <definition>Eigenschappen gebruikt om tot de warmteinhoud te komen.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="data type" idref="_C229">HeatContentSpecification</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureType id="_C149">
+    <name>EmissionSourceGeometry</name>
+    <definition>Mogelijke geometrieën van een emissiebron.</definition>
+    <description>Dit datatype maakt een keuze mogelijk uit verschillende soorten geometrieën die een emissiebron kan aannemen.</description>
+    <characterizedBy idref="_A149_195"/>
+    <characterizedBy idref="_A149_196"/>
+    <characterizedBy idref="_A149_197"/>
+    <package idref="_P10"/>
+    <type>Union Data Type</type>
+    <taggedValues/>
+  </FeatureType>
+  <FeatureAttribute id="_A149_195">
+    <name>GM_Point</name>
+    <cardinality>1</cardinality>
+    <definition>NEN 3610 punt.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C43">GM_Point</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A149_196">
+    <name>GM_Curve</name>
+    <cardinality>1</cardinality>
+    <definition>NEN 3610 lijn.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C44">GM_Curve</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A149_197">
+    <name>GM_Surface</name>
+    <cardinality>1</cardinality>
+    <definition>NEN 3610 vlak.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C45">GM_Surface</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureType id="_C128">
+    <name>EmissionSourceType</name>
+    <definition>Abstracte basisklasse voor de beschrijving van emissiebronnen.</definition>
+    <description>Er zijn verschillende soorten emissiebronnen in het model aanwezig. Deze abstracte basisklasse is een generalisatie van de verschillende soorten emissiebronnen in het model. De geometrie van deze bronnen is opgenomen bij de onderliggende soorten, omdat deze verschillen per type bron.</description>
+    <isAbstract>1</isAbstract>
+    <subtypeOf idref="_C20">GeoObject</subtypeOf>
+    <characterizedBy idref="_A128_200"/>
+    <characterizedBy idref="_A128_143"/>
+    <characterizedBy idref="_A128_144"/>
+    <characterizedBy idref="_A128_293"/>
+    <characterizedBy idref="_A128_145"/>
+    <package idref="_P10"/>
+    <type>Feature Type</type>
+    <taggedValues/>
+  </FeatureType>
+  <FeatureAttribute id="_A128_200">
+    <name>identifier</name>
+    <title>identificatie</title>
+    <cardinality>1</cardinality>
+    <definition>Unieke identificatie van de emissiebron binnen het domein van NEN 3610.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="data type" idref="_C80">NEN3610ID</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A128_143">
+    <name>label</name>
+    <cardinality>0..1</cardinality>
+    <definition>Een optioneel label voor de emissiebron.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C54">CharacterString</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A128_144">
+    <name>emissionSourceCharacteristics</name>
+    <cardinality>0..1</cardinality>
+    <definition>Karakteristieken van een emissiebron.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="data type" idref="_C130">EmissionSourceCharacteristics</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A128_293">
+    <name>geometry</name>
+    <cardinality>1</cardinality>
+    <definition>De geometrie van de emissiebron.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="union data type" idref="_C149">EmissionSourceGeometry</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A128_145">
+    <name>sectorId</name>
+    <cardinality>1</cardinality>
+    <definition>Identificatienummer van de sector waartoe de emissiebron behoord.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C55">Integer</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureType id="_C158">
+    <name>EmissionValueType</name>
+    <definition>De emissiewaarde van een emissiebron.</definition>
+    <description>De emissiewaarde van een emissiebron.</description>
+    <isAbstract>1</isAbstract>
+    <package idref="_P10"/>
+    <type>Data Type</type>
+    <taggedValues/>
+  </FeatureType>
+  <FeatureType id="_C140">
+    <name>FarmLodging</name>
+    <definition>Abstracte basisklasse voor de beschrijving van stallen.</definition>
+    <description>Er zijn verschillende soorten stallen in het model aanwezig. Deze abstracte basisklasse is een generalisatie van de verschillende typen in het model.</description>
+    <isAbstract>1</isAbstract>
+    <subtypeOf idref="_C158">EmissionValueType</subtypeOf>
+    <characterizedBy idref="_A140_168"/>
+    <package idref="_P10"/>
+    <type>Data Type</type>
+    <taggedValues/>
+  </FeatureType>
+  <FeatureAttribute id="_A140_168">
+    <name>numberOfAnimals</name>
+    <cardinality>1</cardinality>
+    <definition>Aantal dieren in deze stal.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C55">Integer</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureType id="_C139">
+    <name>FarmLodgingEmissionSource</name>
+    <definition>Emissiebron van een stal.</definition>
+    <description>Deze klasse beschrijft een stal inclusief geometrie.</description>
+    <subtypeOf idref="_C128">EmissionSourceType</subtypeOf>
+    <characterizedBy idref="_A139_298"/>
+    <characterizedBy idref="_A139_208"/>
+    <package idref="_P10"/>
+    <type>Feature Type</type>
+    <taggedValues/>
+  </FeatureType>
+  <FeatureAttribute id="_A139_298">
+    <name>emission</name>
+    <cardinality>0..*</cardinality>
+    <definition>Emissietypen van de stal.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="data type" idref="_C134">Emission</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A139_208">
+    <name>farmLodging</name>
+    <cardinality>0..*</cardinality>
+    <definition>Staltypen.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="data type" idref="_C140">FarmLodging</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureType id="_C20">
+    <name>GeoObject</name>
+    <title>Geo-object</title>
+    <definition>Abstractie van een fenomeen in de werkelijkheid, dat direct of indirect is geassocieerd met een locatie relatief ten opzichte van de aarde</definition>
+    <description>Van deze klasse worden geen instanties gemaakt. Indien een object een geo-object is, is het altijd een instantie van een subklasse van GeoObject.</description>
+    <description>Alle subklassen van GeoObject hebben conform NEN-EN-ISO 19109:2005 het stereotype «featureType».</description>
+    <isAbstract>1</isAbstract>
+    <package idref="_P10"/>
+    <type>Feature Type</type>
+    <taggedValues/>
+  </FeatureType>
+  <FeatureType id="_C229">
+    <name>HeatContentSpecification</name>
+    <definition>Dit datatype beschrijft de eigenschappen die zijn gebruikt om tot de warmteinhoud van een emissiebron te komen.</definition>
+    <description>De warmteinhoud van een bron kan berekend worden aan de hand van een aantal eigenschappen. Deze eigenschappen kunnen in dit separate datatype vastgelegd worden.</description>
+    <characterizedBy idref="_A229_393"/>
+    <characterizedBy idref="_A229_394"/>
+    <characterizedBy idref="_A229_395"/>
+    <package idref="_P10"/>
+    <type>Data Type</type>
+    <taggedValues/>
+  </FeatureType>
+  <FeatureAttribute id="_A229_393">
+    <name>emissionTemperature</name>
+    <cardinality>1</cardinality>
+    <definition>Emissie temperatuur in graden celsius. Dit moet hoger zijn dan de gemiddelde omgevingstemperatuur (rond de 12 graden).</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C58">Real</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A229_394">
+    <name>outflowSurface</name>
+    <cardinality>1</cardinality>
+    <definition>De uitstroom oppervlakte, in m^2.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C58">Real</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A229_395">
+    <name>outflowVelocity</name>
+    <cardinality>1</cardinality>
+    <definition>De uitstroom snelheid, in m/s.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C58">Real</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureType id="_C191">
+    <name>InlandShipping</name>
+    <definition>Karakteristieken van een vaarroute voor binnenvaart.</definition>
+    <description>Ieder binnenvaart emissietype voor routes wordt beschreven aan de hand van een aantal karakteristieken, die in dit datatype zijn vastgelegd.</description>
+    <subtypeOf idref="_C161">ShippingType</subtypeOf>
+    <characterizedBy idref="_A191_279"/>
+    <characterizedBy idref="_A191_282"/>
+    <characterizedBy idref="_A191_280"/>
+    <characterizedBy idref="_A191_281"/>
+    <characterizedBy idref="_A191_451"/>
+    <characterizedBy idref="_A191_452"/>
+    <package idref="_P10"/>
+    <type>Data Type</type>
+    <taggedValues/>
+  </FeatureType>
+  <FeatureAttribute id="_A191_279">
+    <name>numberOfShipsAtoBperTimeUnit</name>
+    <cardinality>1</cardinality>
+    <definition>Aantal schepen van A naar B per tijdseenheid. Vaarroutes worden van A naar B ingetekend.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C55">Integer</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A191_282">
+    <name>numberOfShipsBtoAperTimeUnit</name>
+    <cardinality>1</cardinality>
+    <definition>Aantal schepen van B naar A per tijdseenheid. Vaarroutes worden van A naar B ingetekend.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C55">Integer</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A191_280">
+    <name>percentageLadenAtoB</name>
+    <cardinality>1</cardinality>
+    <definition>Het percentage van numberOfShipsAtoB wat beladen is.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C55">Integer</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A191_281">
+    <name>percentageLadenBtoA</name>
+    <cardinality>1</cardinality>
+    <definition>Het percentage van numberOfShipsBtoA wat beladen is.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C55">Integer</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A191_451">
+    <name>timeUnitShipsAtoB</name>
+    <cardinality>1</cardinality>
+    <definition>Tijdseenheid voor het aantal schepen van A naar B.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="enumeration">TimeUnit</ValueDataType>
+    <ValueDomainType>1</ValueDomainType>
+    <enumeratedBy idref="_A241_442"/>
+    <enumeratedBy idref="_A241_443"/>
+    <enumeratedBy idref="_A241_444"/>
+    <enumeratedBy idref="_A241_445"/>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A191_452">
+    <name>timeUnitShipsBtoA</name>
+    <cardinality>1</cardinality>
+    <definition>Tijdseenheid voor het aantal schepen van B naar A.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="enumeration">TimeUnit</ValueDataType>
+    <ValueDomainType>1</ValueDomainType>
+    <enumeratedBy idref="_A241_442"/>
+    <enumeratedBy idref="_A241_443"/>
+    <enumeratedBy idref="_A241_444"/>
+    <enumeratedBy idref="_A241_445"/>
+  </FeatureAttribute>
+  <FeatureType id="_C188">
+    <name>InlandShippingEmissionSource</name>
+    <definition>Emissiebron (vaarroute) van binnenvaart.</definition>
+    <description>Deze klasse beschrijft een vaarroute voor binnenvaart, inclusief geometrie. De klasse is een specialisatie van EmissionSourceType.</description>
+    <subtypeOf idref="_C128">EmissionSourceType</subtypeOf>
+    <characterizedBy idref="_A188_272"/>
+    <characterizedBy idref="_A188_273"/>
+    <characterizedBy idref="_A188_439"/>
+    <package idref="_P10"/>
+    <type>Feature Type</type>
+    <taggedValues/>
+  </FeatureType>
+  <FeatureAttribute id="_A188_272">
+    <name>emission</name>
+    <cardinality>0..*</cardinality>
+    <definition>Emissietypen van deze bron.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="data type" idref="_C134">Emission</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A188_273">
+    <name>inlandShipping</name>
+    <cardinality>1..*</cardinality>
+    <definition>Specificatie van schepen voor dit emissiebrontype.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="data type" idref="_C191">InlandShipping</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A188_439">
+    <name>waterway</name>
+    <cardinality>1</cardinality>
+    <definition>Specificatie van het type waterweg dat gebruikt wordt.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="data type" idref="_C240">InlandWaterway</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureType id="_C194">
+    <name>InlandShippingRoute</name>
+    <definition>Karakteristieken van een vaarroute voor (aanmerende) binnenvaart.</definition>
+    <description>Ieder aanmerend binnenvaart emissietype voor routes wordt beschreven aan de hand van een aantal karakteristieken, die in dit datatype zijn vastgelegd.</description>
+    <characterizedBy idref="_A194_303"/>
+    <characterizedBy idref="_A194_302"/>
+    <characterizedBy idref="_A194_304"/>
+    <characterizedBy idref="_A194_301"/>
+    <characterizedBy idref="_A194_438"/>
+    <characterizedBy idref="_A194_449"/>
+    <package idref="_P10"/>
+    <type>Data Type</type>
+    <taggedValues/>
+  </FeatureType>
+  <FeatureAttribute id="_A194_303">
+    <name>direction</name>
+    <cardinality>1</cardinality>
+    <definition>De vaarrichting (aanmerend/vertrekkend) van de schepen.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="enumeration">InlandRouteDirectionType</ValueDataType>
+    <ValueDomainType>1</ValueDomainType>
+    <enumeratedBy idref="_A195_299"/>
+    <enumeratedBy idref="_A195_300"/>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A194_302">
+    <name>percentageLaden</name>
+    <cardinality>1</cardinality>
+    <definition>Het precentage van het aantal schepen wat beladen is.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C55">Integer</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A194_304">
+    <name>route</name>
+    <cardinality>1</cardinality>
+    <definition>De geometry van de vaarroute.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C44">GM_Curve</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A194_301">
+    <name>shippingMovementsPerTimeUnit</name>
+    <cardinality>1</cardinality>
+    <definition>Het aantal scheepsbewegingen op de vaarroute per tijdseenheid.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C55">Integer</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A194_438">
+    <name>waterway</name>
+    <cardinality>1</cardinality>
+    <definition>Specificatie van het type waterweg dat gebruikt wordt.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="data type" idref="_C240">InlandWaterway</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A194_449">
+    <name>timeUnit</name>
+    <cardinality>1</cardinality>
+    <definition>Tijdseenheid voor het aantal scheepsbewegingen op de vaarroute.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="enumeration">TimeUnit</ValueDataType>
+    <ValueDomainType>1</ValueDomainType>
+    <enumeratedBy idref="_A241_442"/>
+    <enumeratedBy idref="_A241_443"/>
+    <enumeratedBy idref="_A241_444"/>
+    <enumeratedBy idref="_A241_445"/>
+  </FeatureAttribute>
+  <FeatureType id="_C240">
+    <name>InlandWaterway</name>
+    <definition>Karakteristieken van een vaarroute voor (aanmerende) binnenvaart.</definition>
+    <description>Ieder aanmerend binnenvaart emissietype voor routes wordt beschreven aan de hand van een aantal karakteristieken, die in dit datatype zijn vastgelegd.</description>
+    <characterizedBy idref="_A240_436"/>
+    <characterizedBy idref="_A240_437"/>
+    <package idref="_P10"/>
+    <type>Data Type</type>
+    <taggedValues/>
+  </FeatureType>
+  <FeatureAttribute id="_A240_436">
+    <name>type</name>
+    <cardinality>1</cardinality>
+    <definition>Specificatie van het type waterweg dat gebruikt wordt.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C54">CharacterString</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A240_437">
+    <name>direction</name>
+    <cardinality>0..1</cardinality>
+    <definition>Specificatie van de stroom richting van de waterweg. De richting is ten opzichte van de tekenrichting.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="enumeration">WaterwayDirectionType</ValueDataType>
+    <ValueDomainType>1</ValueDomainType>
+    <enumeratedBy idref="_A239_433"/>
+    <enumeratedBy idref="_A239_434"/>
+    <enumeratedBy idref="_A239_435"/>
+  </FeatureAttribute>
+  <FeatureType id="_C227">
+    <name>LodgingFodderMeasure</name>
+    <definition>Extra voer maatregel voor stallen.</definition>
+    <description>Deze klasse beschrijft een voer maatregel die voor een bestaande stal gebruikt kan worden, gebruik makend van een voorgedefinieerde code. Gebruik van deze maatregel zorgt voor een reductie (percentage) voor alle dieren.</description>
+    <characterizedBy idref="_A227_386"/>
+    <package idref="_P10"/>
+    <type>Data Type</type>
+    <taggedValues/>
+  </FeatureType>
+  <FeatureAttribute id="_A227_386">
+    <name>fodderMeasureType</name>
+    <cardinality>1</cardinality>
+    <definition>Vaststaande code die aangeeft om wat voor voer maatregel het gaat.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C54">CharacterString</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureType id="_C222">
+    <name>LodgingSystem</name>
+    <definition>Abstracte basis klasse voor extra staltechnieken.</definition>
+    <description>Er zijn verschillende soorten extra staltechnieken in het model aanwezig. Deze abstracte basisklasse is een generalisatie van de verschillende typen in het model.</description>
+    <isAbstract>1</isAbstract>
+    <characterizedBy idref="_A222_382"/>
+    <characterizedBy idref="_A222_385"/>
+    <package idref="_P10"/>
+    <type>Data Type</type>
+    <taggedValues/>
+  </FeatureType>
+  <FeatureAttribute id="_A222_382">
+    <name>lodgingSystemType</name>
+    <cardinality>1</cardinality>
+    <definition>Vaststaande code die aangeeft om wat voor extra staltechniek het gaat.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C54">CharacterString</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A222_385">
+    <name>farmLodgingSystemDefinitionType</name>
+    <cardinality>0..1</cardinality>
+    <definition>Vaststaande (BWL) code die aangeeft om wat voor staltechniek het gaat.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C54">CharacterString</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureType id="_C186">
+    <name>MaritimeShipping</name>
+    <definition>Karakteristieken van een emissietype voor scheepvaart.</definition>
+    <description>Ieder scheepvaart emissietype voor routes wordt beschreven aan de hand van een aantal karakteristieken, die in dit datatype zijn vastgelegd.</description>
+    <subtypeOf idref="_C161">ShippingType</subtypeOf>
+    <characterizedBy idref="_A186_290"/>
+    <characterizedBy idref="_A186_450"/>
+    <package idref="_P10"/>
+    <type>Data Type</type>
+    <taggedValues/>
+  </FeatureType>
+  <FeatureAttribute id="_A186_290">
+    <name>shipsPerTimeUnit</name>
+    <cardinality>1</cardinality>
+    <definition>Aantal schepen op deze vaarroute per tijdseenheid.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C55">Integer</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A186_450">
+    <name>timeUnit</name>
+    <cardinality>1</cardinality>
+    <definition>Tijdseenheid voor het aantal schepen op deze vaarroute.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="enumeration">TimeUnit</ValueDataType>
+    <ValueDomainType>1</ValueDomainType>
+    <enumeratedBy idref="_A241_442"/>
+    <enumeratedBy idref="_A241_443"/>
+    <enumeratedBy idref="_A241_444"/>
+    <enumeratedBy idref="_A241_445"/>
+  </FeatureAttribute>
+  <FeatureType id="_C182">
+    <name>MaritimeShippingEmissionSource</name>
+    <definition>Emissiebron van zeescheepvaart.</definition>
+    <description>Deze klasse beschrijft een vaarroute voor zeescheepvaart, inclusief geometrie.</description>
+    <subtypeOf idref="_C128">EmissionSourceType</subtypeOf>
+    <characterizedBy idref="_A182_258"/>
+    <characterizedBy idref="_A182_259"/>
+    <characterizedBy idref="_A182_266"/>
+    <package idref="_P10"/>
+    <type>Feature Type</type>
+    <taggedValues/>
+  </FeatureType>
+  <FeatureAttribute id="_A182_258">
+    <name>emission</name>
+    <cardinality>0..*</cardinality>
+    <definition>Emissietypen van deze bron.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="data type" idref="_C134">Emission</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A182_259">
+    <name>maritimeShipping</name>
+    <cardinality>1..*</cardinality>
+    <definition>Specificatie van schepen voor dit emissietype.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="data type" idref="_C186">MaritimeShipping</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A182_266">
+    <name>movementType</name>
+    <cardinality>1</cardinality>
+    <definition>Type vaarbeweging.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="enumeration">MaritimeShippingMovementType</ValueDataType>
+    <ValueDomainType>1</ValueDomainType>
+    <enumeratedBy idref="_A184_260"/>
+    <enumeratedBy idref="_A184_261"/>
+  </FeatureAttribute>
+  <FeatureType id="_C193">
+    <name>MaritimeShippingRoute</name>
+    <definition>Karakteristieken van een vaarroute voor scheepvaart.</definition>
+    <description>Ieder scheepvaart emissietype voor routes wordt beschreven aan de hand van een aantal karakteristieken, die in dit datatype zijn vastgelegd.</description>
+    <characterizedBy idref="_A193_288"/>
+    <characterizedBy idref="_A193_289"/>
+    <characterizedBy idref="_A193_448"/>
+    <package idref="_P10"/>
+    <type>Data Type</type>
+    <taggedValues/>
+  </FeatureType>
+  <FeatureAttribute id="_A193_288">
+    <name>shippingMovementsPerTimeUnit</name>
+    <cardinality>1</cardinality>
+    <definition>Het aantal scheepsbewegingen op de vaarroute per tijdseenheid.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C55">Integer</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A193_289">
+    <name>route</name>
+    <cardinality>1</cardinality>
+    <definition>De geometry van de vaarroute.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C44">GM_Curve</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A193_448">
+    <name>timeUnit</name>
+    <cardinality>1</cardinality>
+    <definition>Tijdseenheid voor het aantal scheepsbewegingen op de vaarroute.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="enumeration">TimeUnit</ValueDataType>
+    <ValueDomainType>1</ValueDomainType>
+    <enumeratedBy idref="_A241_442"/>
+    <enumeratedBy idref="_A241_443"/>
+    <enumeratedBy idref="_A241_444"/>
+    <enumeratedBy idref="_A241_445"/>
+  </FeatureAttribute>
+  <FeatureType id="_C196">
+    <name>MooringInlandShipping</name>
+    <definition>Karakteristieken van een aanlegplaats voor binnenvaart.</definition>
+    <description>Iedere aanlegplaats emissietype voor binnenvaartwordt beschreven aan de hand van een aantal karakteristieken. Deze zijn in dit datatype zijn vastgelegd.</description>
+    <subtypeOf idref="_C161">ShippingType</subtypeOf>
+    <characterizedBy idref="_A196_305"/>
+    <characterizedBy idref="_A196_306"/>
+    <package idref="_P10"/>
+    <type>Data Type</type>
+    <taggedValues/>
+  </FeatureType>
+  <FeatureAttribute id="_A196_305">
+    <name>averageResidenceTime</name>
+    <cardinality>1</cardinality>
+    <definition>De gemiddelde verblijftijd van de schepen aan de kade.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C55">Integer</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A196_306">
+    <name>route</name>
+    <cardinality>1..*</cardinality>
+    <definition>De route die de schepen vanaf de kade nemen.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="data type" idref="_C194">InlandShippingRoute</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureType id="_C197">
+    <name>MooringInlandShippingEmissionSource</name>
+    <definition>Emissiebron van binnenvaart (aanlegplaats).</definition>
+    <description>Deze klasse beschrijft een aanlegplaats inclusief geometrie en vaarroute voor binnenvaart.</description>
+    <subtypeOf idref="_C128">EmissionSourceType</subtypeOf>
+    <characterizedBy idref="_A197_307"/>
+    <characterizedBy idref="_A197_308"/>
+    <package idref="_P10"/>
+    <type>Feature Type</type>
+    <taggedValues/>
+  </FeatureType>
+  <FeatureAttribute id="_A197_307">
+    <name>emission</name>
+    <cardinality>0..*</cardinality>
+    <definition>Emissietypen van deze bron.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="data type" idref="_C134">Emission</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A197_308">
+    <name>mooringInlandShipping</name>
+    <cardinality>1..*</cardinality>
+    <definition>Specificatie van schepen voor dit emissietype.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="data type" idref="_C196">MooringInlandShipping</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureType id="_C181">
+    <name>MooringMaritimeShipping</name>
+    <definition>Karakteristieken van een emissietype voor scheepvaart.</definition>
+    <description>Ieder scheepvaart emissietype voor aanlegplaatsen wordt beschreven aan de hand van een aantal karakteristieken. Deze zijn in dit datatype zijn vastgelegd.</description>
+    <subtypeOf idref="_C161">ShippingType</subtypeOf>
+    <characterizedBy idref="_A181_291"/>
+    <characterizedBy idref="_A181_254"/>
+    <characterizedBy idref="_A181_255"/>
+    <characterizedBy idref="_A181_256"/>
+    <characterizedBy idref="_A181_447"/>
+    <package idref="_P10"/>
+    <type>Data Type</type>
+    <taggedValues/>
+  </FeatureType>
+  <FeatureAttribute id="_A181_291">
+    <name>shipsPerTimeUnit</name>
+    <cardinality>1</cardinality>
+    <definition>Het aantal schepen per tijdseenheid.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C55">Integer</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A181_254">
+    <name>averageResidenceTime</name>
+    <cardinality>1</cardinality>
+    <definition>De gemiddelde verblijftijd van de schepen aan de kade.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C55">Integer</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A181_255">
+    <name>inlandRoute</name>
+    <cardinality>1</cardinality>
+    <definition>De route die de schepen binnengaats(tot aan zee) nemen.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C44">GM_Curve</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A181_256">
+    <name>maritimeRoute</name>
+    <cardinality>0..*</cardinality>
+    <definition>De route die de schepen buitengaats (op zee) nemen.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="data type" idref="_C193">MaritimeShippingRoute</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A181_447">
+    <name>timeUnit</name>
+    <cardinality>1</cardinality>
+    <definition>Tijdseenheid voor het aantal schepen.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="enumeration">TimeUnit</ValueDataType>
+    <ValueDomainType>1</ValueDomainType>
+    <enumeratedBy idref="_A241_442"/>
+    <enumeratedBy idref="_A241_443"/>
+    <enumeratedBy idref="_A241_444"/>
+    <enumeratedBy idref="_A241_445"/>
+  </FeatureAttribute>
+  <FeatureType id="_C162">
+    <name>MooringMaritimeShippingEmissionSource</name>
+    <definition>Emissiebron van zeescheepvaart.</definition>
+    <description>Deze klasse beschrijft een kade voor zeescheepvaart inclusief geometrie.</description>
+    <subtypeOf idref="_C128">EmissionSourceType</subtypeOf>
+    <characterizedBy idref="_A162_222"/>
+    <characterizedBy idref="_A162_224"/>
+    <package idref="_P10"/>
+    <type>Feature Type</type>
+    <taggedValues/>
+  </FeatureType>
+  <FeatureAttribute id="_A162_222">
+    <name>emission</name>
+    <cardinality>0..*</cardinality>
+    <definition>Emissietypen van deze bron.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="data type" idref="_C134">Emission</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A162_224">
+    <name>mooringMaritimeShipping</name>
+    <cardinality>1..*</cardinality>
+    <definition>Specificatie van schepen voor dit emissietype.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="data type" idref="_C181">MooringMaritimeShipping</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureType id="_C80">
+    <name>NEN3610ID</name>
+    <definition>Identificatiegegevens voor de universeel unieke identificatie van een object</definition>
+    <description>De combinatie van 'namespace' van een registratie, lokale identificatie en versie informatie maken een object uniek identificeerbaar. Met de informatie van deze klasse kan daardoor met zekerheid worden verwezen naar het geïdentificeerde object.</description>
+    <characterizedBy idref="_A80_45"/>
+    <characterizedBy idref="_A80_46"/>
+    <characterizedBy idref="_A80_47"/>
+    <package idref="_P10"/>
+    <type>Data Type</type>
+    <taggedValues/>
+  </FeatureType>
+  <FeatureAttribute id="_A80_45">
+    <name>namespace</name>
+    <cardinality>1</cardinality>
+    <definition>Unieke verwijzing naar een registratie van objecten</definition>
+    <description>Het attribuut 'namespace' is een unieke verwijzing naar de registratie die de identificatie uitdeelt. Deze lijst van registraties wordt beheerd binnen de context van NEN 3610. Binnen Nederland zal deze namespace vrijwel altijd met 'NL.' beginnen.</description>
+    <description>De volgende karakters mogen in een namespace aanduiding voorkomen: {"A"..."Z", "a"..."z", "0"..."9", "_", "-", ",", "."}</description>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C54">CharacterString</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A80_46">
+    <name>localId</name>
+    <cardinality>1</cardinality>
+    <definition>Unieke identificatiecode binnen een registratie</definition>
+    <description>'LocalId' is de identificatiecode die een object heeft binnen een (lokale) registratie.</description>
+    <description>De volgende karakters mogen in een localId voorkomen: {"A"..."Z", "a"..."z", "0"..."9", "_", "-", ",", "."}.</description>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C54">CharacterString</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A80_47">
+    <name>versionId</name>
+    <cardinality>0..1</cardinality>
+    <definition>Versie-aanduiding van een object</definition>
+    <description>Het attribuut 'versionId' maakt geen deel uit van de identificatie van het object maar kan worden gebruikt om verschillende versies van hetzelfde object te identificeren.</description>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C54">CharacterString</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureType id="_C179">
+    <name>OffRoadMobileSource</name>
+    <definition>Abstracte basisklasse voor de beschrijving van mobiele werktuig bronnen.</definition>
+    <description>Er zijn verschillende soorten mobiele werktuig beschrijvingen in het model aanwezig. Deze abstracte basisklasse is een generalisatie van de verschillende typen in het model.</description>
+    <isAbstract>1</isAbstract>
+    <subtypeOf idref="_C158">EmissionValueType</subtypeOf>
+    <characterizedBy idref="_A179_249"/>
+    <package idref="_P10"/>
+    <type>Data Type</type>
+    <taggedValues/>
+  </FeatureType>
+  <FeatureAttribute id="_A179_249">
+    <name>description</name>
+    <cardinality>1</cardinality>
+    <definition>Beschrijving van het voertuig type.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C54">CharacterString</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureType id="_C167">
+    <name>OffRoadMobileSourceEmissionSource</name>
+    <definition>Emissiebron van mobiele werktuigen.</definition>
+    <description>Deze klasse beschrijft een verzameling mobiele werktuigen inclusief geometrie.</description>
+    <subtypeOf idref="_C128">EmissionSourceType</subtypeOf>
+    <characterizedBy idref="_A167_297"/>
+    <characterizedBy idref="_A167_236"/>
+    <package idref="_P10"/>
+    <type>Feature Type</type>
+    <taggedValues/>
+  </FeatureType>
+  <FeatureAttribute id="_A167_297">
+    <name>emission</name>
+    <cardinality>0..*</cardinality>
+    <definition>Emissietypen van deze bron.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="data type" idref="_C134">Emission</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A167_236">
+    <name>offRoadMobileSource</name>
+    <cardinality>0..*</cardinality>
+    <definition>Specificatie van mobiele werktuigen voor dit emissietype.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="data type" idref="_C179">OffRoadMobileSource</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureType id="_C230">
+    <name>OffRoadVehicleSpecification</name>
+    <definition>Abstracte basisklasse van een specificatie voor de emissie van een eigen gedefinieerde mobiele werktuig bron.</definition>
+    <description>Voor het bepalen van de emissie van mobiel werktuig kunnen verschillende rekenmethodes gebruikt worden. Deze methodes liggen vast in de onderliggende types.</description>
+    <isAbstract>1</isAbstract>
+    <characterizedBy idref="_A230_404"/>
+    <package idref="_P10"/>
+    <type>Data Type</type>
+    <taggedValues/>
+  </FeatureType>
+  <FeatureAttribute id="_A230_404">
+    <name>fuelType</name>
+    <cardinality>1</cardinality>
+    <definition>Vaststaande code die aangeeft wat voor brandstof gebruikt wordt door het voertuig.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C54">CharacterString</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureType id="_C232">
+    <name>OperatingHoursOffRoadVehicleSpecification</name>
+    <definition>Klasse voor een specificatie voor de emissie van een eigen gedefinieerde mobiele werktuig bron aan de hand van de operationele uren.</definition>
+    <description>Voor het bepalen van de emissie van mobiel werktuig kan gekeken worden naar de operationele uren van dat voertuig. De karakteristieken in dit type worden daarbij gebruikt.</description>
+    <subtypeOf idref="_C230">OffRoadVehicleSpecification</subtypeOf>
+    <characterizedBy idref="_A232_397"/>
+    <characterizedBy idref="_A232_398"/>
+    <characterizedBy idref="_A232_399"/>
+    <characterizedBy idref="_A232_400"/>
+    <package idref="_P10"/>
+    <type>Data Type</type>
+    <taggedValues/>
+  </FeatureType>
+  <FeatureAttribute id="_A232_397">
+    <name>emissionFactor</name>
+    <cardinality>1</cardinality>
+    <definition>De emissiefactor NOx van het voertuig, in g/kWh.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C58">Real</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A232_398">
+    <name>load</name>
+    <cardinality>1</cardinality>
+    <definition>Het gedeelte van het volle vermogen van dit mobiele werktuig dat daadwerkelijk wordt gebruikt, in percentages.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C55">Integer</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A232_399">
+    <name>power</name>
+    <cardinality>1</cardinality>
+    <definition>Het gemiddelde volle vermogen van dit mobiele werktuig, in kW.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C55">Integer</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A232_400">
+    <name>operatingHours</name>
+    <cardinality>1</cardinality>
+    <definition>Het aantal uren dat dit mobiele werktuig gemiddeld wordt gebruikt, in uren.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C55">Integer</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureType id="_C175">
+    <name>Plan</name>
+    <definition>Karakteristieken van ruimtelijke plan ontwikkelingen.</definition>
+    <description>Iedere ruimtelijk plan ontwikkel bronsoort wordt beschreven aan de hand van een aantal karakteristieken. Deze zijn in dit datatype zijn vastgelegd.</description>
+    <subtypeOf idref="_C158">EmissionValueType</subtypeOf>
+    <characterizedBy idref="_A175_242"/>
+    <characterizedBy idref="_A175_241"/>
+    <characterizedBy idref="_A175_243"/>
+    <package idref="_P10"/>
+    <type>Data Type</type>
+    <taggedValues/>
+  </FeatureType>
+  <FeatureAttribute id="_A175_242">
+    <name>description</name>
+    <cardinality>1</cardinality>
+    <definition>De omschrijving van dit plan.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C54">CharacterString</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A175_241">
+    <name>amount</name>
+    <cardinality>1</cardinality>
+    <definition>Elk planType heeft een eenheid. De amount is het aantal van deze eenheid.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C55">Integer</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A175_243">
+    <name>planType</name>
+    <cardinality>1</cardinality>
+    <definition>Het type van dit plan.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C54">CharacterString</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureType id="_C173">
+    <name>PlanEmissionSource</name>
+    <definition>Emissiebron definitie van ruimtelijke plan ontwikkelingen.</definition>
+    <description>Deze klasse beschrijft een verzameling ruimtelijke plan ontwikkelings bronnen inclusief geometrie.</description>
+    <subtypeOf idref="_C128">EmissionSourceType</subtypeOf>
+    <characterizedBy idref="_A173_296"/>
+    <characterizedBy idref="_A173_247"/>
+    <package idref="_P10"/>
+    <type>Feature Type</type>
+    <taggedValues/>
+  </FeatureType>
+  <FeatureAttribute id="_A173_296">
+    <name>emission</name>
+    <cardinality>0..*</cardinality>
+    <definition>Emissietypen van deze bron.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="data type" idref="_C134">Emission</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A173_247">
+    <name>plan</name>
+    <cardinality>1..*</cardinality>
+    <definition>Specificatie van de plannen voor dit emissietype.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="data type" idref="_C175">Plan</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureType id="_C234">
+    <name>ProjectMetadata</name>
+    <definition>Metadata over het vastgelegde project.</definition>
+    <description>Met behulp van dit metadata object kan er projectinformatie over de emissiebronnen vastgelegd worden,</description>
+    <characterizedBy idref="_A234_431"/>
+    <characterizedBy idref="_A234_432"/>
+    <characterizedBy idref="_A234_441"/>
+    <characterizedBy idref="_A234_410"/>
+    <characterizedBy idref="_A234_411"/>
+    <characterizedBy idref="_A234_412"/>
+    <characterizedBy idref="_A234_413"/>
+    <package idref="_P10"/>
+    <type>Data Type</type>
+    <taggedValues/>
+  </FeatureType>
+  <FeatureAttribute id="_A234_431">
+    <name>year</name>
+    <cardinality>1</cardinality>
+    <definition>De AERIUS rekenkern maakt gebruik van GDN basisgegevens die jaarlijks worden aangepast. Dit attribuut geeft aan van welk jaar de basisgegevens gebruikt zijn bij de berekeningen.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C55">Integer</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A234_432">
+    <name>temporaryPeriod</name>
+    <cardinality>0..1</cardinality>
+    <definition>Duur van het project in jaren. (alleen in geval van tijdelijke projecten).</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C55">Integer</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A234_441">
+    <name>permitCalculationRadiusType</name>
+    <cardinality>0..1</cardinality>
+    <definition>Afstandsgrenswaarde-type voor de Wet natuurbescherming</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C54">CharacterString</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A234_410">
+    <name>name</name>
+    <cardinality>0..1</cardinality>
+    <definition>Naam van het beschreven project.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C54">CharacterString</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A234_411">
+    <name>corporation</name>
+    <cardinality>0..1</cardinality>
+    <definition>Naam van de rechtspersoon die hoort bij het beschreven project.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C54">CharacterString</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A234_412">
+    <name>facilityLocation</name>
+    <cardinality>0..1</cardinality>
+    <definition>De inrichtingslocatie van het project.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="data type" idref="_C228">Address</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A234_413">
+    <name>description</name>
+    <cardinality>0..1</cardinality>
+    <definition>Beschrijving van of toelichting bij het beschreven project.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C54">CharacterString</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureType id="_C123">
+    <name>ReceptorPoint</name>
+    <definition>Receptorpunt.</definition>
+    <description>Deze klasse beschrijft een rekenpunt op het AERIUS-grid.</description>
+    <subtypeOf idref="_C121">CalculationPointType</subtypeOf>
+    <characterizedBy idref="_A123_140"/>
+    <package idref="_P10"/>
+    <type>Feature Type</type>
+    <taggedValues/>
+  </FeatureType>
+  <FeatureAttribute id="_A123_140">
+    <name>receptorPointId</name>
+    <cardinality>1</cardinality>
+    <definition>Identificatienummer van het receptorpunt.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C55">Integer</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureType id="_C223">
+    <name>ReductiveLodgingSystem</name>
+    <definition>Extra reducerende staltechniek beschrijving.</definition>
+    <description>Deze klasse beschrijft een extra staltechniek die bij een bestaande stal gebruikt kan worden, gebruik makend van een voorgedefinieerde code. Gebruik van dit systeem zorgt voor een reductie (percentage) voor alle dieren.</description>
+    <subtypeOf idref="_C222">LodgingSystem</subtypeOf>
+    <package idref="_P10"/>
+    <type>Data Type</type>
+    <taggedValues/>
+  </FeatureType>
+  <FeatureType id="_C219">
+    <name>Result</name>
+    <definition>Resultaat voor een rekunpunt.</definition>
+    <description>Deze klasse beschrijft het resultaat voor een bepaalde stof/resultaattype combinatie voor een rekenpunt.</description>
+    <characterizedBy idref="_A219_372"/>
+    <characterizedBy idref="_A219_376"/>
+    <characterizedBy idref="_A219_373"/>
+    <package idref="_P10"/>
+    <type>Data Type</type>
+    <taggedValues/>
+  </FeatureType>
+  <FeatureAttribute id="_A219_372">
+    <name>substance</name>
+    <cardinality>1</cardinality>
+    <definition>Resultaatstof.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="enumeration">Substance</ValueDataType>
+    <ValueDomainType>1</ValueDomainType>
+    <enumeratedBy idref="_A113_120"/>
+    <enumeratedBy idref="_A113_121"/>
+    <enumeratedBy idref="_A113_311"/>
+    <enumeratedBy idref="_A113_292"/>
+    <enumeratedBy idref="_A113_312"/>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A219_376">
+    <name>resultType</name>
+    <cardinality>1</cardinality>
+    <definition>Resultaattype.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="enumeration">ResultType</ValueDataType>
+    <ValueDomainType>1</ValueDomainType>
+    <enumeratedBy idref="_A220_374"/>
+    <enumeratedBy idref="_A220_375"/>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A219_373">
+    <name>value</name>
+    <cardinality>1</cardinality>
+    <definition>Resultaatwaarde.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C58">Real</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureType id="_C136">
+    <name>RoadEmissionSource</name>
+    <definition>Emissiebron van een weg.</definition>
+    <description>Deze klasse beschrijft een weg emissiebron inclusief geometrie.</description>
+    <isAbstract>1</isAbstract>
+    <subtypeOf idref="_C128">EmissionSourceType</subtypeOf>
+    <characterizedBy idref="_A136_158"/>
+    <characterizedBy idref="_A136_209"/>
+    <characterizedBy idref="_AS137"/>
+    <package idref="_P10"/>
+    <type>Feature Type</type>
+    <taggedValues/>
+  </FeatureType>
+  <FeatureAttribute id="_A136_158">
+    <name>emission</name>
+    <cardinality>0..*</cardinality>
+    <definition>Emissietypen van deze bron.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="data type" idref="_C134">Emission</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A136_209">
+    <name>vehicles</name>
+    <cardinality>1..*</cardinality>
+    <definition>Specificatie van wegvervoer voor dit emissietype.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="data type" idref="_C137">Vehicle</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureRelationship id="__S137">
+    <name>(unbestimmt)</name>
+    <roles idref="_AS137"/>
+    <roles idref="_AT137"/>
+  </FeatureRelationship>
+  <RelationshipRole id="_AS137">
+    <name>inNetwork</name>
+    <cardinality>0..1</cardinality>
+    <definition>Geeft aan bij welk netwerk de weg hoort.</definition>
+    <taggedValues/>
+    <voidable>true</voidable>
+    <FeatureTypeIncluded category="feature type" idref="_C216">RoadNetwork</FeatureTypeIncluded>
+    <relation idref="__S137"/>
+    <InverseRole idref="_AT137"/>
+    <orderIndicator>0</orderIndicator>
+  </RelationshipRole>
+  <RelationshipRole id="_AT137">
+    <name>element</name>
+    <cardinality>0..*</cardinality>
+    <definition>Referenties naar alle elementen die horen bij het netwerk.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <FeatureTypeIncluded category="feature type" idref="_C136">RoadEmissionSource</FeatureTypeIncluded>
+    <relation idref="__S137"/>
+    <InverseRole idref="_AS137"/>
+    <orderIndicator>0</orderIndicator>
+  </RelationshipRole>
+  <FeatureType id="_C216">
+    <name>RoadNetwork</name>
+    <definition>Een netwerk van wegen.</definition>
+    <description>Deze klasse beschrijft een netwerk, waarbij meerdere elementen gegroupeerd kunnen worden.</description>
+    <subtypeOf idref="_C20">GeoObject</subtypeOf>
+    <characterizedBy idref="_A216_371"/>
+    <characterizedBy idref="_A216_368"/>
+    <characterizedBy idref="_AT137"/>
+    <package idref="_P10"/>
+    <type>Feature Type</type>
+    <taggedValues/>
+  </FeatureType>
+  <FeatureAttribute id="_A216_371">
+    <name>identifier</name>
+    <cardinality>1</cardinality>
+    <definition>Unieke identificatie van het netwerk binnen het domein van NEN 3610.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="data type" idref="_C80">NEN3610ID</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A216_368">
+    <name>label</name>
+    <cardinality>0..1</cardinality>
+    <definition>Een optioneel label voor de emissiebron.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C54">CharacterString</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureType id="_C203">
+    <name>RoadSideBarrier</name>
+    <definition>Karakteristieken van een scheiding(wal of scherm) aan de kant van de weg.</definition>
+    <description>Een scherm/wal aan de kant van een weg is voorzien van een aantal karakteristieken, die in dit separate datatype zijn vastgelegd.</description>
+    <characterizedBy idref="_A203_323"/>
+    <characterizedBy idref="_A203_324"/>
+    <characterizedBy idref="_A203_325"/>
+    <package idref="_P10"/>
+    <type>Data Type</type>
+    <taggedValues/>
+  </FeatureType>
+  <FeatureAttribute id="_A203_323">
+    <name>barrierType</name>
+    <cardinality>1</cardinality>
+    <definition>Type van deze scheiding.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="enumeration">RoadSideBarrierType</ValueDataType>
+    <ValueDomainType>1</ValueDomainType>
+    <enumeratedBy idref="_A204_321"/>
+    <enumeratedBy idref="_A204_322"/>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A203_324">
+    <name>height</name>
+    <cardinality>1</cardinality>
+    <definition>Hoogte van deze scheiding.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C58">Real</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A203_325">
+    <name>distance</name>
+    <cardinality>1</cardinality>
+    <definition>Afstand tot de weg van deze scheiding.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C58">Real</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureType id="_C208">
+    <name>SRM2LinearReference</name>
+    <definition>Gedeeltelijke wijziging in SRM2 attributen.</definition>
+    <description>Deze klasse kan gebruikt worden om voor een gedeelte van de weg een of meerdere attributen een andere waarde te geven. Te gebruiken voor SRM2Road.</description>
+    <subtypeOf idref="_C207">SimpleLinearReference</subtypeOf>
+    <characterizedBy idref="_A208_341"/>
+    <characterizedBy idref="_A208_342"/>
+    <characterizedBy idref="_A208_343"/>
+    <characterizedBy idref="_A208_344"/>
+    <characterizedBy idref="_A208_345"/>
+    <characterizedBy idref="_A208_346"/>
+    <package idref="_P10"/>
+    <type>Data Type</type>
+    <taggedValues/>
+  </FeatureType>
+  <FeatureAttribute id="_A208_341">
+    <name>isFreeway</name>
+    <cardinality>0..1</cardinality>
+    <definition>Zie SRM2Road</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C60">Boolean</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A208_342">
+    <name>tunnelFactor</name>
+    <cardinality>0..1</cardinality>
+    <definition>Zie SRM2Road</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C58">Real</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A208_343">
+    <name>elevation</name>
+    <cardinality>0..1</cardinality>
+    <definition>Zie SRM2Road</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="enumeration">RoadElevation</ValueDataType>
+    <ValueDomainType>1</ValueDomainType>
+    <enumeratedBy idref="_A205_326"/>
+    <enumeratedBy idref="_A205_327"/>
+    <enumeratedBy idref="_A205_328"/>
+    <enumeratedBy idref="_A205_329"/>
+    <enumeratedBy idref="_A205_330"/>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A208_344">
+    <name>elevationHeight</name>
+    <cardinality>0..1</cardinality>
+    <definition>Zie SRM2Road</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C55">Integer</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A208_345">
+    <name>barrierLeft</name>
+    <cardinality>0..1</cardinality>
+    <definition>Zie SRM2Road</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="data type" idref="_C203">RoadSideBarrier</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A208_346">
+    <name>barrierRight</name>
+    <cardinality>0..1</cardinality>
+    <definition>Zie SRM2Road</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="data type" idref="_C203">RoadSideBarrier</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureType id="_C202">
+    <name>SRM2Road</name>
+    <definition>Emissiebron van een SRM2 weg.</definition>
+    <description>Deze klasse beschrijft een weg emissiebron inclusief geometrie. Deze weg is bedoeld om volgens SRM2 door te rekenen. Onder SRM2 vallen wegen die niet onder SRM1 vallen, buitenstedelijke wegen en snelwegen.</description>
+    <subtypeOf idref="_C136">RoadEmissionSource</subtypeOf>
+    <characterizedBy idref="_A202_332"/>
+    <characterizedBy idref="_A202_336"/>
+    <characterizedBy idref="_A202_331"/>
+    <characterizedBy idref="_A202_318"/>
+    <characterizedBy idref="_A202_338"/>
+    <characterizedBy idref="_A202_339"/>
+    <characterizedBy idref="_A202_347"/>
+    <package idref="_P10"/>
+    <type>Feature Type</type>
+    <taggedValues/>
+  </FeatureType>
+  <FeatureAttribute id="_A202_332">
+    <name>isFreeway</name>
+    <cardinality>1</cardinality>
+    <definition>Wel of geen snelweg.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C60">Boolean</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A202_336">
+    <name>tunnelFactor</name>
+    <cardinality>0..1</cardinality>
+    <definition>Voor een wegdeel dat direct aansluit op de uitrit van een tunnelbuis, die tenminste 100 meter lang is en waarbinnen sprake is van één rijrichting, worden de emissies tot op een afstand van 100 meter van de uitrit van een tunnelbuis verrekend met een factor. Dit is die factor. Indien geen sprake is van een tunnel, kan 1.0 gebruikt worden.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C58">Real</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A202_331">
+    <name>elevation</name>
+    <cardinality>0..1</cardinality>
+    <definition>Verhogingstype van de weg.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="enumeration">RoadElevation</ValueDataType>
+    <ValueDomainType>1</ValueDomainType>
+    <enumeratedBy idref="_A205_326"/>
+    <enumeratedBy idref="_A205_327"/>
+    <enumeratedBy idref="_A205_328"/>
+    <enumeratedBy idref="_A205_329"/>
+    <enumeratedBy idref="_A205_330"/>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A202_318">
+    <name>elevationHeight</name>
+    <cardinality>0..1</cardinality>
+    <definition>Verhoging van de weg (in meters).</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C55">Integer</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A202_338">
+    <name>barrierLeft</name>
+    <cardinality>0..1</cardinality>
+    <definition>De afscheiding aan de linkerkant van de weg.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="data type" idref="_C203">RoadSideBarrier</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A202_339">
+    <name>barrierRight</name>
+    <cardinality>0..1</cardinality>
+    <definition>De afscheiding aan de rechterkant van de weg.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="data type" idref="_C203">RoadSideBarrier</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A202_347">
+    <name>partialChange</name>
+    <cardinality>0..*</cardinality>
+    <definition>Specificatie wijzigingen op een gedeelte van de weg. Mits opgegeven, dan wordt op dat gedeelte van de weg de standaaard waarde overschreven door hetgeen hier is opgegeven. Dit kan meerdere keren voorkomen.</definition>
+    <definition>Dit is een stukje Dynamic Segmentation of Linear Referencing.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="data type" idref="_C208">SRM2LinearReference</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureType id="_C161">
+    <name>ShippingType</name>
+    <definition>Abstracte basisklasse van een emissietype voor scheepvaart.</definition>
+    <description>Ieder scheepvaart emissietype wordt beschreven aan de hand van een aantal karakteristieken. Deze abstracte basisklasse is een generalisatie van de verschillende typen in het model.</description>
+    <isAbstract>1</isAbstract>
+    <subtypeOf idref="_C158">EmissionValueType</subtypeOf>
+    <characterizedBy idref="_A161_215"/>
+    <characterizedBy idref="_A161_220"/>
+    <package idref="_P10"/>
+    <type>Data Type</type>
+    <taggedValues/>
+  </FeatureType>
+  <FeatureAttribute id="_A161_215">
+    <name>description</name>
+    <cardinality>1</cardinality>
+    <definition>Omschrijving van dit type schip.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C54">CharacterString</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A161_220">
+    <name>shipType</name>
+    <cardinality>1</cardinality>
+    <definition>Type schip.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C54">CharacterString</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureType id="_C207">
+    <name>SimpleLinearReference</name>
+    <definition>Gedeeltelijke wijziging in attributen voor een object.</definition>
+    <description>Deze klasse kan gebruikt worden om voor een gedeelte van de weg een of meerdere attributen een andere waarde te geven. Alleen te gebruiken voor objecten gedefineerd door een LineString.</description>
+    <isAbstract>1</isAbstract>
+    <characterizedBy idref="_A207_334"/>
+    <characterizedBy idref="_A207_335"/>
+    <package idref="_P10"/>
+    <type>Data Type</type>
+    <taggedValues/>
+  </FeatureType>
+  <FeatureAttribute id="_A207_334">
+    <name>fromPosition</name>
+    <cardinality>1</cardinality>
+    <definition>Positie op het lijnstuk (decimale fractie 0-1) vanaf waar de waardes gaan gelden.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C58">Real</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A207_335">
+    <name>toPosition</name>
+    <cardinality>1</cardinality>
+    <definition>Positie op het lijnstuk (decimale fractie 0-1) tot aan waar de waardes gelden.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C58">Real</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureType id="_C235">
+    <name>SituationMetadata</name>
+    <definition>Metadata over de vastgelegde situatie.</definition>
+    <description>Met behulp van dit metadata object kan er informatie over de situatie vastgelegd worden,</description>
+    <characterizedBy idref="_A235_415"/>
+    <characterizedBy idref="_A235_416"/>
+    <package idref="_P10"/>
+    <type>Data Type</type>
+    <taggedValues/>
+  </FeatureType>
+  <FeatureAttribute id="_A235_415">
+    <name>name</name>
+    <cardinality>0..1</cardinality>
+    <definition>Naam van de lijst van bronnen van de beschreven situatie.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C54">CharacterString</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A235_416">
+    <name>reference</name>
+    <cardinality>0..1</cardinality>
+    <definition>Referentie van de beschreven situatie.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C54">CharacterString</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureType id="_C199">
+    <name>SpecificVehicle</name>
+    <definition>Karakteristieken van een specifieke type voertuigen met een klasse.</definition>
+    <description>Ieder wegvervoer emissietype wordt beschreven aan de hand van een aantal karakteristieken, die in dit separate datatype zijn vastgelegd.</description>
+    <subtypeOf idref="_C137">Vehicle</subtypeOf>
+    <characterizedBy idref="_A199_315"/>
+    <package idref="_P10"/>
+    <type>Data Type</type>
+    <taggedValues/>
+  </FeatureType>
+  <FeatureAttribute id="_A199_315">
+    <name>vehicleType</name>
+    <cardinality>1</cardinality>
+    <definition>De klasse van deze mobiel voertuigen.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C54">CharacterString</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureType id="_C141">
+    <name>StandardFarmLodging</name>
+    <definition>Algemene stal beschrijving.</definition>
+    <description>Deze klasse beschrijft een algemene stal, gebruik makend van een voorgedefinieerde stalcode.</description>
+    <subtypeOf idref="_C140">FarmLodging</subtypeOf>
+    <characterizedBy idref="_A141_377"/>
+    <characterizedBy idref="_A141_169"/>
+    <characterizedBy idref="_A141_387"/>
+    <characterizedBy idref="_A141_378"/>
+    <package idref="_P10"/>
+    <type>Data Type</type>
+    <taggedValues/>
+  </FeatureType>
+  <FeatureAttribute id="_A141_377">
+    <name>farmLodgingSystemDefinitionType</name>
+    <cardinality>0..1</cardinality>
+    <definition>Vaststaande (BWL) code die aangeeft om wat voor staltechniek het gaat.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C54">CharacterString</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A141_169">
+    <name>farmLodgingType</name>
+    <cardinality>1</cardinality>
+    <definition>Vaststaande (RAV) code die aangeeft om wat voor stalsoort het gaat.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C54">CharacterString</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A141_387">
+    <name>fodderMeasure</name>
+    <cardinality>0..*</cardinality>
+    <definition>Specificatie van de extra voer maatregelen die gebruikt zijn voor deze stal.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="data type" idref="_C227">LodgingFodderMeasure</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A141_378">
+    <name>lodgingSystem</name>
+    <cardinality>0..*</cardinality>
+    <definition>Specificatie van de extra (additionele of reducerende) staltechnieken die gebruikt zijn voor deze stal.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="data type" idref="_C222">LodgingSystem</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureType id="_C169">
+    <name>StandardOffRoadMobileSource</name>
+    <definition>Karakteristieken van een emissietype voor mobiele werktuigen.</definition>
+    <description>Mobiele werktuig worden beschreven aan de hand van een aantal karakteristieken. Deze zijn in dit datatype zijn vastgelegd.</description>
+    <subtypeOf idref="_C179">OffRoadMobileSource</subtypeOf>
+    <characterizedBy idref="_A169_237"/>
+    <characterizedBy idref="_A169_248"/>
+    <package idref="_P10"/>
+    <type>Data Type</type>
+    <taggedValues/>
+  </FeatureType>
+  <FeatureAttribute id="_A169_237">
+    <name>literFuelPerYear</name>
+    <cardinality>1</cardinality>
+    <definition>Liter brandstof (gesommeerd) dat dit type voertuig per jaar verbruikt.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C55">Integer</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A169_248">
+    <name>offRoadMobileSourceType</name>
+    <cardinality>1</cardinality>
+    <definition>De klasse van dit mobiele werktuig.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C54">CharacterString</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureType id="_C198">
+    <name>StandardVehicle</name>
+    <definition>Karakteristieken van een standaard klasse wegvervoer.</definition>
+    <subtypeOf idref="_C137">Vehicle</subtypeOf>
+    <characterizedBy idref="_A198_313"/>
+    <characterizedBy idref="_A198_314"/>
+    <characterizedBy idref="_A198_406"/>
+    <characterizedBy idref="_A198_407"/>
+    <package idref="_P10"/>
+    <type>Data Type</type>
+    <taggedValues/>
+  </FeatureType>
+  <FeatureAttribute id="_A198_313">
+    <name>stagnationFactor</name>
+    <cardinality>1</cardinality>
+    <definition>Fractie van het verkeer dat stagneert.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C58">Real</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A198_314">
+    <name>vehicleType</name>
+    <cardinality>1</cardinality>
+    <definition>Type voertuig.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="enumeration">StandardVehicleType</ValueDataType>
+    <ValueDomainType>1</ValueDomainType>
+    <enumeratedBy idref="_A115_132"/>
+    <enumeratedBy idref="_A115_133"/>
+    <enumeratedBy idref="_A115_134"/>
+    <enumeratedBy idref="_A115_135"/>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A198_406">
+    <name>maximumSpeed</name>
+    <cardinality>0..1</cardinality>
+    <definition>Maximum snelheid in kilometers per uur.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C55">Integer</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A198_407">
+    <name>strictEnforcement</name>
+    <cardinality>0..1</cardinality>
+    <definition>Wel of geen strikte handhaving van de snelheid.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C60">Boolean</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureType id="_C137">
+    <name>Vehicle</name>
+    <definition>Karakteristieken van een emissietype wegvervoer.</definition>
+    <description>Ieder wegvervoer emissietype wordt beschreven aan de hand van een aantal karakteristieken, die in dit separate datatype zijn vastgelegd.</description>
+    <isAbstract>1</isAbstract>
+    <subtypeOf idref="_C158">EmissionValueType</subtypeOf>
+    <characterizedBy idref="_A137_160"/>
+    <characterizedBy idref="_A137_446"/>
+    <package idref="_P10"/>
+    <type>Data Type</type>
+    <taggedValues/>
+  </FeatureType>
+  <FeatureAttribute id="_A137_160">
+    <name>vehiclesPerTimeUnit</name>
+    <cardinality>1</cardinality>
+    <definition>Aantal voertuigen per tijdseenheid.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C58">Real</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A137_446">
+    <name>timeUnit</name>
+    <cardinality>1</cardinality>
+    <definition>Tijdseenheid voor het aantal voertuigen.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType category="enumeration">TimeUnit</ValueDataType>
+    <ValueDomainType>1</ValueDomainType>
+    <enumeratedBy idref="_A241_442"/>
+    <enumeratedBy idref="_A241_443"/>
+    <enumeratedBy idref="_A241_444"/>
+    <enumeratedBy idref="_A241_445"/>
+  </FeatureAttribute>
+  <FeatureType id="_C233">
+    <name>VersionMetadata</name>
+    <definition>Metadata over gebruikte versies.</definition>
+    <description>Dit data type bevat de versies die gebruikt zijn om tot de data te komen.</description>
+    <characterizedBy idref="_A233_408"/>
+    <characterizedBy idref="_A233_409"/>
+    <package idref="_P10"/>
+    <type>Data Type</type>
+    <taggedValues/>
+  </FeatureType>
+  <FeatureAttribute id="_A233_408">
+    <name>aeriusVersion</name>
+    <cardinality>1</cardinality>
+    <definition>Versienummer van de AERIUS rekenkern.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C54">CharacterString</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <FeatureAttribute id="_A233_409">
+    <name>databaseVersion</name>
+    <cardinality>1</cardinality>
+    <definition>Versienummer van de AERIUS database.</definition>
+    <taggedValues/>
+    <voidable>false</voidable>
+    <ValueDataType idref="_C54">CharacterString</ValueDataType>
+    <ValueDomainType>0</ValueDomainType>
+  </FeatureAttribute>
+  <Value id="_A204_321">
+    <label>SCREEN</label>
+    <code>SCREEN</code>
+    <definition>Een scherm (denk aan geluidsscherm).</definition>
+  </Value>
+  <Value id="_A204_322">
+    <label>WALL</label>
+    <code>WALL</code>
+    <definition>Een wal (denk aan geluidswal).</definition>
+  </Value>
+  <Value id="_A195_299">
+    <label>ARRIVE</label>
+    <code>ARRIVE</code>
+    <definition>Aanmerend.</definition>
+  </Value>
+  <Value id="_A195_300">
+    <label>DEPART</label>
+    <code>DEPART</code>
+    <definition>Uitgaand.</definition>
+  </Value>
+  <Value id="_A220_374">
+    <label>DEPOSITION</label>
+    <code>DEPOSITION</code>
+    <definition>Depositie (mol/ha/j)</definition>
+  </Value>
+  <Value id="_A220_375">
+    <label>CONCENTRATION</label>
+    <code>CONCENTRATION</code>
+    <definition>Concentratie (µg/m³)</definition>
+  </Value>
+  <Value id="_A238_427">
+    <label>PERMIT</label>
+    <code>PERMIT</code>
+    <definition>Berekening van receptoren volgens de Wet natuurbescherming.</definition>
+  </Value>
+  <Value id="_A238_428">
+    <label>NATURE_AREA</label>
+    <code>NATURE_AREA</code>
+    <definition>Berekening gebruikt hexagonen die natuurgebieden bevatten binnen opgegeven straal.</definition>
+  </Value>
+  <Value id="_A238_429">
+    <label>RADIUS</label>
+    <code>RADIUS</code>
+    <definition>Berekening gebruikt hexagonen binnen opgegeven straal.</definition>
+  </Value>
+  <Value id="_A238_430">
+    <label>CUSTOM_POINTS</label>
+    <code>CUSTOM_POINTS</code>
+    <definition>Berekening gebruikt door de gebruiker gedefinieerde punten (CalculationPoint).</definition>
+  </Value>
+  <Value id="_A205_326">
+    <label>NORMAL</label>
+    <code>NORMAL</code>
+    <definition>dijk of wal met zeer vlakke zijkanten (hoek kleiner dan 20 graden).</definition>
+  </Value>
+  <Value id="_A205_327">
+    <label>NORMAL_DYKE</label>
+    <code>NORMAL_DYKE</code>
+    <definition>dijk of wal met vlakke zijkanten (hoek groter of gelijk aan 20  graden maar kleiner dan 45 graden).</definition>
+  </Value>
+  <Value id="_A205_328">
+    <label>STEEP_DYKE</label>
+    <code>STEEP_DYKE</code>
+    <definition>dijk of wal met scherpe zijkanten (hoek groter dan of gelijk aan 45 graden).</definition>
+  </Value>
+  <Value id="_A205_329">
+    <label>VIADUCT</label>
+    <code>VIADUCT</code>
+    <definition>weg ligt op een viaduct.</definition>
+  </Value>
+  <Value id="_A205_330">
+    <label>TUNNEL</label>
+    <code>TUNNEL</code>
+    <definition>weg ligt in een tunnelbak.</definition>
+  </Value>
+  <Value id="_A113_120">
+    <label>NH3</label>
+    <code>NH3</code>
+    <definition>Stof NH3 (ammoniak).</definition>
+  </Value>
+  <Value id="_A113_121">
+    <label>NOX</label>
+    <code>NOX</code>
+    <definition>Stof NOx (stikstofoxiden).</definition>
+  </Value>
+  <Value id="_A113_311">
+    <label>NO2</label>
+    <code>NO2</code>
+    <definition>Stof NO2 (stikstofdioxide).</definition>
+  </Value>
+  <Value id="_A113_292">
+    <label>PM10</label>
+    <code>PM10</code>
+    <definition>Stof PM10 (fijnstof).</definition>
+  </Value>
+  <Value id="_A113_312">
+    <label>PM25</label>
+    <code>PM25</code>
+    <definition>Stof PM2.5 (fijnstof).</definition>
+  </Value>
+  <Value id="_A115_132">
+    <label>LIGHT_TRAFFIC</label>
+    <code>LIGHT_TRAFFIC</code>
+    <definition>Licht verkeer.</definition>
+  </Value>
+  <Value id="_A115_133">
+    <label>NORMAL_FREIGHT</label>
+    <code>NORMAL_FREIGHT</code>
+    <definition>Middelzwaar vrachtverkeer.</definition>
+  </Value>
+  <Value id="_A115_134">
+    <label>HEAVY_FREIGHT</label>
+    <code>HEAVY_FREIGHT</code>
+    <definition>Zwaar vrachtverkeer.</definition>
+  </Value>
+  <Value id="_A115_135">
+    <label>AUTO_BUS</label>
+    <code>AUTO_BUS</code>
+    <definition>Busverkeer.</definition>
+  </Value>
+  <Value id="_A241_442">
+    <label>HOUR</label>
+    <code>HOUR</code>
+  </Value>
+  <Value id="_A241_443">
+    <label>DAY</label>
+    <code>DAY</code>
+  </Value>
+  <Value id="_A241_444">
+    <label>MONTH</label>
+    <code>MONTH</code>
+  </Value>
+  <Value id="_A241_445">
+    <label>YEAR</label>
+    <code>YEAR</code>
+  </Value>
+  <Value id="_A184_260">
+    <label>INLAND</label>
+    <code>INLAND</code>
+    <definition>Varend binnengaats.</definition>
+  </Value>
+  <Value id="_A184_261">
+    <label>MARITIME</label>
+    <code>MARITIME</code>
+    <definition>Varend op zee.</definition>
+  </Value>
+  <Value id="_A239_433">
+    <label>IRRELEVANT</label>
+    <code>IRRELEVANT</code>
+    <definition>Stroming is niet van belang.</definition>
+  </Value>
+  <Value id="_A239_434">
+    <label>UPSTREAM</label>
+    <code>UPSTREAM</code>
+    <definition>Tegen de stroom in.</definition>
+  </Value>
+  <Value id="_A239_435">
+    <label>DOWNSTREAM</label>
+    <code>DOWNSTREAM</code>
+    <definition>Met de stroom mee.</definition>
+  </Value>
+</FeatureCatalogue>
