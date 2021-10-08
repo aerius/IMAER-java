@@ -1,0 +1,72 @@
+# Compiled source #
+###################
+*.class
+
+# Packages #
+############
+# it's better to unpack these files and commit the raw source
+# git has its own built in compression methods
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Logs and databases #
+######################
+*.log
+
+# OS generated files #
+######################
+Thumbs.db
+
+# Development files  #
+######################
+# Excluded folders used for local configuration in development  
+*/src/test/config/
+*.bat
+*.user.rb
+dependency-reduced-pom.xml
+
+# Eclipse files      #
+######################
+/.metadata/
+.settings/
+.project
+.classpath
+.checkstyle
+.pmd
+.eclipse-pmd
+.ruleset
+.apt_generated
+.externalToolBuilders
+/ucdetector_reports
+
+# VS Code files      #
+######################
+.factorypath
+.vscode/
+
+# DB build config    #
+######################
+!*/src/data/sql/load.rb
+!*/AeriusSettings.rb
+!*/settings.rb
+
+# Build folders      #
+######################
+target/
+/Servers/
+www-test/
+
+# Git merge files    #
+######################
+*.orig
+
+# Other folders      #
+######################
+# Put your private files in here
+.private/
