@@ -32,7 +32,8 @@ public class GMLLegacyCodeConverter {
   public enum GMLLegacyCodeType {
 
     ON_ROAD_MOBILE_SOURCE,
-    OFF_ROAD_MOBILE_SOURCE;
+    OFF_ROAD_MOBILE_SOURCE,
+    SECTOR;
 
   }
 
