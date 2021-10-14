@@ -1,5 +1,6 @@
 /*
  * Copyright the State of the Netherlands
+ * Crown copyright
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -17,7 +18,7 @@
 package nl.overheid.aerius.shared.domain;
 
 /**
- *
+ * Supported file formats.
  */
 public enum FileFormat {
 
@@ -46,7 +47,11 @@ public enum FileFormat {
    */
   BRN,
   /**
-   * UPL (ADMS project file) format.
+   * APL (ADMS 5 industrial air pollution model file) format.
+   */
+  APL,
+  /**
+   * UPL (ADMS-Urban model file) format.
    */
   UPL;
 

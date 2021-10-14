@@ -17,9 +17,11 @@
 package nl.overheid.aerius.shared.domain.v2.characteristics;
 
 public enum CharacteristicsType {
+  ADMS(Names.ADMS),
   OPS(Names.OPS);
 
   public static final class Names {
+    public static final String ADMS = "ADMS";
     public static final String OPS = "OPS";
     private Names() {}
   }

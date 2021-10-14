@@ -1,5 +1,6 @@
 /*
  * Copyright the State of the Netherlands
+ * Crown copyright
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -23,8 +24,11 @@ import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 
+import nl.overheid.aerius.shared.domain.v2.characteristics.adms.ADMSSourceCharacteristics;
+
 @JsonTypeInfo(property = "type", use = Id.NAME)
 @JsonSubTypes({
+@Type(value = ADMSSourceCharacteristics.class, name = CharacteristicsType.Names.ADMS),
 @Type(value = OPSSourceCharacteristics.class, name = CharacteristicsType.Names.OPS),
 })
 public abstract class SourceCharacteristics implements Serializable {

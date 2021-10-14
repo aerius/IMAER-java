@@ -1,0 +1,177 @@
+/*
+ * Crown copyright
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see http://www.gnu.org/licenses/.
+ */
+package nl.overheid.aerius.shared.domain.v2.characteristics.adms;
+
+import nl.overheid.aerius.shared.domain.v2.characteristics.SourceCharacteristics;
+
+/**
+ * ADMS Source Characteristics.
+ */
+public class ADMSSourceCharacteristics extends SourceCharacteristics {
+
+  private static final long serialVersionUID = 1L;
+
+  private String buildingId;
+
+  private BuoyancyType buoyancyType;
+
+  private EffluxType effluxType;
+
+  private ReleaseAtNTP releaseAtNTP;
+
+  private double height;
+
+  private double diameter;
+
+  private double temperature;
+
+  private double density;
+
+  private double verticalVelocity;
+
+  private double volumetricFlowRate;
+
+  private double specificHeatCapacity;
+
+  private double percentNOxAsNO2;
+
+  private double fm;
+
+  private double fb;
+
+  private double massFlux;
+
+  public String getBuildingId() {
+    return buildingId;
+  }
+
+  public void setBuildingId(final String buildingId) {
+    this.buildingId = buildingId;
+  }
+
+  public BuoyancyType getBuoyancyType() {
+    return buoyancyType;
+  }
+
+  public void setBuoyancyType(final BuoyancyType buoyancyType) {
+    this.buoyancyType = buoyancyType;
+  }
+
+  public EffluxType getEffluxType() {
+    return effluxType;
+  }
+
+  public void setEffluxType(final EffluxType effluxType) {
+    this.effluxType = effluxType;
+  }
+
+  public ReleaseAtNTP getReleaseAtNTP() {
+    return releaseAtNTP;
+  }
+
+  public void setReleaseAtNTP(final ReleaseAtNTP releaseAtNTP) {
+    this.releaseAtNTP = releaseAtNTP;
+  }
+
+  public double getHeight() {
+    return height;
+  }
+
+  public void setHeight(final double height) {
+    this.height = height;
+  }
+
+  public double getDiameter() {
+    return diameter;
+  }
+
+  public void setDiameter(final double diameter) {
+    this.diameter = diameter;
+  }
+
+  public double getTemperature() {
+    return temperature;
+  }
+
+  public void setTemperature(final double temperature) {
+    this.temperature = temperature;
+  }
+
+  public double getDensity() {
+    return density;
+  }
+
+  public void setDensity(final double density) {
+    this.density = density;
+  }
+
+  public double getVerticalVelocity() {
+    return verticalVelocity;
+  }
+
+  public void setVerticalVelocity(final double verticalVelocity) {
+    this.verticalVelocity = verticalVelocity;
+  }
+
+  public double getVolumetricFlowRate() {
+    return volumetricFlowRate;
+  }
+
+  public void setVolumetricFlowRate(final double volumetricFlowRate) {
+    this.volumetricFlowRate = volumetricFlowRate;
+  }
+
+  public double getSpecificHeatCapacity() {
+    return specificHeatCapacity;
+  }
+
+  public void setSpecificHeatCapacity(final double specificHeatCapacity) {
+    this.specificHeatCapacity = specificHeatCapacity;
+  }
+
+  public double getPercentNOxAsNO2() {
+    return percentNOxAsNO2;
+  }
+
+  public void setPercentNOxAsNO2(final double percentNOxAsNO2) {
+    this.percentNOxAsNO2 = percentNOxAsNO2;
+  }
+
+  public double getFm() {
+    return fm;
+  }
+
+  public void setFm(final double fm) {
+    this.fm = fm;
+  }
+
+  public double getFb() {
+    return fb;
+  }
+
+  public void setFb(final double fb) {
+    this.fb = fb;
+  }
+
+  public double getMassFlux() {
+    return massFlux;
+  }
+
+  public void setMassFlux(final double massFlux) {
+    this.massFlux = massFlux;
+  }
+}
