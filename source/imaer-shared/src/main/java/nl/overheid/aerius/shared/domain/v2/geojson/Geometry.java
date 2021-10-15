@@ -25,9 +25,9 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 
 @JsonTypeInfo(property = "type", use = Id.NAME)
 @JsonSubTypes({
-@Type(value = Point.class, name = GeometryType.Names.POINT),
-@Type(value = LineString.class, name = GeometryType.Names.LINESTRING),
-@Type(value = Polygon.class, name = GeometryType.Names.POLYGON),
+    @Type(value = Point.class, name = GeometryType.Names.POINT),
+    @Type(value = LineString.class, name = GeometryType.Names.LINESTRING),
+    @Type(value = Polygon.class, name = GeometryType.Names.POLYGON),
 })
 public abstract class Geometry implements Serializable {
 

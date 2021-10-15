@@ -33,7 +33,7 @@ import nl.overheid.aerius.shared.domain.v2.nsl.NSLTreeProfile;
  */
 @XmlType(name = "SRM1RoadDispersionLineType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"label", "description", "jurisdictionId",
     "roadProfile", "treeProfile", "geometry", "calculationPoint", "road"})
-public class SRM1RoadDispersionLine extends FeatureMemberImpl implements IsGmlSRM1RoadDispersionLine{
+public class SRM1RoadDispersionLine extends FeatureMemberImpl implements IsGmlSRM1RoadDispersionLine {
 
   private String label;
   private String description;
@@ -54,7 +54,7 @@ public class SRM1RoadDispersionLine extends FeatureMemberImpl implements IsGmlSR
   }
 
   public void setLineString(final LineString lineString) {
-    super.getEmissionSourceGeometry().setLineString(lineString);;
+    super.getEmissionSourceGeometry().setLineString(lineString);
   }
 
   @Override

@@ -32,8 +32,7 @@ import nl.overheid.aerius.shared.domain.v2.source.road.TrafficDirection;
  *
  */
 @XmlType(name = "SRM2Road", namespace = CalculatorSchema.NAMESPACE, propOrder = {"freeway", "tunnelFactor", "elevation", "elevationHeight",
-"barrierLeft", "barrierRight",
-"dynamicSegments"})
+    "barrierLeft", "barrierRight", "dynamicSegments"})
 public class SRM2RoadEmissionSource extends RoadEmissionSource implements IsGmlSRM2Road {
 
   private boolean freeway;

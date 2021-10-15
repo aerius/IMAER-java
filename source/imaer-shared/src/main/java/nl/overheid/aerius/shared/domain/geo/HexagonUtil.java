@@ -62,8 +62,8 @@ public final class HexagonUtil {
 
     // Polygon first and last point need to be the same
     final double[] lastCoordinate = new double[] {
-      MathUtil.round(point.getX() + horizontal[0]),
-      MathUtil.round(point.getY() + vertical[0])
+        MathUtil.round(point.getX() + horizontal[0]),
+        MathUtil.round(point.getY() + vertical[0])
     };
     coordinates[HexagonZoomLevel.HEXAGON_CORNERS] = lastCoordinate;
     final Polygon polygon = new Polygon();

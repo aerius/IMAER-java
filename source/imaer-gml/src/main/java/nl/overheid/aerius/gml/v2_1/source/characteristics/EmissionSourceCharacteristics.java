@@ -40,7 +40,7 @@ public class EmissionSourceCharacteristics implements IsGmlEmissionSourceCharact
   private String diurnalVariation;
   private HeatContentSpecification heatContentSpecification;
 
-  @XmlElement(name= "heatContent", namespace = CalculatorSchema.NAMESPACE)
+  @XmlElement(name = "heatContent", namespace = CalculatorSchema.NAMESPACE)
   public double getHeatContentValue() {
     return heatContentValue;
   }

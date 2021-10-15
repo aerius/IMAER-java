@@ -45,4 +45,3 @@ public class GML2Generic<T extends IsGmlEmissionSource> extends AbstractGML2Spec
   }
 
 }
-

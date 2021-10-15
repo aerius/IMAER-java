@@ -25,8 +25,8 @@ import nl.overheid.aerius.shared.domain.v2.source.base.AbstractSubSource;
 
 @JsonTypeInfo(property = "offRoadMobileSourceType", use = Id.NAME)
 @JsonSubTypes({
-@Type(value = CustomOffRoadMobileSource.class, name = "CUSTOM"),
-@Type(value = StandardOffRoadMobileSource.class, name = "STANDARD"),
+    @Type(value = CustomOffRoadMobileSource.class, name = "CUSTOM"),
+    @Type(value = StandardOffRoadMobileSource.class, name = "STANDARD"),
 })
 public abstract class OffRoadMobileSource extends AbstractSubSource {
 

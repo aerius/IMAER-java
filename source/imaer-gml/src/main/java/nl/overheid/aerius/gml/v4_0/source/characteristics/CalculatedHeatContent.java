@@ -89,6 +89,4 @@ public class CalculatedHeatContent extends AbstractHeatContent implements IsGmlC
     this.outflowVelocityType = outflowVelocityType;
   }
 
-
-
 }

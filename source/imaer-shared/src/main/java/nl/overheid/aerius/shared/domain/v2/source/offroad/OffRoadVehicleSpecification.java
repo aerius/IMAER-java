@@ -25,8 +25,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 
 @JsonTypeInfo(property = "offRoadVehicleSpecificationType", use = Id.NAME)
 @JsonSubTypes({
-@Type(value = ConsumptionOffRoadVehicleSpecification.class, name = "CONSUMPTION"),
-@Type(value = OperatingHoursOffRoadVehicleSpecification.class, name = "OPERATING_HOURS"),
+    @Type(value = ConsumptionOffRoadVehicleSpecification.class, name = "CONSUMPTION"),
+    @Type(value = OperatingHoursOffRoadVehicleSpecification.class, name = "OPERATING_HOURS"),
 })
 public abstract class OffRoadVehicleSpecification implements Serializable {
 

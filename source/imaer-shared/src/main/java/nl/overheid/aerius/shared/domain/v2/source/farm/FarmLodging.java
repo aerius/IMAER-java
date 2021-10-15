@@ -25,8 +25,8 @@ import nl.overheid.aerius.shared.domain.v2.source.base.AbstractSubSource;
 
 @JsonTypeInfo(property = "farmLodgingType", use = Id.NAME)
 @JsonSubTypes({
-@Type(value = CustomFarmLodging.class, name = "CUSTOM"),
-@Type(value = StandardFarmLodging.class, name = "STANDARD"),
+    @Type(value = CustomFarmLodging.class, name = "CUSTOM"),
+    @Type(value = StandardFarmLodging.class, name = "STANDARD"),
 })
 public abstract class FarmLodging extends AbstractSubSource {
 

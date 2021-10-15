@@ -99,6 +99,4 @@ public abstract class MooringInlandShipping implements IsGmlMooringInlandShippin
     this.percentageLaden = percentageLaden;
   }
 
-
-
 }

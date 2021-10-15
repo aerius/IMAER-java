@@ -142,5 +142,4 @@ public class ScenarioSituation implements Serializable {
     return buildings.getFeatures();
   }
 
-
 }

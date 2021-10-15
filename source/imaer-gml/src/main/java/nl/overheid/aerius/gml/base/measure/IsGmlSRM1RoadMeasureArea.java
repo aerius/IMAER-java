@@ -21,7 +21,7 @@ import java.util.List;
 import nl.overheid.aerius.gml.base.FeatureMember;
 import nl.overheid.aerius.gml.base.IsGmlProperty;
 
-public interface IsGmlSRM1RoadMeasureArea  extends FeatureMember {
+public interface IsGmlSRM1RoadMeasureArea extends FeatureMember {
 
   @Override
   String getId();
@@ -33,6 +33,5 @@ public interface IsGmlSRM1RoadMeasureArea  extends FeatureMember {
   Integer getJurisdictionId();
 
   List<? extends IsGmlProperty<IsGmlSRM1RoadMeasure>> getMeasures();
-
 
 }

@@ -32,8 +32,8 @@ import nl.overheid.aerius.shared.exception.AeriusException;
 
 @JsonTypeInfo(property = "calculationPointType", use = Id.NAME)
 @JsonSubTypes({
-@Type(value = ReceptorPoint.class, name = CalculationPointType.Names.RECEPTOR),
-@Type(value = CustomCalculationPoint.class, name = CalculationPointType.Names.CUSTOM_CALCULATION_POINT),
+    @Type(value = ReceptorPoint.class, name = CalculationPointType.Names.RECEPTOR),
+    @Type(value = CustomCalculationPoint.class, name = CalculationPointType.Names.CUSTOM_CALCULATION_POINT),
 })
 public abstract class CalculationPoint implements Serializable {
 

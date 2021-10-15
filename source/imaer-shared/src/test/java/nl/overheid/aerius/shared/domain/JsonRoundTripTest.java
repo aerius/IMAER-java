@@ -56,9 +56,9 @@ class JsonRoundTripTest {
 
   @ParameterizedTest
   @ValueSource(strings = {
-  "SourceWithPointGeometry.json",
-  "SourceWithLineStringGeometry.json",
-  "SourceWithPolygonGeometry.json",
+      "SourceWithPointGeometry.json",
+      "SourceWithLineStringGeometry.json",
+      "SourceWithPolygonGeometry.json",
   })
   void testConvertGeometries(final String fileName) throws IOException {
     final String originalJson = getFileContent(fileName);
@@ -69,21 +69,21 @@ class JsonRoundTripTest {
 
   @ParameterizedTest
   @ValueSource(strings = {
-  "GenericEmissionSource.json",
-  "FarmLodgingEmissionSource.json",
-  "FarmlandEmissionSource.json",
-  "PlanEmissionSource.json",
-  "OffRoadMobileEmissionSource.json",
-  "OffRoadMobileEmissionSource_specifications.json",
-  "SRM1RoadEmissionSource.json",
-  "SRM1RoadEmissionSource_dynamicSegmentation.json",
-  "SRM2RoadEmissionSource.json",
-  "SRM2RoadEmissionSource_dynamicSegmentation.json",
-  "InlandShippingEmissionSource.json",
-  "MooringInlandShippingEmissionSource.json",
-  "InlandMaritimeShippingEmissionSource.json",
-  "MaritimeMaritimeShippingEmissionSource.json",
-  "MooringMaritimeShippingEmissionSource.json"
+      "GenericEmissionSource.json",
+      "FarmLodgingEmissionSource.json",
+      "FarmlandEmissionSource.json",
+      "PlanEmissionSource.json",
+      "OffRoadMobileEmissionSource.json",
+      "OffRoadMobileEmissionSource_specifications.json",
+      "SRM1RoadEmissionSource.json",
+      "SRM1RoadEmissionSource_dynamicSegmentation.json",
+      "SRM2RoadEmissionSource.json",
+      "SRM2RoadEmissionSource_dynamicSegmentation.json",
+      "InlandShippingEmissionSource.json",
+      "MooringInlandShippingEmissionSource.json",
+      "InlandMaritimeShippingEmissionSource.json",
+      "MaritimeMaritimeShippingEmissionSource.json",
+      "MooringMaritimeShippingEmissionSource.json"
   })
   void testConvertEmissionSourceTypes(final String fileName) throws IOException {
     final String originalJson = getFileContent(fileName);
@@ -94,21 +94,22 @@ class JsonRoundTripTest {
 
   @ParameterizedTest
   @ValueSource(strings = {
-  "SourcesCollection.json",
+      "SourcesCollection.json",
   })
   void testConvertCollection(final String fileName) throws IOException {
     final String originalJson = getFileContent(fileName);
     final FeatureCollection<EmissionSourceFeature> source = mapper.readValue(originalJson,
-        new TypeReference<FeatureCollection<EmissionSourceFeature>>() {});
+        new TypeReference<FeatureCollection<EmissionSourceFeature>>() {
+        });
     final String convertedBack = mapper.writeValueAsString(source);
     assertEquals(originalJson, convertedBack + System.lineSeparator(), "Original should be same as converted");
   }
 
   @ParameterizedTest
   @ValueSource(strings = {
-  "ScenarioSituationSourcesOnly.json",
-  "ScenarioSituationNSL.json",
-  "ScenarioSituationMooringShipping.json"
+      "ScenarioSituationSourcesOnly.json",
+      "ScenarioSituationNSL.json",
+      "ScenarioSituationMooringShipping.json"
   })
   void testConvertSituation(final String fileName) throws IOException {
     final String originalJson = getFileContent(fileName);
@@ -119,9 +120,9 @@ class JsonRoundTripTest {
 
   @ParameterizedTest
   @ValueSource(strings = {
-  "ReceptorPoint.json",
-  "CustomCalculationPoint.json",
-  "CustomCalculationPointWithoutResults.json",
+      "ReceptorPoint.json",
+      "CustomCalculationPoint.json",
+      "CustomCalculationPointWithoutResults.json",
   })
   void testConvertCalculationPointTypes(final String fileName) throws IOException {
     final String originalJson = getFileContent(fileName);
@@ -132,7 +133,7 @@ class JsonRoundTripTest {
 
   @ParameterizedTest
   @ValueSource(strings = {
-  "NSLDispersionLine.json",
+      "NSLDispersionLine.json",
   })
   void testConvertNSLDispersionLine(final String fileName) throws IOException {
     final String originalJson = getFileContent(fileName);

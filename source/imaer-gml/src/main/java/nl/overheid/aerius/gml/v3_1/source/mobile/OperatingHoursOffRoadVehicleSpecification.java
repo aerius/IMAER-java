@@ -32,7 +32,7 @@ import nl.overheid.aerius.gml.v3_1.source.EmissionProperty;
  */
 @XmlRootElement(name = "OperatingHoursOffRoadVehicleSpecification", namespace = CalculatorSchema.NAMESPACE)
 @XmlType(name = "OperatingHoursOffRoadVehicleSpecificationType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"emissionFactors", "load",
-"power", "operatingHours"})
+    "power", "operatingHours"})
 public class OperatingHoursOffRoadVehicleSpecification extends AbstractOffRoadVehicleSpecification
     implements IsGmlOperatingHoursOffRoadVehicleSpecification {
 
