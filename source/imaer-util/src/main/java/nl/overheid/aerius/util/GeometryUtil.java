@@ -40,7 +40,6 @@ import com.vividsolutions.jts.io.WKTReader;
 import com.vividsolutions.jts.linearref.LengthIndexedLine;
 import com.vividsolutions.jts.operation.IsSimpleOp;
 
-import nl.overheid.aerius.geo.shared.BBox;
 import nl.overheid.aerius.geo.shared.Point;
 import nl.overheid.aerius.geo.shared.WKTGeometry;
 import nl.overheid.aerius.shared.domain.geo.OrientedEnvelope;
@@ -61,50 +60,6 @@ public final class GeometryUtil {
   }
 
   /**
-   * @param wktGeometry The geometry to determine the middle for.
-   * @return The middle of the geometry.
-   * @throws AeriusException In case the WKTgeometry did not define a right geometry.
-   */
-  public static Point middleOfGeometry(final WKTGeometry wktGeometry) throws AeriusException {
-    final Geometry geometry = getGeometry(wktGeometry.getWKT());
-
-    final Point midPoint;
-    if (geometry instanceof com.vividsolutions.jts.geom.Point) {
-      final com.vividsolutions.jts.geom.Point geomPoint = (com.vividsolutions.jts.geom.Point) geometry;
-      midPoint = new Point(geomPoint.getX(), geomPoint.getY());
-    } else if (geometry instanceof LineString) {
-      midPoint = GeometryUtil.middleOfLineString((LineString) geometry);
-    } else {
-      midPoint = new Point(geometry.getCentroid().getX(), geometry.getCentroid().getY());
-    }
-
-    return midPoint;
-  }
-
-  /**
-   * @param lineString The linestring to determine the middle for.
-   * @return The middle point of the linestring (on the line).
-   */
-  private static Point middleOfLineString(final LineString lineString) {
-    final double middle = lineString.getLength() / 2;
-    Coordinate prevCoord = lineString.getCoordinateN(0);
-    double curLength = 0;
-    for (final Coordinate nextCoord : lineString.getCoordinates()) {
-      final double d = prevCoord.distance(nextCoord);
-
-      if (curLength + d >= middle) {
-        final double posOnLine = (middle - curLength) / d;
-
-        return new Point(prevCoord.x + (nextCoord.x - prevCoord.x) * posOnLine,
-            prevCoord.y + (nextCoord.y - prevCoord.y) * posOnLine);
-      }
-      curLength += d;
-      prevCoord = nextCoord;
-    }
-    return new Point(prevCoord.x, prevCoord.y);
-  }
-
-  /**
    * @param wkt The WKT to validate.
    * @return The (JTS) geometry that is contained in the WKT.
    */
@@ -120,20 +75,6 @@ public final class GeometryUtil {
       }
     }
     return valid;
-  }
-
-  /**
-   * @param wkt The WKT to convert to a Point object.
-   * @return The point that is contained in the WKT.
-   * @throws AeriusException In case the WKT couldn't be converted to a valid point object.
-   */
-  public static Point getPoint(final String wkt) throws AeriusException {
-    final Geometry geom = getGeometry(wkt);
-    if (!(geom instanceof com.vividsolutions.jts.geom.Point)) {
-      throw new AeriusException(ImaerExceptionReason.GEOMETRY_INVALID, wkt);
-    }
-    final com.vividsolutions.jts.geom.Point point = (com.vividsolutions.jts.geom.Point) geom;
-    return new Point(point.getX(), point.getY());
   }
 
   /**
@@ -435,36 +376,6 @@ public final class GeometryUtil {
   }
 
   /**
-   * @param points The points to determine the bounding box for.
-   * @param <P> The type of the points.
-   * @return the bounding box.
-   */
-  public static <P extends Point> BBox determineBBox(final List<P> points) {
-    final BBox boundingBox = new BBox();
-    if (!points.isEmpty()) {
-      boundingBox.setMaxX(points.get(0).getX());
-      boundingBox.setMinX(points.get(0).getX());
-      boundingBox.setMaxY(points.get(0).getY());
-      boundingBox.setMinY(points.get(0).getY());
-      for (final Point point : points) {
-        if (boundingBox.getMaxX() < point.getX()) {
-          boundingBox.setMaxX(point.getX());
-        }
-        if (boundingBox.getMinX() > point.getX()) {
-          boundingBox.setMinX(point.getX());
-        }
-        if (boundingBox.getMaxY() < point.getY()) {
-          boundingBox.setMaxY(point.getY());
-        }
-        if (boundingBox.getMinY() > point.getY()) {
-          boundingBox.setMinY(point.getY());
-        }
-      }
-    }
-    return boundingBox;
-  }
-
-  /**
    * As denoted by the following ASCII image:
    *    A        B
    *
@@ -534,13 +445,18 @@ public final class GeometryUtil {
     return toAeriusPolygon((Polygon) translatedPolygon);
   }
 
-  private static double orientationXToNorth(final double orientationX) {
-    // switch from x-axis oriented (counter-clockwise) to north oriented (clockwise)
-    // Formula being: (360 + 90 - orientation X) modulo 180
-    // 360 value is used to ensure we end up with positive values
-    // 90 value is used to go from y-axis (north) to x-axis
-    // minus is used to go from counter-clockwise to clockwise
-    // modulo 180 is used to ensure we get the lowest positive angle that represents the orientation.
+  /**
+   * Switch from x-axis oriented (counter-clockwise) to north oriented (clockwise)
+   * Formula being: (360 + 90 - orientation X) modulo 180
+   * 360 value is used to ensure we end up with positive values
+   * 90 value is used to go from y-axis (north) to x-axis
+   * minus is used to go from counter-clockwise to clockwise
+   * modulo 180 is used to ensure we get the lowest positive angle that represents the orientation.
+   *
+   * @param orientationX x-axis oriented (counter-clockwise)
+   * @return north oriented orientation (clockwise)
+   */
+  public static double orientationXToNorth(final double orientationX) {
     return BigDecimal.valueOf(450)
         .subtract(BigDecimal.valueOf(orientationX))
         .remainder(BigDecimal.valueOf(180))
@@ -548,8 +464,7 @@ public final class GeometryUtil {
   }
 
   private static nl.overheid.aerius.shared.domain.v2.geojson.Polygon toBasePolygon(final double length, final double width) {
-    final nl.overheid.aerius.shared.domain.v2.geojson.Polygon polygon =
-        new nl.overheid.aerius.shared.domain.v2.geojson.Polygon();
+    final nl.overheid.aerius.shared.domain.v2.geojson.Polygon polygon = new nl.overheid.aerius.shared.domain.v2.geojson.Polygon();
     final double[][][] coordinates = new double[1][5][2];
     coordinates[0][0] = toBasePolygonCoordinate(length, width, true, true);
     coordinates[0][1] = toBasePolygonCoordinate(length, width, false, true);
@@ -564,6 +479,19 @@ public final class GeometryUtil {
     final double xCoord = BigDecimal.valueOf(width).divide(BigDecimal.valueOf(2), 4, RoundingMode.HALF_UP).doubleValue();
     final double yCoord = BigDecimal.valueOf(length).divide(BigDecimal.valueOf(2), 4, RoundingMode.HALF_UP).doubleValue();
     return new double[] {east ? xCoord : -xCoord, north ? yCoord : -yCoord};
+  }
+
+  public static nl.overheid.aerius.shared.domain.v2.geojson.Point determineCenter(final nl.overheid.aerius.shared.domain.v2.geojson.Geometry geometry)
+      throws AeriusException {
+    if (geometry instanceof nl.overheid.aerius.shared.domain.v2.geojson.Point) {
+      return (nl.overheid.aerius.shared.domain.v2.geojson.Point) geometry;
+    } else if (geometry instanceof nl.overheid.aerius.shared.domain.v2.geojson.Polygon) {
+    final Coordinate centroid = toJtsPolygon((nl.overheid.aerius.shared.domain.v2.geojson.Polygon) geometry).getCentroid().getCoordinate();
+
+    return new nl.overheid.aerius.shared.domain.v2.geojson.Point(centroid.getOrdinate(Coordinate.X), centroid.getOrdinate(Coordinate.Y));
+    } else {
+      throw new AeriusException(ImaerExceptionReason.GEOMETRY_INVALID, String.valueOf(geometry));
+    }
   }
 
   public static OrientedEnvelope determineOrientedEnvelope(final nl.overheid.aerius.shared.domain.v2.geojson.Polygon polygon) throws AeriusException {

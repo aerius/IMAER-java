@@ -18,20 +18,17 @@ package nl.overheid.aerius.util;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import nl.overheid.aerius.geo.shared.BBox;
 import nl.overheid.aerius.geo.shared.Point;
 import nl.overheid.aerius.geo.shared.WKTGeometry;
 import nl.overheid.aerius.shared.exception.AeriusException;
@@ -46,49 +43,12 @@ public class GeometryUtilTest {
   private static double EXAMPLE_POINT_Y = 9.1;
 
   @Test
-  public void testMiddleOfGeometry() throws AeriusException {
-    final Point pointMid = GeometryUtil.middleOfGeometry(getExamplePoint());
-    assertEquals(7.6, pointMid.getX(), 0.001, "Middlepoint of point X");
-    assertEquals(9.1, pointMid.getY(), 0.001, "Middlepoint of point Y");
-    //for linestring, the point should be on the line.
-    final Point lineStringMid = GeometryUtil.middleOfGeometry(new WKTGeometry("LINESTRING(100 0,100 25,175 25)", 100));
-    assertEquals(125, lineStringMid.getX(), 0.001, "Middlepoint of linestring X");
-    assertEquals(25, lineStringMid.getY(), 0.001, "Middlepoint of linestring Y");
-    //linestring: check short (length < 1) linestrings
-    final Point lineStringShortMid = GeometryUtil.middleOfGeometry(new WKTGeometry("LINESTRING(0.25 0.25,0.75 0.75)", 100));
-    assertEquals( 0.5, lineStringShortMid.getX(), 0.001, "Middlepoint of short linestring X");
-    assertEquals(0.5, lineStringShortMid.getY(), 0.001, "Middlepoint of short linestring Y");
-    final Point polygonMid = GeometryUtil.middleOfGeometry(new WKTGeometry("POLYGON((1000 0,1100 100,1200 100,1100 0,1000 0))", 100 * 100));
-    assertEquals(1100, polygonMid.getX(), 0.001, "Middlepoint of polygon X");
-    assertEquals(50, polygonMid.getY(), 0.001, "Middlepoint of polygon Y");
-  }
-
-  @Test
   public void testValidWKT() {
     assertTrue(GeometryUtil.validWKT(getExamplePoint().getWKT()), "Valid WKT");
     assertFalse(GeometryUtil.validWKT(getExamplePoint().getWKT().substring(1)), "Invalid WKT string");
     assertFalse(GeometryUtil.validWKT(null), "Invalid WKT null");
     assertFalse(GeometryUtil.validWKT(""), "Invalid WKT empty string");
     assertFalse(GeometryUtil.validWKT(" "), "Invalid WKT only space");
-  }
-
-  @Test
-  public void testGetPoint() throws AeriusException {
-    final Point point = GeometryUtil.getPoint(getExamplePoint().getWKT());
-    assertNotNull(point, "Point returned");
-    assertEquals(EXAMPLE_POINT_X, point.getX(), 0.0001, "X-coord");
-    assertEquals(EXAMPLE_POINT_Y, point.getY(), 0.0001, "Y-coord");
-    final AeriusException e1 = assertThrows(
-        AeriusException.class,
-        () -> GeometryUtil.getPoint("POINT(7.7 9.1"),
-        "Incorrect WKT should throw an exception");
-    assertEquals(ImaerExceptionReason.GEOMETRY_INVALID, e1.getReason(), "Reason for exception");
-
-    final AeriusException e2 = assertThrows(
-        AeriusException.class,
-        () -> GeometryUtil.getPoint(getExampleLineString().getWKT()),
-        "Linestring WKT should throw an exception");
-    assertEquals(ImaerExceptionReason.GEOMETRY_INVALID, e2.getReason(), "Reason for exception");
   }
 
   @Test
@@ -217,37 +177,6 @@ public class GeometryUtilTest {
         fail("Point wasn't on the line " + i + ", point: " + convertedPoint);
       }
     }
-  }
-
-  @Test
-  public void testDetermineBoundingBox() {
-    final List<Point> points = new ArrayList<Point>();
-    //no points
-    BBox boundingBox = GeometryUtil.determineBBox(points);
-    assertNotNull(boundingBox, "empty list shouldn't return null");
-    assertEquals(0.0, boundingBox.getMaxX(), 1E-3, "No point maxX");
-    assertEquals(0.0, boundingBox.getMaxY(), 1E-3, "No point maxY");
-    assertEquals(0.0, boundingBox.getMinX(), 1E-3, "No point minX");
-    assertEquals(0.0, boundingBox.getMinY(), 1E-3, "No point minY");
-    //one point
-    points.add(new Point(1053.4, 498.1));
-    boundingBox = GeometryUtil.determineBBox(points);
-    assertEquals(1053.4, boundingBox.getMaxX(), 1E-3, "One point maxX");
-    assertEquals(498.1, boundingBox.getMaxY(), 1E-3, "One point maxY");
-    assertEquals(1053.4, boundingBox.getMinX(), 1E-3, "One point minX");
-    assertEquals(498.1, boundingBox.getMinY(), 1E-3, "One point minY");
-    //multiple points
-    points.add(new Point(345.5, 98707.1));
-    points.add(new Point(773.40, 8.1));
-    points.add(new Point(984.4, -498.1));
-    points.add(new Point(1234.5, 870.5));
-    points.add(new Point(1053.4, 498.1));
-    points.add(new Point(955, 38.1));
-    boundingBox = GeometryUtil.determineBBox(points);
-    assertEquals(1234.5, boundingBox.getMaxX(), 1E-3, "Multiple point maxX");
-    assertEquals(98707.1, boundingBox.getMaxY(), 1E-3, "Multiple point maxY");
-    assertEquals(345.5, boundingBox.getMinX(), 1E-3, "Multiple point minX");
-    assertEquals(-498.1, boundingBox.getMinY(), 1E-3, "Multiple point minY");
   }
 
   private WKTGeometry getExamplePoint() {

@@ -17,9 +17,9 @@
 package nl.overheid.aerius.shared.domain.v2.building;
 
 import nl.overheid.aerius.shared.domain.v2.geojson.Feature;
-import nl.overheid.aerius.shared.domain.v2.geojson.Polygon;
+import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
 
-public class BuildingFeature extends Feature<Building, Polygon> {
+public class BuildingFeature extends Feature<Building, Geometry> {
 
   private static final long serialVersionUID = 1L;
 
