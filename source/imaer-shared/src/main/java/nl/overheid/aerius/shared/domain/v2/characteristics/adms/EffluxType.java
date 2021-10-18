@@ -17,7 +17,8 @@
 package nl.overheid.aerius.shared.domain.v2.characteristics.adms;
 
 /**
- * Efflux type determines
+ * This enum defines the efflux parameters that must be specified for each efflux type.
+ * For example this can be used to guide user input on the data that needs to be available for a specific efflux type.
  */
 public enum EffluxType {
   VELOCITY(0, true, true, false, true, false, false),
@@ -25,13 +26,34 @@ public enum EffluxType {
   MOMENTUM(2, false, false, false, false, true, false),
   MASS(3, true, false, false, true, false, true);
 
-  private final boolean actualOrNtp;
-  private final boolean velocity;
-  private final boolean volumeFlux;
-  private final boolean rho;
-  private final boolean fmbm;
-  private final boolean massFlux;
+  /**
+   * ADMS .apl configuration parameter identifying the efflux type.
+   */
   private final int type;
+  /**
+   * If true the efflux can be specified at the temperature or at normal temperature and pressure (NTP).
+   */
+  private final boolean actualOrNtp;
+  /**
+   * If true the velocity must be specified.
+   */
+  private final boolean velocity;
+  /**
+   * If true the volume flux must be specified.
+   */
+  private final boolean volumeFlux;
+  /**
+   * If true the temperature or density of the release must be specified.
+   */
+  private final boolean tRhoAmbient;
+  /**
+   * If true the Momentum Flux (Fm) and Buoyancy Flux (Fb) values must be specified.
+   */
+  private final boolean fmbm;
+  /**
+   * If true the mass flux value must be specified.
+   */
+  private final boolean massFlux;
 
   EffluxType(final int type, final boolean actualOrNtp, final boolean velocity, final boolean volumeFlux, final boolean rho, final boolean fmbm,
       final boolean massFlux) {
@@ -39,7 +61,7 @@ public enum EffluxType {
     this.actualOrNtp = actualOrNtp;
     this.velocity = velocity;
     this.volumeFlux = volumeFlux;
-    this.rho = rho;
+    this.tRhoAmbient = rho;
     this.fmbm = fmbm;
     this.massFlux = massFlux;
   }
@@ -65,8 +87,8 @@ public enum EffluxType {
     return volumeFlux;
   }
 
-  public boolean isRho() {
-    return rho;
+  public boolean isTRhoAmbient() {
+    return tRhoAmbient;
   }
 
   public boolean isFmbm() {

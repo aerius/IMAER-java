@@ -17,19 +17,25 @@
 package nl.overheid.aerius.shared.domain.v2.characteristics.adms;
 
 /**
- * Emission parameters given at actual temperature and pressure or normal temperature and pressure (1atm, 273.15K): 0=actual,1=NTP
+ * Emission parameters given at actual temperature and pressure or normal temperature and pressure (NTP) (1atm, 273.15K): 0=actual,1=NTP
  */
-public enum ReleaseAtNTP {
+public enum ReleaseTemperatureAndPressure {
+  /**
+   * Actual temperature and pressure.
+   */
   ACTUAL(0),
+  /**
+   * Normal temperature and pressure.
+   */
   NTP(1);
 
   private final int type;
 
-  private ReleaseAtNTP(final int type) {
+  private ReleaseTemperatureAndPressure(final int type) {
     this.type = type;
   }
 
-  public static ReleaseAtNTP valueOf(final int type) {
+  public static ReleaseTemperatureAndPressure valueOf(final int type) {
     return type == NTP.type ? NTP : ACTUAL;
   }
 

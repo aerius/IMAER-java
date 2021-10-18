@@ -24,8 +24,6 @@ import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 
-import nl.overheid.aerius.shared.domain.v2.characteristics.adms.ADMSSourceCharacteristics;
-
 @JsonTypeInfo(property = "type", use = Id.NAME)
 @JsonSubTypes({
 @Type(value = ADMSSourceCharacteristics.class, name = CharacteristicsType.Names.ADMS),

@@ -14,9 +14,11 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.shared.domain.v2.characteristics.adms;
+package nl.overheid.aerius.shared.domain.v2.characteristics;
 
-import nl.overheid.aerius.shared.domain.v2.characteristics.SourceCharacteristics;
+import nl.overheid.aerius.shared.domain.v2.characteristics.adms.BuoyancyType;
+import nl.overheid.aerius.shared.domain.v2.characteristics.adms.EffluxType;
+import nl.overheid.aerius.shared.domain.v2.characteristics.adms.ReleaseTemperatureAndPressure;
 
 /**
  * ADMS Source Characteristics.
@@ -31,7 +33,7 @@ public class ADMSSourceCharacteristics extends SourceCharacteristics {
 
   private EffluxType effluxType;
 
-  private ReleaseAtNTP releaseAtNTP;
+  private ReleaseTemperatureAndPressure releaseAtNTP;
 
   private double height;
 
@@ -49,10 +51,19 @@ public class ADMSSourceCharacteristics extends SourceCharacteristics {
 
   private double percentNOxAsNO2;
 
-  private double fm;
+  /**
+   * Momentum flux (Fm) of emission (m4/s2).
+   */
+  private double momentumFlux;
 
-  private double fb;
+  /**
+   * Heat release rate (Fb) of emission (MW).
+   */
+  private double buoyancyFlux;
 
+  /**
+   * Mass flux of the emission (kg/s).
+   */
   private double massFlux;
 
   public String getBuildingId() {
@@ -79,11 +90,11 @@ public class ADMSSourceCharacteristics extends SourceCharacteristics {
     this.effluxType = effluxType;
   }
 
-  public ReleaseAtNTP getReleaseAtNTP() {
+  public ReleaseTemperatureAndPressure getReleaseAtNTP() {
     return releaseAtNTP;
   }
 
-  public void setReleaseAtNTP(final ReleaseAtNTP releaseAtNTP) {
+  public void setReleaseAtNTP(final ReleaseTemperatureAndPressure releaseAtNTP) {
     this.releaseAtNTP = releaseAtNTP;
   }
 
@@ -151,20 +162,20 @@ public class ADMSSourceCharacteristics extends SourceCharacteristics {
     this.percentNOxAsNO2 = percentNOxAsNO2;
   }
 
-  public double getFm() {
-    return fm;
+  public double getMomentumFlux() {
+    return momentumFlux;
   }
 
-  public void setFm(final double fm) {
-    this.fm = fm;
+  public void setMomentumFlux(final double momentumFlux) {
+    this.momentumFlux = momentumFlux;
   }
 
-  public double getFb() {
-    return fb;
+  public double getBuoyancyFlux() {
+    return buoyancyFlux;
   }
 
-  public void setFb(final double fb) {
-    this.fb = fb;
+  public void setBuoyancyFlux(final double buoyancyFlux) {
+    this.buoyancyFlux = buoyancyFlux;
   }
 
   public double getMassFlux() {
