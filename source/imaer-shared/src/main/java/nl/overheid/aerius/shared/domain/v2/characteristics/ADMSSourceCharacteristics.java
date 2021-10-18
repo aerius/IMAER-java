@@ -33,7 +33,7 @@ public class ADMSSourceCharacteristics extends SourceCharacteristics {
 
   private EffluxType effluxType;
 
-  private ReleaseTemperatureAndPressure releaseAtNTP;
+  private ReleaseTemperatureAndPressure releaseTemperatureAndPressure;
 
   private double height;
 
@@ -90,12 +90,12 @@ public class ADMSSourceCharacteristics extends SourceCharacteristics {
     this.effluxType = effluxType;
   }
 
-  public ReleaseTemperatureAndPressure getReleaseAtNTP() {
-    return releaseAtNTP;
+  public ReleaseTemperatureAndPressure getReleaseTemperatureAndPressure() {
+    return releaseTemperatureAndPressure;
   }
 
-  public void setReleaseAtNTP(final ReleaseTemperatureAndPressure releaseAtNTP) {
-    this.releaseAtNTP = releaseAtNTP;
+  public void setReleaseTemperatureAndPressure(final ReleaseTemperatureAndPressure releaseTemperatureAndPressure) {
+    this.releaseTemperatureAndPressure = releaseTemperatureAndPressure;
   }
 
   public double getHeight() {
