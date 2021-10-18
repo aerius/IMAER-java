@@ -20,7 +20,7 @@ import java.io.Serializable;
 
 public class Building implements Serializable {
 
-  private static final long serialVersionUID = -6253436834573615945L;
+  private static final long serialVersionUID = 1L;
 
   private String gmlId;
   private String label;
@@ -28,6 +28,10 @@ public class Building implements Serializable {
    * height of the building (m)
    */
   private double height;
+  /**
+   * Radius of a circle building (m)
+   */
+  private double radius;
 
   public String getGmlId() {
     return gmlId;
@@ -53,4 +57,15 @@ public class Building implements Serializable {
     this.height = height;
   }
 
+  public double getRadius() {
+    return radius;
+  }
+
+  public void setRadius(final double radius) {
+    this.radius = radius;
+  }
+
+  public boolean isCircle() {
+    return radius > 0;
+  }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright the State of the Netherlands
+ * Crown copyright
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -14,14 +14,32 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.shared.domain.ops;
+package nl.overheid.aerius.shared.domain.v2.characteristics.adms;
 
 /**
- * Classes implementing this interface have {@link OPSSourceCharacteristics} data.
+ * Emission parameters given at actual temperature and pressure or normal temperature and pressure (NTP) (1atm, 273.15K): 0=actual,1=NTP
  */
-public interface HasOPSSourceCharacteristics {
+public enum ReleaseTemperatureAndPressure {
+  /**
+   * Actual temperature and pressure.
+   */
+  ACTUAL(0),
+  /**
+   * Normal temperature and pressure.
+   */
+  NTP(1);
 
-  OPSSourceCharacteristics getSourceCharacteristics();
+  private final int type;
 
-  void setSourceCharacteristics(final OPSSourceCharacteristics sourceCharacteristics);
+  private ReleaseTemperatureAndPressure(final int type) {
+    this.type = type;
+  }
+
+  public static ReleaseTemperatureAndPressure valueOf(final int type) {
+    return type == NTP.type ? NTP : ACTUAL;
+  }
+
+  public int type() {
+    return type;
+  }
 }

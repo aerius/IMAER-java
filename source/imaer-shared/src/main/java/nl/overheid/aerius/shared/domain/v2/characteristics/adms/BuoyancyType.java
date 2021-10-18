@@ -1,5 +1,5 @@
 /*
- * Copyright the State of the Netherlands
+ * Crown copyright
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -14,13 +14,23 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.shared.domain.v2.building;
+package nl.overheid.aerius.shared.domain.v2.characteristics.adms;
 
-import nl.overheid.aerius.shared.domain.v2.geojson.Feature;
-import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
+public enum BuoyancyType {
+  DENSITY(1),
+  TEMPERATURE(0);
 
-public class BuildingFeature extends Feature<Building, Geometry> {
+  private final int type;
 
-  private static final long serialVersionUID = 1L;
+  private BuoyancyType(final int type) {
+    this.type = type;
+  }
 
+  public static BuoyancyType valueOf(final int type) {
+    return DENSITY.type == type ? DENSITY : TEMPERATURE;
+  }
+
+  public int type() {
+    return type;
+  }
 }

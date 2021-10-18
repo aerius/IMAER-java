@@ -45,6 +45,10 @@ public enum ImportType {
   /**
    * CERC ADMS UPL file.
    */
+  APL(FileFormat.APL),
+  /**
+   * CERC ADMS UPL file.
+   */
   UPL(FileFormat.UPL),
   /**
    * ZIP file which can contain any of the other types.
