@@ -1,5 +1,6 @@
 /*
  * Copyright the State of the Netherlands
+ * Crown copyright
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -20,6 +21,10 @@ package nl.overheid.aerius.shared.domain.calculation;
  * Profile types guide the calculation for legislation specific implementation choices.
  */
 public enum Profile {
+  /**
+   * Profile for the UK Government Joint Nature Conservation Committee.
+   */
+  JNCC,
   /**
    * Profile for the Dutch Nationaal Samenwerkingsprogramma Luchtkwaliteit (NSL).
    */
