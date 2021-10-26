@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-import nl.overheid.aerius.gml.base.source.mobile.IsGmlStandardOffRoadMobileSource;
+import nl.overheid.aerius.gml.base.source.mobile.v40.IsGmlStandardOffRoadMobileSource;
 import nl.overheid.aerius.gml.v4_0.base.CalculatorSchema;
 
 /**

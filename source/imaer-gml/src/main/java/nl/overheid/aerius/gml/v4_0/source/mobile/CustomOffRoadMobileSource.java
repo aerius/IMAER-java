@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
-import nl.overheid.aerius.gml.base.source.mobile.IsGmlCustomOffRoadMobileSource;
+import nl.overheid.aerius.gml.base.source.mobile.v40.IsGmlCustomOffRoadMobileSource;
 import nl.overheid.aerius.gml.v4_0.base.CalculatorSchema;
 import nl.overheid.aerius.gml.v4_0.source.EmissionProperty;
 import nl.overheid.aerius.gml.v4_0.source.characteristics.EmissionSourceCharacteristics;
