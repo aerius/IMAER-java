@@ -36,9 +36,7 @@ import org.slf4j.LoggerFactory;
 
 import net.opengis.gml.v_3_2_1.ObjectFactory;
 
-import nl.overheid.aerius.gml.base.AeriusGMLVersion;
 import nl.overheid.aerius.gml.base.FeatureCollection;
-import nl.overheid.aerius.gml.base.FeatureMember;
 import nl.overheid.aerius.gml.base.GMLHelper;
 import nl.overheid.aerius.gml.base.GMLVersionReaderFactory;
 import nl.overheid.aerius.shared.domain.geo.ReceptorGridSettings;
@@ -116,13 +114,6 @@ public final class GMLReaderFactory {
     } catch (final XMLStreamException e) {
       throw newGmlParseError(e);
     }
-  }
-
-  public GMLSourceReader createSourceReader(final AeriusGMLVersion version, final List<FeatureMember> featureMembers,
-      final List<AeriusException> errors, final List<AeriusException> warnings)
-      throws AeriusException {
-    return new GMLSourceReader(gmlHelper, rgs, gmlHelper, readerProxy.determineReaderFactory(version), featureMembers, errors,
-        warnings);
   }
 
   public ValidationHelper createValidationHelper() {
