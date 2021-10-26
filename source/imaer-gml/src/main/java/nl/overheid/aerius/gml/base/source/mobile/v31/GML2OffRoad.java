@@ -104,7 +104,7 @@ public class GML2OffRoad<T extends IsGmlOffRoadMobileEmissionSource> extends Abs
     newSource.setSectorId(sectorId);
     newSource.setLabel(constructLabel(source.getLabel(), customMobileSource.getDescription()));
     newSource.setCharacteristics(gml2SourceCharacteristics.fromGML(customMobileSource.getCharacteristics(),
-        null, null));
+        getConversionData().determineDefaultOPSCharacteristicsBySectorId(sectorId), null));
     for (final IsGmlProperty<IsGmlEmission> emissionProperty : customMobileSource.getEmissions()) {
       final IsGmlEmission emission = emissionProperty.getProperty();
       newSource.getEmissions().put(emission.getSubstance(), emission.getValue());
