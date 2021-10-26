@@ -67,17 +67,17 @@ public class GMLOldVersionTest {
     FARM_WITH_SYSTEMS_AND_FODDER_MEASURES,
     ROAD(Arrays.asList(AeriusGMLVersion.V0_5, AeriusGMLVersion.V1_0)),
     ON_ROAD,
-    OFF_ROAD(Arrays.asList(AeriusGMLVersion.V0_5, AeriusGMLVersion.V1_0,
+    OFF_ROAD(true, Arrays.asList(AeriusGMLVersion.V0_5, AeriusGMLVersion.V1_0,
         AeriusGMLVersion.V1_1, AeriusGMLVersion.V2_0, AeriusGMLVersion.V2_1, AeriusGMLVersion.V2_2,
         AeriusGMLVersion.V3_0, AeriusGMLVersion.V3_1)),
     NETWORK_ROAD,
     PLAN,
     ROUTE_INLAND_SHIPPING,
     ROUTE_MARITIME_SHIPPING,
-    MOORING_INLAND_SHIPPING(Arrays.asList(AeriusGMLVersion.V0_5, AeriusGMLVersion.V1_0,
+    MOORING_INLAND_SHIPPING(true, Arrays.asList(AeriusGMLVersion.V0_5, AeriusGMLVersion.V1_0,
         AeriusGMLVersion.V1_1, AeriusGMLVersion.V2_0, AeriusGMLVersion.V2_1, AeriusGMLVersion.V2_2,
         AeriusGMLVersion.V3_0, AeriusGMLVersion.V3_1)),
-    MOORING_MARITIME_SHIPPING(Arrays.asList(AeriusGMLVersion.V0_5, AeriusGMLVersion.V1_0,
+    MOORING_MARITIME_SHIPPING(true, Arrays.asList(AeriusGMLVersion.V0_5, AeriusGMLVersion.V1_0,
         AeriusGMLVersion.V1_1, AeriusGMLVersion.V2_0, AeriusGMLVersion.V2_1, AeriusGMLVersion.V2_2,
         AeriusGMLVersion.V3_0, AeriusGMLVersion.V3_1)),
     METADATA,
@@ -86,17 +86,23 @@ public class GMLOldVersionTest {
     private final List<AeriusGMLVersion> warningsIn;
     private final List<AeriusGMLVersion> errorsIn;
     private final List<AeriusGMLVersion> skipEmissionCheckIn;
+    private final boolean skipNumberOfSourcesCheck;
 
     private TestFile(final AeriusGMLVersion... warningsIn) {
-      this(Collections.emptyList(), Collections.emptyList(), warningsIn);
+      this(false, Collections.emptyList(), Collections.emptyList(), warningsIn);
     }
 
     private TestFile(final List<AeriusGMLVersion> skipEmissionCheckIn, final AeriusGMLVersion... warningsIn) {
-      this(skipEmissionCheckIn, Collections.emptyList(), warningsIn);
+      this(false, skipEmissionCheckIn, Collections.emptyList(), warningsIn);
+    }
+    
+    private TestFile(final boolean skipNumberOfSourcesCheck, final List<AeriusGMLVersion> skipEmissionCheckIn, final AeriusGMLVersion... warningsIn) {
+      this(skipNumberOfSourcesCheck, skipEmissionCheckIn, Collections.emptyList(), warningsIn);
     }
 
-    private TestFile(final List<AeriusGMLVersion> skipEmissionCheckIn, final List<AeriusGMLVersion> errorsIn,
+    private TestFile(final boolean skipNumberOfSourcesCheck, final List<AeriusGMLVersion> skipEmissionCheckIn, final List<AeriusGMLVersion> errorsIn,
         final AeriusGMLVersion... warningsIn) {
+      this.skipNumberOfSourcesCheck = skipNumberOfSourcesCheck;
       this.skipEmissionCheckIn = skipEmissionCheckIn;
       this.errorsIn = errorsIn;
       this.warningsIn = Arrays.asList(warningsIn);
@@ -116,6 +122,10 @@ public class GMLOldVersionTest {
 
     public boolean shouldCheckEmissions(final AeriusGMLVersion version) {
       return !skipEmissionCheckIn.contains(version);
+    }
+
+    public boolean shouldCheckNumberOfSources() {
+      return !skipNumberOfSourcesCheck;
     }
 
   }
@@ -153,10 +163,7 @@ public class GMLOldVersionTest {
     assertNotNull(currentResult, "Expected same file for current result " + testFile);
     final List<EmissionSourceFeature> oldSources = oldResult.getSituation().getEmissionSourcesList();
     final List<EmissionSourceFeature> currentSources = currentResult.getSituation().getEmissionSourcesList();
-    if (version != AeriusGMLVersion.V4_0 && (testFile == TestFile.MOORING_INLAND_SHIPPING || testFile == TestFile.MOORING_MARITIME_SHIPPING)) {
-      assertEquals(currentResult.getSituation().getEmissionSourcesList().size() * 2,
-          oldResult.getSituation().getEmissionSourcesList().size(), "Number of sources");
-    } else {
+    if (testFile.shouldCheckNumberOfSources()) {
       assertEquals(currentResult.getSituation().getEmissionSourcesList().size(),
           oldResult.getSituation().getEmissionSourcesList().size(), "Number of sources");
     }
