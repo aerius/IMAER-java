@@ -99,7 +99,9 @@ public class GML2OffRoad<T extends IsGmlOffRoadMobileEmissionSource> extends Abs
   private void convert(final T source, final IsGmlCustomOffRoadMobileSource customMobileSource, final int index) throws AeriusException {
     final GenericEmissionSource newSource = new GenericEmissionSource();
     newSource.setGmlId(source.getId() + "_" + index);
-    newSource.setSectorId(source.getSectorId());
+    final int sectorId = Integer.parseInt(
+        getConversionData().getCode(GMLLegacyCodeType.SECTOR, String.valueOf(source.getSectorId()), source.getLabel()));
+    newSource.setSectorId(sectorId);
     newSource.setLabel(constructLabel(source.getLabel(), customMobileSource.getDescription()));
     newSource.setCharacteristics(gml2SourceCharacteristics.fromGML(customMobileSource.getCharacteristics(),
         null, null));
