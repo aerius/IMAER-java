@@ -17,6 +17,8 @@
 package nl.overheid.aerius.shared.emissions;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
@@ -60,10 +62,21 @@ class OffRoadMobileEmissionsCalculatorTest {
     final StandardOffRoadMobileSource mobileSource3 = createOnlyFuel();
     emissionSource.getSubSources().add(mobileSource3);
 
+    // Custom vehicles directly use the emissions map (for now), so don't expect those to be empty.
+    assertTrue(mobileSource3.getEmissions().isEmpty());
+
     final Map<Substance, Double> results = emissionsCalculator.calculateEmissions(emissionSource);
 
+    // Check total emissions
     assertEquals(104.8 + 12.50, results.get(Substance.NOX));
     assertEquals(23.7, results.get(Substance.NH3));
+    // Check emissions per subsource (should be set during calculation)
+    assertEquals(88.6, mobileSource1.getEmissions().get(Substance.NOX));
+    assertEquals(16.2, mobileSource2.getEmissions().get(Substance.NOX));
+    assertEquals(12.5, mobileSource3.getEmissions().get(Substance.NOX));
+    assertNull(mobileSource1.getEmissions().get(Substance.NH3));
+    assertEquals(23.7, mobileSource2.getEmissions().get(Substance.NH3));
+    assertNull(mobileSource3.getEmissions().get(Substance.NH3));
   }
 
   @Test

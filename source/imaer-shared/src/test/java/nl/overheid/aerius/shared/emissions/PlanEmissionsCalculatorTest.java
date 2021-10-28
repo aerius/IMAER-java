@@ -17,6 +17,8 @@
 package nl.overheid.aerius.shared.emissions;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
 import java.util.Map;
@@ -85,11 +87,24 @@ class PlanEmissionsCalculatorTest {
     planSource.getSubSources().add(getExamplePlanTwoSubstances());
     planSource.getSubSources().add(getExamplePlanNotPerUnit());
 
+    // Ensure emissions per subsource are unknown at start
+    for (final Plan plan : planSource.getSubSources()) {
+      assertTrue(plan.getEmissions().isEmpty());
+    }
+
     final Map<Substance, Double> results = emissionsCalculator.calculateEmissions(planSource);
 
     assertEquals(2, results.size(), "2 emissions");
+    // Check total emissions
     assertEquals(467, results.get(Substance.NOX), "Emissions for NOx");
     assertEquals(88, results.get(Substance.NH3), "Emissions for NH3");
+    // Check emissions per subsource (should be set during calculation)
+    assertEquals(44, planSource.getSubSources().get(0).getEmissions().get(Substance.NOX));
+    assertEquals(220, planSource.getSubSources().get(1).getEmissions().get(Substance.NOX));
+    assertEquals(203, planSource.getSubSources().get(2).getEmissions().get(Substance.NOX));
+    assertNull(planSource.getSubSources().get(0).getEmissions().get(Substance.NH3));
+    assertEquals(88, planSource.getSubSources().get(1).getEmissions().get(Substance.NH3));
+    assertNull(planSource.getSubSources().get(2).getEmissions().get(Substance.NH3));
   }
 
   private Plan getExamplePlanOneSubstance() {

@@ -17,6 +17,8 @@
 package nl.overheid.aerius.shared.emissions;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -34,6 +36,7 @@ import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.v2.base.EmissionReduction;
 import nl.overheid.aerius.shared.domain.v2.base.TimeUnit;
 import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
+import nl.overheid.aerius.shared.domain.v2.source.RoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.SRM1RoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.SRM2RoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.road.CustomVehicles;
@@ -44,6 +47,7 @@ import nl.overheid.aerius.shared.domain.v2.source.road.StandardVehicleMeasure;
 import nl.overheid.aerius.shared.domain.v2.source.road.StandardVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.ValuesPerVehicleType;
 import nl.overheid.aerius.shared.domain.v2.source.road.VehicleType;
+import nl.overheid.aerius.shared.domain.v2.source.road.Vehicles;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.geometry.GeometryCalculator;
 
@@ -76,12 +80,22 @@ class RoadEmissionsCalculatorTest {
     emissionSource.getSubSources().add(createSpecific());
     emissionSource.getSubSources().add(createStandard());
 
+    ensureSubSourceEmissionsEmpty(emissionSource);
+
     final Map<Substance, Double> results = emissionsCalculator.calculateEmissions(emissionSource, geometry);
 
+    // Check total emissions
     // 321.5 * (1351850.865000 + 42000.00 + 192000.000 ) / (1000 * 1000)
     assertEquals(509.8510530975, results.get(Substance.NOX));
     // 321.5 * (0.0 + 20400.00 + 76200.000 ) / (1000 * 1000)
     assertEquals(31.0569, results.get(Substance.NH3));
+    // Check emissions per subsource (should be set during calculation)
+    assertEquals(434.6200530975, emissionSource.getSubSources().get(0).getEmissions().get(Substance.NOX));
+    assertEquals(13.503, emissionSource.getSubSources().get(1).getEmissions().get(Substance.NOX));
+    assertEquals(61.728, emissionSource.getSubSources().get(2).getEmissions().get(Substance.NOX));
+    assertNull(emissionSource.getSubSources().get(0).getEmissions().get(Substance.NH3));
+    assertEquals(6.5586, emissionSource.getSubSources().get(1).getEmissions().get(Substance.NH3));
+    assertEquals(24.4983, emissionSource.getSubSources().get(2).getEmissions().get(Substance.NH3));
   }
 
   @Test
@@ -96,12 +110,22 @@ class RoadEmissionsCalculatorTest {
     emissionSource.getSubSources().add(createSpecific());
     emissionSource.getSubSources().add(createStandard());
 
+    ensureSubSourceEmissionsEmpty(emissionSource);
+
     final Map<Substance, Double> results = emissionsCalculator.calculateEmissions(emissionSource, geometry);
 
+    // Check total emissions
     // 321.5 * (1351850.865000 + 42000.00 + 384000.000 ) / (1000 * 1000)
     assertEquals(571.5790530975, results.get(Substance.NOX));
     // 321.5 * (0.0 + 20400.00 + 152400.000 ) / (1000 * 1000)
     assertEquals(55.5552, results.get(Substance.NH3));
+    // Check emissions per subsource (should be set during calculation)
+    assertEquals(434.6200530975, emissionSource.getSubSources().get(0).getEmissions().get(Substance.NOX));
+    assertEquals(13.503, emissionSource.getSubSources().get(1).getEmissions().get(Substance.NOX));
+    assertEquals(123.456, emissionSource.getSubSources().get(2).getEmissions().get(Substance.NOX));
+    assertNull(emissionSource.getSubSources().get(0).getEmissions().get(Substance.NH3));
+    assertEquals(6.5586, emissionSource.getSubSources().get(1).getEmissions().get(Substance.NH3));
+    assertEquals(48.9966, emissionSource.getSubSources().get(2).getEmissions().get(Substance.NH3));
   }
 
   @Test
@@ -222,21 +246,20 @@ class RoadEmissionsCalculatorTest {
     final Map<Substance, Double> emissionFactorsSrm1 = Map.of(Substance.NOX, 6.0, Substance.NH3, 2.1);
     lenient().when(emissionFactorSupplier
         .getRoadStandardVehicleEmissionFactors(vehicleType, TEST_ROAD_TYPE, TEST_ROAD_SPEED_TYPE, maximumSpeed, strictEnforcement))
-            .thenReturn(emissionFactorsSrm1);
+        .thenReturn(emissionFactorsSrm1);
     final Map<Substance, Double> emissionFactorsSrm2 = Map.of(Substance.NOX, 12.0, Substance.NH3, 4.2);
     lenient().when(emissionFactorSupplier
         .getRoadStandardVehicleEmissionFactors(vehicleType, TEST_ROAD_TYPE, null, maximumSpeed, strictEnforcement))
-            .thenReturn(emissionFactorsSrm2);
+        .thenReturn(emissionFactorsSrm2);
 
     final Map<Substance, Double> stagnatedEmissionFactorsSrm1 = Map.of(Substance.NOX, 8.0, Substance.NH3, 4.3);
     lenient().when(emissionFactorSupplier
         .getRoadStandardVehicleStagnatedEmissionFactors(vehicleType, TEST_ROAD_TYPE, TEST_ROAD_SPEED_TYPE, maximumSpeed, strictEnforcement))
-            .thenReturn(stagnatedEmissionFactorsSrm1);
+        .thenReturn(stagnatedEmissionFactorsSrm1);
     final Map<Substance, Double> stagnatedEmissionFactorsSrm2 = Map.of(Substance.NOX, 16.0, Substance.NH3, 8.6);
     lenient().when(emissionFactorSupplier
         .getRoadStandardVehicleStagnatedEmissionFactors(vehicleType, TEST_ROAD_TYPE, null, maximumSpeed, strictEnforcement))
-            .thenReturn(stagnatedEmissionFactorsSrm2);
-
+        .thenReturn(stagnatedEmissionFactorsSrm2);
 
     return vehicles;
   }
@@ -254,15 +277,21 @@ class RoadEmissionsCalculatorTest {
     final Map<Substance, Double> emissionFactorsSrm2 = Map.of(Substance.NOX, 10.0, Substance.NH3, 5.3);
     lenient().when(emissionFactorSupplier
         .getRoadStandardVehicleEmissionFactors(vehicleType, TEST_ROAD_TYPE, null, maximumSpeed, strictEnforcement))
-            .thenReturn(emissionFactorsSrm2);
+        .thenReturn(emissionFactorsSrm2);
 
     final Map<Substance, Double> stagnatedEmissionFactorsSrm2 = Map.of(Substance.NOX, 14.0, Substance.NH3, 9.4);
     lenient().when(emissionFactorSupplier
         .getRoadStandardVehicleStagnatedEmissionFactors(vehicleType, TEST_ROAD_TYPE, null, maximumSpeed, strictEnforcement))
-            .thenReturn(stagnatedEmissionFactorsSrm2);
-
+        .thenReturn(stagnatedEmissionFactorsSrm2);
 
     return vehicles;
+  }
+
+  private void ensureSubSourceEmissionsEmpty(final RoadEmissionSource emissionSource) {
+    // Ensure emissions per subsource are unknown at start
+    for (final Vehicles vehicles : emissionSource.getSubSources()) {
+      assertTrue(vehicles.getEmissions().isEmpty());
+    }
   }
 
 }

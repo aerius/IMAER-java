@@ -17,6 +17,8 @@
 package nl.overheid.aerius.shared.emissions;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -32,9 +34,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.v2.base.TimeUnit;
 import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
+import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceWithSubSources;
 import nl.overheid.aerius.shared.domain.v2.source.InlandMaritimeShippingEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.MaritimeShippingEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.MooringMaritimeShippingEmissionSource;
+import nl.overheid.aerius.shared.domain.v2.source.shipping.base.AbstractShipping;
 import nl.overheid.aerius.shared.domain.v2.source.shipping.maritime.CustomMaritimeShipping;
 import nl.overheid.aerius.shared.domain.v2.source.shipping.maritime.CustomMaritimeShippingEmissionProperties;
 import nl.overheid.aerius.shared.domain.v2.source.shipping.maritime.CustomMooringMaritimeShipping;
@@ -64,10 +68,15 @@ class MaritimeShippingEmissionsCalculatorTest {
 
     emissionSource.getSubSources().add(createExampleMooringShip());
 
+    ensureSubSourceEmissionsEmpty(emissionSource);
+
     final Map<Substance, Double> results = emissionsCalculator.calculateEmissions(emissionSource);
 
+    // Check total emissions
     // Mooring: 40 * 5 * 200 * (1 - 0.3) = 28000
     assertEquals(28000.0, results.get(Substance.NOX));
+    // Check emissions per subsource (should be set during calculation)
+    assertEquals(28000.0, emissionSource.getSubSources().get(0).getEmissions().get(Substance.NOX));
   }
 
   @Test
@@ -76,10 +85,15 @@ class MaritimeShippingEmissionsCalculatorTest {
 
     emissionSource.getSubSources().add(createExampleMooringShipCustom());
 
+    ensureSubSourceEmissionsEmpty(emissionSource);
+
     final Map<Substance, Double> results = emissionsCalculator.calculateEmissions(emissionSource);
 
+    // Check total emissions
     // Mooring: 40 * 5 * 300 = 60000
     assertEquals(60000.0, results.get(Substance.NOX));
+    // Check emissions per subsource (should be set during calculation)
+    assertEquals(60000.0, emissionSource.getSubSources().get(0).getEmissions().get(Substance.NOX));
   }
 
   @Test
@@ -94,11 +108,16 @@ class MaritimeShippingEmissionsCalculatorTest {
 
     emissionSource.getSubSources().add(createExampleShip1());
 
+    ensureSubSourceEmissionsEmpty(emissionSource);
+
     final Map<Substance, Double> results = emissionsCalculator.calculateEmissions(emissionSource, geometry);
 
+    // Check total emissions
     // 1st point: 1000 * 1.6 * 40 * 50 = 3200000
     // 2nd point: 3000 * 1.0 * 40 * 50 = 6000000
     assertEquals(9200000.0, results.get(Substance.NOX));
+    // Check emissions per subsource (should be set during calculation)
+    assertEquals(9200000.0, emissionSource.getSubSources().get(0).getEmissions().get(Substance.NOX));
   }
 
   @Test
@@ -113,8 +132,11 @@ class MaritimeShippingEmissionsCalculatorTest {
     emissionSource.getSubSources().add(createExampleShip1());
     emissionSource.getSubSources().add(createExampleShip2());
 
+    ensureSubSourceEmissionsEmpty(emissionSource);
+
     final Map<Substance, Double> results = emissionsCalculator.calculateEmissions(emissionSource, geometry);
 
+    // Check total emissions
     // 1st point 2nd ship: 1000 * 1.6 * 25 * 40 = 1600000
     // 2nd point 2nd ship: 3000 * 1.0 * 25 * 40 = 3000000
     // Add emissions of first test: 9200000
@@ -122,6 +144,11 @@ class MaritimeShippingEmissionsCalculatorTest {
     // 1st point 2nd ship: 1000 * 1.6 * 10 * 40 = 640000
     // 2nd point 2nd ship: 3000 * 1.0 * 10 * 40 = 1200000
     assertEquals(1840000, results.get(Substance.NH3));
+    // Check emissions per subsource (should be set during calculation)
+    assertEquals(9200000.0, emissionSource.getSubSources().get(0).getEmissions().get(Substance.NOX));
+    assertEquals(4600000.0, emissionSource.getSubSources().get(1).getEmissions().get(Substance.NOX));
+    assertNull(emissionSource.getSubSources().get(0).getEmissions().get(Substance.NH3));
+    assertEquals(1840000.0, emissionSource.getSubSources().get(1).getEmissions().get(Substance.NH3));
   }
 
   @Test
@@ -135,11 +162,16 @@ class MaritimeShippingEmissionsCalculatorTest {
 
     emissionSource.getSubSources().add(createExampleShipCustom());
 
+    ensureSubSourceEmissionsEmpty(emissionSource);
+
     final Map<Substance, Double> results = emissionsCalculator.calculateEmissions(emissionSource, geometry);
 
+    // Check total emissions
     // 1st point: 1000 * 1.6 * 35 * 50 = 2800000
     // 2nd point: 3000 * 1.0 * 35 * 50 = 5250000
     assertEquals(8050000.0, results.get(Substance.NOX));
+    // Check emissions per subsource (should be set during calculation)
+    assertEquals(8050000.0, emissionSource.getSubSources().get(0).getEmissions().get(Substance.NOX));
   }
 
   @Test
@@ -156,11 +188,16 @@ class MaritimeShippingEmissionsCalculatorTest {
     emissionSource.getSubSources().add(ship);
     emissionSource.setMooringAId("SomeId");
 
+    ensureSubSourceEmissionsEmpty(emissionSource);
+
     final Map<Substance, Double> results = emissionsCalculator.calculateEmissions(emissionSource, geometry);
 
+    // Check total emissions
     // 1st point: 1000 * 1.6 * 40 * 50 = 3200000
     // 2nd point: 3000 * 1.0 * 40 * 50 = 6000000
     assertEquals(9200000.0, results.get(Substance.NOX));
+    // Check emissions per subsource (should be set during calculation)
+    assertEquals(9200000.0, emissionSource.getSubSources().get(0).getEmissions().get(Substance.NOX));
   }
 
   @Test
@@ -178,11 +215,16 @@ class MaritimeShippingEmissionsCalculatorTest {
     emissionSource.getSubSources().add(customShip);
     emissionSource.setMooringAId("SomeId");
 
+    ensureSubSourceEmissionsEmpty(emissionSource);
+
     final Map<Substance, Double> results = emissionsCalculator.calculateEmissions(emissionSource, geometry);
 
+    // Check total emissions
     // 1st point: 1000 * 1.6 * 35 * 50 = 2800000
     // 2nd point: 3000 * 1.0 * 35 * 50 = 5250000
     assertEquals(8050000.0, results.get(Substance.NOX));
+    // Check emissions per subsource (should be set during calculation)
+    assertEquals(8050000.0, emissionSource.getSubSources().get(0).getEmissions().get(Substance.NOX));
   }
 
   private MaritimeShippingRouteEmissionPoint createRoutePoint(final double segmentLength, final double maneuverFactor) {
@@ -258,6 +300,13 @@ class MaritimeShippingEmissionsCalculatorTest {
     maritimeShipping.setGrossTonnage(30000);
 
     return maritimeShipping;
+  }
+
+  private void ensureSubSourceEmissionsEmpty(final EmissionSourceWithSubSources<? extends AbstractShipping> emissionSource) {
+    // Ensure emissions per subsource are unknown at start
+    for (final AbstractShipping shipping : emissionSource.getSubSources()) {
+      assertTrue(shipping.getEmissions().isEmpty());
+    }
   }
 
 }

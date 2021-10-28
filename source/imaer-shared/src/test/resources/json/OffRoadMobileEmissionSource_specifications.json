@@ -15,15 +15,15 @@
     },
     "subSources" : [ {
       "offRoadMobileSourceType" : "CUSTOM",
+      "emissions" : {
+        "NOX" : 11.76
+      },
       "description" : "Eigen ontwerp traktor",
       "characteristics" : {
         "type" : "OPS",
         "heatContent" : 100.0,
         "emissionHeight" : 3.0,
         "spread" : 2.0
-      },
-      "emissions" : {
-        "NOX" : 11.76
       },
       "vehicleSpecification" : {
         "offRoadVehicleSpecificationType" : "CONSUMPTION",
@@ -41,14 +41,14 @@
       "literFuelPerYear" : 10000
     }, {
       "offRoadMobileSourceType" : "CUSTOM",
+      "emissions" : {
+        "NOX" : 120.96
+      },
       "description" : "tt",
       "characteristics" : {
         "type" : "OPS",
         "emissionHeight" : 4.0,
         "spread" : 4.0
-      },
-      "emissions" : {
-        "NOX" : 120.96
       },
       "vehicleSpecification" : {
         "offRoadVehicleSpecificationType" : "OPERATING_HOURS",

@@ -16,14 +16,13 @@
  */
 package nl.overheid.aerius.shared.domain.v2.source.road;
 
-import java.io.Serializable;
-
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 
 import nl.overheid.aerius.shared.domain.v2.base.TimeUnit;
+import nl.overheid.aerius.shared.domain.v2.source.base.AbstractSubSource;
 
 @JsonTypeInfo(property = "vehicleType", use = Id.NAME)
 @JsonSubTypes({
@@ -31,9 +30,9 @@ import nl.overheid.aerius.shared.domain.v2.base.TimeUnit;
     @Type(value = SpecificVehicles.class, name = "SPECIFIC"),
     @Type(value = StandardVehicles.class, name = "STANDARD"),
 })
-public abstract class Vehicles implements Serializable {
+public abstract class Vehicles extends AbstractSubSource {
 
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 2L;
 
   private TimeUnit timeUnit = TimeUnit.DAY;
 

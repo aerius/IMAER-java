@@ -48,6 +48,8 @@ public class MaritimeShippingEmissionsCalculator {
     for (final MooringMaritimeShipping shipping : shippingEmissionSource.getSubSources()) {
       final Map<Substance, BigDecimal> emissionsForShipping = determineEmissionsMooring(shipping);
       emissionsForShipping.forEach(
+          (key, value) -> shipping.getEmissions().put(key, value.doubleValue()));
+      emissionsForShipping.forEach(
           (key, value) -> summed.merge(key, value, (v1, v2) -> v1.add(v2)));
     }
     final Map<Substance, Double> result = new EnumMap<>(Substance.class);
@@ -114,6 +116,8 @@ public class MaritimeShippingEmissionsCalculator {
       final Map<Substance, BigDecimal> emissionsForShipping = determineEmissionsForPoints(routePoints,
           shippingEmissionSource.getMovementType(), numberOfShipsPerYear, shipping);
       emissionsForShipping.forEach(
+          (key, value) -> shipping.getEmissions().put(key, value.doubleValue()));
+      emissionsForShipping.forEach(
           (key, value) -> summed.merge(key, value, (v1, v2) -> v1.add(v2)));
     }
     return summed;
@@ -128,6 +132,8 @@ public class MaritimeShippingEmissionsCalculator {
       final BigDecimal numberOfShipsPerYear = BigDecimal.valueOf(shipping.getTimeUnit().getPerYear(shipping.getMovementsPerTimeUnit()));
       final Map<Substance, BigDecimal> emissionsForShipping = determineEmissionsForPoints(routePoints,
           shippingEmissionSource.getMovementType(), numberOfShipsPerYear, shipping);
+      emissionsForShipping.forEach(
+          (key, value) -> shipping.getEmissions().put(key, value.doubleValue()));
       emissionsForShipping.forEach(
           (key, value) -> summed.merge(key, value, (v1, v2) -> v1.add(v2)));
     }

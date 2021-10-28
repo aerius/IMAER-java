@@ -16,18 +16,13 @@
  */
 package nl.overheid.aerius.shared.domain.v2.source.offroad;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.v2.characteristics.SourceCharacteristics;
 
 public class CustomOffRoadMobileSource extends OffRoadMobileSource {
 
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 2L;
 
   private SourceCharacteristics characteristics;
-  private Map<Substance, Double> emissions = new HashMap<>();
   private OffRoadVehicleSpecification vehicleSpecification;
 
   public SourceCharacteristics getCharacteristics() {
@@ -36,14 +31,6 @@ public class CustomOffRoadMobileSource extends OffRoadMobileSource {
 
   public void setCharacteristics(final SourceCharacteristics characteristics) {
     this.characteristics = characteristics;
-  }
-
-  public Map<Substance, Double> getEmissions() {
-    return emissions;
-  }
-
-  public void setEmissions(final Map<Substance, Double> emissions) {
-    this.emissions = emissions;
   }
 
   public OffRoadVehicleSpecification getVehicleSpecification() {

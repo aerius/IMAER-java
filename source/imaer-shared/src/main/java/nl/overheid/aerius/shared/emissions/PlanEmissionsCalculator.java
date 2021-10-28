@@ -37,6 +37,8 @@ public class PlanEmissionsCalculator {
     for (final Plan plan : planSource.getSubSources()) {
       final Map<Substance, BigDecimal> emissionsForActivity = calculateEmissions(plan);
       emissionsForActivity.forEach(
+          (key, value) -> plan.getEmissions().put(key, value.doubleValue()));
+      emissionsForActivity.forEach(
           (key, value) -> summed.merge(key, value, (v1, v2) -> v1.add(v2)));
     }
     final Map<Substance, Double> result = new EnumMap<>(Substance.class);

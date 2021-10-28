@@ -16,11 +16,11 @@
  */
 package nl.overheid.aerius.shared.domain.v2.source.plan;
 
-import java.io.Serializable;
+import nl.overheid.aerius.shared.domain.v2.source.base.AbstractSubSource;
 
-public class Plan implements Serializable {
+public class Plan extends AbstractSubSource {
 
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 2L;
 
   private String planCode;
   private String description;

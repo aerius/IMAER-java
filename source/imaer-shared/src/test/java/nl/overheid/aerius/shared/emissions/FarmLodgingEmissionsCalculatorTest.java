@@ -17,6 +17,8 @@
 package nl.overheid.aerius.shared.emissions;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.when;
 
@@ -33,6 +35,7 @@ import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.v2.source.FarmLodgingEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.farm.AdditionalLodgingSystem;
 import nl.overheid.aerius.shared.domain.v2.source.farm.CustomFarmLodging;
+import nl.overheid.aerius.shared.domain.v2.source.farm.FarmLodging;
 import nl.overheid.aerius.shared.domain.v2.source.farm.LodgingFodderMeasure;
 import nl.overheid.aerius.shared.domain.v2.source.farm.ReductiveLodgingSystem;
 import nl.overheid.aerius.shared.domain.v2.source.farm.StandardFarmLodging;
@@ -71,10 +74,23 @@ class FarmLodgingEmissionsCalculatorTest {
     addFodderMeasure2(lodging3);
     emissionSource.getSubSources().add(lodging3);
 
+    // Ensure emissions per subsource are unknown at start
+    for (final FarmLodging lodging : emissionSource.getSubSources()) {
+      assertTrue(lodging.getEmissions().isEmpty());
+    }
+
     final Map<Substance, Double> results = emissionsCalculator.calculateEmissions(emissionSource);
 
+    // Check total emissions
     assertEquals(104.8, results.get(Substance.NOX));
     assertEquals(23.7 + 58.4375, results.get(Substance.NH3));
+    // Check emissions per subsource (should be set during calculation)
+    assertEquals(88.6, lodging1.getEmissions().get(Substance.NOX));
+    assertEquals(16.2, lodging2.getEmissions().get(Substance.NOX));
+    assertNull(lodging3.getEmissions().get(Substance.NOX));
+    assertNull(lodging1.getEmissions().get(Substance.NH3));
+    assertEquals(23.7, lodging2.getEmissions().get(Substance.NH3));
+    assertEquals(58.4375, lodging3.getEmissions().get(Substance.NH3));
   }
 
   @Test

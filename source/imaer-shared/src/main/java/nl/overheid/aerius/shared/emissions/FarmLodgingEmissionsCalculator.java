@@ -54,6 +54,8 @@ public class FarmLodgingEmissionsCalculator {
     for (final FarmLodging lodging : lodgingSource.getSubSources()) {
       final Map<Substance, BigDecimal> emissionsForLodging = calculateEmissions(lodging);
       emissionsForLodging.forEach(
+          (key, value) -> lodging.getEmissions().put(key, value.doubleValue()));
+      emissionsForLodging.forEach(
           (key, value) -> summed.merge(key, value, (v1, v2) -> v1.add(v2)));
     }
     final Map<Substance, Double> result = new EnumMap<>(Substance.class);
