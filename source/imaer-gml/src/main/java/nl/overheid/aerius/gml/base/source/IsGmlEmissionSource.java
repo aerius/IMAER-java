@@ -18,12 +18,11 @@ package nl.overheid.aerius.gml.base.source;
 
 import java.util.List;
 
+import nl.overheid.aerius.gml.base.FeatureMember;
 import nl.overheid.aerius.gml.base.IsGmlProperty;
 import nl.overheid.aerius.gml.base.characteristics.IsBaseGmlEmissionSourceCharacteristics;
 
-public interface IsGmlEmissionSource {
-
-  String getId();
+public interface IsGmlEmissionSource extends FeatureMember {
 
   String getLabel();
 

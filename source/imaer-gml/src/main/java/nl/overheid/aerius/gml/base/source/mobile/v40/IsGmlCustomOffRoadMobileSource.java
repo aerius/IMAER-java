@@ -14,21 +14,20 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.gml.base.source.mobile;
+package nl.overheid.aerius.gml.base.source.mobile.v40;
 
 import java.util.List;
 
 import nl.overheid.aerius.gml.base.IsGmlProperty;
+import nl.overheid.aerius.gml.base.characteristics.IsBaseGmlEmissionSourceCharacteristics;
 import nl.overheid.aerius.gml.base.source.IsGmlEmission;
 
-public interface IsGmlOperatingHoursOffRoadVehicleSpecification extends IsGmlOffRoadVehicleSpecification {
+public interface IsGmlCustomOffRoadMobileSource extends IsGmlOffRoadMobileSource {
 
-  List<? extends IsGmlProperty<IsGmlEmission>> getEmissionFactors();
+  List<? extends IsGmlProperty<IsGmlEmission>> getEmissions();
 
-  int getLoad();
+  IsBaseGmlEmissionSourceCharacteristics getCharacteristics();
 
-  int getPower();
-
-  int getOperatingHours();
+  IsGmlOffRoadVehicleSpecification getOffRoadVehicleSpecification();
 
 }

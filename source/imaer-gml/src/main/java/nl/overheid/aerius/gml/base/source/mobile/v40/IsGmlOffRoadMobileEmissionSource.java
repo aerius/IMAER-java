@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.gml.base.source.mobile;
+package nl.overheid.aerius.gml.base.source.mobile.v40;
 
 import java.util.List;
 

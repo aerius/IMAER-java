@@ -25,7 +25,7 @@ import nl.overheid.aerius.gml.base.characteristics.GML2SourceCharacteristics;
 import nl.overheid.aerius.gml.base.source.GML2Generic;
 import nl.overheid.aerius.gml.base.source.farmland.GML2Farmland;
 import nl.overheid.aerius.gml.base.source.lodging.GML2Farm;
-import nl.overheid.aerius.gml.base.source.mobile.GML2OffRoad;
+import nl.overheid.aerius.gml.base.source.mobile.v40.GML2OffRoad;
 import nl.overheid.aerius.gml.base.source.plan.GML2Plan;
 import nl.overheid.aerius.gml.base.source.road.GML2SRM1Road;
 import nl.overheid.aerius.gml.base.source.road.GML2SRM2Road;

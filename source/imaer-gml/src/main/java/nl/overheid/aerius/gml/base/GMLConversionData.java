@@ -57,6 +57,7 @@ public class GMLConversionData {
   private final Map<EmissionSourceFeature, InlandShippingEmissionSource> extraMooringInlandRoutes = new LinkedHashMap<>();
   private final Map<EmissionSourceFeature, InlandMaritimeShippingEmissionSource> extraMooringMaritimeInlandRoutes = new LinkedHashMap<>();
   private final Map<EmissionSourceFeature, MaritimeMaritimeShippingEmissionSource> extraMooringMaritimeMaritimeRoutes = new LinkedHashMap<>();
+  private final List<EmissionSourceFeature> extraSources = new ArrayList<>();
   private final List<BuildingFeature> extraBuildings = new ArrayList<>();
   private final GMLCharacteristicsSupplier characteristicsSupplier;
   private final InlandShippingUtil inlandRouteUtil;
@@ -176,6 +177,10 @@ public class GMLConversionData {
 
   public Map<EmissionSourceFeature, MaritimeMaritimeShippingEmissionSource> getMaritimeMaritimeRoutes() {
     return extraMooringMaritimeMaritimeRoutes;
+  }
+
+  public List<EmissionSourceFeature> getExtraSources() {
+    return extraSources;
   }
 
   public List<BuildingFeature> getExtraBuildings() {

@@ -126,6 +126,7 @@ public final class GMLReader {
     final List<EmissionSourceFeature> emissionSourceList = new ArrayList<>();
     if ((featureCollection != null) && (featureCollection.getFeatureMembers() != null)) {
       emissionSourceList.addAll(versionReader.sourcesFromGML(featureCollection.getFeatureMembers()));
+      emissionSourceList.addAll(conversionData.getExtraSources());
       emissionSourceList.addAll(conversionData.getInlandRoutes().keySet());
       emissionSourceList.addAll(conversionData.getMaritimeInlandRoutes().keySet());
       emissionSourceList.addAll(conversionData.getMaritimeMaritimeRoutes().keySet());

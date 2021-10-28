@@ -62,15 +62,22 @@ public abstract class AbstractGML2Source<T extends IsGmlEmissionSource> {
     final AtomicInteger id = new AtomicInteger(1);
 
     for (final FeatureMember member : members) {
-      if (member instanceof IsGmlEmissionSource) {
-        try {
-          sources.add(handleSourceMember(member, id));
-        } catch (final AeriusException e) {
-          conversionData.getErrors().add(e);
-        }
-      }
+      handleMember(member, sources, id);
     }
     return sources;
+  }
+
+  private void handleMember(final FeatureMember member, final List<EmissionSourceFeature> sources, final AtomicInteger id) {
+    if (member instanceof IsGmlEmissionSource) {
+      try {
+        final EmissionSourceFeature feature = handleSourceMember(member, id);
+        if (feature != null) {
+          sources.add(feature);
+        }
+      } catch (final AeriusException e) {
+        conversionData.getErrors().add(e);
+      }
+    }
   }
 
   private EmissionSourceFeature handleSourceMember(final FeatureMember member, final AtomicInteger idTracker) throws AeriusException {
@@ -78,9 +85,13 @@ public abstract class AbstractGML2Source<T extends IsGmlEmissionSource> {
     final Geometry geometry = toGeometry(member);
     returnSourceFeature.setGeometry(geometry);
     final EmissionSource emissionSource = toEmissionSource((T) member, geometry);
-    returnSourceFeature.setProperties(emissionSource);
-    returnSourceFeature.setId(String.valueOf(idTracker.getAndIncrement()));
-    return returnSourceFeature;
+    if (emissionSource == null) {
+      return null;
+    } else {
+      returnSourceFeature.setProperties(emissionSource);
+      returnSourceFeature.setId(String.valueOf(idTracker.getAndIncrement()));
+      return returnSourceFeature;
+    }
   }
 
   /**
@@ -92,8 +103,10 @@ public abstract class AbstractGML2Source<T extends IsGmlEmissionSource> {
    */
   public EmissionSource toEmissionSource(final T source, final Geometry geometry) throws AeriusException {
     final EmissionSource returnSource = visitor.visit(source);
-    fromGenericEmissionSource(source, returnSource, geometry);
-    conversionData.putAndTrack(source.getId());
+    if (returnSource != null) {
+      fromGenericEmissionSource(source, returnSource, geometry);
+      conversionData.putAndTrack(source.getId());
+    }
     return returnSource;
   }
 

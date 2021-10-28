@@ -14,10 +14,16 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.gml.base.source.mobile;
+package nl.overheid.aerius.gml.base.source.mobile.v40;
 
-public interface IsGmlOffRoadVehicleSpecification {
+public interface IsGmlStandardOffRoadMobileSource extends IsGmlOffRoadMobileSource {
 
-  String getFuelCode();
+  String getCode();
+
+  Integer getLiterFuelPerYear();
+
+  Integer getOperatingHoursPerYear();
+
+  Integer getLiterAdBluePerYear();
 
 }
