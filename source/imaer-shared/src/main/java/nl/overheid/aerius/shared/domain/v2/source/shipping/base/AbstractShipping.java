@@ -16,11 +16,11 @@
  */
 package nl.overheid.aerius.shared.domain.v2.source.shipping.base;
 
-import java.io.Serializable;
+import nl.overheid.aerius.shared.domain.v2.source.base.AbstractSubSource;
 
-public abstract class AbstractShipping implements Serializable {
+public abstract class AbstractShipping extends AbstractSubSource {
 
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 2L;
 
   private String description;
 

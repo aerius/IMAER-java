@@ -14,22 +14,26 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.shared.domain.v2.source.farmland;
+package nl.overheid.aerius.shared.domain.v2.source.base;
 
-import nl.overheid.aerius.shared.domain.v2.source.base.AbstractSubSource;
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
-public class FarmlandActivity extends AbstractSubSource {
+import nl.overheid.aerius.shared.domain.Substance;
 
-  private static final long serialVersionUID = 2L;
+public abstract class AbstractSubSource implements Serializable {
 
-  private String activityCode;
+  private static final long serialVersionUID = 1L;
 
-  public String getActivityCode() {
-    return activityCode;
+  private Map<Substance, Double> emissions = new HashMap<>();
+
+  public Map<Substance, Double> getEmissions() {
+    return emissions;
   }
 
-  public void setActivityCode(final String activityCode) {
-    this.activityCode = activityCode;
+  public void setEmissions(final Map<Substance, Double> emissions) {
+    this.emissions = emissions;
   }
 
 }

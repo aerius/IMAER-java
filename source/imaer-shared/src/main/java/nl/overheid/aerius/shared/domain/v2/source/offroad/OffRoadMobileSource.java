@@ -16,21 +16,21 @@
  */
 package nl.overheid.aerius.shared.domain.v2.source.offroad;
 
-import java.io.Serializable;
-
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
+
+import nl.overheid.aerius.shared.domain.v2.source.base.AbstractSubSource;
 
 @JsonTypeInfo(property = "offRoadMobileSourceType", use = Id.NAME)
 @JsonSubTypes({
 @Type(value = CustomOffRoadMobileSource.class, name = "CUSTOM"),
 @Type(value = StandardOffRoadMobileSource.class, name = "STANDARD"),
 })
-public abstract class OffRoadMobileSource implements Serializable {
+public abstract class OffRoadMobileSource extends AbstractSubSource {
 
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 2L;
 
   private String description;
 

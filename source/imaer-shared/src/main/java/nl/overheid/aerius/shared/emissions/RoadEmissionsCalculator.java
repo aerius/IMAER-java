@@ -62,11 +62,13 @@ public class RoadEmissionsCalculator {
     for (final Vehicles vehicles : roadEmissionSource.getSubSources()) {
       final Map<Substance, BigDecimal> emissionsForVehicles = calculateEmissions(roadEmissionSource, vehicles);
       emissionsForVehicles.forEach(
+          (key, value) -> vehicles.getEmissions().put(key, toTotalEmission(value, measure, tunnelFactor)));
+      emissionsForVehicles.forEach(
           (key, value) -> summed.merge(key, value, (v1, v2) -> v1.add(v2)));
     }
     final Map<Substance, Double> result = new EnumMap<>(Substance.class);
     summed.forEach(
-        (key, value) -> result.put(key, value.multiply(tunnelFactor).multiply(measure).divide(GRAM_PER_KM_TO_KG_PER_METER).doubleValue()));
+        (key, value) -> result.put(key, toTotalEmission(value, measure, tunnelFactor)));
     return result;
   }
 
@@ -77,11 +79,13 @@ public class RoadEmissionsCalculator {
     for (final Vehicles vehicles : roadEmissionSource.getSubSources()) {
       final Map<Substance, BigDecimal> emissionsForVehicles = calculateEmissions(roadEmissionSource, vehicles);
       emissionsForVehicles.forEach(
+          (key, value) -> vehicles.getEmissions().put(key, toTotalEmission(value, measure, tunnelFactor)));
+      emissionsForVehicles.forEach(
           (key, value) -> summed.merge(key, value, (v1, v2) -> v1.add(v2)));
     }
     final Map<Substance, Double> result = new EnumMap<>(Substance.class);
     summed.forEach(
-        (key, value) -> result.put(key, value.multiply(tunnelFactor).multiply(measure).divide(GRAM_PER_KM_TO_KG_PER_METER).doubleValue()));
+        (key, value) -> result.put(key, toTotalEmission(value, measure, tunnelFactor)));
     return result;
   }
 
@@ -208,6 +212,10 @@ public class RoadEmissionsCalculator {
 
   private BigDecimal getVehiclesPerYear(final Vehicles vehicles, final double vehiclesPerTimeUnit) {
     return BigDecimal.valueOf(vehicles.getTimeUnit().getPerYear(vehiclesPerTimeUnit));
+  }
+
+  private double toTotalEmission(final BigDecimal emissionPerMeter, final BigDecimal measure, final BigDecimal tunnelFactor) {
+    return emissionPerMeter.multiply(tunnelFactor).multiply(measure).divide(GRAM_PER_KM_TO_KG_PER_METER).doubleValue();
   }
 
 }

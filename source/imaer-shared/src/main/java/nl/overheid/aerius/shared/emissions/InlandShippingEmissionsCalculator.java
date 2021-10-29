@@ -58,6 +58,8 @@ public class InlandShippingEmissionsCalculator {
     for (final MooringInlandShipping shipping : shippingEmissionSource.getSubSources()) {
       final Map<Substance, BigDecimal> emissionsForShipping = determineEmissionsMooring(shipping);
       emissionsForShipping.forEach(
+          (key, value) -> shipping.getEmissions().put(key, value.doubleValue()));
+      emissionsForShipping.forEach(
           (key, value) -> summed.merge(key, value, (v1, v2) -> v1.add(v2)));
     }
     final Map<Substance, Double> result = new EnumMap<>(Substance.class);
@@ -125,6 +127,8 @@ public class InlandShippingEmissionsCalculator {
     final Map<Substance, BigDecimal> summed = new EnumMap<>(Substance.class);
     for (final InlandShipping inlandShipping : shippingEmissionSource.getSubSources()) {
       final Map<Substance, BigDecimal> emissionsForShipping = determineEmissionsForPoints(routePoints, inlandShipping);
+      emissionsForShipping.forEach(
+          (key, value) -> inlandShipping.getEmissions().put(key, value.doubleValue()));
       emissionsForShipping.forEach(
           (key, value) -> summed.merge(key, value, (v1, v2) -> v1.add(v2)));
     }

@@ -19,7 +19,9 @@ package nl.overheid.aerius.shared.domain.v2.source;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class EmissionSourceWithSubSources<T> extends EmissionSource {
+import nl.overheid.aerius.shared.domain.v2.source.base.AbstractSubSource;
+
+public abstract class EmissionSourceWithSubSources<T extends AbstractSubSource> extends EmissionSource {
 
   private static final long serialVersionUID = 1L;
 

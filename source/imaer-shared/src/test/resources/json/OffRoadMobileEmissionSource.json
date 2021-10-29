@@ -14,14 +14,14 @@
     },
     "subSources" : [ {
       "offRoadMobileSourceType" : "CUSTOM",
+      "emissions" : {
+        "NOX" : 101010.0
+      },
       "description" : "My Big Custom Bike",
       "characteristics" : {
         "type" : "OPS",
         "heatContent" : 20.0,
         "emissionHeight" : 1.0
-      },
-      "emissions" : {
-        "NOX" : 101010.0
       }
     }, {
       "offRoadMobileSourceType" : "STANDARD",

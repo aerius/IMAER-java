@@ -16,21 +16,21 @@
  */
 package nl.overheid.aerius.shared.domain.v2.source.farm;
 
-import java.io.Serializable;
-
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
+
+import nl.overheid.aerius.shared.domain.v2.source.base.AbstractSubSource;
 
 @JsonTypeInfo(property = "farmLodgingType", use = Id.NAME)
 @JsonSubTypes({
 @Type(value = CustomFarmLodging.class, name = "CUSTOM"),
 @Type(value = StandardFarmLodging.class, name = "STANDARD"),
 })
-public abstract class FarmLodging implements Serializable {
+public abstract class FarmLodging extends AbstractSubSource {
 
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 2L;
 
   private int numberOfAnimals;
 

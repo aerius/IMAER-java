@@ -46,6 +46,8 @@ public class OffRoadMobileEmissionsCalculator {
     for (final OffRoadMobileSource mobileSource : offRoadMobileEmissionSource.getSubSources()) {
       final Map<Substance, BigDecimal> emissionsForMobileSource = calculateEmissions(mobileSource);
       emissionsForMobileSource.forEach(
+          (key, value) -> mobileSource.getEmissions().put(key, value.doubleValue()));
+      emissionsForMobileSource.forEach(
           (key, value) -> summed.merge(key, value, (v1, v2) -> v1.add(v2)));
     }
     final Map<Substance, Double> result = new EnumMap<>(Substance.class);
