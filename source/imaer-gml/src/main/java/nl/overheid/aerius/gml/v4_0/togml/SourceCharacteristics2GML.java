@@ -24,6 +24,8 @@ import nl.overheid.aerius.gml.v4_0.source.characteristics.EmissionSourceCharacte
 import nl.overheid.aerius.gml.v4_0.source.characteristics.ReferenceDiurnalVariation;
 import nl.overheid.aerius.gml.v4_0.source.characteristics.SpecifiedHeatContent;
 import nl.overheid.aerius.gml.v4_0.source.characteristics.StandardDiurnalVariation;
+import nl.overheid.aerius.shared.domain.ops.OutflowDirectionType;
+import nl.overheid.aerius.shared.domain.ops.OutflowVelocityType;
 import nl.overheid.aerius.shared.domain.v2.characteristics.HeatContentType;
 import nl.overheid.aerius.shared.domain.v2.characteristics.OPSSourceCharacteristics;
 
@@ -55,8 +57,12 @@ final class SourceCharacteristics2GML {
       heatContent.setEmissionTemperature(characteristics.getEmissionTemperature());
       heatContent.setOutflowDiameter(characteristics.getOutflowDiameter());
       heatContent.setOutflowVelocity(characteristics.getOutflowVelocity());
-      heatContent.setOutflowDirection(characteristics.getOutflowDirection());
-      heatContent.setOutflowVelocityType(characteristics.getOutflowVelocityType());
+      heatContent.setOutflowDirection(characteristics.getOutflowDirection() == null
+          ? OutflowDirectionType.VERTICAL
+          : characteristics.getOutflowDirection());
+      heatContent.setOutflowVelocityType(characteristics.getOutflowVelocityType() == null
+          ? OutflowVelocityType.ACTUAL_FLOW
+          : characteristics.getOutflowVelocityType());
       return heatContent;
     } else {
       final SpecifiedHeatContent heatContent = new SpecifiedHeatContent();
