@@ -25,6 +25,7 @@ import java.util.stream.Stream;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import nl.overheid.aerius.shared.domain.geo.OrientedEnvelope;
 import nl.overheid.aerius.shared.domain.v2.geojson.Point;
@@ -32,9 +33,17 @@ import nl.overheid.aerius.shared.domain.v2.geojson.Polygon;
 import nl.overheid.aerius.shared.exception.AeriusException;
 
 /**
- *
+ * Test class for Constructing polygons from dimensions.
  */
 class ConstructPolygonTest {
+
+  @ParameterizedTest
+  @ValueSource(doubles = {0, 45, 90, 100, 180, 270, 360, 400})
+  void testOrientationTransformation(final double orientationNorth) {
+    final double computed = GeometryUtil.orientationXToNorth(GeometryUtil.orientationNorthToX(orientationNorth));
+
+    assertEquals(orientationNorth % 180, computed, 1E-5, "Expected same orientation.");
+  }
 
   @ParameterizedTest
   @MethodSource("provideTestCases")
@@ -59,9 +68,22 @@ class ConstructPolygonTest {
 
   @ParameterizedTest
   @MethodSource("provideTestCases")
-  void testDetermineOrientedEnvelope(final Point point,
-      final double expectedWidth, final double expectedLength, final double expectedOrientation, final double[][] coordinates)
-      throws AeriusException {
+  void testConstructPolygonCompareOrientations(final Point point,
+      final double width, final double length, final double orientation, final double[][] coordinates) throws AeriusException {
+    final double testDelta = 0.001;
+    final OrientedEnvelope polygonXaxis = GeometryUtil.determineOrientedEnvelope(GeometryUtil.constructPolygonFromXAxisDimensions(point, length, width, orientation));
+    final OrientedEnvelope polygonNorth = GeometryUtil.determineOrientedEnvelope(GeometryUtil.constructPolygonFromDimensions(point, length, width, orientation));
+
+    assertEquals(polygonNorth.getLength(), polygonXaxis.getLength(), testDelta, "Length of oriented envelope");
+    assertEquals(polygonNorth.getWidth(), polygonXaxis.getWidth(), testDelta, "Width of oriented envelope");
+    assertEquals(polygonNorth.getOrientation(), GeometryUtil.orientationXToNorth(polygonXaxis.getOrientation()), testDelta,
+        "Orientation of oriented envelope");
+  }
+
+  @ParameterizedTest
+  @MethodSource("provideTestCases")
+  void testDetermineOrientedEnvelope(final Point point, final double expectedWidth, final double expectedLength, final double expectedOrientation,
+      final double[][] coordinates) throws AeriusException {
     final double testDelta = 0.001;
     final Polygon polygon = new Polygon();
     polygon.setCoordinates(new double[][][] {coordinates});
@@ -73,13 +95,13 @@ class ConstructPolygonTest {
 
   private static Stream<Arguments> provideTestCases() {
     return Stream.of(
-        testCase(2.5, 5, 5, 10, 90,
+        testCase(2.5, 5, 5, 10, 0,
             new double[][] {{0.0, 0.0}, {5.0, 0.0}, {0.0, 10.0}, {5.0, 10.0}, {0.0, 0.0}}),
-        testCase(5, 2.5, 5, 10, 0,
+        testCase(5, 2.5, 5, 10, 90,
             new double[][] {{0.0, 0.0}, {10.0, 0.0}, {0.0, 5.0}, {10.0, 5.0}, {0.0, 0.0}}),
-        testCase(5, 5.5, 5, 10, 53.130,
+        testCase(5, 5.5, 5, 10, 36.870,
             new double[][] {{0.0, 3.0}, {4.0, 0.0}, {10.0, 8.0}, {6.0, 11.0}, {0.0, 3.0}}),
-        testCase(5.5, 5, 5, 10, 143.130,
+        testCase(5.5, 5, 5, 10, 126.870,
             new double[][] {{0.0, 6.0}, {8.0, 0.0}, {11.0, 4.0}, {3.0, 10.0}, {0.0, 6.0}}));
   }
 

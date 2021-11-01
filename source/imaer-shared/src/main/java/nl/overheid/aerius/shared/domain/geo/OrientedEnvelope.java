@@ -16,6 +16,9 @@
  */
 package nl.overheid.aerius.shared.domain.geo;
 
+/**
+ * Envelop with length, width and clockwise North orientation of an object.
+ */
 public class OrientedEnvelope {
 
   private final double length;
@@ -43,7 +46,7 @@ public class OrientedEnvelope {
   }
 
   /**
-   * Orientation in degrees counterclockwise relative to the x-axis.
+   * Orientation in degrees clockwise relative to the North.
    */
   public double getOrientation() {
     return orientation;

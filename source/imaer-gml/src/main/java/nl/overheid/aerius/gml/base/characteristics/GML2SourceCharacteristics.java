@@ -78,7 +78,7 @@ public class GML2SourceCharacteristics {
       final String buildingId = String.valueOf(buildingIdInt);
       final BuildingFeature buildingFeature = new BuildingFeature();
       buildingFeature.setId(buildingId);
-      final Polygon polygon = GeometryUtil.constructPolygonFromDimensions(geometry, gmlBuilding.getLength(), gmlBuilding.getWidth(),
+      final Polygon polygon = GeometryUtil.constructPolygonFromXAxisDimensions(geometry, gmlBuilding.getLength(), gmlBuilding.getWidth(),
           gmlBuilding.getOrientation());
       buildingFeature.setGeometry(polygon);
       final Building building = new Building();
