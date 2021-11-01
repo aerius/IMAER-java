@@ -414,14 +414,28 @@ public final class GeometryUtil {
    * @param geometry Geometry to determine the centroid of, which will be use as a center of the polygon.
    * @param length The length that the polygon should get
    * @param width The width that the polygon should get
-   * @param orientation The orientation with respect to the x-axis. That is, from X positive counter-clockwise.
+   * @param orientationXAxis The orientation with respect to the x-axis. That is, from X positive counter-clockwise.
+   * @return The corresponding polygon.
+   */
+  public static nl.overheid.aerius.shared.domain.v2.geojson.Polygon constructPolygonFromXAxisDimensions(
+      final nl.overheid.aerius.shared.domain.v2.geojson.Geometry geometry, final double length, final double width, final double orientationXAxis)
+      throws AeriusException {
+    final Geometry jtsGeometry = getGeometry(geometry);
+    return constructPolygonFromDimensions(jtsGeometry.getCentroid(), length, width, orientationXToNorth(orientationXAxis));
+  }
+
+  /**
+   * @param geometry Geometry to determine the centroid of, which will be use as a center of the polygon.
+   * @param length The length that the polygon should get
+   * @param width The width that the polygon should get
+   * @param orientationNorth The orientation with respect to the North. That is, from North positive clockwise.
    * @return The corresponding polygon.
    */
   public static nl.overheid.aerius.shared.domain.v2.geojson.Polygon constructPolygonFromDimensions(
-      final nl.overheid.aerius.shared.domain.v2.geojson.Geometry geometry, final double length, final double width, final double orientation)
+      final nl.overheid.aerius.shared.domain.v2.geojson.Geometry geometry, final double length, final double width, final double orientationNorth)
       throws AeriusException {
     final Geometry jtsGeometry = getGeometry(geometry);
-    return constructPolygonFromDimensions(jtsGeometry.getCentroid(), length, width, orientation);
+    return constructPolygonFromDimensions(jtsGeometry.getCentroid(), length, width, orientationNorth);
   }
 
   /**
@@ -432,11 +446,10 @@ public final class GeometryUtil {
    * @return The corresponding polygon.
    */
   private static nl.overheid.aerius.shared.domain.v2.geojson.Polygon constructPolygonFromDimensions(
-      final com.vividsolutions.jts.geom.Point point, final double length, final double width, final double orientation)
+      final com.vividsolutions.jts.geom.Point point, final double length, final double width, final double orientationToNorth)
       throws AeriusException {
     final nl.overheid.aerius.shared.domain.v2.geojson.Polygon polygon = toBasePolygon(length, width);
     final Geometry jtsPolygon = toJtsPolygon(polygon);
-    final double orientationToNorth = orientationXToNorth(orientation);
     final double rotationInRadians = -Math.toRadians(orientationToNorth);
     final AffineTransformation rotate = AffineTransformation.rotationInstance(rotationInRadians);
     final Geometry rotatedPolygon = rotate.transform(jtsPolygon);
@@ -459,6 +472,19 @@ public final class GeometryUtil {
   public static double orientationXToNorth(final double orientationX) {
     return BigDecimal.valueOf(450)
         .subtract(BigDecimal.valueOf(orientationX))
+        .remainder(BigDecimal.valueOf(180))
+        .doubleValue();
+  }
+
+  /**
+   * Switch from north oriented (clockwise) to x-axis oriented (counter-clockwise).
+   *
+   * @param north oriented orientation (clockwise)
+   * @return orientationX x-axis oriented (counter-clockwise)
+   */
+  public static double orientationNorthToX(final double orientation) {
+    return BigDecimal.valueOf(630)
+        .subtract(BigDecimal.valueOf(orientation))
         .remainder(BigDecimal.valueOf(180))
         .doubleValue();
   }
@@ -486,9 +512,9 @@ public final class GeometryUtil {
     if (geometry instanceof nl.overheid.aerius.shared.domain.v2.geojson.Point) {
       return (nl.overheid.aerius.shared.domain.v2.geojson.Point) geometry;
     } else if (geometry instanceof nl.overheid.aerius.shared.domain.v2.geojson.Polygon) {
-    final Coordinate centroid = toJtsPolygon((nl.overheid.aerius.shared.domain.v2.geojson.Polygon) geometry).getCentroid().getCoordinate();
+      final Coordinate centroid = toJtsPolygon((nl.overheid.aerius.shared.domain.v2.geojson.Polygon) geometry).getCentroid().getCoordinate();
 
-    return new nl.overheid.aerius.shared.domain.v2.geojson.Point(centroid.getOrdinate(Coordinate.X), centroid.getOrdinate(Coordinate.Y));
+      return new nl.overheid.aerius.shared.domain.v2.geojson.Point(centroid.getOrdinate(Coordinate.X), centroid.getOrdinate(Coordinate.Y));
     } else {
       throw new AeriusException(ImaerExceptionReason.GEOMETRY_INVALID, String.valueOf(geometry));
     }
@@ -499,6 +525,13 @@ public final class GeometryUtil {
     return determineOrientedEnvelope(jtsPolygon);
   }
 
+  /**
+   * Returns the Oriented Envelop of a Polygon, where the orientation is North clockwise.
+   *
+   * @param polygon polygon to determine oriented envelope
+   * @return the oriented envelope
+   * @throws AeriusException
+   */
   public static OrientedEnvelope determineOrientedEnvelope(final Polygon polygon) throws AeriusException {
     final Polygon convexHull = toConvexHull(polygon);
     final Coordinate centroid = polygon.getCentroid().getCoordinate();
@@ -547,16 +580,17 @@ public final class GeometryUtil {
       final double tempLength = length;
       length = sanelyRounded(width);
       width = sanelyRounded(tempLength);
-      minAngleDegrees = sanelyRounded(minAngleDegrees + 90);
+      minAngleDegrees = minAngleDegrees + 90;
     }
 
-    final double orientation = orientationXToNorth(minAngleDegrees);
-
-    return new OrientedEnvelope(length, width, orientation);
+    return new OrientedEnvelope(length, width, sanelyRounded(BigDecimal.valueOf(minAngleDegrees + 180).remainder(BigDecimal.valueOf(180))));
   }
 
   private static double sanelyRounded(final double value) {
-    return BigDecimal.valueOf(value).setScale(SANELY_ROUNDING_DECIMALS, RoundingMode.HALF_UP).doubleValue();
+    return sanelyRounded(BigDecimal.valueOf(value));
   }
 
+  private static double sanelyRounded(final BigDecimal value) {
+    return value.setScale(SANELY_ROUNDING_DECIMALS, RoundingMode.HALF_UP).doubleValue();
+  }
 }
