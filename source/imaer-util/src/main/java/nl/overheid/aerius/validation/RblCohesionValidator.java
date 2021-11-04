@@ -28,12 +28,13 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import nl.overheid.aerius.shared.domain.v2.geojson.Feature;
-import nl.overheid.aerius.shared.domain.v2.importer.ImportParcel;
 import nl.overheid.aerius.shared.domain.v2.nsl.NSLCorrection;
 import nl.overheid.aerius.shared.domain.v2.nsl.NSLDispersionLine;
 import nl.overheid.aerius.shared.domain.v2.nsl.NSLMeasure;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPoint;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPointFeature;
+import nl.overheid.aerius.shared.domain.v2.scenario.Scenario;
+import nl.overheid.aerius.shared.domain.v2.scenario.ScenarioSituation;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceFeature;
 import nl.overheid.aerius.shared.domain.v2.source.SRM1RoadEmissionSource;
@@ -62,12 +63,20 @@ public class RblCohesionValidator {
     private final List<AeriusException> errors = new ArrayList<>();
     private final List<AeriusException> warnings = new ArrayList<>();
 
-    void add(final ImportParcel importResult) {
-      addSources(importResult);
-      addPoints(importResult);
-      addMeasures(importResult);
-      addDispersionLineIds(importResult);
-      this.corrections.addAll(importResult.getSituation().getNslCorrections());
+    void add(final ScenarioSituation situation) {
+      addSources(situation);
+      addMeasures(situation);
+      addDispersionLineIds(situation);
+      this.corrections.addAll(situation.getNslCorrections());
+    }
+
+    public void addPoints(final List<CalculationPointFeature> calculationPoints) {
+      calculationPoints.stream()
+          .map(CalculationPointFeature::getProperties)
+          .map(CalculationPoint::getGmlId)
+          .forEach(calculationPointId -> calculationPointIds.merge(calculationPointId, 1, (oldValue, value) -> oldValue + value));
+      points.putAll(calculationPoints.stream()
+          .collect(Collectors.toMap(feature -> feature.getProperties().getGmlId(), Function.identity(), (oldValue, value) -> oldValue)));
     }
 
     public void addError(final AeriusException error) {
@@ -86,8 +95,8 @@ public class RblCohesionValidator {
       return warnings;
     }
 
-    private void addSources(final ImportParcel importResult) {
-      final List<EmissionSourceFeature> importedSources = importResult.getSituation().getEmissionSourcesList();
+    private void addSources(final ScenarioSituation situation) {
+      final List<EmissionSourceFeature> importedSources = situation.getEmissionSourcesList();
       sources.putAll(importedSources.stream()
           .collect(Collectors.toMap(feature -> feature.getProperties().getGmlId(), Function.identity(), (oldValue, value) -> oldValue)));
       importedSources.stream()
@@ -102,17 +111,8 @@ public class RblCohesionValidator {
           .collect(Collectors.toList()));
     }
 
-    private void addPoints(final ImportParcel importResult) {
-      importResult.getCalculationPointsList().stream()
-          .map(CalculationPointFeature::getProperties)
-          .map(CalculationPoint::getGmlId)
-          .forEach(calculationPointId -> calculationPointIds.merge(calculationPointId, 1, (oldValue, value) -> oldValue + value));
-      points.putAll(importResult.getCalculationPointsList().stream()
-          .collect(Collectors.toMap(feature -> feature.getProperties().getGmlId(), Function.identity(), (oldValue, value) -> oldValue)));
-    }
-
-    private void addMeasures(final ImportParcel importResult) {
-      final List<NSLMeasure> importedMeasures = importResult.getSituation().getNslMeasuresList().stream()
+    private void addMeasures(final ScenarioSituation situation) {
+      final List<NSLMeasure> importedMeasures = situation.getNslMeasuresList().stream()
           .map(Feature::getProperties)
           .collect(Collectors.toList());
       importedMeasures.stream()
@@ -121,8 +121,8 @@ public class RblCohesionValidator {
       measures.addAll(importedMeasures);
     }
 
-    private void addDispersionLineIds(final ImportParcel importResult) {
-      final List<NSLDispersionLine> importedDispersionLines = importResult.getSituation().getNslDispersionLinesList().stream()
+    private void addDispersionLineIds(final ScenarioSituation situation) {
+      final List<NSLDispersionLine> importedDispersionLines = situation.getNslDispersionLinesList().stream()
           .map(Feature::getProperties)
           .collect(Collectors.toList());
       // Use a fake ID in this case to simulate the composite ID.
@@ -139,15 +139,21 @@ public class RblCohesionValidator {
   private static final String ID_SEPARATOR = "| |";
 
   /**
+   * Checks cohesion of a list of {@link Scenario}.
    *
-   * @param importResults
-   * @param errors
-   * @param warnings
+   * @param scenario Scenario to check cohesion
+   * @param errors cohesion errors will be added to this list
+   * @param warnings cohesion warnings will be added to this list
    */
-  public void checkCohesion(final List<ImportParcel> importResults, final List<AeriusException> errors, final List<AeriusException> warnings) {
+  public void checkCohesion(final Scenario scenario, final List<AeriusException> errors, final List<AeriusException> warnings) {
     final CohesionTracker tracker = new CohesionTracker();
-    importResults.forEach(tracker::add);
+    scenario.getSituations().forEach(tracker::add);
+    tracker.addPoints(scenario.getCustomPointsList());
 
+    checkCohesion(tracker, errors, warnings);
+  }
+
+  private static void checkCohesion(final CohesionTracker tracker, final List<AeriusException> errors, final List<AeriusException> warnings) {
     checkDuplicateIds(tracker);
     checkDispersionLines(tracker);
     checkSrm1Roads(tracker);
@@ -156,7 +162,7 @@ public class RblCohesionValidator {
     warnings.addAll(tracker.getWarnings());
   }
 
-  private void checkDuplicateIds(final CohesionTracker tracker) {
+  private static void checkDuplicateIds(final CohesionTracker tracker) {
     final List<String> duplicateSourceIds = determineDuplicates(tracker.sourceIds);
     for (final String duplicateSourceId : duplicateSourceIds) {
       tracker.addError(new AeriusException(ImaerExceptionReason.COHESION_DUPLICATE_SOURCE_IDS, duplicateSourceId));
@@ -179,7 +185,7 @@ public class RblCohesionValidator {
     }
   }
 
-  private <T> List<T> determineDuplicates(final Map<T, Integer> mapToTest) {
+  private static <T> List<T> determineDuplicates(final Map<T, Integer> mapToTest) {
     return mapToTest.entrySet().stream()
         .filter(entry -> entry.getValue() > 1)
         .map(Entry::getKey)
@@ -187,7 +193,7 @@ public class RblCohesionValidator {
         .collect(Collectors.toList());
   }
 
-  private void checkDispersionLines(final CohesionTracker tracker) {
+  private static void checkDispersionLines(final CohesionTracker tracker) {
     final List<NSLDispersionLine> dispersionLineWithoutPoints = tracker.dispersionLines.stream()
         .filter(dispersionLine -> !tracker.calculationPointIds.containsKey(dispersionLine.getCalculationPointGmlId()))
         .collect(Collectors.toList());
@@ -207,7 +213,7 @@ public class RblCohesionValidator {
     tracker.dispersionLines.forEach(dispersionLine -> checkDispersionlinePerpendicular(dispersionLine, tracker));
   }
 
-  private void checkDispersionlinePerpendicular(final NSLDispersionLine dispersionLine,
+  private static void checkDispersionlinePerpendicular(final NSLDispersionLine dispersionLine,
       final CohesionTracker tracker) {
     final EmissionSourceFeature sourceFeature = tracker.sources.get(dispersionLine.getRoadGmlId());
     final CalculationPointFeature pointFeature = tracker.points.get(dispersionLine.getCalculationPointGmlId());
@@ -223,11 +229,11 @@ public class RblCohesionValidator {
     }
   }
 
-  private boolean isSrm1Source(final EmissionSource source) {
+  private static boolean isSrm1Source(final EmissionSource source) {
     return source instanceof SRM1RoadEmissionSource;
   }
 
-  private void checkCorrections(final CohesionTracker tracker) {
+  private static void checkCorrections(final CohesionTracker tracker) {
     final List<String> missingCalculationPoints = tracker.corrections.stream()
         .map(NSLCorrection::getCalculationPointGmlId)
         .filter(calculationPointId -> !tracker.calculationPointIds.containsKey(calculationPointId))
@@ -238,7 +244,7 @@ public class RblCohesionValidator {
     }
   }
 
-  private void checkSrm1Roads(final CohesionTracker tracker) {
+  private static void checkSrm1Roads(final CohesionTracker tracker) {
     final List<String> srm1RoadsWithoutDispersionLines = tracker.srm1SourceIds.stream()
         .filter(srm1SourceId -> !tracker.dispersionLinesPerRoadId.containsKey(srm1SourceId))
         .collect(Collectors.toList());
