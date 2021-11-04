@@ -215,7 +215,7 @@ public class GMLReaderTest {
     metaDataInput.setSituationType(SITUATION_TYPE);
     metaDataInput.setVersion(VERSION);
     metaDataInput.setDatabaseVersion(DATABASE_VERSION);
-    metaDataInput.getOptions().setCalculationType(CalculationType.WNB);
+    metaDataInput.getOptions().setCalculationType(CalculationType.PERMIT);
     metaDataInput.getOptions().setMonitorSrm2Year(MONITOR_SRM2_YEAR);
     metaDataInput.setResultsIncluded(true);
     final InternalGMLWriter writer = new InternalGMLWriter(gridSettings, GMLTestDomain.TEST_REFERENCE_GENERATOR);

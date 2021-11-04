@@ -23,7 +23,7 @@ package nl.overheid.aerius.shared.domain.calculation;
 public enum CalculationType {
 
   /**
-   * Calculate deposition at custom points (fixed set of receptors or user defined points).
+   * Calculate with custom points (fixed set of receptors or user defined points).
    */
   CUSTOM_POINTS,
   /**
@@ -31,17 +31,13 @@ public enum CalculationType {
    */
   NATURE_AREA,
   /**
-   * Calculates for the Dutch Nationaal Samenwerkingsprogramma Luchtkwaliteit (NSL)
+   * Calculates using calculation points and settings established by policy.
    */
-  NSL,
+  PERMIT,
   /**
    * Calculate deposition in a radius around the sources.
    */
-  RADIUS,
-  /**
-   * Calculate for the Dutch WetNB (Nature Compliance Act) compliance.
-   */
-  WNB;
+  RADIUS;
 
   /**
    * Safely returns a CalculationType. It is case independent and returns null in
