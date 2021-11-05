@@ -178,9 +178,4 @@ public class MetaDataImpl implements MetaData {
     return project == null ? null : project.getDescription();
   }
 
-  @Override
-  public Integer getMonitorSRM2Year() {
-    return calculation == null ? null : calculation.getMonitorSrm2Year();
-  }
-
 }

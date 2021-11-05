@@ -16,7 +16,12 @@
                     <imaer:resultType>CONCENTRATION</imaer:resultType>
                     <imaer:resultType>DEPOSITION</imaer:resultType>
                     <imaer:maximumRange>3.0</imaer:maximumRange>
-                    <imaer:monitorSrm2Year>2030</imaer:monitorSrm2Year>
+                    <imaer:option>
+                        <imaer:CalculationOption>
+                            <imaer:key>monitor_srm2_year</imaer:key>
+                            <imaer:value>2030</imaer:value>
+                        </imaer:CalculationOption>
+                    </imaer:option>
                 </imaer:CalculationMetadata>
             </imaer:calculation>
             <imaer:version>

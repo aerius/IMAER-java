@@ -31,7 +31,7 @@ import nl.overheid.aerius.shared.domain.result.EmissionResultType;
  *
  */
 @XmlType(name = "CalculationMetadataType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"calculationType", "substances", "resultTypes",
-    "maximumRange", "researchArea", "monitorSrm2Year"})
+    "maximumRange", "researchArea", "monitorSrm2Year", "options"})
 public class CalculationMetadata {
 
   //TODO Calculation Type PERMIT should become PAS, preferable not being a enum either.
@@ -43,6 +43,7 @@ public class CalculationMetadata {
   private Double maximumRange;
   private Boolean researchArea;
   private Integer monitorSrm2Year;
+  private List<CalculationOptionProperty> options;
 
   @XmlElement(name = "type", namespace = CalculatorSchema.NAMESPACE)
   public String getCalculationType() {
@@ -100,6 +101,15 @@ public class CalculationMetadata {
 
   public void setMonitorSrm2Year(final Integer monitorSrm2Year) {
     this.monitorSrm2Year = monitorSrm2Year;
+  }
+
+  @XmlElement(name = "option", namespace = CalculatorSchema.NAMESPACE)
+  public List<CalculationOptionProperty> getOptions() {
+    return options;
+  }
+
+  public void setOptions(final List<CalculationOptionProperty> options) {
+    this.options = options;
   }
 
 }

@@ -72,14 +72,6 @@ public class GMLMetaDataReader {
   }
 
   /**
-   * Monitor SRM2 year specified in the GML data.
-   * @return Monitor SRM2 year used in previous calculations (null if not used).
-   */
-  public Integer readMonitorSrm2Year() {
-    return checkFeatureCollection(featureCollection) ? featureCollection.getMetaData().getMonitorSRM2Year() : null;
-  }
-
-  /**
    * Permit Calculation Radius type specified in the GML data.
    * @return temporary period for the project (null if no calculation radius).
    */
