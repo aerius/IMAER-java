@@ -246,11 +246,40 @@ NOTE Met behulp van dit metadata object kan er informatie over de berekening vas
           <documentation>Indicatie of er voor de SRM2 wegen gebruik is gemaakt van het NSL monitor netwerk, en zo ja uit welk jaar.</documentation>
         </annotation>
       </element>
+      <element maxOccurs="unbounded" minOccurs="0" name="option" type="IMAER:CalculationOptionPropertyType">
+        <annotation>
+          <documentation>Opties die zijn gebruikt voor de rekenresultaten. Maakt gebruik van een generieke key-value structuur, waarbij de key aangeeft om welke optie het gaat, en de value de waarde voor de betreffende optie.</documentation>
+        </annotation>
+      </element>
     </sequence>
   </complexType>
   <complexType name="CalculationMetadataPropertyType">
     <sequence>
       <element ref="IMAER:CalculationMetadata"/>
+    </sequence>
+  </complexType>
+  <element name="CalculationOption" substitutionGroup="gml:AbstractObject" type="IMAER:CalculationOptionType">
+    <annotation>
+      <documentation>Generieke rekenoptie waarde.</documentation>
+    </annotation>
+  </element>
+  <complexType name="CalculationOptionType">
+    <sequence>
+      <element name="key" type="string">
+        <annotation>
+          <documentation>Sleutelwaarde voor deze rekenoptie.</documentation>
+        </annotation>
+      </element>
+      <element name="value" type="string">
+        <annotation>
+          <documentation>Gebruikte waarde voor deze rekenoptie.</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="CalculationOptionPropertyType">
+    <sequence>
+      <element ref="IMAER:CalculationOption"/>
     </sequence>
   </complexType>
   <element name="CalculationPoint" substitutionGroup="IMAER:CalculationPointType" type="IMAER:CalculationPointType">
