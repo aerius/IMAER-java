@@ -19,28 +19,97 @@ package nl.overheid.aerius.shared.domain.meteo;
 import java.io.Serializable;
 
 /**
- * Abstract meteo class, is implemented for single years (e.g. 2014) and multiple years (e.g. 1995-2004)
- * @see SingleYearMeteo
- * @see MultiYearMeteo
+ * Meteo class for single years (e.g. 2014) and multiple years (e.g. 1995-2004).
+ * If startYear is the same as the endYear it can be considered single-year meteo.
  */
-public abstract class Meteo implements Serializable {
+public class Meteo implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 2L;
 
-  private String opsFile;
+  private String code;
+  private String description;
+  private int startYear;
+  private int endYear;
 
-  public Meteo(String opsFile) {
-    this.opsFile = opsFile;
+  protected Meteo() {
+    // Default constructor, needed for serialization
   }
 
-  public Meteo() {
+  /**
+   * @param year The year for this meteo set. Will be used for both start and end year. Can be used by models to determine the correct file.
+   */
+  public Meteo(final int year) {
+    this(String.valueOf(year), String.valueOf(year), year);
   }
 
+  /**
+   * @param startYear The start year for this meteo set. Can be used by models to determine the correct file.
+   * @param endYear The end year for this meteo set. Can be used by models to determine the correct file.
+   */
+  public Meteo(final int startYear, final int endYear) {
+    this(startYear + "-" + endYear, startYear + "-" + endYear, startYear, endYear);
+  }
+
+  /**
+   * @param code Unique code for this meteo.
+   * If the same year is specified multiple times (different parts of the country for instance),
+   * this should be reflected in the code.
+   * @param description A user friendly description.
+   * @param year The year for this meteo set. Will be used for both start and end year. Can be used by models to determine the correct file.
+   */
+  public Meteo(final String code, final String description, final int year) {
+    this(code, description, year, year);
+  }
+
+  /**
+   * @param code Unique code for this meteo.
+   * If the same year is specified multiple times (different parts of the country for instance),
+   * this should be reflected in the code.
+   * @param description A user friendly description.
+   * @param startYear The start year for this meteo set. Can be used by models to determine the correct file.
+   * @param endYear The end year for this meteo set. Can be used by models to determine the correct file.
+   */
+  public Meteo(final String code, final String description, final int startYear, final int endYear) {
+    this.code = code;
+    this.description = description;
+    this.startYear = startYear;
+    this.endYear = endYear;
+  }
+
+  /**
+   * To be removed soon-ish.
+   */
+  @Deprecated
   public String getOpsFile() {
-    return opsFile;
+    return null;
   }
 
-  public void setOpsFile(String opsFile) {
-    this.opsFile = opsFile;
+  public String getCode() {
+    return code;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
+  public int getStartYear() {
+    return startYear;
+  }
+
+  public int getEndYear() {
+    return endYear;
+  }
+
+  public boolean isSingleYear() {
+    return !isMultiYear();
+  }
+
+  public boolean isMultiYear() {
+    return endYear > startYear;
+  }
+
+  @Override
+  public String toString() {
+    return code;
   }
 }

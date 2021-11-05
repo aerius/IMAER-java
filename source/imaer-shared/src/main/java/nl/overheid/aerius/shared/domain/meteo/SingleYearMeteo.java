@@ -20,53 +20,43 @@ import java.util.Objects;
 
 /**
  * Represents a single year (e.g. 2014)
+ * @deprecated Use Meteo directly instead.
  */
+@Deprecated
 public class SingleYearMeteo extends Meteo {
 
   private static final long serialVersionUID = 1L;
 
-  private int year;
-
-  public SingleYearMeteo(int year, String opsFile) {
-    super(opsFile);
-    this.year = year;
+  public SingleYearMeteo(final int year, final String opsFile) {
+    super(year);
   }
 
-  public SingleYearMeteo(int year) {
-    super("");
-    this.year = year;
+  public SingleYearMeteo(final int year) {
+    super(year);
   }
 
   public SingleYearMeteo() {
   }
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(final Object o) {
     if (this == o) {
       return true;
     }
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    SingleYearMeteo that = (SingleYearMeteo) o;
-    return year == that.year;
+    final SingleYearMeteo that = (SingleYearMeteo) o;
+    return getYear() == that.getYear();
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(year);
+    return Objects.hash(getStartYear());
   }
 
   public int getYear() {
-    return year;
+    return getStartYear();
   }
 
-  public void setYear(int year) {
-    this.year = year;
-  }
-
-  @Override
-  public String toString() {
-    return String.valueOf(year);
-  }
 }
