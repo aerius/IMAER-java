@@ -56,7 +56,10 @@ public enum SituationType {
 
   /**
    * All the {@link SituationType} values, except for {@link #UNKNOWN}.
+   *
+   * @deprecated kept in so old client will/might continue to compile, to be removed soon.
    */
+  @Deprecated
   public static final SituationType[] KNOWN_VALUES = Arrays.copyOfRange(values(), 1, values().length);
 
   /**
