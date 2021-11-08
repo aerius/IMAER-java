@@ -18,6 +18,7 @@ package nl.overheid.aerius.gml.base.source.road;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import nl.overheid.aerius.gml.base.AbstractGML2Specific;
@@ -50,8 +51,9 @@ abstract class GML2SRMRoad<T extends IsGmlRoadEmissionSource, S extends RoadEmis
   @Override
   public S convert(final T source) throws AeriusException {
     final S emissionSource = construct();
+    final List<StandardVehicles> mergingStandardVehicles = new ArrayList<>();
     for (final IsGmlProperty<IsGmlVehicle> vp : source.getVehicles()) {
-      addVehicleEmissions(emissionSource.getSubSources(), source, vp);
+      addVehicleEmissions(emissionSource.getSubSources(), source, vp, mergingStandardVehicles);
     }
     emissionSource.setTrafficDirection(source.getTrafficDirection());
     emissionSource.setRoadManager(source.getRoadManager());
@@ -69,9 +71,9 @@ abstract class GML2SRMRoad<T extends IsGmlRoadEmissionSource, S extends RoadEmis
 
   protected abstract void setOptionalVariables(T source, S emissionSource) throws AeriusException;
 
-  protected void addVehicleEmissions(final List<Vehicles> addToVehicles, final T source, final IsGmlProperty<IsGmlVehicle> vp) {
+  protected void addVehicleEmissions(final List<Vehicles> addToVehicles, final T source, final IsGmlProperty<IsGmlVehicle> vp,
+      final List<StandardVehicles> mergingStandardVehicles) {
     final IsGmlVehicle av = vp.getProperty();
-    final List<StandardVehicles> mergingStandardVehicles = new ArrayList<>();
     if (av instanceof IsGmlStandardVehicle) {
       addEmissionValues(addToVehicles, source, (IsGmlStandardVehicle) av, mergingStandardVehicles);
     } else if (av instanceof IsGmlSpecificVehicle) {
@@ -103,8 +105,8 @@ abstract class GML2SRMRoad<T extends IsGmlRoadEmissionSource, S extends RoadEmis
 
   protected Optional<StandardVehicles> findExistingMatch(final IsGmlStandardVehicle sv, final List<StandardVehicles> mergingStandardVehicles) {
     return mergingStandardVehicles.stream()
-        .filter(x -> x.getMaximumSpeed() == sv.getMaximumSpeed())
-        .filter(x -> x.getStrictEnforcement() == sv.isStrictEnforcement())
+        .filter(x -> Objects.equals(x.getMaximumSpeed(), sv.getMaximumSpeed()))
+        .filter(x -> Objects.equals(x.getStrictEnforcement(), sv.isStrictEnforcement()))
         .filter(x -> x.getTimeUnit() == TimeUnit.valueOf(sv.getTimeUnit().name()))
         .filter(x -> !x.getValuesPerVehicleTypes().containsKey(sv.getVehicleType()))
         .findFirst();
