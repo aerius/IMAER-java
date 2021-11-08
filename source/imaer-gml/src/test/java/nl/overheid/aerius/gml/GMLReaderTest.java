@@ -150,7 +150,6 @@ public class GMLReaderTest {
     assertEquals(expectedMetaData.getVersion(), metaDataReader.readAeriusVersion(), "Metadata version");
     assertEquals(expectedMetaData.getDatabaseVersion(), metaDataReader.readDatabaseVersion(), "Metadata DB version");
     assertEquals(expectedMetaData.getTemporaryPeriod(), metaDataReader.readTemporaryProjectPeriodYear(), "Metadata temporary period");
-    assertEquals(expectedMetaData.getMonitorSRM2Year(), metaDataReader.readMonitorSrm2Year(), "Metadata monitor SRM2 year");
     final ScenarioMetaData MetaData = metaDataReader.readMetaData();
     assertEquals(expectedMetaData.getProjectName(), MetaData.getProjectName(), "Metadata name");
     assertEquals(expectedMetaData.getReference(), MetaData.getReference(), "Metadata reference");

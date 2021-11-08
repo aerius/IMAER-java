@@ -81,13 +81,6 @@ public interface MetaData {
   String getDescription();
 
   /**
-   * @return The year of the NSL Monitor SRM2 network to use. Null indicates it shouldn't be used.
-   */
-  default Integer getMonitorSRM2Year() {
-    return null;
-  }
-
-  /**
    * @return The type of the situation. Null indicates it hasn't been specified (older GMLs).
    */
   default SituationType getSituationType() {

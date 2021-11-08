@@ -18,6 +18,7 @@ package nl.overheid.aerius.gml.v4_0.togml;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -35,11 +36,14 @@ import nl.overheid.aerius.gml.v4_0.definitions.CustomDiurnalVariation;
 import nl.overheid.aerius.gml.v4_0.definitions.DefinitionsImpl;
 import nl.overheid.aerius.gml.v4_0.metadata.AddressImpl;
 import nl.overheid.aerius.gml.v4_0.metadata.CalculationMetadata;
+import nl.overheid.aerius.gml.v4_0.metadata.CalculationOption;
+import nl.overheid.aerius.gml.v4_0.metadata.CalculationOptionProperty;
 import nl.overheid.aerius.gml.v4_0.metadata.MetaDataImpl;
 import nl.overheid.aerius.gml.v4_0.metadata.ProjectMetadata;
 import nl.overheid.aerius.gml.v4_0.metadata.SituationMetadata;
 import nl.overheid.aerius.gml.v4_0.metadata.VersionMetadata;
 import nl.overheid.aerius.shared.domain.Substance;
+import nl.overheid.aerius.shared.domain.calculation.CalculationSetOptions;
 import nl.overheid.aerius.shared.domain.calculation.CalculationType;
 import nl.overheid.aerius.shared.domain.geo.HexagonZoomLevel;
 import nl.overheid.aerius.shared.domain.result.EmissionResultKey;
@@ -53,6 +57,7 @@ import nl.overheid.aerius.shared.domain.v2.scenario.ScenarioMetaData;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceFeature;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
+import nl.overheid.aerius.util.OptionsMetadataUtil;
 
 /**
  * GML proxy for version 4.0.
@@ -168,11 +173,9 @@ public class GMLVersionWriterV40 implements GMLVersionWriter {
       if (input.isResearchArea()) {
         calculation.setResearchArea(input.isResearchArea());
       }
-      if (input.getOptions().isIncludeMonitorSrm2Network()) {
-        calculation.setMonitorSrm2Year(input.getOptions().getMonitorSrm2Year());
-      }
       calculation.setSubstances(input.getOptions().getSubstances());
       calculation.setResultTypes(determineResultTypes(input.getOptions().getEmissionResultKeys()));
+      calculation.setOptions(options2GML(input.getOptions()));
     } else {
       calculation = null;
     }
@@ -194,6 +197,14 @@ public class GMLVersionWriterV40 implements GMLVersionWriter {
       }
     }
     return types.stream().sorted().collect(Collectors.toList());
+  }
+
+  private List<CalculationOptionProperty> options2GML(final CalculationSetOptions options) {
+    final Map<String, String> gmlOptionsMap = OptionsMetadataUtil.optionsToMap(options, false);
+    return gmlOptionsMap.entrySet().stream()
+        .map(entry -> new CalculationOption(entry.getKey(), entry.getValue()))
+        .map(CalculationOptionProperty::new)
+        .collect(Collectors.toList());
   }
 
   @Override

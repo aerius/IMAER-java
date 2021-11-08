@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:IMAER="http://imaer.aerius.nl/4.0" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:gmlsf="http://www.opengis.net/gmlsf/2.0" elementFormDefault="qualified" targetNamespace="http://imaer.aerius.nl/4.0" version="4.0.1">
+<?xml version="1.0" encoding="UTF-8"?><schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:IMAER="http://imaer.aerius.nl/4.0" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:gmlsf="http://www.opengis.net/gmlsf/2.0" elementFormDefault="qualified" targetNamespace="http://imaer.aerius.nl/4.0" version="4.0.2">
   <annotation>
     <documentation>Dit model beschrijft het InformatieModel AERius (IMAER). IMAER is het standaard gegevens uitwisselingsformaat van AERIUS en wordt gebruikt voor het importeren, exporteren en uitwisselen van gegevens met en tussen de verschillende AERIUS producten (o.a. Calculator, Monitor en Register).  
 
@@ -246,11 +246,40 @@ NOTE Met behulp van dit metadata object kan er informatie over de berekening vas
           <documentation>Indicatie of er voor de SRM2 wegen gebruik is gemaakt van het NSL monitor netwerk, en zo ja uit welk jaar.</documentation>
         </annotation>
       </element>
+      <element maxOccurs="unbounded" minOccurs="0" name="option" type="IMAER:CalculationOptionPropertyType">
+        <annotation>
+          <documentation>Opties die zijn gebruikt voor de rekenresultaten. Maakt gebruik van een generieke key-value structuur, waarbij de key aangeeft om welke optie het gaat, en de value de waarde voor de betreffende optie.</documentation>
+        </annotation>
+      </element>
     </sequence>
   </complexType>
   <complexType name="CalculationMetadataPropertyType">
     <sequence>
       <element ref="IMAER:CalculationMetadata"/>
+    </sequence>
+  </complexType>
+  <element name="CalculationOption" substitutionGroup="gml:AbstractObject" type="IMAER:CalculationOptionType">
+    <annotation>
+      <documentation>Generieke rekenoptie waarde.</documentation>
+    </annotation>
+  </element>
+  <complexType name="CalculationOptionType">
+    <sequence>
+      <element name="key" type="string">
+        <annotation>
+          <documentation>Sleutelwaarde voor deze rekenoptie.</documentation>
+        </annotation>
+      </element>
+      <element name="value" type="string">
+        <annotation>
+          <documentation>Gebruikte waarde voor deze rekenoptie.</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="CalculationOptionPropertyType">
+    <sequence>
+      <element ref="IMAER:CalculationOption"/>
     </sequence>
   </complexType>
   <element name="CalculationPoint" substitutionGroup="IMAER:CalculationPointType" type="IMAER:CalculationPointType">
