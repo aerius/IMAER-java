@@ -17,7 +17,6 @@
 package nl.overheid.aerius.gml.v2_0.metadata;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
@@ -34,23 +33,19 @@ import nl.overheid.aerius.shared.domain.result.EmissionResultType;
     "maximumRange", "researchArea"})
 public class CalculationMetadata {
 
-  private CalculationTypeLegacy calculationType;
+  private CalculationType calculationType;
   private List<Substance> substances;
   private List<EmissionResultType> resultTypes;
   private Double maximumRange;
   private Boolean researchArea;
 
   @XmlElement(name = "type", namespace = CalculatorSchema.NAMESPACE)
-  public CalculationTypeLegacy getCalculationType() {
+  public CalculationType getCalculationType() {
     return calculationType;
   }
 
-  public void setCalculationType(final CalculationTypeLegacy calculationType) {
-    this.calculationType = calculationType;
-  }
-
   public void setCalculationType(final CalculationType calculationType) {
-    setCalculationType(CalculationTypeLegacy.to(calculationType));
+    this.calculationType = calculationType;
   }
 
   @XmlElement(name = "substance", namespace = CalculatorSchema.NAMESPACE)
@@ -87,42 +82,5 @@ public class CalculationMetadata {
 
   public void setResearchArea(final Boolean researchArea) {
     this.researchArea = researchArea;
-  }
-
-  /**
-   * Legacy type to convert IMAER calculation type to internal {@link CalculationType} enum.
-   */
-  public enum CalculationTypeLegacy {
-
-    /**
-     * Calculate deposition at custom points (fixed set of receptors or user defined points).
-     */
-    CUSTOM_POINTS(CalculationType.CUSTOM_POINTS),
-    /**
-     * Calculate deposition in nature areas.
-     */
-    NATURE_AREA(CalculationType.NATURE_AREA),
-    /**
-     * Calculate for the Dutch NB-wet (Nature Compliance Act) compliance.
-     */
-    PERMIT(CalculationType.WNB),
-    /**
-     * Calculate deposition in a radius around the sources.
-     */
-    RADIUS(CalculationType.RADIUS);
-
-    private final CalculationType calculationType;
-
-    private CalculationTypeLegacy(final CalculationType calculationType) {
-      this.calculationType = calculationType;
-    }
-
-    public CalculationType from() {
-      return calculationType;
-    }
-
-    public static CalculationTypeLegacy to(final CalculationType calculationType) {
-      return Stream.of(values()).filter(e -> e.calculationType == calculationType).findFirst().orElse(null);
-    }
   }
 }

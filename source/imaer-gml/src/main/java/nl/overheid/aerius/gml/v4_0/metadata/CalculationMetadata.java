@@ -17,7 +17,6 @@
 package nl.overheid.aerius.gml.v4_0.metadata;
 
 import java.util.List;
-import java.util.Locale;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
@@ -34,9 +33,6 @@ import nl.overheid.aerius.shared.domain.result.EmissionResultType;
     "maximumRange", "researchArea", "monitorSrm2Year", "options"})
 public class CalculationMetadata {
 
-  //TODO Calculation Type PERMIT should become PAS, preferable not being a enum either.
-  private static final String PERMIT = "PERMIT";
-
   private String calculationType;
   private List<Substance> substances;
   private List<EmissionResultType> resultTypes;
@@ -51,7 +47,7 @@ public class CalculationMetadata {
   }
 
   public void setCalculationType(final CalculationType calculationType) {
-    setCalculationType(calculationType == CalculationType.WNB ? PERMIT : calculationType.toString().toUpperCase(Locale.ENGLISH));
+    setCalculationType(calculationType.type());
   }
 
   public void setCalculationType(final String calculationType) {

@@ -16,6 +16,8 @@
  */
 package nl.overheid.aerius.shared.domain.calculation;
 
+import java.util.Locale;
+
 /**
  * Type of calculation. It be a radius from the source point or to only
  * calculate points within nature areas.
@@ -23,7 +25,7 @@ package nl.overheid.aerius.shared.domain.calculation;
 public enum CalculationType {
 
   /**
-   * Calculate deposition at custom points (fixed set of receptors or user defined points).
+   * Calculate with custom points (fixed set of receptors or user defined points).
    */
   CUSTOM_POINTS,
   /**
@@ -31,17 +33,19 @@ public enum CalculationType {
    */
   NATURE_AREA,
   /**
-   * Calculates for the Dutch Nationaal Samenwerkingsprogramma Luchtkwaliteit (NSL)
+   * Calculates using calculation points and settings established by policy.
    */
-  NSL,
+  PERMIT,
   /**
    * Calculate deposition in a radius around the sources.
    */
   RADIUS,
-  /**
-   * Calculate for the Dutch WetNB (Nature Compliance Act) compliance.
-   */
-  WNB;
+
+  @Deprecated
+  WNB,
+  @Deprecated
+  NSL
+  ;
 
   /**
    * Safely returns a CalculationType. It is case independent and returns null in
@@ -58,13 +62,17 @@ public enum CalculationType {
     }
   }
 
+  public String type() {
+    return (this == WNB ? CalculationType.PERMIT : this).name().toString();
+  }
+
   /**
    * Returns the name in lowercase.
    * @return name in lowercase
    */
   @Override
   public String toString() {
-    return name().toLowerCase();
+    return name().toLowerCase(Locale.ROOT);
   }
 
 }
