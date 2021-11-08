@@ -117,7 +117,12 @@ public final class OptionsMetadataUtil {
   }
 
   private static void addIntValue(final Map<Option, String> mapToAddTo, final Option key, final int value, final boolean addDefaults) {
-    if (addDefaults || value != 0) {
+    addIntValue(mapToAddTo, key, value, addDefaults, 0);
+  }
+
+  private static void addIntValue(final Map<Option, String> mapToAddTo, final Option key, final int value, final boolean addDefaults,
+      final int defaultValue) {
+    if (addDefaults || value != defaultValue) {
       mapToAddTo.put(key, String.valueOf(value));
     }
   }
