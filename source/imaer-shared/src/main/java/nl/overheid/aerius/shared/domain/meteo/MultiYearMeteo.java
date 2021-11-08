@@ -20,65 +20,40 @@ import java.util.Objects;
 
 /**
  * Represents multiple years (e.g. 1995-2004)
+ * @deprecated Use Meteo directly instead.
  */
+@Deprecated
 public class MultiYearMeteo extends Meteo {
 
   private static final long serialVersionUID = 1L;
 
-  private int startYear;
-  private int endYear;
-
-  public MultiYearMeteo(int startYear, int endYear, String opsFile) {
-    super(opsFile);
-    this.startYear = startYear;
-    this.endYear = endYear;
+  public MultiYearMeteo(final int startYear, final int endYear, final String opsFile) {
+    super(startYear, endYear);
   }
 
-  public MultiYearMeteo(int startYear, int endYear) {
-    super("");
-    this.startYear = startYear;
-    this.endYear = endYear;
+  public MultiYearMeteo(final int startYear, final int endYear) {
+    super(startYear, endYear);
   }
 
   public MultiYearMeteo() {
   }
 
-  public int getStartYear() {
-    return startYear;
-  }
-
-  public void setStartYear(int startYear) {
-    this.startYear = startYear;
-  }
-
-  public int getEndYear() {
-    return endYear;
-  }
-
-  public void setEndYear(int endYear) {
-    this.endYear = endYear;
-  }
-
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(final Object o) {
     if (this == o) {
       return true;
     }
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    MultiYearMeteo that = (MultiYearMeteo) o;
-    return startYear == that.startYear &&
-        endYear == that.endYear;
+    final MultiYearMeteo that = (MultiYearMeteo) o;
+    return getStartYear() == that.getStartYear() &&
+        getEndYear() == that.getEndYear();
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(startYear, endYear);
+    return Objects.hash(getStartYear(), getEndYear());
   }
 
-  @Override
-  public String toString() {
-    return String.valueOf(startYear) + "-" + String.valueOf(endYear);
-  }
 }
