@@ -44,11 +44,22 @@ public enum SituationType {
    * Represents a situation that can be used for netting purposes (salderingssituatie).
    * Acts like an addition to the reference situation when it comes to permit calculations.
    */
-  NETTING;
+  NETTING,
+  /**
+   * Represents a situation that is to be calculated in cumulation with the reference situation.
+   */
+  COMBINATION_REFERENCE,
+  /**
+   * Represents a situation that is to be calculated in cumulation with the proposed situation.
+   */
+  COMBINATION_PROPOSED;
 
   /**
    * All the {@link SituationType} values, except for {@link #UNKNOWN}.
+   *
+   * @deprecated kept in so old client will/might continue to compile, to be removed soon.
    */
+  @Deprecated
   public static final SituationType[] KNOWN_VALUES = Arrays.copyOfRange(values(), 1, values().length);
 
   /**
