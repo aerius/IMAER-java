@@ -170,9 +170,6 @@ public class GMLVersionWriterV40 implements GMLVersionWriter {
       if (input.getOptions().isMaximumRangeRelevant()) {
         calculation.setMaximumRange(input.getOptions().getCalculateMaximumRange());
       }
-      if (input.isResearchArea()) {
-        calculation.setResearchArea(input.isResearchArea());
-      }
       calculation.setSubstances(input.getOptions().getSubstances());
       calculation.setResultTypes(determineResultTypes(input.getOptions().getEmissionResultKeys()));
       calculation.setOptions(options2GML(input.getOptions()));

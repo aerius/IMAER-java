@@ -146,9 +146,6 @@ public class GMLVersionWriterV31 implements GMLVersionWriter {
       if (input.getOptions().isMaximumRangeRelevant()) {
         calculation.setMaximumRange(input.getOptions().getCalculateMaximumRange());
       }
-      if (input.isResearchArea()) {
-        calculation.setResearchArea(input.isResearchArea());
-      }
       if (input.getOptions().isIncludeMonitorSrm2Network()) {
         calculation.setMonitorSrm2Year(input.getOptions().getMonitorSrm2Year());
       }

@@ -106,13 +106,4 @@ public class MetaDataInput {
   public void setResultsIncluded(final boolean resultsIncluded) {
     this.resultsIncluded = resultsIncluded;
   }
-
-  /**
-   * @deprecated not supported anymore.
-   * @return false
-   */
-  @Deprecated
-  public boolean isResearchArea() {
-    return false;
-  }
 }
