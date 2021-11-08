@@ -16,6 +16,8 @@
  */
 package nl.overheid.aerius.shared.domain.calculation;
 
+import java.util.Locale;
+
 /**
  * Type of calculation. It be a radius from the source point or to only
  * calculate points within nature areas.
@@ -37,7 +39,13 @@ public enum CalculationType {
   /**
    * Calculate deposition in a radius around the sources.
    */
-  RADIUS;
+  RADIUS,
+
+  @Deprecated
+  WNB,
+  @Deprecated
+  NSL
+  ;
 
   /**
    * Safely returns a CalculationType. It is case independent and returns null in
@@ -54,13 +62,17 @@ public enum CalculationType {
     }
   }
 
+  public String type() {
+    return (this == WNB ? CalculationType.PERMIT : this).name().toString();
+  }
+
   /**
    * Returns the name in lowercase.
    * @return name in lowercase
    */
   @Override
   public String toString() {
-    return name().toLowerCase();
+    return name().toLowerCase(Locale.ROOT);
   }
 
 }

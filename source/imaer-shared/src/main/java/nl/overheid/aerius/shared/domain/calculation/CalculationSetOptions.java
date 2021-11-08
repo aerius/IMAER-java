@@ -33,7 +33,7 @@ public class CalculationSetOptions implements Serializable {
   private static final long serialVersionUID = 4L;
 
   private int calculationSetOptionsId;
-  private CalculationType calculationType = CalculationType.PERMIT;
+  private CalculationType calculationType = CalculationType.WNB;
   private double calculateMaximumRange;
   private final ArrayList<Substance> substances = new ArrayList<>();
   private final Set<EmissionResultKey> emissionResultKeys = new HashSet<>();
@@ -63,6 +63,13 @@ public class CalculationSetOptions implements Serializable {
 
   public ArrayList<Substance> getSubstances() {
     return substances;
+  }
+
+  /**
+   * @return Returns true if WNB maximum distance calculation is to be applied.
+   */
+  public boolean isWNBMaxDistance() {
+    return calculationType == CalculationType.WNB;
   }
 
   public boolean isStacking() {

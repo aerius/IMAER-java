@@ -33,7 +33,7 @@ import nl.overheid.aerius.shared.domain.v2.point.CalculationPointFeature;
  */
 public class Scenario implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 2L;
 
   private Theme theme;
   private CalculationSetOptions options = new CalculationSetOptions();
@@ -45,7 +45,7 @@ public class Scenario implements Serializable {
     this.theme = theme;
   }
 
-  protected Scenario() {
+  public Scenario() {
     // protected scenario for serialization.
   }
 
