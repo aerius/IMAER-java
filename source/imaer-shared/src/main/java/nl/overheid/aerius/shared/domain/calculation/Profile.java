@@ -17,9 +17,13 @@
  */
 package nl.overheid.aerius.shared.domain.calculation;
 
+import nl.overheid.aerius.shared.domain.Theme;
+
 /**
  * Profile types guide the calculation for legislation specific implementation choices.
+ * @deprecated Will be replaced by {@link Theme}.
  */
+@Deprecated
 public enum Profile {
   /**
    * Profile for the UK Government Joint Nature Conservation Committee.
