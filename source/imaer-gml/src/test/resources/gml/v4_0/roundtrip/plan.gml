@@ -24,18 +24,34 @@
         </imaer:AeriusCalculatorMetadata>
     </imaer:metadata>
     <imaer:featureMember>
-        <imaer:PlanEmissionSource sectorId="9000" gml:id="ES.1">
+        <imaer:EmissionSource sectorId="9999" gml:id="ES.1_0">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
-                    <imaer:localId>ES.1</imaer:localId>
+                    <imaer:localId>ES.1_0</imaer:localId>
                 </imaer:NEN3610ID>
             </imaer:identifier>
-            <imaer:label>Woonwijk</imaer:label>
+            <imaer:label>Plan; Woonwijk; Huizen</imaer:label>
+            <imaer:emissionSourceCharacteristics>
+                <imaer:EmissionSourceCharacteristics>
+                    <imaer:heatContent>
+                        <imaer:SpecifiedHeatContent>
+                            <imaer:value>10.0</imaer:value>
+                        </imaer:SpecifiedHeatContent>
+                    </imaer:heatContent>
+                    <imaer:emissionHeight>2.0</imaer:emissionHeight>
+                    <imaer:spread>1.0</imaer:spread>
+                    <imaer:diurnalVariation>
+                        <imaer:StandardDiurnalVariation>
+                            <imaer:standardType>INDUSTRIAL_ACTIVITY</imaer:standardType>
+                        </imaer:StandardDiurnalVariation>
+                    </imaer:diurnalVariation>
+                </imaer:EmissionSourceCharacteristics>
+            </imaer:emissionSourceCharacteristics>
             <imaer:geometry>
                 <imaer:EmissionSourceGeometry>
                     <imaer:GM_Surface>
-                        <gml:Polygon srsName="urn:ogc:def:crs:EPSG::28992" gml:id="ES.1.SURFACE">
+                        <gml:Polygon srsName="urn:ogc:def:crs:EPSG::28992" gml:id="ES.1_0.SURFACE">
                             <gml:exterior>
 <gml:LinearRing>
     <gml:posList>68555.26 443877.84 68924.86 443635.92 69072.7 443810.64 68709.82 444072.72 68555.26 443877.84</gml:posList>
@@ -52,7 +68,7 @@
             </imaer:emission>
             <imaer:emission>
                 <imaer:Emission substance="NOX">
-                    <imaer:value>472547.716035</imaer:value>
+                    <imaer:value>110.997</imaer:value>
                 </imaer:Emission>
             </imaer:emission>
             <imaer:emission>
@@ -65,54 +81,426 @@
                     <imaer:value>0.0</imaer:value>
                 </imaer:Emission>
             </imaer:emission>
-            <imaer:plan>
-                <imaer:Plan planType="PHA">
-                    <imaer:description>Huizen</imaer:description>
-                    <imaer:amount>100</imaer:amount>
-                </imaer:Plan>
-            </imaer:plan>
-            <imaer:plan>
-                <imaer:Plan planType="PHB">
-                    <imaer:description>Tussenwoningen</imaer:description>
-                    <imaer:amount>10</imaer:amount>
-                </imaer:Plan>
-            </imaer:plan>
-            <imaer:plan>
-                <imaer:Plan planType="POA">
-                    <imaer:description>Kantoren</imaer:description>
-                    <imaer:amount>105783</imaer:amount>
-                </imaer:Plan>
-            </imaer:plan>
-            <imaer:plan>
-                <imaer:Plan planType="PGA">
-                    <imaer:description>Kassen</imaer:description>
-                    <imaer:amount>1</imaer:amount>
-                </imaer:Plan>
-            </imaer:plan>
-            <imaer:plan>
-                <imaer:Plan planType="PEA">
-                    <imaer:description>Centrale</imaer:description>
-                    <imaer:amount>10000</imaer:amount>
-                </imaer:Plan>
-            </imaer:plan>
-            <imaer:plan>
-                <imaer:Plan planType="PIA">
-                    <imaer:description>Bouwmaterialen</imaer:description>
-                    <imaer:amount>100</imaer:amount>
-                </imaer:Plan>
-            </imaer:plan>
-            <imaer:plan>
-                <imaer:Plan planType="PWA">
-                    <imaer:description>Afvalverwerking</imaer:description>
-                    <imaer:amount>1</imaer:amount>
-                </imaer:Plan>
-            </imaer:plan>
-            <imaer:plan>
-                <imaer:Plan planType="PFA">
-                    <imaer:description>Café</imaer:description>
-                    <imaer:amount>1</imaer:amount>
-                </imaer:Plan>
-            </imaer:plan>
-        </imaer:PlanEmissionSource>
+        </imaer:EmissionSource>
+    </imaer:featureMember>
+    <imaer:featureMember>
+        <imaer:EmissionSource sectorId="9999" gml:id="ES.1_1">
+            <imaer:identifier>
+                <imaer:NEN3610ID>
+                    <imaer:namespace>NL.IMAER</imaer:namespace>
+                    <imaer:localId>ES.1_1</imaer:localId>
+                </imaer:NEN3610ID>
+            </imaer:identifier>
+            <imaer:label>Plan; Woonwijk; Tussenwoningen</imaer:label>
+            <imaer:emissionSourceCharacteristics>
+                <imaer:EmissionSourceCharacteristics>
+                    <imaer:heatContent>
+                        <imaer:SpecifiedHeatContent>
+                            <imaer:value>20.0</imaer:value>
+                        </imaer:SpecifiedHeatContent>
+                    </imaer:heatContent>
+                    <imaer:emissionHeight>4.0</imaer:emissionHeight>
+                    <imaer:spread>2.0</imaer:spread>
+                    <imaer:diurnalVariation>
+                        <imaer:StandardDiurnalVariation>
+                            <imaer:standardType>INDUSTRIAL_ACTIVITY</imaer:standardType>
+                        </imaer:StandardDiurnalVariation>
+                    </imaer:diurnalVariation>
+                </imaer:EmissionSourceCharacteristics>
+            </imaer:emissionSourceCharacteristics>
+            <imaer:geometry>
+                <imaer:EmissionSourceGeometry>
+                    <imaer:GM_Surface>
+                        <gml:Polygon srsName="urn:ogc:def:crs:EPSG::28992" gml:id="ES.1_1.SURFACE">
+                            <gml:exterior>
+<gml:LinearRing>
+    <gml:posList>68555.26 443877.84 68924.86 443635.92 69072.7 443810.64 68709.82 444072.72 68555.26 443877.84</gml:posList>
+</gml:LinearRing>
+                            </gml:exterior>
+                        </gml:Polygon>
+                    </imaer:GM_Surface>
+                </imaer:EmissionSourceGeometry>
+            </imaer:geometry>
+            <imaer:emission>
+                <imaer:Emission substance="NH3">
+                    <imaer:value>0.0</imaer:value>
+                </imaer:Emission>
+            </imaer:emission>
+            <imaer:emission>
+                <imaer:Emission substance="NOX">
+                    <imaer:value>15.5043</imaer:value>
+                </imaer:Emission>
+            </imaer:emission>
+            <imaer:emission>
+                <imaer:Emission substance="PM10">
+                    <imaer:value>0.0</imaer:value>
+                </imaer:Emission>
+            </imaer:emission>
+            <imaer:emission>
+                <imaer:Emission substance="NO2">
+                    <imaer:value>0.0</imaer:value>
+                </imaer:Emission>
+            </imaer:emission>
+        </imaer:EmissionSource>
+    </imaer:featureMember>
+    <imaer:featureMember>
+        <imaer:EmissionSource sectorId="9999" gml:id="ES.1_2">
+            <imaer:identifier>
+                <imaer:NEN3610ID>
+                    <imaer:namespace>NL.IMAER</imaer:namespace>
+                    <imaer:localId>ES.1_2</imaer:localId>
+                </imaer:NEN3610ID>
+            </imaer:identifier>
+            <imaer:label>Plan; Woonwijk; Kantoren</imaer:label>
+            <imaer:emissionSourceCharacteristics>
+                <imaer:EmissionSourceCharacteristics>
+                    <imaer:heatContent>
+                        <imaer:SpecifiedHeatContent>
+                            <imaer:value>30.0</imaer:value>
+                        </imaer:SpecifiedHeatContent>
+                    </imaer:heatContent>
+                    <imaer:emissionHeight>6.0</imaer:emissionHeight>
+                    <imaer:spread>3.0</imaer:spread>
+                    <imaer:diurnalVariation>
+                        <imaer:StandardDiurnalVariation>
+                            <imaer:standardType>INDUSTRIAL_ACTIVITY</imaer:standardType>
+                        </imaer:StandardDiurnalVariation>
+                    </imaer:diurnalVariation>
+                </imaer:EmissionSourceCharacteristics>
+            </imaer:emissionSourceCharacteristics>
+            <imaer:geometry>
+                <imaer:EmissionSourceGeometry>
+                    <imaer:GM_Surface>
+                        <gml:Polygon srsName="urn:ogc:def:crs:EPSG::28992" gml:id="ES.1_2.SURFACE">
+                            <gml:exterior>
+<gml:LinearRing>
+    <gml:posList>68555.26 443877.84 68924.86 443635.92 69072.7 443810.64 68709.82 444072.72 68555.26 443877.84</gml:posList>
+</gml:LinearRing>
+                            </gml:exterior>
+                        </gml:Polygon>
+                    </imaer:GM_Surface>
+                </imaer:EmissionSourceGeometry>
+            </imaer:geometry>
+            <imaer:emission>
+                <imaer:Emission substance="NH3">
+                    <imaer:value>0.0</imaer:value>
+                </imaer:Emission>
+            </imaer:emission>
+            <imaer:emission>
+                <imaer:Emission substance="NOX">
+                    <imaer:value>17088.714735</imaer:value>
+                </imaer:Emission>
+            </imaer:emission>
+            <imaer:emission>
+                <imaer:Emission substance="PM10">
+                    <imaer:value>0.0</imaer:value>
+                </imaer:Emission>
+            </imaer:emission>
+            <imaer:emission>
+                <imaer:Emission substance="NO2">
+                    <imaer:value>0.0</imaer:value>
+                </imaer:Emission>
+            </imaer:emission>
+        </imaer:EmissionSource>
+    </imaer:featureMember>
+    <imaer:featureMember>
+        <imaer:EmissionSource sectorId="9999" gml:id="ES.1_3">
+            <imaer:identifier>
+                <imaer:NEN3610ID>
+                    <imaer:namespace>NL.IMAER</imaer:namespace>
+                    <imaer:localId>ES.1_3</imaer:localId>
+                </imaer:NEN3610ID>
+            </imaer:identifier>
+            <imaer:label>Plan; Woonwijk; Kassen</imaer:label>
+            <imaer:emissionSourceCharacteristics>
+                <imaer:EmissionSourceCharacteristics>
+                    <imaer:heatContent>
+                        <imaer:SpecifiedHeatContent>
+                            <imaer:value>40.0</imaer:value>
+                        </imaer:SpecifiedHeatContent>
+                    </imaer:heatContent>
+                    <imaer:emissionHeight>8.0</imaer:emissionHeight>
+                    <imaer:spread>4.0</imaer:spread>
+                    <imaer:diurnalVariation>
+                        <imaer:StandardDiurnalVariation>
+                            <imaer:standardType>INDUSTRIAL_ACTIVITY</imaer:standardType>
+                        </imaer:StandardDiurnalVariation>
+                    </imaer:diurnalVariation>
+                </imaer:EmissionSourceCharacteristics>
+            </imaer:emissionSourceCharacteristics>
+            <imaer:geometry>
+                <imaer:EmissionSourceGeometry>
+                    <imaer:GM_Surface>
+                        <gml:Polygon srsName="urn:ogc:def:crs:EPSG::28992" gml:id="ES.1_3.SURFACE">
+                            <gml:exterior>
+<gml:LinearRing>
+    <gml:posList>68555.26 443877.84 68924.86 443635.92 69072.7 443810.64 68709.82 444072.72 68555.26 443877.84</gml:posList>
+</gml:LinearRing>
+                            </gml:exterior>
+                        </gml:Polygon>
+                    </imaer:GM_Surface>
+                </imaer:EmissionSourceGeometry>
+            </imaer:geometry>
+            <imaer:emission>
+                <imaer:Emission substance="NH3">
+                    <imaer:value>0.0</imaer:value>
+                </imaer:Emission>
+            </imaer:emission>
+            <imaer:emission>
+                <imaer:Emission substance="NOX">
+                    <imaer:value>1004.0</imaer:value>
+                </imaer:Emission>
+            </imaer:emission>
+            <imaer:emission>
+                <imaer:Emission substance="PM10">
+                    <imaer:value>0.0</imaer:value>
+                </imaer:Emission>
+            </imaer:emission>
+            <imaer:emission>
+                <imaer:Emission substance="NO2">
+                    <imaer:value>0.0</imaer:value>
+                </imaer:Emission>
+            </imaer:emission>
+        </imaer:EmissionSource>
+    </imaer:featureMember>
+    <imaer:featureMember>
+        <imaer:EmissionSource sectorId="9999" gml:id="ES.1_4">
+            <imaer:identifier>
+                <imaer:NEN3610ID>
+                    <imaer:namespace>NL.IMAER</imaer:namespace>
+                    <imaer:localId>ES.1_4</imaer:localId>
+                </imaer:NEN3610ID>
+            </imaer:identifier>
+            <imaer:label>Plan; Woonwijk; Centrale</imaer:label>
+            <imaer:emissionSourceCharacteristics>
+                <imaer:EmissionSourceCharacteristics>
+                    <imaer:heatContent>
+                        <imaer:SpecifiedHeatContent>
+                            <imaer:value>50.0</imaer:value>
+                        </imaer:SpecifiedHeatContent>
+                    </imaer:heatContent>
+                    <imaer:emissionHeight>10.0</imaer:emissionHeight>
+                    <imaer:spread>5.0</imaer:spread>
+                    <imaer:diurnalVariation>
+                        <imaer:StandardDiurnalVariation>
+                            <imaer:standardType>INDUSTRIAL_ACTIVITY</imaer:standardType>
+                        </imaer:StandardDiurnalVariation>
+                    </imaer:diurnalVariation>
+                </imaer:EmissionSourceCharacteristics>
+            </imaer:emissionSourceCharacteristics>
+            <imaer:geometry>
+                <imaer:EmissionSourceGeometry>
+                    <imaer:GM_Surface>
+                        <gml:Polygon srsName="urn:ogc:def:crs:EPSG::28992" gml:id="ES.1_4.SURFACE">
+                            <gml:exterior>
+<gml:LinearRing>
+    <gml:posList>68555.26 443877.84 68924.86 443635.92 69072.7 443810.64 68709.82 444072.72 68555.26 443877.84</gml:posList>
+</gml:LinearRing>
+                            </gml:exterior>
+                        </gml:Polygon>
+                    </imaer:GM_Surface>
+                </imaer:EmissionSourceGeometry>
+            </imaer:geometry>
+            <imaer:emission>
+                <imaer:Emission substance="NH3">
+                    <imaer:value>0.0</imaer:value>
+                </imaer:Emission>
+            </imaer:emission>
+            <imaer:emission>
+                <imaer:Emission substance="NOX">
+                    <imaer:value>3000.0</imaer:value>
+                </imaer:Emission>
+            </imaer:emission>
+            <imaer:emission>
+                <imaer:Emission substance="PM10">
+                    <imaer:value>0.0</imaer:value>
+                </imaer:Emission>
+            </imaer:emission>
+            <imaer:emission>
+                <imaer:Emission substance="NO2">
+                    <imaer:value>0.0</imaer:value>
+                </imaer:Emission>
+            </imaer:emission>
+        </imaer:EmissionSource>
+    </imaer:featureMember>
+    <imaer:featureMember>
+        <imaer:EmissionSource sectorId="9999" gml:id="ES.1_5">
+            <imaer:identifier>
+                <imaer:NEN3610ID>
+                    <imaer:namespace>NL.IMAER</imaer:namespace>
+                    <imaer:localId>ES.1_5</imaer:localId>
+                </imaer:NEN3610ID>
+            </imaer:identifier>
+            <imaer:label>Plan; Woonwijk; Bouwmaterialen</imaer:label>
+            <imaer:emissionSourceCharacteristics>
+                <imaer:EmissionSourceCharacteristics>
+                    <imaer:heatContent>
+                        <imaer:SpecifiedHeatContent>
+                            <imaer:value>60.0</imaer:value>
+                        </imaer:SpecifiedHeatContent>
+                    </imaer:heatContent>
+                    <imaer:emissionHeight>12.0</imaer:emissionHeight>
+                    <imaer:spread>6.0</imaer:spread>
+                    <imaer:diurnalVariation>
+                        <imaer:StandardDiurnalVariation>
+                            <imaer:standardType>INDUSTRIAL_ACTIVITY</imaer:standardType>
+                        </imaer:StandardDiurnalVariation>
+                    </imaer:diurnalVariation>
+                </imaer:EmissionSourceCharacteristics>
+            </imaer:emissionSourceCharacteristics>
+            <imaer:geometry>
+                <imaer:EmissionSourceGeometry>
+                    <imaer:GM_Surface>
+                        <gml:Polygon srsName="urn:ogc:def:crs:EPSG::28992" gml:id="ES.1_5.SURFACE">
+                            <gml:exterior>
+<gml:LinearRing>
+    <gml:posList>68555.26 443877.84 68924.86 443635.92 69072.7 443810.64 68709.82 444072.72 68555.26 443877.84</gml:posList>
+</gml:LinearRing>
+                            </gml:exterior>
+                        </gml:Polygon>
+                    </imaer:GM_Surface>
+                </imaer:EmissionSourceGeometry>
+            </imaer:geometry>
+            <imaer:emission>
+                <imaer:Emission substance="NH3">
+                    <imaer:value>0.0</imaer:value>
+                </imaer:Emission>
+            </imaer:emission>
+            <imaer:emission>
+                <imaer:Emission substance="NOX">
+                    <imaer:value>67.5</imaer:value>
+                </imaer:Emission>
+            </imaer:emission>
+            <imaer:emission>
+                <imaer:Emission substance="PM10">
+                    <imaer:value>0.0</imaer:value>
+                </imaer:Emission>
+            </imaer:emission>
+            <imaer:emission>
+                <imaer:Emission substance="NO2">
+                    <imaer:value>0.0</imaer:value>
+                </imaer:Emission>
+            </imaer:emission>
+        </imaer:EmissionSource>
+    </imaer:featureMember>
+    <imaer:featureMember>
+        <imaer:EmissionSource sectorId="9999" gml:id="ES.1_6">
+            <imaer:identifier>
+                <imaer:NEN3610ID>
+                    <imaer:namespace>NL.IMAER</imaer:namespace>
+                    <imaer:localId>ES.1_6</imaer:localId>
+                </imaer:NEN3610ID>
+            </imaer:identifier>
+            <imaer:label>Plan; Woonwijk; Afvalverwerking</imaer:label>
+            <imaer:emissionSourceCharacteristics>
+                <imaer:EmissionSourceCharacteristics>
+                    <imaer:heatContent>
+                        <imaer:SpecifiedHeatContent>
+                            <imaer:value>70.0</imaer:value>
+                        </imaer:SpecifiedHeatContent>
+                    </imaer:heatContent>
+                    <imaer:emissionHeight>14.0</imaer:emissionHeight>
+                    <imaer:spread>7.0</imaer:spread>
+                    <imaer:diurnalVariation>
+                        <imaer:StandardDiurnalVariation>
+                            <imaer:standardType>INDUSTRIAL_ACTIVITY</imaer:standardType>
+                        </imaer:StandardDiurnalVariation>
+                    </imaer:diurnalVariation>
+                </imaer:EmissionSourceCharacteristics>
+            </imaer:emissionSourceCharacteristics>
+            <imaer:geometry>
+                <imaer:EmissionSourceGeometry>
+                    <imaer:GM_Surface>
+                        <gml:Polygon srsName="urn:ogc:def:crs:EPSG::28992" gml:id="ES.1_6.SURFACE">
+                            <gml:exterior>
+<gml:LinearRing>
+    <gml:posList>68555.26 443877.84 68924.86 443635.92 69072.7 443810.64 68709.82 444072.72 68555.26 443877.84</gml:posList>
+</gml:LinearRing>
+                            </gml:exterior>
+                        </gml:Polygon>
+                    </imaer:GM_Surface>
+                </imaer:EmissionSourceGeometry>
+            </imaer:geometry>
+            <imaer:emission>
+                <imaer:Emission substance="NH3">
+                    <imaer:value>0.0</imaer:value>
+                </imaer:Emission>
+            </imaer:emission>
+            <imaer:emission>
+                <imaer:Emission substance="NOX">
+                    <imaer:value>341647.0</imaer:value>
+                </imaer:Emission>
+            </imaer:emission>
+            <imaer:emission>
+                <imaer:Emission substance="PM10">
+                    <imaer:value>0.0</imaer:value>
+                </imaer:Emission>
+            </imaer:emission>
+            <imaer:emission>
+                <imaer:Emission substance="NO2">
+                    <imaer:value>0.0</imaer:value>
+                </imaer:Emission>
+            </imaer:emission>
+        </imaer:EmissionSource>
+    </imaer:featureMember>
+    <imaer:featureMember>
+        <imaer:EmissionSource sectorId="9999" gml:id="ES.1_7">
+            <imaer:identifier>
+                <imaer:NEN3610ID>
+                    <imaer:namespace>NL.IMAER</imaer:namespace>
+                    <imaer:localId>ES.1_7</imaer:localId>
+                </imaer:NEN3610ID>
+            </imaer:identifier>
+            <imaer:label>Plan; Woonwijk; Café</imaer:label>
+            <imaer:emissionSourceCharacteristics>
+                <imaer:EmissionSourceCharacteristics>
+                    <imaer:heatContent>
+                        <imaer:SpecifiedHeatContent>
+                            <imaer:value>80.0</imaer:value>
+                        </imaer:SpecifiedHeatContent>
+                    </imaer:heatContent>
+                    <imaer:emissionHeight>16.0</imaer:emissionHeight>
+                    <imaer:spread>8.0</imaer:spread>
+                    <imaer:diurnalVariation>
+                        <imaer:StandardDiurnalVariation>
+                            <imaer:standardType>INDUSTRIAL_ACTIVITY</imaer:standardType>
+                        </imaer:StandardDiurnalVariation>
+                    </imaer:diurnalVariation>
+                </imaer:EmissionSourceCharacteristics>
+            </imaer:emissionSourceCharacteristics>
+            <imaer:geometry>
+                <imaer:EmissionSourceGeometry>
+                    <imaer:GM_Surface>
+                        <gml:Polygon srsName="urn:ogc:def:crs:EPSG::28992" gml:id="ES.1_7.SURFACE">
+                            <gml:exterior>
+<gml:LinearRing>
+    <gml:posList>68555.26 443877.84 68924.86 443635.92 69072.7 443810.64 68709.82 444072.72 68555.26 443877.84</gml:posList>
+</gml:LinearRing>
+                            </gml:exterior>
+                        </gml:Polygon>
+                    </imaer:GM_Surface>
+                </imaer:EmissionSourceGeometry>
+            </imaer:geometry>
+            <imaer:emission>
+                <imaer:Emission substance="NH3">
+                    <imaer:value>0.0</imaer:value>
+                </imaer:Emission>
+            </imaer:emission>
+            <imaer:emission>
+                <imaer:Emission substance="NOX">
+                    <imaer:value>109614.0</imaer:value>
+                </imaer:Emission>
+            </imaer:emission>
+            <imaer:emission>
+                <imaer:Emission substance="PM10">
+                    <imaer:value>0.0</imaer:value>
+                </imaer:Emission>
+            </imaer:emission>
+            <imaer:emission>
+                <imaer:Emission substance="NO2">
+                    <imaer:value>0.0</imaer:value>
+                </imaer:Emission>
+            </imaer:emission>
+        </imaer:EmissionSource>
     </imaer:featureMember>
 </imaer:FeatureCollectionCalculator>

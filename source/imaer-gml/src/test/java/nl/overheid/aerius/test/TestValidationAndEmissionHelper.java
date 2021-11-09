@@ -27,7 +27,10 @@ import java.util.stream.Collectors;
 import nl.overheid.aerius.gml.base.GMLLegacyCodeConverter.Conversion;
 import nl.overheid.aerius.gml.base.GMLLegacyCodeConverter.GMLLegacyCodeType;
 import nl.overheid.aerius.gml.base.conversion.MobileSourceOffRoadConversion;
+import nl.overheid.aerius.gml.base.conversion.PlanConversion;
 import nl.overheid.aerius.shared.domain.Substance;
+import nl.overheid.aerius.shared.domain.ops.DiurnalVariation;
+import nl.overheid.aerius.shared.domain.v2.characteristics.OPSSourceCharacteristics;
 import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
 import nl.overheid.aerius.shared.domain.v2.source.road.RoadSpeedType;
 import nl.overheid.aerius.shared.domain.v2.source.road.RoadType;
@@ -148,7 +151,7 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
       new OffRoadOldCodesHelper("SVM4C30", "B4T", 1.0687796, null),
       new OffRoadOldCodesHelper("P1980", "SI75560DSN", 16.208658, 0.410843));
 
-  private static final List<GenericConstructHelper> PLAN_CATEGORIES = Arrays.asList(
+  private static final List<GenericConstructHelper> OLD_PLAN_CATEGORIES = Arrays.asList(
       new GenericConstructHelper("PHA", new EmissionHelper(1.10997, 0.0)),
       new GenericConstructHelper("PHB", new EmissionHelper(1.55043, 0.0)),
       new GenericConstructHelper("POA", new EmissionHelper(0.161545, 0.0)),
@@ -380,6 +383,24 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
     OFF_ROAD_MOBILE_SOURCE_OLD_CODES.forEach(
         helper -> conversions.put(helper.oldCode, new MobileSourceOffRoadConversion(helper.fuelConsumptionUnderLoad, helper.fuelConsumptionIdle)));
     return conversions;
+  }
+
+  public static Map<String, PlanConversion> legacyPlanConversions() {
+    final Map<String, PlanConversion> conversions = new HashMap<>();
+    OLD_PLAN_CATEGORIES.forEach(
+        helper -> conversions.put(helper.code,
+            new PlanConversion(helper.emissions.toEmissions(), mockPlanCharacteristics(OLD_PLAN_CATEGORIES.indexOf(helper) + 1))));
+    return conversions;
+  }
+
+  private static final OPSSourceCharacteristics mockPlanCharacteristics(final int index) {
+    final OPSSourceCharacteristics characteristics = new OPSSourceCharacteristics();
+    characteristics.setEmissionHeight(index * 2.0);
+    characteristics.setSpread(index * 1.0);
+    characteristics.setHeatContent(index * 10.0);
+    characteristics.setParticleSizeDistribution(index);
+    characteristics.setDiurnalVariation(DiurnalVariation.INDUSTRIAL_ACTIVITY);
+    return characteristics;
   }
 
   @Override
@@ -764,7 +785,7 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
   }
 
   private Optional<GenericConstructHelper> plan(final String planCode) {
-    return PLAN_CATEGORIES.stream()
+    return OLD_PLAN_CATEGORIES.stream()
         .filter(c -> c.code.equalsIgnoreCase(planCode))
         .findFirst();
   }

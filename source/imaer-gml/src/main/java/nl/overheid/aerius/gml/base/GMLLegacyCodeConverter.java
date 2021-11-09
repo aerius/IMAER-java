@@ -16,10 +16,10 @@
  */
 package nl.overheid.aerius.gml.base;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import nl.overheid.aerius.gml.base.conversion.MobileSourceOffRoadConversion;
+import nl.overheid.aerius.gml.base.conversion.PlanConversion;
 
 /**
  * Util class to convert old codes in previous versions of AERIUS gml files to the codes of the latest version.
@@ -39,15 +39,19 @@ public class GMLLegacyCodeConverter {
 
   private final Map<GMLLegacyCodeType, Map<String, Conversion>> codeMaps;
   private final Map<String, MobileSourceOffRoadConversion> mobileSourceOffRoadConversions;
+  private final Map<String, PlanConversion> planConversions;
 
   /**
    * @param codeMaps The &lt;OldCode, NewCode&gt; maps to use for each legacy code type.
    * @param mobileSourceOffRoadConversions The &lt;OldCode, ConversionValues&gt; to use for mobile sources.
+   * @param planConversions The &lt;OldCode, ConversionValues&gt; to use for plan activities.
    */
   public GMLLegacyCodeConverter(final Map<GMLLegacyCodeType, Map<String, Conversion>> codeMaps,
-      final Map<String, MobileSourceOffRoadConversion> mobileSourceOffRoadConversions) {
-    this.codeMaps = codeMaps == null ? new HashMap<>() : codeMaps;
-    this.mobileSourceOffRoadConversions = mobileSourceOffRoadConversions == null ? new HashMap<>() : mobileSourceOffRoadConversions;
+      final Map<String, MobileSourceOffRoadConversion> mobileSourceOffRoadConversions,
+      final Map<String, PlanConversion> planConversions) {
+    this.codeMaps = codeMaps == null ? Map.of() : codeMaps;
+    this.mobileSourceOffRoadConversions = mobileSourceOffRoadConversions == null ? Map.of() : mobileSourceOffRoadConversions;
+    this.planConversions = planConversions == null ? Map.of() : planConversions;
   }
 
   /**
@@ -63,6 +67,10 @@ public class GMLLegacyCodeConverter {
 
   protected MobileSourceOffRoadConversion getMobileSourceOffRoadConversion(final String oldCode) {
     return mobileSourceOffRoadConversions.get(oldCode);
+  }
+
+  protected PlanConversion getPlanConversion(final String oldCode) {
+    return planConversions.get(oldCode);
   }
 
   /**

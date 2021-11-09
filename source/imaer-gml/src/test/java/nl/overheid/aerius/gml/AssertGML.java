@@ -193,6 +193,8 @@ public final class AssertGML {
     when(gmlHelper.getLegacyCodes(any())).thenAnswer(invocation -> TestValidationAndEmissionHelper.legacyCodes());
     when(gmlHelper.getLegacyMobileSourceOffRoadConversions())
         .thenAnswer(invocation -> TestValidationAndEmissionHelper.legacyMobileSourceOffRoadConversions());
+    when(gmlHelper.getLegacyPlanConversions())
+        .thenAnswer(invocation -> TestValidationAndEmissionHelper.legacyPlanConversions());
     when(gmlHelper.determineDefaultCharacteristicsBySectorId(anyInt())).thenReturn(mock(OPSSourceCharacteristics.class));
     when(gmlHelper.getValidationHelper()).thenReturn(valiationAndEmissionHelper);
     return gmlHelper;

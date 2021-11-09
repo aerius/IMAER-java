@@ -66,7 +66,9 @@ final class SourceCharacteristics2GML {
       return heatContent;
     } else {
       final SpecifiedHeatContent heatContent = new SpecifiedHeatContent();
-      heatContent.setValue(characteristics.getHeatContent());
+      heatContent.setValue(characteristics.getHeatContent() == null
+          ? 0
+          : characteristics.getHeatContent());
       return heatContent;
 
     }
