@@ -63,7 +63,7 @@ public class RblCohesionValidator {
     private final List<AeriusException> errors = new ArrayList<>();
     private final List<AeriusException> warnings = new ArrayList<>();
 
-    void add(final ScenarioSituation situation) {
+    public void add(final ScenarioSituation situation) {
       addSources(situation);
       addMeasures(situation);
       addDispersionLineIds(situation);
