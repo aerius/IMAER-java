@@ -18,7 +18,6 @@ package nl.overheid.aerius.gml.v4_0.togml;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map.Entry;
 
 import nl.overheid.aerius.gml.v4_0.source.TimeUnit;
 import nl.overheid.aerius.gml.v4_0.source.road.CustomVehicle;
@@ -176,17 +175,21 @@ class Road2GML extends SpecificSource2GML<nl.overheid.aerius.shared.domain.v2.so
   }
 
   private void addVehicleEmissionSource(final List<VehiclesProperty> vehiclesList, final StandardVehicles vse, final boolean isFreeway) {
-    for (final Entry<VehicleType, ValuesPerVehicleType> entry : vse.getValuesPerVehicleTypes().entrySet()) {
-      final StandardVehicle sv = new StandardVehicle();
-      sv.setVehiclesPerTimeUnit(entry.getValue().getVehiclesPerTimeUnit());
-      sv.setStagnationFactor(entry.getValue().getStagnationFraction());
-      sv.setVehicleType(entry.getKey());
-      sv.setMaximumSpeed(vse.getMaximumSpeed());
-      if (isFreeway) {
-        sv.setStrictEnforcement(vse.getStrictEnforcement());
+    // Loop over possible VehicleType values instead of over EntrySet to get a predictable order
+    for (final VehicleType vehicleType : VehicleType.values()) {
+      if (vse.getValuesPerVehicleTypes().containsKey(vehicleType)) {
+        final ValuesPerVehicleType valuesPerVehicleType = vse.getValuesPerVehicleTypes().get(vehicleType);
+        final StandardVehicle sv = new StandardVehicle();
+        sv.setVehiclesPerTimeUnit(valuesPerVehicleType.getVehiclesPerTimeUnit());
+        sv.setStagnationFactor(valuesPerVehicleType.getStagnationFraction());
+        sv.setVehicleType(vehicleType);
+        sv.setMaximumSpeed(vse.getMaximumSpeed());
+        if (isFreeway) {
+          sv.setStrictEnforcement(vse.getStrictEnforcement());
+        }
+        sv.setTimeUnit(TimeUnit.from(vse.getTimeUnit()));
+        vehiclesList.add(new VehiclesProperty(sv));
       }
-      sv.setTimeUnit(TimeUnit.from(vse.getTimeUnit()));
-      vehiclesList.add(new VehiclesProperty(sv));
     }
   }
 
