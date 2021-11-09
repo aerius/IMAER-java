@@ -35,7 +35,7 @@ import com.helger.schematron.SchematronHelper;
 import com.helger.schematron.testfiles.SchematronTestHelper;
 import com.helger.xml.microdom.IMicroDocument;
 
-import nl.overheid.aerius.shared.domain.calculation.Profile;
+import nl.overheid.aerius.shared.domain.Theme;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.util.ImaerFileUtil;
 
@@ -50,7 +50,7 @@ public final class ImaerSchematronValidatorTest {
   private final ImaerSchematronValidator validator;
 
   public ImaerSchematronValidatorTest() throws AeriusException {
-    validator = new ImaerSchematronValidator(Profile.NSL);
+    validator = new ImaerSchematronValidator(Theme.RBL);
   }
 
   @Test

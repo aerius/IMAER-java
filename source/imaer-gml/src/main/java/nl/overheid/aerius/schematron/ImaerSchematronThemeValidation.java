@@ -20,23 +20,23 @@ import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.util.Arrays;
 
-import nl.overheid.aerius.shared.domain.calculation.Profile;
+import nl.overheid.aerius.shared.domain.Theme;
 
 /**
  * Enum with complete set of validations per profile.
  */
-public enum ImaerSchematronProfileValidation {
+public enum ImaerSchematronThemeValidation {
 
-  NSL(Profile.NSL,
+  RBL(Theme.RBL,
       ImaerSchematronValidation.METADATA, ImaerSchematronValidation.SRM1ROAD, ImaerSchematronValidation.SRM2ROAD,
       ImaerSchematronValidation.NSLCALCULATIONPOINT, ImaerSchematronValidation.SRM1DISPERSIONLINE,
       ImaerSchematronValidation.SRM1MEASUREAREA, ImaerSchematronValidation.CALCULATIONPOINTCORRECTION);
 
-  private final Profile profile;
+  private final Theme theme;
   private String schema;
 
-  private ImaerSchematronProfileValidation(final Profile profile, final ImaerSchematronValidation... validations) {
-    this.profile = profile;
+  private ImaerSchematronThemeValidation(final Theme theme, final ImaerSchematronValidation... validations) {
+    this.theme = theme;
 
     try {
       schema = ImaerSchematronResourceBuilder.buildSchematron(Arrays.asList(validations));
@@ -45,9 +45,9 @@ public enum ImaerSchematronProfileValidation {
     }
   }
 
-  public static final ImaerSchematronProfileValidation getValidations(final Profile profile) {
-    for (final ImaerSchematronProfileValidation pv : values()) {
-      if (pv.profile == profile) {
+  public static final ImaerSchematronThemeValidation getValidations(final Theme theme) {
+    for (final ImaerSchematronThemeValidation pv : values()) {
+      if (pv.theme == theme) {
         return pv;
       }
     }

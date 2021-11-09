@@ -37,7 +37,7 @@ import com.helger.schematron.pure.SchematronResourcePure;
 import com.helger.schematron.pure.errorhandler.CollectingPSErrorHandler;
 import com.helger.schematron.pure.errorhandler.IPSErrorHandler;
 
-import nl.overheid.aerius.shared.domain.calculation.Profile;
+import nl.overheid.aerius.shared.domain.Theme;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 
@@ -52,11 +52,11 @@ public class ImaerSchematronValidator {
   /**
    * Creates a new Schematron validator dedicated for the given profile.
    *
-   * @param profile profile to configure validator for
+   * @param theme theme to configure validator for
    * @throws AeriusException
    */
-  public ImaerSchematronValidator(final Profile profile) throws AeriusException {
-    schematronResourcePure = createSchematronResource(ImaerSchematronProfileValidation.getValidations(profile).getSchema());
+  public ImaerSchematronValidator(final Theme theme) throws AeriusException {
+    schematronResourcePure = createSchematronResource(ImaerSchematronThemeValidation.getValidations(theme).getSchema());
   }
 
   public ImaerSchematronValidator(final ImaerSchematronValidation validation) throws AeriusException, IOException {
