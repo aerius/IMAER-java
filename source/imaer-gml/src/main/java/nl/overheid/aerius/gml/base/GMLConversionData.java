@@ -27,8 +27,10 @@ import java.util.Set;
 import nl.overheid.aerius.gml.base.GMLLegacyCodeConverter.Conversion;
 import nl.overheid.aerius.gml.base.GMLLegacyCodeConverter.GMLLegacyCodeType;
 import nl.overheid.aerius.gml.base.conversion.MobileSourceOffRoadConversion;
+import nl.overheid.aerius.gml.base.conversion.PlanConversion;
 import nl.overheid.aerius.gml.base.source.ship.v31.GMLInlandShippingSupplier;
 import nl.overheid.aerius.gml.base.source.ship.v31.InlandShippingUtil;
+import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.geo.ReceptorGridSettings;
 import nl.overheid.aerius.shared.domain.v2.building.BuildingFeature;
 import nl.overheid.aerius.shared.domain.v2.characteristics.OPSSourceCharacteristics;
@@ -149,6 +151,20 @@ public class GMLConversionData {
       estimation = conversion.estimageOffRoadOperatingHours(literFuelPerYear, hoursIdlePerYear, engineDisplacement);
     }
     return estimation;
+  }
+
+  public boolean isInvalidPlanActivityCode(final String oldCode) {
+    return legacyCodeConverter.getPlanConversion(oldCode) == null;
+  }
+
+  public Map<Substance, Double> determinePlanActivityEmissions(final String oldCode, final int amount) {
+    final PlanConversion conversion = legacyCodeConverter.getPlanConversion(oldCode);
+    return conversion == null ? Map.of() : conversion.calculateEmissionsForActivity(amount);
+  }
+
+  public OPSSourceCharacteristics determinePlanActivityCharacteristics(final String oldCode) {
+    final PlanConversion conversion = legacyCodeConverter.getPlanConversion(oldCode);
+    return conversion == null ? null : conversion.getCharacteristics();
   }
 
   private Reason getReason(final GMLLegacyCodeType codeType) {

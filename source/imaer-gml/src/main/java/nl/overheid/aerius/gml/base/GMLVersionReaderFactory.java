@@ -61,7 +61,8 @@ public abstract class GMLVersionReaderFactory {
     this.featureCollectionClass = featureCollectionClass;
     schema = createSchema(schemaLocation);
     legacyCodeConverter =
-        new GMLLegacyCodeConverter(legacyCodeSupplier.getLegacyCodes(version), legacyCodeSupplier.getLegacyMobileSourceOffRoadConversions());
+        new GMLLegacyCodeConverter(legacyCodeSupplier.getLegacyCodes(version), legacyCodeSupplier.getLegacyMobileSourceOffRoadConversions(),
+            legacyCodeSupplier.getLegacyPlanConversions());
   }
 
   private static Schema createSchema(final String schemaLocation) throws AeriusException {
