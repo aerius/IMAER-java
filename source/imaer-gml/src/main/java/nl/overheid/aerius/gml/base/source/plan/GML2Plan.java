@@ -36,6 +36,7 @@ import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 public class GML2Plan<T extends IsGmlPlanEmissionSource> extends AbstractGML2Specific<T, PlanEmissionSource> {
 
   private static final int DEFAULT_SECTOR = 9999;
+  private static final String DESCRIPTION_PREFIX = "Plan";
 
   private final GML2Geometry gml2Geometry;
 
@@ -86,7 +87,7 @@ public class GML2Plan<T extends IsGmlPlanEmissionSource> extends AbstractGML2Spe
   }
 
   private String constructLabel(final String sourceLabel, final String subSourceDescription) {
-    return Stream.of(sourceLabel, subSourceDescription)
+    return Stream.of(DESCRIPTION_PREFIX, sourceLabel, subSourceDescription)
         .filter(x -> x != null && !x.isBlank())
         .collect(Collectors.joining("; "));
   }

@@ -31,7 +31,7 @@
                     <imaer:localId>ES.1_0</imaer:localId>
                 </imaer:NEN3610ID>
             </imaer:identifier>
-            <imaer:label>Woonwijk; Huizen</imaer:label>
+            <imaer:label>Plan; Woonwijk; Huizen</imaer:label>
             <imaer:emissionSourceCharacteristics>
                 <imaer:EmissionSourceCharacteristics>
                     <imaer:heatContent>
@@ -91,7 +91,7 @@
                     <imaer:localId>ES.1_1</imaer:localId>
                 </imaer:NEN3610ID>
             </imaer:identifier>
-            <imaer:label>Woonwijk; Tussenwoningen</imaer:label>
+            <imaer:label>Plan; Woonwijk; Tussenwoningen</imaer:label>
             <imaer:emissionSourceCharacteristics>
                 <imaer:EmissionSourceCharacteristics>
                     <imaer:heatContent>
@@ -151,7 +151,7 @@
                     <imaer:localId>ES.1_2</imaer:localId>
                 </imaer:NEN3610ID>
             </imaer:identifier>
-            <imaer:label>Woonwijk; Kantoren</imaer:label>
+            <imaer:label>Plan; Woonwijk; Kantoren</imaer:label>
             <imaer:emissionSourceCharacteristics>
                 <imaer:EmissionSourceCharacteristics>
                     <imaer:heatContent>
@@ -211,7 +211,7 @@
                     <imaer:localId>ES.1_3</imaer:localId>
                 </imaer:NEN3610ID>
             </imaer:identifier>
-            <imaer:label>Woonwijk; Kassen</imaer:label>
+            <imaer:label>Plan; Woonwijk; Kassen</imaer:label>
             <imaer:emissionSourceCharacteristics>
                 <imaer:EmissionSourceCharacteristics>
                     <imaer:heatContent>
@@ -271,7 +271,7 @@
                     <imaer:localId>ES.1_4</imaer:localId>
                 </imaer:NEN3610ID>
             </imaer:identifier>
-            <imaer:label>Woonwijk; Centrale</imaer:label>
+            <imaer:label>Plan; Woonwijk; Centrale</imaer:label>
             <imaer:emissionSourceCharacteristics>
                 <imaer:EmissionSourceCharacteristics>
                     <imaer:heatContent>
@@ -331,7 +331,7 @@
                     <imaer:localId>ES.1_5</imaer:localId>
                 </imaer:NEN3610ID>
             </imaer:identifier>
-            <imaer:label>Woonwijk; Bouwmaterialen</imaer:label>
+            <imaer:label>Plan; Woonwijk; Bouwmaterialen</imaer:label>
             <imaer:emissionSourceCharacteristics>
                 <imaer:EmissionSourceCharacteristics>
                     <imaer:heatContent>
@@ -391,7 +391,7 @@
                     <imaer:localId>ES.1_6</imaer:localId>
                 </imaer:NEN3610ID>
             </imaer:identifier>
-            <imaer:label>Woonwijk; Afvalverwerking</imaer:label>
+            <imaer:label>Plan; Woonwijk; Afvalverwerking</imaer:label>
             <imaer:emissionSourceCharacteristics>
                 <imaer:EmissionSourceCharacteristics>
                     <imaer:heatContent>
@@ -451,7 +451,7 @@
                     <imaer:localId>ES.1_7</imaer:localId>
                 </imaer:NEN3610ID>
             </imaer:identifier>
-            <imaer:label>Woonwijk; Café</imaer:label>
+            <imaer:label>Plan; Woonwijk; Café</imaer:label>
             <imaer:emissionSourceCharacteristics>
                 <imaer:EmissionSourceCharacteristics>
                     <imaer:heatContent>
