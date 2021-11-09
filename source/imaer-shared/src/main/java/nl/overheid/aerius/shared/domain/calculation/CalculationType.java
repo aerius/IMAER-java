@@ -39,13 +39,7 @@ public enum CalculationType {
   /**
    * Calculate deposition in a radius around the sources.
    */
-  RADIUS,
-
-  @Deprecated
-  WNB,
-  @Deprecated
-  NSL
-  ;
+  RADIUS;
 
   /**
    * Safely returns a CalculationType. It is case independent and returns null in
@@ -63,7 +57,7 @@ public enum CalculationType {
   }
 
   public String type() {
-    return (this == WNB ? CalculationType.PERMIT : this).name().toString();
+    return name().toString();
   }
 
   /**
