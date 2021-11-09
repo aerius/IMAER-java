@@ -106,6 +106,8 @@ public class GMLRoundtripTest {
       {"situation_type_proposed",},
       {"situation_type_temporary",},
       {"situation_type_netting",},
+      {"situation_type_combination_reference",},
+      {"situation_type_combination_proposed",},
   };
 
   private static final String LATEST_VERSION = "latest";

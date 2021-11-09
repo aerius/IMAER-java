@@ -2808,6 +2808,16 @@ NOTE Bij een situatie kan aangegeven worden om wat voor soort/type situatie het 
           <documentation>Salderingssituatie, bedoeld als aanvullende situatie voor extern salderen. Bij dit situatie type is de mogelijkheid om een fractie/percentage op te geven, waarbij dit gedeelte van de depositie in de salderingssituatie NIET mag worden uitgegeven (ten behoeve van de natuur).</documentation>
         </annotation>
       </enumeration>
+      <enumeration value="COMBINATION_REFERENCE">
+        <annotation>
+          <documentation>Cumulatie referentie situatie. Bedoeld voor berekeningen waarbij nabije projecten ook worden meegenomen.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="COMBINATION_PROPOSED">
+        <annotation>
+          <documentation>Cumulatie beoogde situatie. Bedoeld voor berekeningen waarbij nabije projecten ook worden meegenomen.</documentation>
+        </annotation>
+      </enumeration>
     </restriction>
   </simpleType>
   <element name="SpecificVehicle" substitutionGroup="IMAER:Vehicle" type="IMAER:SpecificVehicleType">
