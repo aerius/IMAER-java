@@ -28,6 +28,7 @@ import nl.overheid.aerius.shared.domain.ops.OutflowDirectionType;
 import nl.overheid.aerius.shared.domain.ops.OutflowVelocityType;
 import nl.overheid.aerius.shared.domain.v2.characteristics.HeatContentType;
 import nl.overheid.aerius.shared.domain.v2.characteristics.OPSSourceCharacteristics;
+import nl.overheid.aerius.util.gml.GMLIdUtil;
 
 /**
  *
@@ -89,7 +90,10 @@ final class SourceCharacteristics2GML {
   }
 
   private static ReferenceType determineBuilding(final OPSSourceCharacteristics characteristics) {
-    return toReferenceType(characteristics.getBuildingId());
+    final String validBuildingId = characteristics.getBuildingId() == null
+        ? null
+        : GMLIdUtil.toValidGmlId(characteristics.getBuildingId(), GMLIdUtil.BUILDING_PREFIX);
+    return toReferenceType(validBuildingId);
   }
 
   private static ReferenceType toReferenceType(final String id) {

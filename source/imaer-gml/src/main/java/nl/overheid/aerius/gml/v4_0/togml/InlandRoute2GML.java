@@ -27,6 +27,7 @@ import nl.overheid.aerius.shared.domain.v2.source.shipping.inland.CustomInlandSh
 import nl.overheid.aerius.shared.domain.v2.source.shipping.inland.InlandShipping;
 import nl.overheid.aerius.shared.domain.v2.source.shipping.inland.StandardInlandShipping;
 import nl.overheid.aerius.shared.exception.AeriusException;
+import nl.overheid.aerius.util.gml.GMLIdUtil;
 
 /**
  *
@@ -92,7 +93,8 @@ class InlandRoute2GML extends SpecificSource2GML<InlandShippingEmissionSource> {
       reference = null;
     } else {
       reference = new ReferenceType(null);
-      reference.setHref("#" + id);
+      final String gmlId = GMLIdUtil.toValidGmlId(id, GMLIdUtil.SOURCE_PREFIX);
+      reference.setHref("#" + gmlId);
     }
     return reference;
   }
