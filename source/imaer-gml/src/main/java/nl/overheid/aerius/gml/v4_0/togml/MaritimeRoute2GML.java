@@ -26,6 +26,7 @@ import nl.overheid.aerius.shared.domain.v2.source.MaritimeShippingEmissionSource
 import nl.overheid.aerius.shared.domain.v2.source.shipping.maritime.CustomMaritimeShipping;
 import nl.overheid.aerius.shared.domain.v2.source.shipping.maritime.MaritimeShipping;
 import nl.overheid.aerius.shared.domain.v2.source.shipping.maritime.StandardMaritimeShipping;
+import nl.overheid.aerius.util.gml.GMLIdUtil;
 
 /**
  *
@@ -83,7 +84,8 @@ class MaritimeRoute2GML extends SpecificSource2GML<MaritimeShippingEmissionSourc
       reference = null;
     } else {
       reference = new ReferenceType(null);
-      reference.setHref("#" + id);
+      final String gmlId = GMLIdUtil.toValidGmlId(id, GMLIdUtil.SOURCE_PREFIX);
+      reference.setHref("#" + gmlId);
     }
     return reference;
   }
