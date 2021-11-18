@@ -258,17 +258,17 @@ public enum ImaerExceptionReason implements Reason {
   /**
    * While importing the old category could not correctly matched with a new category.
    *
-   * @param 0 the label of the source.
-   * @param 1 the offending category code.
-   * @param 2 the category code used.
+   * @param 0 the offending category code.
+   * @param 1 the category code used.
+   * @param 2 the label of the source.
    */
   GML_INVALID_CATEGORY_MATCH(5218),
   /**
    * While importing a road source the old category could not correctly matched with a new category.
    *
-   * @param 0 the label of the source.
-   * @param 1 the offending category code.
-   * @param 2 the category code used.
+   * @param 0 the offending category code.
+   * @param 1 the category code used.
+   * @param 2 the label of the source.
    */
   GML_INVALID_ROAD_CATEGORY_MATCH(5219),
 
@@ -362,9 +362,9 @@ public enum ImaerExceptionReason implements Reason {
   /**
    * While importing an old GML a off road mobile source was converted.
    *
-   * @param 0 the label of the source.
-   * @param 1 the old category code.
-   * @param 2 the new category code used.
+   * @param 0 the old category code.
+   * @param 1 the new category code used.
+   * @param 2 the label of the source.
    */
   GML_OFF_ROAD_CATEGORY_CONVERTED(5234),
 
