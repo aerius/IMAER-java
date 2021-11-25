@@ -80,6 +80,7 @@
                     <imaer:localId>ES.MaritimeInlandMooringRoute.0</imaer:localId>
                 </imaer:NEN3610ID>
             </imaer:identifier>
+            <imaer:label>Zeescheepvaart haven; Route 1</imaer:label>
             <imaer:geometry>
                 <imaer:EmissionSourceGeometry>
                     <imaer:GM_Curve>
@@ -127,6 +128,7 @@
                     <imaer:localId>ES.MaritimeMaritimeMooringRoute.0</imaer:localId>
                 </imaer:NEN3610ID>
             </imaer:identifier>
+            <imaer:label>Route 1</imaer:label>
             <imaer:geometry>
                 <imaer:EmissionSourceGeometry>
                     <imaer:GM_Curve>
@@ -173,6 +175,7 @@
                     <imaer:localId>ES.MaritimeMaritimeMooringRoute.1</imaer:localId>
                 </imaer:NEN3610ID>
             </imaer:identifier>
+            <imaer:label>Route 2</imaer:label>
             <imaer:geometry>
                 <imaer:EmissionSourceGeometry>
                     <imaer:GM_Curve>

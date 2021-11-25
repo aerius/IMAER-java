@@ -81,6 +81,7 @@
                     <imaer:localId>ES.InlandMooringRoute.0</imaer:localId>
                 </imaer:NEN3610ID>
             </imaer:identifier>
+            <imaer:label>binnenvaart aanlegplaats; Route 1</imaer:label>
             <imaer:geometry>
                 <imaer:EmissionSourceGeometry>
                     <imaer:GM_Curve>
@@ -137,6 +138,7 @@
                     <imaer:localId>ES.InlandMooringRoute.1</imaer:localId>
                 </imaer:NEN3610ID>
             </imaer:identifier>
+            <imaer:label>binnenvaart aanlegplaats; Route 2</imaer:label>
             <imaer:geometry>
                 <imaer:EmissionSourceGeometry>
                     <imaer:GM_Curve>

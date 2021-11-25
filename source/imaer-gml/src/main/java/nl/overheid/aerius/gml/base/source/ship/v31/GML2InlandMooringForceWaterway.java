@@ -16,19 +16,15 @@
  */
 package nl.overheid.aerius.gml.base.source.ship.v31;
 
-import nl.overheid.aerius.gml.base.AbstractGML2Specific;
+import java.util.concurrent.atomic.AtomicInteger;
+
 import nl.overheid.aerius.gml.base.GMLConversionData;
 import nl.overheid.aerius.gml.base.IsGmlProperty;
 import nl.overheid.aerius.gml.base.geo.GML2Geometry;
 import nl.overheid.aerius.gml.base.geo.GmlLineString;
-import nl.overheid.aerius.shared.domain.v2.base.TimeUnit;
 import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
 import nl.overheid.aerius.shared.domain.v2.source.InlandShippingEmissionSource;
-import nl.overheid.aerius.shared.domain.v2.source.MooringInlandShippingEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.shipping.inland.InlandWaterway;
-import nl.overheid.aerius.shared.domain.v2.source.shipping.inland.MooringRouteDirection;
-import nl.overheid.aerius.shared.domain.v2.source.shipping.inland.StandardInlandShipping;
-import nl.overheid.aerius.shared.domain.v2.source.shipping.inland.StandardMooringInlandShipping;
 import nl.overheid.aerius.shared.exception.AeriusException;
 
 /**
@@ -38,11 +34,10 @@ import nl.overheid.aerius.shared.exception.AeriusException;
  * To be used in IMAER versions < 2.0
  */
 public class GML2InlandMooringForceWaterway<T extends IsGmlMooringInlandShippingEmissionSource>
-    extends AbstractGML2Specific<T, MooringInlandShippingEmissionSource> {
+    extends GML2InlandMooring<T> {
 
   private static final int DEFAULT_ROUTE_SECTOR_ID = 7620;
 
-  private final GML2Route gml2route;
   private final GML2Geometry gml2Geometry;
 
   /**
@@ -50,104 +45,13 @@ public class GML2InlandMooringForceWaterway<T extends IsGmlMooringInlandShipping
    */
   public GML2InlandMooringForceWaterway(final GMLConversionData conversionData, final GML2Geometry gml2Geometry) {
     super(conversionData);
-    gml2route = new GML2Route(conversionData.getSrid());
     this.gml2Geometry = gml2Geometry;
   }
 
   @Override
-  public MooringInlandShippingEmissionSource convert(final T source) throws AeriusException {
-    final MooringInlandShippingEmissionSource emissionSource = new MooringInlandShippingEmissionSource();
-    for (final IsGmlProperty<IsGmlMooringInlandShipping> mooringInlandShippingProperty : source.getShips()) {
-      addVesselGroup(mooringInlandShippingProperty.getProperty(), emissionSource, source.getId());
-    }
-    return emissionSource;
-  }
-
-  private void addVesselGroup(final IsGmlMooringInlandShipping mooringInlandShipping, final MooringInlandShippingEmissionSource emissionSource,
-      final String sourceId) throws AeriusException {
-    final StandardMooringInlandShipping vesselGroupEmissionValues = new StandardMooringInlandShipping();
-    vesselGroupEmissionValues.setDescription(mooringInlandShipping.getDescription());
-    vesselGroupEmissionValues.setShipCode(mooringInlandShipping.getCode());
-    vesselGroupEmissionValues.setAverageResidenceTime(mooringInlandShipping.getAverageResidenceTime());
-    if (mooringInlandShipping.getRoutes() != null) {
-      for (final IsGmlProperty<IsGmlInlandShippingRoute> isrp : mooringInlandShipping.getRoutes()) {
-        addRoute(isrp.getProperty(), vesselGroupEmissionValues, sourceId);
-      }
-    }
-    // Assume movements in arrival and departure match, and we can divide by 2 to get to the number of ships moored.
-    vesselGroupEmissionValues.setShipsPerTimeUnit(vesselGroupEmissionValues.getShipsPerTimeUnit() / 2);
-    emissionSource.getSubSources().add(vesselGroupEmissionValues);
-  }
-
-  private void addRoute(final IsGmlInlandShippingRoute inlandShippingRoute, final StandardMooringInlandShipping vesselGroupEmissionValues,
-      final String sourceId) throws AeriusException {
-    final InlandShippingEmissionSource route = gml2route.findRoute(
-        inlandShippingRoute.getRoute(), getConversionData().getInlandRoutes(), sourceId, "InlandMooringRoute",
-        () -> this.createRoute(inlandShippingRoute.getInlandWaterwayProperty()));
-    final StandardInlandShipping imr = new StandardInlandShipping();
-    imr.setDescription(vesselGroupEmissionValues.getDescription());
-    imr.setShipCode(vesselGroupEmissionValues.getShipCode());
-    if (inlandShippingRoute.getDirection() == MooringRouteDirection.DEPART) {
-      imr.setMovementsAtoBPerTimeUnit(inlandShippingRoute.getShippingMovementsPerTimeUnit());
-      imr.setPercentageLadenAtoB(inlandShippingRoute.getPercentageLaden());
-      imr.setMovementsBtoAPerTimeUnit(0);
-      imr.setPercentageLadenBtoA(0);
-    } else {
-      imr.setMovementsAtoBPerTimeUnit(0);
-      imr.setPercentageLadenAtoB(0);
-      imr.setMovementsBtoAPerTimeUnit(inlandShippingRoute.getShippingMovementsPerTimeUnit());
-      imr.setPercentageLadenBtoA(inlandShippingRoute.getPercentageLaden());
-    }
-    imr.setTimeUnitAtoB(TimeUnit.valueOf(inlandShippingRoute.getTimeUnit().name()));
-    imr.setTimeUnitBtoA(TimeUnit.valueOf(inlandShippingRoute.getTimeUnit().name()));
-    route.getSubSources().add(imr);
-    route.setMooringAId(sourceId);
-    addRouteShipsToMooringShips(inlandShippingRoute, vesselGroupEmissionValues);
-    ensureWaterway(route, inlandShippingRoute.getRoute(), sourceId);
-  }
-
-  private InlandShippingEmissionSource createRoute(final IsGmlProperty<IsGmlInlandWaterway> waterwayProperty) {
-    final InlandShippingEmissionSource mooringRoute = new InlandShippingEmissionSource();
-    if (waterwayProperty != null) {
-      final InlandWaterway waterway = GML2InlandUtil.toInlandWaterway(waterwayProperty);
-      mooringRoute.setWaterway(waterway);
-    }
-    mooringRoute.setSectorId(DEFAULT_ROUTE_SECTOR_ID);
-    return mooringRoute;
-  }
-
-  private void addRouteShipsToMooringShips(final IsGmlInlandShippingRoute inlandShippingRoute,
-      final StandardMooringInlandShipping vesselGroupEmissionValues) {
-    // At this point we're just adding each departure and arrival. This will have to be divided by 2 to get the moored ships later on.
-    // (not doing it right away to avoid some integer division shenanigans).
-    final TimeUnit gmlTimeUnit = TimeUnit.valueOf(inlandShippingRoute.getTimeUnit().name());
-    if (vesselGroupEmissionValues.getTimeUnit() == null) {
-      vesselGroupEmissionValues.setTimeUnit(gmlTimeUnit);
-      vesselGroupEmissionValues.setShipsPerTimeUnit(inlandShippingRoute.getShippingMovementsPerTimeUnit());
-      vesselGroupEmissionValues.setPercentageLaden(inlandShippingRoute.getPercentageLaden());
-    } else if (vesselGroupEmissionValues.getTimeUnit() == gmlTimeUnit) {
-      final int shipsExisting = vesselGroupEmissionValues.getShipsPerTimeUnit();
-      final int shipsToAdd = inlandShippingRoute.getShippingMovementsPerTimeUnit();
-      final int shipsTotal = shipsExisting + shipsToAdd;
-      vesselGroupEmissionValues.setShipsPerTimeUnit(shipsTotal);
-      final int avgPercentageLaden = determinePercentageLaden(shipsExisting, vesselGroupEmissionValues.getPercentageLaden(),
-          shipsToAdd, inlandShippingRoute.getPercentageLaden());
-      vesselGroupEmissionValues.setPercentageLaden(avgPercentageLaden);
-    } else {
-      final int shipsPerYearExisting = vesselGroupEmissionValues.getTimeUnit().getPerYear(vesselGroupEmissionValues.getShipsPerTimeUnit());
-      final int shipsPerYearToAdd = gmlTimeUnit.getPerYear(inlandShippingRoute.getShippingMovementsPerTimeUnit());
-      final int shipsTotal = shipsPerYearExisting + shipsPerYearToAdd;
-      vesselGroupEmissionValues.setTimeUnit(TimeUnit.YEAR);
-      vesselGroupEmissionValues.setShipsPerTimeUnit(shipsTotal);
-      final int avgPercentageLaden = determinePercentageLaden(shipsPerYearExisting, vesselGroupEmissionValues.getPercentageLaden(),
-          shipsPerYearToAdd, inlandShippingRoute.getPercentageLaden());
-      vesselGroupEmissionValues.setPercentageLaden(avgPercentageLaden);
-    }
-  }
-
-  private int determinePercentageLaden(final int shipsExisting, final int percentageLadenExisting, final int shipsToAdd,
-      final int percentageLadenToAdd) {
-    return (percentageLadenExisting * shipsExisting + percentageLadenToAdd * shipsToAdd) / (shipsExisting + shipsToAdd);
+  protected void additionalRouteStuff(final IsGmlInlandShippingRoute inlandShippingRoute, final InlandShippingEmissionSource route, final T source)
+      throws AeriusException {
+    ensureWaterway(route, inlandShippingRoute.getRoute(), source.getId());
   }
 
   private void ensureWaterway(final InlandShippingEmissionSource route, final GmlLineString lineString, final String sourceId)
@@ -157,6 +61,19 @@ public class GML2InlandMooringForceWaterway<T extends IsGmlMooringInlandShipping
       final InlandWaterway waterway = getConversionData().determineInlandWaterway(sourceId, geometry);
       route.setWaterway(waterway);
     }
+  }
+
+  @Override
+  protected InlandShippingEmissionSource createRoute(final IsGmlProperty<IsGmlInlandWaterway> waterwayProperty, final String sourceLabel,
+      final AtomicInteger routeIndexTracker) {
+    final InlandShippingEmissionSource mooringRoute = new InlandShippingEmissionSource();
+    if (waterwayProperty != null) {
+      final InlandWaterway waterway = GML2InlandUtil.toInlandWaterway(waterwayProperty);
+      mooringRoute.setWaterway(waterway);
+    }
+    mooringRoute.setSectorId(DEFAULT_ROUTE_SECTOR_ID);
+    mooringRoute.setLabel(constructLabel(sourceLabel, routeIndexTracker));
+    return mooringRoute;
   }
 
 }

@@ -16,6 +16,9 @@
  */
 package nl.overheid.aerius.gml.base;
 
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSource;
 import nl.overheid.aerius.shared.exception.AeriusException;
 
@@ -44,6 +47,12 @@ public abstract class AbstractGML2Specific<T, E extends EmissionSource> {
 
   protected GMLConversionData getConversionData() {
     return conversionData;
+  }
+
+  protected static String constructLabelOf(final String... nameparts) {
+    return Stream.of(nameparts)
+        .filter(x -> x != null && !x.isBlank())
+        .collect(Collectors.joining("; "));
   }
 
 }

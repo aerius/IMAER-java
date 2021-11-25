@@ -16,6 +16,9 @@
  */
 package nl.overheid.aerius.gml.base.source.ship.v31;
 
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.IntSupplier;
+
 import nl.overheid.aerius.gml.base.AbstractGML2Specific;
 import nl.overheid.aerius.gml.base.GMLConversionData;
 import nl.overheid.aerius.gml.base.IsGmlProperty;
@@ -50,6 +53,7 @@ public class GML2MaritimeMooring<T extends IsGmlMooringMaritimeShippingEmissionS
   @Override
   public MooringMaritimeShippingEmissionSource convert(final T source) throws AeriusException {
     final MooringMaritimeShippingEmissionSource emissionValues = new MooringMaritimeShippingEmissionSource();
+    final AtomicInteger inlandRouteIndexTracker = new AtomicInteger(1);
     for (final IsGmlProperty<IsGmlMooringMaritimeShipping> mooringMaritimeShippingProperty : source.getShips()) {
       final IsGmlMooringMaritimeShipping mooringMaritimeShipping = mooringMaritimeShippingProperty.getProperty();
       final StandardMooringMaritimeShipping vesselGroupEmissionValues = new StandardMooringMaritimeShipping();
@@ -59,7 +63,7 @@ public class GML2MaritimeMooring<T extends IsGmlMooringMaritimeShippingEmissionS
       vesselGroupEmissionValues.setShipsPerTimeUnit(mooringMaritimeShipping.getShipsPerTimeUnit());
       vesselGroupEmissionValues.setTimeUnit(TimeUnit.valueOf(mooringMaritimeShipping.getTimeUnit().name()));
       if (mooringMaritimeShipping.getInlandRoute() != null) {
-        handleInlandRoute(mooringMaritimeShipping, source.getId());
+        handleInlandRoute(mooringMaritimeShipping, source, inlandRouteIndexTracker);
       }
       handleMaritimeRoutes(mooringMaritimeShipping, source.getId());
       emissionValues.getSubSources().add(vesselGroupEmissionValues);
@@ -68,9 +72,11 @@ public class GML2MaritimeMooring<T extends IsGmlMooringMaritimeShippingEmissionS
   }
 
   private void handleInlandRoute(final IsGmlMooringMaritimeShipping mooringMaritimeShipping,
-      final String sourceId) throws AeriusException {
+      final T source, final AtomicInteger inlandRouteIndexTracker) throws AeriusException {
+    final String sourceId = source.getId();
     final InlandMaritimeShippingEmissionSource route = gml2route.findRoute(mooringMaritimeShipping.getInlandRoute(),
-        getConversionData().getMaritimeInlandRoutes(), sourceId, "MaritimeInlandMooringRoute", this::createInlandRoute);
+        getConversionData().getMaritimeInlandRoutes(), sourceId, "MaritimeInlandMooringRoute",
+        () -> createInlandRoute(source.getLabel(), inlandRouteIndexTracker));
     final StandardMaritimeShipping mr = new StandardMaritimeShipping();
     mr.setDescription(mooringMaritimeShipping.getDescription());
     mr.setShipCode(mooringMaritimeShipping.getCode());
@@ -81,9 +87,10 @@ public class GML2MaritimeMooring<T extends IsGmlMooringMaritimeShippingEmissionS
     route.setMooringAId(sourceId);
   }
 
-  private InlandMaritimeShippingEmissionSource createInlandRoute() {
+  private InlandMaritimeShippingEmissionSource createInlandRoute(final String sourceLabel, final AtomicInteger inlandRouteIndexTracker) {
     final InlandMaritimeShippingEmissionSource source = new InlandMaritimeShippingEmissionSource();
     source.setSectorId(DEFAULT_SECTOR_INLAND_ROUTE);
+    source.setLabel(constructLabel(sourceLabel, inlandRouteIndexTracker::getAndIncrement));
     return source;
   }
 
@@ -107,7 +114,18 @@ public class GML2MaritimeMooring<T extends IsGmlMooringMaritimeShippingEmissionS
   private MaritimeMaritimeShippingEmissionSource createMaritimeRoute() {
     final MaritimeMaritimeShippingEmissionSource source = new MaritimeMaritimeShippingEmissionSource();
     source.setSectorId(DEFAULT_SECTOR_MARITIME_ROUTE);
+    // Maritime routes used to be global, so can't really tie them to 1 source.
+    // Hence, use the global available routes to determine index, and don't use anything source specific.
+    source.setLabel(constructLabel(null, () -> getConversionData().getMaritimeMaritimeRoutes().size() + 1));
     return source;
+  }
+
+  private String constructLabel(final String sourceLabel, final IntSupplier routeIndexTracker) {
+    // Routes did not have a name in old GML, so come up with our own label
+    // Might not be completely i18n, but works for both NL and EN at least.
+    final int currentIndex = routeIndexTracker.getAsInt();
+    final String routeDescription = "Route " + currentIndex;
+    return constructLabelOf(sourceLabel, routeDescription);
   }
 
 }

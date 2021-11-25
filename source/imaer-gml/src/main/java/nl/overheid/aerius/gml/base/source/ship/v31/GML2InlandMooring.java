@@ -16,6 +16,8 @@
  */
 package nl.overheid.aerius.gml.base.source.ship.v31;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import nl.overheid.aerius.gml.base.AbstractGML2Specific;
 import nl.overheid.aerius.gml.base.GMLConversionData;
 import nl.overheid.aerius.gml.base.IsGmlProperty;
@@ -49,21 +51,22 @@ public class GML2InlandMooring<T extends IsGmlMooringInlandShippingEmissionSourc
   @Override
   public MooringInlandShippingEmissionSource convert(final T source) throws AeriusException {
     final MooringInlandShippingEmissionSource emissionSource = new MooringInlandShippingEmissionSource();
+    final AtomicInteger routeIndexTracker = new AtomicInteger(1);
     for (final IsGmlProperty<IsGmlMooringInlandShipping> mooringInlandShippingProperty : source.getShips()) {
-      addVesselGroup(mooringInlandShippingProperty.getProperty(), emissionSource, source.getId());
+      addVesselGroup(mooringInlandShippingProperty.getProperty(), emissionSource, source, routeIndexTracker);
     }
     return emissionSource;
   }
 
   private void addVesselGroup(final IsGmlMooringInlandShipping mooringInlandShipping, final MooringInlandShippingEmissionSource emissionSource,
-      final String sourceId) throws AeriusException {
+      final T source, final AtomicInteger routeIndexTracker) throws AeriusException {
     final StandardMooringInlandShipping vesselGroupEmissionValues = new StandardMooringInlandShipping();
     vesselGroupEmissionValues.setDescription(mooringInlandShipping.getDescription());
     vesselGroupEmissionValues.setShipCode(mooringInlandShipping.getCode());
     vesselGroupEmissionValues.setAverageResidenceTime(mooringInlandShipping.getAverageResidenceTime());
     if (mooringInlandShipping.getRoutes() != null) {
       for (final IsGmlProperty<IsGmlInlandShippingRoute> isrp : mooringInlandShipping.getRoutes()) {
-        addRoute(isrp.getProperty(), vesselGroupEmissionValues, sourceId);
+        addRoute(isrp.getProperty(), vesselGroupEmissionValues, source, routeIndexTracker);
       }
     }
     // Assume movements in arrival and departure match, and we can divide by 2 to get to the number of ships moored.
@@ -72,10 +75,11 @@ public class GML2InlandMooring<T extends IsGmlMooringInlandShippingEmissionSourc
   }
 
   private void addRoute(final IsGmlInlandShippingRoute inlandShippingRoute, final StandardMooringInlandShipping vesselGroupEmissionValues,
-      final String sourceId) throws AeriusException {
+      final T source, final AtomicInteger routeIndexTracker) throws AeriusException {
+    final String sourceId = source.getId();
     final InlandShippingEmissionSource route = gml2route.findRoute(
         inlandShippingRoute.getRoute(), getConversionData().getInlandRoutes(), sourceId, "InlandMooringRoute",
-        () -> this.createRoute(inlandShippingRoute.getInlandWaterwayProperty()));
+        () -> this.createRoute(inlandShippingRoute.getInlandWaterwayProperty(), source.getLabel(), routeIndexTracker));
     final StandardInlandShipping imr = new StandardInlandShipping();
     imr.setDescription(vesselGroupEmissionValues.getDescription());
     imr.setShipCode(vesselGroupEmissionValues.getShipCode());
@@ -95,6 +99,12 @@ public class GML2InlandMooring<T extends IsGmlMooringInlandShippingEmissionSourc
     route.getSubSources().add(imr);
     route.setMooringAId(sourceId);
     addRouteShipsToMooringShips(inlandShippingRoute, vesselGroupEmissionValues);
+    additionalRouteStuff(inlandShippingRoute, route, source);
+  }
+
+  protected void additionalRouteStuff(final IsGmlInlandShippingRoute inlandShippingRoute, final InlandShippingEmissionSource route, final T source)
+      throws AeriusException {
+    // NO-OP, intended for behavior by child class that for example enforces waterway
   }
 
   private void addRouteShipsToMooringShips(final IsGmlInlandShippingRoute inlandShippingRoute,
@@ -131,12 +141,22 @@ public class GML2InlandMooring<T extends IsGmlMooringInlandShippingEmissionSourc
     return (percentageLadenExisting * shipsExisting + percentageLadenToAdd * shipsToAdd) / (shipsExisting + shipsToAdd);
   }
 
-  private InlandShippingEmissionSource createRoute(final IsGmlProperty<IsGmlInlandWaterway> waterwayProperty) {
+  protected InlandShippingEmissionSource createRoute(final IsGmlProperty<IsGmlInlandWaterway> waterwayProperty, final String sourceLabel,
+      final AtomicInteger routeIndexTracker) {
     final InlandShippingEmissionSource mooringRoute = new InlandShippingEmissionSource();
     final InlandWaterway waterway = GML2InlandUtil.toInlandWaterway(waterwayProperty);
     mooringRoute.setSectorId(DEFAULT_ROUTE_SECTOR_ID);
     mooringRoute.setWaterway(waterway);
+    mooringRoute.setLabel(constructLabel(sourceLabel, routeIndexTracker));
     return mooringRoute;
+  }
+
+  protected String constructLabel(final String sourceLabel, final AtomicInteger routeIndexTracker) {
+    // Routes did not have a name in old GML, so come up with our own label
+    // Might not be completely i18n, but works for both NL and EN at least.
+    final int currentIndex = routeIndexTracker.getAndIncrement();
+    final String routeDescription = "Route " + currentIndex;
+    return constructLabelOf(sourceLabel, routeDescription);
   }
 
 }
