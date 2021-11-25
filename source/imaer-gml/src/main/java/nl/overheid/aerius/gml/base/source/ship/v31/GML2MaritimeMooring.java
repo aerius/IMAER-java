@@ -18,8 +18,6 @@ package nl.overheid.aerius.gml.base.source.ship.v31;
 
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.IntSupplier;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import nl.overheid.aerius.gml.base.AbstractGML2Specific;
 import nl.overheid.aerius.gml.base.GMLConversionData;
@@ -127,9 +125,7 @@ public class GML2MaritimeMooring<T extends IsGmlMooringMaritimeShippingEmissionS
     // Might not be completely i18n, but works for both NL and EN at least.
     final int currentIndex = routeIndexTracker.getAsInt();
     final String routeDescription = "Route " + currentIndex;
-    return Stream.of(sourceLabel, routeDescription)
-        .filter(x -> x != null && !x.isBlank())
-        .collect(Collectors.joining("; "));
+    return constructLabelOf(sourceLabel, routeDescription);
   }
 
 }

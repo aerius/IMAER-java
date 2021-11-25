@@ -16,9 +16,6 @@
  */
 package nl.overheid.aerius.gml.base.source.mobile.v40;
 
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -109,9 +106,7 @@ public class GML2OffRoad<T extends IsGmlOffRoadMobileEmissionSource> extends Abs
   }
 
   private String constructLabel(final String sourceLabel, final String subSourceDescription) {
-    return Stream.of(sourceLabel, subSourceDescription)
-        .filter(x -> x != null && !x.isBlank())
-        .collect(Collectors.joining("; "));
+    return constructLabelOf(sourceLabel, subSourceDescription);
   }
 
 }

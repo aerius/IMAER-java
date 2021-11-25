@@ -17,8 +17,6 @@
 package nl.overheid.aerius.gml.base.source.ship.v31;
 
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import nl.overheid.aerius.gml.base.AbstractGML2Specific;
 import nl.overheid.aerius.gml.base.GMLConversionData;
@@ -106,7 +104,7 @@ public class GML2InlandMooring<T extends IsGmlMooringInlandShippingEmissionSourc
 
   protected void additionalRouteStuff(final IsGmlInlandShippingRoute inlandShippingRoute, final InlandShippingEmissionSource route, final T source)
       throws AeriusException {
-    // NO-OP for this version
+    // NO-OP, intended for behavior by child class that for example enforces waterway
   }
 
   private void addRouteShipsToMooringShips(final IsGmlInlandShippingRoute inlandShippingRoute,
@@ -158,9 +156,7 @@ public class GML2InlandMooring<T extends IsGmlMooringInlandShippingEmissionSourc
     // Might not be completely i18n, but works for both NL and EN at least.
     final int currentIndex = routeIndexTracker.getAndIncrement();
     final String routeDescription = "Route " + currentIndex;
-    return Stream.of(sourceLabel, routeDescription)
-        .filter(x -> x != null && !x.isBlank())
-        .collect(Collectors.joining("; "));
+    return constructLabelOf(sourceLabel, routeDescription);
   }
 
 }

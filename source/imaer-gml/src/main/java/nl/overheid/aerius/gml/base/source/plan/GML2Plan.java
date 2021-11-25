@@ -16,9 +16,6 @@
  */
 package nl.overheid.aerius.gml.base.source.plan;
 
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import nl.overheid.aerius.gml.base.AbstractGML2Specific;
 import nl.overheid.aerius.gml.base.GMLConversionData;
 import nl.overheid.aerius.gml.base.IsGmlProperty;
@@ -87,9 +84,7 @@ public class GML2Plan<T extends IsGmlPlanEmissionSource> extends AbstractGML2Spe
   }
 
   private String constructLabel(final String sourceLabel, final String subSourceDescription) {
-    return Stream.of(DESCRIPTION_PREFIX, sourceLabel, subSourceDescription)
-        .filter(x -> x != null && !x.isBlank())
-        .collect(Collectors.joining("; "));
+    return constructLabelOf(DESCRIPTION_PREFIX, sourceLabel, subSourceDescription);
   }
 
 }
