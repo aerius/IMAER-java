@@ -28,6 +28,15 @@ public class MobileSourceOffRoadConversion {
   private final BigDecimal fuelConsumption;
 
   /**
+   * @deprecated since fuelConsumptionIdle has no effect anymore.
+   * Left in for now to let existing branches be compilable.
+   */
+  @Deprecated
+  public MobileSourceOffRoadConversion(final double fuelConsumption, final Double fuelConsumptionIdle) {
+    this(fuelConsumption);
+  }
+
+  /**
    * @param fuelConsumption The average fuel consumption per hour (in l/h).
    */
   public MobileSourceOffRoadConversion(final double fuelConsumption) {
