@@ -18,7 +18,6 @@ package nl.overheid.aerius.gml.base.conversion;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.Optional;
 
 /**
  * Class to be used to convert from properties used for the older IMAER versions (<= 3.1)
@@ -26,62 +25,34 @@ import java.util.Optional;
  */
 public class MobileSourceOffRoadConversion {
 
-  private final BigDecimal fuelConsumptionUnderLoad;
-  private final BigDecimal fuelConsumptionIdle;
+  private final BigDecimal fuelConsumption;
 
   /**
-   * @param fuelConsumptionUnderLoad The fuel consumption under load per hour (in l/h).
-   * @param fuelConsumptionIdle The fuel consumption while idle per liter engine displacement per hour (in l/l/h).
+   * @param fuelConsumption The average fuel consumption per hour (in l/h).
    */
-  public MobileSourceOffRoadConversion(final double fuelConsumptionUnderLoad, final Double fuelConsumptionIdle) {
-    this.fuelConsumptionUnderLoad = BigDecimal.valueOf(fuelConsumptionUnderLoad);
-    this.fuelConsumptionIdle = Optional.ofNullable(fuelConsumptionIdle).map(BigDecimal::valueOf).orElse(BigDecimal.ZERO);
+  public MobileSourceOffRoadConversion(final double fuelConsumption) {
+    this.fuelConsumption = BigDecimal.valueOf(fuelConsumption);
   }
 
   /**
    * <pre>
-   * Formulas used:
-   * BS = DS * BSPU_CI * CI
-   * BW = B - BS
-   * DW = BW / BSPUW
-   * D = DS + DW
+   * Formula used:
+   * D = B / BSPU
    *
    * Where:
-   * BS = Fuel used while idle (brandstofverbruik stationair)
-   * DS = operating hours idle (draaiuren stationair)
-   * BSPU_CI = fuel consumption idle (brandstofverbruik stationair per uur per liter cilinderinhoud)
-   * CI = engine displacement (cilinderinhoud)
-   * BW = Fuel used under load (brandstofverbruik werkend)
    * B = total fuel used (brandstofverbruik)
-   * DW = operating hours under load (draaiuren werkend)
-   * BSPUW = fuel consumption under load (brandstofverbruik werkend per uur)
+   * BSPU = fuel consumption (brandstofverbruik per uur)
    * D = total operating hours (draaiuren)
    * </pre>
    *
    * @param literFuelPerYear
-   * @param hoursIdlePerYear If supplied, engineDisplacement is also expected. If not, this value is ignored.
-   * @param engineDisplacement If supplied, hoursIdlePerYear is also expected. If not, this value is ignored.
    * @return Estimation of the operating hours.
    */
-  public int estimageOffRoadOperatingHours(final int literFuelPerYear,
-      final Integer hoursIdlePerYear, final Double engineDisplacement) {
+  public int estimageOffRoadOperatingHours(final int literFuelPerYear) {
     final BigDecimal literFuelPerYearBD = BigDecimal.valueOf(literFuelPerYear);
-    final BigDecimal hoursIdlePerYearBD;
-    final BigDecimal fuelUsedUnderLoad;
-    if (hoursIdlePerYear != null && engineDisplacement != null) {
-      hoursIdlePerYearBD = BigDecimal.valueOf(hoursIdlePerYear);
-      final BigDecimal engineDisplacementBD = BigDecimal.valueOf(engineDisplacement);
-      final BigDecimal fuelUsedWhileIdle = fuelConsumptionIdle.multiply(hoursIdlePerYearBD).multiply(engineDisplacementBD);
-      fuelUsedUnderLoad = literFuelPerYearBD.subtract(fuelUsedWhileIdle);
-    } else {
-      hoursIdlePerYearBD = BigDecimal.ZERO;
-      fuelUsedUnderLoad = literFuelPerYearBD;
-    }
-    final BigDecimal hoursUnderLoadPerYear = fuelUsedUnderLoad.divide(fuelConsumptionUnderLoad, RoundingMode.HALF_UP);
-    final BigDecimal totalOperatingHours = hoursIdlePerYearBD.add(hoursUnderLoadPerYear);
-    // ensure we don't end up with negative estimations (which technically would be possible due to the subtraction)
-    // and round to the nearest integer.
-    return totalOperatingHours.max(BigDecimal.ZERO).setScale(0, RoundingMode.HALF_UP).intValue();
+    final BigDecimal totalOperatingHours = literFuelPerYearBD.divide(fuelConsumption, RoundingMode.HALF_UP);
+    // Round to the nearest integer.
+    return totalOperatingHours.setScale(0, RoundingMode.HALF_UP).intValue();
   }
 
 }

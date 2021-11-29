@@ -84,8 +84,7 @@ public class GML2OffRoad<T extends IsGmlOffRoadMobileEmissionSource> extends Abs
     if (!oldCode.equals(newCode)) {
       // If the code was converted, that means we can convert from the old properties to the new properties
       // In theory this should be for all codes, but there's a possibility that the code supplied was incorrect in the first place.
-      final int estimatedOperatingHours = getConversionData().estimageOffRoadOperatingHours(oldCode, mobileSource.getLiterFuelPerYear(),
-          mobileSource.getHoursIdlePerYear(), mobileSource.getEngineDisplacement());
+      final int estimatedOperatingHours = getConversionData().estimageOffRoadOperatingHours(oldCode, mobileSource.getLiterFuelPerYear());
       vehicleEmissionValues.setOperatingHoursPerYear(estimatedOperatingHours);
       vehicleEmissionValues.setLiterAdBluePerYear(0);
     }

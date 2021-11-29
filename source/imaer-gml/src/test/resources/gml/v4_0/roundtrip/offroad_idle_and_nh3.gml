@@ -52,7 +52,7 @@
             </imaer:emission>
             <imaer:emission>
                 <imaer:Emission substance="NOX">
-                    <imaer:value>207.995</imaer:value>
+                    <imaer:value>202.56</imaer:value>
                 </imaer:Emission>
             </imaer:emission>
             <imaer:emission>
@@ -69,7 +69,7 @@
                 <imaer:StandardOffRoadMobileSource offRoadMobileSourceType="SII75560DSN">
                     <imaer:description>Traktors</imaer:description>
                     <imaer:literFuelPerYear>10000</imaer:literFuelPerYear>
-                    <imaer:operatingHoursPerYear>1599</imaer:operatingHoursPerYear>
+                    <imaer:operatingHoursPerYear>512</imaer:operatingHoursPerYear>
                 </imaer:StandardOffRoadMobileSource>
             </imaer:offRoadMobileSource>
         </imaer:OffRoadMobileSourceEmissionSource>
