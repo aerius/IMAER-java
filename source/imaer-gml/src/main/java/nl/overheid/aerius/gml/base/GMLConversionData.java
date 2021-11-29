@@ -137,12 +137,11 @@ public class GMLConversionData {
     return returnCode;
   }
 
-  public int estimageOffRoadOperatingHours(final String oldCode, final int literFuelPerYear,
-      final Integer hoursIdlePerYear, final Double engineDisplacement) {
+  public int estimageOffRoadOperatingHours(final String oldCode, final int literFuelPerYear) {
     final MobileSourceOffRoadConversion conversion = legacyCodeConverter.getMobileSourceOffRoadConversion(oldCode);
     int estimation = 0;
     if (conversion != null) {
-      estimation = conversion.estimageOffRoadOperatingHours(literFuelPerYear, hoursIdlePerYear, engineDisplacement);
+      estimation = conversion.estimageOffRoadOperatingHours(literFuelPerYear);
     }
     return estimation;
   }

@@ -146,10 +146,10 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
           new EmissionHelper(-0.46, 0.0)));
 
   private static final List<OffRoadOldCodesHelper> OFF_ROAD_MOBILE_SOURCE_OLD_CODES = Arrays.asList(
-      new OffRoadOldCodesHelper("S1A", "SI75560DSN", 14.690993, 0.410843),
-      new OffRoadOldCodesHelper("S2F", "SII75560DSN", 6.8731995, 0.410843),
-      new OffRoadOldCodesHelper("SVM4C30", "B4T", 1.0687796, null),
-      new OffRoadOldCodesHelper("P1980", "SI75560DSN", 16.208658, 0.410843));
+      new OffRoadOldCodesHelper("S1A", "SI75560DSN", 19.54),
+      new OffRoadOldCodesHelper("S2F", "SII75560DSN", 19.54),
+      new OffRoadOldCodesHelper("SVM4C30", "B4T", 2.44),
+      new OffRoadOldCodesHelper("P1980", "SI75560DSN", 19.54));
 
   private static final List<GenericConstructHelper> OLD_PLAN_CATEGORIES = Arrays.asList(
       new GenericConstructHelper("PHA", new EmissionHelper(1.10997, 0.0)),
@@ -288,15 +288,12 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
 
     final String oldCode;
     final String newCode;
-    final double fuelConsumptionUnderLoad;
-    final Double fuelConsumptionIdle;
+    final double fuelConsumption;
 
-    public OffRoadOldCodesHelper(final String oldCode, final String newCode, final double fuelConsumptionUnderLoad,
-        final Double fuelConsumptionIdle) {
+    public OffRoadOldCodesHelper(final String oldCode, final String newCode, final double fuelConsumption) {
       this.oldCode = oldCode;
       this.newCode = newCode;
-      this.fuelConsumptionUnderLoad = fuelConsumptionUnderLoad;
-      this.fuelConsumptionIdle = fuelConsumptionIdle;
+      this.fuelConsumption = fuelConsumption;
     }
 
   }
@@ -381,7 +378,7 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
   public static Map<String, MobileSourceOffRoadConversion> legacyMobileSourceOffRoadConversions() {
     final Map<String, MobileSourceOffRoadConversion> conversions = new HashMap<>();
     OFF_ROAD_MOBILE_SOURCE_OLD_CODES.forEach(
-        helper -> conversions.put(helper.oldCode, new MobileSourceOffRoadConversion(helper.fuelConsumptionUnderLoad, helper.fuelConsumptionIdle)));
+        helper -> conversions.put(helper.oldCode, new MobileSourceOffRoadConversion(helper.fuelConsumption)));
     return conversions;
   }
 

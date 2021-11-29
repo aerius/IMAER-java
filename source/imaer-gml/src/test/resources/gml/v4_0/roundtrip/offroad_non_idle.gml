@@ -69,7 +69,7 @@
                 <imaer:StandardOffRoadMobileSource offRoadMobileSourceType="B4T">
                     <imaer:description>Traktors</imaer:description>
                     <imaer:literFuelPerYear>10000</imaer:literFuelPerYear>
-                    <imaer:operatingHoursPerYear>9356</imaer:operatingHoursPerYear>
+                    <imaer:operatingHoursPerYear>4098</imaer:operatingHoursPerYear>
                 </imaer:StandardOffRoadMobileSource>
             </imaer:offRoadMobileSource>
         </imaer:OffRoadMobileSourceEmissionSource>
