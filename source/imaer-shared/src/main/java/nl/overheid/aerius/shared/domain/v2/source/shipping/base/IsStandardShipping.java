@@ -19,5 +19,5 @@ package nl.overheid.aerius.shared.domain.v2.source.shipping.base;
 public interface IsStandardShipping {
 
   String getShipCode();
-  
+
 }

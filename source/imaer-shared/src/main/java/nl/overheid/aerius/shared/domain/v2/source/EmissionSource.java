@@ -34,18 +34,18 @@ import nl.overheid.aerius.shared.exception.AeriusException;
 
 @JsonTypeInfo(property = "emissionSourceType", use = Id.NAME)
 @JsonSubTypes({
-@Type(value = GenericEmissionSource.class, name = EmissionSourceType.Names.GENERIC),
-@Type(value = FarmLodgingEmissionSource.class, name = EmissionSourceType.Names.FARM_LODGE),
-@Type(value = FarmlandEmissionSource.class, name = EmissionSourceType.Names.FARMLAND),
-@Type(value = PlanEmissionSource.class, name = EmissionSourceType.Names.PLAN),
-@Type(value = OffRoadMobileEmissionSource.class, name = EmissionSourceType.Names.OFFROAD_MOBILE),
-@Type(value = SRM1RoadEmissionSource.class, name = EmissionSourceType.Names.SRM1_ROAD),
-@Type(value = SRM2RoadEmissionSource.class, name = EmissionSourceType.Names.SRM2_ROAD),
-@Type(value = InlandShippingEmissionSource.class, name = EmissionSourceType.Names.SHIPPING_INLAND),
-@Type(value = MooringInlandShippingEmissionSource.class, name = EmissionSourceType.Names.SHIPPING_INLAND_DOCKED),
-@Type(value = InlandMaritimeShippingEmissionSource.class, name = EmissionSourceType.Names.SHIPPING_MARITIME_INLAND),
-@Type(value = MaritimeMaritimeShippingEmissionSource.class, name = EmissionSourceType.Names.SHIPPING_MARITIME_MARITIME),
-@Type(value = MooringMaritimeShippingEmissionSource.class, name = EmissionSourceType.Names.SHIPPING_MARITIME_DOCKED),
+    @Type(value = GenericEmissionSource.class, name = EmissionSourceType.Names.GENERIC),
+    @Type(value = FarmLodgingEmissionSource.class, name = EmissionSourceType.Names.FARM_LODGE),
+    @Type(value = FarmlandEmissionSource.class, name = EmissionSourceType.Names.FARMLAND),
+    @Type(value = PlanEmissionSource.class, name = EmissionSourceType.Names.PLAN),
+    @Type(value = OffRoadMobileEmissionSource.class, name = EmissionSourceType.Names.OFFROAD_MOBILE),
+    @Type(value = SRM1RoadEmissionSource.class, name = EmissionSourceType.Names.SRM1_ROAD),
+    @Type(value = SRM2RoadEmissionSource.class, name = EmissionSourceType.Names.SRM2_ROAD),
+    @Type(value = InlandShippingEmissionSource.class, name = EmissionSourceType.Names.SHIPPING_INLAND),
+    @Type(value = MooringInlandShippingEmissionSource.class, name = EmissionSourceType.Names.SHIPPING_INLAND_DOCKED),
+    @Type(value = InlandMaritimeShippingEmissionSource.class, name = EmissionSourceType.Names.SHIPPING_MARITIME_INLAND),
+    @Type(value = MaritimeMaritimeShippingEmissionSource.class, name = EmissionSourceType.Names.SHIPPING_MARITIME_MARITIME),
+    @Type(value = MooringMaritimeShippingEmissionSource.class, name = EmissionSourceType.Names.SHIPPING_MARITIME_DOCKED),
 })
 public abstract class EmissionSource implements Serializable {
 

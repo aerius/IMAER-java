@@ -34,7 +34,7 @@ import nl.overheid.aerius.shared.domain.Substance;
  */
 @XmlRootElement(name = "ConsumptionOffRoadVehicleSpecification", namespace = CalculatorSchema.NAMESPACE)
 @XmlType(name = "ConsumptionOffRoadVehicleSpecificationType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"emissionFactor",
-"energyEfficiency", "consumption"})
+    "energyEfficiency", "consumption"})
 public class ConsumptionOffRoadVehicleSpecification extends AbstractOffRoadVehicleSpecification
     implements IsGmlConsumptionOffRoadVehicleSpecification {
 

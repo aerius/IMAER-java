@@ -16,7 +16,7 @@
  */
 package nl.overheid.aerius.gml.base.source.ship;
 
-public interface IsGmlStandardMooringMaritimeShipping extends IsGmlMooringMaritimeShipping{
+public interface IsGmlStandardMooringMaritimeShipping extends IsGmlMooringMaritimeShipping {
 
   String getCode();
 

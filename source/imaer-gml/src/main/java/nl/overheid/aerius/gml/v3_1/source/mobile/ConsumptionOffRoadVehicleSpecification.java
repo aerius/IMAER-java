@@ -32,7 +32,7 @@ import nl.overheid.aerius.gml.v3_1.source.EmissionProperty;
  */
 @XmlRootElement(name = "ConsumptionOffRoadVehicleSpecification", namespace = CalculatorSchema.NAMESPACE)
 @XmlType(name = "ConsumptionOffRoadVehicleSpecificationType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"emissionFactors",
-"energyEfficiency", "consumption"})
+    "energyEfficiency", "consumption"})
 public class ConsumptionOffRoadVehicleSpecification extends AbstractOffRoadVehicleSpecification
     implements IsGmlConsumptionOffRoadVehicleSpecification {
 

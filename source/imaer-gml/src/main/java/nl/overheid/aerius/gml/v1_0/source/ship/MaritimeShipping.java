@@ -54,5 +54,4 @@ public class MaritimeShipping extends AbstractShipping implements IsGmlMaritimeS
     return TimeUnit.YEAR::name;
   }
 
-
 }

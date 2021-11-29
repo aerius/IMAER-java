@@ -143,8 +143,8 @@ public class RoadEmissionsCalculator {
   Map<Substance, BigDecimal> calculateEmissions(final StandardVehicles standardVehicles, final RoadType roadType, final RoadSpeedType roadSpeedType) {
     final Map<Substance, BigDecimal> results = new EnumMap<>(Substance.class);
     for (final Entry<VehicleType, ValuesPerVehicleType> entry : standardVehicles.getValuesPerVehicleTypes().entrySet()) {
-      final Map<Substance, BigDecimal> emissionsForVehicles =
-          calculateEmissions(standardVehicles, entry.getKey(), entry.getValue(), roadType, roadSpeedType);
+      final Map<Substance, BigDecimal> emissionsForVehicles = calculateEmissions(standardVehicles, entry.getKey(), entry.getValue(), roadType,
+          roadSpeedType);
       emissionsForVehicles.forEach(
           (key, value) -> results.merge(key, value, (v1, v2) -> v1.add(v2)));
     }
@@ -157,10 +157,10 @@ public class RoadEmissionsCalculator {
     final Map<Substance, BigDecimal> results = new EnumMap<>(Substance.class);
     final BigDecimal numberOfVehiclesPerYear = getVehiclesPerYear(standardVehicles, valuesPerVehicleType.getVehiclesPerTimeUnit());
 
-    final Map<Substance, BigDecimal> emissions =
-        calculateNonStagnatedEmissionsPerVehicle(standardVehicles, vehicleType, valuesPerVehicleType, roadType, roadSpeedType);
-    final Map<Substance, BigDecimal> stagnatedEmissions =
-        calculateStagnatedEmissionsPerVehicle(standardVehicles, vehicleType, valuesPerVehicleType, roadType, roadSpeedType);
+    final Map<Substance, BigDecimal> emissions = calculateNonStagnatedEmissionsPerVehicle(standardVehicles, vehicleType, valuesPerVehicleType,
+        roadType, roadSpeedType);
+    final Map<Substance, BigDecimal> stagnatedEmissions = calculateStagnatedEmissionsPerVehicle(standardVehicles, vehicleType, valuesPerVehicleType,
+        roadType, roadSpeedType);
     stagnatedEmissions.forEach(
         (key, value) -> emissions.merge(key, value, (v1, v2) -> v1.add(v2)));
     final List<StandardVehicleMeasure> measures = standardVehicles.getMeasures();

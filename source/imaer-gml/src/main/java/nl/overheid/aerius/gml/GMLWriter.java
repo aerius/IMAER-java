@@ -134,7 +134,8 @@ public class GMLWriter {
    * @param dispersionLines List of NSL dispersion lines
    * @throws AeriusException When exception occurred generating the GML.
    */
-  public Map<NSLDispersionLineFeature, String> getGmlByNslDispersionLines(final List<NSLDispersionLineFeature> dispersionLines) throws AeriusException {
+  public Map<NSLDispersionLineFeature, String> getGmlByNslDispersionLines(final List<NSLDispersionLineFeature> dispersionLines)
+      throws AeriusException {
     final Map<NSLDispersionLineFeature, String> gmlPerDispersionLine = new HashMap<>();
     final InternalGMLWriter writer = createInternalWriter();
     for (final NSLDispersionLineFeature dispersionLine : dispersionLines) {
@@ -157,7 +158,7 @@ public class GMLWriter {
     for (final NSLMeasureFeature measure : measures) {
       final FeatureMember feature = writer.nslMeasuresToFeatures(Collections.singletonList(measure)).get(0);
 
-      setGMLFeatureOnObject(writer, feature,  gml -> gmlPerMeasure.put(measure, gml));
+      setGMLFeatureOnObject(writer, feature, gml -> gmlPerMeasure.put(measure, gml));
     }
     return gmlPerMeasure;
   }

@@ -18,7 +18,7 @@ package nl.overheid.aerius.gml.base.source.ship;
 
 import nl.overheid.aerius.gml.base.IsGmlProperty;
 
-public interface IsGmlCustomMooringMaritimeShipping extends IsGmlMooringMaritimeShipping{
+public interface IsGmlCustomMooringMaritimeShipping extends IsGmlMooringMaritimeShipping {
 
   IsGmlProperty<IsGmlCustomMaritimeShippingEmissionProperties> getEmissionProperties();
 

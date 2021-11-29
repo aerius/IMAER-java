@@ -25,8 +25,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 
 @JsonTypeInfo(property = "lodgingSystemType", use = Id.NAME)
 @JsonSubTypes({
-@Type(value = ReductiveLodgingSystem.class, name = "REDUCTIVE"),
-@Type(value = AdditionalLodgingSystem.class, name = "ADDITIONAL"),
+    @Type(value = ReductiveLodgingSystem.class, name = "REDUCTIVE"),
+    @Type(value = AdditionalLodgingSystem.class, name = "ADDITIONAL"),
 })
 public abstract class LodgingSystem implements Serializable {
 

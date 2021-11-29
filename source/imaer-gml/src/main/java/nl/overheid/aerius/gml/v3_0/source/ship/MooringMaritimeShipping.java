@@ -31,7 +31,7 @@ import nl.overheid.aerius.gml.v3_0.source.TimeUnit;
  *
  */
 @XmlType(name = "MooringMaritimeShippingType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"shipsPerTimeUnit", "averageResidenceTime",
-"inlandRoute", "maritimeRoutes", "timeUnit"})
+    "inlandRoute", "maritimeRoutes", "timeUnit"})
 public class MooringMaritimeShipping extends AbstractShipping implements IsGmlMooringMaritimeShipping {
 
   private int shipsPerTimeUnit;

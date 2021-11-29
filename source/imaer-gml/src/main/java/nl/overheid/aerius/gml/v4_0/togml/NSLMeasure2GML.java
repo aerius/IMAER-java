@@ -61,7 +61,6 @@ final class NSLMeasure2GML {
 
     gmlMeasure.setMeasures(toGML(measure.getVehicleMeasures()));
 
-
     return gmlMeasure;
   }
 

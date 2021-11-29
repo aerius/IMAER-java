@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-
 package nl.overheid.aerius.validation;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
@@ -467,8 +466,8 @@ class RblCohesionValidatorTest {
     final EmissionSourceFeature feature = new EmissionSourceFeature();
     final LineString geometry = new LineString();
     geometry.setCoordinates(new double[][] {
-    {5, 9},
-    {10, 3},
+        {5, 9},
+        {10, 3},
     });
     feature.setGeometry(geometry);
     final SRM2RoadEmissionSource road = new SRM2RoadEmissionSource();
@@ -481,8 +480,8 @@ class RblCohesionValidatorTest {
     final EmissionSourceFeature feature = new EmissionSourceFeature();
     final LineString geometry = new LineString();
     geometry.setCoordinates(new double[][] {
-    {101, 202},
-    {101, 303},
+        {101, 202},
+        {101, 303},
     });
     feature.setGeometry(geometry);
     final SRM1RoadEmissionSource road = new SRM1RoadEmissionSource();

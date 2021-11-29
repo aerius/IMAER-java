@@ -29,7 +29,7 @@ import nl.overheid.aerius.gml.v2_2.base.CalculatorSchema;
  *
  */
 @XmlType(name = "MooringInlandShippingType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"averageResidenceTime", "routes"})
-public class MooringInlandShipping extends AbstractShipping implements IsGmlMooringInlandShipping{
+public class MooringInlandShipping extends AbstractShipping implements IsGmlMooringInlandShipping {
 
   private int averageResidenceTime;
   private List<InlandShippingRouteProperty> routes = new ArrayList<>();

@@ -39,7 +39,7 @@ public class EmissionSourceCharacteristics implements IsGmlEmissionSourceCharact
   private Double spread;
   private DiurnalVariationEnum diurnalVariation;
 
-  @XmlElement(name="heatContent", namespace = CalculatorSchema.NAMESPACE)
+  @XmlElement(name = "heatContent", namespace = CalculatorSchema.NAMESPACE)
   public double getHeatContentValue() {
     return heatContentValue;
   }
@@ -77,7 +77,7 @@ public class EmissionSourceCharacteristics implements IsGmlEmissionSourceCharact
     this.spread = spread;
   }
 
-  @XmlElement(name="diurnalVariation", namespace = CalculatorSchema.NAMESPACE)
+  @XmlElement(name = "diurnalVariation", namespace = CalculatorSchema.NAMESPACE)
   public DiurnalVariationEnum getDiurnalVariationValue() {
     return diurnalVariation;
   }

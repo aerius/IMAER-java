@@ -146,5 +146,4 @@ public class FeatureCollectionImpl implements FeatureCollection {
     setDefinitions((DefinitionsImpl) definitions);
   }
 
-
 }

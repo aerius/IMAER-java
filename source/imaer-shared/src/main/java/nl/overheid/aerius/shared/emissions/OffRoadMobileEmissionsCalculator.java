@@ -84,8 +84,8 @@ public class OffRoadMobileEmissionsCalculator {
     operatingEmissions.forEach(
         (key, value) -> emissions.merge(key, value, (v1, v2) -> v1.add(v2)));
 
-    final Map<Substance, BigDecimal> adBlueEmissions =
-        determineAdBlueEmissions(mobileSourceCode, literFuelPerYear, standardSource.getLiterAdBluePerYear());
+    final Map<Substance, BigDecimal> adBlueEmissions = determineAdBlueEmissions(mobileSourceCode, literFuelPerYear,
+        standardSource.getLiterAdBluePerYear());
     adBlueEmissions.forEach(
         (key, value) -> emissions.merge(key, value, (v1, v2) -> v1.add(v2)));
 
@@ -127,8 +127,8 @@ public class OffRoadMobileEmissionsCalculator {
     final Map<Substance, BigDecimal> emissions = new EnumMap<>(Substance.class);
     if (adBlueLiterPerYear != null && fuelLiterPerYear.isPresent()) {
       final OptionalDouble maxAdBlueRatio = emissionFactorSupplier.getMaxAdBlueFuelRatio(mobileSourceCode);
-      final BigDecimal maxAdBlue =
-          fuelLiterPerYear.get().multiply(maxAdBlueRatio.isPresent() ? BigDecimal.valueOf(maxAdBlueRatio.getAsDouble()) : BigDecimal.ZERO);
+      final BigDecimal maxAdBlue = fuelLiterPerYear.get()
+          .multiply(maxAdBlueRatio.isPresent() ? BigDecimal.valueOf(maxAdBlueRatio.getAsDouble()) : BigDecimal.ZERO);
 
       final BigDecimal adBlueLiterPerYearDB = BigDecimal.valueOf(adBlueLiterPerYear).min(maxAdBlue);
       final Map<Substance, Double> emissionFactorsPerLiterAdBlue = emissionFactorSupplier
