@@ -17,7 +17,6 @@
 package nl.overheid.aerius.gml.base;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -52,7 +51,7 @@ public class GMLConversionData {
 
   private final List<AeriusException> errors;
   private final List<AeriusException> warnings;
-  private final Map<String, Set<String>> idMap = new HashMap<>();
+  private final Set<String> idMap = new HashSet<>();
   private final GMLLegacyCodeConverter legacyCodeConverter;
   private final int srid;
   private final ReceptorUtil receptorUtil;
@@ -111,15 +110,10 @@ public class GMLConversionData {
    * @param gmlId Feature Member String id
    */
   public void putAndTrack(final String gmlId) {
-    final String globalId = "";
-    if (!idMap.containsKey(globalId)) {
-      idMap.put(globalId, new HashSet<>());
-    }
-    final Set<String> sMap = idMap.get(globalId);
-    if (sMap.contains(gmlId)) {
+    if (idMap.contains(gmlId)) {
       errors.add(new AeriusException(ImaerExceptionReason.GML_ID_NOT_UNIQUE, gmlId, gmlId));
     } else {
-      sMap.add(gmlId);
+      idMap.add(gmlId);
     }
   }
 
