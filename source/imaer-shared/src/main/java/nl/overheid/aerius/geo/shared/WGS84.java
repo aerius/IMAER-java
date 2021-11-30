@@ -19,8 +19,8 @@ package nl.overheid.aerius.geo.shared;
 /**
  * Constants for WGS84 (EPSG::4326).
  *
- * The coordinates are not fully supported in AERIUS. This is only available to set points with these coordinates from OPS brn files. This is used
- * only to calculated foreign depositions.
+ * The coordinates are not fully supported in AERIUS. This is only available to set points with these coordinates from OPS brn files.
+ * This is used only to calculated foreign depositions.
  */
 public final class WGS84 {
 
@@ -28,6 +28,11 @@ public final class WGS84 {
    * SRID of EPSG:4326.
    */
   public static final int SRID = 4326;
+
+  /**
+   * EPSG code for WGS84.
+   */
+  public static final String EPSG_CODE = "EPSG:" + SRID;
 
   private WGS84() {
     // Only available for SRID reference.
