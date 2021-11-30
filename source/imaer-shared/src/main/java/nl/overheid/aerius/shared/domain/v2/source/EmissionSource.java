@@ -57,7 +57,6 @@ public abstract class EmissionSource implements Serializable {
   private String description;
   private Integer jurisdictionId;
   private SourceCharacteristics characteristics;
-  private Integer actualSrid;
   private Map<Substance, Double> emissions = new HashMap<>();
 
   public String getGmlId() {
@@ -107,14 +106,6 @@ public abstract class EmissionSource implements Serializable {
 
   public void setCharacteristics(final SourceCharacteristics characteristics) {
     this.characteristics = characteristics;
-  }
-
-  public Integer getActualSrid() {
-    return actualSrid;
-  }
-
-  public void setActualSrid(final Integer actualSrid) {
-    this.actualSrid = actualSrid;
   }
 
   public Map<Substance, Double> getEmissions() {
