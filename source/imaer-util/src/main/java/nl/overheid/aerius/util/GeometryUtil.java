@@ -78,21 +78,6 @@ public final class GeometryUtil {
   }
 
   /**
-   * Returns the The (JTS) geometry that is contained in the AERIUS geometry.
-   * @param aeriusGeometry AERIUS geometry object.
-   * @return The (JTS) geometry that is contained in the WKT.
-   * @throws AeriusException exception in case of geometry problems
-   */
-  public static Geometry getGeometry(final nl.overheid.aerius.geo.shared.Geometry aeriusGeometry) throws AeriusException {
-    final Geometry geometry = getGeometry(aeriusGeometry instanceof WKTGeometry ? ((WKTGeometry) aeriusGeometry).getWKT()
-        : aeriusGeometry instanceof Point ? ((Point) aeriusGeometry).toUnroundedWKT() : null);
-    if (geometry == null) {
-      throw new AeriusException(ImaerExceptionReason.GEOMETRY_INVALID, String.valueOf(aeriusGeometry));
-    }
-    return geometry;
-  }
-
-  /**
    * @param wkt The WKT to convert to a JTS Geometry object.
    * @return The (JTS) geometry that is contained in the WKT.
    * @throws AeriusException In case the WKT couldn't be converted to a valid JTS Geometry object.
@@ -310,12 +295,9 @@ public final class GeometryUtil {
    * @throws AeriusException When no valid LINESTRING could be made from the WKT.
    */
   public static Point lastPointFromWKT(final String wkt) throws AeriusException {
-    final Point point = new Point();
     final Geometry lineString = getGeometry(wkt);
     final Coordinate lastCoordinate = lineString.getCoordinates()[lineString.getCoordinates().length - 1];
-    point.setX(lastCoordinate.getOrdinate(Coordinate.X));
-    point.setY(lastCoordinate.getOrdinate(Coordinate.Y));
-    return point;
+    return new Point(lastCoordinate.getOrdinate(Coordinate.X), lastCoordinate.getOrdinate(Coordinate.Y));
   }
 
   /**

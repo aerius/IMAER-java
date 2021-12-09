@@ -21,7 +21,7 @@ import java.io.Serializable;
 import nl.overheid.aerius.geo.shared.Point;
 
 /**
- * Shipping nodes are part of the main route network(s). 
+ * Shipping nodes are part of the main route network(s).
  * They can be used to attach a transfer route to a certain network when defining a dock.
  */
 public class ShippingNode extends Point implements Serializable {
@@ -31,7 +31,7 @@ public class ShippingNode extends Point implements Serializable {
   private int id;
 
   /**
-   * 
+   *
    */
   public ShippingNode() {
     //default constructor.
@@ -42,7 +42,7 @@ public class ShippingNode extends Point implements Serializable {
    * @param y Y coordinate
    * @param id The shipping node ID.
    */
-  public ShippingNode(int id, double x, double y) {
+  public ShippingNode(final int id, final double x, final double y) {
     super(x, y);
     this.id = id;
   }
@@ -51,7 +51,7 @@ public class ShippingNode extends Point implements Serializable {
     return id;
   }
 
-  public void setId(int id) {
+  public void setId(final int id) {
     this.id = id;
   }
 

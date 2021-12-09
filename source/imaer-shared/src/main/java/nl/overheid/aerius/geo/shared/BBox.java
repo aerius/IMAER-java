@@ -21,9 +21,9 @@ import java.io.Serializable;
 /**
  * Represents a Bounding Box.
  */
-public class BBox extends Geometry implements Serializable {
+public class BBox implements Serializable {
 
-  private static final long serialVersionUID = -8632974689754535845L;
+  private static final long serialVersionUID = 1L;
 
   private double minX;
   private double maxX;

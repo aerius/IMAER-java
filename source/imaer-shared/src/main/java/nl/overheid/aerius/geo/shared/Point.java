@@ -18,14 +18,12 @@ package nl.overheid.aerius.geo.shared;
 
 import java.io.Serializable;
 
-import nl.overheid.aerius.shared.MathUtil;
-
 /**
  * Simple point with x and y coordinate.
  */
-public class Point extends Geometry implements Serializable {
+public class Point extends nl.overheid.aerius.shared.domain.v2.geojson.Point implements Serializable {
 
-  private static final long serialVersionUID = 6802697428089063814L;
+  private static final long serialVersionUID = 1L;
 
   /**
    * If the SRID is not set then the system default SRID applies.
@@ -33,8 +31,6 @@ public class Point extends Geometry implements Serializable {
   private static final int DEFAULT_SRID = 0;
 
   private int srid;
-  private double x;
-  private double y;
 
   // Needed for GWT.
   public Point() {
@@ -45,8 +41,7 @@ public class Point extends Geometry implements Serializable {
   }
 
   public Point(final double x, final double y, final int srid) {
-    this.x = x;
-    this.y = y;
+    super(x, y);
     this.srid = srid;
   }
 
@@ -56,8 +51,8 @@ public class Point extends Geometry implements Serializable {
    * @return distance to other point
    */
   public double distance(final Point other) {
-    final double tx = x - other.x;
-    final double ty = y - other.y;
+    final double tx = getX() - other.getX();
+    final double ty = getY() - other.getY();
 
     return Math.sqrt(tx * tx + ty * ty);
   }
@@ -65,7 +60,7 @@ public class Point extends Geometry implements Serializable {
   @Override
   public boolean equals(final Object obj) {
     return obj instanceof Point && srid == ((Point) obj).srid
-        && MathUtil.round(x) == MathUtil.round(((Point) obj).x) && MathUtil.round(y) == MathUtil.round(((Point) obj).y);
+        && getRoundedX() == ((Point) obj).getRoundedX() && getRoundedY() == ((Point) obj).getRoundedY();
   }
 
   /**
@@ -84,20 +79,12 @@ public class Point extends Geometry implements Serializable {
     return srid;
   }
 
-  public double getX() {
-    return x;
-  }
-
-  public double getY() {
-    return y;
-  }
-
   /**
    * Get the rounded value of x.
    * @return rounded x.
    */
   public int getRoundedX() {
-    return (int) Math.round(x);
+    return (int) Math.round(getX());
   }
 
   /**
@@ -105,7 +92,7 @@ public class Point extends Geometry implements Serializable {
    * @return x rounded on centimeters
    */
   public double getRoundedCmX() {
-    return ((int) Math.round(x * 100)) / 100.0;
+    return ((int) Math.round(getX() * 100)) / 100.0;
   }
 
   /**
@@ -113,7 +100,7 @@ public class Point extends Geometry implements Serializable {
    * @return rounded y.
    */
   public int getRoundedY() {
-    return (int) Math.round(y);
+    return (int) Math.round(getY());
   }
 
   /**
@@ -121,33 +108,16 @@ public class Point extends Geometry implements Serializable {
    * @return y rounded on centimeters
    */
   public double getRoundedCmY() {
-    return ((int) Math.round(y * 100)) / 100.0;
+    return ((int) Math.round(getY() * 100)) / 100.0;
   }
 
   @Override
   public int hashCode() {
-    final int prime = 31;
-    final int bitShift = 32;
-    int result = srid;
-    long temp = Double.doubleToLongBits(x);
-    result = prime * result + (int) (temp ^ (temp >>> bitShift));
-    result = prime * result + (int) x;
-    temp = Double.doubleToLongBits(y);
-    result = prime * result + (int) (temp ^ (temp >>> bitShift));
-    result = prime * result + (int) y;
-    return result;
+    return super.hashCode() * srid;
   }
 
   public void setSrid(final int srid) {
     this.srid = srid;
-  }
-
-  public void setX(final double x) {
-    this.x = x;
-  }
-
-  public void setY(final double y) {
-    this.y = y;
   }
 
   /**
@@ -156,7 +126,7 @@ public class Point extends Geometry implements Serializable {
    * @return the point as WKT string
    */
   public String toWKT() {
-    return "POINT(" + MathUtil.round(x) + " " + MathUtil.round(y) + ")";
+    return "POINT(" + getRoundedX() + " " + getRoundedX() + ")";
   }
 
   /**
@@ -165,11 +135,11 @@ public class Point extends Geometry implements Serializable {
    * @return the point as WKT string
    */
   public String toUnroundedWKT() {
-    return "POINT(" + x + " " + y + ")";
+    return "POINT(" + getX() + " " + getY() + ")";
   }
 
   @Override
   public String toString() {
-    return "Point [x=" + x + ", y=" + y + "]";
+    return "Point [x=" + getX() + ", y=" + getY() + "]";
   }
 }

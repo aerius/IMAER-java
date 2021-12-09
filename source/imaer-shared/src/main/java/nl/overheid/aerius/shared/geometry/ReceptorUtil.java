@@ -98,7 +98,7 @@ public final class ReceptorUtil {
   }
 
   /**
-   * Sets the receptor id based on the given X and Y coordinates. Only works for X and Y within NL bounding box.
+   * Gets the receptor id based on the given X and Y coordinates. Only works for X and Y within NL bounding box.
    *
    * @param rec AeriusPoint to set id for
    * @return AeriusPoint with id
@@ -236,16 +236,28 @@ public final class ReceptorUtil {
     }
   }
 
-  public int getZoomLevelForReceptor(final Point point) {
-    int zoomLevel = zoomLevelXY.length;
-    for (int i = 0; i < zoomLevelXY.length - 1; i++) {
-      final double marginX = ((point.getX() + DIVIDE_CORRECTION) - boundingBox.getMinX()) % zoomLevelXY[i][INDEX_X];
-      final double marginY = ((point.getY() + DIVIDE_CORRECTION) - boundingBox.getMinY()) % zoomLevelXY[i][INDEX_Y];
-      if (marginX > 1 || marginY > 1) {
-        zoomLevel = i + 1;
-        break;
+  public int getZoomLevelForReceptor(final int receptorId) {
+    final int rowNumber = (receptorId - 1) / hexHor;
+    final int numberInRow = receptorId - rowNumber * hexHor;
+
+    for (int zoomLevel = 1; zoomLevel < zoomLevelXY.length; zoomLevel++) {
+      final int nextZoomLevel = zoomLevel + 1;
+      final int zoomlevelFactor = (int) Math.pow(2, nextZoomLevel);
+      final int zoomlevelFactorMinusOne = (int) Math.pow(2, zoomLevel);
+
+      if (rowNumber % zoomlevelFactor == 0) {
+        // One of final the rows where final the numbering starts final at the beginning
+        if ((numberInRow - 1) % zoomlevelFactorMinusOne == 0) {
+          continue;
+        }
+      } else if ((rowNumber) % zoomlevelFactor == zoomlevelFactorMinusOne) {
+        // One of final the rows where final the numbering starts final one step to final the right
+        if ((numberInRow + zoomlevelFactorMinusOne / 2 - 1) % zoomlevelFactorMinusOne == 0) {
+          continue;
+        }
       }
+      return zoomLevel;
     }
-    return zoomLevel;
+    return zoomLevelXY.length;
   }
 }

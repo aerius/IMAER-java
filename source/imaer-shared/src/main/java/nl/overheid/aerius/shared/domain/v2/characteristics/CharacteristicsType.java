@@ -16,6 +16,9 @@
  */
 package nl.overheid.aerius.shared.domain.v2.characteristics;
 
+/**
+ * Type of the source characteristics. Related to which environmental calculation model is used.
+ */
 public enum CharacteristicsType {
   ADMS(Names.ADMS),
   OPS(Names.OPS);

@@ -31,13 +31,13 @@ public class BBoxTest {
 
   @Test
   public void testIsPointWithinBoundingBox() {
-    final Point point1 = new Point();
+    final Point point1 = new Point(0, 0);
     Assertions.assertFalse(RECEPTOR_BBOX.isPointWithinBoundingBox(point1), "New point shouldn't be");
     point1.setX(135583);
 
     Assertions.assertFalse(RECEPTOR_BBOX.isPointWithinBoundingBox(point1), "Both coords need to be set");
 
-    final Point point2 = new Point();
+    final Point point2 = new Point(0, 0);
     point2.setY(455387);
     Assertions.assertFalse(RECEPTOR_BBOX.isPointWithinBoundingBox(point2), "Both coords need to be set");
     point2.setX(135583);
