@@ -16,6 +16,8 @@
  */
 package nl.overheid.aerius.geo.shared;
 
+import nl.overheid.aerius.shared.domain.v2.geojson.Point;
+
 /**
  * Constants for British National Grid -- United Kingdom (EPSG:27700).
  * Derived from the settings as provided by the jncc.

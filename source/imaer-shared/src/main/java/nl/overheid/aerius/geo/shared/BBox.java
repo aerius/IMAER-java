@@ -18,12 +18,14 @@ package nl.overheid.aerius.geo.shared;
 
 import java.io.Serializable;
 
+import nl.overheid.aerius.shared.domain.v2.geojson.Point;
+
 /**
  * Represents a Bounding Box.
  */
 public class BBox implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 2L;
 
   private double minX;
   private double maxX;

@@ -16,6 +16,8 @@
  */
 package nl.overheid.aerius.geo.shared;
 
+import nl.overheid.aerius.shared.domain.v2.geojson.Point;
+
 /**
  * Constants for RD New coordinates (EPSG:28992).
  */

@@ -40,9 +40,9 @@ import com.vividsolutions.jts.io.WKTReader;
 import com.vividsolutions.jts.linearref.LengthIndexedLine;
 import com.vividsolutions.jts.operation.IsSimpleOp;
 
-import nl.overheid.aerius.geo.shared.Point;
 import nl.overheid.aerius.geo.shared.WKTGeometry;
 import nl.overheid.aerius.shared.domain.geo.OrientedEnvelope;
+import nl.overheid.aerius.shared.domain.v2.geojson.Point;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 

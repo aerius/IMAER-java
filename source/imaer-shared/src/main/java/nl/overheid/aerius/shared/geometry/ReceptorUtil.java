@@ -246,12 +246,12 @@ public final class ReceptorUtil {
       final int zoomlevelFactorMinusOne = (int) Math.pow(2, zoomLevel);
 
       if (rowNumber % zoomlevelFactor == 0) {
-        // One of final the rows where final the numbering starts final at the beginning
+        // One of the rows where the numbering starts at the beginning
         if ((numberInRow - 1) % zoomlevelFactorMinusOne == 0) {
           continue;
         }
       } else if ((rowNumber) % zoomlevelFactor == zoomlevelFactorMinusOne) {
-        // One of final the rows where final the numbering starts final one step to final the right
+        // One of the rows where the numbering starts one step to the right
         if ((numberInRow + zoomlevelFactorMinusOne / 2 - 1) % zoomlevelFactorMinusOne == 0) {
           continue;
         }
