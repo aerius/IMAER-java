@@ -28,9 +28,9 @@ import java.io.Serializable;
  * the line for polygons this is the area of the polygon. The units are assumed
  * to be in meters for lines or square meters for polygons.
  */
-public class WKTGeometry extends Geometry implements Serializable {
+public class WKTGeometry implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 2L;
 
   /**
    * Type of the geometry.

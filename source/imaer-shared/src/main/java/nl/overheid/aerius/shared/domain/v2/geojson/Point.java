@@ -22,16 +22,17 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class Point extends Geometry {
 
-  private static final long serialVersionUID = 2L;
+  private static final long serialVersionUID = 3L;
 
-  private double[] coordinates;
+  private double[] coordinates = { 0, 0 };
 
   public Point() {
     // Default constructor for serialization.
   }
 
   public Point(final double x, final double y) {
-    coordinates = new double[] {x, y};
+    coordinates[0] = x;
+    coordinates[1] = y;
   }
 
   public double[] getCoordinates() {
@@ -39,7 +40,8 @@ public class Point extends Geometry {
   }
 
   public void setCoordinates(final double[] coordinates) {
-    this.coordinates = coordinates;
+    this.coordinates[0] = coordinates[0];
+    this.coordinates[1] = coordinates[1];
   }
 
   @JsonIgnore
@@ -47,9 +49,55 @@ public class Point extends Geometry {
     return coordinates[0];
   }
 
+  /**
+   * Get the rounded value of x.
+   * @return rounded x.
+   */
+  @JsonIgnore
+  public int getRoundedX() {
+    return (int) Math.round(getX());
+  }
+
+  /**
+   * Get the value of x rounded on centimeters.
+   * @return x rounded on centimeters
+   */
+  @JsonIgnore
+  public double getRoundedCmX() {
+    return ((int) Math.round(getX() * 100)) / 100.0;
+  }
+
+  @JsonIgnore
+  public void setX(final double x) {
+    coordinates[0] = x;
+  }
+
   @JsonIgnore
   public double getY() {
     return coordinates[1];
+  }
+
+  /**
+   * Get the rounded value of y.
+   * @return rounded y.
+   */
+  @JsonIgnore
+  public int getRoundedY() {
+    return (int) Math.round(getY());
+  }
+
+  /**
+   * Get the value of y rounded on centimeters.
+   * @return y rounded on centimeters
+   */
+  @JsonIgnore
+  public double getRoundedCmY() {
+    return ((int) Math.round(getY() * 100)) / 100.0;
+  }
+
+  @JsonIgnore
+  public void setY(final double y) {
+    coordinates[1] = y;
   }
 
   @Override
@@ -60,8 +108,13 @@ public class Point extends Geometry {
   @Override
   public int hashCode() {
     final int prime = 31;
-    int result = 1;
-    result = prime * result + Arrays.hashCode(coordinates);
+    final int bitShift = 32;
+    long temp = Double.doubleToLongBits(getX());
+    int result = (int) (temp ^ (temp >>> bitShift));
+    result = prime * result + (int) getX();
+    temp = Double.doubleToLongBits(getY());
+    result = prime * result + (int) (temp ^ (temp >>> bitShift));
+    result = prime * result + (int) getY();
     return result;
   }
 

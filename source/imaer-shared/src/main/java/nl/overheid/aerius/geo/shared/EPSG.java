@@ -18,6 +18,8 @@ package nl.overheid.aerius.geo.shared;
 
 import java.io.Serializable;
 
+import nl.overheid.aerius.shared.domain.v2.geojson.Point;
+
 /**
  * EPSG map constants.
  */

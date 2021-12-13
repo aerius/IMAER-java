@@ -25,6 +25,8 @@ import java.util.Random;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import nl.overheid.aerius.geo.shared.BBox;
 import nl.overheid.aerius.geo.shared.EPSGProxy;
@@ -52,7 +54,7 @@ class ReceptorUtilTest {
       {4706906, 123279.78488053002, 462176.3125076431},
       {9184376, 227135.287156324, 619493.35052661}};
 
-  private static final HexagonZoomLevel ZOOM_LEVEL_1 = new HexagonZoomLevel(1, 10000);
+  private static final HexagonZoomLevel ZOOM_LEVEL_1 = new HexagonZoomLevel(1, 10_000);
   private static final BBox RECEPTOR_BBOX = new BBox(3604, 296800, 287959, 629300);
 
   private static final ArrayList<HexagonZoomLevel> hexagonZoomLevels = createZoomLevels();
@@ -94,7 +96,10 @@ class ReceptorUtilTest {
   private static ArrayList<HexagonZoomLevel> createZoomLevels() {
     final ArrayList<HexagonZoomLevel> zoomLevels = new ArrayList<>();
     zoomLevels.add(ZOOM_LEVEL_1);
-    zoomLevels.add(new HexagonZoomLevel(2, 10000));
+    zoomLevels.add(new HexagonZoomLevel(2, 40_000));
+    zoomLevels.add(new HexagonZoomLevel(3, 160_000));
+    zoomLevels.add(new HexagonZoomLevel(4, 640_000));
+    zoomLevels.add(new HexagonZoomLevel(5, 2_560_000));
     return zoomLevels;
   }
 
@@ -127,8 +132,7 @@ class ReceptorUtilTest {
       final int sign = random.nextInt() % 2 == 0 ? 1 : -1;
       final Point point = new Point(
           RPS[i][1] + sign * random.nextDouble() * ZOOM_LEVEL_1.getHexagonRadius() / 2,
-          RPS[i][2] + sign * random.nextDouble() * ZOOM_LEVEL_1.getHexagonHeight() / 2
-          );
+          RPS[i][2] + sign * random.nextDouble() * ZOOM_LEVEL_1.getHexagonHeight() / 2);
       final int rp = RECEPTOR_UTIL.getReceptorIdFromPoint(point);
 
       Assertions.assertEquals((int) RPS[i][0], rp, "Receptor(" + i + ":" + point.getX() + ", " + point.getY() + ") ID:");
@@ -146,8 +150,7 @@ class ReceptorUtilTest {
       final int sign = random.nextInt() % 2 == 0 ? 1 : -1;
       final Point point = new Point(
           RPS[i][1] + sign * (ZOOM_LEVEL_1.getHexagonRadius() - divergeFromMaximum),
-          RPS[i][2]
-          );
+          RPS[i][2]);
       final int rp = RECEPTOR_UTIL.getReceptorIdFromPoint(point);
 
       Assertions.assertEquals((int) RPS[i][0], rp, "Receptor(" + i + ":" + point.getX() + ", " + point.getY() + ") ID:");
@@ -157,8 +160,7 @@ class ReceptorUtilTest {
       final int sign = random.nextInt() % 2 == 0 ? 1 : -1;
       final Point point = new Point(
           RPS[i][1] + sign * (ZOOM_LEVEL_1.getHexagonRadius() / 2 - divergeFromMaximum),
-          RPS[i][2] + (ZOOM_LEVEL_1.getHexagonHeight() / 2 - divergeFromMaximum)
-          );
+          RPS[i][2] + (ZOOM_LEVEL_1.getHexagonHeight() / 2 - divergeFromMaximum));
       final int rp = RECEPTOR_UTIL.getReceptorIdFromPoint(point);
 
       Assertions.assertEquals((int) RPS[i][0], rp, "Receptor(" + i + ":" + point.getX() + ", " + point.getY() + ") ID:");
@@ -168,8 +170,7 @@ class ReceptorUtilTest {
       final int sign = random.nextInt() % 2 == 0 ? 1 : -1;
       final Point point = new Point(
           RPS[i][1] + sign * (ZOOM_LEVEL_1.getHexagonRadius() / 2 - divergeFromMaximum),
-          RPS[i][2] - (ZOOM_LEVEL_1.getHexagonHeight() / 2 - divergeFromMaximum)
-          );
+          RPS[i][2] - (ZOOM_LEVEL_1.getHexagonHeight() / 2 - divergeFromMaximum));
       final int rp = RECEPTOR_UTIL.getReceptorIdFromPoint(point);
 
       Assertions.assertEquals((int) RPS[i][0], rp, "Receptor(" + i + ":" + point.getX() + ", " + point.getY() + ") ID:");
@@ -214,11 +215,13 @@ class ReceptorUtilTest {
     return Math.sqrt(tx * tx + ty * ty);
   }
 
-  @Test
-  void testGetZoomLevelForReceptor() {
-    final Point zoomLevel1Point = RECEPTOR_UTIL.getPointFromReceptorId(3842801);
-    assertEquals(1, RECEPTOR_UTIL.getZoomLevelForReceptor(zoomLevel1Point), "Receptor on zoom level 1");
-    final Point zoomLevel5Point = RECEPTOR_UTIL.getPointFromReceptorId(1334301);
-    assertEquals(2, RECEPTOR_UTIL.getZoomLevelForReceptor(zoomLevel5Point), "Receptor on zoom level 2");
+  @ParameterizedTest
+  @MethodSource("zoomLevelReceptors")
+  void testGetZoomLevelForReceptor(final int id, final int expectedZoomLevel) {
+    assertEquals(expectedZoomLevel, RECEPTOR_UTIL.getZoomLevelForReceptor(id), "Not the expected zoomlevel for id " + id);
+  }
+
+  private static Object[][] zoomLevelReceptors() {
+    return new Object[][] {{4512290, 1}, {4512011, 1}, {4512003, 1}, {4511888, 2}, {4502301, 3}, {4502425, 4}, {4502305, 5}};
   }
 }
