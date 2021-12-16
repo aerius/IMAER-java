@@ -31,11 +31,20 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 })
 public abstract class SourceCharacteristics implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 2L;
+
+  private String buildingId;
 
   public <E extends SourceCharacteristics> E copyTo(final E copy) {
-    // NO-OP for now
+    copy.setBuildingId(buildingId);
     return copy;
   }
 
+  public String getBuildingId() {
+    return buildingId;
+  }
+
+  public void setBuildingId(final String buildingId) {
+    this.buildingId = buildingId;
+  }
 }
