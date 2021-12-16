@@ -41,6 +41,10 @@ public class CalculationSetOptions implements Serializable {
   private CalculationRoadOPS roadOPS = CalculationRoadOPS.DEFAULT;
   private int monitorSrm2Year;
   /**
+   * If true apply the WNB 25km calculation limit. Default true for WNB.
+   */
+  private boolean wnbMaxDistance;
+  /**
    * Controls the stacking of Point sources.
    */
   private boolean stacking = true;
@@ -63,6 +67,17 @@ public class CalculationSetOptions implements Serializable {
 
   public ArrayList<Substance> getSubstances() {
     return substances;
+  }
+
+  public void setWnbMaxDistance(final boolean wnbMaxDistance) {
+    this.wnbMaxDistance = wnbMaxDistance;
+  }
+
+  /**
+   * @return Returns true if WNB maximum distance calculation is to be applied.
+   */
+  public boolean isWNBMaxDistance() {
+    return wnbMaxDistance;
   }
 
   public boolean isStacking() {
