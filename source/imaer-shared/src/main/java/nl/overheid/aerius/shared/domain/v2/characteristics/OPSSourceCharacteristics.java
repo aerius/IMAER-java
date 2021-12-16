@@ -89,8 +89,6 @@ public class OPSSourceCharacteristics extends SourceCharacteristics {
    */
   private int particleSizeDistribution;
 
-  private String buildingId;
-
   public HeatContentType getHeatContentType() {
     return heatContentType;
   }
@@ -204,14 +202,6 @@ public class OPSSourceCharacteristics extends SourceCharacteristics {
     this.particleSizeDistribution = particleSizeDistribution;
   }
 
-  public String getBuildingId() {
-    return buildingId;
-  }
-
-  public void setBuildingId(final String buildingId) {
-    this.buildingId = buildingId;
-  }
-
   public <E extends OPSSourceCharacteristics> E copyTo(final E copy) {
     super.copyTo(copy);
     copy.setHeatContentType(heatContentType);
@@ -227,7 +217,6 @@ public class OPSSourceCharacteristics extends SourceCharacteristics {
     copy.setOutflowDirection(outflowDirection);
     copy.setOutflowVelocity(outflowVelocity);
     copy.setOutflowVelocityType(outflowVelocityType);
-    copy.setBuildingId(buildingId);
     return copy;
   }
 

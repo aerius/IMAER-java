@@ -27,8 +27,6 @@ public class ADMSSourceCharacteristics extends SourceCharacteristics {
 
   private static final long serialVersionUID = 1L;
 
-  private String buildingId;
-
   private BuoyancyType buoyancyType;
 
   private EffluxType effluxType;
@@ -65,14 +63,6 @@ public class ADMSSourceCharacteristics extends SourceCharacteristics {
    * Mass flux of the emission (kg/s).
    */
   private double massFlux;
-
-  public String getBuildingId() {
-    return buildingId;
-  }
-
-  public void setBuildingId(final String buildingId) {
-    this.buildingId = buildingId;
-  }
 
   public BuoyancyType getBuoyancyType() {
     return buoyancyType;
@@ -184,5 +174,24 @@ public class ADMSSourceCharacteristics extends SourceCharacteristics {
 
   public void setMassFlux(final double massFlux) {
     this.massFlux = massFlux;
+  }
+
+  public <E extends ADMSSourceCharacteristics> E copyTo(final E copy) {
+    super.copyTo(copy);
+    copy.setBuoyancyType(buoyancyType);
+    copy.setEffluxType(effluxType);
+    copy.setReleaseTemperatureAndPressure(releaseTemperatureAndPressure);
+    copy.setHeight(height);
+    copy.setDiameter(diameter);
+    copy.setTemperature(temperature);
+    copy.setDensity(density);
+    copy.setVerticalVelocity(verticalVelocity);
+    copy.setVolumetricFlowRate(volumetricFlowRate);
+    copy.setSpecificHeatCapacity(specificHeatCapacity);
+    copy.setPercentNOxAsNO2(percentNOxAsNO2);
+    copy.setMomentumFlux(momentumFlux);
+    copy.setBuoyancyFlux(buoyancyFlux);
+    copy.setMassFlux(massFlux);
+    return copy;
   }
 }
