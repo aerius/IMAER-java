@@ -20,17 +20,19 @@ import nl.overheid.aerius.gml.base.AbstractGML2Source;
 import nl.overheid.aerius.gml.base.GMLConversionData;
 import nl.overheid.aerius.gml.base.characteristics.GML2SourceCharacteristics;
 import nl.overheid.aerius.gml.v4_0.source.EmissionSource;
+import nl.overheid.aerius.shared.domain.v2.characteristics.SourceCharacteristics;
 
 /**
  * Utility class to convert to and from GML objects (specific for emission sources).
  */
-class GML2Source extends AbstractGML2Source<EmissionSource> {
+class GML2Source<S extends SourceCharacteristics> extends AbstractGML2Source<EmissionSource, S> {
 
   /**
    * @param conversionData The data to use when converting. Should be filled.
+   * @param gml2SourceCharacteristics Converter for GML to type specific source characteristics.
    */
-  public GML2Source(final GMLConversionData conversionData) {
-    super(conversionData, new GML2SourceVisitor(conversionData), new GML2SourceCharacteristics(conversionData));
+  public GML2Source(final GMLConversionData conversionData, final GML2SourceCharacteristics<S> gml2SourceCharacteristics) {
+    super(conversionData, new GML2SourceVisitor<S>(conversionData, gml2SourceCharacteristics), gml2SourceCharacteristics);
   }
 
 }

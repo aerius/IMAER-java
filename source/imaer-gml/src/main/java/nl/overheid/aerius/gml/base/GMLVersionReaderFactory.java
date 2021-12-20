@@ -112,5 +112,5 @@ public abstract class GMLVersionReaderFactory {
    * @param conversionData
    * @return
    */
-  public abstract GMLVersionReader createReader(GMLConversionData conversionData);
+  public abstract GMLVersionReader createReader(final GMLConversionData conversionData);
 }

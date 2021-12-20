@@ -21,12 +21,10 @@ import java.util.List;
 
 import nl.overheid.aerius.gml.base.AeriusGMLVersion;
 import nl.overheid.aerius.gml.base.FeatureCollection;
-import nl.overheid.aerius.gml.base.GMLCharacteristicsSupplier;
 import nl.overheid.aerius.gml.base.GMLConversionData;
 import nl.overheid.aerius.gml.base.GMLHelper;
 import nl.overheid.aerius.gml.base.GMLVersionReader;
 import nl.overheid.aerius.gml.base.GMLVersionReaderFactory;
-import nl.overheid.aerius.shared.domain.geo.ReceptorGridSettings;
 import nl.overheid.aerius.shared.domain.scenario.SituationType;
 import nl.overheid.aerius.shared.domain.v2.building.BuildingFeature;
 import nl.overheid.aerius.shared.domain.v2.nsl.NSLCorrection;
@@ -54,21 +52,19 @@ public final class GMLReader {
    * Constructor.
    *
    * @param gmlHelper The GML Helper
-   * @param rgs the receptor grid settings
-   * @param characteristicsSupplier
    * @param factory specific version factory
    * @param featureCollection the feature collection with parsed IMAER GML data
    * @param errors list to add errors on
    * @param warnings list to add warnings on
+   * @throws AeriusException
    */
-  GMLReader(final GMLHelper gmlHelper, final ReceptorGridSettings rgs, final GMLCharacteristicsSupplier characteristicsSupplier,
-      final GMLVersionReaderFactory factory, final FeatureCollection featureCollection, final List<AeriusException> errors,
-      final List<AeriusException> warnings) {
+  GMLReader(final GMLHelper gmlHelper, final GMLVersionReaderFactory factory, final FeatureCollection featureCollection,
+      final List<AeriusException> errors, final List<AeriusException> warnings) throws AeriusException {
     this.gmlHelper = gmlHelper;
     this.factory = factory;
     this.featureCollection = featureCollection;
     metaDataReader = new GMLMetaDataReader(featureCollection);
-    conversionData = new GMLConversionData(gmlHelper, factory.getLegacyCodeConverter(), characteristicsSupplier, rgs, errors, warnings);
+    conversionData = new GMLConversionData(gmlHelper, factory.getLegacyCodeConverter(), errors, warnings);
     versionReader = factory.createReader(conversionData);
   }
 
@@ -135,11 +131,11 @@ public final class GMLReader {
   }
 
   /**
-  * Retrieve all receptor points (domain objects) from a list of FeatureMembers.
-  * Only features extending AbstractCalculationPoint will be handled (AeriusPoint, CustomCalculationPoint, etc).
-  * @param includeResults if true also read results from GML
-  * @return List of all calculation points defined in the GML
-  */
+   * Retrieve all receptor points (domain objects) from a list of FeatureMembers.
+   * Only features extending AbstractCalculationPoint will be handled (AeriusPoint, CustomCalculationPoint, etc).
+   * @param includeResults if true also read results from GML
+   * @return List of all calculation points defined in the GML
+   */
   public List<CalculationPointFeature> getAeriusPoints(final boolean includeResults) {
     final List<CalculationPointFeature> points = new ArrayList<>();
     if ((featureCollection != null) && (featureCollection.getFeatureMembers() != null)) {

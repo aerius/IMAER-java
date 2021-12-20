@@ -39,7 +39,6 @@ import net.opengis.gml.v_3_2_1.ObjectFactory;
 import nl.overheid.aerius.gml.base.FeatureCollection;
 import nl.overheid.aerius.gml.base.GMLHelper;
 import nl.overheid.aerius.gml.base.GMLVersionReaderFactory;
-import nl.overheid.aerius.shared.domain.geo.ReceptorGridSettings;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 import nl.overheid.aerius.validation.ValidationHelper;
@@ -55,21 +54,17 @@ public final class GMLReaderFactory {
 
   private final GMLReaderProxy readerProxy;
   private final GMLHelper gmlHelper;
-  private final ReceptorGridSettings rgs;
 
   GMLReaderFactory(final GMLHelper gmlHelper) throws AeriusException {
-    this.gmlHelper = gmlHelper;
-    readerProxy = new GMLReaderProxy(gmlHelper);
-    rgs = gmlHelper.getReceptorGridSettings();
+    this(gmlHelper, new GMLReaderProxy(gmlHelper));
   }
 
   /**
    * Constructor to use this factory with a specific version reader. Only used in tests.
    */
-  GMLReaderFactory(final GMLHelper gmlHelper, final GMLReaderProxy readerProxy, final ReceptorGridSettings rgs) {
+  GMLReaderFactory(final GMLHelper gmlHelper, final GMLReaderProxy readerProxy) {
     this.gmlHelper = gmlHelper;
     this.readerProxy = readerProxy;
-    this.rgs = rgs;
   }
 
   /**
@@ -107,8 +102,7 @@ public final class GMLReaderFactory {
       reader.nextTag();
       //determine version of the XML based on the namespaces available.
       factory = readerProxy.determineReaderFactory(reader.getNamespaceContext());
-      final GMLReader gmlr = new GMLReader(gmlHelper, rgs, gmlHelper, factory, convertToCollection(reader, factory, vec, validate),
-          errors, warnings);
+      final GMLReader gmlr = new GMLReader(gmlHelper, factory, convertToCollection(reader, factory, vec, validate), errors, warnings);
       checkEvents(vec.getEvents());
       return gmlr;
     } catch (final XMLStreamException e) {

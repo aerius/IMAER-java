@@ -25,7 +25,7 @@ import nl.overheid.aerius.shared.domain.v2.characteristics.OPSSourceCharacterist
  * Will ensure that the emission temperature will be set to the correct value for default,
  * if the value in the GML was the default at that time (11.85).
  */
-public class GML2SourceCharacteristicsV31 extends GML2SourceCharacteristics {
+public class GML2SourceCharacteristicsV31 extends GML2OPSSourceCharacteristics {
 
   private static final double EMISSION_TEMPERATURE_DEFAULT = 11.85;
 

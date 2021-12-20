@@ -22,6 +22,7 @@ import nl.overheid.aerius.gml.base.FeatureMember;
 import nl.overheid.aerius.gml.base.GML2Result;
 import nl.overheid.aerius.gml.base.GMLConversionData;
 import nl.overheid.aerius.gml.base.GMLVersionReader;
+import nl.overheid.aerius.gml.base.characteristics.GML2SourceCharacteristicsV31;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPointFeature;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceFeature;
 
@@ -34,7 +35,7 @@ final class GMLReader implements GMLVersionReader {
   private final GML2Result gml2Result;
 
   public GMLReader(final GMLConversionData conversionData) {
-    gml2Source = new GML2Source(conversionData);
+    gml2Source = new GML2Source(conversionData, new GML2SourceCharacteristicsV31(conversionData));
     gml2Result = new GML2Result(conversionData);
   }
 
