@@ -35,7 +35,7 @@ import nl.overheid.aerius.shared.domain.meteo.SingleYearMeteo;
  */
 class OptionsMetadataUtilTest {
 
-  private static final int BASIC_OPTIONS = 6;
+  private static final int BASIC_OPTIONS = 7;
   private static final int CONNECT_OPTIONS = 2;
   private static final int OPS_OPTIONS = 10;
 
@@ -72,6 +72,7 @@ class OptionsMetadataUtilTest {
     options.setCalculationType(CalculationType.CUSTOM_POINTS);
     options.setRoadOPS(CalculationRoadOPS.OPS_ROAD);
     options.setForceAggregation(true);
+    options.setWnbMaxDistance(true);
     options.setUseReceptorHeights(true);
     options.setMonitorSrm2Year(2023);
 

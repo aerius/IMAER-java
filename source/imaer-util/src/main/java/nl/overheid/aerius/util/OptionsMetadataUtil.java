@@ -37,6 +37,7 @@ public final class OptionsMetadataUtil {
     FORCED_AGGREGATION,
     USE_RECEPTOR_HEIGHT,
     MONITOR_SRM2_YEAR,
+    WNB_MAX_DISTANCE,
 
     /* ConnectSuppliedOptions related */
     CALCULATION_YEAR,
@@ -75,6 +76,7 @@ public final class OptionsMetadataUtil {
     }
     addBooleanValue(mapToAddTo, Option.FORCED_AGGREGATION, options.isForceAggregation(), addDefaults);
     addBooleanValue(mapToAddTo, Option.USE_RECEPTOR_HEIGHT, options.isUseReceptorHeights(), addDefaults);
+    addBooleanValue(mapToAddTo, Option.WNB_MAX_DISTANCE, options.isWNBMaxDistance(), addDefaults);
     addConnectSuppliedOptions(options.getConnectSuppliedOptions(), mapToAddTo, addDefaults);
     addIntValue(mapToAddTo, Option.MONITOR_SRM2_YEAR, options.getMonitorSrm2Year(), addDefaults);
     opsOptionsToMap(options.getOpsOptions(), mapToAddTo, addDefaults);
