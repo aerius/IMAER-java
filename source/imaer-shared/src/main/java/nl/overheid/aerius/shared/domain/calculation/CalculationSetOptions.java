@@ -43,7 +43,7 @@ public class CalculationSetOptions implements Serializable {
   /**
    * If true apply the WNB 25km calculation limit. Default true for WNB.
    */
-  private boolean wnbMaxDistance;
+  private boolean useWNBMaxDistance;
   /**
    * Controls the stacking of Point sources.
    */
@@ -69,15 +69,15 @@ public class CalculationSetOptions implements Serializable {
     return substances;
   }
 
-  public void setWnbMaxDistance(final boolean wnbMaxDistance) {
-    this.wnbMaxDistance = wnbMaxDistance;
+  public void setUseWnbMaxDistance(final boolean uswWNBMaxDistance) {
+    this.useWNBMaxDistance = uswWNBMaxDistance;
   }
 
   /**
    * @return Returns true if WNB maximum distance calculation is to be applied.
    */
-  public boolean isWNBMaxDistance() {
-    return wnbMaxDistance;
+  public boolean isUseWNBMaxDistance() {
+    return useWNBMaxDistance;
   }
 
   public boolean isStacking() {
