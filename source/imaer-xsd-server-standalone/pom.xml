@@ -29,7 +29,7 @@
   <packaging>war</packaging>
 
   <properties>
-    <tomcat-standalone.version>1.0-SNAPSHOT</tomcat-standalone.version>
+    <tomcat-standalone.version>1.0.0</tomcat-standalone.version>
   </properties>
 
   <dependencies>
