@@ -18,6 +18,8 @@ package nl.overheid.aerius.shared.domain.calculation;
 
 import java.io.Serializable;
 
+import nl.overheid.aerius.shared.domain.chemistry.Chemistry;
+
 /**
  * Contains OPS specific settings that will override any preset value in the control file of OPS.
  */
@@ -33,6 +35,7 @@ public class OPSOptions implements Serializable {
   private String washout;
   private String convRate;
   private Double roughness;
+  private Chemistry chemistry;
 
   public boolean isRawInput() {
     return rawInput;
@@ -59,6 +62,18 @@ public class OPSOptions implements Serializable {
 
   public void setYear(final Integer year) {
     this.year = year;
+  }
+
+  /**
+   * This is a suffix for
+   * OPS .ctr variable:YEAR
+   */
+  public Chemistry getChemistry() {
+    return chemistry;
+  }
+
+  public void setChemistry(Chemistry chemistry) {
+    this.chemistry = chemistry;
   }
 
   /**
