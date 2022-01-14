@@ -28,7 +28,7 @@ import nl.overheid.aerius.shared.domain.calculation.CalculationSetOptions;
 import nl.overheid.aerius.shared.domain.calculation.CalculationType;
 import nl.overheid.aerius.shared.domain.calculation.ConnectSuppliedOptions;
 import nl.overheid.aerius.shared.domain.calculation.OPSOptions;
-import nl.overheid.aerius.shared.domain.meteo.SingleYearMeteo;
+import nl.overheid.aerius.shared.domain.meteo.Meteo;
 
 /**
  *
@@ -66,7 +66,7 @@ class OptionsMetadataUtilTest {
   @Test
   void testNonDefaultOptions() {
     final CalculationSetOptions options = new CalculationSetOptions();
-    options.setMeteo(new SingleYearMeteo(2020));
+    options.setMeteo(new Meteo(2020));
     options.setStacking(false);
     // RoadOPS only applies with custom_points.
     options.setCalculationType(CalculationType.CUSTOM_POINTS);

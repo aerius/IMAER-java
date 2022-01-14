@@ -17,6 +17,7 @@
 package nl.overheid.aerius.shared.domain.meteo;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Meteo class for single years (e.g. 2014) and multiple years (e.g. 1995-2004).
@@ -76,14 +77,6 @@ public class Meteo implements Serializable {
     this.endYear = endYear;
   }
 
-  /**
-   * To be removed soon-ish.
-   */
-  @Deprecated
-  public String getOpsFile() {
-    return null;
-  }
-
   public String getCode() {
     return code;
   }
@@ -109,7 +102,20 @@ public class Meteo implements Serializable {
   }
 
   @Override
+  public int hashCode() {
+    return Objects.hash(code);
+  }
+
+  @Override
+  public boolean equals(final Object obj) {
+    return this == obj
+        || (obj != null && getClass() == obj.getClass()
+            && Objects.equals(code, ((Meteo) obj).code));
+  }
+
+  @Override
   public String toString() {
     return code;
   }
+
 }
