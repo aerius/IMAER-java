@@ -37,8 +37,7 @@ public class BNGrid extends EPSG {
   /**
    * Official boundaries of the BN grid extent of the map.
    */
-  private static final BBox BOUNDS = new BBox(-90619.29, 10097.13, 612435.55, 1234954.16);
-// TODO Original boundary used. Check it this one it still needed. private static final BBox BOUNDS = new BBox(0, 0, 800000, 1300000);
+  private static final BBox BOUNDS = new BBox(1393.0196, 13494.9764, 671196.3657, 1230275.0454);
   private static final Point CENTER = new Point(308188.48, 608846.16);
 
   BNGrid() {
