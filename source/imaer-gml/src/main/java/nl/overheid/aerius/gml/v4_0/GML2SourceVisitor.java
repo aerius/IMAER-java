@@ -44,17 +44,18 @@ import nl.overheid.aerius.gml.v4_0.source.ship.InlandShippingEmissionSource;
 import nl.overheid.aerius.gml.v4_0.source.ship.MaritimeShippingEmissionSource;
 import nl.overheid.aerius.gml.v4_0.source.ship.MooringInlandShippingEmissionSource;
 import nl.overheid.aerius.gml.v4_0.source.ship.MooringMaritimeShippingEmissionSource;
+import nl.overheid.aerius.shared.domain.v2.characteristics.SourceCharacteristics;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 
 /**
  *
  */
-class GML2SourceVisitor implements IsGML2SourceVisitor<EmissionSource> {
+class GML2SourceVisitor<S extends SourceCharacteristics> implements IsGML2SourceVisitor<EmissionSource> {
 
   @SuppressWarnings("rawtypes") private final HashMap<Class<? extends EmissionSource>, AbstractGML2Specific> handlers = new HashMap<>();
 
-  GML2SourceVisitor(final GMLConversionData conversionData) {
+  GML2SourceVisitor(final GMLConversionData conversionData, final GML2SourceCharacteristics<S> gml2SourceCharacteristics) {
     handlers.put(EmissionSource.class, new GML2Generic<EmissionSource>(conversionData));
     handlers.put(FarmLodgingEmissionSource.class, new GML2Farm<FarmLodgingEmissionSource>(conversionData));
     handlers.put(FarmlandEmissionSource.class, new GML2Farmland<FarmlandEmissionSource>(conversionData));
@@ -62,8 +63,7 @@ class GML2SourceVisitor implements IsGML2SourceVisitor<EmissionSource> {
     handlers.put(InlandShippingEmissionSource.class, new GML2InlandRoute<InlandShippingEmissionSource>(conversionData));
     handlers.put(MooringMaritimeShippingEmissionSource.class, new GML2MaritimeMooring<MooringMaritimeShippingEmissionSource>(conversionData));
     handlers.put(MaritimeShippingEmissionSource.class, new GML2MaritimeRoute<MaritimeShippingEmissionSource>(conversionData));
-    handlers.put(OffRoadMobileEmissionSource.class, new GML2OffRoad<OffRoadMobileEmissionSource>(conversionData,
-        new GML2SourceCharacteristics(conversionData)));
+    handlers.put(OffRoadMobileEmissionSource.class, new GML2OffRoad<OffRoadMobileEmissionSource>(conversionData, gml2SourceCharacteristics));
     handlers.put(PlanEmissionSource.class, new GML2Plan<PlanEmissionSource>(conversionData));
     handlers.put(SRM2Road.class, new GML2SRM2Road<SRM2Road>(conversionData));
     handlers.put(SRM1Road.class, new GML2SRM1Road<SRM1Road>(conversionData));

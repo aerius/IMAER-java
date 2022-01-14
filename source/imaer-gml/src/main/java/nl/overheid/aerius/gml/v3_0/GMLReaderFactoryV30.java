@@ -21,6 +21,7 @@ import nl.overheid.aerius.gml.base.GMLConversionData;
 import nl.overheid.aerius.gml.base.GMLLegacyCodesSupplier;
 import nl.overheid.aerius.gml.base.GMLVersionReader;
 import nl.overheid.aerius.gml.base.GMLVersionReaderFactory;
+import nl.overheid.aerius.gml.base.characteristics.GML2SourceCharacteristicsV31;
 import nl.overheid.aerius.gml.v3_0.base.CalculatorSchema;
 import nl.overheid.aerius.gml.v3_0.collection.FeatureCollectionImpl;
 import nl.overheid.aerius.shared.exception.AeriusException;
@@ -41,6 +42,6 @@ public class GMLReaderFactoryV30 extends GMLVersionReaderFactory {
 
   @Override
   public GMLVersionReader createReader(final GMLConversionData conversionData) {
-    return new GMLReader(conversionData);
+    return new GMLReader(conversionData, new GML2SourceCharacteristicsV31(conversionData));
   }
 }

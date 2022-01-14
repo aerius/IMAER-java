@@ -180,7 +180,7 @@ public class GMLReaderTest {
       public GMLVersionReaderFactory determineReaderFactory(final NamespaceContext nameSpaceContext) throws AeriusException {
         return gmlReaderFactoryV05;
       }
-    }, gridSettings);
+    });
     final List<EmissionSourceFeature> sources;
     final ArrayList<AeriusException> warnings = new ArrayList<>();
     try (InputStream inputStream = new FileInputStream(file)) {
@@ -315,7 +315,7 @@ public class GMLReaderTest {
     offRoadMobileSourceMap.put("101", new Conversion("BA-B-E3", true));
     codeMaps.put(GMLLegacyCodeType.ON_ROAD_MOBILE_SOURCE, offRoadMobileSourceMap);
     when(mockHelper.getLegacyCodes(any())).thenReturn(codeMaps);
-
+    when(mockHelper.getReceptorGridSettings()).thenReturn(gridSettings);
     return mockHelper;
   }
 

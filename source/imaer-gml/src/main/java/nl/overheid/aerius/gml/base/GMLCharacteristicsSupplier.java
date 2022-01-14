@@ -16,22 +16,23 @@
  */
 package nl.overheid.aerius.gml.base;
 
-import nl.overheid.aerius.shared.domain.v2.characteristics.OPSSourceCharacteristics;
+import nl.overheid.aerius.shared.domain.v2.characteristics.CharacteristicsType;
+import nl.overheid.aerius.shared.domain.v2.characteristics.SourceCharacteristics;
 
 /**
- *
+ * Supplier for Source characteristics.
  */
 public interface GMLCharacteristicsSupplier {
 
   /**
-   * Determine the default OPS characteristics for a sector (based on AERIUS sector ID).
-   * Characteristics should contain at least:
-   * - diurnalVariation
-   * - heatContent
-   * - emissionHeight
-   * - spread
-   * - particleSizeDistribution
+   * Determine the default characteristics for a sector (based on AERIUS sector ID).
    */
-  OPSSourceCharacteristics determineDefaultCharacteristicsBySectorId(int sectorId);
+  <S extends SourceCharacteristics> S determineDefaultCharacteristicsBySectorId(int sectorId);
 
+  /**
+   * @return returns the data type of the characteristics.
+   */
+  default CharacteristicsType getCharacteristicsType() {
+    return CharacteristicsType.OPS;
+  }
 }

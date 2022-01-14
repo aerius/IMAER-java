@@ -28,8 +28,10 @@ import nl.overheid.aerius.gml.base.GML2NSLMeasure;
 import nl.overheid.aerius.gml.base.GML2Result;
 import nl.overheid.aerius.gml.base.GMLConversionData;
 import nl.overheid.aerius.gml.base.GMLVersionReader;
+import nl.overheid.aerius.gml.base.characteristics.GML2SourceCharacteristics;
 import nl.overheid.aerius.gml.v4_0.result.AbstractCalculationPoint;
 import nl.overheid.aerius.shared.domain.v2.building.BuildingFeature;
+import nl.overheid.aerius.shared.domain.v2.characteristics.SourceCharacteristics;
 import nl.overheid.aerius.shared.domain.v2.nsl.NSLCorrection;
 import nl.overheid.aerius.shared.domain.v2.nsl.NSLDispersionLineFeature;
 import nl.overheid.aerius.shared.domain.v2.nsl.NSLMeasureFeature;
@@ -40,9 +42,9 @@ import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceFeature;
 /**
  * {@link GMLVersionReader} for AERIUS GML version 4.0.
  */
-public class GMLReader implements GMLVersionReader {
+public class GMLReader<S extends SourceCharacteristics> implements GMLVersionReader {
 
-  private final GML2Source gml2Source;
+  private final GML2Source<S> gml2Source;
   private final GML2Building gml2Building;
   private final GML2Result gml2Result;
   private final GML2NSLMeasure gml2NSLMeasure;
@@ -50,8 +52,8 @@ public class GMLReader implements GMLVersionReader {
   private final GML2NSLCorrection gml2NSLCorrection;
   private final GML2Definitions gml2Definitions;
 
-  public GMLReader(final GMLConversionData conversionData) {
-    gml2Source = new GML2Source(conversionData);
+  public GMLReader(final GMLConversionData conversionData, final GML2SourceCharacteristics<S> gml2SourceCharacteristics) {
+    gml2Source = new GML2Source<S>(conversionData, gml2SourceCharacteristics);
     gml2Building = new GML2Building(conversionData);
     gml2Result = new GML2Result(conversionData);
     gml2NSLMeasure = new GML2NSLMeasure(conversionData);

@@ -47,6 +47,7 @@ import nl.overheid.aerius.importer.ImportOption;
 import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.geo.ReceptorGridSettings;
 import nl.overheid.aerius.shared.domain.scenario.SituationType;
+import nl.overheid.aerius.shared.domain.v2.characteristics.CharacteristicsType;
 import nl.overheid.aerius.shared.domain.v2.characteristics.OPSSourceCharacteristics;
 import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
 import nl.overheid.aerius.shared.domain.v2.geojson.GeometryType;
@@ -179,6 +180,7 @@ public final class AssertGML {
   static GMLHelper mockGMLHelper() throws AeriusException {
     final GMLHelper gmlHelper = mock(GMLHelper.class);
     when(gmlHelper.getReceptorGridSettings()).thenReturn(RECEPTOR_GRID_SETTINGS);
+    when(gmlHelper.getCharacteristicsType()).thenReturn(CharacteristicsType.OPS);
     final TestValidationAndEmissionHelper valiationAndEmissionHelper = new TestValidationAndEmissionHelper();
     doAnswer(invocation -> {
       final List<EmissionSourceFeature> arg1 = (List<EmissionSourceFeature>) invocation.getArgument(1);

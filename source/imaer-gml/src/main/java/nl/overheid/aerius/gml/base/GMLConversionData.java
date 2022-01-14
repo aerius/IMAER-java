@@ -27,12 +27,12 @@ import nl.overheid.aerius.gml.base.GMLLegacyCodeConverter.Conversion;
 import nl.overheid.aerius.gml.base.GMLLegacyCodeConverter.GMLLegacyCodeType;
 import nl.overheid.aerius.gml.base.conversion.MobileSourceOffRoadConversion;
 import nl.overheid.aerius.gml.base.conversion.PlanConversion;
-import nl.overheid.aerius.gml.base.source.ship.v31.GMLInlandShippingSupplier;
 import nl.overheid.aerius.gml.base.source.ship.v31.InlandShippingUtil;
 import nl.overheid.aerius.shared.domain.Substance;
-import nl.overheid.aerius.shared.domain.geo.ReceptorGridSettings;
 import nl.overheid.aerius.shared.domain.v2.building.BuildingFeature;
+import nl.overheid.aerius.shared.domain.v2.characteristics.CharacteristicsType;
 import nl.overheid.aerius.shared.domain.v2.characteristics.OPSSourceCharacteristics;
+import nl.overheid.aerius.shared.domain.v2.characteristics.SourceCharacteristics;
 import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceFeature;
 import nl.overheid.aerius.shared.domain.v2.source.InlandMaritimeShippingEmissionSource;
@@ -64,23 +64,21 @@ public class GMLConversionData {
   private final InlandShippingUtil inlandRouteUtil;
 
   /**
-   * @param inlandShippingSupplier Inland shipping supplier
+   * @param gmlHelper Inland shipping supplier, and characteristics supplier for default characteristics
    * @param legacyCodeConverter The converter for old category codes to use.
-   * @param characteristicsSupplier The supplier for default characteristics
-   * @param rgs ReceptorGridSettings
    * @param errors
    * @param warnings
+   * @throws AeriusException
    */
-  public GMLConversionData(final GMLInlandShippingSupplier inlandShippingSupplier, final GMLLegacyCodeConverter legacyCodeConverter,
-      final GMLCharacteristicsSupplier characteristicsSupplier, final ReceptorGridSettings rgs, final List<AeriusException> errors,
-      final List<AeriusException> warnings) {
+  public GMLConversionData(final GMLHelper helper, final GMLLegacyCodeConverter legacyCodeConverter, final List<AeriusException> errors,
+      final List<AeriusException> warnings) throws AeriusException {
     this.legacyCodeConverter = legacyCodeConverter;
-    this.characteristicsSupplier = characteristicsSupplier;
-    this.srid = rgs.getEpsg().getSrid();
-    this.receptorUtil = new ReceptorUtil(rgs);
+    this.characteristicsSupplier = helper;
+    this.srid = helper.getReceptorGridSettings().getEpsg().getSrid();
+    this.receptorUtil = new ReceptorUtil(helper.getReceptorGridSettings());
     this.errors = errors;
     this.warnings = warnings;
-    inlandRouteUtil = new InlandShippingUtil(inlandShippingSupplier, warnings);
+    inlandRouteUtil = new InlandShippingUtil(helper, warnings);
   }
 
   public int getSrid() {
@@ -103,6 +101,10 @@ public class GMLConversionData {
    */
   public List<AeriusException> getWarnings() {
     return warnings;
+  }
+
+  public CharacteristicsType getCharacteristicsType() {
+    return characteristicsSupplier.getCharacteristicsType();
   }
 
   /**
@@ -200,14 +202,7 @@ public class GMLConversionData {
     return inlandRouteUtil.determineInlandWaterWayType(label, route);
   }
 
-  public OPSSourceCharacteristics determineDefaultOPSCharacteristicsBySectorId(final int sectorId) {
-    final OPSSourceCharacteristics characteristics = new OPSSourceCharacteristics();
-    final OPSSourceCharacteristics sectorCharacteristics = characteristicsSupplier.determineDefaultCharacteristicsBySectorId(sectorId);
-    characteristics.setDiurnalVariation(sectorCharacteristics.getDiurnalVariation());
-    characteristics.setHeatContent(sectorCharacteristics.getHeatContent());
-    characteristics.setEmissionHeight(sectorCharacteristics.getEmissionHeight());
-    characteristics.setSpread(sectorCharacteristics.getSpread());
-    characteristics.setParticleSizeDistribution(sectorCharacteristics.getParticleSizeDistribution());
-    return characteristics;
+  public <S extends SourceCharacteristics> S determineDefaultCharacteristicsBySectorId(final int sectorId) {
+    return characteristicsSupplier.determineDefaultCharacteristicsBySectorId(sectorId);
   }
 }

@@ -26,6 +26,7 @@ import nl.overheid.aerius.gml.base.GML2NSLMeasure;
 import nl.overheid.aerius.gml.base.GML2Result;
 import nl.overheid.aerius.gml.base.GMLConversionData;
 import nl.overheid.aerius.gml.base.GMLVersionReader;
+import nl.overheid.aerius.gml.base.characteristics.GML2SourceCharacteristicsV31;
 import nl.overheid.aerius.gml.v3_1.result.AbstractCalculationPoint;
 import nl.overheid.aerius.shared.domain.v2.nsl.NSLCorrection;
 import nl.overheid.aerius.shared.domain.v2.nsl.NSLDispersionLineFeature;
@@ -45,7 +46,7 @@ public class GMLReader implements GMLVersionReader {
   private final GML2NSLCorrection gml2NSLCorrection;
 
   public GMLReader(final GMLConversionData conversionData) {
-    gml2Source = new GML2Source(conversionData);
+    gml2Source = new GML2Source(conversionData, new GML2SourceCharacteristicsV31(conversionData));
     gml2Result = new GML2Result(conversionData);
     gml2NSLMeasure = new GML2NSLMeasure(conversionData);
     gml2NSLDispersionLine = new GML2NSLDispersionLine();

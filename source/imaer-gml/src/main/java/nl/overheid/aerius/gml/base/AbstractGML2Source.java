@@ -24,7 +24,7 @@ import nl.overheid.aerius.gml.base.GMLLegacyCodeConverter.GMLLegacyCodeType;
 import nl.overheid.aerius.gml.base.characteristics.GML2SourceCharacteristics;
 import nl.overheid.aerius.gml.base.geo.GML2Geometry;
 import nl.overheid.aerius.gml.base.source.IsGmlEmissionSource;
-import nl.overheid.aerius.shared.domain.v2.characteristics.OPSSourceCharacteristics;
+import nl.overheid.aerius.shared.domain.v2.characteristics.SourceCharacteristics;
 import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceFeature;
@@ -38,19 +38,22 @@ import nl.overheid.aerius.shared.exception.AeriusException;
 
 /**
  * Utility class to convert to and from GML objects (specific for emission sources).
+ *
+ * @Param <T> The GML version specific emission source
+ * @param <S> The specific type of source characteristics that are to be read from the gml
  */
-public abstract class AbstractGML2Source<T extends IsGmlEmissionSource> {
+public abstract class AbstractGML2Source<T extends IsGmlEmissionSource, S extends SourceCharacteristics> {
 
   private final GMLConversionData conversionData;
   private final GML2Geometry gml2geometry;
   private final IsGML2SourceVisitor<T> visitor;
-  private final GML2SourceCharacteristics gml2SourceCharacteristics;
+  private final GML2SourceCharacteristics<S> gml2SourceCharacteristics;
 
   /**
    * @param conversionData The data to use when converting. Should be filled.
    */
   protected AbstractGML2Source(final GMLConversionData conversionData, final IsGML2SourceVisitor<T> visitor,
-      final GML2SourceCharacteristics gml2SourceCharacteristics) {
+      final GML2SourceCharacteristics<S> gml2SourceCharacteristics) {
     this.conversionData = conversionData;
     this.gml2geometry = new GML2Geometry(conversionData.getSrid());
     this.visitor = visitor;
@@ -123,13 +126,12 @@ public abstract class AbstractGML2Source<T extends IsGmlEmissionSource> {
         || returnSource instanceof MooringMaritimeShippingEmissionSource
         || returnSource instanceof OffRoadMobileEmissionSource
         || returnSource instanceof PlanEmissionSource)) {
-      final OPSSourceCharacteristics sectorCharacteristics = conversionData.determineDefaultOPSCharacteristicsBySectorId(source.getSectorId());
+      final S sectorCharacteristics = conversionData.determineDefaultCharacteristicsBySectorId(source.getSectorId());
       if (source.getCharacteristics() == null) {
         // if characteristics weren't supplied in GML, use the sector default.
         returnSource.setCharacteristics(sectorCharacteristics);
       } else {
-        returnSource.setCharacteristics(
-            gml2SourceCharacteristics.fromGML(source.getCharacteristics(), sectorCharacteristics, geometry));
+        returnSource.setCharacteristics(gml2SourceCharacteristics.fromGML(source.getCharacteristics(), sectorCharacteristics, geometry));
       }
     }
   }
