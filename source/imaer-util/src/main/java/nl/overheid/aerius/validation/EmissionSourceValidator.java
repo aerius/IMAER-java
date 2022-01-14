@@ -24,7 +24,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 
-import com.vividsolutions.jts.geom.Geometry;
+import org.locationtech.jts.geom.Geometry;
 
 import nl.overheid.aerius.shared.MathUtil;
 import nl.overheid.aerius.shared.domain.v2.geojson.GeometryType;

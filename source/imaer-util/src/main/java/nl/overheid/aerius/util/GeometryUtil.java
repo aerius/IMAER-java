@@ -22,23 +22,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiFunction;
 
+import org.locationtech.jts.algorithm.ConvexHull;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.LineSegment;
+import org.locationtech.jts.geom.LineString;
+import org.locationtech.jts.geom.LinearRing;
+import org.locationtech.jts.geom.MultiPolygon;
+import org.locationtech.jts.geom.Polygon;
+import org.locationtech.jts.geom.util.AffineTransformation;
+import org.locationtech.jts.io.ParseException;
+import org.locationtech.jts.io.WKTReader;
+import org.locationtech.jts.linearref.LengthIndexedLine;
+import org.locationtech.jts.operation.IsSimpleOp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.vividsolutions.jts.algorithm.ConvexHull;
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.GeometryFactory;
-import com.vividsolutions.jts.geom.LineSegment;
-import com.vividsolutions.jts.geom.LineString;
-import com.vividsolutions.jts.geom.LinearRing;
-import com.vividsolutions.jts.geom.MultiPolygon;
-import com.vividsolutions.jts.geom.Polygon;
-import com.vividsolutions.jts.geom.util.AffineTransformation;
-import com.vividsolutions.jts.io.ParseException;
-import com.vividsolutions.jts.io.WKTReader;
-import com.vividsolutions.jts.linearref.LengthIndexedLine;
-import com.vividsolutions.jts.operation.IsSimpleOp;
 
 import nl.overheid.aerius.geo.shared.WKTGeometry;
 import nl.overheid.aerius.shared.domain.geo.OrientedEnvelope;
@@ -114,7 +113,7 @@ public final class GeometryUtil {
     return geometry;
   }
 
-  private static com.vividsolutions.jts.geom.Point toJtsPoint(final nl.overheid.aerius.shared.domain.v2.geojson.Point aeriusPoint)
+  private static org.locationtech.jts.geom.Point toJtsPoint(final nl.overheid.aerius.shared.domain.v2.geojson.Point aeriusPoint)
       throws AeriusException {
     final GeometryFactory geometryFactory = new GeometryFactory();
     final Coordinate coordinate = toJtsCoordinate(aeriusPoint.getCoordinates(), aeriusPoint);
@@ -175,24 +174,24 @@ public final class GeometryUtil {
    */
   public static final nl.overheid.aerius.shared.domain.v2.geojson.Geometry getAeriusGeometry(final Geometry jtsGeometry) throws AeriusException {
     final nl.overheid.aerius.shared.domain.v2.geojson.Geometry aeriusGeometry;
-    if (jtsGeometry instanceof com.vividsolutions.jts.geom.Point) {
-      aeriusGeometry = toAeriusPoint((com.vividsolutions.jts.geom.Point) jtsGeometry);
-    } else if (jtsGeometry instanceof com.vividsolutions.jts.geom.LineString) {
-      aeriusGeometry = toAeriusLineString((com.vividsolutions.jts.geom.LineString) jtsGeometry);
-    } else if (jtsGeometry instanceof com.vividsolutions.jts.geom.Polygon) {
-      aeriusGeometry = toAeriusPolygon((com.vividsolutions.jts.geom.Polygon) jtsGeometry);
+    if (jtsGeometry instanceof org.locationtech.jts.geom.Point) {
+      aeriusGeometry = toAeriusPoint((org.locationtech.jts.geom.Point) jtsGeometry);
+    } else if (jtsGeometry instanceof org.locationtech.jts.geom.LineString) {
+      aeriusGeometry = toAeriusLineString((org.locationtech.jts.geom.LineString) jtsGeometry);
+    } else if (jtsGeometry instanceof org.locationtech.jts.geom.Polygon) {
+      aeriusGeometry = toAeriusPolygon((org.locationtech.jts.geom.Polygon) jtsGeometry);
     } else {
       throw new AeriusException(ImaerExceptionReason.GEOMETRY_INVALID, String.valueOf(jtsGeometry));
     }
     return aeriusGeometry;
   }
 
-  private static nl.overheid.aerius.shared.domain.v2.geojson.Point toAeriusPoint(final com.vividsolutions.jts.geom.Point jtsPoint) {
+  private static nl.overheid.aerius.shared.domain.v2.geojson.Point toAeriusPoint(final org.locationtech.jts.geom.Point jtsPoint) {
     return new nl.overheid.aerius.shared.domain.v2.geojson.Point(jtsPoint.getX(), jtsPoint.getY());
   }
 
   private static nl.overheid.aerius.shared.domain.v2.geojson.LineString toAeriusLineString(
-      final com.vividsolutions.jts.geom.LineString jtsLineString) {
+      final org.locationtech.jts.geom.LineString jtsLineString) {
     final nl.overheid.aerius.shared.domain.v2.geojson.LineString aeriusLinestring = new nl.overheid.aerius.shared.domain.v2.geojson.LineString();
     final double[][] aeriusCoordinates = toAeriusCoordinates(jtsLineString);
     aeriusLinestring.setCoordinates(aeriusCoordinates);
@@ -200,7 +199,7 @@ public final class GeometryUtil {
   }
 
   private static nl.overheid.aerius.shared.domain.v2.geojson.Polygon toAeriusPolygon(
-      final com.vividsolutions.jts.geom.Polygon jtsPolygon) {
+      final org.locationtech.jts.geom.Polygon jtsPolygon) {
     final nl.overheid.aerius.shared.domain.v2.geojson.Polygon aeriusPolygon = new nl.overheid.aerius.shared.domain.v2.geojson.Polygon();
     final double[][][] aeriusCoordinates = new double[jtsPolygon.getNumInteriorRing() + 1][][];
     aeriusCoordinates[0] = toAeriusCoordinates(jtsPolygon.getExteriorRing());
@@ -211,7 +210,7 @@ public final class GeometryUtil {
     return aeriusPolygon;
   }
 
-  private static double[][] toAeriusCoordinates(final com.vividsolutions.jts.geom.LineString jtsLineString) {
+  private static double[][] toAeriusCoordinates(final org.locationtech.jts.geom.LineString jtsLineString) {
     final Coordinate[] jtsCoordinates = jtsLineString.getCoordinates();
     final double[][] aeriusCoordinates = new double[jtsCoordinates.length][];
     for (int i = 0; i < jtsCoordinates.length; i++) {
@@ -428,7 +427,7 @@ public final class GeometryUtil {
    * @return The corresponding polygon.
    */
   private static nl.overheid.aerius.shared.domain.v2.geojson.Polygon constructPolygonFromDimensions(
-      final com.vividsolutions.jts.geom.Point point, final double length, final double width, final double orientationToNorth)
+      final org.locationtech.jts.geom.Point point, final double length, final double width, final double orientationToNorth)
       throws AeriusException {
     final nl.overheid.aerius.shared.domain.v2.geojson.Polygon polygon = toBasePolygon(length, width);
     final Geometry jtsPolygon = toJtsPolygon(polygon);

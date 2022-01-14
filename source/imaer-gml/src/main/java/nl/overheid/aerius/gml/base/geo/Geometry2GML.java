@@ -21,8 +21,8 @@ import java.util.List;
 
 import javax.xml.bind.JAXBElement;
 
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Geometry;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Geometry;
 
 import net.opengis.gml.v_3_2_1.AbstractRingPropertyType;
 import net.opengis.gml.v_3_2_1.DirectPositionListType;
@@ -99,8 +99,8 @@ public final class Geometry2GML {
     polygonType.setSrsName(srsName);
     final Geometry poly = GeometryUtil.getGeometry(polygon);
 
-    if (poly instanceof com.vividsolutions.jts.geom.Polygon) {
-      final com.vividsolutions.jts.geom.Polygon polygonJts = (com.vividsolutions.jts.geom.Polygon) poly;
+    if (poly instanceof org.locationtech.jts.geom.Polygon) {
+      final org.locationtech.jts.geom.Polygon polygonJts = (org.locationtech.jts.geom.Polygon) poly;
       final AbstractRingPropertyType exterior = setCoordinates(factory, getCoordinates(polygonJts.getExteriorRing().getCoordinates()));
       polygonType.setExterior(exterior);
       final List<AbstractRingPropertyType> interiors = new ArrayList<>();
