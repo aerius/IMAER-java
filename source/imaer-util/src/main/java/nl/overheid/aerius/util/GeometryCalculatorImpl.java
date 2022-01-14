@@ -61,7 +61,7 @@ public class GeometryCalculatorImpl implements GeometryCalculator {
     }
   }
 
-  private com.vividsolutions.jts.geom.Geometry toJtsGeometry(final Geometry geometry) throws AeriusException {
+  private org.locationtech.jts.geom.Geometry toJtsGeometry(final Geometry geometry) throws AeriusException {
     return GeometryUtil.getGeometry(geometry);
   }
 
