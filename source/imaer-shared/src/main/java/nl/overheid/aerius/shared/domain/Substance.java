@@ -17,6 +17,7 @@
 package nl.overheid.aerius.shared.domain;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 /**
@@ -28,9 +29,29 @@ import java.util.ArrayList;
 public enum Substance implements Serializable {
 
   /**
+   * Zwaveldioxide
+   */
+  SO2(1, "SO2"),
+  /**
+   * Koolstofdioxide
+   */
+  CO2(2, "CO2"),
+  /**
+   * Koolmonoxide
+   */
+  CO(4, "CO"),
+  /**
    * Nitrogen dioxide.
    */
   NO2(7, "NO2"),
+  /**
+   * Benzo(a)pyreen
+   */
+  BAP(8, "BAP"),
+  /**
+   * Benzeen
+   */
+  C6H6(9, "C6H6"),
   /**
    * Particulate matter, 10 micrometers.
    */
@@ -79,6 +100,8 @@ public enum Substance implements Serializable {
    * (60 * 60 * 24 * 365) / 1000
    */
   public static final double EMISSION_IN_G_PER_S_FACTOR = 31536;
+
+  public static final BigDecimal EMISSION_IN_G_PER_S_FACTOR_BD = BigDecimal.valueOf(EMISSION_IN_G_PER_S_FACTOR);
 
   private final int id;
   private final String name;

@@ -16,6 +16,8 @@
  */
 package nl.overheid.aerius.shared.domain.v2.characteristics.adms;
 
+import java.util.Locale;
+
 /**
  * This enum defines the efflux parameters that must be specified for each efflux type.
  * For example this can be used to guide user input on the data that needs to be available for a specific efflux type.
@@ -73,6 +75,14 @@ public enum EffluxType {
       }
     }
     return null;
+  }
+
+  public static EffluxType safeValueOf(final String value) {
+    try {
+      return value == null ? null : valueOf(value.toUpperCase(Locale.ROOT));
+    } catch (final IllegalArgumentException e) {
+      return null;
+    }
   }
 
   public boolean isActualOrNtp() {

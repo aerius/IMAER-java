@@ -16,7 +16,10 @@
  */
 package nl.overheid.aerius.shared.domain.v2.characteristics.adms;
 
+import java.util.Locale;
+
 public enum BuoyancyType {
+  AMBIENT(2),
   DENSITY(1),
   TEMPERATURE(0);
 
@@ -27,7 +30,15 @@ public enum BuoyancyType {
   }
 
   public static BuoyancyType valueOf(final int type) {
-    return DENSITY.type == type ? DENSITY : TEMPERATURE;
+    return AMBIENT.type == type? AMBIENT : (DENSITY.type == type ? DENSITY : TEMPERATURE);
+  }
+
+  public static BuoyancyType safeValueOf(final String value) {
+    try {
+      return value == null ? null : valueOf(value.toUpperCase(Locale.ROOT));
+    } catch (final IllegalArgumentException e) {
+      return null;
+    }
   }
 
   public int type() {

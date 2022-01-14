@@ -19,37 +19,42 @@ package nl.overheid.aerius.shared.domain.v2.characteristics.adms;
 import java.util.Locale;
 
 /**
- * Emission parameters given at actual temperature and pressure or normal temperature and pressure (NTP) (1atm, 273.15K): 0=actual,1=NTP
+ * ADMS Source Type.
  */
-public enum ReleaseTemperatureAndPressure {
-  /**
-   * Actual temperature and pressure.
-   */
-  ACTUAL(0),
-  /**
-   * Normal temperature and pressure.
-   */
-  NTP(1);
+public enum SourceType {
+  // @formatter:off
+  POINT(0),
+  AREA(1),
+  VOLUME(2),
+  LINE(3),
+  ROAD(4),
+  JET(6);
+  // @formatter:on
 
   private final int type;
 
-  private ReleaseTemperatureAndPressure(final int type) {
+  SourceType(final int type) {
     this.type = type;
   }
 
-  public static ReleaseTemperatureAndPressure valueOf(final int type) {
-    return type == NTP.type ? NTP : ACTUAL;
+  public int getType() {
+    return type;
   }
 
-  public static ReleaseTemperatureAndPressure safeValueOf(final String value) {
+  public static SourceType byType(final int type) {
+    for (final SourceType st : values()) {
+      if (st.type == type) {
+        return st;
+      }
+    }
+    return null;
+  }
+
+  public static SourceType safeValueOf(final String value) {
     try {
       return value == null ? null : valueOf(value.toUpperCase(Locale.ROOT));
     } catch (final IllegalArgumentException e) {
       return null;
     }
-  }
-
-  public int type() {
-    return type;
   }
 }

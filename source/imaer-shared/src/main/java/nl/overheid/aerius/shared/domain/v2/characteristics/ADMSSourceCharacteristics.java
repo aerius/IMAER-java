@@ -19,6 +19,7 @@ package nl.overheid.aerius.shared.domain.v2.characteristics;
 import nl.overheid.aerius.shared.domain.v2.characteristics.adms.BuoyancyType;
 import nl.overheid.aerius.shared.domain.v2.characteristics.adms.EffluxType;
 import nl.overheid.aerius.shared.domain.v2.characteristics.adms.ReleaseTemperatureAndPressure;
+import nl.overheid.aerius.shared.domain.v2.characteristics.adms.SourceType;
 
 /**
  * ADMS Source Characteristics.
@@ -26,6 +27,8 @@ import nl.overheid.aerius.shared.domain.v2.characteristics.adms.ReleaseTemperatu
 public class ADMSSourceCharacteristics extends SourceCharacteristics {
 
   private static final long serialVersionUID = 1L;
+
+  private SourceType sourceType;
 
   private BuoyancyType buoyancyType;
 
@@ -63,6 +66,14 @@ public class ADMSSourceCharacteristics extends SourceCharacteristics {
    * Mass flux of the emission (kg/s).
    */
   private double massFlux;
+
+  public SourceType getSourceType() {
+    return sourceType;
+  }
+
+  public void setSourceType(final SourceType sourceType) {
+    this.sourceType = sourceType;
+  }
 
   public BuoyancyType getBuoyancyType() {
     return buoyancyType;
