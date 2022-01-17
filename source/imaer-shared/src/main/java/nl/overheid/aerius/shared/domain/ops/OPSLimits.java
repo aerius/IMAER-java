@@ -468,11 +468,6 @@ public final class OPSLimits implements BuildingLimits {
   }
 
   @Override
-  public double buildingWidthDefault() {
-    return 0;
-  }
-
-  @Override
   public double buildingLengthMinimum() {
     return SCOPE_BUILDING_LENGTH_MINIMUM;
   }
@@ -480,20 +475,5 @@ public final class OPSLimits implements BuildingLimits {
   @Override
   public double buildingLengthMaximum() {
     return SCOPE_BUILDING_LENGTH_MAXIMUM;
-  }
-
-  @Override
-  public double buildingLengthDefault() {
-    return 0;
-  }
-
-  @Override
-  public double buildingOrientationMinimum() {
-    return SCOPE_BUILDING_ORIENTATION_MINIMUM;
-  }
-
-  @Override
-  public double buildingOrientationMaximum() {
-    return SCOPE_BUILDING_ORIENTATION_MAXIMUM;
   }
 }

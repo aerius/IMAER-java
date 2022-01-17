@@ -77,14 +77,9 @@ public final class ADMSLimits implements BuildingLimits {
 
   public static final double BUILDING_WIDTH_MINIMUM = 0.001;
   public static final double BUILDING_WIDTH_MAXIMUM = 1_000;
-  public static final double BUILDING_WIDTH_DEFAULT = 10;
 
   public static final double BUILDING_LENGTH_MINIMUM = 0.001;
   public static final double BUILDING_LENGTH_MAXIMUM = 1_000;
-  public static final double BUILDING_LENGTH_DEFAULT = 10;
-
-  private static final double BUILDING_ORIENTATION_MINIMUM = 0;
-  private static final double BUILDING_ORIENTATION_MAXIMUM = 360;
 
   public static final ADMSLimits INSTANCE = new ADMSLimits();
 
@@ -128,11 +123,6 @@ public final class ADMSLimits implements BuildingLimits {
   }
 
   @Override
-  public double buildingWidthDefault() {
-    return BUILDING_WIDTH_DEFAULT;
-  }
-
-  @Override
   public double buildingLengthMinimum() {
     return BUILDING_LENGTH_MINIMUM;
   }
@@ -140,20 +130,5 @@ public final class ADMSLimits implements BuildingLimits {
   @Override
   public double buildingLengthMaximum() {
     return BUILDING_LENGTH_MAXIMUM;
-  }
-
-  @Override
-  public double buildingLengthDefault() {
-    return BUILDING_LENGTH_DEFAULT;
-  }
-
-  @Override
-  public double buildingOrientationMinimum() {
-    return BUILDING_ORIENTATION_MINIMUM;
-  }
-
-  @Override
-  public double buildingOrientationMaximum() {
-    return BUILDING_ORIENTATION_MAXIMUM;
   }
 }

@@ -32,16 +32,9 @@ public interface BuildingLimits {
   double buildingHeightMaximum();
   double buildingHeightDefault();
 
-
   double buildingWidthMinimum();
   double buildingWidthMaximum();
-  double buildingWidthDefault();
 
   double buildingLengthMinimum();
   double buildingLengthMaximum();
-  double buildingLengthDefault();
-
-  double buildingOrientationMinimum();
-  double buildingOrientationMaximum();
-
 }
