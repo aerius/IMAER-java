@@ -17,10 +17,12 @@
  */
 package nl.overheid.aerius.shared.domain.v2.building;
 
+import java.io.Serializable;
+
 /**
  * Interface for Building limits.
  */
-public interface BuildingLimits {
+public interface BuildingLimits extends Serializable {
 
   default boolean isCircularBuildingSupported() {
     return false;

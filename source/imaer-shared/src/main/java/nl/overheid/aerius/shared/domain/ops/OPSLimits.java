@@ -23,6 +23,8 @@ import nl.overheid.aerius.shared.domain.v2.building.BuildingLimits;
  */
 public final class OPSLimits implements BuildingLimits {
 
+  private static final long serialVersionUID = 1L;
+
   /**
    * receptor ID: fortran notation: I8 -> Over max value of int.
    */

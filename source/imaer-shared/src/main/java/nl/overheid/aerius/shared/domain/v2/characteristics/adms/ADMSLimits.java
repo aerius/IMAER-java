@@ -23,6 +23,8 @@ import nl.overheid.aerius.shared.domain.v2.building.BuildingLimits;
  */
 public final class ADMSLimits implements BuildingLimits {
 
+  private static final long serialVersionUID = 1L;
+
   public static final int SOURCE_HEIGHT_MINIMUM = 0;
   public static final int SOURCE_HEIGHT_MAXIMUM = 15_000;
 
