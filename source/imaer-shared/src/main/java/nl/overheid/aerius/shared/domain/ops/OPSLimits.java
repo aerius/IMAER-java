@@ -16,10 +16,12 @@
  */
 package nl.overheid.aerius.shared.domain.ops;
 
+import nl.overheid.aerius.shared.domain.v2.building.BuildingLimits;
+
 /**
  * Contains any limits for input for OPS (Source and Emission files).
  */
-public final class OPSLimits {
+public final class OPSLimits implements BuildingLimits {
 
   /**
    * receptor ID: fortran notation: I8 -> Over max value of int.
@@ -430,6 +432,68 @@ public final class OPSLimits {
    */
   public static final double SCOPE_BUILDING_ORIENTATION_MAXIMUM = 179;
 
+  public static final OPSLimits INSTANCE = new OPSLimits();
+
   private OPSLimits() {
+  }
+
+  @Override
+  public int buildingDigitsPrecision() {
+    return SOURCE_BUILDING_DIGITS_PRECISION;
+  }
+
+  @Override
+  public double buildingHeightMinimum() {
+    return SCOPE_BUILDING_HEIGHT_MINIMUM;
+  }
+
+  @Override
+  public double buildingHeightMaximum() {
+    return SCOPE_BUILDING_HEIGHT_MAXIMUM;
+  }
+
+  @Override
+  public double buildingHeightDefault() {
+    return 0;
+  }
+
+  @Override
+  public double buildingWidthMinimum() {
+    return SCOPE_BUILDING_WIDTH_MINIMUM;
+  }
+
+  @Override
+  public double buildingWidthMaximum() {
+    return SCOPE_BUILDING_WIDTH_MAXIMUM;
+  }
+
+  @Override
+  public double buildingWidthDefault() {
+    return 0;
+  }
+
+  @Override
+  public double buildingLengthMinimum() {
+    return SCOPE_BUILDING_LENGTH_MINIMUM;
+  }
+
+  @Override
+  public double buildingLengthMaximum() {
+    return SCOPE_BUILDING_LENGTH_MAXIMUM;
+  }
+
+  @Override
+  public double buildingLengthDefault() {
+    return 0;
+  }
+
+  @Override
+  public double buildingOrientationMinimum() {
+    return SCOPE_BUILDING_ORIENTATION_MINIMUM;
+  }
+
+  @Override
+  public double buildingOrientationMaximum() {
+    return SCOPE_BUILDING_ORIENTATION_MAXIMUM;
   }
 }

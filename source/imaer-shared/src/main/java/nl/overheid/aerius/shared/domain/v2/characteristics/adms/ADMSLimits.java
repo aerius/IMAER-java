@@ -1,0 +1,159 @@
+/*
+ * Crown copyright
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see http://www.gnu.org/licenses/.
+ */
+package nl.overheid.aerius.shared.domain.v2.characteristics.adms;
+
+import nl.overheid.aerius.shared.domain.v2.building.BuildingLimits;
+
+/**
+ * Class of ADMS minimum, maximum and default values.
+ */
+public final class ADMSLimits implements BuildingLimits {
+
+  public static final int SOURCE_HEIGHT_MINIMUM = 0;
+  public static final int SOURCE_HEIGHT_MAXIMUM = 15_000;
+
+  public static final double SOURCE_DIAMETER_MINIMUM = 0.001;
+  public static final int SOURCE_DIAMETER_MAXIMUM = 100;
+
+  public static final int SOURCE_VOLUMETRIC_FLOW_RATE_MINIMUM = 0;
+  public static final int SOURCE_VOLUMETRIC_FLOW_RATE_MAXIMUM = 1_000_000_000; // 10^9
+  public static final double SOURCE_VOLUMETRIC_FLOW_RATE_DEFAULT = 11.781;
+
+  public static final int SOURCE_VERTICAL_VELOCITY_MINIMUM = 0;
+  public static final int SOURCE_VERTICAL_VELOCITY_MAXIMUM = 1_000;
+  public static final double SOURCE_VERTICAL_VELOCITY_DEFAULT = 15;
+
+  public static final int SOURCE_TEMPERATURE_MINIMUM = -100;
+  public static final int SOURCE_TEMPERATURE_MAXIMUM = 60;
+  public static final double SOURCE_TEMPERATURE_PRECISION = 0.1;
+  public static final int SOURCE_TEMPERATURE_DEFAULT = 15;
+
+  public static final long SOURCE_MOL_WEIGHT_MINIMUM = 1;
+  public static final long SOURCE_MOL_WEIGHT_MAXIMUM = 300;
+  public static final double SOURCE_MOL_WEIGHT_DEFAULT = 28.966;
+
+  public static final double SOURCE_DENSITY_MINIMUM = 0.01;
+  public static final int SOURCE_DENSITY_MAXIMUM = 2;
+  public static final double SOURCE_DENSITY_DEFAULT = 1.225;
+
+  public static final int SOURCE_SPECIFIC_HEAT_CAPACITY_MINIMUM = 1;
+  public static final int SOURCE_SPECIFIC_HEAT_CAPACITY_MAXIMUM = 100_000;
+  public static final double SOURCE_SPECIFIC_HEAT_CAPACITY_DEFAULT = 1012;
+
+  public static final int SOURCE_MOMENTUM_FLUX_MINIMUM = 0;
+  public static final int SOURCE_MOMENTUM_FLUX_MAXIMUM = 1_000_000;
+  public static final double SOURCE_MOMENTUM_FLUX_DEFAULT = 1.0;
+
+  public static final int SOURCE_BUOYANCY_FLUX_MINIMUM = 0;
+  public static final int SOURCE_BUOYANCY_FLUX_MAXIMUM = 10_000;
+  public static final double SOURCE_BUOYANCY_FLUX_DEFAULT = 1.0;
+
+  public static final long SOURCE_MASS_FLUX_MINIMUM = 0;
+  public static final long SOURCE_MASS_FLUX_MAXIMUM = 100_000;
+  public static final double SOURCE_MASS_FLUX_DEFAULT = 1;
+
+  public static final long SOURCE_L1_MINIMUM = 0;
+  public static final long SOURCE_L1_MAXIMUM = 1_000;
+
+  private static final int BUILDING_DIGITS_PRECISION = 3;
+
+  public static final double BUILDING_HEIGHT_MINIMUM = 0.001;
+  public static final double BUILDING_HEIGHT_MAXIMUM = 500;
+  public static final double BUILDING_HEIGHT_DEFAULT = 10;
+
+  public static final double BUILDING_WIDTH_MINIMUM = 0.001;
+  public static final double BUILDING_WIDTH_MAXIMUM = 1_000;
+  public static final double BUILDING_WIDTH_DEFAULT = 10;
+
+  public static final double BUILDING_LENGTH_MINIMUM = 0.001;
+  public static final double BUILDING_LENGTH_MAXIMUM = 1_000;
+  public static final double BUILDING_LENGTH_DEFAULT = 10;
+
+  private static final double BUILDING_ORIENTATION_MINIMUM = 0;
+  private static final double BUILDING_ORIENTATION_MAXIMUM = 360;
+
+  public static final ADMSLimits INSTANCE = new ADMSLimits();
+
+  private ADMSLimits() {
+    // Static constants class.
+  }
+
+  @Override
+  public boolean isCircularBuildingSupported() {
+    return true;
+  }
+
+  @Override
+  public int buildingDigitsPrecision() {
+    return BUILDING_DIGITS_PRECISION;
+  }
+
+  @Override
+  public double buildingHeightMinimum() {
+    return BUILDING_HEIGHT_MINIMUM;
+  }
+
+  @Override
+  public double buildingHeightMaximum() {
+    return BUILDING_HEIGHT_MAXIMUM;
+  }
+
+  @Override
+  public double buildingHeightDefault() {
+    return BUILDING_HEIGHT_DEFAULT;
+  }
+
+  @Override
+  public double buildingWidthMinimum() {
+    return BUILDING_WIDTH_MINIMUM;
+  }
+
+  @Override
+  public double buildingWidthMaximum() {
+    return BUILDING_WIDTH_MAXIMUM;
+  }
+
+  @Override
+  public double buildingWidthDefault() {
+    return BUILDING_WIDTH_DEFAULT;
+  }
+
+  @Override
+  public double buildingLengthMinimum() {
+    return BUILDING_LENGTH_MINIMUM;
+  }
+
+  @Override
+  public double buildingLengthMaximum() {
+    return BUILDING_LENGTH_MAXIMUM;
+  }
+
+  @Override
+  public double buildingLengthDefault() {
+    return BUILDING_LENGTH_DEFAULT;
+  }
+
+  @Override
+  public double buildingOrientationMinimum() {
+    return BUILDING_ORIENTATION_MINIMUM;
+  }
+
+  @Override
+  public double buildingOrientationMaximum() {
+    return BUILDING_ORIENTATION_MAXIMUM;
+  }
+}
