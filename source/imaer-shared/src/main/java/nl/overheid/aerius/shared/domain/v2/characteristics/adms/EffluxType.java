@@ -68,6 +68,10 @@ public enum EffluxType {
     this.massFlux = massFlux;
   }
 
+  public int type() {
+    return type;
+  }
+
   public static EffluxType valueOf(final int effluxType) {
     for (final EffluxType et : values()) {
       if (et.type == effluxType) {

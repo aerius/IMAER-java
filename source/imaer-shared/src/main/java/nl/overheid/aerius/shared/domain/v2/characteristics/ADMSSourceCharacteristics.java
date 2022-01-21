@@ -52,6 +52,8 @@ public class ADMSSourceCharacteristics extends SourceCharacteristics {
 
   private double percentNOxAsNO2;
 
+  private double verticalDimension;
+
   /**
    * Momentum flux (Fm) of emission (m4/s2).
    */
@@ -187,6 +189,13 @@ public class ADMSSourceCharacteristics extends SourceCharacteristics {
     this.massFlux = massFlux;
   }
 
+  public double getVerticalDimension() {
+    return verticalDimension;
+  }
+  public void setVerticalDimension(final double verticalDimension) {
+    this.verticalDimension = verticalDimension;
+  }
+
   public <E extends ADMSSourceCharacteristics> E copyTo(final E copy) {
     super.copyTo(copy);
     copy.setBuoyancyType(buoyancyType);
@@ -203,6 +212,7 @@ public class ADMSSourceCharacteristics extends SourceCharacteristics {
     copy.setMomentumFlux(momentumFlux);
     copy.setBuoyancyFlux(buoyancyFlux);
     copy.setMassFlux(massFlux);
+    copy.setVerticalDimension(verticalDimension);
     return copy;
   }
 }
