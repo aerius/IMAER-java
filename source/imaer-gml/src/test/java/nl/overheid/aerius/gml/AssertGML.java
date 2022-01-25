@@ -94,8 +94,8 @@ public final class AssertGML {
     //util convenience class.
   }
 
-  static void assertEqualsGML(final String expected, final String actual) {
-    assertEquals(getCleanGML(expected), getCleanGML(actual), "GML contented compared not equal");
+  static void assertEqualsGML(final String expected, final String actual, final String gmlName) {
+    assertEquals(getCleanGML(expected), getCleanGML(actual), "GML (" + gmlName + ") content is not the same.");
   }
 
   private static String getCleanGML(final String gml) {

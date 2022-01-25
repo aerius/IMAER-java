@@ -231,9 +231,9 @@ public class GMLRoundtripTest {
 
   private void assertGMLs(final String generatedGML, final String version, final String file) throws IOException {
     final String actual = replaceIncomparables(generatedGML);
-    assertFalse(actual.isEmpty(), "Result shouldn't be empty");
+    assertFalse(actual.isEmpty(), "Result shouldn't be empty for " + file);
     final String expected = replaceIncomparables(getFileContent(version, file));
-    AssertGML.assertEqualsGML(expected, actual);
+    AssertGML.assertEqualsGML(expected, actual, file);
   }
 
   private String getFileContent(final String version, final String file) throws IOException {
