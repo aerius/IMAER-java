@@ -70,7 +70,7 @@ public class GMLValidateWarningsTest {
     return files;
   }
 
-  @ParameterizedTest
+  @ParameterizedTest(name = "{0}-{1}")
   @MethodSource("data")
   public void testVersionGML(final AeriusGMLVersion version, final TestFile testFile) throws IOException, AeriusException {
     final ImportParcel oldResult = getImportResult(version.name().toLowerCase(), testFile);

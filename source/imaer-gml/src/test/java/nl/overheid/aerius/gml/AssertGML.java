@@ -93,8 +93,8 @@ public final class AssertGML {
     //util convenience class.
   }
 
-  static void assertEqualsGML(final String expected, final String actual) {
-    assertEquals(getCleanGML(expected), getCleanGML(actual), "GML contented compared not equal");
+  static void assertEqualsGML(final String expected, final String actual, final String gmlName) {
+    assertEquals(getCleanGML(expected), getCleanGML(actual), "GML (" + gmlName + ") content is not the same.");
   }
 
   private static String getCleanGML(final String gml) {
@@ -141,7 +141,8 @@ public final class AssertGML {
   static ImportParcel getImportResult(final String relativePath, final String fileName)
       throws IOException, AeriusException {
     final File file = getFile(relativePath, fileName);
-    final ImaerImporter importer = new ImaerImporter(AssertGML.mockGMLHelper());
+    final GMLHelper mockGMLHelper = AssertGML.mockGMLHelper();
+    final ImaerImporter importer = new ImaerImporter(mockGMLHelper, new GMLReaderFactory(mockGMLHelper));
     final ImportParcel result = new ImportParcel();
     try (final InputStream inputStream = new BufferedInputStream(new FileInputStream(file))) {
       importer.importStream(inputStream, ImportOption.getDefaultOptions(), result);
@@ -190,11 +191,9 @@ public final class AssertGML {
       return null;
     }).when(gmlHelper).enforceEmissions(anyInt(), any());
     when(gmlHelper.suggestInlandShippingWaterway(any())).thenAnswer(invocation -> suggest((Geometry) invocation.getArgument(0)));
-    when(gmlHelper.getLegacyCodes(any())).thenAnswer(invocation -> TestValidationAndEmissionHelper.legacyCodes());
-    when(gmlHelper.getLegacyMobileSourceOffRoadConversions())
-        .thenAnswer(invocation -> TestValidationAndEmissionHelper.legacyMobileSourceOffRoadConversions());
-    when(gmlHelper.getLegacyPlanConversions())
-        .thenAnswer(invocation -> TestValidationAndEmissionHelper.legacyPlanConversions());
+    when(gmlHelper.getLegacyCodes(any())).thenReturn(TestValidationAndEmissionHelper.legacyCodes());
+    when(gmlHelper.getLegacyMobileSourceOffRoadConversions()).thenReturn(TestValidationAndEmissionHelper.legacyMobileSourceOffRoadConversions());
+    when(gmlHelper.getLegacyPlanConversions()).thenReturn(TestValidationAndEmissionHelper.legacyPlanConversions());
     when(gmlHelper.determineDefaultCharacteristicsBySectorId(anyInt())).thenReturn(mock(OPSSourceCharacteristics.class));
     when(gmlHelper.getValidationHelper()).thenReturn(valiationAndEmissionHelper);
     return gmlHelper;
