@@ -40,6 +40,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import nl.overheid.aerius.gml.base.AeriusGMLVersion;
+import nl.overheid.aerius.gml.base.GMLHelper;
 import nl.overheid.aerius.gml.base.MetaDataInput;
 import nl.overheid.aerius.importer.ImaerImporter;
 import nl.overheid.aerius.importer.ImportOption;
@@ -156,16 +157,14 @@ public class GMLRoundtripTest {
     return warnings;
   }
 
-  @ParameterizedTest
+  @ParameterizedTest(name = "{0}-{1}")
   @MethodSource("data")
   public void testRoundTripGML(final AeriusGMLVersion version, final String file, final Set<Reason> expectedWarnings) {
     final String versionString = version.name().toLowerCase();
     final String fileVersion = ": " + file + ':' + versionString;
     final ImportParcel result = importAndCompare(versionString, fileVersion, file);
 
-    assertTrue(result.getExceptions().isEmpty(),
-        "No Exceptions: " + result.getExceptions().stream().map(Object::toString).collect(Collectors.joining(", "))
-            + fileVersion);
+    assertNoExceptions(result.getExceptions(), fileVersion);
     assertExpectedWarnings(result.getWarnings(), expectedWarnings);
     assertUnExpectedWarnings(result.getWarnings(), expectedWarnings);
   }
@@ -231,9 +230,9 @@ public class GMLRoundtripTest {
 
   private void assertGMLs(final String generatedGML, final String version, final String file) throws IOException {
     final String actual = replaceIncomparables(generatedGML);
-    assertFalse(actual.isEmpty(), "Result shouldn't be empty");
+    assertFalse(actual.isEmpty(), "Result shouldn't be empty for " + file);
     final String expected = replaceIncomparables(getFileContent(version, file));
-    AssertGML.assertEqualsGML(expected, actual);
+    AssertGML.assertEqualsGML(expected, actual, file);
   }
 
   private String getFileContent(final String version, final String file) throws IOException {
@@ -257,7 +256,8 @@ public class GMLRoundtripTest {
       throws IOException, AeriusException {
     final String relativePath = getRelativePath(versionString, testFolder);
     final AtomicReference<String> readVersion = new AtomicReference<>();
-    final ImaerImporter importer = new ImaerImporter(AssertGML.mockGMLHelper()) {
+    final GMLHelper mockGMLHelper = AssertGML.mockGMLHelper();
+    final ImaerImporter importer = new ImaerImporter(mockGMLHelper, new GMLReaderFactory(mockGMLHelper)) {
       @Override
       protected GMLReader createGMLReader(final InputStream inputStream, final Set<ImportOption> importOptions, final ImportParcel result)
           throws AeriusException {
@@ -271,8 +271,12 @@ public class GMLRoundtripTest {
       importer.importStream(inputStream, ImportOption.getDefaultOptions(), result);
     }
     assertEquals(versionString, readVersion.get(), "GML imported is not of expected version");
-    assertTrue(result.getExceptions().isEmpty(), "No exceptions");
+    assertNoExceptions(result.getExceptions(), " for version " + versionString + " with file " + file);
     return result;
+  }
+
+  private void assertNoExceptions(final List<AeriusException> exceptions, final String message) {
+    assertTrue(exceptions.isEmpty(), "No Exceptions: " + exceptions.stream().map(Object::toString).collect(Collectors.joining(", ")) + message);
   }
 
   private static String getRelativePath(final String versionString, final String testFolder) {

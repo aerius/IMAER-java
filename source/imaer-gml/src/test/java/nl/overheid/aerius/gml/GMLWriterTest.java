@@ -80,7 +80,7 @@ public class GMLWriterTest {
     final List<EmissionSourceFeature> sources = getExampleEmissionSources();
     final String result = getConversionResult(builder, sources);
     assertFalse(result.isEmpty(), "Result shouldn't be empty");
-    AssertGML.assertEqualsGML(AssertGML.getFileContent(PATH_CURRENT_VERSION, SOURCES_ONLY_FILE), result);
+    AssertGML.assertEqualsGML(AssertGML.getFileContent(PATH_CURRENT_VERSION, SOURCES_ONLY_FILE), result, SOURCES_ONLY_FILE);
   }
 
   private String getConversionResult(final GMLWriter builder, final List<EmissionSourceFeature> sources) throws IOException, AeriusException {
@@ -230,7 +230,7 @@ public class GMLWriterTest {
       result = bos.toString(StandardCharsets.UTF_8.name());
     }
     assertFalse(result.isEmpty(), "Result shouldn't be empty for " + receptorFile);
-    AssertGML.assertEqualsGML(AssertGML.getFileContent(PATH_CURRENT_VERSION, receptorFile), result);
+    AssertGML.assertEqualsGML(AssertGML.getFileContent(PATH_CURRENT_VERSION, receptorFile), result, receptorFile);
   }
 
   private ArrayList<CalculationPointFeature> getExampleAeriusPoints(final boolean includeDeposition, final boolean includeConcentration) {
@@ -311,7 +311,7 @@ public class GMLWriterTest {
       result = bos.toString(StandardCharsets.UTF_8.name());
     }
     assertFalse(result.isEmpty(), "Result shouldn't be empty");
-    AssertGML.assertEqualsGML(AssertGML.getFileContent(PATH_CURRENT_VERSION, MIXED_FEATURES_FILE), result);
+    AssertGML.assertEqualsGML(AssertGML.getFileContent(PATH_CURRENT_VERSION, MIXED_FEATURES_FILE), result, MIXED_FEATURES_FILE);
   }
 
   private ScenarioMetaData getScenarioMetaData() {

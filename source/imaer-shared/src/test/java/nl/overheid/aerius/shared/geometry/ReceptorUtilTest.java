@@ -215,7 +215,7 @@ class ReceptorUtilTest {
     return Math.sqrt(tx * tx + ty * ty);
   }
 
-  @ParameterizedTest
+  @ParameterizedTest(name = "ReceptorId: {0}, zoomLevel:{1}")
   @MethodSource("zoomLevelReceptors")
   void testGetZoomLevelForReceptor(final int id, final int expectedZoomLevel) {
     assertEquals(expectedZoomLevel, RECEPTOR_UTIL.getZoomLevelForReceptor(id), "Not the expected zoomlevel for id " + id);
