@@ -37,7 +37,7 @@ class OptionsMetadataUtilTest {
 
   private static final int BASIC_OPTIONS = 7;
   private static final int CONNECT_OPTIONS = 2;
-  private static final int OPS_OPTIONS = 10;
+  private static final int OPS_OPTIONS = 11;
 
   @Test
   void testDefaultOptionsWithoutAddingDefaults() {
@@ -134,6 +134,7 @@ class OptionsMetadataUtilTest {
     assertEquals("", result.get("ops_washout"));
     assertEquals("", result.get("ops_conv_rate"));
     assertEquals("", result.get("ops_roughness"));
+    assertEquals("", result.get("ops_chemistry"));
   }
 
   @Test
@@ -150,6 +151,7 @@ class OptionsMetadataUtilTest {
     opsOptions.setWashout("reject");
     opsOptions.setConvRate("8 out of 10");
     opsOptions.setRoughness(8.19);
+    opsOptions.setChemistry(OPSOptions.Chemistry.PROGNOSIS);
     options.setOpsOptions(opsOptions);
 
     final Map<String, String> result = OptionsMetadataUtil.optionsToMap(options, false);
@@ -165,5 +167,6 @@ class OptionsMetadataUtilTest {
     assertEquals("reject", result.get("ops_washout"));
     assertEquals("8 out of 10", result.get("ops_conv_rate"));
     assertEquals("8.19", result.get("ops_roughness"));
+    assertEquals("prognosis", result.get("ops_chemistry"));
   }
 }

@@ -18,8 +18,6 @@ package nl.overheid.aerius.shared.domain.calculation;
 
 import java.io.Serializable;
 
-import nl.overheid.aerius.shared.domain.chemistry.Chemistry;
-
 /**
  * Contains OPS specific settings that will override any preset value in the control file of OPS.
  */
@@ -165,7 +163,34 @@ public class OPSOptions implements Serializable {
         ", diffCoeff='" + diffCoeff + '\'' +
         ", washout='" + washout + '\'' +
         ", convRate='" + convRate + '\'' +
-        ", roughness=" + roughness +
+        ", roughness=" + roughness + '\'' +
+        ", chemistry=" + chemistry +
         '}';
+  }
+
+  /**
+   * Represents the type of background chemistry maps to be used by OPS.
+   */
+  public enum Chemistry {
+
+    /**
+     * Prognostic chemistry background map
+     */
+    PROGNOSIS("prognosis"),
+
+    /**
+     * Actual chemistry background map
+     */
+    ACTUAL("");
+
+    private final String opsLabel;
+
+    Chemistry(final String opsLabel) {
+      this.opsLabel = opsLabel;
+    }
+
+    public String getOpsLabel() {
+      return opsLabel;
+    }
   }
 }

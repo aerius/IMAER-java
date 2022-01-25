@@ -18,6 +18,7 @@ package nl.overheid.aerius.util;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import nl.overheid.aerius.shared.domain.calculation.CalculationRoadOPS;
 import nl.overheid.aerius.shared.domain.calculation.CalculationSetOptions;
@@ -54,6 +55,7 @@ public final class OptionsMetadataUtil {
     OPS_WASHOUT,
     OPS_CONV_RATE,
     OPS_ROUGHNESS,
+    OPS_CHEMISTRY,
     ;
     // @formatter:on
 
@@ -98,6 +100,7 @@ public final class OptionsMetadataUtil {
     if (options != null) {
       addBooleanValue(mapToAddTo, Option.OPS_RAW_INPUT, options.isRawInput(), addDefaults);
       addValue(mapToAddTo, Option.OPS_YEAR, options.getYear(), addDefaults);
+      addValue(mapToAddTo, Option.OPS_CHEMISTRY, Optional.ofNullable(options.getChemistry()).map(OPSOptions.Chemistry::getOpsLabel).orElse(null), addDefaults);
       addValue(mapToAddTo, Option.OPS_COMP_CODE, options.getCompCode(), addDefaults);
       addValue(mapToAddTo, Option.OPS_MOL_WEIGHT, options.getMolWeight(), addDefaults);
       addValue(mapToAddTo, Option.OPS_PHASE, options.getPhase(), addDefaults);
