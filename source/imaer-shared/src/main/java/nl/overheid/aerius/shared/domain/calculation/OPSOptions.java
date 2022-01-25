@@ -33,6 +33,7 @@ public class OPSOptions implements Serializable {
   private String washout;
   private String convRate;
   private Double roughness;
+  private Chemistry chemistry;
 
   public boolean isRawInput() {
     return rawInput;
@@ -59,6 +60,18 @@ public class OPSOptions implements Serializable {
 
   public void setYear(final Integer year) {
     this.year = year;
+  }
+
+  /**
+   * This is a suffix for
+   * OPS .ctr variable:YEAR
+   */
+  public Chemistry getChemistry() {
+    return chemistry;
+  }
+
+  public void setChemistry(Chemistry chemistry) {
+    this.chemistry = chemistry;
   }
 
   /**
@@ -150,7 +163,34 @@ public class OPSOptions implements Serializable {
         ", diffCoeff='" + diffCoeff + '\'' +
         ", washout='" + washout + '\'' +
         ", convRate='" + convRate + '\'' +
-        ", roughness=" + roughness +
+        ", roughness=" + roughness + '\'' +
+        ", chemistry=" + chemistry +
         '}';
+  }
+
+  /**
+   * Represents the type of background chemistry maps to be used by OPS.
+   */
+  public enum Chemistry {
+
+    /**
+     * Prognostic chemistry background map
+     */
+    PROGNOSIS("prognosis"),
+
+    /**
+     * Actual chemistry background map
+     */
+    ACTUAL("");
+
+    private final String opsLabel;
+
+    Chemistry(final String opsLabel) {
+      this.opsLabel = opsLabel;
+    }
+
+    public String getOpsLabel() {
+      return opsLabel;
+    }
   }
 }
