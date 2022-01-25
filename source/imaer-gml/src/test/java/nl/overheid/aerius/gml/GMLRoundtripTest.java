@@ -163,9 +163,7 @@ public class GMLRoundtripTest {
     final String fileVersion = ": " + file + ':' + versionString;
     final ImportParcel result = importAndCompare(versionString, fileVersion, file);
 
-    assertTrue(result.getExceptions().isEmpty(),
-        "No Exceptions: " + result.getExceptions().stream().map(Object::toString).collect(Collectors.joining(", "))
-            + fileVersion);
+    assertNoExceptions(result.getExceptions(), fileVersion);
     assertExpectedWarnings(result.getWarnings(), expectedWarnings);
     assertUnExpectedWarnings(result.getWarnings(), expectedWarnings);
   }
@@ -271,8 +269,12 @@ public class GMLRoundtripTest {
       importer.importStream(inputStream, ImportOption.getDefaultOptions(), result);
     }
     assertEquals(versionString, readVersion.get(), "GML imported is not of expected version");
-    assertTrue(result.getExceptions().isEmpty(), "No exceptions");
+    assertNoExceptions(result.getExceptions(), " for version " + versionString + " with file " + file);
     return result;
+  }
+
+  private void assertNoExceptions(final List<AeriusException> exceptions, final String message) {
+    assertTrue(exceptions.isEmpty(), "No Exceptions: " + exceptions.stream().map(Object::toString).collect(Collectors.joining(", ")) + message);
   }
 
   private static String getRelativePath(final String versionString, final String testFolder) {
