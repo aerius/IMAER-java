@@ -95,7 +95,7 @@ public class GMLOldVersionTest {
     private TestFile(final List<AeriusGMLVersion> skipEmissionCheckIn, final AeriusGMLVersion... warningsIn) {
       this(false, skipEmissionCheckIn, Collections.emptyList(), warningsIn);
     }
-    
+
     private TestFile(final boolean skipNumberOfSourcesCheck, final List<AeriusGMLVersion> skipEmissionCheckIn, final AeriusGMLVersion... warningsIn) {
       this(skipNumberOfSourcesCheck, skipEmissionCheckIn, Collections.emptyList(), warningsIn);
     }
@@ -154,7 +154,7 @@ public class GMLOldVersionTest {
     return files;
   }
 
-  @ParameterizedTest
+  @ParameterizedTest(name = "{0}-{1}")
   @MethodSource("data")
   public void testVersionGML(final AeriusGMLVersion version, final TestFile testFile) throws IOException, AeriusException {
     final ImportParcel oldResult = getImportResult(version.name().toLowerCase() + TEST_FOLDER, testFile);

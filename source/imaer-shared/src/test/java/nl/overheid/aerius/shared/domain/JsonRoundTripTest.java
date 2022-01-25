@@ -54,7 +54,7 @@ class JsonRoundTripTest {
     mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
   }
 
-  @ParameterizedTest
+  @ParameterizedTest(name = "{0}")
   @ValueSource(strings = {
       "SourceWithPointGeometry.json",
       "SourceWithLineStringGeometry.json",
@@ -67,7 +67,7 @@ class JsonRoundTripTest {
     assertEquals(originalJson, convertedBack + System.lineSeparator(), "Original should be same as converted");
   }
 
-  @ParameterizedTest
+  @ParameterizedTest(name = "{0}")
   @ValueSource(strings = {
       "GenericEmissionSource.json",
       "FarmLodgingEmissionSource.json",
@@ -92,7 +92,7 @@ class JsonRoundTripTest {
     assertEquals(originalJson, convertedBack + System.lineSeparator(), "Original should be same as converted");
   }
 
-  @ParameterizedTest
+  @ParameterizedTest(name = "{0}")
   @ValueSource(strings = {
       "SourcesCollection.json",
   })
@@ -131,7 +131,7 @@ class JsonRoundTripTest {
     assertEquals(originalJson, convertedBack + System.lineSeparator(), "Original should be same as converted");
   }
 
-  @ParameterizedTest
+  @ParameterizedTest(name = "{0}")
   @ValueSource(strings = {
       "NSLDispersionLine.json",
   })

@@ -37,7 +37,7 @@ import nl.overheid.aerius.shared.exception.AeriusException;
  */
 class ConstructPolygonTest {
 
-  @ParameterizedTest
+  @ParameterizedTest(name = "Orientation North:{0}")
   @ValueSource(doubles = {0, 45, 90, 100, 180, 270, 360, 400})
   void testOrientationTransformation(final double orientationNorth) {
     final double computed = GeometryUtil.orientationXToNorth(GeometryUtil.orientationNorthToX(orientationNorth));

@@ -156,7 +156,7 @@ public class GMLRoundtripTest {
     return warnings;
   }
 
-  @ParameterizedTest
+  @ParameterizedTest(name = "{0}-{1}")
   @MethodSource("data")
   public void testRoundTripGML(final AeriusGMLVersion version, final String file, final Set<Reason> expectedWarnings) {
     final String versionString = version.name().toLowerCase();
