@@ -192,11 +192,9 @@ public final class AssertGML {
       return null;
     }).when(gmlHelper).enforceEmissions(anyInt(), any());
     when(gmlHelper.suggestInlandShippingWaterway(any())).thenAnswer(invocation -> suggest((Geometry) invocation.getArgument(0)));
-    when(gmlHelper.getLegacyCodes(any())).thenAnswer(invocation -> TestValidationAndEmissionHelper.legacyCodes());
-    when(gmlHelper.getLegacyMobileSourceOffRoadConversions())
-        .thenAnswer(invocation -> TestValidationAndEmissionHelper.legacyMobileSourceOffRoadConversions());
-    when(gmlHelper.getLegacyPlanConversions())
-        .thenAnswer(invocation -> TestValidationAndEmissionHelper.legacyPlanConversions());
+    when(gmlHelper.getLegacyCodes(any())).thenReturn(TestValidationAndEmissionHelper.legacyCodes());
+    when(gmlHelper.getLegacyMobileSourceOffRoadConversions()).thenReturn(TestValidationAndEmissionHelper.legacyMobileSourceOffRoadConversions());
+    when(gmlHelper.getLegacyPlanConversions()).thenReturn(TestValidationAndEmissionHelper.legacyPlanConversions());
     when(gmlHelper.determineDefaultCharacteristicsBySectorId(anyInt())).thenReturn(mock(OPSSourceCharacteristics.class));
     when(gmlHelper.getValidationHelper()).thenReturn(valiationAndEmissionHelper);
     return gmlHelper;
