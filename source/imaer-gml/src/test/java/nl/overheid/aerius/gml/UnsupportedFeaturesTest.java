@@ -82,7 +82,7 @@ public class UnsupportedFeaturesTest {
    *           Thrown if an error occurred while re-accessing the test file.
    * @throws AeriusException
    */
-  @ParameterizedTest
+  @ParameterizedTest(name = "{0}")
   @MethodSource("data")
   public void testValidationFailure(final String fileName, final File file) throws FileNotFoundException, IOException, AeriusException {
     final ImaerImporter importer = new ImaerImporter(AssertGML.mockGMLHelper());
