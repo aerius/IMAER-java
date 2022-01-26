@@ -82,10 +82,12 @@ final class InternalGMLWriter {
 
   private final GMLVersionWriter writer;
   private final ReferenceGenerator referenceGenerator;
+  private final Boolean formattedOutput;
 
-  InternalGMLWriter(final ReceptorGridSettings rgs, final ReferenceGenerator referenceGenerator) {
+  InternalGMLWriter(final ReceptorGridSettings rgs, final ReferenceGenerator referenceGenerator, final Boolean formattedOutput) {
     writer = new GMLVersionWriterV40(rgs.getZoomLevel1(), GMLSchema.getSRSName(rgs.getEpsg().getSrid()));
     this.referenceGenerator = referenceGenerator;
+    this.formattedOutput = formattedOutput;
   }
 
   GMLVersionWriter getWriter() {
@@ -181,9 +183,7 @@ final class InternalGMLWriter {
       final JAXBContext jaxbContext = JAXBContextCache.find(jaxbElement.getClass(), ObjectFactory.class);
       final Marshaller marshaller = jaxbContext.createMarshaller();
 
-      // assure line breaks and indentation for pretty output.
-      marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-
+      marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, formattedOutput);
       // set the targetNameSpaceLocation (namespace and actual location separated by a space, can be multiple combinations)
       marshaller.setProperty(Marshaller.JAXB_SCHEMA_LOCATION, writer.getNameSpace() + " " + writer.getPublicSchemaLocation());
       marshaller.setProperty(Marshaller.JAXB_ENCODING, GML_ENCODING);

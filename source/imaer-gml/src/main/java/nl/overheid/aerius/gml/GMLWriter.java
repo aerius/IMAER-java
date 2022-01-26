@@ -88,10 +88,20 @@ public class GMLWriter {
 
   private final ReceptorGridSettings receptorGridSettings;
   private final ReferenceGenerator referenceGenerator;
+  private Boolean formattedOutput = Boolean.TRUE;
 
   public GMLWriter(final ReceptorGridSettings rgs, final ReferenceGenerator referenceGenerator) {
     this.receptorGridSettings = rgs;
     this.referenceGenerator = referenceGenerator;
+  }
+
+  /**
+   * Set to true to generate formatted GML.
+   *
+   * @param formattedOutput if true formatted output will be generated
+   */
+  public void setFormattedOutput(final Boolean formattedOutput) {
+    this.formattedOutput = formattedOutput;
   }
 
   /**
@@ -286,7 +296,7 @@ public class GMLWriter {
   }
 
   private InternalGMLWriter createInternalWriter() {
-    return new InternalGMLWriter(receptorGridSettings, referenceGenerator);
+    return new InternalGMLWriter(receptorGridSettings, referenceGenerator, formattedOutput);
   }
 
 }

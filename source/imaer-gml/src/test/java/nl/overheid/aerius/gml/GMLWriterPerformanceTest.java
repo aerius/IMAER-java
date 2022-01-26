@@ -50,7 +50,8 @@ public class GMLWriterPerformanceTest {
 
   @Test
   public void testConvertMetaData() throws IOException, AeriusException {
-    final InternalGMLWriter writer = new InternalGMLWriter(GMLTestDomain.getExampleGridSettings(), GMLTestDomain.TEST_REFERENCE_GENERATOR);
+    final InternalGMLWriter writer =
+        new InternalGMLWriter(GMLTestDomain.getExampleGridSettings(), GMLTestDomain.TEST_REFERENCE_GENERATOR, Boolean.TRUE);
 
     final int numberOfSources = 800000;
     final List<EmissionSourceFeature> sourceFeatures = new ArrayList<>(numberOfSources);
