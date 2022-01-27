@@ -218,7 +218,7 @@ public class GMLReaderTest {
     metaDataInput.getOptions().setCalculationType(CalculationType.PERMIT);
     metaDataInput.getOptions().setMonitorSrm2Year(MONITOR_SRM2_YEAR);
     metaDataInput.setResultsIncluded(true);
-    final InternalGMLWriter writer = new InternalGMLWriter(gridSettings, GMLTestDomain.TEST_REFERENCE_GENERATOR);
+    final InternalGMLWriter writer = new InternalGMLWriter(gridSettings, GMLTestDomain.TEST_REFERENCE_GENERATOR, Boolean.TRUE);
     return writer.getWriter().metaData2GML(metaDataInput);
   }
 

@@ -30,6 +30,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import nl.overheid.aerius.gml.base.MetaDataInput;
 import nl.overheid.aerius.shared.domain.Substance;
@@ -55,6 +57,8 @@ import nl.overheid.aerius.test.GMLTestDomain;
 public class GMLWriterTest {
 
   private static final String SOURCES_ONLY_FILE = "test_sources_only";
+  // This is a copy of test_sources_only but unformatted.
+  private static final String SOURCES_ONLY_FILE_UNFORMATTED = SOURCES_ONLY_FILE + "_unformatted";
   private static final String RECEPTORS_DEPOSITION_ONLY_FILE = "test_receptors_deposition_only";
   private static final String RECEPTORS_CONCENTRATION_ONLY_FILE = "test_receptors_concentration_only";
   private static final String RECEPTORS_ALL_FILE = "test_receptors";
@@ -74,13 +78,15 @@ public class GMLWriterTest {
 
   private static final ReceptorGridSettings RECEPTOR_GRID_SETTINGS = GMLTestDomain.getExampleGridSettings();
 
-  @Test
-  public void testConvertSources() throws IOException, AeriusException {
+  @ParameterizedTest
+  @ValueSource(strings = {SOURCES_ONLY_FILE, SOURCES_ONLY_FILE_UNFORMATTED})
+  public void testConvertSources(final String gmlFilename) throws IOException, AeriusException {
     final GMLWriter builder = new GMLWriter(RECEPTOR_GRID_SETTINGS, GMLTestDomain.TEST_REFERENCE_GENERATOR);
+    builder.setFormattedOutput(SOURCES_ONLY_FILE.equals(gmlFilename));
     final List<EmissionSourceFeature> sources = getExampleEmissionSources();
     final String result = getConversionResult(builder, sources);
     assertFalse(result.isEmpty(), "Result shouldn't be empty");
-    AssertGML.assertEqualsGML(AssertGML.getFileContent(PATH_CURRENT_VERSION, SOURCES_ONLY_FILE), result, SOURCES_ONLY_FILE);
+    AssertGML.assertEqualsGML(AssertGML.getFileContent(PATH_CURRENT_VERSION, gmlFilename), result, gmlFilename);
   }
 
   private String getConversionResult(final GMLWriter builder, final List<EmissionSourceFeature> sources) throws IOException, AeriusException {
