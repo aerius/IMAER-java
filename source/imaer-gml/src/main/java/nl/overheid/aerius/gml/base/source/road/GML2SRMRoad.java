@@ -116,6 +116,7 @@ abstract class GML2SRMRoad<T extends IsGmlRoadEmissionSource, S extends RoadEmis
     final SpecificVehicles vse = new SpecificVehicles();
     final String vehicleCode = getConversionData().getCode(GMLLegacyCodeType.ON_ROAD_MOBILE_SOURCE, sv.getCode(), source.getLabel());
     vse.setVehicleCode(vehicleCode);
+    vse.setTimeUnit(TimeUnit.valueOf(sv.getTimeUnit().name()));
     vse.setVehiclesPerTimeUnit(sv.getVehiclesPerTimeUnit());
     addToVehicles.add(vse);
   }
@@ -127,6 +128,7 @@ abstract class GML2SRMRoad<T extends IsGmlRoadEmissionSource, S extends RoadEmis
       final IsGmlEmission emission = e.getProperty();
       vce.getEmissionFactors().put(emission.getSubstance(), emission.getValue());
     }
+    vce.setTimeUnit(TimeUnit.valueOf(cv.getTimeUnit().name()));
     vce.setVehiclesPerTimeUnit(cv.getVehiclesPerTimeUnit());
     addToVehicles.add(vce);
   }

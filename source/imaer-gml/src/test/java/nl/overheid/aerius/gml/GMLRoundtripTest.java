@@ -93,6 +93,7 @@ public class GMLRoundtripTest {
       {"road_dynamic_segmentation",},
       {"road_empty", EnumSet.of(ImaerExceptionReason.SRM2_SOURCE_NO_VEHICLES, ImaerExceptionReason.GML_SOURCE_NO_EMISSION)},
       {"road_direction",},
+      {"road_specific_and_custom",},
       {"metadata",},
       {"industry_with_calculated_heat_content",},
       {"industry_with_default_emission_temperature",},

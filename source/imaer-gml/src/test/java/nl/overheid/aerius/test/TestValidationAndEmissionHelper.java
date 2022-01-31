@@ -655,7 +655,7 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
   @Override
   public Map<Substance, Double> getRoadSpecificVehicleEmissionFactors(final String specificVehicleCode, final RoadType roadType) {
     return roadSpecific(specificVehicleCode)
-        .map(c -> new HashMap<Substance, Double>())
+        .map(c -> Map.of(Substance.NOX, 10.0))
         .orElse(null);
   }
 
