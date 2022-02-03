@@ -271,8 +271,8 @@ public class GMLRoundtripTest {
     try (final InputStream inputStream = AssertGML.getFileInputStream(relativePath, file)) {
       importer.importStream(inputStream, ImportOption.getDefaultOptions(), result);
     }
-    assertEquals(versionString, readVersion.get(), "GML imported is not of expected version");
     assertNoExceptions(result.getExceptions(), " for version " + versionString + " with file " + file);
+    assertEquals(versionString, readVersion.get(), "GML imported is not of expected version");
     return result;
   }
 
