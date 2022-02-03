@@ -283,10 +283,11 @@ public enum ImaerExceptionReason implements Reason {
    * GML contains an unknown combination of road characteristics that don't match a known vehicle category.
    *
    * @param 0 the id of the object containing the error.
-   * @param 1 road sector
-   * @param 2 road speed
-   * @param 3 strict enforcement
-   * @param 4 road vehicle category
+   * @param 1 road area category
+   * @param 2 road type category
+   * @param 3 road speed
+   * @param 4 strict enforcement
+   * @param 5 road vehicle category
    */
   GML_UNKNOWN_ROAD_CATEGORY(5221),
   /**
