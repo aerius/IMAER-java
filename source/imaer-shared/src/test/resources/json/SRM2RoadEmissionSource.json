@@ -61,6 +61,8 @@
       "vehiclesPerTimeUnit" : 500.0,
       "vehicleCode" : "BA-B-E3"
     } ],
+    "roadAreaCode" : "NL",
+    "roadTypeCode" : "FREEWAY",
     "tunnelFactor" : 1.0,
     "trafficDirection" : "A_TO_B",
     "elevation" : "STEEP_DYKE",

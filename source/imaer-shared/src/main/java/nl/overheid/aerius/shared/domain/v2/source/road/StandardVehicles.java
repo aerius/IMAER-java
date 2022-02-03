@@ -25,11 +25,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class StandardVehicles extends Vehicles {
 
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 2L;
 
   private Integer maximumSpeed;
   private Boolean strictEnforcement;
-  private Map<VehicleType, ValuesPerVehicleType> valuesPerVehicleTypes = new HashMap<>();
+  private Map<String, ValuesPerVehicleType> valuesPerVehicleTypes = new HashMap<>();
 
   private List<StandardVehicleMeasure> measures = new ArrayList<>();
 
@@ -49,11 +49,11 @@ public class StandardVehicles extends Vehicles {
     this.strictEnforcement = strictEnforcement;
   }
 
-  public Map<VehicleType, ValuesPerVehicleType> getValuesPerVehicleTypes() {
+  public Map<String, ValuesPerVehicleType> getValuesPerVehicleTypes() {
     return valuesPerVehicleTypes;
   }
 
-  public void setValuesPerVehicleTypes(final Map<VehicleType, ValuesPerVehicleType> valuesPerVehicleTypes) {
+  public void setValuesPerVehicleTypes(final Map<String, ValuesPerVehicleType> valuesPerVehicleTypes) {
     this.valuesPerVehicleTypes = valuesPerVehicleTypes;
   }
 

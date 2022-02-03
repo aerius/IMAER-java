@@ -20,10 +20,9 @@ import nl.overheid.aerius.shared.domain.v2.base.LinearReference;
 
 public class SRM1LinearReference extends LinearReference {
 
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 2L;
 
   private Double tunnelFactor;
-  private RoadSpeedType roadSpeedType;
 
   public Double getTunnelFactor() {
     return tunnelFactor;
@@ -31,14 +30,6 @@ public class SRM1LinearReference extends LinearReference {
 
   public void setTunnelFactor(final Double tunnelFactor) {
     this.tunnelFactor = tunnelFactor;
-  }
-
-  public RoadSpeedType getRoadSpeedType() {
-    return roadSpeedType;
-  }
-
-  public void setRoadSpeedType(final RoadSpeedType roadSpeedType) {
-    this.roadSpeedType = roadSpeedType;
   }
 
 }

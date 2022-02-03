@@ -22,7 +22,11 @@ import nl.overheid.aerius.shared.domain.v2.source.road.Vehicles;
 
 public abstract class RoadEmissionSource extends EmissionSourceWithSubSources<Vehicles> {
 
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 2L;
+
+  private String roadAreaCode;
+
+  private String roadTypeCode;
 
   /**
    * Default tunnelfactor = 1.0 (normal road).
@@ -35,6 +39,22 @@ public abstract class RoadEmissionSource extends EmissionSourceWithSubSources<Ve
   private RoadManager roadManager;
 
   private TrafficDirection trafficDirection;
+
+  public String getRoadAreaCode() {
+    return roadAreaCode;
+  }
+
+  public void setRoadAreaCode(final String roadAreaCode) {
+    this.roadAreaCode = roadAreaCode;
+  }
+
+  public String getRoadTypeCode() {
+    return roadTypeCode;
+  }
+
+  public void setRoadTypeCode(final String roadTypeCode) {
+    this.roadTypeCode = roadTypeCode;
+  }
 
   public RoadManager getRoadManager() {
     return roadManager;
