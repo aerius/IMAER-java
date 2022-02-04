@@ -14,19 +14,17 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.gml.base.source.road;
+package nl.overheid.aerius.gml.base.source.road.v10;
 
-import java.util.List;
+import nl.overheid.aerius.gml.base.source.road.v40.IsGmlSRM2Road;
 
-import nl.overheid.aerius.gml.base.IsGmlProperty;
-import nl.overheid.aerius.shared.domain.v2.source.road.RoadSpeedType;
+/**
+ * Old version of SRM2Road where maximum speed and strict enforcement were available on source level instead of the vehicle level.
+ */
+public interface IsGmlSRM2RoadOld extends IsGmlSRM2Road {
 
-public interface IsGmlSRM1Road extends IsGmlRoadEmissionSource {
+  Integer getMaximumSpeed();
 
-  RoadSpeedType getSpeedProfile();
-
-  Double getTunnelFactor();
-
-  List<? extends IsGmlProperty<IsGmlSRM1RoadLinearReference>> getDynamicSegments();
+  Boolean isStrictEnforcement();
 
 }

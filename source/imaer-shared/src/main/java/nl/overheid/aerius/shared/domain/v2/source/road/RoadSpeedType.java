@@ -25,38 +25,40 @@ public enum RoadSpeedType {
    *
    * Typisch buitenwegverkeer, een gemiddelde snelheid van ongeveer 60 km/h, gemiddeld ca. 0,2 stops per afgelegde km.
    */
-  NON_URBAN_TRAFFIC("B"),
+  NON_URBAN_TRAFFIC("B", "NON_URBAN_ROAD_GENERAL"),
   /**
    * "normaal stadsverkeer".
    *
    * Typisch stadsverkeer met een redelijke mate van congestie, een gemiddelde snelheid tussen de 15 en 30 km/h,
    * gemiddeld ca. 2 stops per afgelegde km.
    */
-  URBAN_TRAFFIC_NORMAL("C"),
+  URBAN_TRAFFIC_NORMAL("C", "URBAN_ROAD_NORMAL"),
   /**
    * "stagnerend stadsverkeer".
    *
    * Stadsverkeer met een grote mate van congestie, een gemiddelde snelheid kleiner dan 15 km/h, gemiddeld ca. 10 stops per afgelegde km.
    */
-  URBAN_TRAFFIC_STAGNATING("D"),
+  URBAN_TRAFFIC_STAGNATING("D", "URBAN_ROAD_STAGNATING"),
   /**
    * "stadsverkeer met minder congestie".
    *
    * Stadsverkeer met een relatief groter aandeel "free-flow" rijgedrag, een gemiddelde snelheid tussen de 30 en 45 km/h,
    * gemiddeld ca. 1,5 stop per afgelegde km.
    */
-  URBAN_TRAFFIC_FREE_FLOW("E"),
+  URBAN_TRAFFIC_FREE_FLOW("E", "URBAN_ROAD_FREE_FLOW"),
   /**
    * "buitenweg nationale weg".
    *
    * Typisch buitenwegverkeer op een nationale weg.
    */
-  NATIONAL_ROAD("NATIONAL_ROAD");
+  NATIONAL_ROAD("NATIONAL_ROAD", "NON_URBAN_ROAD_NATIONAL");
 
   private final String legacyValue;
+  private final String roadTypeCode;
 
-  private RoadSpeedType(final String legacyValue) {
+  private RoadSpeedType(final String legacyValue, final String roadTypeCode) {
     this.legacyValue = legacyValue;
+    this.roadTypeCode = roadTypeCode;
   }
 
   public static RoadSpeedType safeLegacyValueOf(final String snelheid) {
@@ -67,6 +69,10 @@ public enum RoadSpeedType {
       }
     }
     return result;
+  }
+
+  public String getRoadTypeCode() {
+    return roadTypeCode;
   }
 
 }

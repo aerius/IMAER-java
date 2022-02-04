@@ -14,10 +14,27 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.gml.base.source.road;
+package nl.overheid.aerius.gml.base.source.road.v40;
 
-public interface IsGmlRoadNetwork {
+import java.util.List;
 
-  String getLabel();
+import nl.overheid.aerius.gml.base.IsGmlProperty;
+import nl.overheid.aerius.shared.domain.v2.source.road.RoadElevation;
+
+public interface IsGmlSRM2Road extends IsGmlRoadEmissionSource {
+
+  boolean isFreeway();
+
+  Double getTunnelFactor();
+
+  RoadElevation getElevation();
+
+  Integer getElevationHeight();
+
+  IsGmlProperty<IsGmlRoadSideBarrier> getBarrierLeft();
+
+  IsGmlProperty<IsGmlRoadSideBarrier> getBarrierRight();
+
+  List<? extends IsGmlProperty<IsGmlSRM2RoadLinearReference>> getDynamicSegments();
 
 }

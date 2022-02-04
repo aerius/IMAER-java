@@ -14,16 +14,14 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.gml.base.source.road;
+package nl.overheid.aerius.gml.base.measure.v40;
 
-import nl.overheid.aerius.shared.domain.v2.source.road.RoadSideBarrierType;
+import nl.overheid.aerius.shared.domain.Substance;
 
-public interface IsGmlRoadSideBarrier {
+public interface IsGMLEmissionReduction {
 
-  RoadSideBarrierType getBarrierType();
+  Substance getSubstance();
 
-  double getHeight();
-
-  double getDistance();
+  double getFactor();
 
 }

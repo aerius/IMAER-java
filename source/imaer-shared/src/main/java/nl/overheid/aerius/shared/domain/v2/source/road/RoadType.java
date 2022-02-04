@@ -25,20 +25,22 @@ public enum RoadType implements HasId {
   /**
    * Roads within residential areas.
    */
-  URBAN_ROAD(3113),
+  URBAN_ROAD(3113, "URBAN_ROAD_FREE_FLOW"),
   /**
    * Non urban roads.
    */
-  NON_URBAN_ROAD(3112),
+  NON_URBAN_ROAD(3112, "NON_URBAN_ROAD_NATIONAL"),
   /**
    * High ways.
    */
-  FREEWAY(3111);
+  FREEWAY(3111, "FREEWAY");
 
-  private int sectorId;
+  private final int sectorId;
+  private final String roadTypeCode;
 
-  private RoadType(final int sectorId) {
+  private RoadType(final int sectorId, final String roadTypeCode) {
     this.sectorId = sectorId;
+    this.roadTypeCode = roadTypeCode;
   }
 
   public int getSectorId() {
@@ -78,4 +80,9 @@ public enum RoadType implements HasId {
   public void setId(final int id) {
     // no-op
   }
+
+  public String getRoadTypeCode() {
+    return roadTypeCode;
+  }
+
 }

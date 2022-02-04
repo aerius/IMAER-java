@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.gml.base.measure;
+package nl.overheid.aerius.gml.base.measure.v40;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -112,8 +112,8 @@ public class GML2NSLMeasure {
 
   private StandardVehicleMeasure fromGML(final IsGmlSRM1RoadMeasure measure) {
     final StandardVehicleMeasure vehicleMeasure = new StandardVehicleMeasure();
-    vehicleMeasure.setVehicleType(measure.getVehicleType());
-    vehicleMeasure.setRoadSpeedType(measure.getSpeedProfile());
+    vehicleMeasure.setVehicleTypeCode(measure.getVehicleType().getStandardVehicleCode());
+    vehicleMeasure.setRoadTypeCode(measure.getSpeedProfile().getRoadTypeCode());
     measure.getReductions().stream()
         .map(IsGmlProperty::getProperty)
         .map(this::fromGML)

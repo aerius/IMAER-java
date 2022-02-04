@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-import nl.overheid.aerius.gml.base.measure.IsGMLEmissionReduction;
+import nl.overheid.aerius.gml.base.measure.v40.IsGMLEmissionReduction;
 import nl.overheid.aerius.gml.v5_0.base.CalculatorSchema;
 import nl.overheid.aerius.shared.domain.Substance;
 

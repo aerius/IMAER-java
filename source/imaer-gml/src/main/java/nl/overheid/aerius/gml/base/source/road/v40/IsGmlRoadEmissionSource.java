@@ -14,14 +14,21 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.gml.base.source.road;
+package nl.overheid.aerius.gml.base.source.road.v40;
 
-import nl.overheid.aerius.gml.base.source.IsGmlTimeUnit;
+import java.util.List;
 
-public interface IsGmlVehicle {
+import nl.overheid.aerius.gml.base.IsGmlProperty;
+import nl.overheid.aerius.gml.base.source.IsGmlEmissionSource;
+import nl.overheid.aerius.shared.domain.v2.source.road.RoadManager;
+import nl.overheid.aerius.shared.domain.v2.source.road.TrafficDirection;
 
-  double getVehiclesPerTimeUnit();
+public interface IsGmlRoadEmissionSource extends IsGmlEmissionSource {
 
-  IsGmlTimeUnit getTimeUnit();
+  List<? extends IsGmlProperty<IsGmlVehicle>> getVehicles();
+
+  RoadManager getRoadManager();
+
+  TrafficDirection getTrafficDirection();
 
 }

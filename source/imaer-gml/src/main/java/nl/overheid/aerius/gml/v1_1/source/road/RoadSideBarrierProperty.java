@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlElementRef;
 
 import nl.overheid.aerius.gml.base.AbstractProperty;
 import nl.overheid.aerius.gml.base.IsGmlProperty;
-import nl.overheid.aerius.gml.base.source.road.IsGmlRoadSideBarrier;
+import nl.overheid.aerius.gml.base.source.road.v40.IsGmlRoadSideBarrier;
 
 /**
  *

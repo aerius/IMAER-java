@@ -22,7 +22,7 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-import nl.overheid.aerius.gml.base.source.road.IsGmlSRM2RoadOld;
+import nl.overheid.aerius.gml.base.source.road.v10.IsGmlSRM2RoadOld;
 import nl.overheid.aerius.gml.v1_0.base.CalculatorSchema;
 import nl.overheid.aerius.shared.domain.v2.source.road.RoadElevation;
 import nl.overheid.aerius.shared.domain.v2.source.road.RoadManager;

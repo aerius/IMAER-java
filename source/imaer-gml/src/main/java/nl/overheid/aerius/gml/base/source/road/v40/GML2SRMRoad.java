@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.gml.base.source.road;
+package nl.overheid.aerius.gml.base.source.road.v40;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +29,7 @@ import nl.overheid.aerius.gml.base.source.IsGmlEmission;
 import nl.overheid.aerius.shared.domain.v2.base.TimeUnit;
 import nl.overheid.aerius.shared.domain.v2.source.RoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.road.CustomVehicles;
+import nl.overheid.aerius.shared.domain.v2.source.road.RoadType;
 import nl.overheid.aerius.shared.domain.v2.source.road.SpecificVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.StandardVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.ValuesPerVehicleType;
@@ -57,6 +58,9 @@ abstract class GML2SRMRoad<T extends IsGmlRoadEmissionSource, S extends RoadEmis
     }
     emissionSource.setTrafficDirection(source.getTrafficDirection());
     emissionSource.setRoadManager(source.getRoadManager());
+    emissionSource.setRoadAreaCode("NL");
+    // Ensure road type get set before specific, as it's overwritten by SRM1
+    emissionSource.setRoadTypeCode(RoadType.valueFromSectorId(source.getSectorId()).getRoadTypeCode());
 
     setSpecificVariables(source, emissionSource);
 
@@ -100,7 +104,7 @@ abstract class GML2SRMRoad<T extends IsGmlRoadEmissionSource, S extends RoadEmis
     final ValuesPerVehicleType valuesPerVehicleType = new ValuesPerVehicleType();
     valuesPerVehicleType.setStagnationFraction(sv.getStagnationFactor());
     valuesPerVehicleType.setVehiclesPerTimeUnit(sv.getVehiclesPerTimeUnit());
-    standardVehicle.getValuesPerVehicleTypes().put(sv.getVehicleType(), valuesPerVehicleType);
+    standardVehicle.getValuesPerVehicleTypes().put(sv.getVehicleType().getStandardVehicleCode(), valuesPerVehicleType);
   }
 
   protected Optional<StandardVehicles> findExistingMatch(final IsGmlStandardVehicle sv, final List<StandardVehicles> mergingStandardVehicles) {
@@ -108,7 +112,7 @@ abstract class GML2SRMRoad<T extends IsGmlRoadEmissionSource, S extends RoadEmis
         .filter(x -> Objects.equals(x.getMaximumSpeed(), sv.getMaximumSpeed()))
         .filter(x -> Objects.equals(x.getStrictEnforcement(), sv.isStrictEnforcement()))
         .filter(x -> x.getTimeUnit() == TimeUnit.valueOf(sv.getTimeUnit().name()))
-        .filter(x -> !x.getValuesPerVehicleTypes().containsKey(sv.getVehicleType()))
+        .filter(x -> !x.getValuesPerVehicleTypes().containsKey(sv.getVehicleType().getStandardVehicleCode()))
         .findFirst();
   }
 

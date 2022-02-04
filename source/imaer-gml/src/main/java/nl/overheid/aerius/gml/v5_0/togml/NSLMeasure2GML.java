@@ -27,7 +27,9 @@ import nl.overheid.aerius.gml.v5_0.measure.SRM1RoadMeasureArea;
 import nl.overheid.aerius.gml.v5_0.measure.SRM1RoadMeasureProperty;
 import nl.overheid.aerius.shared.domain.v2.nsl.NSLMeasure;
 import nl.overheid.aerius.shared.domain.v2.nsl.NSLMeasureFeature;
+import nl.overheid.aerius.shared.domain.v2.source.road.RoadSpeedType;
 import nl.overheid.aerius.shared.domain.v2.source.road.StandardVehicleMeasure;
+import nl.overheid.aerius.shared.domain.v2.source.road.VehicleType;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.util.gml.GMLIdUtil;
 
@@ -73,8 +75,8 @@ final class NSLMeasure2GML {
 
   private SRM1RoadMeasure toGMLRoadMeasure(final StandardVehicleMeasure vehicleMeasure) {
     final SRM1RoadMeasure roadMeasure = new SRM1RoadMeasure();
-    roadMeasure.setVehicleType(vehicleMeasure.getVehicleType());
-    roadMeasure.setSpeedProfile(vehicleMeasure.getRoadSpeedType());
+    roadMeasure.setVehicleType(toVehicleType(vehicleMeasure.getVehicleTypeCode()));
+    roadMeasure.setSpeedProfile(toRoadSpeedType(vehicleMeasure.getRoadTypeCode()));
     roadMeasure.setReductions(toGMLReductions(vehicleMeasure.getEmissionReductions()));
     return roadMeasure;
   }
@@ -93,4 +95,38 @@ final class NSLMeasure2GML {
     return reduction;
   }
 
+
+
+  /**
+   * Method to convert from code to vehicle type. This is temporary while we keep the 4_0 generation available.
+   * For unknown vehicle types it'll use light traffic.
+   * This should work for NL at least.
+   */
+  @Deprecated
+  private static VehicleType toVehicleType(final String vehicleTypeCode) {
+    VehicleType correctType = VehicleType.LIGHT_TRAFFIC;
+    for (final VehicleType vehicleType : VehicleType.values()) {
+      if (vehicleType.getStandardVehicleCode().equals(vehicleTypeCode)) {
+        correctType = vehicleType;
+      }
+    }
+    return correctType;
+  }
+
+  /**
+   *
+   * Method to convert from code to road speed type. This is temporary while we keep the 4_0 generation available.
+   * For unknown vehicle types it'll use an arbitrary value (non_urban_traffic).
+   * This should work for NL at least.
+   */
+  @Deprecated
+  private static RoadSpeedType toRoadSpeedType(final String roadTypeCode) {
+    RoadSpeedType correctType = RoadSpeedType.NON_URBAN_TRAFFIC;
+    for (final RoadSpeedType roadSpeedType : RoadSpeedType.values()) {
+      if (roadSpeedType.getRoadTypeCode().equals(roadTypeCode)) {
+        correctType = roadSpeedType;
+      }
+    }
+    return correctType;
+  }
 }

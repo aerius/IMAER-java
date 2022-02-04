@@ -14,24 +14,17 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.gml.base.measure;
+package nl.overheid.aerius.gml.base.source.road.v40;
 
 import java.util.List;
 
-import nl.overheid.aerius.gml.base.FeatureMember;
 import nl.overheid.aerius.gml.base.IsGmlProperty;
+import nl.overheid.aerius.gml.base.source.IsGmlEmission;
 
-public interface IsGmlSRM1RoadMeasureArea extends FeatureMember {
-
-  @Override
-  String getId();
-
-  String getLabel();
+public interface IsGmlCustomVehicle extends IsGmlVehicle {
 
   String getDescription();
 
-  Integer getJurisdictionId();
-
-  List<? extends IsGmlProperty<IsGmlSRM1RoadMeasure>> getMeasures();
+  List<? extends IsGmlProperty<IsGmlEmission>> getEmissions();
 
 }

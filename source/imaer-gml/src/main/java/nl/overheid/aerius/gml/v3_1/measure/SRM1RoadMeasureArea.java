@@ -22,7 +22,7 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-import nl.overheid.aerius.gml.base.measure.IsGmlSRM1RoadMeasureArea;
+import nl.overheid.aerius.gml.base.measure.v40.IsGmlSRM1RoadMeasureArea;
 import nl.overheid.aerius.gml.v3_1.base.CalculatorSchema;
 import nl.overheid.aerius.gml.v3_1.base.FeatureMemberImpl;
 import nl.overheid.aerius.gml.v3_1.geo.Polygon;

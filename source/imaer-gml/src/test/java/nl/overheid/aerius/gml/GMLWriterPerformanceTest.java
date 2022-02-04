@@ -36,7 +36,6 @@ import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceFeature;
 import nl.overheid.aerius.shared.domain.v2.source.SRM2RoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.road.StandardVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.ValuesPerVehicleType;
-import nl.overheid.aerius.shared.domain.v2.source.road.VehicleType;
 import nl.overheid.aerius.shared.domain.v2.source.road.Vehicles;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.test.GMLTestDomain;
@@ -45,11 +44,11 @@ import nl.overheid.aerius.test.GMLTestDomain;
  * Test class for {@link GMLWriter}. Disabled because these are performance tests.
  */
 @Disabled
-public class GMLWriterPerformanceTest {
+class GMLWriterPerformanceTest {
   private static final Logger LOG = LoggerFactory.getLogger(GMLWriterPerformanceTest.class);
 
   @Test
-  public void testConvertMetaData() throws IOException, AeriusException {
+  void testConvertMetaData() throws IOException, AeriusException {
     final InternalGMLWriter writer =
         new InternalGMLWriter(GMLTestDomain.getExampleGridSettings(), GMLTestDomain.TEST_REFERENCE_GENERATOR, Boolean.TRUE);
 
@@ -63,12 +62,14 @@ public class GMLWriterPerformanceTest {
       sourceFeature.setGeometry(geometry);
       final SRM2RoadEmissionSource es = new SRM2RoadEmissionSource();
       es.setEmissions(Map.of(Substance.NOX, 123.4, Substance.PM10, 4.321));
+      es.setRoadAreaCode("NL");
+      es.setRoadTypeCode("SOME_ROAD_CODE");
       final List<Vehicles> traffic = es.getSubSources();
       final StandardVehicles tr = new StandardVehicles();
       final ValuesPerVehicleType valuePerVehicleType = new ValuesPerVehicleType();
       valuePerVehicleType.setStagnationFraction(1.0);
       valuePerVehicleType.setVehiclesPerTimeUnit(200);
-      tr.getValuesPerVehicleTypes().put(VehicleType.LIGHT_TRAFFIC, valuePerVehicleType);
+      tr.getValuesPerVehicleTypes().put("LIGHT_TRAFFIC", valuePerVehicleType);
       tr.setMaximumSpeed(120);
       tr.setStrictEnforcement(false);
       tr.setTimeUnit(TimeUnit.DAY);
@@ -85,6 +86,6 @@ public class GMLWriterPerformanceTest {
 
     LOG.info("Completed in: {}s", (end - start) / 1000);
 
-    assertEquals(result.size(), result.size(), "Result size should be 101.");
+    assertEquals(numberOfSources, result.size(), "Result size should be 101.");
   }
 }

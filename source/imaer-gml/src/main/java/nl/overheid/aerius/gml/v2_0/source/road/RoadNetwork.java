@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-import nl.overheid.aerius.gml.base.source.road.IsGmlRoadNetwork;
+import nl.overheid.aerius.gml.base.source.road.v40.IsGmlRoadNetwork;
 import nl.overheid.aerius.gml.v2_0.base.CalculatorSchema;
 import nl.overheid.aerius.gml.v2_0.base.FeatureMemberImpl;
 import nl.overheid.aerius.gml.v2_0.base.ReferenceType;

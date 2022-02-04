@@ -23,7 +23,7 @@ import nl.overheid.aerius.gml.base.FeatureMember;
 import nl.overheid.aerius.gml.base.GMLConversionData;
 import nl.overheid.aerius.gml.base.GMLVersionReader;
 import nl.overheid.aerius.gml.base.characteristics.GML2SourceCharacteristicsV31;
-import nl.overheid.aerius.gml.base.measure.GML2NSLMeasure;
+import nl.overheid.aerius.gml.base.measure.v40.GML2NSLMeasure;
 import nl.overheid.aerius.gml.base.result.GML2NSLCorrection;
 import nl.overheid.aerius.gml.base.result.GML2Result;
 import nl.overheid.aerius.gml.base.source.road.GML2NSLDispersionLine;

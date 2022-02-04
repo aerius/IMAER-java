@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-import nl.overheid.aerius.gml.base.source.road.IsGmlSpecificVehicle;
+import nl.overheid.aerius.gml.base.source.road.v40.IsGmlSpecificVehicle;
 import nl.overheid.aerius.gml.v2_2.base.CalculatorSchema;
 
 /**

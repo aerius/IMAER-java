@@ -32,9 +32,6 @@ import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.ops.DiurnalVariation;
 import nl.overheid.aerius.shared.domain.v2.characteristics.OPSSourceCharacteristics;
 import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
-import nl.overheid.aerius.shared.domain.v2.source.road.RoadSpeedType;
-import nl.overheid.aerius.shared.domain.v2.source.road.RoadType;
-import nl.overheid.aerius.shared.domain.v2.source.road.VehicleType;
 import nl.overheid.aerius.shared.domain.v2.source.shipping.inland.InlandWaterway;
 import nl.overheid.aerius.shared.domain.v2.source.shipping.inland.WaterwayDirection;
 import nl.overheid.aerius.shared.domain.v2.source.shipping.maritime.ShippingMovementType;
@@ -164,55 +161,55 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
   private static final List<RoadConstructHelper> ROAD_CATEGORIES = Arrays.asList(
       new RoadConstructHelper("",
           new EmissionHelper(0.1021, 0.0466, 0.0261, 0.017),
-          100, RoadType.FREEWAY, VehicleType.LIGHT_TRAFFIC, false, null,
+          100, "FREEWAY", "LIGHT_TRAFFIC", false,
           new EmissionHelper(0.1453, 0.0502, 0.0376, 0.029)),
       new RoadConstructHelper("",
           new EmissionHelper(0.0971, 0.046, 0.0235, 0.017),
-          100, RoadType.FREEWAY, VehicleType.LIGHT_TRAFFIC, true, null,
+          100, "FREEWAY", "LIGHT_TRAFFIC", true,
           new EmissionHelper(0.1453, 0.0502, 0.0376, 0.029)),
       new RoadConstructHelper("",
           new EmissionHelper(0.124, 0.0476, 0.0315, 0.017),
-          130, RoadType.FREEWAY, VehicleType.LIGHT_TRAFFIC, false, null,
+          130, "FREEWAY", "LIGHT_TRAFFIC", false,
           new EmissionHelper(0.1453, 0.0502, 0.0376, 0.029)),
       new RoadConstructHelper("",
           new EmissionHelper(1.1584, 0.0525, 0.1151, 0.0868),
-          80, RoadType.FREEWAY, VehicleType.NORMAL_FREIGHT, false, null,
+          80, "FREEWAY", "NORMAL_FREIGHT", false,
           new EmissionHelper(4.129, 0.0525, 0.1201, 0.146)),
       new RoadConstructHelper("",
           new EmissionHelper(1.4714, 0.0786, 0.1177, 0.0794),
-          80, RoadType.FREEWAY, VehicleType.HEAVY_FREIGHT, false, null,
+          80, "FREEWAY", "HEAVY_FREIGHT", false,
           new EmissionHelper(6.0702, 0.0786, 0.2166, 0.1566)),
       new RoadConstructHelper("",
           new EmissionHelper(1.4749, 0.0786, 0.1177, 0.0794),
-          80, RoadType.FREEWAY, VehicleType.HEAVY_FREIGHT, true, null,
+          80, "FREEWAY", "HEAVY_FREIGHT", true,
           new EmissionHelper(6.0702, 0.0786, 0.2166, 0.1566)),
       new RoadConstructHelper("",
           new EmissionHelper(1.4749, 0.0786, 0.1177, 0.0794),
-          100, RoadType.FREEWAY, VehicleType.HEAVY_FREIGHT, false, null,
+          100, "FREEWAY", "HEAVY_FREIGHT", false,
           new EmissionHelper(6.0702, 0.0786, 0.2166, 0.1566)),
       new RoadConstructHelper("",
           new EmissionHelper(1.4749, 0.0786, 0.1177, 0.0794),
-          100, RoadType.FREEWAY, VehicleType.HEAVY_FREIGHT, true, null,
+          100, "FREEWAY", "HEAVY_FREIGHT", true,
           new EmissionHelper(6.0702, 0.0786, 0.2166, 0.1566)),
       new RoadConstructHelper("",
           new EmissionHelper(0.1037, 0.0266, 0.0214, 0.0147),
-          80, RoadType.NON_URBAN_ROAD, VehicleType.LIGHT_TRAFFIC, false, RoadSpeedType.NATIONAL_ROAD,
+          80, "NON_URBAN_ROAD_NATIONAL", "LIGHT_TRAFFIC", false,
           new EmissionHelper(0.1037, 0.0266, 0.0214, 0.0147)),
       new RoadConstructHelper("",
           new EmissionHelper(2.9868, 0.0971, 0.1395, 0.0774),
-          80, RoadType.NON_URBAN_ROAD, VehicleType.HEAVY_FREIGHT, false, RoadSpeedType.NATIONAL_ROAD,
+          80, "NON_URBAN_ROAD_NATIONAL", "HEAVY_FREIGHT", false,
           new EmissionHelper(2.9868, 0.0971, 0.1395, 0.0774)),
       new RoadConstructHelper("",
           new EmissionHelper(0.1425, 0.0146, 0.0227, 0.0288),
-          0, RoadType.URBAN_ROAD, VehicleType.LIGHT_TRAFFIC, false, RoadSpeedType.URBAN_TRAFFIC_FREE_FLOW,
+          0, "URBAN_ROAD_FREE_FLOW", "LIGHT_TRAFFIC", false,
           new EmissionHelper(0.1884, 0.018, 0.0369, 0.0289)),
       new RoadConstructHelper("",
           new EmissionHelper(3.5597, 0.0772, 0.1612, 0.1318),
-          0, RoadType.URBAN_ROAD, VehicleType.HEAVY_FREIGHT, false, RoadSpeedType.URBAN_TRAFFIC_FREE_FLOW,
+          0, "URBAN_ROAD_FREE_FLOW", "HEAVY_FREIGHT", false,
           new EmissionHelper(5.5221, 0.0772, 0.351, 0.1639)),
       new RoadConstructHelper("",
           new EmissionHelper(0.1501, 0.016, 0.0276, 0.0287),
-          0, RoadType.URBAN_ROAD, VehicleType.LIGHT_TRAFFIC, false, RoadSpeedType.URBAN_TRAFFIC_NORMAL,
+          0, "URBAN_ROAD_NORMAL", "LIGHT_TRAFFIC", false,
           new EmissionHelper(0.1884, 0.018, 0.0369, 0.0289)));
 
   private static final List<String> ON_ROAD_MOBILE_SOURCE_CATEGORIES = Arrays.asList(
@@ -301,21 +298,18 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
   private static class RoadConstructHelper extends GenericConstructHelper {
 
     final int maximumSpeed;
-    final RoadType roadType;
-    final VehicleType vehicleType;
+    final String roadType;
+    final String vehicleType;
     final boolean strictEnforcement;
-    final RoadSpeedType speedType;
     final EmissionHelper stagnatedEmissions;
 
-    public RoadConstructHelper(final String code, final EmissionHelper emissions, final int maximumSpeed, final RoadType roadType,
-        final VehicleType vehicleType,
-        final boolean strictEnforcement, final RoadSpeedType speedType, final EmissionHelper stagnatedEmissions) {
+    public RoadConstructHelper(final String code, final EmissionHelper emissions, final int maximumSpeed, final String roadType,
+        final String vehicleType, final boolean strictEnforcement, final EmissionHelper stagnatedEmissions) {
       super(code, emissions);
       this.maximumSpeed = maximumSpeed;
       this.roadType = roadType;
       this.vehicleType = vehicleType;
       this.strictEnforcement = strictEnforcement;
-      this.speedType = speedType;
       this.stagnatedEmissions = stagnatedEmissions;
     }
 
@@ -653,30 +647,32 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
   }
 
   @Override
-  public Map<Substance, Double> getRoadSpecificVehicleEmissionFactors(final String specificVehicleCode, final RoadType roadType) {
+  public Map<Substance, Double> getRoadSpecificVehicleEmissionFactors(final String specificVehicleCode, final String roadTypeCode) {
     return roadSpecific(specificVehicleCode)
         .map(c -> Map.of(Substance.NOX, 10.0))
         .orElse(null);
   }
 
   @Override
-  public boolean isValidRoadStandardVehicleCombination(final RoadType roadType, final VehicleType vehicleType, final Integer maximumSpeed,
-      final Boolean strictEnforced, final RoadSpeedType speedType) {
-    return roadStandard(vehicleType, roadType, maximumSpeed, strictEnforced, speedType).isPresent();
+  public boolean isValidRoadStandardVehicleCombination(final String roadAreaCode, final String roadTypeCode, final String vehicleTypeCode,
+      final Integer maximumSpeed,
+      final Boolean strictEnforced) {
+    return roadStandard(vehicleTypeCode, roadTypeCode, maximumSpeed, strictEnforced).isPresent();
   }
 
   @Override
-  public Map<Substance, Double> getRoadStandardVehicleEmissionFactors(final VehicleType vehicleType, final RoadType roadType,
-      final RoadSpeedType roadSpeedType, final Integer maximumSpeed, final Boolean strictEnforcement) {
-    return roadStandard(vehicleType, roadType, maximumSpeed, strictEnforcement, roadSpeedType)
+  public Map<Substance, Double> getRoadStandardVehicleEmissionFactors(final String roadAreaCode, final String standardVehicleCode,
+      final String roadTypeCode,
+      final Integer maximumSpeed, final Boolean strictEnforcement) {
+    return roadStandard(standardVehicleCode, roadTypeCode, maximumSpeed, strictEnforcement)
         .map(c -> c.emissions.toEmissions())
         .orElseThrow();
   }
 
   @Override
-  public Map<Substance, Double> getRoadStandardVehicleStagnatedEmissionFactors(final VehicleType vehicleType, final RoadType roadType,
-      final RoadSpeedType roadSpeedType, final Integer maximumSpeed, final Boolean strictEnforcement) {
-    return roadStandard(vehicleType, roadType, maximumSpeed, strictEnforcement, roadSpeedType)
+  public Map<Substance, Double> getRoadStandardVehicleStagnatedEmissionFactors(final String roadAreaCode, final String standardVehicleCode,
+      final String roadTypeCode, final Integer maximumSpeed, final Boolean strictEnforcement) {
+    return roadStandard(standardVehicleCode, roadTypeCode, maximumSpeed, strictEnforcement)
         .map(c -> c.stagnatedEmissions.toEmissions())
         .orElseThrow();
   }
@@ -799,11 +795,11 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
         .findFirst();
   }
 
-  private Optional<RoadConstructHelper> roadStandard(final VehicleType vehicleType, final RoadType roadType,
-      final Integer maximumSpeed, final Boolean strictEnforcement, final RoadSpeedType roadSpeedType) {
+  private Optional<RoadConstructHelper> roadStandard(final String vehicleType, final String roadType,
+      final Integer maximumSpeed, final Boolean strictEnforcement) {
     final List<RoadConstructHelper> applicable = ROAD_CATEGORIES.stream()
-        .filter(c -> c.vehicleType == vehicleType
-            && c.roadType == roadType
+        .filter(c -> c.vehicleType.equals(vehicleType)
+            && c.roadType.equals(roadType)
             && c.strictEnforcement == (strictEnforcement == null ? false : strictEnforcement))
         .collect(Collectors.toList());
     if (applicable.isEmpty()) {
@@ -812,7 +808,6 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
       return Optional.of(applicable.get(0));
     } else {
       final List<RoadConstructHelper> nextApplicable = applicable.stream()
-          .filter(c -> c.speedType == roadSpeedType)
           .filter(c -> c.maximumSpeed >= (maximumSpeed == null ? 0 : maximumSpeed))
           .sorted((a, b) -> Integer.compare(a.maximumSpeed, b.maximumSpeed))
           .collect(Collectors.toList());

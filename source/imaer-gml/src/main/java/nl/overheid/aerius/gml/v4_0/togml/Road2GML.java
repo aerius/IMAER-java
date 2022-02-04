@@ -38,6 +38,7 @@ import nl.overheid.aerius.shared.domain.v2.source.SRM2RoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.road.CustomVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.RoadElevation;
 import nl.overheid.aerius.shared.domain.v2.source.road.RoadSideBarrier;
+import nl.overheid.aerius.shared.domain.v2.source.road.RoadSpeedType;
 import nl.overheid.aerius.shared.domain.v2.source.road.SRM1LinearReference;
 import nl.overheid.aerius.shared.domain.v2.source.road.SRM2LinearReference;
 import nl.overheid.aerius.shared.domain.v2.source.road.SpecificVehicles;
@@ -171,14 +172,14 @@ class Road2GML extends SpecificSource2GML<nl.overheid.aerius.shared.domain.v2.so
 
   private void handleSpeedProfile(final nl.overheid.aerius.shared.domain.v2.source.SRM1RoadEmissionSource emissionSource,
       final SRM1Road returnSource) {
-    returnSource.setSpeedProfile(emissionSource.getRoadSpeedType());
+    returnSource.setSpeedProfile(toRoadSpeedType(emissionSource.getRoadTypeCode()));
   }
 
   private void addVehicleEmissionSource(final List<VehiclesProperty> vehiclesList, final StandardVehicles vse, final boolean isFreeway) {
     // Loop over possible VehicleType values instead of over EntrySet to get a predictable order
     for (final VehicleType vehicleType : VehicleType.values()) {
-      if (vse.getValuesPerVehicleTypes().containsKey(vehicleType)) {
-        final ValuesPerVehicleType valuesPerVehicleType = vse.getValuesPerVehicleTypes().get(vehicleType);
+      if (vse.getValuesPerVehicleTypes().containsKey(vehicleType.getStandardVehicleCode())) {
+        final ValuesPerVehicleType valuesPerVehicleType = vse.getValuesPerVehicleTypes().get(vehicleType.getStandardVehicleCode());
         final StandardVehicle sv = new StandardVehicle();
         sv.setVehiclesPerTimeUnit(valuesPerVehicleType.getVehiclesPerTimeUnit());
         sv.setStagnationFactor(valuesPerVehicleType.getStagnationFraction());
@@ -264,6 +265,21 @@ class Road2GML extends SpecificSource2GML<nl.overheid.aerius.shared.domain.v2.so
     dynamicSegmentGML.setTunnelFactor(dynamicSegment.getTunnelFactor());
 
     partialChangeProperties.add(new SRM1RoadLinearReferenceProperty(dynamicSegmentGML));
+  }
+
+  /**
+   * Method to convert from code to road speed type. This is temporary while we keep the 4_0 generation available.
+   * For unknown vehicle types it'll use an arbitrary value (non_urban_traffic).
+   * This should work for NL at least.
+   */
+  private static RoadSpeedType toRoadSpeedType(final String roadTypeCode) {
+    RoadSpeedType correctType = RoadSpeedType.NON_URBAN_TRAFFIC;
+    for (final RoadSpeedType roadSpeedType : RoadSpeedType.values()) {
+      if (roadSpeedType.getRoadTypeCode().equals(roadTypeCode)) {
+        correctType = roadSpeedType;
+      }
+    }
+    return correctType;
   }
 
 }

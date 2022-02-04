@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.gml.base.source.road;
+package nl.overheid.aerius.gml.base.source.road.v40;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +46,8 @@ public class GML2SRM1Road<T extends IsGmlSRM1Road> extends GML2SRMRoad<T, SRM1Ro
 
   @Override
   protected void setSpecificVariables(final IsGmlSRM1Road source, final SRM1RoadEmissionSource emissionSource) {
-    emissionSource.setRoadSpeedType(source.getSpeedProfile());
+    // Overwrite the road type based on sector with the one based on speed profile
+    emissionSource.setRoadTypeCode(source.getSpeedProfile().getRoadTypeCode());
   }
 
   @Override

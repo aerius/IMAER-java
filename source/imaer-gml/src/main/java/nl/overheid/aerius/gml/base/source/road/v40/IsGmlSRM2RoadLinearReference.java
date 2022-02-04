@@ -14,21 +14,24 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.gml.base.source.road;
-
-import java.util.List;
+package nl.overheid.aerius.gml.base.source.road.v40;
 
 import nl.overheid.aerius.gml.base.IsGmlProperty;
-import nl.overheid.aerius.gml.base.source.IsGmlEmissionSource;
-import nl.overheid.aerius.shared.domain.v2.source.road.RoadManager;
-import nl.overheid.aerius.shared.domain.v2.source.road.TrafficDirection;
+import nl.overheid.aerius.gml.base.source.road.IsGmlLinearReference;
+import nl.overheid.aerius.shared.domain.v2.source.road.RoadElevation;
 
-public interface IsGmlRoadEmissionSource extends IsGmlEmissionSource {
+public interface IsGmlSRM2RoadLinearReference extends IsGmlLinearReference {
 
-  List<? extends IsGmlProperty<IsGmlVehicle>> getVehicles();
+  Boolean isFreeway();
 
-  RoadManager getRoadManager();
+  Double getTunnelFactor();
 
-  TrafficDirection getTrafficDirection();
+  RoadElevation getElevation();
+
+  Integer getElevationHeight();
+
+  IsGmlProperty<IsGmlRoadSideBarrier> getBarrierLeft();
+
+  IsGmlProperty<IsGmlRoadSideBarrier> getBarrierRight();
 
 }

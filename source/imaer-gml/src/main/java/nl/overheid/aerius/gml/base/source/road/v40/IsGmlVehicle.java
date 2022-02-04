@@ -14,14 +14,14 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.gml.base.source.road;
+package nl.overheid.aerius.gml.base.source.road.v40;
 
-import nl.overheid.aerius.shared.domain.v2.source.road.RoadSpeedType;
+import nl.overheid.aerius.gml.base.source.IsGmlTimeUnit;
 
-public interface IsGmlSRM1RoadLinearReference extends IsGmlLinearReference {
+public interface IsGmlVehicle {
 
-  RoadSpeedType getSpeedProfile();
+  double getVehiclesPerTimeUnit();
 
-  Double getTunnelFactor();
+  IsGmlTimeUnit getTimeUnit();
 
 }
