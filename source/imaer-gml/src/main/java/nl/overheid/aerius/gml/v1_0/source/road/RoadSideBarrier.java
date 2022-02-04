@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-import nl.overheid.aerius.gml.base.source.road.v40.IsGmlRoadSideBarrier;
+import nl.overheid.aerius.gml.base.source.road.IsGmlRoadSideBarrier;
 import nl.overheid.aerius.gml.v1_0.base.CalculatorSchema;
 import nl.overheid.aerius.shared.domain.v2.source.road.RoadSideBarrierType;
 

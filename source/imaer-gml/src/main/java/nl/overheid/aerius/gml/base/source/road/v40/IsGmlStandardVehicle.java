@@ -16,6 +16,7 @@
  */
 package nl.overheid.aerius.gml.base.source.road.v40;
 
+import nl.overheid.aerius.gml.base.source.road.IsGmlVehicle;
 import nl.overheid.aerius.shared.domain.v2.source.road.VehicleType;
 
 public interface IsGmlStandardVehicle extends IsGmlVehicle {

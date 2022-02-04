@@ -20,6 +20,7 @@ import java.util.List;
 
 import nl.overheid.aerius.gml.base.IsGmlProperty;
 import nl.overheid.aerius.gml.base.source.IsGmlEmissionSource;
+import nl.overheid.aerius.gml.base.source.road.IsGmlVehicle;
 import nl.overheid.aerius.shared.domain.v2.source.road.RoadManager;
 import nl.overheid.aerius.shared.domain.v2.source.road.TrafficDirection;
 

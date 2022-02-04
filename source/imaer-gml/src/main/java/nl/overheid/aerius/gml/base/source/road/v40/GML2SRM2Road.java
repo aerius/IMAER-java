@@ -21,6 +21,8 @@ import java.util.List;
 
 import nl.overheid.aerius.gml.base.GMLConversionData;
 import nl.overheid.aerius.gml.base.IsGmlProperty;
+import nl.overheid.aerius.gml.base.source.road.IsGmlRoadSideBarrier;
+import nl.overheid.aerius.gml.base.source.road.IsGmlSRM2RoadLinearReference;
 import nl.overheid.aerius.shared.domain.v2.source.SRM2RoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.road.RoadSideBarrier;
 import nl.overheid.aerius.shared.domain.v2.source.road.SRM2LinearReference;

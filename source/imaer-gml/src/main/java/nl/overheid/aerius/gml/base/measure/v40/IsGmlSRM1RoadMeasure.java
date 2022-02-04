@@ -19,6 +19,7 @@ package nl.overheid.aerius.gml.base.measure.v40;
 import java.util.List;
 
 import nl.overheid.aerius.gml.base.IsGmlProperty;
+import nl.overheid.aerius.gml.base.measure.IsGMLEmissionReduction;
 import nl.overheid.aerius.shared.domain.v2.source.road.RoadSpeedType;
 import nl.overheid.aerius.shared.domain.v2.source.road.VehicleType;
 

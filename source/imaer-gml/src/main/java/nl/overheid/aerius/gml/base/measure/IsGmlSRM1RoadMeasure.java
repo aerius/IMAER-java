@@ -14,14 +14,18 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.gml.base.source.road.v40;
+package nl.overheid.aerius.gml.base.measure;
 
-import nl.overheid.aerius.gml.base.source.IsGmlTimeUnit;
+import java.util.List;
 
-public interface IsGmlVehicle {
+import nl.overheid.aerius.gml.base.IsGmlProperty;
 
-  double getVehiclesPerTimeUnit();
+public interface IsGmlSRM1RoadMeasure {
 
-  IsGmlTimeUnit getTimeUnit();
+  String getVehicleType();
+
+  String getRoadType();
+
+  List<? extends IsGmlProperty<IsGMLEmissionReduction>> getReductions();
 
 }

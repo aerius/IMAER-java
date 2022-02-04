@@ -22,39 +22,37 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-import nl.overheid.aerius.gml.base.measure.v40.IsGmlSRM1RoadMeasure;
+import nl.overheid.aerius.gml.base.measure.IsGmlSRM1RoadMeasure;
 import nl.overheid.aerius.gml.v5_0.base.CalculatorSchema;
-import nl.overheid.aerius.shared.domain.v2.source.road.RoadSpeedType;
-import nl.overheid.aerius.shared.domain.v2.source.road.VehicleType;
 
 /**
  *
  */
-@XmlType(name = "SRM1RoadMeasureType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"vehicleType", "speedProfile", "reductions"})
+@XmlType(name = "SRM1RoadMeasureType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"vehicleType", "roadType", "reductions"})
 public class SRM1RoadMeasure implements IsGmlSRM1RoadMeasure {
 
-  private VehicleType vehicleType;
-  private RoadSpeedType speedProfile;
+  private String vehicleType;
+  private String roadType;
   private List<EmissionReductionProperty> reductions = new ArrayList<>();
 
   @Override
   @XmlElement(namespace = CalculatorSchema.NAMESPACE)
-  public VehicleType getVehicleType() {
+  public String getVehicleType() {
     return vehicleType;
   }
 
-  public void setVehicleType(final VehicleType vehicleType) {
+  public void setVehicleType(final String vehicleType) {
     this.vehicleType = vehicleType;
   }
 
   @Override
   @XmlElement(namespace = CalculatorSchema.NAMESPACE)
-  public RoadSpeedType getSpeedProfile() {
-    return speedProfile;
+  public String getRoadType() {
+    return roadType;
   }
 
-  public void setSpeedProfile(final RoadSpeedType speedProfile) {
-    this.speedProfile = speedProfile;
+  public void setRoadType(final String roadType) {
+    this.roadType = roadType;
   }
 
   @Override

@@ -19,10 +19,11 @@ package nl.overheid.aerius.gml.v5_0.source.road;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-import nl.overheid.aerius.gml.base.source.road.v40.IsGmlRoadEmissionSource;
+import nl.overheid.aerius.gml.base.source.road.IsGmlRoadEmissionSource;
 import nl.overheid.aerius.gml.v5_0.base.CalculatorSchema;
 import nl.overheid.aerius.gml.v5_0.base.ReferenceType;
 import nl.overheid.aerius.gml.v5_0.source.EmissionSource;
@@ -36,10 +37,32 @@ import nl.overheid.aerius.shared.domain.v2.source.road.TrafficDirection;
     "network"})
 public abstract class RoadEmissionSource extends EmissionSource implements IsGmlRoadEmissionSource {
 
+  private String roadAreaCode;
+  private String roadTypeCode;
   private List<VehiclesProperty> vehicles = new ArrayList<>();
   private ReferenceType network;
   private RoadManager roadManager;
   private TrafficDirection trafficDirection;
+
+  @Override
+  @XmlAttribute(name = "roadAreaType")
+  public String getRoadAreaCode() {
+    return roadAreaCode;
+  }
+
+  public void setRoadAreaCode(final String roadAreaCode) {
+    this.roadAreaCode = roadAreaCode;
+  }
+
+  @Override
+  @XmlAttribute(name = "roadType")
+  public String getRoadTypeCode() {
+    return roadTypeCode;
+  }
+
+  public void setRoadTypeCode(final String roadTypeCode) {
+    this.roadTypeCode = roadTypeCode;
+  }
 
   @Override
   @XmlElement(namespace = CalculatorSchema.NAMESPACE)

@@ -17,6 +17,7 @@
 package nl.overheid.aerius.gml.base.source.road.v10;
 
 import java.util.List;
+import java.util.Optional;
 
 import nl.overheid.aerius.gml.base.GMLConversionData;
 import nl.overheid.aerius.gml.base.source.road.v11.GML2SRM2RoadV11;
@@ -56,6 +57,14 @@ public class GML2SRM2RoadV10<T extends IsGmlSRM2RoadOld> extends GML2SRM2RoadV11
     valuesPerVehicleType.setStagnationFraction(sv.getStagnationFactor());
     valuesPerVehicleType.setVehiclesPerTimeUnit(sv.getVehiclesPerTimeUnit());
     standardVehicle.getValuesPerVehicleTypes().put(sv.getVehicleType().getStandardVehicleCode(), valuesPerVehicleType);
+  }
+
+  @Override
+  protected Optional<StandardVehicles> findExistingMatch(final IsGmlStandardVehicle sv, final List<StandardVehicles> mergingStandardVehicles) {
+    return mergingStandardVehicles.stream()
+        .filter(x -> x.getTimeUnit() == TimeUnit.valueOf(sv.getTimeUnit().name()))
+        .filter(x -> !x.getValuesPerVehicleTypes().containsKey(sv.getVehicleType().getStandardVehicleCode()))
+        .findFirst();
   }
 
 }

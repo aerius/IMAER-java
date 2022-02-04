@@ -19,6 +19,8 @@ package nl.overheid.aerius.gml.base.source.road.v40;
 import java.util.List;
 
 import nl.overheid.aerius.gml.base.IsGmlProperty;
+import nl.overheid.aerius.gml.base.source.road.IsGmlRoadSideBarrier;
+import nl.overheid.aerius.gml.base.source.road.IsGmlSRM2RoadLinearReference;
 import nl.overheid.aerius.shared.domain.v2.source.road.RoadElevation;
 
 public interface IsGmlSRM2Road extends IsGmlRoadEmissionSource {

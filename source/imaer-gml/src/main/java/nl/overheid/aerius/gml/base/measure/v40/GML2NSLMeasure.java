@@ -27,6 +27,7 @@ import nl.overheid.aerius.gml.base.FeatureMember;
 import nl.overheid.aerius.gml.base.GMLConversionData;
 import nl.overheid.aerius.gml.base.IsGmlProperty;
 import nl.overheid.aerius.gml.base.geo.GML2Geometry;
+import nl.overheid.aerius.gml.base.measure.IsGMLEmissionReduction;
 import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
 import nl.overheid.aerius.shared.domain.v2.geojson.Polygon;
 import nl.overheid.aerius.shared.domain.v2.nsl.NSLMeasure;

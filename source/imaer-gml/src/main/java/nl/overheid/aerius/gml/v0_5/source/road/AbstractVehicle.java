@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 import nl.overheid.aerius.gml.base.source.IsGmlTimeUnit;
-import nl.overheid.aerius.gml.base.source.road.v40.IsGmlVehicle;
+import nl.overheid.aerius.gml.base.source.road.IsGmlVehicle;
 import nl.overheid.aerius.gml.v0_5.base.CalculatorSchema;
 import nl.overheid.aerius.shared.domain.v2.base.TimeUnit;
 

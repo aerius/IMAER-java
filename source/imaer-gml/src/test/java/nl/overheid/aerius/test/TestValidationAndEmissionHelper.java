@@ -64,26 +64,6 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
     FarmLodgingValidationHelper, FarmlandValidationHelper, OffRoadValidationHelper, PlanValidationHelper, RoadValidationHelper,
     InlandShippingValidationHelper, MaritimeShippingValidationHelper {
 
-  private static final List<Integer> SECTORS = Arrays.asList(
-      1400,
-      2100,
-      3111,
-      3112,
-      3113,
-      3210,
-      3220,
-      3230,
-      4110,
-      4140,
-      4150,
-      7510,
-      7530,
-      7610,
-      7620,
-      9000);
-
-  private static final String FARM_ANIMAL_CODE = "D3";
-
   private static final List<FarmConstructHelper> FARM_LODGING_CATEGORIES = Arrays.asList(
       new FarmConstructHelper("A1.4", 9.2, false),
       new FarmConstructHelper("B1.100", 0.7, false),
@@ -365,6 +345,9 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
     legacyCodes.put(GMLLegacyCodeType.OFF_ROAD_MOBILE_SOURCE, offroadConversions);
     final Map<String, Conversion> sectorConversions = new HashMap<>();
     sectorConversions.put("3230", new Conversion("3220", false));
+    sectorConversions.put("3111", new Conversion("3100", false));
+    sectorConversions.put("3112", new Conversion("3100", false));
+    sectorConversions.put("3113", new Conversion("3100", false));
     legacyCodes.put(GMLLegacyCodeType.SECTOR, sectorConversions);
     return legacyCodes;
   }
