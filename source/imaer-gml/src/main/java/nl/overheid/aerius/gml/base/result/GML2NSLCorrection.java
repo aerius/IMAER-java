@@ -14,13 +14,12 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.gml.base;
+package nl.overheid.aerius.gml.base.result;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import nl.overheid.aerius.gml.base.result.IsGmlCalculationPoint;
-import nl.overheid.aerius.gml.base.result.IsGmlCalculationPointCorrection;
+import nl.overheid.aerius.gml.base.IsGmlProperty;
 import nl.overheid.aerius.shared.domain.v2.nsl.NSLCorrection;
 
 /**

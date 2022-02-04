@@ -19,10 +19,10 @@ package nl.overheid.aerius.gml.v2_2;
 import java.util.List;
 
 import nl.overheid.aerius.gml.base.FeatureMember;
-import nl.overheid.aerius.gml.base.GML2Result;
 import nl.overheid.aerius.gml.base.GMLConversionData;
 import nl.overheid.aerius.gml.base.GMLVersionReader;
 import nl.overheid.aerius.gml.base.characteristics.GML2SourceCharacteristicsV31;
+import nl.overheid.aerius.gml.base.result.GML2Result;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPointFeature;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceFeature;
 

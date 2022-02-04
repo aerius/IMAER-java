@@ -20,13 +20,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import nl.overheid.aerius.gml.base.FeatureMember;
-import nl.overheid.aerius.gml.base.GML2NSLCorrection;
-import nl.overheid.aerius.gml.base.GML2NSLDispersionLine;
-import nl.overheid.aerius.gml.base.GML2NSLMeasure;
-import nl.overheid.aerius.gml.base.GML2Result;
 import nl.overheid.aerius.gml.base.GMLConversionData;
 import nl.overheid.aerius.gml.base.GMLVersionReader;
 import nl.overheid.aerius.gml.base.characteristics.GML2OPSSourceCharacteristics;
+import nl.overheid.aerius.gml.base.measure.GML2NSLMeasure;
+import nl.overheid.aerius.gml.base.result.GML2NSLCorrection;
+import nl.overheid.aerius.gml.base.result.GML2Result;
+import nl.overheid.aerius.gml.base.source.road.GML2NSLDispersionLine;
 import nl.overheid.aerius.gml.v3_0.result.AbstractCalculationPoint;
 import nl.overheid.aerius.shared.domain.v2.nsl.NSLCorrection;
 import nl.overheid.aerius.shared.domain.v2.nsl.NSLDispersionLineFeature;

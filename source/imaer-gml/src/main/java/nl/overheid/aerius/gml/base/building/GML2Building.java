@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.gml.base;
+package nl.overheid.aerius.gml.base.building;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,8 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import nl.overheid.aerius.gml.base.building.IsGmlBuilding;
+import nl.overheid.aerius.gml.base.FeatureMember;
+import nl.overheid.aerius.gml.base.GMLConversionData;
 import nl.overheid.aerius.gml.base.geo.GML2Geometry;
 import nl.overheid.aerius.shared.domain.v2.building.Building;
 import nl.overheid.aerius.shared.domain.v2.building.BuildingFeature;

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.gml.base;
+package nl.overheid.aerius.gml.base.measure;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,10 +23,10 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import nl.overheid.aerius.gml.base.FeatureMember;
+import nl.overheid.aerius.gml.base.GMLConversionData;
+import nl.overheid.aerius.gml.base.IsGmlProperty;
 import nl.overheid.aerius.gml.base.geo.GML2Geometry;
-import nl.overheid.aerius.gml.base.measure.IsGMLEmissionReduction;
-import nl.overheid.aerius.gml.base.measure.IsGmlSRM1RoadMeasure;
-import nl.overheid.aerius.gml.base.measure.IsGmlSRM1RoadMeasureArea;
 import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
 import nl.overheid.aerius.shared.domain.v2.geojson.Polygon;
 import nl.overheid.aerius.shared.domain.v2.nsl.NSLMeasure;
