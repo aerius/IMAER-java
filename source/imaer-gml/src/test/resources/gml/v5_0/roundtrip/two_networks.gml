@@ -23,7 +23,7 @@
         </imaer:AeriusCalculatorMetadata>
     </imaer:metadata>
     <imaer:featureMember>
-        <imaer:SRM2Road sectorId="3111" gml:id="NWR.1_1">
+        <imaer:SRM2Road sectorId="3100" gml:id="NWR.1_1" roadAreaType="NL" roadType="FREEWAY">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -104,7 +104,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road sectorId="3111" gml:id="NWR.1_2">
+        <imaer:SRM2Road sectorId="3100" gml:id="NWR.1_2" roadAreaType="NL" roadType="FREEWAY">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -185,7 +185,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road sectorId="3111" gml:id="NWR.2_1">
+        <imaer:SRM2Road sectorId="3100" gml:id="NWR.2_1" roadAreaType="NL" roadType="FREEWAY">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -266,7 +266,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road sectorId="3111" gml:id="NWR.2_2">
+        <imaer:SRM2Road sectorId="3100" gml:id="NWR.2_2" roadAreaType="NL" roadType="FREEWAY">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>

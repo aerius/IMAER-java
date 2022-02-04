@@ -60,7 +60,8 @@ abstract class GML2SRMRoad<T extends IsGmlRoadEmissionSource, S extends RoadEmis
     emissionSource.setRoadManager(source.getRoadManager());
     emissionSource.setRoadAreaCode("NL");
     // Ensure road type get set before specific, as it's overwritten by SRM1
-    emissionSource.setRoadTypeCode(RoadType.valueFromSectorId(source.getSectorId()).getRoadTypeCode());
+    final RoadType roadType = RoadType.valueFromSectorId(source.getSectorId());
+    emissionSource.setRoadTypeCode(roadType == null ? null : roadType.getRoadTypeCode());
 
     setSpecificVariables(source, emissionSource);
 

@@ -25,7 +25,7 @@
         </imaer:AeriusCalculatorMetadata>
     </imaer:metadata>
     <imaer:featureMember>
-        <imaer:SRM2Road sectorId="3111" gml:id="ES.2">
+        <imaer:SRM2Road sectorId="3100" gml:id="ES.2" roadAreaType="NL" roadType="FREEWAY">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
