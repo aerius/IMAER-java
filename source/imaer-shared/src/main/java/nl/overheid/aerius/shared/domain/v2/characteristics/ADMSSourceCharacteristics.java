@@ -54,6 +54,10 @@ public class ADMSSourceCharacteristics extends SourceCharacteristics {
 
   private double verticalDimension;
 
+  private double elevationAngle; // Angle 1
+
+  private double horizontalAngle; // Angle 2
+
   /**
    * Momentum flux (Fm) of emission (m4/s2).
    */
@@ -192,27 +196,24 @@ public class ADMSSourceCharacteristics extends SourceCharacteristics {
   public double getVerticalDimension() {
     return verticalDimension;
   }
+
   public void setVerticalDimension(final double verticalDimension) {
     this.verticalDimension = verticalDimension;
   }
 
-  public <E extends ADMSSourceCharacteristics> E copyTo(final E copy) {
-    super.copyTo(copy);
-    copy.setBuoyancyType(buoyancyType);
-    copy.setEffluxType(effluxType);
-    copy.setReleaseTemperatureAndPressure(releaseTemperatureAndPressure);
-    copy.setHeight(height);
-    copy.setDiameter(diameter);
-    copy.setTemperature(temperature);
-    copy.setDensity(density);
-    copy.setVerticalVelocity(verticalVelocity);
-    copy.setVolumetricFlowRate(volumetricFlowRate);
-    copy.setSpecificHeatCapacity(specificHeatCapacity);
-    copy.setPercentNOxAsNO2(percentNOxAsNO2);
-    copy.setMomentumFlux(momentumFlux);
-    copy.setBuoyancyFlux(buoyancyFlux);
-    copy.setMassFlux(massFlux);
-    copy.setVerticalDimension(verticalDimension);
-    return copy;
+  public double getElevationAngle() {
+    return elevationAngle;
+  }
+
+  public void setElevationAngle(final double elevationAngle) {
+    this.elevationAngle = elevationAngle;
+  }
+
+  public double getHorizontalAngle() {
+    return horizontalAngle;
+  }
+
+  public void setHorizontalAngle(final double horizontalAngle) {
+    this.horizontalAngle = horizontalAngle;
   }
 }
