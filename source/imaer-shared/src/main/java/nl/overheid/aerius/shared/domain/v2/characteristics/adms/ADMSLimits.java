@@ -72,7 +72,6 @@ public final class ADMSLimits implements BuildingLimits {
   public static final long SOURCE_L1_MAXIMUM = 1_000;
   public static final long SOURCE_L1_DEFAULT = 1;
 
-
   private static final int BUILDING_DIGITS_PRECISION = 3;
 
   public static final double BUILDING_HEIGHT_MINIMUM = 0.001;
@@ -84,6 +83,13 @@ public final class ADMSLimits implements BuildingLimits {
 
   public static final double BUILDING_LENGTH_MINIMUM = 0.001;
   public static final double BUILDING_LENGTH_MAXIMUM = 1_000;
+
+  public static final double ELEVATION_ANGLE_DEFAULT = 0.0;
+  public static final double ELEVATION_ANGLE_MIN = 0.0;
+  public static final double ELEVATION_ANGLE_MAX = 90.0;
+  public static final double HORIZONTAL_ANGLE_DEFAULT = 0.0;
+  public static final double HORIZONTAL_ANGLE_MIN = 0.0;
+  public static final double HORIZONTAL_ANGLE_MAX = 360.0;
 
   public static final ADMSLimits INSTANCE = new ADMSLimits();
 
