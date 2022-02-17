@@ -24,8 +24,16 @@ public abstract class RoadEmissionSource extends EmissionSourceWithSubSources<Ve
 
   private static final long serialVersionUID = 2L;
 
+  /**
+   * The code of the (road-specific) area that the road belongs to.
+   * Used to determine the correct emissions.
+   */
   private String roadAreaCode;
 
+  /**
+   * The code of the road type for this source.
+   * Used to determine the correct emissions.
+   */
   private String roadTypeCode;
 
   /**
