@@ -167,6 +167,6 @@ class OptionsMetadataUtilTest {
     assertEquals("reject", result.get("ops_washout"));
     assertEquals("8 out of 10", result.get("ops_conv_rate"));
     assertEquals("8.19", result.get("ops_roughness"));
-    assertEquals("prognosis", result.get("ops_chemistry"));
+    assertEquals("PROGNOSIS", result.get("ops_chemistry"));
   }
 }

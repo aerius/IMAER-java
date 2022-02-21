@@ -183,14 +183,14 @@ public class OPSOptions implements Serializable {
      */
     ACTUAL("");
 
-    private final String opsLabel;
+    private final String controlFileLabel;
 
-    Chemistry(final String opsLabel) {
-      this.opsLabel = opsLabel;
+    Chemistry(final String controlFileLabel) {
+      this.controlFileLabel = controlFileLabel;
     }
 
-    public String getOpsLabel() {
-      return opsLabel;
+    public String getControlFileLabel() {
+      return controlFileLabel;
     }
   }
 }
