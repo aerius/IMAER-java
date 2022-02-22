@@ -86,7 +86,6 @@
                 </imaer:SpecificVehicle>
             </imaer:vehicles>
             <imaer:inNetwork xlink:href="#NW.1"/>
-            <imaer:isFreeway>false</imaer:isFreeway>
             <imaer:elevation>NORMAL</imaer:elevation>
         </imaer:SRM2Road>
     </imaer:featureMember>
@@ -152,7 +151,6 @@
                 </imaer:SpecificVehicle>
             </imaer:vehicles>
             <imaer:inNetwork xlink:href="#NW.1"/>
-            <imaer:isFreeway>false</imaer:isFreeway>
             <imaer:elevation>NORMAL</imaer:elevation>
         </imaer:SRM2Road>
     </imaer:featureMember>

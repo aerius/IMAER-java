@@ -29,11 +29,10 @@ import nl.overheid.aerius.shared.domain.v2.source.road.RoadElevation;
 /**
  *
  */
-@XmlType(name = "SRM2Road", namespace = CalculatorSchema.NAMESPACE, propOrder = {"freeway", "tunnelFactor", "elevation", "elevationHeight",
+@XmlType(name = "SRM2Road", namespace = CalculatorSchema.NAMESPACE, propOrder = {"tunnelFactor", "elevation", "elevationHeight",
     "barrierLeft", "barrierRight", "dynamicSegments"})
 public class SRM2Road extends RoadEmissionSource implements IsGmlSRM2Road {
 
-  private boolean freeway;
   private Double tunnelFactor;
   private RoadElevation elevation;
   private Integer elevationHeight;
@@ -41,16 +40,6 @@ public class SRM2Road extends RoadEmissionSource implements IsGmlSRM2Road {
   private RoadSideBarrierProperty barrierRight;
 
   private List<SRM2RoadLinearReferenceProperty> dynamicSegments = new ArrayList<>();
-
-  @Override
-  @XmlElement(namespace = CalculatorSchema.NAMESPACE, name = "isFreeway")
-  public boolean isFreeway() {
-    return freeway;
-  }
-
-  public void setFreeway(final boolean freeway) {
-    this.freeway = freeway;
-  }
 
   @Override
   @XmlElement(namespace = CalculatorSchema.NAMESPACE)

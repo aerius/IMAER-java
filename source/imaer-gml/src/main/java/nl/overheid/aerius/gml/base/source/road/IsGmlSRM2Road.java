@@ -23,8 +23,6 @@ import nl.overheid.aerius.shared.domain.v2.source.road.RoadElevation;
 
 public interface IsGmlSRM2Road extends IsGmlRoadEmissionSource {
 
-  boolean isFreeway();
-
   Double getTunnelFactor();
 
   RoadElevation getElevation();

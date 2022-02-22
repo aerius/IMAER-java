@@ -49,7 +49,7 @@ public class GML2SRM2Road<T extends IsGmlSRM2Road> extends GML2SRMRoad<T, SRM2Ro
 
   @Override
   protected void setSpecificVariables(final T source, final SRM2RoadEmissionSource emissionSource) {
-    emissionSource.setFreeway(source.isFreeway());
+    // NO-OP
   }
 
   @Override
@@ -98,7 +98,6 @@ public class GML2SRM2Road<T extends IsGmlSRM2Road> extends GML2SRMRoad<T, SRM2Ro
     final SRM2LinearReference dynamicSegment = new SRM2LinearReference();
     dynamicSegment.setFromPosition(fromPosition);
     dynamicSegment.setToPosition(toPosition);
-    dynamicSegment.setFreeway(dynamicSegmentGML.isFreeway());
     dynamicSegment.setTunnelFactor(dynamicSegmentGML.getTunnelFactor());
     dynamicSegment.setElevation(dynamicSegmentGML.getElevation());
     dynamicSegment.setElevationHeight(dynamicSegmentGML.getElevationHeight());

@@ -23,7 +23,6 @@ public class SRM2LinearReference extends LinearReference {
   private static final long serialVersionUID = 1L;
 
   private Double tunnelFactor;
-  private Boolean freeway;
   private RoadElevation elevation;
   private Integer elevationHeight;
   private RoadSideBarrier barrierLeft;
@@ -35,14 +34,6 @@ public class SRM2LinearReference extends LinearReference {
 
   public void setTunnelFactor(final Double tunnelFactor) {
     this.tunnelFactor = tunnelFactor;
-  }
-
-  public Boolean getFreeway() {
-    return freeway;
-  }
-
-  public void setFreeway(final Boolean freeway) {
-    this.freeway = freeway;
   }
 
   public RoadElevation getElevation() {

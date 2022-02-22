@@ -30,7 +30,6 @@ public class SRM2RoadEmissionSource extends RoadEmissionSource {
 
   private RoadElevation elevation = RoadElevation.NORMAL;
   private int elevationHeight;
-  private boolean freeway;
 
   private RoadSideBarrier barrierLeft;
   private RoadSideBarrier barrierRight;
@@ -51,14 +50,6 @@ public class SRM2RoadEmissionSource extends RoadEmissionSource {
 
   public void setElevationHeight(final int elevationHeight) {
     this.elevationHeight = elevationHeight;
-  }
-
-  public boolean isFreeway() {
-    return freeway;
-  }
-
-  public void setFreeway(final boolean freeway) {
-    this.freeway = freeway;
   }
 
   public RoadSideBarrier getBarrierLeft() {

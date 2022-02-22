@@ -21,8 +21,6 @@ import java.util.List;
 
 import nl.overheid.aerius.gml.base.GMLConversionData;
 import nl.overheid.aerius.gml.base.IsGmlProperty;
-import nl.overheid.aerius.gml.base.source.road.IsGmlRoadSideBarrier;
-import nl.overheid.aerius.gml.base.source.road.IsGmlSRM2RoadLinearReference;
 import nl.overheid.aerius.shared.domain.v2.source.SRM2RoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.road.RoadSideBarrier;
 import nl.overheid.aerius.shared.domain.v2.source.road.SRM2LinearReference;
@@ -49,7 +47,7 @@ public class GML2SRM2Road<T extends IsGmlSRM2Road> extends GML2SRMRoad<T, SRM2Ro
 
   @Override
   protected void setSpecificVariables(final T source, final SRM2RoadEmissionSource emissionSource) {
-    emissionSource.setFreeway(source.isFreeway());
+    // NO-OP
   }
 
   @Override
@@ -98,7 +96,6 @@ public class GML2SRM2Road<T extends IsGmlSRM2Road> extends GML2SRMRoad<T, SRM2Ro
     final SRM2LinearReference dynamicSegment = new SRM2LinearReference();
     dynamicSegment.setFromPosition(fromPosition);
     dynamicSegment.setToPosition(toPosition);
-    dynamicSegment.setFreeway(dynamicSegmentGML.isFreeway());
     dynamicSegment.setTunnelFactor(dynamicSegmentGML.getTunnelFactor());
     dynamicSegment.setElevation(dynamicSegmentGML.getElevation());
     dynamicSegment.setElevationHeight(dynamicSegmentGML.getElevationHeight());

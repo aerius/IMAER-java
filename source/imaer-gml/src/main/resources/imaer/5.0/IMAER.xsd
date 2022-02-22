@@ -2625,11 +2625,6 @@ NOTE Deze klasse kan gebruikt worden om voor een gedeelte van de weg een of meer
     <complexContent>
       <extension base="IMAER:SimpleLinearReferenceType">
         <sequence>
-          <element minOccurs="0" name="isFreeway" type="boolean">
-            <annotation>
-              <documentation>Zie SRM2Road</documentation>
-            </annotation>
-          </element>
           <element minOccurs="0" name="tunnelFactor" type="double">
             <annotation>
               <documentation>Zie SRM2Road</documentation>
@@ -2674,11 +2669,6 @@ NOTE Deze klasse beschrijft een weg emissiebron inclusief geometrie. Deze weg is
     <complexContent>
       <extension base="IMAER:RoadEmissionSourceType">
         <sequence>
-          <element name="isFreeway" type="boolean">
-            <annotation>
-              <documentation>Wel of geen snelweg.</documentation>
-            </annotation>
-          </element>
           <element minOccurs="0" name="tunnelFactor" type="double">
             <annotation>
               <documentation>Voor een wegdeel dat direct aansluit op de uitrit van een tunnelbuis, die tenminste 100 meter lang is en waarbinnen sprake is van &amp;#233;&amp;#233;n rijrichting, worden de emissies tot op een afstand van 100 meter van de uitrit van een tunnelbuis verrekend met een factor. Dit is die factor. Indien geen sprake is van een tunnel, kan 1.0 gebruikt worden of deze waarde weggelaten worden.</documentation>

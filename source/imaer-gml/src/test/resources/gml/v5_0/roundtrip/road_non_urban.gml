@@ -79,7 +79,6 @@
                     <imaer:stagnationFactor>0.1</imaer:stagnationFactor>
                 </imaer:StandardVehicle>
             </imaer:vehicles>
-            <imaer:isFreeway>false</imaer:isFreeway>
             <imaer:elevation>NORMAL</imaer:elevation>
         </imaer:SRM2Road>
     </imaer:featureMember>

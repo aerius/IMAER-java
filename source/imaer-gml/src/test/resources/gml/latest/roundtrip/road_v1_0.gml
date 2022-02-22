@@ -90,7 +90,6 @@
                     <imaer:strictEnforcement>true</imaer:strictEnforcement>
                 </imaer:StandardVehicle>
             </imaer:vehicles>
-            <imaer:isFreeway>true</imaer:isFreeway>
             <imaer:tunnelFactor>1.1</imaer:tunnelFactor>
             <imaer:elevation>STEEP_DYKE</imaer:elevation>
             <imaer:elevationHeight>2</imaer:elevationHeight>

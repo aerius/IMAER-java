@@ -90,7 +90,6 @@
                     <imaer:strictEnforcement>false</imaer:strictEnforcement>
                 </imaer:StandardVehicle>
             </imaer:vehicles>
-            <imaer:isFreeway>true</imaer:isFreeway>
             <imaer:elevation>NORMAL</imaer:elevation>
         </imaer:SRM2Road>
     </imaer:featureMember>
@@ -157,7 +156,6 @@
                     <imaer:stagnationFactor>0.0</imaer:stagnationFactor>
                 </imaer:StandardVehicle>
             </imaer:vehicles>
-            <imaer:isFreeway>false</imaer:isFreeway>
             <imaer:elevation>NORMAL</imaer:elevation>
         </imaer:SRM2Road>
     </imaer:featureMember>
@@ -224,7 +222,6 @@
                     <imaer:stagnationFactor>0.0</imaer:stagnationFactor>
                 </imaer:StandardVehicle>
             </imaer:vehicles>
-            <imaer:isFreeway>false</imaer:isFreeway>
             <imaer:elevation>NORMAL</imaer:elevation>
         </imaer:SRM2Road>
     </imaer:featureMember>
