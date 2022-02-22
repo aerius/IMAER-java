@@ -26,26 +26,26 @@ import nl.overheid.aerius.shared.domain.v2.base.EmissionReduction;
 
 public class StandardVehicleMeasure implements Serializable {
 
-  private static final long serialVersionUID = 3L;
+  private static final long serialVersionUID = 4L;
 
-  private VehicleType vehicleType;
-  private RoadSpeedType roadSpeedType;
+  private String vehicleTypeCode;
+  private String roadTypeCode;
   private final List<EmissionReduction> emissionReductions = new ArrayList<>();
 
-  public VehicleType getVehicleType() {
-    return vehicleType;
+  public String getVehicleTypeCode() {
+    return vehicleTypeCode;
   }
 
-  public void setVehicleType(final VehicleType vehicleType) {
-    this.vehicleType = vehicleType;
+  public void setVehicleTypeCode(final String vehicleTypeCode) {
+    this.vehicleTypeCode = vehicleTypeCode;
   }
 
-  public RoadSpeedType getRoadSpeedType() {
-    return roadSpeedType;
+  public String getRoadTypeCode() {
+    return roadTypeCode;
   }
 
-  public void setRoadSpeedType(final RoadSpeedType roadSpeedType) {
-    this.roadSpeedType = roadSpeedType;
+  public void setRoadTypeCode(final String roadTypeCode) {
+    this.roadTypeCode = roadTypeCode;
   }
 
   public List<EmissionReduction> getEmissionReductions() {
@@ -56,8 +56,8 @@ public class StandardVehicleMeasure implements Serializable {
     this.emissionReductions.add(emissionReduction);
   }
 
-  public OptionalDouble determineFactor(final VehicleType vehicleType, final RoadSpeedType roadSpeedType, final Substance substance) {
-    return appliesTo(vehicleType, roadSpeedType) && appliesTo(substance) ? determineFactor(substance) : OptionalDouble.empty();
+  public OptionalDouble determineFactor(final String vehicleTypeCode, final String roadTypeCode, final Substance substance) {
+    return appliesTo(vehicleTypeCode, roadTypeCode) && appliesTo(substance) ? determineFactor(substance) : OptionalDouble.empty();
   }
 
   private OptionalDouble determineFactor(final Substance substance) {
@@ -68,8 +68,8 @@ public class StandardVehicleMeasure implements Serializable {
         .max();
   }
 
-  public boolean appliesTo(final VehicleType vehicleType, final RoadSpeedType roadSpeedType) {
-    return vehicleType == this.vehicleType && roadSpeedType == this.roadSpeedType;
+  public boolean appliesTo(final String vehicleTypeCode, final String roadTypeCode) {
+    return vehicleTypeCode.equals(this.vehicleTypeCode) && roadTypeCode.equals(this.roadTypeCode);
   }
 
   public boolean appliesTo(final Substance substance) {

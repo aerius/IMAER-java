@@ -57,6 +57,8 @@ abstract class GML2SRMRoad<T extends IsGmlRoadEmissionSource, S extends RoadEmis
     }
     emissionSource.setTrafficDirection(source.getTrafficDirection());
     emissionSource.setRoadManager(source.getRoadManager());
+    emissionSource.setRoadAreaCode(source.getRoadAreaCode());
+    emissionSource.setRoadTypeCode(source.getRoadTypeCode());
 
     setSpecificVariables(source, emissionSource);
 

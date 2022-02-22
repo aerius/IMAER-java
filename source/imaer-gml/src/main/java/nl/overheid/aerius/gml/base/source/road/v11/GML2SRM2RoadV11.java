@@ -14,9 +14,11 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.gml.base.source.road;
+package nl.overheid.aerius.gml.base.source.road.v11;
 
 import nl.overheid.aerius.gml.base.GMLConversionData;
+import nl.overheid.aerius.gml.base.source.road.v40.GML2SRM2Road;
+import nl.overheid.aerius.gml.base.source.road.v40.IsGmlSRM2Road;
 import nl.overheid.aerius.shared.ImaerConstants;
 
 /**

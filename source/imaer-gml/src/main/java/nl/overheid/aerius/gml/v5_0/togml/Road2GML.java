@@ -18,6 +18,7 @@ package nl.overheid.aerius.gml.v5_0.togml;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import nl.overheid.aerius.gml.v5_0.source.TimeUnit;
 import nl.overheid.aerius.gml.v5_0.source.road.CustomVehicle;
@@ -43,7 +44,6 @@ import nl.overheid.aerius.shared.domain.v2.source.road.SRM2LinearReference;
 import nl.overheid.aerius.shared.domain.v2.source.road.SpecificVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.StandardVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.ValuesPerVehicleType;
-import nl.overheid.aerius.shared.domain.v2.source.road.VehicleType;
 import nl.overheid.aerius.shared.domain.v2.source.road.Vehicles;
 
 /**
@@ -72,12 +72,11 @@ class Road2GML extends SpecificSource2GML<nl.overheid.aerius.shared.domain.v2.so
 
     returnSource.setVehicles(toVehicleProperties(emissionSource.getSubSources(), emissionSource.isFreeway()));
 
+    handleGenericProperties(emissionSource, returnSource);
     handleFreeWay(emissionSource, returnSource);
     handleTunnel(emissionSource, returnSource);
     handleElevation(emissionSource, returnSource);
     handleBarriers(emissionSource, returnSource);
-    handleRoadManager(emissionSource, returnSource);
-    handleTrafficDirection(emissionSource, returnSource);
 
     returnSource.setDynamicSegments(getSrm2DynamicSegments(emissionSource));
 
@@ -89,10 +88,8 @@ class Road2GML extends SpecificSource2GML<nl.overheid.aerius.shared.domain.v2.so
 
     returnSource.setVehicles(toVehicleProperties(emissionSource.getSubSources(), false));
 
+    handleGenericProperties(emissionSource, returnSource);
     handleTunnel(emissionSource, returnSource);
-    handleSpeedProfile(emissionSource, returnSource);
-    handleRoadManager(emissionSource, returnSource);
-    handleTrafficDirection(emissionSource, returnSource);
 
     returnSource.setDynamicSegments(getSrm1DynamicSegments(emissionSource));
 
@@ -116,11 +113,24 @@ class Road2GML extends SpecificSource2GML<nl.overheid.aerius.shared.domain.v2.so
     return vehiclesList;
   }
 
+  private void handleGenericProperties(final nl.overheid.aerius.shared.domain.v2.source.RoadEmissionSource emissionSource,
+      final RoadEmissionSource returnSource) {
+    handleRoadCodes(emissionSource, returnSource);
+    handleRoadManager(emissionSource, returnSource);
+    handleTrafficDirection(emissionSource, returnSource);
+  }
+
+  private void handleRoadCodes(final nl.overheid.aerius.shared.domain.v2.source.RoadEmissionSource emissionSource,
+      final RoadEmissionSource returnSource) {
+    returnSource.setRoadAreaCode(emissionSource.getRoadAreaCode());
+    returnSource.setRoadTypeCode(emissionSource.getRoadTypeCode());
+  }
+
   private void handleFreeWay(final nl.overheid.aerius.shared.domain.v2.source.SRM2RoadEmissionSource emissionSource, final SRM2Road returnSource) {
     returnSource.setFreeway(emissionSource.isFreeway());
   }
 
-  private void handleTunnel(final nl.overheid.aerius.shared.domain.v2.source.SRM2RoadEmissionSource emissionSource, final SRM2Road returnSource) {
+  private void handleTunnel(final nl.overheid.aerius.shared.domain.v2.source.RoadEmissionSource emissionSource, final SRM2Road returnSource) {
     //don't return tunnel factor if it's the default value.
     if (Double.doubleToLongBits(emissionSource.getTunnelFactor()) != Double.doubleToLongBits(1.0)) {
       returnSource.setTunnelFactor(emissionSource.getTunnelFactor());
@@ -169,14 +179,10 @@ class Road2GML extends SpecificSource2GML<nl.overheid.aerius.shared.domain.v2.so
     returnSource.setTrafficDirection(emissionSource.getTrafficDirection());
   }
 
-  private void handleSpeedProfile(final nl.overheid.aerius.shared.domain.v2.source.SRM1RoadEmissionSource emissionSource,
-      final SRM1Road returnSource) {
-    returnSource.setSpeedProfile(emissionSource.getRoadSpeedType());
-  }
-
   private void addVehicleEmissionSource(final List<VehiclesProperty> vehiclesList, final StandardVehicles vse, final boolean isFreeway) {
-    // Loop over possible VehicleType values instead of over EntrySet to get a predictable order
-    for (final VehicleType vehicleType : VehicleType.values()) {
+    // Loop over all vehicle types in the valuesPerVehicleTypes map, but sort them first to get predictable order.
+    final List<String> vehicleTypes = vse.getValuesPerVehicleTypes().keySet().stream().sorted().collect(Collectors.toList());
+    for (final String vehicleType : vehicleTypes) {
       if (vse.getValuesPerVehicleTypes().containsKey(vehicleType)) {
         final ValuesPerVehicleType valuesPerVehicleType = vse.getValuesPerVehicleTypes().get(vehicleType);
         final StandardVehicle sv = new StandardVehicle();

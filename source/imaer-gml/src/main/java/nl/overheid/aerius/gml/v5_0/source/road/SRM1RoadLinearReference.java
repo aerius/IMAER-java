@@ -22,27 +22,15 @@ import javax.xml.bind.annotation.XmlType;
 
 import nl.overheid.aerius.gml.base.source.road.IsGmlSRM1RoadLinearReference;
 import nl.overheid.aerius.gml.v5_0.base.CalculatorSchema;
-import nl.overheid.aerius.shared.domain.v2.source.road.RoadSpeedType;
 
 /**
  *
  */
 @XmlRootElement(name = "SRM1LinearReference", namespace = CalculatorSchema.NAMESPACE)
-@XmlType(name = "SRM1LinearReferenceType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"speedProfile", "tunnelFactor"})
+@XmlType(name = "SRM1LinearReferenceType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"tunnelFactor"})
 public class SRM1RoadLinearReference extends AbstractLinearReference implements IsGmlSRM1RoadLinearReference {
 
-  private RoadSpeedType speedProfile;
   private Double tunnelFactor;
-
-  @Override
-  @XmlElement(namespace = CalculatorSchema.NAMESPACE)
-  public RoadSpeedType getSpeedProfile() {
-    return speedProfile;
-  }
-
-  public void setSpeedProfile(final RoadSpeedType speedProfile) {
-    this.speedProfile = speedProfile;
-  }
 
   @Override
   @XmlElement(namespace = CalculatorSchema.NAMESPACE)

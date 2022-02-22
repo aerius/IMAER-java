@@ -16,11 +16,9 @@
  */
 package nl.overheid.aerius.gml.base.source.road;
 
-import nl.overheid.aerius.shared.domain.v2.source.road.VehicleType;
-
 public interface IsGmlStandardVehicle extends IsGmlVehicle {
 
-  VehicleType getVehicleType();
+  String getVehicleType();
 
   double getStagnationFactor();
 

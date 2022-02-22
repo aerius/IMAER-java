@@ -2239,6 +2239,16 @@ NOTE Deze klasse beschrijft een weg emissiebron inclusief geometrie.</documentat
             </annotation>
           </element>
         </sequence>
+        <attribute name="roadAreaType" type="string" use="required">
+          <annotation>
+            <documentation>Het emissiegebied waarbij deze weg hoort.</documentation>
+          </annotation>
+        </attribute>
+        <attribute name="roadType" type="string" use="required">
+          <annotation>
+            <documentation>Het type weg.</documentation>
+          </annotation>
+        </attribute>
       </extension>
     </complexContent>
   </complexType>
@@ -2408,11 +2418,6 @@ NOTE Deze klasse kan gebruikt worden om voor een gedeelte van de weg een of meer
     <complexContent>
       <extension base="IMAER:SimpleLinearReferenceType">
         <sequence>
-          <element minOccurs="0" name="speedProfile" type="IMAER:SpeedProfileType">
-            <annotation>
-              <documentation>Zie SRM1Road</documentation>
-            </annotation>
-          </element>
           <element minOccurs="0" name="tunnelFactor" type="double">
             <annotation>
               <documentation>Zie SRM1Road</documentation>
@@ -2437,11 +2442,6 @@ NOTE Deze klasse beschrijft een weg emissiebron inclusief geometrie. Deze weg is
     <complexContent>
       <extension base="IMAER:RoadEmissionSourceType">
         <sequence>
-          <element name="speedProfile" type="IMAER:SpeedProfileType">
-            <annotation>
-              <documentation>Snelheidsprofiel van de weg.</documentation>
-            </annotation>
-          </element>
           <element minOccurs="0" name="tunnelFactor" type="double">
             <annotation>
               <documentation>Voor een wegdeel dat direct aansluit op de uitrit van een tunnelbuis, die tenminste 100 meter lang is en waarbinnen sprake is van twee rijrichtingen, worden de emissies tot op een afstand van 20 meter van de uitrit van een tunnelbuis verrekend met een factor. Voor een wegdeel dat direct aansluit op de uitrit van een tunnelbuis, die tenminste 100 meter lang is en waarbinnen sprake is van &amp;#233;&amp;#233;n rijrichting, worden de emissies tot op een afstand van 50 meter van de uitrit van een tunnelbuis verrekend met een factor. Dit is die factor. Indien geen sprake is van een tunnel, kan 1.0 gebruikt worden of deze waarde weggelaten worden.</documentation>
@@ -2542,14 +2542,14 @@ NOTE Het kan voorkomen dat er een maatregel geldt voor een specifiek voertuigtyp
   </element>
   <complexType name="SRM1RoadMeasureType">
     <sequence>
-      <element name="vehicleType" type="IMAER:StandardVehicleTypeType">
+      <element name="vehicleType" type="string">
         <annotation>
-          <documentation>Type voertuig waarvoor de maatregelen gelden.</documentation>
+          <documentation>Type standaard voertuiggroep waarvoor de maatregelen gelden.</documentation>
         </annotation>
       </element>
-      <element name="speedProfile" type="IMAER:SpeedProfileType">
+      <element name="roadType" type="string">
         <annotation>
-          <documentation>Type snelheidsprofiel waarvoor de maatregelen gelden.</documentation>
+          <documentation>Type weg waarvoor de maatregelen gelden.</documentation>
         </annotation>
       </element>
       <element maxOccurs="unbounded" name="reduction" type="IMAER:EmissionReductionPropertyType">
@@ -2867,34 +2867,6 @@ NOTE Deze klasse kan gebruikt worden als de warmteinhoud van een emissiebron bek
       <element ref="IMAER:SpecifiedHeatContent"/>
     </sequence>
   </complexType>
-  <simpleType name="SpeedProfileType">
-    <annotation>
-      <documentation>Lijst met verschillende types snelheidsprofiel van een weg
-NOTE Bij berekenen van emissies voor wegverkeer in buitenstedelijk gebied kan rekening gehouden worden met het snelheidsprofiel van de weg (SRM1).</documentation>
-    </annotation>
-    <restriction base="string">
-      <enumeration value="URBAN_TRAFFIC_STAGNATING">
-        <annotation>
-          <documentation>Stadsverkeer met een grote mate van congestie, een gemiddelde snelheid kleiner dan 15 km/h, gemiddeld ca. 10 stops per afgelegde km.</documentation>
-        </annotation>
-      </enumeration>
-      <enumeration value="URBAN_TRAFFIC_NORMAL">
-        <annotation>
-          <documentation>Typisch stadsverkeer met een redelijke mate van congestie, een gemiddelde snelheid tussen de 15 en 30 km/h, gemiddeld ca. 2 stops per afgelegde km.</documentation>
-        </annotation>
-      </enumeration>
-      <enumeration value="URBAN_TRAFFIC_FREE_FLOW">
-        <annotation>
-          <documentation>Stadsverkeer met een relatief groter aandeel "free-flow" rijgedrag, een gemiddelde snelheid tussen de 30 en 45 km/h, gemiddeld ca. 1,5 stop per afgelegde km.</documentation>
-        </annotation>
-      </enumeration>
-      <enumeration value="NON_URBAN_TRAFFIC">
-        <annotation>
-          <documentation>Typisch buitenwegverkeer, een gemiddelde snelheid van ongeveer 60 km/h, gemiddeld ca. 0,2 stops per afgelegde km.</documentation>
-        </annotation>
-      </enumeration>
-    </restriction>
-  </simpleType>
   <element name="StandardDiurnalVariation" substitutionGroup="IMAER:DiurnalVariation" type="IMAER:StandardDiurnalVariationType">
     <annotation>
       <documentation>Temporele variatie volgens een van de standaard waarden die binnen AERIUS bekend is (gebaseerd op OPS).</documentation>
@@ -3113,9 +3085,9 @@ NOTE Mobiele werktuig worden beschreven aan de hand van een aantal karakteristie
             </annotation>
           </element>
         </sequence>
-        <attribute name="vehicleType" type="IMAER:StandardVehicleTypeType" use="required">
+        <attribute name="vehicleType" type="string" use="required">
           <annotation>
-            <documentation>Type voertuig.</documentation>
+            <documentation>De klasse van deze standaard voertuigengroep.</documentation>
           </annotation>
         </attribute>
       </extension>
@@ -3126,34 +3098,6 @@ NOTE Mobiele werktuig worden beschreven aan de hand van een aantal karakteristie
       <element ref="IMAER:StandardVehicle"/>
     </sequence>
   </complexType>
-  <simpleType name="StandardVehicleTypeType">
-    <annotation>
-      <documentation>Lijst met verschillende voertuigtypen.
-NOTE de AERIUS rekenkern kan emissies berekenen voor een aantal voertuigtypen, die hier in een lijst zijn vastgelegd.</documentation>
-    </annotation>
-    <restriction base="string">
-      <enumeration value="LIGHT_TRAFFIC">
-        <annotation>
-          <documentation>Licht verkeer.</documentation>
-        </annotation>
-      </enumeration>
-      <enumeration value="NORMAL_FREIGHT">
-        <annotation>
-          <documentation>Middelzwaar vrachtverkeer.</documentation>
-        </annotation>
-      </enumeration>
-      <enumeration value="HEAVY_FREIGHT">
-        <annotation>
-          <documentation>Zwaar vrachtverkeer.</documentation>
-        </annotation>
-      </enumeration>
-      <enumeration value="AUTO_BUS">
-        <annotation>
-          <documentation>Busverkeer.</documentation>
-        </annotation>
-      </enumeration>
-    </restriction>
-  </simpleType>
   <simpleType name="SubstanceType">
     <annotation>
       <documentation>Lijst met verschillende stofnamen.

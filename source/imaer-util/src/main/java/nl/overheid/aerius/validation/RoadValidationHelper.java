@@ -16,15 +16,11 @@
  */
 package nl.overheid.aerius.validation;
 
-import nl.overheid.aerius.shared.domain.v2.source.road.RoadSpeedType;
-import nl.overheid.aerius.shared.domain.v2.source.road.RoadType;
-import nl.overheid.aerius.shared.domain.v2.source.road.VehicleType;
-
 public interface RoadValidationHelper {
 
   boolean isValidRoadSpecificVehicleCode(String onRoadMobileCode);
 
-  boolean isValidRoadStandardVehicleCombination(final RoadType roadType, final VehicleType vehicleType, final Integer maximumSpeed,
-      final Boolean strictEnforced, final RoadSpeedType speedType);
+  boolean isValidRoadStandardVehicleCombination(final String roadAreaCode, final String roadTypeCode, final String vehicleTypeCode,
+      final Integer maximumSpeed, final Boolean strictEnforced);
 
 }

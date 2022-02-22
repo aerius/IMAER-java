@@ -49,4 +49,8 @@ public enum VehicleType implements Serializable {
       return null;
     }
   }
+
+  public String getStandardVehicleCode() {
+    return name();
+  }
 }

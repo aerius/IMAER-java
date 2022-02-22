@@ -14,11 +14,14 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.gml.base.source.road;
+package nl.overheid.aerius.gml.base.source.road.v10;
 
 import java.util.List;
+import java.util.Optional;
 
 import nl.overheid.aerius.gml.base.GMLConversionData;
+import nl.overheid.aerius.gml.base.source.road.v11.GML2SRM2RoadV11;
+import nl.overheid.aerius.gml.base.source.road.v40.IsGmlStandardVehicle;
 import nl.overheid.aerius.shared.domain.v2.base.TimeUnit;
 import nl.overheid.aerius.shared.domain.v2.source.road.StandardVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.ValuesPerVehicleType;
@@ -53,7 +56,15 @@ public class GML2SRM2RoadV10<T extends IsGmlSRM2RoadOld> extends GML2SRM2RoadV11
     final ValuesPerVehicleType valuesPerVehicleType = new ValuesPerVehicleType();
     valuesPerVehicleType.setStagnationFraction(sv.getStagnationFactor());
     valuesPerVehicleType.setVehiclesPerTimeUnit(sv.getVehiclesPerTimeUnit());
-    standardVehicle.getValuesPerVehicleTypes().put(sv.getVehicleType(), valuesPerVehicleType);
+    standardVehicle.getValuesPerVehicleTypes().put(sv.getVehicleType().getStandardVehicleCode(), valuesPerVehicleType);
+  }
+
+  @Override
+  protected Optional<StandardVehicles> findExistingMatch(final IsGmlStandardVehicle sv, final List<StandardVehicles> mergingStandardVehicles) {
+    return mergingStandardVehicles.stream()
+        .filter(x -> x.getTimeUnit() == TimeUnit.valueOf(sv.getTimeUnit().name()))
+        .filter(x -> !x.getValuesPerVehicleTypes().containsKey(sv.getVehicleType().getStandardVehicleCode()))
+        .findFirst();
   }
 
 }

@@ -23,7 +23,6 @@ import javax.xml.bind.annotation.XmlType;
 
 import nl.overheid.aerius.gml.base.source.road.IsGmlStandardVehicle;
 import nl.overheid.aerius.gml.v5_0.base.CalculatorSchema;
-import nl.overheid.aerius.shared.domain.v2.source.road.VehicleType;
 
 /**
  *
@@ -33,18 +32,18 @@ import nl.overheid.aerius.shared.domain.v2.source.road.VehicleType;
     "strictEnforcement"})
 public class StandardVehicle extends AbstractVehicle implements IsGmlStandardVehicle {
 
-  private VehicleType vehicleType;
+  private String vehicleType;
   private double stagnationFactor;
   private Integer maximumSpeed;
   private Boolean strictEnforcement;
 
   @Override
   @XmlAttribute
-  public VehicleType getVehicleType() {
+  public String getVehicleType() {
     return vehicleType;
   }
 
-  public void setVehicleType(final VehicleType vehicleType) {
+  public void setVehicleType(final String vehicleType) {
     this.vehicleType = vehicleType;
   }
 

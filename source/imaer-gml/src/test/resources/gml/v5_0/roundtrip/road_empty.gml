@@ -24,7 +24,7 @@
         </imaer:AeriusCalculatorMetadata>
     </imaer:metadata>
     <imaer:featureMember>
-        <imaer:SRM2Road sectorId="3111" gml:id="ES.1">
+        <imaer:SRM2Road roadAreaType="NL" roadType="FREEWAY" sectorId="3100" gml:id="ES.1">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -73,7 +73,7 @@
                 </imaer:Emission>
             </imaer:emission>
             <imaer:vehicles>
-                <imaer:StandardVehicle vehicleType="LIGHT_TRAFFIC">
+                <imaer:StandardVehicle vehicleType="HEAVY_FREIGHT">
                     <imaer:vehiclesPerTimeUnit>0.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.0</imaer:stagnationFactor>
@@ -82,7 +82,7 @@
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:vehicles>
-                <imaer:StandardVehicle vehicleType="HEAVY_FREIGHT">
+                <imaer:StandardVehicle vehicleType="LIGHT_TRAFFIC">
                     <imaer:vehiclesPerTimeUnit>0.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.0</imaer:stagnationFactor>
@@ -95,7 +95,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road sectorId="3112" gml:id="ES.2">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.2">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -144,14 +144,14 @@
                 </imaer:Emission>
             </imaer:emission>
             <imaer:vehicles>
-                <imaer:StandardVehicle vehicleType="LIGHT_TRAFFIC">
+                <imaer:StandardVehicle vehicleType="HEAVY_FREIGHT">
                     <imaer:vehiclesPerTimeUnit>0.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.0</imaer:stagnationFactor>
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:vehicles>
-                <imaer:StandardVehicle vehicleType="HEAVY_FREIGHT">
+                <imaer:StandardVehicle vehicleType="LIGHT_TRAFFIC">
                     <imaer:vehiclesPerTimeUnit>0.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.0</imaer:stagnationFactor>
@@ -162,7 +162,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road sectorId="3113" gml:id="ES.3">
+        <imaer:SRM2Road roadAreaType="NL" roadType="URBAN_ROAD_FREE_FLOW" sectorId="3100" gml:id="ES.3">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -211,14 +211,14 @@
                 </imaer:Emission>
             </imaer:emission>
             <imaer:vehicles>
-                <imaer:StandardVehicle vehicleType="LIGHT_TRAFFIC">
+                <imaer:StandardVehicle vehicleType="HEAVY_FREIGHT">
                     <imaer:vehiclesPerTimeUnit>0.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.0</imaer:stagnationFactor>
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:vehicles>
-                <imaer:StandardVehicle vehicleType="HEAVY_FREIGHT">
+                <imaer:StandardVehicle vehicleType="LIGHT_TRAFFIC">
                     <imaer:vehiclesPerTimeUnit>0.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.0</imaer:stagnationFactor>

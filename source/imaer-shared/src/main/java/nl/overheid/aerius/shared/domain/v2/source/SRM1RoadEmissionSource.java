@@ -19,25 +19,14 @@ package nl.overheid.aerius.shared.domain.v2.source;
 import java.util.List;
 
 import nl.overheid.aerius.shared.domain.v2.geojson.IsFeature;
-import nl.overheid.aerius.shared.domain.v2.source.road.RoadSpeedType;
 import nl.overheid.aerius.shared.domain.v2.source.road.SRM1LinearReference;
 import nl.overheid.aerius.shared.exception.AeriusException;
 
 public class SRM1RoadEmissionSource extends RoadEmissionSource {
 
-  private static final long serialVersionUID = 1L;
-
-  private RoadSpeedType roadSpeedType;
+  private static final long serialVersionUID = 2L;
 
   private List<SRM1LinearReference> partialChanges;
-
-  public RoadSpeedType getRoadSpeedType() {
-    return roadSpeedType;
-  }
-
-  public void setRoadSpeedType(final RoadSpeedType roadSpeedType) {
-    this.roadSpeedType = roadSpeedType;
-  }
 
   public List<SRM1LinearReference> getPartialChanges() {
     return partialChanges;

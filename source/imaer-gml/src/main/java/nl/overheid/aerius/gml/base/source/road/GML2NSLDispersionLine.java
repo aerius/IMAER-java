@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.gml.base;
+package nl.overheid.aerius.gml.base.source.road;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import nl.overheid.aerius.gml.base.source.road.IsGmlSRM1RoadDispersionLine;
+import nl.overheid.aerius.gml.base.FeatureMember;
 import nl.overheid.aerius.shared.domain.v2.nsl.NSLDispersionLine;
 import nl.overheid.aerius.shared.domain.v2.nsl.NSLDispersionLineFeature;
 

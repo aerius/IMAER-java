@@ -22,7 +22,7 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-import nl.overheid.aerius.gml.base.source.road.IsGmlRoadEmissionSource;
+import nl.overheid.aerius.gml.base.source.road.v40.IsGmlRoadEmissionSource;
 import nl.overheid.aerius.gml.v0_5.base.CalculatorSchema;
 import nl.overheid.aerius.gml.v0_5.base.ReferenceType;
 import nl.overheid.aerius.gml.v0_5.source.EmissionSource;

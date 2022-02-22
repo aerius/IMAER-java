@@ -31,4 +31,8 @@ public interface IsGmlRoadEmissionSource extends IsGmlEmissionSource {
 
   TrafficDirection getTrafficDirection();
 
+  String getRoadAreaCode();
+
+  String getRoadTypeCode();
+
 }

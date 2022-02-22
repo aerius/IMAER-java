@@ -73,8 +73,8 @@ final class NSLMeasure2GML {
 
   private SRM1RoadMeasure toGMLRoadMeasure(final StandardVehicleMeasure vehicleMeasure) {
     final SRM1RoadMeasure roadMeasure = new SRM1RoadMeasure();
-    roadMeasure.setVehicleType(vehicleMeasure.getVehicleType());
-    roadMeasure.setSpeedProfile(vehicleMeasure.getRoadSpeedType());
+    roadMeasure.setVehicleType(vehicleMeasure.getVehicleTypeCode());
+    roadMeasure.setRoadType(vehicleMeasure.getRoadTypeCode());
     roadMeasure.setReductions(toGMLReductions(vehicleMeasure.getEmissionReductions()));
     return roadMeasure;
   }

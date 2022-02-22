@@ -49,12 +49,13 @@
       "vehiclesPerTimeUnit" : 500.0,
       "vehicleCode" : "BA-B-E3"
     } ],
+    "roadAreaCode" : "NL",
+    "roadTypeCode" : "URBAN_ROAD_NORMAL",
     "tunnelFactor" : 1.0,
-    "roadSpeedType" : "URBAN_TRAFFIC_NORMAL",
     "partialChanges" : [ {
       "fromPosition" : 0.4,
       "toPosition" : 0.6,
-      "roadSpeedType" : "URBAN_TRAFFIC_FREE_FLOW"
+      "tunnelFactor" : 0.33
     } ]
   }
 }

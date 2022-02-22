@@ -16,11 +16,7 @@
  */
 package nl.overheid.aerius.gml.base.source.road;
 
-import nl.overheid.aerius.shared.domain.v2.source.road.RoadSpeedType;
-
 public interface IsGmlSRM1RoadLinearReference extends IsGmlLinearReference {
-
-  RoadSpeedType getSpeedProfile();
 
   Double getTunnelFactor();
 

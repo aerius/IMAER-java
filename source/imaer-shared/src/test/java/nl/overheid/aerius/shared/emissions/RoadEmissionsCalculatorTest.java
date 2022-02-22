@@ -40,13 +40,10 @@ import nl.overheid.aerius.shared.domain.v2.source.RoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.SRM1RoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.SRM2RoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.road.CustomVehicles;
-import nl.overheid.aerius.shared.domain.v2.source.road.RoadSpeedType;
-import nl.overheid.aerius.shared.domain.v2.source.road.RoadType;
 import nl.overheid.aerius.shared.domain.v2.source.road.SpecificVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.StandardVehicleMeasure;
 import nl.overheid.aerius.shared.domain.v2.source.road.StandardVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.ValuesPerVehicleType;
-import nl.overheid.aerius.shared.domain.v2.source.road.VehicleType;
 import nl.overheid.aerius.shared.domain.v2.source.road.Vehicles;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.geometry.GeometryCalculator;
@@ -54,8 +51,9 @@ import nl.overheid.aerius.shared.geometry.GeometryCalculator;
 @ExtendWith(MockitoExtension.class)
 class RoadEmissionsCalculatorTest {
 
-  private static final RoadType TEST_ROAD_TYPE = RoadType.URBAN_ROAD;
-  private static final RoadSpeedType TEST_ROAD_SPEED_TYPE = RoadSpeedType.URBAN_TRAFFIC_NORMAL;
+  private static final String TEST_ROAD_AREA = "NL";
+  private static final String TEST_ROAD_TYPE_SRM2 = "URBAN_ROAD";
+  private static final String TEST_ROAD_TYPE_SRM1 = "NON_URBAN_ROAD_STAGNATING";
 
   @Mock RoadEmissionFactorSupplier emissionFactorSupplier;
   @Mock GeometryCalculator geometryCalculator;
@@ -70,8 +68,8 @@ class RoadEmissionsCalculatorTest {
   @Test
   void testCalculateEmissionsSRM1() throws AeriusException {
     final SRM1RoadEmissionSource emissionSource = new SRM1RoadEmissionSource();
-    emissionSource.setSectorId(TEST_ROAD_TYPE.getSectorId());
-    emissionSource.setRoadSpeedType(TEST_ROAD_SPEED_TYPE);
+    emissionSource.setRoadAreaCode(TEST_ROAD_AREA);
+    emissionSource.setRoadTypeCode(TEST_ROAD_TYPE_SRM1);
     final Geometry geometry = mock(Geometry.class);
     when(geometryCalculator.determineMeasure(geometry)).thenReturn(321.5);
 
@@ -101,7 +99,8 @@ class RoadEmissionsCalculatorTest {
   @Test
   void testCalculateEmissionsSRM2() throws AeriusException {
     final SRM2RoadEmissionSource emissionSource = new SRM2RoadEmissionSource();
-    emissionSource.setSectorId(TEST_ROAD_TYPE.getSectorId());
+    emissionSource.setRoadAreaCode(TEST_ROAD_AREA);
+    emissionSource.setRoadTypeCode(TEST_ROAD_TYPE_SRM2);
     final Geometry geometry = mock(Geometry.class);
     when(geometryCalculator.determineMeasure(geometry)).thenReturn(321.5);
 
@@ -142,7 +141,7 @@ class RoadEmissionsCalculatorTest {
   void testCalculateEmissionsSpecificVehicles() {
     final SpecificVehicles vehicles = createSpecific();
 
-    final Map<Substance, BigDecimal> results = emissionsCalculator.calculateEmissions(vehicles, TEST_ROAD_TYPE);
+    final Map<Substance, BigDecimal> results = emissionsCalculator.calculateEmissions(vehicles, TEST_ROAD_TYPE_SRM2);
 
     // 12 * 500 * 7.0
     assertEquals(new BigDecimal("42000.00"), results.get(Substance.NOX));
@@ -154,7 +153,7 @@ class RoadEmissionsCalculatorTest {
   void testCalculateEmissionsStandardVehiclesSrm1() {
     final StandardVehicles vehicles = createStandard();
 
-    final Map<Substance, BigDecimal> results = emissionsCalculator.calculateEmissions(vehicles, TEST_ROAD_TYPE, TEST_ROAD_SPEED_TYPE);
+    final Map<Substance, BigDecimal> results = emissionsCalculator.calculateEmissions(vehicles, TEST_ROAD_AREA, TEST_ROAD_TYPE_SRM1);
 
     // 30000 * 6.0 * 0.8 + 30000 * 8.0 * 0.2
     assertEquals(new BigDecimal("192000.000"), results.get(Substance.NOX));
@@ -167,8 +166,8 @@ class RoadEmissionsCalculatorTest {
     final StandardVehicles vehicles = createStandard();
 
     final StandardVehicleMeasure measure = new StandardVehicleMeasure();
-    measure.setVehicleType(VehicleType.NORMAL_FREIGHT);
-    measure.setRoadSpeedType(TEST_ROAD_SPEED_TYPE);
+    measure.setVehicleTypeCode("NORMAL_FREIGHT");
+    measure.setRoadTypeCode(TEST_ROAD_TYPE_SRM1);
 
     final EmissionReduction emissionReduction = new EmissionReduction();
     emissionReduction.setSubstance(Substance.NOX);
@@ -177,7 +176,7 @@ class RoadEmissionsCalculatorTest {
 
     vehicles.getMeasures().add(measure);
 
-    final Map<Substance, BigDecimal> results = emissionsCalculator.calculateEmissions(vehicles, TEST_ROAD_TYPE, TEST_ROAD_SPEED_TYPE);
+    final Map<Substance, BigDecimal> results = emissionsCalculator.calculateEmissions(vehicles, TEST_ROAD_AREA, TEST_ROAD_TYPE_SRM1);
 
     // (30000 * 6.0 * 0.8 + 30000 * 8.0 * 0.2) * 0.7
     assertEquals(new BigDecimal("134400.0000"), results.get(Substance.NOX));
@@ -189,7 +188,7 @@ class RoadEmissionsCalculatorTest {
   void testCalculateEmissionsStandardVehiclesSrm2() {
     final StandardVehicles vehicles = createStandard();
 
-    final Map<Substance, BigDecimal> results = emissionsCalculator.calculateEmissions(vehicles, TEST_ROAD_TYPE, null);
+    final Map<Substance, BigDecimal> results = emissionsCalculator.calculateEmissions(vehicles, TEST_ROAD_AREA, TEST_ROAD_TYPE_SRM2);
 
     // 30000 * 12.0 * 0.8 + 30000 * 16.0 * 0.2
     assertEquals(new BigDecimal("384000.000"), results.get(Substance.NOX));
@@ -201,7 +200,7 @@ class RoadEmissionsCalculatorTest {
   void testCalculateEmissionsMultipleStandardVehiclesSrm2() {
     final StandardVehicles vehicles = createMultipleStandard();
 
-    final Map<Substance, BigDecimal> results = emissionsCalculator.calculateEmissions(vehicles, TEST_ROAD_TYPE, null);
+    final Map<Substance, BigDecimal> results = emissionsCalculator.calculateEmissions(vehicles, TEST_ROAD_AREA, TEST_ROAD_TYPE_SRM2);
 
     // 30000 * 12.0 * 0.8 + 30000 * 16.0 * 0.2 + 2000 * 10.0 * 0.8 + 2000 * 14.0 * 0.2
     assertEquals(new BigDecimal("405600.000"), results.get(Substance.NOX));
@@ -225,7 +224,8 @@ class RoadEmissionsCalculatorTest {
     vehicles.setVehicleCode(specificCode);
 
     final Map<Substance, Double> emissionFactors = Map.of(Substance.NOX, 7.0, Substance.NH3, 3.4);
-    when(emissionFactorSupplier.getRoadSpecificVehicleEmissionFactors(specificCode, TEST_ROAD_TYPE)).thenReturn(emissionFactors);
+    lenient().when(emissionFactorSupplier.getRoadSpecificVehicleEmissionFactors(specificCode, TEST_ROAD_TYPE_SRM2)).thenReturn(emissionFactors);
+    lenient().when(emissionFactorSupplier.getRoadSpecificVehicleEmissionFactors(specificCode, TEST_ROAD_TYPE_SRM1)).thenReturn(emissionFactors);
 
     return vehicles;
   }
@@ -236,7 +236,7 @@ class RoadEmissionsCalculatorTest {
     final ValuesPerVehicleType valuesPerVehicleType = new ValuesPerVehicleType();
     valuesPerVehicleType.setStagnationFraction(0.2);
     valuesPerVehicleType.setVehiclesPerTimeUnit(30000);
-    final VehicleType vehicleType = VehicleType.NORMAL_FREIGHT;
+    final String vehicleType = "NORMAL_FREIGHT";
     vehicles.getValuesPerVehicleTypes().put(vehicleType, valuesPerVehicleType);
     final boolean strictEnforcement = false;
     vehicles.setStrictEnforcement(strictEnforcement);
@@ -245,20 +245,20 @@ class RoadEmissionsCalculatorTest {
 
     final Map<Substance, Double> emissionFactorsSrm1 = Map.of(Substance.NOX, 6.0, Substance.NH3, 2.1);
     lenient().when(emissionFactorSupplier
-        .getRoadStandardVehicleEmissionFactors(vehicleType, TEST_ROAD_TYPE, TEST_ROAD_SPEED_TYPE, maximumSpeed, strictEnforcement))
+        .getRoadStandardVehicleEmissionFactors(TEST_ROAD_AREA, vehicleType, TEST_ROAD_TYPE_SRM1, maximumSpeed, strictEnforcement))
         .thenReturn(emissionFactorsSrm1);
     final Map<Substance, Double> emissionFactorsSrm2 = Map.of(Substance.NOX, 12.0, Substance.NH3, 4.2);
     lenient().when(emissionFactorSupplier
-        .getRoadStandardVehicleEmissionFactors(vehicleType, TEST_ROAD_TYPE, null, maximumSpeed, strictEnforcement))
+        .getRoadStandardVehicleEmissionFactors(TEST_ROAD_AREA, vehicleType, TEST_ROAD_TYPE_SRM2, maximumSpeed, strictEnforcement))
         .thenReturn(emissionFactorsSrm2);
 
     final Map<Substance, Double> stagnatedEmissionFactorsSrm1 = Map.of(Substance.NOX, 8.0, Substance.NH3, 4.3);
     lenient().when(emissionFactorSupplier
-        .getRoadStandardVehicleStagnatedEmissionFactors(vehicleType, TEST_ROAD_TYPE, TEST_ROAD_SPEED_TYPE, maximumSpeed, strictEnforcement))
+        .getRoadStandardVehicleStagnatedEmissionFactors(TEST_ROAD_AREA, vehicleType, TEST_ROAD_TYPE_SRM1, maximumSpeed, strictEnforcement))
         .thenReturn(stagnatedEmissionFactorsSrm1);
     final Map<Substance, Double> stagnatedEmissionFactorsSrm2 = Map.of(Substance.NOX, 16.0, Substance.NH3, 8.6);
     lenient().when(emissionFactorSupplier
-        .getRoadStandardVehicleStagnatedEmissionFactors(vehicleType, TEST_ROAD_TYPE, null, maximumSpeed, strictEnforcement))
+        .getRoadStandardVehicleStagnatedEmissionFactors(TEST_ROAD_AREA, vehicleType, TEST_ROAD_TYPE_SRM2, maximumSpeed, strictEnforcement))
         .thenReturn(stagnatedEmissionFactorsSrm2);
 
     return vehicles;
@@ -269,19 +269,19 @@ class RoadEmissionsCalculatorTest {
     final ValuesPerVehicleType valuesPerVehicleType = new ValuesPerVehicleType();
     valuesPerVehicleType.setStagnationFraction(0.2);
     valuesPerVehicleType.setVehiclesPerTimeUnit(2000);
-    final VehicleType vehicleType = VehicleType.HEAVY_FREIGHT;
+    final String vehicleType = "HEAVY_FREIGHT";
     vehicles.getValuesPerVehicleTypes().put(vehicleType, valuesPerVehicleType);
     final boolean strictEnforcement = vehicles.getStrictEnforcement();
     final int maximumSpeed = vehicles.getMaximumSpeed();
 
     final Map<Substance, Double> emissionFactorsSrm2 = Map.of(Substance.NOX, 10.0, Substance.NH3, 5.3);
     lenient().when(emissionFactorSupplier
-        .getRoadStandardVehicleEmissionFactors(vehicleType, TEST_ROAD_TYPE, null, maximumSpeed, strictEnforcement))
+        .getRoadStandardVehicleEmissionFactors(TEST_ROAD_AREA, vehicleType, TEST_ROAD_TYPE_SRM2, maximumSpeed, strictEnforcement))
         .thenReturn(emissionFactorsSrm2);
 
     final Map<Substance, Double> stagnatedEmissionFactorsSrm2 = Map.of(Substance.NOX, 14.0, Substance.NH3, 9.4);
     lenient().when(emissionFactorSupplier
-        .getRoadStandardVehicleStagnatedEmissionFactors(vehicleType, TEST_ROAD_TYPE, null, maximumSpeed, strictEnforcement))
+        .getRoadStandardVehicleStagnatedEmissionFactors(TEST_ROAD_AREA, vehicleType, TEST_ROAD_TYPE_SRM2, maximumSpeed, strictEnforcement))
         .thenReturn(stagnatedEmissionFactorsSrm2);
 
     return vehicles;

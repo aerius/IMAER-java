@@ -19,11 +19,8 @@ package nl.overheid.aerius.gml.base.source.road;
 import java.util.List;
 
 import nl.overheid.aerius.gml.base.IsGmlProperty;
-import nl.overheid.aerius.shared.domain.v2.source.road.RoadSpeedType;
 
 public interface IsGmlSRM1Road extends IsGmlRoadEmissionSource {
-
-  RoadSpeedType getSpeedProfile();
 
   Double getTunnelFactor();
 

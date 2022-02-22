@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<imaer:FeatureCollectionCalculator xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:imaer="http://imaer.aerius.nl/4.0" xmlns:gml="http://www.opengis.net/gml/3.2" gml:id="NL.IMAER.Collection" xsi:schemaLocation="http://imaer.aerius.nl/4.0 https://imaer.aerius.nl/4.0/IMAER.xsd">
+<imaer:FeatureCollectionCalculator xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:imaer="http://imaer.aerius.nl/5.0" xmlns:gml="http://www.opengis.net/gml/3.2" gml:id="NL.IMAER.Collection" xsi:schemaLocation="http://imaer.aerius.nl/5.0 https://imaer.aerius.nl/5.0/IMAER.xsd">
     <imaer:metadata>
         <imaer:AeriusCalculatorMetadata>
             <imaer:project>
@@ -24,7 +24,7 @@
         </imaer:AeriusCalculatorMetadata>
     </imaer:metadata>
     <imaer:featureMember>
-        <imaer:SRM2Road sectorId="3111" gml:id="ES.1">
+        <imaer:SRM2Road roadAreaType="NL" roadType="FREEWAY" sectorId="3100" gml:id="ES.1">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -73,8 +73,8 @@
                 </imaer:Emission>
             </imaer:emission>
             <imaer:vehicles>
-                <imaer:StandardVehicle vehicleType="LIGHT_TRAFFIC">
-                    <imaer:vehiclesPerTimeUnit>980.0</imaer:vehiclesPerTimeUnit>
+                <imaer:StandardVehicle vehicleType="HEAVY_FREIGHT">
+                    <imaer:vehiclesPerTimeUnit>200.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.2</imaer:stagnationFactor>
                     <imaer:maximumSpeed>100</imaer:maximumSpeed>
@@ -82,8 +82,8 @@
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:vehicles>
-                <imaer:StandardVehicle vehicleType="HEAVY_FREIGHT">
-                    <imaer:vehiclesPerTimeUnit>200.0</imaer:vehiclesPerTimeUnit>
+                <imaer:StandardVehicle vehicleType="LIGHT_TRAFFIC">
+                    <imaer:vehiclesPerTimeUnit>980.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.2</imaer:stagnationFactor>
                     <imaer:maximumSpeed>100</imaer:maximumSpeed>

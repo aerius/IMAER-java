@@ -161,14 +161,14 @@ public class GMLOldVersionTest {
     final ImportParcel currentResult = getImportResult(CURRENT_VERSION + TEST_FOLDER, testFile);
     //if there is, there should be a current counter part.
     assertNotNull(currentResult, "Expected same file for current result " + testFile);
+    validateExceptions(oldResult, version, testFile);
+    validateWarnings(oldResult, version, testFile);
     final List<EmissionSourceFeature> oldSources = oldResult.getSituation().getEmissionSourcesList();
     final List<EmissionSourceFeature> currentSources = currentResult.getSituation().getEmissionSourcesList();
     if (testFile.shouldCheckNumberOfSources()) {
       assertEquals(currentResult.getSituation().getEmissionSourcesList().size(),
           oldResult.getSituation().getEmissionSourcesList().size(), "Number of sources");
     }
-    validateExceptions(oldResult, version, testFile);
-    validateWarnings(oldResult, version, testFile);
     if (testFile.shouldCheckEmissions(version)) {
       for (final EmissionSourceFeature source : oldSources) {
         testSource(source, currentSources.get(oldSources.indexOf(source)));

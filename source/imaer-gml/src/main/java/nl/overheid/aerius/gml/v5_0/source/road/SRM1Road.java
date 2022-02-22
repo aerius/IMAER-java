@@ -24,27 +24,15 @@ import javax.xml.bind.annotation.XmlType;
 
 import nl.overheid.aerius.gml.base.source.road.IsGmlSRM1Road;
 import nl.overheid.aerius.gml.v5_0.base.CalculatorSchema;
-import nl.overheid.aerius.shared.domain.v2.source.road.RoadSpeedType;
 
 /**
  *
  */
-@XmlType(name = "SRM1Road", namespace = CalculatorSchema.NAMESPACE, propOrder = {"speedProfile", "tunnelFactor", "dynamicSegments"})
+@XmlType(name = "SRM1Road", namespace = CalculatorSchema.NAMESPACE, propOrder = {"tunnelFactor", "dynamicSegments"})
 public class SRM1Road extends RoadEmissionSource implements IsGmlSRM1Road {
 
-  private RoadSpeedType speedProfile;
   private Double tunnelFactor;
   private List<SRM1RoadLinearReferenceProperty> dynamicSegments = new ArrayList<>();
-
-  @Override
-  @XmlElement(namespace = CalculatorSchema.NAMESPACE)
-  public RoadSpeedType getSpeedProfile() {
-    return speedProfile;
-  }
-
-  public void setSpeedProfile(final RoadSpeedType speedProfile) {
-    this.speedProfile = speedProfile;
-  }
 
   @Override
   @XmlElement(namespace = CalculatorSchema.NAMESPACE)

@@ -43,8 +43,8 @@ import nl.overheid.aerius.gml.base.GMLSchema;
 import nl.overheid.aerius.gml.base.GMLVersionWriter;
 import nl.overheid.aerius.gml.base.MetaData;
 import nl.overheid.aerius.gml.base.MetaDataInput;
-import nl.overheid.aerius.gml.v4_0.base.CalculatorSchema;
-import nl.overheid.aerius.gml.v4_0.togml.GMLVersionWriterV40;
+import nl.overheid.aerius.gml.v5_0.base.CalculatorSchema;
+import nl.overheid.aerius.gml.v5_0.togml.GMLVersionWriterV50;
 import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.geo.ReceptorGridSettings;
 import nl.overheid.aerius.shared.domain.scenario.IsScenario;
@@ -65,7 +65,7 @@ final class InternalGMLWriter {
   /**
    * Current GML version data is exported to.
    */
-  static final AeriusGMLVersion LATEST_WRITER_VERSION = AeriusGMLVersion.V4_0;
+  static final AeriusGMLVersion LATEST_WRITER_VERSION = AeriusGMLVersion.V5_0;
 
   static final String LATEST_NAMESPACE = CalculatorSchema.NAMESPACE;
 
@@ -85,7 +85,7 @@ final class InternalGMLWriter {
   private final Boolean formattedOutput;
 
   InternalGMLWriter(final ReceptorGridSettings rgs, final ReferenceGenerator referenceGenerator, final Boolean formattedOutput) {
-    writer = new GMLVersionWriterV40(rgs.getZoomLevel1(), GMLSchema.getSRSName(rgs.getEpsg().getSrid()));
+    writer = new GMLVersionWriterV50(rgs.getZoomLevel1(), GMLSchema.getSRSName(rgs.getEpsg().getSrid()));
     this.referenceGenerator = referenceGenerator;
     this.formattedOutput = formattedOutput;
   }

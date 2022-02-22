@@ -20,15 +20,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import nl.overheid.aerius.gml.base.FeatureMember;
-import nl.overheid.aerius.gml.base.GML2Building;
 import nl.overheid.aerius.gml.base.GML2Definitions;
-import nl.overheid.aerius.gml.base.GML2NSLCorrection;
-import nl.overheid.aerius.gml.base.GML2NSLDispersionLine;
-import nl.overheid.aerius.gml.base.GML2NSLMeasure;
-import nl.overheid.aerius.gml.base.GML2Result;
 import nl.overheid.aerius.gml.base.GMLConversionData;
 import nl.overheid.aerius.gml.base.GMLVersionReader;
+import nl.overheid.aerius.gml.base.building.GML2Building;
 import nl.overheid.aerius.gml.base.characteristics.GML2SourceCharacteristics;
+import nl.overheid.aerius.gml.base.measure.GML2NSLMeasure;
+import nl.overheid.aerius.gml.base.result.GML2NSLCorrection;
+import nl.overheid.aerius.gml.base.result.GML2Result;
+import nl.overheid.aerius.gml.base.source.road.GML2NSLDispersionLine;
 import nl.overheid.aerius.gml.v5_0.result.AbstractCalculationPoint;
 import nl.overheid.aerius.shared.domain.v2.building.BuildingFeature;
 import nl.overheid.aerius.shared.domain.v2.characteristics.SourceCharacteristics;
@@ -40,7 +40,7 @@ import nl.overheid.aerius.shared.domain.v2.scenario.Definitions;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceFeature;
 
 /**
- * {@link GMLVersionReader} for AERIUS GML version 4.0.
+ * {@link GMLVersionReader} for AERIUS GML version 5.0.
  */
 public class GMLReader<S extends SourceCharacteristics> implements GMLVersionReader {
 

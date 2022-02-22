@@ -46,7 +46,7 @@ public class GML2SRM1Road<T extends IsGmlSRM1Road> extends GML2SRMRoad<T, SRM1Ro
 
   @Override
   protected void setSpecificVariables(final IsGmlSRM1Road source, final SRM1RoadEmissionSource emissionSource) {
-    emissionSource.setRoadSpeedType(source.getSpeedProfile());
+    // NO-OP for SRM1
   }
 
   @Override

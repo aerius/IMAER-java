@@ -23,12 +23,9 @@ import nl.overheid.aerius.shared.domain.v2.source.RoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.SRM1RoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.SRM2RoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.road.CustomVehicles;
-import nl.overheid.aerius.shared.domain.v2.source.road.RoadSpeedType;
-import nl.overheid.aerius.shared.domain.v2.source.road.RoadType;
 import nl.overheid.aerius.shared.domain.v2.source.road.SpecificVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.StandardVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.ValuesPerVehicleType;
-import nl.overheid.aerius.shared.domain.v2.source.road.VehicleType;
 import nl.overheid.aerius.shared.domain.v2.source.road.Vehicles;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
@@ -129,20 +126,15 @@ class RoadValidator extends SourceValidator<RoadEmissionSource> {
   }
 
   private boolean validateStandardVehicles(final RoadEmissionSource source, final StandardVehicles vehicles, final String sourceLabel) {
-    final RoadType roadType = RoadType.valueFromSectorId(source.getSectorId());
+    final String roadAreaCode = source.getRoadAreaCode();
+    final String roadTypeCode = source.getRoadTypeCode();
     boolean valid = true;
-    for (final VehicleType vehicleType : vehicles.getValuesPerVehicleTypes().keySet()) {
+    for (final String vehicleType : vehicles.getValuesPerVehicleTypes().keySet()) {
       final Boolean strictEnforcement = vehicles.getStrictEnforcement();
       final Integer maximumSpeed = vehicles.getMaximumSpeed();
-      final RoadSpeedType speedType;
-      if (source instanceof SRM1RoadEmissionSource) {
-        speedType = ((SRM1RoadEmissionSource) source).getRoadSpeedType();
-      } else {
-        speedType = null;
-      }
-      if (!validationHelper.isValidRoadStandardVehicleCombination(roadType, vehicleType, maximumSpeed, strictEnforcement, speedType)) {
-        getErrors().add(new AeriusException(ImaerExceptionReason.GML_UNKNOWN_ROAD_CATEGORY, sourceLabel, String.valueOf(source.getSectorId()),
-            String.valueOf(maximumSpeed), String.valueOf(strictEnforcement), String.valueOf(vehicleType)));
+      if (!validationHelper.isValidRoadStandardVehicleCombination(roadAreaCode, roadTypeCode, vehicleType, maximumSpeed, strictEnforcement)) {
+        getErrors().add(new AeriusException(ImaerExceptionReason.GML_UNKNOWN_ROAD_CATEGORY, sourceLabel, roadAreaCode, roadTypeCode,
+            String.valueOf(maximumSpeed), String.valueOf(strictEnforcement), vehicleType));
         valid = false;
       }
     }

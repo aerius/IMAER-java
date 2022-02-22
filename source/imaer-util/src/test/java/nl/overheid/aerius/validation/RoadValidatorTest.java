@@ -35,14 +35,11 @@ import nl.overheid.aerius.shared.domain.v2.source.RoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.SRM1RoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.SRM2RoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.road.CustomVehicles;
-import nl.overheid.aerius.shared.domain.v2.source.road.RoadSpeedType;
-import nl.overheid.aerius.shared.domain.v2.source.road.RoadType;
 import nl.overheid.aerius.shared.domain.v2.source.road.SRM1LinearReference;
 import nl.overheid.aerius.shared.domain.v2.source.road.SRM2LinearReference;
 import nl.overheid.aerius.shared.domain.v2.source.road.SpecificVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.StandardVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.ValuesPerVehicleType;
-import nl.overheid.aerius.shared.domain.v2.source.road.VehicleType;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 
@@ -51,6 +48,10 @@ class RoadValidatorTest {
 
   private static final String SOURCE_ID = "OurSourceId";
   private static final String SOURCE_LABEL = "Source label";
+
+  private static final String ROAD_AREA_CODE = "NL";
+  private static final String ROAD_TYPE_CODE_SRM1 = "NON_URBAN_ROAD";
+  private static final String ROAD_TYPE_CODE_SRM2 = "FREEWAY";
 
   @Mock RoadValidationHelper validationHelper;
 
@@ -105,7 +106,7 @@ class RoadValidatorTest {
   void testValidStandardCombination() {
     final RoadEmissionSource source = constructSrm1Source();
     final StandardVehicles subSource = new StandardVehicles();
-    final VehicleType vehicleType = VehicleType.LIGHT_TRAFFIC;
+    final String vehicleType = "LIGHT_TRAFFIC";
     final Integer maximumSpeed = 80;
     final Boolean strictEnforcement = false;
     mockStandardCombinationSrm1(vehicleType, maximumSpeed, strictEnforcement);
@@ -132,7 +133,7 @@ class RoadValidatorTest {
   void testInvalidStandardCombination() {
     final RoadEmissionSource source = constructSrm1Source();
     final StandardVehicles subSource = new StandardVehicles();
-    final VehicleType vehicleType = VehicleType.LIGHT_TRAFFIC;
+    final String vehicleType = "LIGHT_TRAFFIC";
     final Integer maximumSpeed = 80;
     final Boolean strictEnforcement = false;
     subSource.setTimeUnit(TimeUnit.DAY);
@@ -154,7 +155,8 @@ class RoadValidatorTest {
     assertEquals(ImaerExceptionReason.GML_UNKNOWN_ROAD_CATEGORY, errors.get(0).getReason(), "Error reason");
     assertArrayEquals(new Object[] {
         SOURCE_LABEL,
-        String.valueOf(RoadType.NON_URBAN_ROAD.getSectorId()),
+        ROAD_AREA_CODE,
+        ROAD_TYPE_CODE_SRM1,
         String.valueOf(maximumSpeed),
         String.valueOf(strictEnforcement),
         String.valueOf(vehicleType)
@@ -212,7 +214,7 @@ class RoadValidatorTest {
   void testValidSrm1LinearReference() {
     final SRM1RoadEmissionSource source = constructSrm1Source();
     final StandardVehicles subSource = new StandardVehicles();
-    final VehicleType vehicleType = VehicleType.LIGHT_TRAFFIC;
+    final String vehicleType = "LIGHT_TRAFFIC";
     final Integer maximumSpeed = 80;
     final Boolean strictEnforcement = false;
     mockStandardCombinationSrm1(vehicleType, maximumSpeed, strictEnforcement);
@@ -243,7 +245,7 @@ class RoadValidatorTest {
   void testInvalidSrm1LinearReferenceFrom() {
     final SRM1RoadEmissionSource source = constructSrm1Source();
     final StandardVehicles subSource = new StandardVehicles();
-    final VehicleType vehicleType = VehicleType.LIGHT_TRAFFIC;
+    final String vehicleType = "LIGHT_TRAFFIC";
     final Integer maximumSpeed = 80;
     final Boolean strictEnforcement = false;
     mockStandardCombinationSrm1(vehicleType, maximumSpeed, strictEnforcement);
@@ -278,7 +280,7 @@ class RoadValidatorTest {
   void testInvalidSrm1LinearReferenceTo() {
     final SRM1RoadEmissionSource source = constructSrm1Source();
     final StandardVehicles subSource = new StandardVehicles();
-    final VehicleType vehicleType = VehicleType.LIGHT_TRAFFIC;
+    final String vehicleType = "LIGHT_TRAFFIC";
     final Integer maximumSpeed = 80;
     final Boolean strictEnforcement = false;
     mockStandardCombinationSrm1(vehicleType, maximumSpeed, strictEnforcement);
@@ -313,7 +315,7 @@ class RoadValidatorTest {
   void testValidSrm2LinearReference() {
     final SRM2RoadEmissionSource source = constructSrm2Source();
     final StandardVehicles subSource = new StandardVehicles();
-    final VehicleType vehicleType = VehicleType.LIGHT_TRAFFIC;
+    final String vehicleType = "LIGHT_TRAFFIC";
     final Integer maximumSpeed = 80;
     final Boolean strictEnforcement = false;
     mockStandardCombinationSrm2(vehicleType, maximumSpeed, strictEnforcement);
@@ -344,7 +346,7 @@ class RoadValidatorTest {
   void testInvalidSrm2LinearReference() {
     final SRM2RoadEmissionSource source = constructSrm2Source();
     final StandardVehicles subSource = new StandardVehicles();
-    final VehicleType vehicleType = VehicleType.LIGHT_TRAFFIC;
+    final String vehicleType = "LIGHT_TRAFFIC";
     final Integer maximumSpeed = 80;
     final Boolean strictEnforcement = false;
     mockStandardCombinationSrm2(vehicleType, maximumSpeed, strictEnforcement);
@@ -383,8 +385,8 @@ class RoadValidatorTest {
     final SRM1RoadEmissionSource source = new SRM1RoadEmissionSource();
     source.setGmlId(SOURCE_ID);
     source.setLabel(SOURCE_LABEL);
-    source.setSectorId(RoadType.NON_URBAN_ROAD.getSectorId());
-    source.setRoadSpeedType(RoadSpeedType.NATIONAL_ROAD);
+    source.setRoadAreaCode(ROAD_AREA_CODE);
+    source.setRoadTypeCode(ROAD_TYPE_CODE_SRM1);
     return source;
   }
 
@@ -392,7 +394,8 @@ class RoadValidatorTest {
     final SRM2RoadEmissionSource source = new SRM2RoadEmissionSource();
     source.setGmlId(SOURCE_ID);
     source.setLabel(SOURCE_LABEL);
-    source.setSectorId(RoadType.FREEWAY.getSectorId());
+    source.setRoadAreaCode(ROAD_AREA_CODE);
+    source.setRoadTypeCode(ROAD_TYPE_CODE_SRM2);
     return source;
   }
 
@@ -400,14 +403,13 @@ class RoadValidatorTest {
     when(validationHelper.isValidRoadSpecificVehicleCode(code)).thenReturn(true);
   }
 
-  private void mockStandardCombinationSrm1(final VehicleType vehicleType, final Integer maximumSpeed, final Boolean strictEnforcement) {
-    when(validationHelper.isValidRoadStandardVehicleCombination(RoadType.NON_URBAN_ROAD, vehicleType, maximumSpeed, strictEnforcement,
-        RoadSpeedType.NATIONAL_ROAD))
+  private void mockStandardCombinationSrm1(final String vehicleTypeCode, final Integer maximumSpeed, final Boolean strictEnforcement) {
+    when(validationHelper.isValidRoadStandardVehicleCombination(ROAD_AREA_CODE, ROAD_TYPE_CODE_SRM1, vehicleTypeCode, maximumSpeed, strictEnforcement))
             .thenReturn(true);
   }
 
-  private void mockStandardCombinationSrm2(final VehicleType vehicleType, final Integer maximumSpeed, final Boolean strictEnforcement) {
-    when(validationHelper.isValidRoadStandardVehicleCombination(RoadType.FREEWAY, vehicleType, maximumSpeed, strictEnforcement, null))
+  private void mockStandardCombinationSrm2(final String vehicleTypeCode, final Integer maximumSpeed, final Boolean strictEnforcement) {
+    when(validationHelper.isValidRoadStandardVehicleCombination(ROAD_AREA_CODE, ROAD_TYPE_CODE_SRM2, vehicleTypeCode, maximumSpeed, strictEnforcement))
         .thenReturn(true);
   }
 

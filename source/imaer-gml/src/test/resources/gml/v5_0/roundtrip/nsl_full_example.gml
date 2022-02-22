@@ -24,7 +24,7 @@
         </imaer:AeriusCalculatorMetadata>
     </imaer:metadata>
     <imaer:featureMember>
-        <imaer:SRM2Road sectorId="3111" gml:id="ES.NWR.1_1">
+        <imaer:SRM2Road roadAreaType="NL" roadType="FREEWAY" sectorId="3100" gml:id="ES.NWR.1_1">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -113,7 +113,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM1Road sectorId="3113" gml:id="ES.NWR.1_2">
+        <imaer:SRM1Road roadAreaType="NL" roadType="URBAN_ROAD_NORMAL" sectorId="3100" gml:id="ES.NWR.1_2">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -170,7 +170,6 @@
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:roadManager>PROVINCE</imaer:roadManager>
-            <imaer:speedProfile>URBAN_TRAFFIC_NORMAL</imaer:speedProfile>
             <imaer:tunnelFactor>1.1</imaer:tunnelFactor>
         </imaer:SRM1Road>
     </imaer:featureMember>
@@ -241,7 +240,7 @@
             <imaer:measure>
                 <imaer:SRM1RoadMeasure>
                     <imaer:vehicleType>LIGHT_TRAFFIC</imaer:vehicleType>
-                    <imaer:speedProfile>URBAN_TRAFFIC_NORMAL</imaer:speedProfile>
+                    <imaer:roadType>URBAN_ROAD_NORMAL</imaer:roadType>
                     <imaer:reduction>
                         <imaer:EmissionReduction substance="NOX">
                             <imaer:factor>0.8</imaer:factor>
@@ -257,7 +256,7 @@
             <imaer:measure>
                 <imaer:SRM1RoadMeasure>
                     <imaer:vehicleType>HEAVY_FREIGHT</imaer:vehicleType>
-                    <imaer:speedProfile>URBAN_TRAFFIC_NORMAL</imaer:speedProfile>
+                    <imaer:roadType>URBAN_ROAD_NORMAL</imaer:roadType>
                     <imaer:reduction>
                         <imaer:EmissionReduction substance="NOX">
                             <imaer:factor>0.9</imaer:factor>

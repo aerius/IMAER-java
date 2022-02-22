@@ -19,14 +19,12 @@ package nl.overheid.aerius.gml.base.measure;
 import java.util.List;
 
 import nl.overheid.aerius.gml.base.IsGmlProperty;
-import nl.overheid.aerius.shared.domain.v2.source.road.RoadSpeedType;
-import nl.overheid.aerius.shared.domain.v2.source.road.VehicleType;
 
 public interface IsGmlSRM1RoadMeasure {
 
-  VehicleType getVehicleType();
+  String getVehicleType();
 
-  RoadSpeedType getSpeedProfile();
+  String getRoadType();
 
   List<? extends IsGmlProperty<IsGMLEmissionReduction>> getReductions();
 

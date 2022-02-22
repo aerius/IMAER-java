@@ -24,7 +24,7 @@
         </imaer:AeriusCalculatorMetadata>
     </imaer:metadata>
     <imaer:featureMember>
-        <imaer:SRM1Road sectorId="3113" gml:id="ES.1">
+        <imaer:SRM1Road roadAreaType="NL" roadType="URBAN_ROAD_NORMAL" sectorId="3100" gml:id="ES.1">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -80,7 +80,6 @@
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:roadManager>STATE</imaer:roadManager>
-            <imaer:speedProfile>URBAN_TRAFFIC_NORMAL</imaer:speedProfile>
             <imaer:tunnelFactor>1.1</imaer:tunnelFactor>
         </imaer:SRM1Road>
     </imaer:featureMember>

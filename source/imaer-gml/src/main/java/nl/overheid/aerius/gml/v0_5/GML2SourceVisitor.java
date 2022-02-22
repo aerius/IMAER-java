@@ -27,7 +27,7 @@ import nl.overheid.aerius.gml.base.source.GML2Generic;
 import nl.overheid.aerius.gml.base.source.lodging.GML2Farm;
 import nl.overheid.aerius.gml.base.source.mobile.v31.GML2OffRoad;
 import nl.overheid.aerius.gml.base.source.plan.GML2Plan;
-import nl.overheid.aerius.gml.base.source.road.GML2SRM2RoadV10;
+import nl.overheid.aerius.gml.base.source.road.v10.GML2SRM2RoadV10;
 import nl.overheid.aerius.gml.base.source.ship.v31.GML2InlandMooringForceWaterway;
 import nl.overheid.aerius.gml.base.source.ship.v31.GML2InlandRouteForceWaterway;
 import nl.overheid.aerius.gml.base.source.ship.v31.GML2MaritimeMooring;

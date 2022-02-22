@@ -47,6 +47,8 @@
         }
       }
     } ],
+    "roadAreaCode" : "NL",
+    "roadTypeCode" : "FREEWAY",
     "tunnelFactor" : 1.0,
     "elevation" : "STEEP_DYKE",
     "elevationHeight" : 2,

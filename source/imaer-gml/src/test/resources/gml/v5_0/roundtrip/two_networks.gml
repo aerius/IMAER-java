@@ -23,7 +23,7 @@
         </imaer:AeriusCalculatorMetadata>
     </imaer:metadata>
     <imaer:featureMember>
-        <imaer:SRM2Road sectorId="3111" gml:id="NWR.1_1">
+        <imaer:SRM2Road roadAreaType="NL" roadType="FREEWAY" sectorId="3100" gml:id="NWR.1_1">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -81,8 +81,8 @@
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:vehicles>
-                <imaer:StandardVehicle vehicleType="NORMAL_FREIGHT">
-                    <imaer:vehiclesPerTimeUnit>1012.0</imaer:vehiclesPerTimeUnit>
+                <imaer:StandardVehicle vehicleType="HEAVY_FREIGHT">
+                    <imaer:vehiclesPerTimeUnit>1006.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.0</imaer:stagnationFactor>
                     <imaer:maximumSpeed>100</imaer:maximumSpeed>
@@ -90,8 +90,8 @@
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:vehicles>
-                <imaer:StandardVehicle vehicleType="HEAVY_FREIGHT">
-                    <imaer:vehiclesPerTimeUnit>1006.0</imaer:vehiclesPerTimeUnit>
+                <imaer:StandardVehicle vehicleType="NORMAL_FREIGHT">
+                    <imaer:vehiclesPerTimeUnit>1012.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.0</imaer:stagnationFactor>
                     <imaer:maximumSpeed>100</imaer:maximumSpeed>
@@ -104,7 +104,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road sectorId="3111" gml:id="NWR.1_2">
+        <imaer:SRM2Road roadAreaType="NL" roadType="FREEWAY" sectorId="3100" gml:id="NWR.1_2">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -162,8 +162,8 @@
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:vehicles>
-                <imaer:StandardVehicle vehicleType="NORMAL_FREIGHT">
-                    <imaer:vehiclesPerTimeUnit>1609.0</imaer:vehiclesPerTimeUnit>
+                <imaer:StandardVehicle vehicleType="HEAVY_FREIGHT">
+                    <imaer:vehiclesPerTimeUnit>1205.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.0</imaer:stagnationFactor>
                     <imaer:maximumSpeed>100</imaer:maximumSpeed>
@@ -171,8 +171,8 @@
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:vehicles>
-                <imaer:StandardVehicle vehicleType="HEAVY_FREIGHT">
-                    <imaer:vehiclesPerTimeUnit>1205.0</imaer:vehiclesPerTimeUnit>
+                <imaer:StandardVehicle vehicleType="NORMAL_FREIGHT">
+                    <imaer:vehiclesPerTimeUnit>1609.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.0</imaer:stagnationFactor>
                     <imaer:maximumSpeed>100</imaer:maximumSpeed>
@@ -185,7 +185,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road sectorId="3111" gml:id="NWR.2_1">
+        <imaer:SRM2Road roadAreaType="NL" roadType="FREEWAY" sectorId="3100" gml:id="NWR.2_1">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -243,8 +243,8 @@
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:vehicles>
-                <imaer:StandardVehicle vehicleType="NORMAL_FREIGHT">
-                    <imaer:vehiclesPerTimeUnit>1012.0</imaer:vehiclesPerTimeUnit>
+                <imaer:StandardVehicle vehicleType="HEAVY_FREIGHT">
+                    <imaer:vehiclesPerTimeUnit>1006.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.0</imaer:stagnationFactor>
                     <imaer:maximumSpeed>100</imaer:maximumSpeed>
@@ -252,8 +252,8 @@
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:vehicles>
-                <imaer:StandardVehicle vehicleType="HEAVY_FREIGHT">
-                    <imaer:vehiclesPerTimeUnit>1006.0</imaer:vehiclesPerTimeUnit>
+                <imaer:StandardVehicle vehicleType="NORMAL_FREIGHT">
+                    <imaer:vehiclesPerTimeUnit>1012.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.0</imaer:stagnationFactor>
                     <imaer:maximumSpeed>100</imaer:maximumSpeed>
@@ -266,7 +266,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road sectorId="3111" gml:id="NWR.2_2">
+        <imaer:SRM2Road roadAreaType="NL" roadType="FREEWAY" sectorId="3100" gml:id="NWR.2_2">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -324,8 +324,8 @@
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:vehicles>
-                <imaer:StandardVehicle vehicleType="NORMAL_FREIGHT">
-                    <imaer:vehiclesPerTimeUnit>1609.0</imaer:vehiclesPerTimeUnit>
+                <imaer:StandardVehicle vehicleType="HEAVY_FREIGHT">
+                    <imaer:vehiclesPerTimeUnit>1205.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.0</imaer:stagnationFactor>
                     <imaer:maximumSpeed>100</imaer:maximumSpeed>
@@ -333,8 +333,8 @@
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:vehicles>
-                <imaer:StandardVehicle vehicleType="HEAVY_FREIGHT">
-                    <imaer:vehiclesPerTimeUnit>1205.0</imaer:vehiclesPerTimeUnit>
+                <imaer:StandardVehicle vehicleType="NORMAL_FREIGHT">
+                    <imaer:vehiclesPerTimeUnit>1609.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.0</imaer:stagnationFactor>
                     <imaer:maximumSpeed>100</imaer:maximumSpeed>
