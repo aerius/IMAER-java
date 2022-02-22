@@ -49,6 +49,10 @@ public enum EmissionSourceType {
    */
   SRM2_ROAD(Names.SRM2_ROAD),
   /**
+   * ADMS Road emission values.
+   */
+  ADMS_ROAD(Names.ADMS_ROAD),
+  /**
    * Docked inland shipping emission values.
    */
   SHIPPING_INLAND_DOCKED(Names.SHIPPING_INLAND_DOCKED),
@@ -77,6 +81,7 @@ public enum EmissionSourceType {
     public static final String PLAN = "PLAN";
     public static final String SRM1_ROAD = "SRM1_ROAD";
     public static final String SRM2_ROAD = "SRM2_ROAD";
+    public static final String ADMS_ROAD = "ADMS_ROAD";
     public static final String SHIPPING_INLAND_DOCKED = "SHIPPING_INLAND_DOCKED";
     public static final String SHIPPING_INLAND = "SHIPPING_INLAND";
     public static final String SHIPPING_MARITIME_DOCKED = "SHIPPING_MARITIME_DOCKED";
