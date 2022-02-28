@@ -91,7 +91,6 @@
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:trafficDirection>A_TO_B</imaer:trafficDirection>
-            <imaer:isFreeway>true</imaer:isFreeway>
             <imaer:tunnelFactor>1.1</imaer:tunnelFactor>
             <imaer:elevation>STEEP_DYKE</imaer:elevation>
             <imaer:elevationHeight>2</imaer:elevationHeight>

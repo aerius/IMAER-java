@@ -98,7 +98,6 @@
                     <imaer:strictEnforcement>false</imaer:strictEnforcement>
                 </imaer:StandardVehicle>
             </imaer:vehicles>
-            <imaer:isFreeway>true</imaer:isFreeway>
             <imaer:elevation>STEEP_DYKE</imaer:elevation>
             <imaer:elevationHeight>2</imaer:elevationHeight>
         </imaer:SRM2Road>
@@ -179,7 +178,6 @@
                     <imaer:strictEnforcement>false</imaer:strictEnforcement>
                 </imaer:StandardVehicle>
             </imaer:vehicles>
-            <imaer:isFreeway>true</imaer:isFreeway>
             <imaer:elevation>STEEP_DYKE</imaer:elevation>
             <imaer:elevationHeight>7</imaer:elevationHeight>
         </imaer:SRM2Road>
@@ -260,7 +258,6 @@
                     <imaer:strictEnforcement>false</imaer:strictEnforcement>
                 </imaer:StandardVehicle>
             </imaer:vehicles>
-            <imaer:isFreeway>true</imaer:isFreeway>
             <imaer:elevation>STEEP_DYKE</imaer:elevation>
             <imaer:elevationHeight>2</imaer:elevationHeight>
         </imaer:SRM2Road>
@@ -341,7 +338,6 @@
                     <imaer:strictEnforcement>false</imaer:strictEnforcement>
                 </imaer:StandardVehicle>
             </imaer:vehicles>
-            <imaer:isFreeway>true</imaer:isFreeway>
             <imaer:elevation>STEEP_DYKE</imaer:elevation>
             <imaer:elevationHeight>7</imaer:elevationHeight>
         </imaer:SRM2Road>

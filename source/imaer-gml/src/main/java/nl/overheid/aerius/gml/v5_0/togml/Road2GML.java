@@ -70,10 +70,9 @@ class Road2GML extends SpecificSource2GML<nl.overheid.aerius.shared.domain.v2.so
   private SRM2Road convertSrm2(final SRM2RoadEmissionSource emissionSource) {
     final SRM2Road returnSource = new SRM2Road();
 
-    returnSource.setVehicles(toVehicleProperties(emissionSource.getSubSources(), emissionSource.isFreeway()));
+    returnSource.setVehicles(toVehicleProperties(emissionSource.getSubSources()));
 
     handleGenericProperties(emissionSource, returnSource);
-    handleFreeWay(emissionSource, returnSource);
     handleTunnel(emissionSource, returnSource);
     handleElevation(emissionSource, returnSource);
     handleBarriers(emissionSource, returnSource);
@@ -86,7 +85,7 @@ class Road2GML extends SpecificSource2GML<nl.overheid.aerius.shared.domain.v2.so
   private SRM1Road convertSrm1(final SRM1RoadEmissionSource emissionSource) {
     final SRM1Road returnSource = new SRM1Road();
 
-    returnSource.setVehicles(toVehicleProperties(emissionSource.getSubSources(), false));
+    returnSource.setVehicles(toVehicleProperties(emissionSource.getSubSources()));
 
     handleGenericProperties(emissionSource, returnSource);
     handleTunnel(emissionSource, returnSource);
@@ -96,12 +95,12 @@ class Road2GML extends SpecificSource2GML<nl.overheid.aerius.shared.domain.v2.so
     return returnSource;
   }
 
-  private List<VehiclesProperty> toVehicleProperties(final List<Vehicles> vehicleGroups, final boolean isFreeway) {
+  private List<VehiclesProperty> toVehicleProperties(final List<Vehicles> vehicleGroups) {
     final List<VehiclesProperty> vehiclesList = new ArrayList<>(vehicleGroups.size());
 
     for (final Vehicles vehicleGroup : vehicleGroups) {
       if (vehicleGroup instanceof StandardVehicles) {
-        addVehicleEmissionSource(vehiclesList, (StandardVehicles) vehicleGroup, isFreeway);
+        addVehicleEmissionSource(vehiclesList, (StandardVehicles) vehicleGroup);
       } else if (vehicleGroup instanceof SpecificVehicles) {
         addVehicleEmissionSource(vehiclesList, (SpecificVehicles) vehicleGroup);
       } else if (vehicleGroup instanceof CustomVehicles) {
@@ -124,10 +123,6 @@ class Road2GML extends SpecificSource2GML<nl.overheid.aerius.shared.domain.v2.so
       final RoadEmissionSource returnSource) {
     returnSource.setRoadAreaCode(emissionSource.getRoadAreaCode());
     returnSource.setRoadTypeCode(emissionSource.getRoadTypeCode());
-  }
-
-  private void handleFreeWay(final nl.overheid.aerius.shared.domain.v2.source.SRM2RoadEmissionSource emissionSource, final SRM2Road returnSource) {
-    returnSource.setFreeway(emissionSource.isFreeway());
   }
 
   private void handleTunnel(final nl.overheid.aerius.shared.domain.v2.source.RoadEmissionSource emissionSource, final SRM2Road returnSource) {
@@ -179,7 +174,7 @@ class Road2GML extends SpecificSource2GML<nl.overheid.aerius.shared.domain.v2.so
     returnSource.setTrafficDirection(emissionSource.getTrafficDirection());
   }
 
-  private void addVehicleEmissionSource(final List<VehiclesProperty> vehiclesList, final StandardVehicles vse, final boolean isFreeway) {
+  private void addVehicleEmissionSource(final List<VehiclesProperty> vehiclesList, final StandardVehicles vse) {
     // Loop over all vehicle types in the valuesPerVehicleTypes map, but sort them first to get predictable order.
     final List<String> vehicleTypes = vse.getValuesPerVehicleTypes().keySet().stream().sorted().collect(Collectors.toList());
     for (final String vehicleType : vehicleTypes) {
@@ -190,9 +185,7 @@ class Road2GML extends SpecificSource2GML<nl.overheid.aerius.shared.domain.v2.so
         sv.setStagnationFactor(valuesPerVehicleType.getStagnationFraction());
         sv.setVehicleType(vehicleType);
         sv.setMaximumSpeed(vse.getMaximumSpeed());
-        if (isFreeway) {
-          sv.setStrictEnforcement(vse.getStrictEnforcement());
-        }
+        sv.setStrictEnforcement(vse.getStrictEnforcement());
         sv.setTimeUnit(TimeUnit.from(vse.getTimeUnit()));
         vehiclesList.add(new VehiclesProperty(sv));
       }
@@ -234,7 +227,6 @@ class Road2GML extends SpecificSource2GML<nl.overheid.aerius.shared.domain.v2.so
 
     dynamicSegmentGML.setFromPosition(dynamicSegment.getFromPosition());
     dynamicSegmentGML.setToPosition(dynamicSegment.getToPosition());
-    dynamicSegmentGML.setFreeway(dynamicSegment.getFreeway());
     dynamicSegmentGML.setTunnelFactor(dynamicSegment.getTunnelFactor());
     dynamicSegmentGML.setElevation(dynamicSegment.getElevation());
     dynamicSegmentGML.setElevationHeight(dynamicSegment.getElevationHeight());

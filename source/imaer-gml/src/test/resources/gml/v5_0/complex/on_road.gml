@@ -85,7 +85,6 @@
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                 </imaer:SpecificVehicle>
             </imaer:vehicles>
-            <imaer:isFreeway>false</imaer:isFreeway>
             <imaer:elevation>NORMAL</imaer:elevation>
         </imaer:SRM2Road>
     </imaer:featureMember>
@@ -150,7 +149,6 @@
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                 </imaer:SpecificVehicle>
             </imaer:vehicles>
-            <imaer:isFreeway>false</imaer:isFreeway>
             <imaer:elevation>NORMAL</imaer:elevation>
         </imaer:SRM2Road>
     </imaer:featureMember>

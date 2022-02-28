@@ -92,7 +92,6 @@
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:roadManager>STATE</imaer:roadManager>
-            <imaer:isFreeway>true</imaer:isFreeway>
             <imaer:tunnelFactor>1.1</imaer:tunnelFactor>
             <imaer:elevation>STEEP_DYKE</imaer:elevation>
             <imaer:elevationHeight>2</imaer:elevationHeight>
