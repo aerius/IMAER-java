@@ -29,9 +29,9 @@ public class Building implements Serializable {
    */
   private double height;
   /**
-   * Radius of a circle building (m)
+   * Diameter of a circle building (m)
    */
-  private double radius;
+  private double diameter;
 
   public String getGmlId() {
     return gmlId;
@@ -57,15 +57,15 @@ public class Building implements Serializable {
     this.height = height;
   }
 
-  public double getRadius() {
-    return radius;
+  public double getDiameter() {
+    return diameter;
   }
 
-  public void setRadius(final double radius) {
-    this.radius = radius;
+  public void setDiameter(final double diameter) {
+    this.diameter = diameter;
   }
 
   public boolean isCircle() {
-    return radius > 0;
+    return diameter > 0;
   }
 }
