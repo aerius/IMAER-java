@@ -52,7 +52,6 @@
     "tunnelFactor" : 1.0,
     "elevation" : "STEEP_DYKE",
     "elevationHeight" : 2,
-    "freeway" : true,
     "partialChanges" : [ {
       "fromPosition" : 0.5,
       "toPosition" : 0.6,

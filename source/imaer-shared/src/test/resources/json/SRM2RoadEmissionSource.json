@@ -67,7 +67,6 @@
     "trafficDirection" : "A_TO_B",
     "elevation" : "STEEP_DYKE",
     "elevationHeight" : 2,
-    "freeway" : true,
     "barrierLeft" : {
       "barrierType" : "SCREEN",
       "height" : 2.6,
