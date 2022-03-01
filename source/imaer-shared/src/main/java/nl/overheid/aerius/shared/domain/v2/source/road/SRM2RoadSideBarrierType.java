@@ -19,7 +19,7 @@ package nl.overheid.aerius.shared.domain.v2.source.road;
 /**
  * The type of a barrier on the side of a road.
  */
-public enum RoadSideBarrierType {
+public enum SRM2RoadSideBarrierType {
 
   /**
    * The barrier is a screen (example: 'Geluidsscherm').
@@ -33,7 +33,7 @@ public enum RoadSideBarrierType {
 
   private final double heightFactor;
 
-  RoadSideBarrierType(final double heightFactor) {
+  SRM2RoadSideBarrierType(final double heightFactor) {
     this.heightFactor = heightFactor;
   }
 

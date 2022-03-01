@@ -24,6 +24,7 @@ import java.util.List;
 import com.helger.commons.io.stream.StringInputStream;
 
 import nl.overheid.aerius.shared.domain.v2.geojson.IsFeature;
+import nl.overheid.aerius.shared.domain.v2.source.ADMSRoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceVisitor;
 import nl.overheid.aerius.shared.domain.v2.source.FarmLodgingEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.FarmlandEmissionSource;
@@ -87,6 +88,12 @@ public class EmissionSourceSchematronVisitor implements EmissionSourceVisitor<Vo
   @Override
   public Void visit(final SRM2RoadEmissionSource emissionSource, final IsFeature feature) throws AeriusException {
     validate(validators.getSrm2RoadValidator());
+    return null;
+  }
+
+  @Override
+  public Void visit(final ADMSRoadEmissionSource emissionSource, final IsFeature feature) throws AeriusException {
+    //NO-OP
     return null;
   }
 

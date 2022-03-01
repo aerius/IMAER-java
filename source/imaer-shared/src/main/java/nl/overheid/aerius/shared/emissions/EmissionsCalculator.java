@@ -20,6 +20,7 @@ import java.util.Map;
 
 import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.v2.geojson.IsFeature;
+import nl.overheid.aerius.shared.domain.v2.source.ADMSRoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceVisitor;
 import nl.overheid.aerius.shared.domain.v2.source.FarmLodgingEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.FarmlandEmissionSource;
@@ -98,6 +99,11 @@ class EmissionsCalculator implements EmissionSourceVisitor<Map<Substance, Double
 
   @Override
   public Map<Substance, Double> visit(final SRM2RoadEmissionSource emissionSource, final IsFeature feature) throws AeriusException {
+    return roadEmissionsCalculator.calculateEmissions(emissionSource, feature.getGeometry());
+  }
+
+  @Override
+  public Map<Substance, Double> visit(final ADMSRoadEmissionSource emissionSource, final IsFeature feature) throws AeriusException {
     return roadEmissionsCalculator.calculateEmissions(emissionSource, feature.getGeometry());
   }
 

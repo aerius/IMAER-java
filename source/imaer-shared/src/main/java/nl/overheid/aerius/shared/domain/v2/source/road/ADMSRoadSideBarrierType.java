@@ -14,16 +14,16 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.gml.base.source.road;
+package nl.overheid.aerius.shared.domain.v2.source.road;
 
-import nl.overheid.aerius.shared.domain.v2.source.road.SRM2RoadSideBarrierType;
-
-public interface IsGmlRoadSideBarrier {
-
-  SRM2RoadSideBarrierType getBarrierType();
-
-  double getHeight();
-
-  double getDistance();
-
+/**
+ * The type of a barrier on the side of a road.
+ */
+public enum ADMSRoadSideBarrierType {
+  NONE,
+  NOISE_BARRIER,
+  STREET_CANYON_TERRACED_HOUSES,
+  STREET_CANYON_DETACHED_HOUSES,
+  TREE_BARRIER,
+  OTHER;
 }

@@ -37,6 +37,8 @@ public interface EmissionSourceVisitor<T> {
 
   T visit(SRM2RoadEmissionSource emissionSource, IsFeature feature) throws AeriusException;
 
+  T visit(ADMSRoadEmissionSource emissionSource, IsFeature feature) throws AeriusException;
+
   T visit(InlandShippingEmissionSource emissionSource, IsFeature feature) throws AeriusException;
 
   T visit(MooringInlandShippingEmissionSource emissionSource, IsFeature feature) throws AeriusException;

@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlType;
 
 import nl.overheid.aerius.gml.base.source.road.IsGmlRoadSideBarrier;
 import nl.overheid.aerius.gml.v4_0.base.CalculatorSchema;
-import nl.overheid.aerius.shared.domain.v2.source.road.RoadSideBarrierType;
+import nl.overheid.aerius.shared.domain.v2.source.road.SRM2RoadSideBarrierType;
 
 /**
  *
@@ -31,17 +31,17 @@ import nl.overheid.aerius.shared.domain.v2.source.road.RoadSideBarrierType;
 @XmlType(name = "RoadSideBarrierType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"barrierType", "height", "distance"})
 public class RoadSideBarrier implements IsGmlRoadSideBarrier {
 
-  private RoadSideBarrierType barrierType;
+  private SRM2RoadSideBarrierType barrierType;
   private double height;
   private double distance;
 
   @Override
   @XmlElement(namespace = CalculatorSchema.NAMESPACE)
-  public RoadSideBarrierType getBarrierType() {
+  public SRM2RoadSideBarrierType getBarrierType() {
     return barrierType;
   }
 
-  public void setBarrierType(final RoadSideBarrierType barrierType) {
+  public void setBarrierType(final SRM2RoadSideBarrierType barrierType) {
     this.barrierType = barrierType;
   }
 

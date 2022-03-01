@@ -41,6 +41,7 @@ import nl.overheid.aerius.shared.exception.AeriusException;
     @Type(value = OffRoadMobileEmissionSource.class, name = EmissionSourceType.Names.OFFROAD_MOBILE),
     @Type(value = SRM1RoadEmissionSource.class, name = EmissionSourceType.Names.SRM1_ROAD),
     @Type(value = SRM2RoadEmissionSource.class, name = EmissionSourceType.Names.SRM2_ROAD),
+    @Type(value = ADMSRoadEmissionSource.class, name = EmissionSourceType.Names.ADMS_ROAD),
     @Type(value = InlandShippingEmissionSource.class, name = EmissionSourceType.Names.SHIPPING_INLAND),
     @Type(value = MooringInlandShippingEmissionSource.class, name = EmissionSourceType.Names.SHIPPING_INLAND_DOCKED),
     @Type(value = InlandMaritimeShippingEmissionSource.class, name = EmissionSourceType.Names.SHIPPING_MARITIME_INLAND),

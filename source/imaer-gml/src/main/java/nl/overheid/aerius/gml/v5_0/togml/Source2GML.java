@@ -30,6 +30,7 @@ import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.v2.characteristics.OPSSourceCharacteristics;
 import nl.overheid.aerius.shared.domain.v2.geojson.IsFeature;
 import nl.overheid.aerius.shared.domain.v2.geojson.Point;
+import nl.overheid.aerius.shared.domain.v2.source.ADMSRoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceFeature;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceVisitor;
@@ -174,6 +175,12 @@ final class Source2GML implements EmissionSourceVisitor<nl.overheid.aerius.gml.v
 
   @Override
   public nl.overheid.aerius.gml.v5_0.source.EmissionSource visit(final SRM2RoadEmissionSource emissionSource, final IsFeature feature)
+      throws AeriusException {
+    return new Road2GML().convert(emissionSource);
+  }
+
+  @Override
+  public nl.overheid.aerius.gml.v5_0.source.EmissionSource visit(final ADMSRoadEmissionSource emissionSource, final IsFeature feature)
       throws AeriusException {
     return new Road2GML().convert(emissionSource);
   }
