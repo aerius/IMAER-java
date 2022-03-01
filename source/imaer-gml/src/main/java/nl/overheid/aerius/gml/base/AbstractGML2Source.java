@@ -118,15 +118,15 @@ public abstract class AbstractGML2Source<T extends IsGmlEmissionSource, S extend
     returnSource.setLabel(source.getLabel());
     returnSource.setDescription(source.getDescription());
     returnSource.setJurisdictionId(source.getJurisdictionId());
-    returnSource.setSectorId(
-        Integer.parseInt(conversionData.getCode(GMLLegacyCodeType.SECTOR, String.valueOf(source.getSectorId()), source.getLabel())));
+    final int sectorId = Integer.parseInt(conversionData.getCode(GMLLegacyCodeType.SECTOR, String.valueOf(source.getSectorId()), source.getLabel()));
+    returnSource.setSectorId(sectorId);
     if (!(returnSource instanceof InlandShippingEmissionSource
         || returnSource instanceof MooringInlandShippingEmissionSource
         || returnSource instanceof MaritimeShippingEmissionSource
         || returnSource instanceof MooringMaritimeShippingEmissionSource
         || returnSource instanceof OffRoadMobileEmissionSource
         || returnSource instanceof PlanEmissionSource)) {
-      final S sectorCharacteristics = conversionData.determineDefaultCharacteristicsBySectorId(source.getSectorId());
+      final S sectorCharacteristics = conversionData.determineDefaultCharacteristicsBySectorId(sectorId);
       if (source.getCharacteristics() == null) {
         // if characteristics weren't supplied in GML, use the sector default.
         returnSource.setCharacteristics(sectorCharacteristics);
