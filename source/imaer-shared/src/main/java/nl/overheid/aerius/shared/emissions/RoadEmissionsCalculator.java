@@ -25,6 +25,8 @@ import java.util.OptionalDouble;
 
 import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
+import nl.overheid.aerius.shared.domain.v2.source.ADMSRoadEmissionSource;
+import nl.overheid.aerius.shared.domain.v2.source.RoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.SRM1RoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.SRM2RoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.road.CustomVehicles;
@@ -86,21 +88,24 @@ public class RoadEmissionsCalculator {
     return result;
   }
 
-  private Map<Substance, BigDecimal> calculateEmissions(final SRM1RoadEmissionSource roadEmissionSource, final Vehicles vehicles)
-      throws AeriusException {
-    // Determine emissions per km
-    if (vehicles instanceof CustomVehicles) {
-      return calculateEmissions((CustomVehicles) vehicles);
-    } else if (vehicles instanceof SpecificVehicles) {
-      return calculateEmissions((SpecificVehicles) vehicles, roadEmissionSource.getRoadTypeCode());
-    } else if (vehicles instanceof StandardVehicles) {
-      return calculateEmissions((StandardVehicles) vehicles, roadEmissionSource.getRoadAreaCode(), roadEmissionSource.getRoadTypeCode());
-    } else {
-      throw new AeriusException(ImaerExceptionReason.INTERNAL_ERROR, "Unknown Vehicles type");
+  public Map<Substance, Double> calculateEmissions(final ADMSRoadEmissionSource roadEmissionSource, final Geometry geometry) throws AeriusException {
+    final BigDecimal measure = BigDecimal.valueOf(geometryCalculator.determineMeasure(geometry));
+    final BigDecimal tunnelFactor = BigDecimal.ONE;
+    final Map<Substance, BigDecimal> summed = new EnumMap<>(Substance.class);
+    for (final Vehicles vehicles : roadEmissionSource.getSubSources()) {
+      final Map<Substance, BigDecimal> emissionsForVehicles = calculateEmissions(roadEmissionSource, vehicles);
+      emissionsForVehicles.forEach(
+          (key, value) -> vehicles.getEmissions().put(key, toTotalEmission(value, measure, tunnelFactor)));
+      emissionsForVehicles.forEach(
+          (key, value) -> summed.merge(key, value, (v1, v2) -> v1.add(v2)));
     }
+    final Map<Substance, Double> result = new EnumMap<>(Substance.class);
+    summed.forEach(
+        (key, value) -> result.put(key, toTotalEmission(value, measure, tunnelFactor)));
+    return result;
   }
 
-  private Map<Substance, BigDecimal> calculateEmissions(final SRM2RoadEmissionSource roadEmissionSource, final Vehicles vehicles)
+  private Map<Substance, BigDecimal> calculateEmissions(final RoadEmissionSource roadEmissionSource, final Vehicles vehicles)
       throws AeriusException {
     // Determine emissions per km
     if (vehicles instanceof CustomVehicles) {

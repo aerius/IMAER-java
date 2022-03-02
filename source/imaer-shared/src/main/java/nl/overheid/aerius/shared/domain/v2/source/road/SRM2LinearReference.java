@@ -25,8 +25,8 @@ public class SRM2LinearReference extends LinearReference {
   private Double tunnelFactor;
   private RoadElevation elevation;
   private Integer elevationHeight;
-  private RoadSideBarrier barrierLeft;
-  private RoadSideBarrier barrierRight;
+  private SRM2RoadSideBarrier barrierLeft;
+  private SRM2RoadSideBarrier barrierRight;
 
   public Double getTunnelFactor() {
     return tunnelFactor;
@@ -52,19 +52,19 @@ public class SRM2LinearReference extends LinearReference {
     this.elevationHeight = elevationHeight;
   }
 
-  public RoadSideBarrier getBarrierLeft() {
+  public SRM2RoadSideBarrier getBarrierLeft() {
     return barrierLeft;
   }
 
-  public void setBarrierLeft(final RoadSideBarrier barrierLeft) {
+  public void setBarrierLeft(final SRM2RoadSideBarrier barrierLeft) {
     this.barrierLeft = barrierLeft;
   }
 
-  public RoadSideBarrier getBarrierRight() {
+  public SRM2RoadSideBarrier getBarrierRight() {
     return barrierRight;
   }
 
-  public void setBarrierRight(final RoadSideBarrier barrierRight) {
+  public void setBarrierRight(final SRM2RoadSideBarrier barrierRight) {
     this.barrierRight = barrierRight;
   }
 

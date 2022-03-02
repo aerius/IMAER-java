@@ -1,5 +1,5 @@
 /*
- * Copyright the State of the Netherlands
+ * Crown copyright
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -19,25 +19,11 @@ package nl.overheid.aerius.shared.domain.v2.source.road;
 /**
  * The type of a barrier on the side of a road.
  */
-public enum RoadSideBarrierType {
-
-  /**
-   * The barrier is a screen (example: 'Geluidsscherm').
-   */
-  SCREEN(0.5),
-
-  /**
-   * The barrier is a wall (example: 'Geluidswal').
-   */
-  WALL(0.25);
-
-  private final double heightFactor;
-
-  RoadSideBarrierType(final double heightFactor) {
-    this.heightFactor = heightFactor;
-  }
-
-  public double getHeightFactor() {
-    return this.heightFactor;
-  }
+public enum ADMSRoadSideBarrierType {
+  NONE,
+  NOISE_BARRIER,
+  STREET_CANYON_TERRACED_HOUSES,
+  STREET_CANYON_DETACHED_HOUSES,
+  TREE_BARRIER,
+  OTHER;
 }

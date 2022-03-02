@@ -37,10 +37,10 @@ import nl.overheid.aerius.shared.domain.v2.source.SRM1RoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.SRM2RoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.road.CustomVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.RoadElevation;
-import nl.overheid.aerius.shared.domain.v2.source.road.RoadSideBarrier;
 import nl.overheid.aerius.shared.domain.v2.source.road.RoadSpeedType;
 import nl.overheid.aerius.shared.domain.v2.source.road.SRM1LinearReference;
 import nl.overheid.aerius.shared.domain.v2.source.road.SRM2LinearReference;
+import nl.overheid.aerius.shared.domain.v2.source.road.SRM2RoadSideBarrier;
 import nl.overheid.aerius.shared.domain.v2.source.road.SpecificVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.StandardVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.ValuesPerVehicleType;
@@ -61,6 +61,7 @@ class Road2GML extends SpecificSource2GML<nl.overheid.aerius.shared.domain.v2.so
       returnSource = convertSrm1((SRM1RoadEmissionSource) emissionSource);
     } else if (emissionSource instanceof SRM2RoadEmissionSource) {
       returnSource = convertSrm2((SRM2RoadEmissionSource) emissionSource);
+      // TODO: ADMSRoadEmissionSource ? UK specific, and UK shouldn't be using IMAER 4.0
     } else {
       returnSource = null;
     }
@@ -147,7 +148,7 @@ class Road2GML extends SpecificSource2GML<nl.overheid.aerius.shared.domain.v2.so
     }
   }
 
-  private RoadSideBarrierProperty toGMLRoadSideBarrier(final RoadSideBarrier barrier) {
+  private RoadSideBarrierProperty toGMLRoadSideBarrier(final SRM2RoadSideBarrier barrier) {
     final nl.overheid.aerius.gml.v4_0.source.road.RoadSideBarrier gmlBarrier = new nl.overheid.aerius.gml.v4_0.source.road.RoadSideBarrier();
     gmlBarrier.setBarrierType(barrier.getBarrierType());
     gmlBarrier.setHeight(barrier.getHeight());

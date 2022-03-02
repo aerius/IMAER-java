@@ -18,14 +18,14 @@ package nl.overheid.aerius.shared.domain.v2.source.road;
 
 import java.io.Serializable;
 
-public class RoadSideBarrier implements Serializable {
+public class SRM2RoadSideBarrier implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 2L;
 
   /**
    * Type of the barrier.
    */
-  private RoadSideBarrierType barrierType;
+  private SRM2RoadSideBarrierType barrierType;
   /**
    * Height of the barrier.
    */
@@ -35,11 +35,11 @@ public class RoadSideBarrier implements Serializable {
    */
   private double distance;
 
-  public RoadSideBarrierType getBarrierType() {
+  public SRM2RoadSideBarrierType getBarrierType() {
     return barrierType;
   }
 
-  public void setBarrierType(final RoadSideBarrierType barrierType) {
+  public void setBarrierType(final SRM2RoadSideBarrierType barrierType) {
     this.barrierType = barrierType;
   }
 

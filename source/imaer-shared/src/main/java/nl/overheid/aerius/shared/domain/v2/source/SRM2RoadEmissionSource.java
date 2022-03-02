@@ -20,7 +20,7 @@ import java.util.List;
 
 import nl.overheid.aerius.shared.domain.v2.geojson.IsFeature;
 import nl.overheid.aerius.shared.domain.v2.source.road.RoadElevation;
-import nl.overheid.aerius.shared.domain.v2.source.road.RoadSideBarrier;
+import nl.overheid.aerius.shared.domain.v2.source.road.SRM2RoadSideBarrier;
 import nl.overheid.aerius.shared.domain.v2.source.road.SRM2LinearReference;
 import nl.overheid.aerius.shared.exception.AeriusException;
 
@@ -31,8 +31,8 @@ public class SRM2RoadEmissionSource extends RoadEmissionSource {
   private RoadElevation elevation = RoadElevation.NORMAL;
   private int elevationHeight;
 
-  private RoadSideBarrier barrierLeft;
-  private RoadSideBarrier barrierRight;
+  private SRM2RoadSideBarrier barrierLeft;
+  private SRM2RoadSideBarrier barrierRight;
 
   private List<SRM2LinearReference> partialChanges;
 
@@ -52,19 +52,19 @@ public class SRM2RoadEmissionSource extends RoadEmissionSource {
     this.elevationHeight = elevationHeight;
   }
 
-  public RoadSideBarrier getBarrierLeft() {
+  public SRM2RoadSideBarrier getBarrierLeft() {
     return barrierLeft;
   }
 
-  public void setBarrierLeft(final RoadSideBarrier barrierLeft) {
+  public void setBarrierLeft(final SRM2RoadSideBarrier barrierLeft) {
     this.barrierLeft = barrierLeft;
   }
 
-  public RoadSideBarrier getBarrierRight() {
+  public SRM2RoadSideBarrier getBarrierRight() {
     return barrierRight;
   }
 
-  public void setBarrierRight(final RoadSideBarrier barrierRight) {
+  public void setBarrierRight(final SRM2RoadSideBarrier barrierRight) {
     this.barrierRight = barrierRight;
   }
 

@@ -14,16 +14,30 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.gml.base.source.road;
+package nl.overheid.aerius.shared.domain.v2.source.road;
 
-import nl.overheid.aerius.shared.domain.v2.source.road.SRM2RoadSideBarrierType;
+/**
+ * The type of a barrier on the side of a road.
+ */
+public enum SRM2RoadSideBarrierType {
 
-public interface IsGmlRoadSideBarrier {
+  /**
+   * The barrier is a screen (example: 'Geluidsscherm').
+   */
+  SCREEN(0.5),
 
-  SRM2RoadSideBarrierType getBarrierType();
+  /**
+   * The barrier is a wall (example: 'Geluidswal').
+   */
+  WALL(0.25);
 
-  double getHeight();
+  private final double heightFactor;
 
-  double getDistance();
+  SRM2RoadSideBarrierType(final double heightFactor) {
+    this.heightFactor = heightFactor;
+  }
 
+  public double getHeightFactor() {
+    return this.heightFactor;
+  }
 }
