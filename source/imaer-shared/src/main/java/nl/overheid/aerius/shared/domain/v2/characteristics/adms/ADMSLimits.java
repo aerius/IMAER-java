@@ -94,11 +94,13 @@ public final class ADMSLimits implements BuildingLimits {
   public static final int ROAD_COVERAGE_MAX = 100;
 
   public static final double ROAD_POROSITY_DEFAULT_NONE = 0D;
-  public static final double ROAD_POROSITY_DEFAULT_NOISE_BARRIER = 0D;
-  public static final double ROAD_POROSITY_DEFAULT_STREET_CANYON_TERRACED_HOUSES = 0D;
-  public static final double ROAD_POROSITY_DEFAULT_STREET_CANYON_DETACHED_HOUSES = 0D;
-  public static final double ROAD_POROSITY_DEFAULT_TREE_BARRIER = 0D;
-  public static final double ROAD_POROSITY_DEFAULT_OTHER = 0D;
+  public static final double ROAD_POROSITY_DEFAULT_NOISE_BARRIER = 5D;
+  public static final double ROAD_POROSITY_DEFAULT_BRICK_WALL = 5D;
+  public static final double ROAD_POROSITY_DEFAULT_STREET_CANYON_TERRACED_HOUSES = 20D;
+  public static final double ROAD_POROSITY_DEFAULT_STREET_CANYON_SEMIDETACHED_HOUSES = 40D;
+  public static final double ROAD_POROSITY_DEFAULT_STREET_CANYON_DETACHED_HOUSES = 50D;
+  public static final double ROAD_POROSITY_DEFAULT_TREE_BARRIER_DENSE = 80D;
+  public static final double ROAD_POROSITY_DEFAULT_TREE_BARRIER_OPEN = 95D;
 
   public static final double ELEVATION_ANGLE_DEFAULT = 0.0;
   public static final double ELEVATION_ANGLE_MIN = 0.0;
