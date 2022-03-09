@@ -27,6 +27,8 @@ public final class ADMSLimits implements BuildingLimits {
 
   public static final int SOURCE_HEIGHT_MINIMUM = 0;
   public static final int SOURCE_HEIGHT_MAXIMUM = 15_000;
+  public static final int SOURCE_WIDTH_MINIMUM = 2;
+  public static final int SOURCE_WIDTH_MAXIMUM = 100;
 
   public static final double SOURCE_DIAMETER_MINIMUM = 0.001;
   public static final int SOURCE_DIAMETER_MAXIMUM = 100;
