@@ -21,9 +21,29 @@ package nl.overheid.aerius.shared.domain.v2.source.road;
  */
 public enum ADMSRoadSideBarrierType {
   NONE,
-  NOISE_BARRIER,
-  STREET_CANYON_TERRACED_HOUSES,
-  STREET_CANYON_DETACHED_HOUSES,
-  TREE_BARRIER,
+  NOISE_BARRIER(5D),
+  BRICK_WALL(5D),
+  STREET_CANYON_TERRACED_HOUSES(20D),
+  STREET_CANYON_SEMIDETACHED_HOUSES(40D),
+  STREET_CANYON_DETACHED_HOUSES(50D),
+  TREE_BARRIER_OPEN(80D),
+  TREE_BARRIER_DENSE(90D),
   OTHER;
+
+  private Double defaultPorosity;
+
+  private ADMSRoadSideBarrierType() {
+    this(null);
+  }
+
+  /**
+   * A default porosity value, in percentages (0-100)
+   */
+  private ADMSRoadSideBarrierType(final Double defaultPorosity) {
+    this.defaultPorosity = defaultPorosity;
+  }
+
+  public Double getDefaultPorosity() {
+    return defaultPorosity;
+  }
 }
