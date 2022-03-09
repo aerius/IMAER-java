@@ -17,6 +17,7 @@
 package nl.overheid.aerius.shared.emissions;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
@@ -158,7 +159,7 @@ public class ADMSRoadEmissionsCalculator {
   }
 
   private BigDecimal getVehiclesPerDay(final Vehicles vehicles, final double vehiclesPerTimeUnit) {
-    return BigDecimal.valueOf(TimeUnit.DAY.toUnit(vehiclesPerTimeUnit, vehicles.getTimeUnit()));
+    return BigDecimal.valueOf(vehicles.getTimeUnit().toUnit(vehiclesPerTimeUnit, TimeUnit.DAY)).setScale(3, RoundingMode.HALF_UP);
   }
 
   private double toTotalEmission(final BigDecimal emissionPerMeter, final BigDecimal measure) {
