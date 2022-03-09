@@ -49,7 +49,7 @@ import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.geometry.GeometryCalculator;
 
 @ExtendWith(MockitoExtension.class)
-class RoadEmissionsCalculatorTest {
+class SRMRoadEmissionsCalculatorTest {
 
   private static final String TEST_ROAD_AREA = "NL";
   private static final String TEST_ROAD_TYPE_SRM2 = "URBAN_ROAD";
@@ -58,11 +58,11 @@ class RoadEmissionsCalculatorTest {
   @Mock RoadEmissionFactorSupplier emissionFactorSupplier;
   @Mock GeometryCalculator geometryCalculator;
 
-  RoadEmissionsCalculator emissionsCalculator;
+  SRMRoadEmissionsCalculator emissionsCalculator;
 
   @BeforeEach
   void beforeEach() throws AeriusException {
-    emissionsCalculator = new RoadEmissionsCalculator(emissionFactorSupplier, geometryCalculator);
+    emissionsCalculator = new SRMRoadEmissionsCalculator(emissionFactorSupplier, geometryCalculator);
   }
 
   @Test
