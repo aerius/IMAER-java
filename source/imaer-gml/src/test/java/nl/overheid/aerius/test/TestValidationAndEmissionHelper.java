@@ -32,6 +32,7 @@ import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.ops.DiurnalVariation;
 import nl.overheid.aerius.shared.domain.v2.characteristics.OPSSourceCharacteristics;
 import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
+import nl.overheid.aerius.shared.domain.v2.source.road.RoadStandardEmissionFactorsKey;
 import nl.overheid.aerius.shared.domain.v2.source.shipping.inland.InlandWaterway;
 import nl.overheid.aerius.shared.domain.v2.source.shipping.inland.WaterwayDirection;
 import nl.overheid.aerius.shared.domain.v2.source.shipping.maritime.ShippingMovementType;
@@ -637,25 +638,20 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
   }
 
   @Override
-  public boolean isValidRoadStandardVehicleCombination(final String roadAreaCode, final String roadTypeCode, final String vehicleTypeCode,
-      final Integer maximumSpeed,
-      final Boolean strictEnforced) {
-    return roadStandard(vehicleTypeCode, roadTypeCode, maximumSpeed, strictEnforced).isPresent();
+  public boolean isValidRoadStandardVehicleCombination(final RoadStandardEmissionFactorsKey emissionFactorsKey) {
+    return roadStandard(emissionFactorsKey).isPresent();
   }
 
   @Override
-  public Map<Substance, Double> getRoadStandardVehicleEmissionFactors(final String roadAreaCode, final String standardVehicleCode,
-      final String roadTypeCode,
-      final Integer maximumSpeed, final Boolean strictEnforcement) {
-    return roadStandard(standardVehicleCode, roadTypeCode, maximumSpeed, strictEnforcement)
+  public Map<Substance, Double> getRoadStandardVehicleEmissionFactors(final RoadStandardEmissionFactorsKey emissionFactorsKey) {
+    return roadStandard(emissionFactorsKey)
         .map(c -> c.emissions.toEmissions())
         .orElseThrow();
   }
 
   @Override
-  public Map<Substance, Double> getRoadStandardVehicleStagnatedEmissionFactors(final String roadAreaCode, final String standardVehicleCode,
-      final String roadTypeCode, final Integer maximumSpeed, final Boolean strictEnforcement) {
-    return roadStandard(standardVehicleCode, roadTypeCode, maximumSpeed, strictEnforcement)
+  public Map<Substance, Double> getRoadStandardVehicleStagnatedEmissionFactors(final RoadStandardEmissionFactorsKey emissionFactorsKey) {
+    return roadStandard(emissionFactorsKey)
         .map(c -> c.stagnatedEmissions.toEmissions())
         .orElseThrow();
   }
@@ -778,12 +774,12 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
         .findFirst();
   }
 
-  private Optional<RoadConstructHelper> roadStandard(final String vehicleType, final String roadType,
-      final Integer maximumSpeed, final Boolean strictEnforcement) {
+  private Optional<RoadConstructHelper> roadStandard(final RoadStandardEmissionFactorsKey emissionFactorsKey) {
     final List<RoadConstructHelper> applicable = ROAD_CATEGORIES.stream()
-        .filter(c -> c.vehicleType.equals(vehicleType)
-            && c.roadType.equals(roadType)
-            && c.strictEnforcement == (strictEnforcement == null ? false : strictEnforcement))
+        .filter(c -> c.vehicleType.equals(emissionFactorsKey.getStandardVehicleCode())
+            && c.roadType.equals(emissionFactorsKey.getRoadTypeCode())
+            && c.strictEnforcement == (emissionFactorsKey.getStrictEnforcement() == null ? false
+                : emissionFactorsKey.getStrictEnforcement().booleanValue()))
         .collect(Collectors.toList());
     if (applicable.isEmpty()) {
       return Optional.empty();
@@ -791,7 +787,7 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
       return Optional.of(applicable.get(0));
     } else {
       final List<RoadConstructHelper> nextApplicable = applicable.stream()
-          .filter(c -> c.maximumSpeed >= (maximumSpeed == null ? 0 : maximumSpeed))
+          .filter(c -> c.maximumSpeed >= (emissionFactorsKey.getMaximumSpeed() == null ? 0 : emissionFactorsKey.getMaximumSpeed()))
           .sorted((a, b) -> Integer.compare(a.maximumSpeed, b.maximumSpeed))
           .collect(Collectors.toList());
       if (nextApplicable.isEmpty()) {

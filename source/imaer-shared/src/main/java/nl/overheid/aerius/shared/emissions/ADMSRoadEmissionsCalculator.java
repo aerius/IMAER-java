@@ -29,6 +29,7 @@ import nl.overheid.aerius.shared.domain.v2.base.TimeUnit;
 import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
 import nl.overheid.aerius.shared.domain.v2.source.ADMSRoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.road.CustomVehicles;
+import nl.overheid.aerius.shared.domain.v2.source.road.RoadStandardEmissionFactorsKey;
 import nl.overheid.aerius.shared.domain.v2.source.road.SpecificVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.StandardVehicleMeasure;
 import nl.overheid.aerius.shared.domain.v2.source.road.StandardVehicles;
@@ -150,9 +151,9 @@ public class ADMSRoadEmissionsCalculator {
       final String standardVehicleCode, final String roadAreaCode, final String roadTypeCode, final double gradient) {
     final Map<Substance, BigDecimal> results = new EnumMap<>(Substance.class);
     // TODO: interpolation and using gradient
-    final Map<Substance, Double> emissionFactors = emissionFactorSupplier
-        .getRoadStandardVehicleEmissionFactors(roadAreaCode, standardVehicleCode, roadTypeCode, standardVehicles.getMaximumSpeed(),
-            standardVehicles.getStrictEnforcement());
+    final Map<Substance, Double> emissionFactors = emissionFactorSupplier.getRoadStandardVehicleEmissionFactors(
+        new RoadStandardEmissionFactorsKey(roadAreaCode, roadTypeCode, standardVehicleCode,
+            standardVehicles.getMaximumSpeed(), standardVehicles.getStrictEnforcement(), gradient));
     emissionFactors.forEach(
         (key, value) -> results.put(key, BigDecimal.valueOf(value)));
     return results;

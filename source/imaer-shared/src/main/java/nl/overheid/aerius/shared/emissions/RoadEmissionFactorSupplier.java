@@ -19,6 +19,7 @@ package nl.overheid.aerius.shared.emissions;
 import java.util.Map;
 
 import nl.overheid.aerius.shared.domain.Substance;
+import nl.overheid.aerius.shared.domain.v2.source.road.RoadStandardEmissionFactorsKey;
 
 public interface RoadEmissionFactorSupplier {
 
@@ -30,13 +31,11 @@ public interface RoadEmissionFactorSupplier {
   /**
    * Obtain emission factors per kilometer driven (in gram/kilometer) for a standard vehicle type.
    */
-  Map<Substance, Double> getRoadStandardVehicleEmissionFactors(final String roadAreaCode, final String standardVehicleCode, final String roadTypeCode,
-      final Integer maximumSpeed, final Boolean strictEnforcement);
+  Map<Substance, Double> getRoadStandardVehicleEmissionFactors(final RoadStandardEmissionFactorsKey emissionFactorsKey);
 
   /**
    * Obtain emission factors per kilometer driven (in gram/kilometer) for stagnation for a standard vehicle type.
    */
-  Map<Substance, Double> getRoadStandardVehicleStagnatedEmissionFactors(final String roadAreaCode, final String standardVehicleCode,
-      final String roadTypeCode, final Integer maximumSpeed, final Boolean strictEnforcement);
+  Map<Substance, Double> getRoadStandardVehicleStagnatedEmissionFactors(final RoadStandardEmissionFactorsKey emissionFactorsKey);
 
 }

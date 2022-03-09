@@ -38,6 +38,7 @@ import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
 import nl.overheid.aerius.shared.domain.v2.source.ADMSRoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.RoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.road.CustomVehicles;
+import nl.overheid.aerius.shared.domain.v2.source.road.RoadStandardEmissionFactorsKey;
 import nl.overheid.aerius.shared.domain.v2.source.road.SpecificVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.StandardVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.ValuesPerVehicleType;
@@ -68,11 +69,13 @@ class ADMSRoadEmissionsCalculatorTest {
     emissionSource.setRoadTypeCode(TEST_ROAD_TYPE_ADMS);
     final Geometry geometry = mock(Geometry.class);
     when(geometryCalculator.determineMeasure(geometry)).thenReturn(321.5);
+    final double gradient = -2.9;
+    emissionSource.setGradient(gradient);
 
     // add 1 vehicles object of every type
     emissionSource.getSubSources().add(createCustom());
     emissionSource.getSubSources().add(createSpecific());
-    emissionSource.getSubSources().add(createStandard());
+    emissionSource.getSubSources().add(createStandard(gradient));
 
     ensureSubSourceEmissionsEmpty(emissionSource);
 
@@ -116,8 +119,8 @@ class ADMSRoadEmissionsCalculatorTest {
 
   @Test
   void testCalculateEmissionsStandardVehicles() {
-    final StandardVehicles vehicles = createStandard();
     final double gradient = 3.4;
+    final StandardVehicles vehicles = createStandard(gradient);
 
     final Map<Substance, BigDecimal> results = emissionsCalculator.calculateEmissions(vehicles, TEST_ROAD_AREA, TEST_ROAD_TYPE_ADMS,
         gradient);
@@ -130,8 +133,8 @@ class ADMSRoadEmissionsCalculatorTest {
 
   @Test
   void testCalculateEmissionsMultipleStandardVehicles() {
-    final StandardVehicles vehicles = createMultipleStandard();
     final double gradient = 2.7;
+    final StandardVehicles vehicles = createMultipleStandard(gradient);
 
     final Map<Substance, BigDecimal> results = emissionsCalculator.calculateEmissions(vehicles, TEST_ROAD_AREA, TEST_ROAD_TYPE_ADMS,
         gradient);
@@ -163,7 +166,7 @@ class ADMSRoadEmissionsCalculatorTest {
     return vehicles;
   }
 
-  private StandardVehicles createStandard() {
+  private StandardVehicles createStandard(final double gradient) {
     final StandardVehicles vehicles = new StandardVehicles();
     vehicles.setTimeUnit(TimeUnit.YEAR);
     final ValuesPerVehicleType valuesPerVehicleType = new ValuesPerVehicleType();
@@ -178,14 +181,15 @@ class ADMSRoadEmissionsCalculatorTest {
 
     final Map<Substance, Double> emissionFactorsSrm1 = Map.of(Substance.NOX, 6.0, Substance.NH3, 2.1);
     lenient().when(emissionFactorSupplier
-        .getRoadStandardVehicleEmissionFactors(TEST_ROAD_AREA, vehicleType, TEST_ROAD_TYPE_ADMS, maximumSpeed, strictEnforcement))
+        .getRoadStandardVehicleEmissionFactors(
+            new RoadStandardEmissionFactorsKey(TEST_ROAD_AREA, TEST_ROAD_TYPE_ADMS, vehicleType, maximumSpeed, strictEnforcement, gradient)))
         .thenReturn(emissionFactorsSrm1);
 
     return vehicles;
   }
 
-  private StandardVehicles createMultipleStandard() {
-    final StandardVehicles vehicles = createStandard();
+  private StandardVehicles createMultipleStandard(final double gradient) {
+    final StandardVehicles vehicles = createStandard(gradient);
     final ValuesPerVehicleType valuesPerVehicleType = new ValuesPerVehicleType();
     valuesPerVehicleType.setStagnationFraction(0.2);
     valuesPerVehicleType.setVehiclesPerTimeUnit(2000);
@@ -196,7 +200,8 @@ class ADMSRoadEmissionsCalculatorTest {
 
     final Map<Substance, Double> emissionFactorsSrm2 = Map.of(Substance.NOX, 10.0, Substance.NH3, 5.3);
     lenient().when(emissionFactorSupplier
-        .getRoadStandardVehicleEmissionFactors(TEST_ROAD_AREA, vehicleType, TEST_ROAD_TYPE_ADMS, maximumSpeed, strictEnforcement))
+        .getRoadStandardVehicleEmissionFactors(
+            new RoadStandardEmissionFactorsKey(TEST_ROAD_AREA, TEST_ROAD_TYPE_ADMS, vehicleType, maximumSpeed, strictEnforcement, gradient)))
         .thenReturn(emissionFactorsSrm2);
 
     return vehicles;

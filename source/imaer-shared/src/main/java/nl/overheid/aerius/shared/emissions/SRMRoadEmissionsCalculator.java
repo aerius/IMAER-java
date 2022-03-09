@@ -29,6 +29,7 @@ import nl.overheid.aerius.shared.domain.v2.source.RoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.SRM1RoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.SRM2RoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.road.CustomVehicles;
+import nl.overheid.aerius.shared.domain.v2.source.road.RoadStandardEmissionFactorsKey;
 import nl.overheid.aerius.shared.domain.v2.source.road.SpecificVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.StandardVehicleMeasure;
 import nl.overheid.aerius.shared.domain.v2.source.road.StandardVehicles;
@@ -169,9 +170,9 @@ public class SRMRoadEmissionsCalculator {
       final String standardVehicleCode, final ValuesPerVehicleType valuesPerVehicleType, final String roadAreaCode, final String roadTypeCode) {
     final Map<Substance, BigDecimal> results = new EnumMap<>(Substance.class);
     final BigDecimal nonStagnatedFraction = BigDecimal.ONE.subtract(BigDecimal.valueOf(valuesPerVehicleType.getStagnationFraction()));
-    final Map<Substance, Double> emissionFactorsNotStagnated = emissionFactorSupplier
-        .getRoadStandardVehicleEmissionFactors(roadAreaCode, standardVehicleCode, roadTypeCode, standardVehicles.getMaximumSpeed(),
-            standardVehicles.getStrictEnforcement());
+    final Map<Substance, Double> emissionFactorsNotStagnated = emissionFactorSupplier.getRoadStandardVehicleEmissionFactors(
+        new RoadStandardEmissionFactorsKey(roadAreaCode, roadTypeCode, standardVehicleCode,
+            standardVehicles.getMaximumSpeed(), standardVehicles.getStrictEnforcement(), null));
     emissionFactorsNotStagnated.forEach(
         (key, value) -> results.put(key, BigDecimal.valueOf(value).multiply(nonStagnatedFraction)));
     return results;
@@ -181,9 +182,9 @@ public class SRMRoadEmissionsCalculator {
       final ValuesPerVehicleType valuesPerVehicleType, final String roadAreaCode, final String roadTypeCode) {
     final Map<Substance, BigDecimal> results = new EnumMap<>(Substance.class);
     final BigDecimal stagnatedFraction = BigDecimal.valueOf(valuesPerVehicleType.getStagnationFraction());
-    final Map<Substance, Double> emissionFactorsStagnated = emissionFactorSupplier
-        .getRoadStandardVehicleStagnatedEmissionFactors(roadAreaCode, standardVehicleCode, roadTypeCode,
-            standardVehicles.getMaximumSpeed(), standardVehicles.getStrictEnforcement());
+    final Map<Substance, Double> emissionFactorsStagnated = emissionFactorSupplier.getRoadStandardVehicleStagnatedEmissionFactors(
+        new RoadStandardEmissionFactorsKey(roadAreaCode, roadTypeCode, standardVehicleCode,
+            standardVehicles.getMaximumSpeed(), standardVehicles.getStrictEnforcement(), null));
     emissionFactorsStagnated.forEach(
         (key, value) -> results.put(key, BigDecimal.valueOf(value).multiply(stagnatedFraction)));
     return results;

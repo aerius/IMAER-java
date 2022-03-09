@@ -23,6 +23,7 @@ import nl.overheid.aerius.shared.domain.v2.source.RoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.SRM1RoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.SRM2RoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.road.CustomVehicles;
+import nl.overheid.aerius.shared.domain.v2.source.road.RoadStandardEmissionFactorsKey;
 import nl.overheid.aerius.shared.domain.v2.source.road.SpecificVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.StandardVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.ValuesPerVehicleType;
@@ -132,7 +133,8 @@ class RoadValidator extends SourceValidator<RoadEmissionSource> {
     for (final String vehicleType : vehicles.getValuesPerVehicleTypes().keySet()) {
       final Boolean strictEnforcement = vehicles.getStrictEnforcement();
       final Integer maximumSpeed = vehicles.getMaximumSpeed();
-      if (!validationHelper.isValidRoadStandardVehicleCombination(roadAreaCode, roadTypeCode, vehicleType, maximumSpeed, strictEnforcement)) {
+      if (!validationHelper.isValidRoadStandardVehicleCombination(
+          new RoadStandardEmissionFactorsKey(roadAreaCode, roadTypeCode, vehicleType, maximumSpeed, strictEnforcement, 0.0))) {
         getErrors().add(new AeriusException(ImaerExceptionReason.GML_UNKNOWN_ROAD_CATEGORY, sourceLabel, roadAreaCode, roadTypeCode,
             String.valueOf(maximumSpeed), String.valueOf(strictEnforcement), vehicleType));
         valid = false;

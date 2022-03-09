@@ -40,6 +40,7 @@ import nl.overheid.aerius.shared.domain.v2.source.RoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.SRM1RoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.SRM2RoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.road.CustomVehicles;
+import nl.overheid.aerius.shared.domain.v2.source.road.RoadStandardEmissionFactorsKey;
 import nl.overheid.aerius.shared.domain.v2.source.road.SpecificVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.StandardVehicleMeasure;
 import nl.overheid.aerius.shared.domain.v2.source.road.StandardVehicles;
@@ -245,20 +246,24 @@ class SRMRoadEmissionsCalculatorTest {
 
     final Map<Substance, Double> emissionFactorsSrm1 = Map.of(Substance.NOX, 6.0, Substance.NH3, 2.1);
     lenient().when(emissionFactorSupplier
-        .getRoadStandardVehicleEmissionFactors(TEST_ROAD_AREA, vehicleType, TEST_ROAD_TYPE_SRM1, maximumSpeed, strictEnforcement))
+        .getRoadStandardVehicleEmissionFactors(
+            new RoadStandardEmissionFactorsKey(TEST_ROAD_AREA, TEST_ROAD_TYPE_SRM1, vehicleType, maximumSpeed, strictEnforcement, null)))
         .thenReturn(emissionFactorsSrm1);
     final Map<Substance, Double> emissionFactorsSrm2 = Map.of(Substance.NOX, 12.0, Substance.NH3, 4.2);
     lenient().when(emissionFactorSupplier
-        .getRoadStandardVehicleEmissionFactors(TEST_ROAD_AREA, vehicleType, TEST_ROAD_TYPE_SRM2, maximumSpeed, strictEnforcement))
+        .getRoadStandardVehicleEmissionFactors(
+            new RoadStandardEmissionFactorsKey(TEST_ROAD_AREA, TEST_ROAD_TYPE_SRM2, vehicleType, maximumSpeed, strictEnforcement, null)))
         .thenReturn(emissionFactorsSrm2);
 
     final Map<Substance, Double> stagnatedEmissionFactorsSrm1 = Map.of(Substance.NOX, 8.0, Substance.NH3, 4.3);
     lenient().when(emissionFactorSupplier
-        .getRoadStandardVehicleStagnatedEmissionFactors(TEST_ROAD_AREA, vehicleType, TEST_ROAD_TYPE_SRM1, maximumSpeed, strictEnforcement))
+        .getRoadStandardVehicleStagnatedEmissionFactors(
+            new RoadStandardEmissionFactorsKey(TEST_ROAD_AREA, TEST_ROAD_TYPE_SRM1, vehicleType, maximumSpeed, strictEnforcement, null)))
         .thenReturn(stagnatedEmissionFactorsSrm1);
     final Map<Substance, Double> stagnatedEmissionFactorsSrm2 = Map.of(Substance.NOX, 16.0, Substance.NH3, 8.6);
     lenient().when(emissionFactorSupplier
-        .getRoadStandardVehicleStagnatedEmissionFactors(TEST_ROAD_AREA, vehicleType, TEST_ROAD_TYPE_SRM2, maximumSpeed, strictEnforcement))
+        .getRoadStandardVehicleStagnatedEmissionFactors(
+            new RoadStandardEmissionFactorsKey(TEST_ROAD_AREA, TEST_ROAD_TYPE_SRM2, vehicleType, maximumSpeed, strictEnforcement, null)))
         .thenReturn(stagnatedEmissionFactorsSrm2);
 
     return vehicles;
@@ -276,12 +281,14 @@ class SRMRoadEmissionsCalculatorTest {
 
     final Map<Substance, Double> emissionFactorsSrm2 = Map.of(Substance.NOX, 10.0, Substance.NH3, 5.3);
     lenient().when(emissionFactorSupplier
-        .getRoadStandardVehicleEmissionFactors(TEST_ROAD_AREA, vehicleType, TEST_ROAD_TYPE_SRM2, maximumSpeed, strictEnforcement))
+        .getRoadStandardVehicleEmissionFactors(
+            new RoadStandardEmissionFactorsKey(TEST_ROAD_AREA, TEST_ROAD_TYPE_SRM2, vehicleType, maximumSpeed, strictEnforcement, null)))
         .thenReturn(emissionFactorsSrm2);
 
     final Map<Substance, Double> stagnatedEmissionFactorsSrm2 = Map.of(Substance.NOX, 14.0, Substance.NH3, 9.4);
     lenient().when(emissionFactorSupplier
-        .getRoadStandardVehicleStagnatedEmissionFactors(TEST_ROAD_AREA, vehicleType, TEST_ROAD_TYPE_SRM2, maximumSpeed, strictEnforcement))
+        .getRoadStandardVehicleStagnatedEmissionFactors(
+            new RoadStandardEmissionFactorsKey(TEST_ROAD_AREA, TEST_ROAD_TYPE_SRM2, vehicleType, maximumSpeed, strictEnforcement, null)))
         .thenReturn(stagnatedEmissionFactorsSrm2);
 
     return vehicles;

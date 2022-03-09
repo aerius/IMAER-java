@@ -35,6 +35,7 @@ import nl.overheid.aerius.shared.domain.v2.source.RoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.SRM1RoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.SRM2RoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.road.CustomVehicles;
+import nl.overheid.aerius.shared.domain.v2.source.road.RoadStandardEmissionFactorsKey;
 import nl.overheid.aerius.shared.domain.v2.source.road.SRM1LinearReference;
 import nl.overheid.aerius.shared.domain.v2.source.road.SRM2LinearReference;
 import nl.overheid.aerius.shared.domain.v2.source.road.SpecificVehicles;
@@ -404,13 +405,15 @@ class RoadValidatorTest {
   }
 
   private void mockStandardCombinationSrm1(final String vehicleTypeCode, final Integer maximumSpeed, final Boolean strictEnforcement) {
-    when(validationHelper.isValidRoadStandardVehicleCombination(ROAD_AREA_CODE, ROAD_TYPE_CODE_SRM1, vehicleTypeCode, maximumSpeed, strictEnforcement))
+    when(validationHelper.isValidRoadStandardVehicleCombination(
+        new RoadStandardEmissionFactorsKey(ROAD_AREA_CODE, ROAD_TYPE_CODE_SRM1, vehicleTypeCode, maximumSpeed, strictEnforcement, 0.0)))
             .thenReturn(true);
   }
 
   private void mockStandardCombinationSrm2(final String vehicleTypeCode, final Integer maximumSpeed, final Boolean strictEnforcement) {
-    when(validationHelper.isValidRoadStandardVehicleCombination(ROAD_AREA_CODE, ROAD_TYPE_CODE_SRM2, vehicleTypeCode, maximumSpeed, strictEnforcement))
-        .thenReturn(true);
+    when(validationHelper.isValidRoadStandardVehicleCombination(
+        new RoadStandardEmissionFactorsKey(ROAD_AREA_CODE, ROAD_TYPE_CODE_SRM2, vehicleTypeCode, maximumSpeed, strictEnforcement, 0.0)))
+            .thenReturn(true);
   }
 
 }
