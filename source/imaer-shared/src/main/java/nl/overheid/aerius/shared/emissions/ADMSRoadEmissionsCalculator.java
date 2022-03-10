@@ -22,6 +22,7 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.OptionalDouble;
 
 import nl.overheid.aerius.shared.domain.Substance;
@@ -30,6 +31,7 @@ import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
 import nl.overheid.aerius.shared.domain.v2.source.ADMSRoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.road.CustomVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.RoadStandardEmissionFactorsKey;
+import nl.overheid.aerius.shared.domain.v2.source.road.RoadStandardsInterpolationValues;
 import nl.overheid.aerius.shared.domain.v2.source.road.SpecificVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.StandardVehicleMeasure;
 import nl.overheid.aerius.shared.domain.v2.source.road.StandardVehicles;
@@ -149,22 +151,90 @@ public class ADMSRoadEmissionsCalculator {
 
   private Map<Substance, BigDecimal> calculateEmissionsPerVehicle(final StandardVehicles standardVehicles,
       final String standardVehicleCode, final String roadAreaCode, final String roadTypeCode, final double gradient) {
+    final RoadStandardEmissionFactorsKey targetKey = new RoadStandardEmissionFactorsKey(roadAreaCode, roadTypeCode, standardVehicleCode,
+        standardVehicles.getMaximumSpeed(), standardVehicles.getStrictEnforcement(), gradient);
+    final RoadStandardsInterpolationValues interpolationValues = emissionFactorSupplier.getRoadStandardVehicleInterpolationValues(targetKey);
+    return interpolate(targetKey, interpolationValues);
+  }
+
+  private BigDecimal getVehiclesPerDay(final Vehicles vehicles, final double vehiclesPerTimeUnit) {
+    return vehicles.getTimeUnit().toUnit(BigDecimal.valueOf(vehiclesPerTimeUnit), TimeUnit.DAY);
+  }
+
+  private double toTotalEmission(final BigDecimal emissionPerMeter, final BigDecimal measure) {
+    return emissionPerMeter.multiply(measure).divide(GRAM_PER_KM_TO_KG_PER_METER, 5, RoundingMode.HALF_UP).doubleValue();
+  }
+
+  private Map<Substance, BigDecimal> interpolate(final RoadStandardEmissionFactorsKey targetKey,
+      final RoadStandardsInterpolationValues interpolationValues) {
+    final Map<Substance, BigDecimal> speedFloorGradientFloor =
+        getEmissionFactors(targetKey, interpolationValues.getSpeedFloor(), interpolationValues.getGradientFloor());
+    if (interpolationValues.speedMatches() && interpolationValues.gradientMatches()) {
+      return speedFloorGradientFloor;
+    }
+    final Map<Substance, BigDecimal> speedCeilingGradientFloor = interpolationValues.speedMatches()
+        ? speedFloorGradientFloor
+        : getEmissionFactors(targetKey, interpolationValues.getSpeedCeiling(), interpolationValues.getGradientFloor());
+    final Map<Substance, BigDecimal> speedFloorGradientCeiling = interpolationValues.gradientMatches()
+        ? speedFloorGradientFloor
+        : getEmissionFactors(targetKey, interpolationValues.getSpeedFloor(), interpolationValues.getGradientCeiling());
+    final Map<Substance, BigDecimal> speedCeilingGradientCeiling = interpolationValues.gradientMatches()
+        ? speedCeilingGradientFloor
+        : getEmissionFactors(targetKey, interpolationValues.getSpeedCeiling(), interpolationValues.getGradientCeiling());
+
     final Map<Substance, BigDecimal> results = new EnumMap<>(Substance.class);
-    // TODO: interpolation and using gradient
-    final Map<Substance, Double> emissionFactors = emissionFactorSupplier.getRoadStandardVehicleEmissionFactors(
-        new RoadStandardEmissionFactorsKey(roadAreaCode, roadTypeCode, standardVehicleCode,
-            standardVehicles.getMaximumSpeed(), standardVehicles.getStrictEnforcement(), gradient));
-    emissionFactors.forEach(
+    // Assume same substances are available for all sets
+    for (final Substance substance : speedFloorGradientFloor.keySet()) {
+      final BigDecimal targetSpeed = Optional.ofNullable(targetKey.getMaximumSpeed())
+          .map(BigDecimal::valueOf)
+          .orElse(BigDecimal.ZERO);
+      final BigDecimal targetGradient = Optional.ofNullable(targetKey.getGradient())
+          .map(BigDecimal::valueOf)
+          .orElse(BigDecimal.ZERO);
+      final BigDecimal speedInterpolatedGradientFloor = interpolate(
+          interpolationValues.getSpeedFloorBD(), interpolationValues.getSpeedCeilingBD(), speedFloorGradientFloor.get(substance),
+          speedCeilingGradientFloor.get(substance), targetSpeed);
+      final BigDecimal speedInterpolatedGradientCeiling = interpolate(
+          interpolationValues.getSpeedFloorBD(), interpolationValues.getSpeedCeilingBD(), speedFloorGradientCeiling.get(substance),
+          speedCeilingGradientCeiling.get(substance), targetSpeed);
+      results.put(substance, interpolate(interpolationValues.getGradientFloorBD(), interpolationValues.getGradientCeilingDB(),
+          speedInterpolatedGradientFloor, speedInterpolatedGradientCeiling, targetGradient));
+    }
+    return results;
+  }
+
+  private Map<Substance, BigDecimal> getEmissionFactors(final RoadStandardEmissionFactorsKey targetKey, final int speed, final double floor) {
+    return toBigDecimalMap(emissionFactorSupplier.getRoadStandardVehicleEmissionFactors(targetKey.copyWith(speed, floor)));
+  }
+
+  private static Map<Substance, BigDecimal> toBigDecimalMap(final Map<Substance, Double> doubleMap) {
+    final Map<Substance, BigDecimal> results = new EnumMap<>(Substance.class);
+    doubleMap.forEach(
         (key, value) -> results.put(key, BigDecimal.valueOf(value)));
     return results;
   }
 
-  private BigDecimal getVehiclesPerDay(final Vehicles vehicles, final double vehiclesPerTimeUnit) {
-    return BigDecimal.valueOf(vehicles.getTimeUnit().toUnit(vehiclesPerTimeUnit, TimeUnit.DAY)).setScale(3, RoundingMode.HALF_UP);
-  }
-
-  private double toTotalEmission(final BigDecimal emissionPerMeter, final BigDecimal measure) {
-    return emissionPerMeter.multiply(measure).divide(GRAM_PER_KM_TO_KG_PER_METER).doubleValue();
+  /**
+   * Linear interpolate:
+   * y = y1 + ((targetX - x1) / (x2 - x1)) * (y2 - y1)
+   * or
+   * y = y1 + part1 * part2
+   * @param x1 X lower bound
+   * @param x2 X upper bound
+   * @param y1 Y value belonging to X lower bound
+   * @param y2 Y value belonging to X upper bound
+   * @param targetX The X to get the interpolation value for.
+   * @return The interpolated Y value.
+   */
+  private static BigDecimal interpolate(final BigDecimal x1, final BigDecimal x2, final BigDecimal y1, final BigDecimal y2,
+      final BigDecimal targetX) {
+    if (x1.equals(x2)) {
+      return y1;
+    } else {
+      final BigDecimal part1 = targetX.subtract(x1).divide(x2.subtract(x1), 5, RoundingMode.HALF_UP);
+      final BigDecimal part2 = y2.subtract(y1);
+      return y1.add(part1.multiply(part2));
+    }
   }
 
 }

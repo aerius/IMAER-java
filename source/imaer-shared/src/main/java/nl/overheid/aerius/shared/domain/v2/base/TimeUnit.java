@@ -16,6 +16,9 @@
  */
 package nl.overheid.aerius.shared.domain.v2.base;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 import nl.overheid.aerius.shared.ImaerConstants;
 
 public enum TimeUnit {
@@ -25,10 +28,12 @@ public enum TimeUnit {
   MONTH(ImaerConstants.MONTHS_PER_YEAR),
   YEAR(1);
 
-  private int multiplier;
+  private final int multiplier;
+  private final BigDecimal multiplierBD;
 
   TimeUnit(final int multiplier) {
     this.multiplier = multiplier;
+    this.multiplierBD = BigDecimal.valueOf(multiplier);
   }
 
   public int getPerYear(final int amount) {
@@ -39,11 +44,20 @@ public enum TimeUnit {
     return amount * multiplier;
   }
 
+  public BigDecimal getPerYear(final BigDecimal amount) {
+    return amount.multiply(multiplierBD);
+  }
+
   public double toUnit(final double amount, final TimeUnit unit) {
     return getPerYear(amount) / unit.multiplier;
+  }
+
+  public BigDecimal toUnit(final BigDecimal amount, final TimeUnit unit) {
+    return getPerYear(amount).divide(unit.multiplierBD, 5, RoundingMode.HALF_UP);
   }
 
   public static TimeUnit valueOf(final Enum<?> from) {
     return valueOf(from.name());
   }
+
 }

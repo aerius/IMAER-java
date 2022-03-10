@@ -20,6 +20,7 @@ import java.util.Map;
 
 import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.v2.source.road.RoadStandardEmissionFactorsKey;
+import nl.overheid.aerius.shared.domain.v2.source.road.RoadStandardsInterpolationValues;
 
 public interface RoadEmissionFactorSupplier {
 
@@ -37,5 +38,10 @@ public interface RoadEmissionFactorSupplier {
    * Obtain emission factors per kilometer driven (in gram/kilometer) for stagnation for a standard vehicle type.
    */
   Map<Substance, Double> getRoadStandardVehicleStagnatedEmissionFactors(final RoadStandardEmissionFactorsKey emissionFactorsKey);
+
+  /**
+   * Obtain interpolation values for a standard vehicle type.
+   */
+  RoadStandardsInterpolationValues getRoadStandardVehicleInterpolationValues(final RoadStandardEmissionFactorsKey emissionFactorsKey);
 
 }

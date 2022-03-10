@@ -25,10 +25,14 @@ import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -39,6 +43,7 @@ import nl.overheid.aerius.shared.domain.v2.source.ADMSRoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.RoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.road.CustomVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.RoadStandardEmissionFactorsKey;
+import nl.overheid.aerius.shared.domain.v2.source.road.RoadStandardsInterpolationValues;
 import nl.overheid.aerius.shared.domain.v2.source.road.SpecificVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.StandardVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.ValuesPerVehicleType;
@@ -69,30 +74,30 @@ class ADMSRoadEmissionsCalculatorTest {
     emissionSource.setRoadTypeCode(TEST_ROAD_TYPE_ADMS);
     final Geometry geometry = mock(Geometry.class);
     when(geometryCalculator.determineMeasure(geometry)).thenReturn(321.5);
-    final double gradient = -2.9;
+    final double gradient = 3.4;
     emissionSource.setGradient(gradient);
 
     // add 1 vehicles object of every type
     emissionSource.getSubSources().add(createCustom());
     emissionSource.getSubSources().add(createSpecific());
-    emissionSource.getSubSources().add(createStandard(gradient));
+    emissionSource.getSubSources().add(createStandard(gradient, true, true));
 
     ensureSubSourceEmissionsEmpty(emissionSource);
 
     final Map<Substance, Double> results = emissionsCalculator.calculateEmissions(emissionSource, geometry);
 
     // Check total emissions
-    // 321.5 * (3703.70100000 + 115.0660 + 493.1520 ) / (1000 * 1000)
-    assertEquals(1.3862819585, results.get(Substance.NOX));
-    // 321.5 * (0.0 + 55.8892 + 172.6032 ) / (1000 * 1000)
-    assertEquals(0.0734603066, results.get(Substance.NH3));
+    // 321.5 * (3703.7010 + 115.0685 + 673.9726 ) / (1000 * 1000)
+    assertEquals(1.4444, results.get(Substance.NOX), 1E-3);
+    // 321.5 * (0.0 + 55.8892 + 172.60320000 ) / (1000 * 1000)
+    assertEquals(0.0735, results.get(Substance.NH3), 1E-3);
     // Check emissions per subsource (should be set during calculation)
-    assertEquals(1.1907398715, emissionSource.getSubSources().get(0).getEmissions().get(Substance.NOX));
-    assertEquals(0.036993719, emissionSource.getSubSources().get(1).getEmissions().get(Substance.NOX));
-    assertEquals(0.158548368, emissionSource.getSubSources().get(2).getEmissions().get(Substance.NOX));
+    assertEquals(1.19074, emissionSource.getSubSources().get(0).getEmissions().get(Substance.NOX), 1E-5);
+    assertEquals(0.03699, emissionSource.getSubSources().get(1).getEmissions().get(Substance.NOX), 1E-5);
+    assertEquals(0.21668, emissionSource.getSubSources().get(2).getEmissions().get(Substance.NOX), 1E-5);
     assertNull(emissionSource.getSubSources().get(0).getEmissions().get(Substance.NH3));
-    assertEquals(0.0179683778, emissionSource.getSubSources().get(1).getEmissions().get(Substance.NH3));
-    assertEquals(0.0554919288, emissionSource.getSubSources().get(2).getEmissions().get(Substance.NH3));
+    assertEquals(0.01797, emissionSource.getSubSources().get(1).getEmissions().get(Substance.NH3), 1E-5);
+    assertEquals(0.05549, emissionSource.getSubSources().get(2).getEmissions().get(Substance.NH3), 1E-5);
   }
 
   @Test
@@ -102,7 +107,7 @@ class ADMSRoadEmissionsCalculatorTest {
     final Map<Substance, BigDecimal> results = emissionsCalculator.calculateEmissions(vehicles);
 
     // 365 * 300 * 12.34567 / 365
-    assertEquals(new BigDecimal("3703.70100000"), results.get(Substance.NOX));
+    assertEquals(3703.7010, results.get(Substance.NOX).doubleValue(), 1E-3);
   }
 
   @Test
@@ -112,23 +117,46 @@ class ADMSRoadEmissionsCalculatorTest {
     final Map<Substance, BigDecimal> results = emissionsCalculator.calculateEmissions(vehicles, TEST_ROAD_TYPE_ADMS);
 
     // 12 * 500 * 7.0 / 365
-    assertEquals(new BigDecimal("115.0660"), results.get(Substance.NOX));
+    assertEquals(115.0685, results.get(Substance.NOX).doubleValue(), 1E-3);
     // 12 * 500 * 3.4 / 365
-    assertEquals(new BigDecimal("55.8892"), results.get(Substance.NH3));
+    assertEquals(55.8904, results.get(Substance.NH3).doubleValue(), 1E-3);
   }
 
-  @Test
-  void testCalculateEmissionsStandardVehicles() {
+  @ParameterizedTest
+  @MethodSource("standardVehicleInterpolation")
+  void testCalculateEmissionsStandardVehicles(final boolean interpolateSpeed, final boolean interpolateGradient, final double expectedNOx) {
     final double gradient = 3.4;
-    final StandardVehicles vehicles = createStandard(gradient);
+    final StandardVehicles vehicles = createStandard(gradient, interpolateSpeed, interpolateGradient);
 
     final Map<Substance, BigDecimal> results = emissionsCalculator.calculateEmissions(vehicles, TEST_ROAD_AREA, TEST_ROAD_TYPE_ADMS,
         gradient);
 
-    // 30000 * 6.0 / 365
-    assertEquals(new BigDecimal("493.1520"), results.get(Substance.NOX));
+    // See method source as to what the calculation should be
+    assertEquals(expectedNOx, results.get(Substance.NOX).doubleValue(), 1E-3);
+    // Kept the NH3 the same for each test, so should return about the same
     // 30000 * 2.1 / 365
-    assertEquals(new BigDecimal("172.6032"), results.get(Substance.NH3));
+    assertEquals(172.6027, results.get(Substance.NH3).doubleValue(), 1E-3);
+  }
+
+  private static Stream<Arguments> standardVehicleInterpolation() {
+    // When no interpolation is done for emission factor, the last emission factor mocked should be used.
+    // 30000 *  9.0 / 365
+    final Arguments noInterpolation = Arguments.of(false, false, 739.7260);
+    // When interpolation is done for speed
+    // interpolated = 6 + ((40 - 25) / (50 - 25)) * (9 - 6) = 7.8
+    // 30000 * 7.8 / 365
+    final Arguments speedInterpolation = Arguments.of(true, false, 641.0959);
+    // When interpolation is done for gradient
+    // interpolated = 6 + ((3.4 - 1) / (4 - 1)) * (9 - 6) = 8.4
+    // 30000 * 8.4 / 365
+    final Arguments gradientInterpolation = Arguments.of(false, true, 690.4110);
+    // When interpolation is done for both
+    // gradientFloor = 6 + ((40 - 25) / (50 - 25)) * (7 - 6) = 6.6
+    // gradientCeiling = 8 + ((40 - 25) / (50 - 25)) * (9 - 8) = 8.6
+    // interpolatedTotal = 6.6 + ((3.4 - 1) / (4 - 1)) * (8.6 - 6.6) = 8.2
+    // 30000 * 8.2 / 365
+    final Arguments bothInterpolation = Arguments.of(true, true, 673.9726);
+    return Stream.of(noInterpolation, speedInterpolation, gradientInterpolation, bothInterpolation);
   }
 
   @Test
@@ -139,10 +167,14 @@ class ADMSRoadEmissionsCalculatorTest {
     final Map<Substance, BigDecimal> results = emissionsCalculator.calculateEmissions(vehicles, TEST_ROAD_AREA, TEST_ROAD_TYPE_ADMS,
         gradient);
 
-    // (30000 * 6.0 + 2000 * 10.0) / 365
-    assertEquals(new BigDecimal("547.9420"), results.get(Substance.NOX));
+    // Interpolation is done for emission factor
+    // gradientFloor = 6 + ((40 - 25) / (50 - 25)) * (7 - 6) = 6.6
+    // gradientCeiling = 8 + ((40 - 25) / (50 - 25)) * (9 - 8) = 8.6
+    // interpolatedTotal = 6.6 + ((2.7 - 0) / (3 - 0)) * (8.6 - 6.6) = 8.4
+    // (30000 * 8.4 + 2000 * 10.0) / 365
+    assertEquals(745.2055, results.get(Substance.NOX).doubleValue(), 1E-3);
     // (30000 * 2.1 + 2000 * 5.3) / 365
-    assertEquals(new BigDecimal("201.6419"), results.get(Substance.NH3));
+    assertEquals(201.6438, results.get(Substance.NH3).doubleValue(), 1E-3);
   }
 
   private CustomVehicles createCustom() {
@@ -166,7 +198,7 @@ class ADMSRoadEmissionsCalculatorTest {
     return vehicles;
   }
 
-  private StandardVehicles createStandard(final double gradient) {
+  private StandardVehicles createStandard(final double gradient, final boolean speedInterpolation, final boolean gradientInterpolation) {
     final StandardVehicles vehicles = new StandardVehicles();
     vehicles.setTimeUnit(TimeUnit.YEAR);
     final ValuesPerVehicleType valuesPerVehicleType = new ValuesPerVehicleType();
@@ -179,30 +211,59 @@ class ADMSRoadEmissionsCalculatorTest {
     final int maximumSpeed = 40;
     vehicles.setMaximumSpeed(maximumSpeed);
 
-    final Map<Substance, Double> emissionFactorsSrm1 = Map.of(Substance.NOX, 6.0, Substance.NH3, 2.1);
+    final int lowerBoundSpeed = speedInterpolation ? maximumSpeed - 15 : maximumSpeed;
+    final int upperBoundSpeed = speedInterpolation ? maximumSpeed + 10 : maximumSpeed;
+    final int lowerBoundGradient = gradientInterpolation ? (int) gradient - 2 : (int) gradient;
+    final int upperBoundGradient = gradientInterpolation ? (int) gradient + 1 : (int) gradient;
+
     lenient().when(emissionFactorSupplier
-        .getRoadStandardVehicleEmissionFactors(
+        .getRoadStandardVehicleInterpolationValues(
             new RoadStandardEmissionFactorsKey(TEST_ROAD_AREA, TEST_ROAD_TYPE_ADMS, vehicleType, maximumSpeed, strictEnforcement, gradient)))
-        .thenReturn(emissionFactorsSrm1);
+        .thenReturn(new RoadStandardsInterpolationValues(lowerBoundSpeed, upperBoundSpeed, lowerBoundGradient, upperBoundGradient));
+
+    lenient().when(emissionFactorSupplier
+        .getRoadStandardVehicleEmissionFactors(new RoadStandardEmissionFactorsKey(
+            TEST_ROAD_AREA, TEST_ROAD_TYPE_ADMS, vehicleType, lowerBoundSpeed, strictEnforcement, (double) lowerBoundGradient)))
+        .thenReturn(Map.of(Substance.NOX, 6.0, Substance.NH3, 2.1));
+    if (speedInterpolation && gradientInterpolation) {
+      // Not directly necessary as we're using lenient, but helps with understanding which factors are used.
+      lenient().when(emissionFactorSupplier
+          .getRoadStandardVehicleEmissionFactors(new RoadStandardEmissionFactorsKey(
+              TEST_ROAD_AREA, TEST_ROAD_TYPE_ADMS, vehicleType, upperBoundSpeed, strictEnforcement, (double) lowerBoundGradient)))
+          .thenReturn(Map.of(Substance.NOX, 7.0, Substance.NH3, 2.1));
+      lenient().when(emissionFactorSupplier
+          .getRoadStandardVehicleEmissionFactors(new RoadStandardEmissionFactorsKey(
+              TEST_ROAD_AREA, TEST_ROAD_TYPE_ADMS, vehicleType, lowerBoundSpeed, strictEnforcement, (double) upperBoundGradient)))
+          .thenReturn(Map.of(Substance.NOX, 8.0, Substance.NH3, 2.1));
+    }
+    lenient().when(emissionFactorSupplier
+        .getRoadStandardVehicleEmissionFactors(new RoadStandardEmissionFactorsKey(
+            TEST_ROAD_AREA, TEST_ROAD_TYPE_ADMS, vehicleType, upperBoundSpeed, strictEnforcement, (double) upperBoundGradient)))
+        .thenReturn(Map.of(Substance.NOX, 9.0, Substance.NH3, 2.1));
 
     return vehicles;
   }
 
   private StandardVehicles createMultipleStandard(final double gradient) {
-    final StandardVehicles vehicles = createStandard(gradient);
+    final StandardVehicles vehicles = createStandard(gradient, true, true);
     final ValuesPerVehicleType valuesPerVehicleType = new ValuesPerVehicleType();
-    valuesPerVehicleType.setStagnationFraction(0.2);
     valuesPerVehicleType.setVehiclesPerTimeUnit(2000);
     final String vehicleType = "HEAVY_FREIGHT";
     vehicles.getValuesPerVehicleTypes().put(vehicleType, valuesPerVehicleType);
     final boolean strictEnforcement = vehicles.getStrictEnforcement();
     final int maximumSpeed = vehicles.getMaximumSpeed();
+    final int gradientMatch = (int) gradient;
 
-    final Map<Substance, Double> emissionFactorsSrm2 = Map.of(Substance.NOX, 10.0, Substance.NH3, 5.3);
     lenient().when(emissionFactorSupplier
-        .getRoadStandardVehicleEmissionFactors(
+        .getRoadStandardVehicleInterpolationValues(
             new RoadStandardEmissionFactorsKey(TEST_ROAD_AREA, TEST_ROAD_TYPE_ADMS, vehicleType, maximumSpeed, strictEnforcement, gradient)))
-        .thenReturn(emissionFactorsSrm2);
+        .thenReturn(new RoadStandardsInterpolationValues(maximumSpeed, maximumSpeed, gradientMatch, gradientMatch));
+
+    final Map<Substance, Double> emissionFactors = Map.of(Substance.NOX, 10.0, Substance.NH3, 5.3);
+    lenient().when(emissionFactorSupplier
+        .getRoadStandardVehicleEmissionFactors(new RoadStandardEmissionFactorsKey(
+            TEST_ROAD_AREA, TEST_ROAD_TYPE_ADMS, vehicleType, maximumSpeed, strictEnforcement, (double) gradientMatch)))
+        .thenReturn(emissionFactors);
 
     return vehicles;
   }

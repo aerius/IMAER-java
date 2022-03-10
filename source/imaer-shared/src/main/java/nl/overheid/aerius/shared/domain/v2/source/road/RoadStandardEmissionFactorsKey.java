@@ -65,6 +65,10 @@ public class RoadStandardEmissionFactorsKey {
     return gradient;
   }
 
+  public RoadStandardEmissionFactorsKey copyWith(final Integer maxSpeed, final Double gradient) {
+    return new RoadStandardEmissionFactorsKey(roadAreaCode, roadTypeCode, standardVehicleCode, maxSpeed, strictEnforcement, gradient);
+  }
+
   @Override
   public int hashCode() {
     return Objects.hash(roadAreaCode, roadTypeCode, standardVehicleCode, maximumSpeed, strictEnforcement, gradient);
