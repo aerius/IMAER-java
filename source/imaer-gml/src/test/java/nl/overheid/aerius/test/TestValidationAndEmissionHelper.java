@@ -33,6 +33,7 @@ import nl.overheid.aerius.shared.domain.ops.DiurnalVariation;
 import nl.overheid.aerius.shared.domain.v2.characteristics.OPSSourceCharacteristics;
 import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
 import nl.overheid.aerius.shared.domain.v2.source.road.RoadStandardEmissionFactorsKey;
+import nl.overheid.aerius.shared.domain.v2.source.road.RoadStandardsInterpolationValues;
 import nl.overheid.aerius.shared.domain.v2.source.shipping.inland.InlandWaterway;
 import nl.overheid.aerius.shared.domain.v2.source.shipping.inland.WaterwayDirection;
 import nl.overheid.aerius.shared.domain.v2.source.shipping.maritime.ShippingMovementType;
@@ -654,6 +655,14 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
     return roadStandard(emissionFactorsKey)
         .map(c -> c.stagnatedEmissions.toEmissions())
         .orElseThrow();
+  }
+
+  @Override
+  public RoadStandardsInterpolationValues getRoadStandardVehicleInterpolationValues(final RoadStandardEmissionFactorsKey emissionFactorsKey) {
+    // For now just return the supplied values (will result in no interpolation).
+    final int speed = emissionFactorsKey.getMaximumSpeed();
+    final int gradient = Optional.ofNullable(emissionFactorsKey.getGradient()).map(Double::intValue).orElse(0);
+    return new RoadStandardsInterpolationValues(speed, speed, gradient, gradient);
   }
 
   @Override
