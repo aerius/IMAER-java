@@ -70,11 +70,7 @@ public class ImaerImporter {
   private final EPSG epsg;
 
   public ImaerImporter(final GMLHelper gmlHelper) throws AeriusException {
-    this(gmlHelper, GMLReaderFactory.getFactory(gmlHelper));
-  }
-
-  public ImaerImporter(final GMLHelper gmlHelper, final GMLReaderFactory factory) throws AeriusException {
-    this.factory = factory;
+    factory = GMLReaderFactory.getFactory(gmlHelper);
     epsg = gmlHelper.getReceptorGridSettings().getEpsg();
   }
 

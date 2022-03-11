@@ -143,7 +143,7 @@ public final class AssertGML {
       throws IOException, AeriusException {
     final File file = getFile(relativePath, fileName);
     final GMLHelper mockGMLHelper = AssertGML.mockGMLHelper();
-    final ImaerImporter importer = new ImaerImporter(mockGMLHelper, new GMLReaderFactory(mockGMLHelper));
+    final ImaerImporter importer = new ImaerImporter(mockGMLHelper);
     final ImportParcel result = new ImportParcel();
     try (final InputStream inputStream = new BufferedInputStream(new FileInputStream(file))) {
       importer.importStream(inputStream, ImportOption.getDefaultOptions(), result);
