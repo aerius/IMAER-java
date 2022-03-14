@@ -116,16 +116,16 @@ class SRMRoadEmissionsCalculatorTest {
 
     // Check total emissions
     // 321.5 * (1351850.865000 + 42000.00 + 384000.000 ) / (1000 * 1000)
-    assertEquals(571.5790530975, results.get(Substance.NOX));
+    assertEquals(571.5790530975, results.get(Substance.NOX), "Total NOx emissions");
     // 321.5 * (0.0 + 20400.00 + 152400.000 ) / (1000 * 1000)
-    assertEquals(55.5552, results.get(Substance.NH3));
+    assertEquals(55.5552, results.get(Substance.NH3), "Total NH3 emissions");
     // Check emissions per subsource (should be set during calculation)
-    assertEquals(434.6200530975, emissionSource.getSubSources().get(0).getEmissions().get(Substance.NOX));
-    assertEquals(13.503, emissionSource.getSubSources().get(1).getEmissions().get(Substance.NOX));
-    assertEquals(123.456, emissionSource.getSubSources().get(2).getEmissions().get(Substance.NOX));
-    assertNull(emissionSource.getSubSources().get(0).getEmissions().get(Substance.NH3));
-    assertEquals(6.5586, emissionSource.getSubSources().get(1).getEmissions().get(Substance.NH3));
-    assertEquals(48.9966, emissionSource.getSubSources().get(2).getEmissions().get(Substance.NH3));
+    assertEquals(434.6200530975, emissionSource.getSubSources().get(0).getEmissions().get(Substance.NOX), "NOx emissions first subsource");
+    assertEquals(13.503, emissionSource.getSubSources().get(1).getEmissions().get(Substance.NOX), "NOx emissions second subsource");
+    assertEquals(123.456, emissionSource.getSubSources().get(2).getEmissions().get(Substance.NOX), "NOx emissions third subsource");
+    assertNull(emissionSource.getSubSources().get(0).getEmissions().get(Substance.NH3), "NH3 emissions first subsource");
+    assertEquals(6.5586, emissionSource.getSubSources().get(1).getEmissions().get(Substance.NH3), "NH3 emissions second subsource");
+    assertEquals(48.9966, emissionSource.getSubSources().get(2).getEmissions().get(Substance.NH3), "NH3 emissions third subsource");
   }
 
   @Test
@@ -135,7 +135,7 @@ class SRMRoadEmissionsCalculatorTest {
     final Map<Substance, BigDecimal> results = emissionsCalculator.calculateEmissions(vehicles);
 
     // 365 * 300 * 12.34567
-    assertEquals(new BigDecimal("1351850.865000"), results.get(Substance.NOX));
+    assertEquals(new BigDecimal("1351850.865000"), results.get(Substance.NOX), "NOx emissions custom vehicle");
   }
 
   @Test
@@ -145,9 +145,9 @@ class SRMRoadEmissionsCalculatorTest {
     final Map<Substance, BigDecimal> results = emissionsCalculator.calculateEmissions(vehicles, TEST_ROAD_TYPE_SRM2);
 
     // 12 * 500 * 7.0
-    assertEquals(new BigDecimal("42000.00"), results.get(Substance.NOX));
+    assertEquals(new BigDecimal("42000.00"), results.get(Substance.NOX), "NOx emissions specific vehicle");
     // 12 * 500 * 3.4
-    assertEquals(new BigDecimal("20400.00"), results.get(Substance.NH3));
+    assertEquals(new BigDecimal("20400.00"), results.get(Substance.NH3), "NH3 emissions specific vehicle");
   }
 
   @Test
@@ -157,9 +157,9 @@ class SRMRoadEmissionsCalculatorTest {
     final Map<Substance, BigDecimal> results = emissionsCalculator.calculateEmissions(vehicles, TEST_ROAD_AREA, TEST_ROAD_TYPE_SRM1);
 
     // 30000 * 6.0 * 0.8 + 30000 * 8.0 * 0.2
-    assertEquals(new BigDecimal("192000.000"), results.get(Substance.NOX));
+    assertEquals(new BigDecimal("192000.000"), results.get(Substance.NOX), "NOx emissions standard vehicle");
     // 30000 * 2.1 * 0.8 + 30000 * 4.3 * 0.2
-    assertEquals(new BigDecimal("76200.000"), results.get(Substance.NH3));
+    assertEquals(new BigDecimal("76200.000"), results.get(Substance.NH3), "NH3 emissions standard vehicle");
   }
 
   @Test
@@ -180,9 +180,9 @@ class SRMRoadEmissionsCalculatorTest {
     final Map<Substance, BigDecimal> results = emissionsCalculator.calculateEmissions(vehicles, TEST_ROAD_AREA, TEST_ROAD_TYPE_SRM1);
 
     // (30000 * 6.0 * 0.8 + 30000 * 8.0 * 0.2) * 0.7
-    assertEquals(new BigDecimal("134400.0000"), results.get(Substance.NOX));
+    assertEquals(new BigDecimal("134400.0000"), results.get(Substance.NOX), "NOx emissions standard vehicle with measure");
     // 30000 * 2.1 * 0.8 + 30000 * 4.3 * 0.2
-    assertEquals(new BigDecimal("76200.0000"), results.get(Substance.NH3));
+    assertEquals(new BigDecimal("76200.0000"), results.get(Substance.NH3), "NH3 emissions standard vehicle with measure");
   }
 
   @Test
@@ -192,9 +192,9 @@ class SRMRoadEmissionsCalculatorTest {
     final Map<Substance, BigDecimal> results = emissionsCalculator.calculateEmissions(vehicles, TEST_ROAD_AREA, TEST_ROAD_TYPE_SRM2);
 
     // 30000 * 12.0 * 0.8 + 30000 * 16.0 * 0.2
-    assertEquals(new BigDecimal("384000.000"), results.get(Substance.NOX));
+    assertEquals(new BigDecimal("384000.000"), results.get(Substance.NOX), "NOx emissions standard vehicle");
     // 30000 * 4.2 * 0.8 + 30000 * 8.6 * 0.2
-    assertEquals(new BigDecimal("152400.000"), results.get(Substance.NH3));
+    assertEquals(new BigDecimal("152400.000"), results.get(Substance.NH3), "NH3 emissions standard vehicle");
   }
 
   @Test
@@ -204,9 +204,9 @@ class SRMRoadEmissionsCalculatorTest {
     final Map<Substance, BigDecimal> results = emissionsCalculator.calculateEmissions(vehicles, TEST_ROAD_AREA, TEST_ROAD_TYPE_SRM2);
 
     // 30000 * 12.0 * 0.8 + 30000 * 16.0 * 0.2 + 2000 * 10.0 * 0.8 + 2000 * 14.0 * 0.2
-    assertEquals(new BigDecimal("405600.000"), results.get(Substance.NOX));
+    assertEquals(new BigDecimal("405600.000"), results.get(Substance.NOX), "NOx emissions standard vehicles");
     // 30000 * 4.2 * 0.8 + 30000 * 8.6 * 0.2 + 2000 * 5.3 * 0.8 + 2000 * 9.4 * 0.2
-    assertEquals(new BigDecimal("164640.000"), results.get(Substance.NH3));
+    assertEquals(new BigDecimal("164640.000"), results.get(Substance.NH3), "NH3 emissions standard vehicles");
   }
 
   private CustomVehicles createCustom() {

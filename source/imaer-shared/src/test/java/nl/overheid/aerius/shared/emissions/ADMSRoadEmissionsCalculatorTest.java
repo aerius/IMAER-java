@@ -88,16 +88,16 @@ class ADMSRoadEmissionsCalculatorTest {
 
     // Check total emissions
     // 321.5 * (3703.7010 + 115.0685 + 673.9726 ) / (1000 * 1000)
-    assertEquals(1.4444, results.get(Substance.NOX), 1E-3);
+    assertEquals(1.4444, results.get(Substance.NOX), 1E-3, "Total NOx emissions");
     // 321.5 * (0.0 + 55.8892 + 172.60320000 ) / (1000 * 1000)
-    assertEquals(0.0735, results.get(Substance.NH3), 1E-3);
+    assertEquals(0.0735, results.get(Substance.NH3), 1E-3, "Total NH3 emissions");
     // Check emissions per subsource (should be set during calculation)
-    assertEquals(1.19074, emissionSource.getSubSources().get(0).getEmissions().get(Substance.NOX), 1E-5);
-    assertEquals(0.03699, emissionSource.getSubSources().get(1).getEmissions().get(Substance.NOX), 1E-5);
-    assertEquals(0.21668, emissionSource.getSubSources().get(2).getEmissions().get(Substance.NOX), 1E-5);
-    assertNull(emissionSource.getSubSources().get(0).getEmissions().get(Substance.NH3));
-    assertEquals(0.01797, emissionSource.getSubSources().get(1).getEmissions().get(Substance.NH3), 1E-5);
-    assertEquals(0.05549, emissionSource.getSubSources().get(2).getEmissions().get(Substance.NH3), 1E-5);
+    assertEquals(1.19074, emissionSource.getSubSources().get(0).getEmissions().get(Substance.NOX), 1E-5, "NOx emissions first subsource");
+    assertEquals(0.03699, emissionSource.getSubSources().get(1).getEmissions().get(Substance.NOX), 1E-5, "NOx emissions second subsource");
+    assertEquals(0.21668, emissionSource.getSubSources().get(2).getEmissions().get(Substance.NOX), 1E-5, "NOx emissions third subsource");
+    assertNull(emissionSource.getSubSources().get(0).getEmissions().get(Substance.NH3), "NH3 emissions first subsource");
+    assertEquals(0.01797, emissionSource.getSubSources().get(1).getEmissions().get(Substance.NH3), 1E-5, "NH3 emissions second subsource");
+    assertEquals(0.05549, emissionSource.getSubSources().get(2).getEmissions().get(Substance.NH3), 1E-5, "NH3 emissions third subsource");
   }
 
   @Test
@@ -107,7 +107,7 @@ class ADMSRoadEmissionsCalculatorTest {
     final Map<Substance, BigDecimal> results = emissionsCalculator.calculateEmissions(vehicles);
 
     // 365 * 300 * 12.34567 / 365
-    assertEquals(3703.7010, results.get(Substance.NOX).doubleValue(), 1E-3);
+    assertEquals(3703.7010, results.get(Substance.NOX).doubleValue(), 1E-3, "NOx emissions custom vehicle");
   }
 
   @Test
@@ -117,9 +117,9 @@ class ADMSRoadEmissionsCalculatorTest {
     final Map<Substance, BigDecimal> results = emissionsCalculator.calculateEmissions(vehicles, TEST_ROAD_TYPE_ADMS);
 
     // 12 * 500 * 7.0 / 365
-    assertEquals(115.0685, results.get(Substance.NOX).doubleValue(), 1E-3);
+    assertEquals(115.0685, results.get(Substance.NOX).doubleValue(), 1E-3, "NOx emissions specific vehicle");
     // 12 * 500 * 3.4 / 365
-    assertEquals(55.8904, results.get(Substance.NH3).doubleValue(), 1E-3);
+    assertEquals(55.8904, results.get(Substance.NH3).doubleValue(), 1E-3, "NH3 emissions specific vehicle");
   }
 
   @ParameterizedTest
@@ -132,10 +132,10 @@ class ADMSRoadEmissionsCalculatorTest {
         gradient);
 
     // See method source as to what the calculation should be
-    assertEquals(expectedNOx, results.get(Substance.NOX).doubleValue(), 1E-3);
+    assertEquals(expectedNOx, results.get(Substance.NOX).doubleValue(), 1E-3, "NOx interpolated emissions standard vehicle");
     // Kept the NH3 the same for each test, so should return about the same
     // 30000 * 2.1 / 365
-    assertEquals(172.6027, results.get(Substance.NH3).doubleValue(), 1E-3);
+    assertEquals(172.6027, results.get(Substance.NH3).doubleValue(), 1E-3, "NH3 interpolated emissions standard vehicle");
   }
 
   private static Stream<Arguments> standardVehicleInterpolation() {
@@ -172,9 +172,9 @@ class ADMSRoadEmissionsCalculatorTest {
     // gradientCeiling = 8 + ((40 - 25) / (50 - 25)) * (9 - 8) = 8.6
     // interpolatedTotal = 6.6 + ((2.7 - 0) / (3 - 0)) * (8.6 - 6.6) = 8.4
     // (30000 * 8.4 + 2000 * 10.0) / 365
-    assertEquals(745.2055, results.get(Substance.NOX).doubleValue(), 1E-3);
+    assertEquals(745.2055, results.get(Substance.NOX).doubleValue(), 1E-3, "NOx interpolated emissions standard vehicles");
     // (30000 * 2.1 + 2000 * 5.3) / 365
-    assertEquals(201.6438, results.get(Substance.NH3).doubleValue(), 1E-3);
+    assertEquals(201.6438, results.get(Substance.NH3).doubleValue(), 1E-3, "NH3 interpolated emissions standard vehicles");
   }
 
   private CustomVehicles createCustom() {
