@@ -19,11 +19,9 @@ package nl.overheid.aerius.shared.emissions;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.EnumMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
-import java.util.OptionalDouble;
 
 import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.v2.base.TimeUnit;
@@ -33,8 +31,8 @@ import nl.overheid.aerius.shared.domain.v2.source.road.CustomVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.RoadStandardEmissionFactorsKey;
 import nl.overheid.aerius.shared.domain.v2.source.road.RoadStandardsInterpolationValues;
 import nl.overheid.aerius.shared.domain.v2.source.road.SpecificVehicles;
-import nl.overheid.aerius.shared.domain.v2.source.road.StandardVehicleMeasure;
 import nl.overheid.aerius.shared.domain.v2.source.road.StandardVehicles;
+import nl.overheid.aerius.shared.domain.v2.source.road.TrafficDirection;
 import nl.overheid.aerius.shared.domain.v2.source.road.ValuesPerVehicleType;
 import nl.overheid.aerius.shared.domain.v2.source.road.Vehicles;
 import nl.overheid.aerius.shared.exception.AeriusException;
@@ -46,7 +44,9 @@ public class ADMSRoadEmissionsCalculator {
   /**
    * Conversion from gram/meter to kilogram/kilometer.
    */
-  private static final BigDecimal GRAM_PER_KM_TO_KG_PER_METER = BigDecimal.valueOf(1000L * 1000L);
+  private static final BigDecimal GRAM_PER_KM_TO_KG_PER_METER = BigDecimal.valueOf(1000 * 1000);
+
+  private static final BigDecimal HALF_FACTOR = BigDecimal.valueOf(0.5);
 
   private final RoadEmissionFactorSupplier emissionFactorSupplier;
   private final GeometryCalculator geometryCalculator;
@@ -80,8 +80,7 @@ public class ADMSRoadEmissionsCalculator {
     } else if (vehicles instanceof SpecificVehicles) {
       return calculateEmissions((SpecificVehicles) vehicles, roadEmissionSource.getRoadTypeCode());
     } else if (vehicles instanceof StandardVehicles) {
-      return calculateEmissions((StandardVehicles) vehicles, roadEmissionSource.getRoadAreaCode(), roadEmissionSource.getRoadTypeCode(),
-          roadEmissionSource.getGradient());
+      return calculateEmissions((StandardVehicles) vehicles, roadEmissionSource);
     } else {
       throw new AeriusException(ImaerExceptionReason.INTERNAL_ERROR, "Unknown Vehicles type");
     }
@@ -106,12 +105,11 @@ public class ADMSRoadEmissionsCalculator {
     return results;
   }
 
-  Map<Substance, BigDecimal> calculateEmissions(final StandardVehicles standardVehicles, final String roadAreaCode, final String roadTypeCode,
-      final double gradient) {
+  Map<Substance, BigDecimal> calculateEmissions(final StandardVehicles standardVehicles, final ADMSRoadEmissionSource roadEmissionSource) {
     final Map<Substance, BigDecimal> results = new EnumMap<>(Substance.class);
     for (final Entry<String, ValuesPerVehicleType> entry : standardVehicles.getValuesPerVehicleTypes().entrySet()) {
       final Map<Substance, BigDecimal> emissionsForVehicles =
-          calculateEmissions(standardVehicles, entry.getKey(), entry.getValue(), roadAreaCode, roadTypeCode, gradient);
+          calculateEmissions(standardVehicles, entry.getKey(), entry.getValue(), roadEmissionSource);
       emissionsForVehicles.forEach(
           (key, value) -> results.merge(key, value, (v1, v2) -> v1.add(v2)));
     }
@@ -120,33 +118,51 @@ public class ADMSRoadEmissionsCalculator {
   }
 
   Map<Substance, BigDecimal> calculateEmissions(final StandardVehicles standardVehicles, final String standardVehicleCode,
-      final ValuesPerVehicleType valuesPerVehicleType, final String roadAreaCode, final String roadTypeCode, final double gradient) {
-    final Map<Substance, BigDecimal> results = new EnumMap<>(Substance.class);
+      final ValuesPerVehicleType valuesPerVehicleType, final ADMSRoadEmissionSource roadEmissionSource) {
+    final Map<Substance, BigDecimal> results;
     final BigDecimal numberOfVehiclesPerDay = getVehiclesPerDay(standardVehicles, valuesPerVehicleType.getVehiclesPerTimeUnit());
 
+    final TrafficDirection direction = roadEmissionSource.getTrafficDirection();
     // ADMSRoad does not use stagnation (this is incorporated into the speed used).
-    final Map<Substance, BigDecimal> emissions = calculateEmissionsPerVehicle(standardVehicles, standardVehicleCode,
-        roadAreaCode, roadTypeCode, gradient);
-    final List<StandardVehicleMeasure> measures = standardVehicles.getMeasures();
-    if (measures != null && !measures.isEmpty()) {
-      emissions.forEach((substance, value) -> {
-        final BigDecimal measureFactor = determineMeasureFactor(measures, standardVehicleCode, roadTypeCode, substance);
-        emissions.put(substance, value.multiply(measureFactor));
-      });
+    // However, the gradient depends on the direction
+    if (direction == TrafficDirection.A_TO_B) {
+      // If A to B, all vehicles go that way, calculate appropriately
+      results = calculateAtoBEmissions(standardVehicles, standardVehicleCode, numberOfVehiclesPerDay, roadEmissionSource);
+    } else if (direction == TrafficDirection.B_TO_A) {
+      // If B to A, all vehicles go that way, calculate appropriately (reverse gradient somewhere)
+      results = calculateBtoAEmissions(standardVehicles, standardVehicleCode, numberOfVehiclesPerDay, roadEmissionSource);
+    } else {
+      final BigDecimal vehiclesAtoB = numberOfVehiclesPerDay.multiply(HALF_FACTOR);
+      final BigDecimal vehiclesBtoA = numberOfVehiclesPerDay.multiply(HALF_FACTOR);
+      results = new EnumMap<>(Substance.class);
+      calculateAtoBEmissions(standardVehicles, standardVehicleCode, vehiclesAtoB, roadEmissionSource).forEach(
+          (key, value) -> results.merge(key, value, (v1, v2) -> v1.add(v2)));
+      calculateBtoAEmissions(standardVehicles, standardVehicleCode, vehiclesBtoA, roadEmissionSource).forEach(
+          (key, value) -> results.merge(key, value, (v1, v2) -> v1.add(v2)));
     }
-    emissions.forEach(
-        (key, value) -> results.put(key, value.multiply(numberOfVehiclesPerDay)));
 
     return results;
   }
 
-  private BigDecimal determineMeasureFactor(final List<StandardVehicleMeasure> measures, final String standardVehicleCode,
-      final String roadTypeCode, final Substance substance) {
-    return BigDecimal.valueOf(measures.stream()
-        .map(measure -> measure.determineFactor(standardVehicleCode, roadTypeCode, substance))
-        .filter(OptionalDouble::isPresent)
-        .mapToDouble(OptionalDouble::getAsDouble)
-        .max().orElse(1));
+  private Map<Substance, BigDecimal> calculateAtoBEmissions(final StandardVehicles standardVehicles, final String standardVehicleCode,
+      final BigDecimal numberOfVehiclesPerDay, final ADMSRoadEmissionSource roadEmissionSource) {
+    final Map<Substance, BigDecimal> results = new EnumMap<>(Substance.class);
+    final Map<Substance, BigDecimal> emissions = calculateEmissionsPerVehicle(standardVehicles, standardVehicleCode,
+        roadEmissionSource.getRoadAreaCode(), roadEmissionSource.getRoadTypeCode(), roadEmissionSource.getGradient());
+    emissions.forEach(
+        (key, value) -> results.put(key, value.multiply(numberOfVehiclesPerDay)));
+    return results;
+  }
+
+  private Map<Substance, BigDecimal> calculateBtoAEmissions(final StandardVehicles standardVehicles, final String standardVehicleCode,
+      final BigDecimal numberOfVehiclesPerDay, final ADMSRoadEmissionSource roadEmissionSource) {
+    final Map<Substance, BigDecimal> results = new EnumMap<>(Substance.class);
+    // B to A, so reverse gradient
+    final Map<Substance, BigDecimal> emissions = calculateEmissionsPerVehicle(standardVehicles, standardVehicleCode,
+        roadEmissionSource.getRoadAreaCode(), roadEmissionSource.getRoadTypeCode(), -roadEmissionSource.getGradient());
+    emissions.forEach(
+        (key, value) -> results.put(key, value.multiply(numberOfVehiclesPerDay)));
+    return results;
   }
 
   private Map<Substance, BigDecimal> calculateEmissionsPerVehicle(final StandardVehicles standardVehicles,
