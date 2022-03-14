@@ -51,7 +51,8 @@ class EmissionsCalculatorTest {
   @Mock FarmlandEmissionsCalculator farmlandCalculator;
   @Mock PlanEmissionsCalculator planCalculator;
   @Mock OffRoadMobileEmissionsCalculator offRoadMobileCalculator;
-  @Mock RoadEmissionsCalculator roadCalculator;
+  @Mock SRMRoadEmissionsCalculator srmRoadCalculator;
+  @Mock ADMSRoadEmissionsCalculator admsRoadCalculator;
   @Mock InlandShippingEmissionsCalculator inlandShippingCalculator;
   @Mock MaritimeShippingEmissionsCalculator maritimeShippingCalculator;
 
@@ -60,7 +61,7 @@ class EmissionsCalculatorTest {
   @BeforeEach
   void beforeEach() throws AeriusException {
     emissionsCalculator = new EmissionsCalculator(farmLodgingCalculator, farmlandCalculator, planCalculator, offRoadMobileCalculator,
-        roadCalculator, inlandShippingCalculator, maritimeShippingCalculator);
+        srmRoadCalculator, admsRoadCalculator, inlandShippingCalculator, maritimeShippingCalculator);
   }
 
   @Test
@@ -118,7 +119,7 @@ class EmissionsCalculatorTest {
     final Geometry geometry = mock(Geometry.class);
     final IsFeature feature = mock(IsFeature.class);
     when(feature.getGeometry()).thenReturn(geometry);
-    when(roadCalculator.calculateEmissions(emissionSource, geometry)).thenReturn(calculatedEmissions);
+    when(srmRoadCalculator.calculateEmissions(emissionSource, geometry)).thenReturn(calculatedEmissions);
 
     final Map<Substance, Double> result = emissionsCalculator.visit(emissionSource, feature);
 
@@ -133,7 +134,7 @@ class EmissionsCalculatorTest {
     final Geometry geometry = mock(Geometry.class);
     final IsFeature feature = mock(IsFeature.class);
     when(feature.getGeometry()).thenReturn(geometry);
-    when(roadCalculator.calculateEmissions(emissionSource, geometry)).thenReturn(calculatedEmissions);
+    when(srmRoadCalculator.calculateEmissions(emissionSource, geometry)).thenReturn(calculatedEmissions);
 
     final Map<Substance, Double> result = emissionsCalculator.visit(emissionSource, feature);
 

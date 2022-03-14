@@ -16,11 +16,12 @@
  */
 package nl.overheid.aerius.validation;
 
+import nl.overheid.aerius.shared.domain.v2.source.road.RoadStandardEmissionFactorsKey;
+
 public interface RoadValidationHelper {
 
   boolean isValidRoadSpecificVehicleCode(String onRoadMobileCode);
 
-  boolean isValidRoadStandardVehicleCombination(final String roadAreaCode, final String roadTypeCode, final String vehicleTypeCode,
-      final Integer maximumSpeed, final Boolean strictEnforced);
+  boolean isValidRoadStandardVehicleCombination(RoadStandardEmissionFactorsKey emissionFactorsKey);
 
 }

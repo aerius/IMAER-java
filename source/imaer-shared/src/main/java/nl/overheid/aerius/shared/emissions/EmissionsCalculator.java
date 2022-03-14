@@ -42,7 +42,8 @@ class EmissionsCalculator implements EmissionSourceVisitor<Map<Substance, Double
   private final FarmlandEmissionsCalculator farmlandEmissionsCalculator;
   private final PlanEmissionsCalculator planEmissionsCalculator;
   private final OffRoadMobileEmissionsCalculator offRoadMobileEmissionsCalculator;
-  private final RoadEmissionsCalculator roadEmissionsCalculator;
+  private final SRMRoadEmissionsCalculator srmRoadEmissionsCalculator;
+  private final ADMSRoadEmissionsCalculator admsRoadEmissionsCalculator;
   private final InlandShippingEmissionsCalculator inlandShippingEmissionsCalculator;
   private final MaritimeShippingEmissionsCalculator maritimeShippingEmissionsCalculator;
 
@@ -51,7 +52,8 @@ class EmissionsCalculator implements EmissionSourceVisitor<Map<Substance, Double
         new FarmlandEmissionsCalculator(),
         new PlanEmissionsCalculator(emissionFactorSupplier.plan()),
         new OffRoadMobileEmissionsCalculator(emissionFactorSupplier.offRoadMobile()),
-        new RoadEmissionsCalculator(emissionFactorSupplier.road(), geometryCalculator),
+        new SRMRoadEmissionsCalculator(emissionFactorSupplier.road(), geometryCalculator),
+        new ADMSRoadEmissionsCalculator(emissionFactorSupplier.road(), geometryCalculator),
         new InlandShippingEmissionsCalculator(emissionFactorSupplier.inlandShipping()),
         new MaritimeShippingEmissionsCalculator(emissionFactorSupplier.maritimeShipping()));
   }
@@ -60,14 +62,16 @@ class EmissionsCalculator implements EmissionSourceVisitor<Map<Substance, Double
       final FarmlandEmissionsCalculator farmlandEmissionsCalculator,
       final PlanEmissionsCalculator planEmissionsCalculator,
       final OffRoadMobileEmissionsCalculator offRoadMobileEmissionsCalculator,
-      final RoadEmissionsCalculator roadEmissionsCalculator,
+      final SRMRoadEmissionsCalculator srmRoadEmissionsCalculator,
+      final ADMSRoadEmissionsCalculator admsRoadEmissionsCalculator,
       final InlandShippingEmissionsCalculator inlandShippingEmissionsCalculator,
       final MaritimeShippingEmissionsCalculator maritimeShippingEmissionsCalculator) {
     this.farmLodgingEmissionsCalculator = farmLodgingEmissionsCalculator;
     this.farmlandEmissionsCalculator = farmlandEmissionsCalculator;
     this.planEmissionsCalculator = planEmissionsCalculator;
     this.offRoadMobileEmissionsCalculator = offRoadMobileEmissionsCalculator;
-    this.roadEmissionsCalculator = roadEmissionsCalculator;
+    this.srmRoadEmissionsCalculator = srmRoadEmissionsCalculator;
+    this.admsRoadEmissionsCalculator = admsRoadEmissionsCalculator;
     this.inlandShippingEmissionsCalculator = inlandShippingEmissionsCalculator;
     this.maritimeShippingEmissionsCalculator = maritimeShippingEmissionsCalculator;
   }
@@ -94,17 +98,17 @@ class EmissionsCalculator implements EmissionSourceVisitor<Map<Substance, Double
 
   @Override
   public Map<Substance, Double> visit(final SRM1RoadEmissionSource emissionSource, final IsFeature feature) throws AeriusException {
-    return roadEmissionsCalculator.calculateEmissions(emissionSource, feature.getGeometry());
+    return srmRoadEmissionsCalculator.calculateEmissions(emissionSource, feature.getGeometry());
   }
 
   @Override
   public Map<Substance, Double> visit(final SRM2RoadEmissionSource emissionSource, final IsFeature feature) throws AeriusException {
-    return roadEmissionsCalculator.calculateEmissions(emissionSource, feature.getGeometry());
+    return srmRoadEmissionsCalculator.calculateEmissions(emissionSource, feature.getGeometry());
   }
 
   @Override
   public Map<Substance, Double> visit(final ADMSRoadEmissionSource emissionSource, final IsFeature feature) throws AeriusException {
-    return roadEmissionsCalculator.calculateEmissions(emissionSource, feature.getGeometry());
+    return admsRoadEmissionsCalculator.calculateEmissions(emissionSource, feature.getGeometry());
   }
 
   @Override
