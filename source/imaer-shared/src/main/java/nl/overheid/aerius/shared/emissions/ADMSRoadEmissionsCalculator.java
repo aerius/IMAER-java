@@ -46,6 +46,10 @@ public class ADMSRoadEmissionsCalculator {
    */
   private static final BigDecimal GRAM_PER_KM_TO_KG_PER_METER = BigDecimal.valueOf(1000 * 1000);
 
+  private static final BigDecimal PER_SECOND_TO_PER_YEAR = BigDecimal.valueOf(365 * 24 * 60 * 60);
+
+  private static final BigDecimal FACTOR_FOR_ADMS_EMISSIONS = PER_SECOND_TO_PER_YEAR.divide(GRAM_PER_KM_TO_KG_PER_METER, 5, RoundingMode.HALF_UP);
+
   private static final BigDecimal HALF_FACTOR = BigDecimal.valueOf(0.5);
 
   private final RoadEmissionFactorSupplier emissionFactorSupplier;
@@ -177,8 +181,10 @@ public class ADMSRoadEmissionsCalculator {
     return vehicles.getTimeUnit().toUnit(BigDecimal.valueOf(vehiclesPerTimeUnit), TimeUnit.DAY);
   }
 
-  private double toTotalEmission(final BigDecimal emissionPerMeter, final BigDecimal measure) {
-    return emissionPerMeter.multiply(measure).divide(GRAM_PER_KM_TO_KG_PER_METER, 5, RoundingMode.HALF_UP).doubleValue();
+  private double toTotalEmission(final BigDecimal emissionPerKilometer, final BigDecimal measure) {
+    // Supplied emission factors are in g/km/s, but we need them in kg/m/year
+    // as the measure is in meters and our goal is an emission in kg/year
+    return emissionPerKilometer.multiply(FACTOR_FOR_ADMS_EMISSIONS).multiply(measure).doubleValue();
   }
 
   private Map<Substance, BigDecimal> interpolate(final RoadStandardEmissionFactorsKey targetKey,
