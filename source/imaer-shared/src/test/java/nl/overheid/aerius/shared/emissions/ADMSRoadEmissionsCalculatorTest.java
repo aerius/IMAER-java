@@ -89,17 +89,17 @@ class ADMSRoadEmissionsCalculatorTest {
     final Map<Substance, Double> results = emissionsCalculator.calculateEmissions(emissionSource, geometry);
 
     // Check total emissions
-    // 321.5 * (3703.7010 + 115.0685 + 673.9726 ) / (1000 * 1000)
-    assertEquals(1.4444, results.get(Substance.NOX), 1E-3, "Total NOx emissions");
-    // 321.5 * (0.0 + 55.8892 + 172.60320000 ) / (1000 * 1000)
-    assertEquals(0.0735, results.get(Substance.NH3), 1E-3, "Total NH3 emissions");
+    // 321.5 * (3703.7010 + 115.0685 + 673.9726 ) * (365 * 24 * 60 * 60) / (1000 * 1000)
+    assertEquals(4.555E7, results.get(Substance.NOX), 1E4, "Total NOx emissions");
+    // 321.5 * (0.0 + 55.8892 + 172.60320000 ) * (365 * 24 * 60 * 60) / (1000 * 1000)
+    assertEquals(2.317E6, results.get(Substance.NH3), 1E4, "Total NH3 emissions");
     // Check emissions per subsource (should be set during calculation)
-    assertEquals(1.19074, emissionSource.getSubSources().get(0).getEmissions().get(Substance.NOX), 1E-5, "NOx emissions first subsource");
-    assertEquals(0.03699, emissionSource.getSubSources().get(1).getEmissions().get(Substance.NOX), 1E-5, "NOx emissions second subsource");
-    assertEquals(0.21668, emissionSource.getSubSources().get(2).getEmissions().get(Substance.NOX), 1E-5, "NOx emissions third subsource");
+    assertEquals(3.7551E7, emissionSource.getSubSources().get(0).getEmissions().get(Substance.NOX), 1E3, "NOx emissions first subsource");
+    assertEquals(1.1667E6, emissionSource.getSubSources().get(1).getEmissions().get(Substance.NOX), 1E3, "NOx emissions second subsource");
+    assertEquals(6.8333E6, emissionSource.getSubSources().get(2).getEmissions().get(Substance.NOX), 1E3, "NOx emissions third subsource");
     assertNull(emissionSource.getSubSources().get(0).getEmissions().get(Substance.NH3), "NH3 emissions first subsource");
-    assertEquals(0.01797, emissionSource.getSubSources().get(1).getEmissions().get(Substance.NH3), 1E-5, "NH3 emissions second subsource");
-    assertEquals(0.05549, emissionSource.getSubSources().get(2).getEmissions().get(Substance.NH3), 1E-5, "NH3 emissions third subsource");
+    assertEquals(0.5667E6, emissionSource.getSubSources().get(1).getEmissions().get(Substance.NH3), 1E3, "NH3 emissions second subsource");
+    assertEquals(1.7500E6, emissionSource.getSubSources().get(2).getEmissions().get(Substance.NH3), 1E3, "NH3 emissions third subsource");
   }
 
   @Test

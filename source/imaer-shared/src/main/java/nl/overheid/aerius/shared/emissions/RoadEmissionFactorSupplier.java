@@ -25,17 +25,23 @@ import nl.overheid.aerius.shared.domain.v2.source.road.RoadStandardsInterpolatio
 public interface RoadEmissionFactorSupplier {
 
   /**
-   * Obtain emission factors per kilometer driven (in gram/kilometer) for a specific vehicle based on code.
+   * Obtain emission factors per kilometer driven for a specific vehicle based on code.
+   * For NL, this should be in gram/kilometer.
+   * For UK, this should be in gram/kilometer/second for vehicles per 24 hours.
    */
   Map<Substance, Double> getRoadSpecificVehicleEmissionFactors(final String specificVehicleCode, final String roadTypeCode);
 
   /**
-   * Obtain emission factors per kilometer driven (in gram/kilometer) for a standard vehicle type.
+   * Obtain emission factors per kilometer driven for a standard vehicle type.
+   * For NL, this should be in gram/kilometer.
+   * For UK, this should be in gram/kilometer/second for vehicles per 24 hours.
    */
   Map<Substance, Double> getRoadStandardVehicleEmissionFactors(final RoadStandardEmissionFactorsKey emissionFactorsKey);
 
   /**
-   * Obtain emission factors per kilometer driven (in gram/kilometer) for stagnation for a standard vehicle type.
+   * Obtain emission factors per kilometer driven for stagnation for a standard vehicle type.
+   * For NL, this should be in gram/kilometer.
+   * For UK, this should be in gram/kilometer/second for vehicles per 24 hours.
    */
   Map<Substance, Double> getRoadStandardVehicleStagnatedEmissionFactors(final RoadStandardEmissionFactorsKey emissionFactorsKey);
 
