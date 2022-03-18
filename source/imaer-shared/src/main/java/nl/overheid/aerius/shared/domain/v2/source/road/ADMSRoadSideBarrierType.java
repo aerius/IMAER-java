@@ -28,7 +28,7 @@ public enum ADMSRoadSideBarrierType {
   STREET_CANYON_DETACHED_HOUSES(50D),
   TREE_BARRIER_OPEN(80D),
   TREE_BARRIER_DENSE(90D),
-  OTHER;
+  OTHER(0D);
 
   private Double defaultPorosity;
 
