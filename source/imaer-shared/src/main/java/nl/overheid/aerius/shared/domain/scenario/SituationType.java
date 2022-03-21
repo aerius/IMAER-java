@@ -52,7 +52,11 @@ public enum SituationType {
   /**
    * Represents a situation that is to be calculated in cumulation with the proposed situation.
    */
-  COMBINATION_PROPOSED;
+  COMBINATION_PROPOSED,
+  /**
+   * Baseline situation
+   */
+  BASELINE;
 
   /**
    * All the {@link SituationType} values, except for {@link #UNKNOWN}.
