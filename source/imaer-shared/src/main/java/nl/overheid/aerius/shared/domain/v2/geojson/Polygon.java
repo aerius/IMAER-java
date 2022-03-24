@@ -51,4 +51,8 @@ public class Polygon extends Geometry {
         || (obj != null && getClass() == obj.getClass() && Arrays.deepEquals(coordinates, ((Polygon) obj).coordinates));
   }
 
+  @Override
+  public String toString() {
+    return "Polygon:" + (coordinates == null ? "" : Arrays.deepToString(coordinates));
+  }
 }

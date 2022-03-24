@@ -28,22 +28,27 @@ import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
+import nl.overheid.aerius.geo.shared.RDNew;
 import nl.overheid.aerius.geo.shared.WKTGeometry;
+import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
 import nl.overheid.aerius.shared.domain.v2.geojson.Point;
+import nl.overheid.aerius.shared.domain.v2.geojson.Polygon;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 
 /**
-* Util class for
-*/
-public class GeometryUtilTest {
+ * Util class for {@link GeometryUtil}.
+ */
+class GeometryUtilTest {
 
   private static double EXAMPLE_POINT_X = 7.6;
   private static double EXAMPLE_POINT_Y = 9.1;
 
   @Test
-  public void testValidWKT() {
+  void testValidWKT() {
     assertTrue(GeometryUtil.validWKT(getExamplePoint().getWKT()), "Valid WKT");
     assertFalse(GeometryUtil.validWKT(getExamplePoint().getWKT().substring(1)), "Invalid WKT string");
     assertFalse(GeometryUtil.validWKT(null), "Invalid WKT null");
@@ -52,7 +57,7 @@ public class GeometryUtilTest {
   }
 
   @Test
-  public void testHasIntersections() throws AeriusException {
+  void testHasIntersections() throws AeriusException {
     final int side = 4000;
     //create normal linestring with points (0,0), (0,4000), (4000,4000), (0,4000)
     final String normalLineStringWKT = "LineString(0 0," + side + " 0," + side + " " + side + ",0 " + side + ")";
@@ -79,28 +84,28 @@ public class GeometryUtilTest {
   }
 
   @Test
-  public void testDetermineLength() {
+  void testDetermineLength() {
     final WKTGeometry lineString = getExampleLineString();
     final double determinedLength = GeometryUtil.determineLength(lineString.getWKT());
     assertEquals(lineString.getMeasure(), determinedLength, 0.500, "Length of a line");
   }
 
   @Test
-  public void testDetermineLengthNullArgument() {
+  void testDetermineLengthNullArgument() {
     Assertions.assertThrows(IllegalArgumentException.class, () -> {
       GeometryUtil.determineLength(null);
     });
   }
 
   @Test
-  public void testDetermineArea() {
+  void testDetermineArea() {
     final WKTGeometry polygon = getExampleWKTPolygon();
     final double determinedArea = GeometryUtil.determineArea(polygon.getWKT());
     assertEquals(polygon.getMeasure(), determinedArea, 0.001, "Area of a surface");
   }
 
   @Test
-  public void testLastPointFromWKT() throws AeriusException {
+  void testLastPointFromWKT() throws AeriusException {
     Point point = GeometryUtil.lastPointFromWKT("LINESTRING(1 2,3 4,2 2)");
     assertEquals(2, point.getX(), 0.001, "X coordinate");
     assertEquals(2, point.getY(), 0.001, "Y coordinate");
@@ -113,14 +118,14 @@ public class GeometryUtilTest {
   }
 
   @Test
-  public void testLastPointFromWKTIncorrectWKT() throws AeriusException {
+  void testLastPointFromWKTIncorrectWKT() throws AeriusException {
     Assertions.assertThrows(AeriusException.class, () -> {
       GeometryUtil.lastPointFromWKT("LINESTRNG(1 2,4 5)");
     });
   }
 
   @Test
-  public void testConvertToPoints() throws AeriusException {
+  void testConvertToPoints() throws AeriusException {
     //create linestring with (0,0), (0,4000), (0,8000), (0,12000), (0,16000)
     final int numberOfCoordinates = 5;
     final StringBuilder lineString = new StringBuilder();
@@ -149,7 +154,7 @@ public class GeometryUtilTest {
   }
 
   @Test
-  public void testConvertToPointsZigZag() throws AeriusException {
+  void testConvertToPointsZigZag() throws AeriusException {
     //create linestring that zigs n zags
     final WKTGeometry geometry = new WKTGeometry("LINESTRING(0 0,0 4000,1000 4000,1000 12000,3000 12000)");
     final double length = GeometryUtil.determineLength(geometry.getWKT());
@@ -177,6 +182,15 @@ public class GeometryUtilTest {
         fail("Point wasn't on the line " + i + ", point: " + convertedPoint);
       }
     }
+  }
+
+  @Test
+  void testToConvexHull() throws AeriusException {
+    final Polygon geometry = (Polygon) GeometryUtil.getAeriusGeometry(GeometryUtil.getGeometry("POLYGON ((0 0, 0 100, 20 100, 15 50, 20 0, 0 0))"));
+    final Polygon convexHull = GeometryUtil.toConvexHull(geometry, RDNew.SRID);
+    final Polygon expectedGeometry = (Polygon) GeometryUtil.getAeriusGeometry(GeometryUtil.getGeometry("POLYGON ((0 0, 0 100, 20 100, 20 0, 0 0))"));
+
+    assertEquals(expectedGeometry, convexHull, "Should be expected convex geometry");
   }
 
   private WKTGeometry getExamplePoint() {
