@@ -16,7 +16,6 @@
  */
 package nl.overheid.aerius.gml.base.geo;
 
-import nl.overheid.aerius.geo.shared.WKTGeometry;
 import nl.overheid.aerius.gml.base.FeatureMember;
 import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
 import nl.overheid.aerius.shared.domain.v2.geojson.LineString;
@@ -34,47 +33,6 @@ public final class GML2Geometry {
 
   public GML2Geometry(final int srid) {
     geo2GeometryUtil = new Geo2GeometryUtil(srid);
-  }
-
-  /**
-   * Get the geometry.
-   * @param gml2Geometry convert gml geometry to object
-   * @return the Geometry of this featureMember.
-   * @throws AeriusException When underlying geometry could not be parsed to a valid object or when it's not allowed for this feature member type.
-   * (does not check for actual valid geometries)
-   */
-  @Deprecated
-  public WKTGeometry getGeometryWkt(final FeatureMember fm) throws AeriusException {
-    final GmlEmissionSourceGeometry emissionSourceGeometry = fm.getEmissionSourceGeometry();
-    final WKTGeometry geometry;
-    try {
-      geometry = constructGeometryWkt(fm.getId(), emissionSourceGeometry);
-      // Method should be temporary
-      //isValidGeometry(fm, geometry);
-    } catch (final AeriusException e) {
-      if (e.getReason() == ImaerExceptionReason.GML_GEOMETRY_INVALID) {
-        throw new AeriusException(ImaerExceptionReason.GML_GEOMETRY_INVALID, fm.getId());
-      } else {
-        throw e;
-      }
-    }
-    return geometry;
-  }
-
-  @Deprecated
-  private WKTGeometry constructGeometryWkt(final String id, final GmlEmissionSourceGeometry emissionSourceGeometry)
-      throws AeriusException {
-    final WKTGeometry geometry;
-    if (emissionSourceGeometry.getPolygon() != null) {
-      geometry = fromXMLPolygonWkt(emissionSourceGeometry.getPolygon());
-    } else if (emissionSourceGeometry.getLineString() != null) {
-      geometry = fromXMLLineStringWkt(emissionSourceGeometry.getLineString());
-    } else if (emissionSourceGeometry.getPoint() != null) {
-      geometry = fromXMLPointWkt(emissionSourceGeometry.getPoint());
-    } else {
-      throw new AeriusException(ImaerExceptionReason.GML_GEOMETRY_UNKNOWN, id);
-    }
-    return geometry;
   }
 
   /**
@@ -121,39 +79,6 @@ public final class GML2Geometry {
     if (!fm.isValidGeometry(geometry.type())) {
       throw new AeriusException(ImaerExceptionReason.GML_GEOMETRY_NOT_PERMITTED, fm.getId());
     }
-  }
-
-  /**
-   * Convert a GML-object to a WKTGeometry containing a POINT.
-   * @param gmlPoint The GML-object to convert to WKTGeometry
-   * @return The WKTGeometry containing POINT.
-   * @throws AeriusException When no valid POINT could be made from the gml-object.
-   */
-  @Deprecated
-  public WKTGeometry fromXMLPointWkt(final GmlPoint gmlPoint) throws AeriusException {
-    return geo2GeometryUtil.fromXMLPointWkt(gmlPoint.getGmlPoint());
-  }
-
-  /**
-   * Convert a GML-object to a WKTGeometry containing a LINESTRING.
-   * @param gmlString The GML-object to convert to WKTGeometry
-   * @return The WKTGeometry containing LINESTRING.
-   * @throws AeriusException When no valid LINESTRING could be made from the gml-object.
-   */
-  @Deprecated
-  public WKTGeometry fromXMLLineStringWkt(final GmlLineString gmlString) throws AeriusException {
-    return geo2GeometryUtil.fromXMLLineStringWkt(gmlString.getGMLLineString());
-  }
-
-  /**
-   * Convert a GML-object to a WKTGeometry containing a POLYGON.
-   * @param gmlPolygon The GML-object to convert to WKTGeometry
-   * @return The WKTGeometry containing POLYGON.
-   * @throws AeriusException When no valid POLYGON could be made from the gml-object.
-   */
-  @Deprecated
-  public WKTGeometry fromXMLPolygonWkt(final GmlPolygon gmlPolygon) throws AeriusException {
-    return geo2GeometryUtil.fromXMLPolygonWkt(gmlPolygon.getGmlPolygon());
   }
 
   /**

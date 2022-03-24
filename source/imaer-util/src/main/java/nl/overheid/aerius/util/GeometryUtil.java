@@ -40,9 +40,7 @@ import org.locationtech.jts.operation.valid.IsSimpleOp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import nl.overheid.aerius.geo.shared.WKTGeometry;
 import nl.overheid.aerius.shared.domain.geo.OrientedEnvelope;
-import nl.overheid.aerius.shared.domain.v2.geojson.Point;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 
@@ -244,81 +242,6 @@ public final class GeometryUtil {
     //done here, as isSimple is needed for checking lines.
     return (geometry instanceof Polygon || geometry instanceof MultiPolygon)
         && (!isSimpleOp.isSimple() || !geometry.isValid());
-  }
-
-  /**
-   * Determine the length of a geometry.
-   * @param wkt The (WKT) geometry to determine the length for (must be a linestring).
-   * @return The length of the linestring (in m).
-   */
-  public static double determineLength(final String wkt) {
-    if (wkt == null) {
-      throw new IllegalArgumentException("WKT can't be null");
-    }
-    Geometry jtsGeometry = null;
-    try {
-      jtsGeometry = getGeometry(wkt);
-    } catch (final AeriusException e) {
-      throw new IllegalArgumentException("Could not parse WKT (for linestring): " + wkt);
-    }
-    if (!(jtsGeometry instanceof LineString)) { // no null check needed, as instanceof will return false if object is null
-      throw new IllegalArgumentException("WKT did not describe a linestring: " + wkt);
-    }
-    return ((LineString) jtsGeometry).getLength();
-  }
-
-  /**
-   * Determine the surface of a geometry.
-   * @param wkt The (WKT) geometry to determine the surface for (must be a polygon).
-   * @return The surface of the polygon (in m^2).
-   */
-  public static double determineArea(final String wkt) {
-    if (wkt == null) {
-      throw new IllegalArgumentException("WKT can't be null");
-    }
-    Geometry jtsGeometry = null;
-    try {
-      jtsGeometry = getGeometry(wkt);
-    } catch (final AeriusException e) {
-      throw new IllegalArgumentException("Could not parse WKT (for polygon): " + wkt);
-    }
-    if (!(jtsGeometry instanceof Polygon)) { // no null check needed, as instanceof will return false if object is null
-      throw new IllegalArgumentException("WKT did not describe a polygon: " + wkt);
-    }
-    final Polygon polygon = (Polygon) jtsGeometry;
-    return polygon.getArea();
-  }
-
-  /**
-   * @param wkt The WKT string containing LINESTRING
-   * @return the point representing the last point of the linestring.
-   * @throws AeriusException When no valid LINESTRING could be made from the WKT.
-   */
-  public static Point lastPointFromWKT(final String wkt) throws AeriusException {
-    final Geometry lineString = getGeometry(wkt);
-    final Coordinate lastCoordinate = lineString.getCoordinates()[lineString.getCoordinates().length - 1];
-    return new Point(lastCoordinate.getOrdinate(Coordinate.X), lastCoordinate.getOrdinate(Coordinate.Y));
-  }
-
-  /**
-   * Convert a Line (or LineString) into a list of points that represent the line.
-   * Each point represents an equal part of the line.
-   * @param line The line to convert.
-   * @param maxSegmentSize The maximum size of the segments that should be returned.
-   * @return The converted points that represent the line.
-   * @throws AeriusException When the geometry wasn't right.
-   */
-  public static List<Point> convertToPoints(final WKTGeometry line, final double maxSegmentSize) throws AeriusException {
-    final List<Point> points;
-    final Geometry geometry = getGeometry(line.getWKT());
-    if (geometry instanceof LineString) {
-      points = convertToPoints((LineString) geometry, maxSegmentSize, (x, y) -> new Point(x, y));
-    } else {
-      LOG.error("Can't convert {}. It is not a valid linestring geometry.", line);
-      throw new AeriusException(ImaerExceptionReason.INTERNAL_ERROR);
-    }
-
-    return points;
   }
 
   /**
