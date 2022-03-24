@@ -31,11 +31,12 @@ import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.LinearRing;
 import org.locationtech.jts.geom.MultiPolygon;
 import org.locationtech.jts.geom.Polygon;
+import org.locationtech.jts.geom.PrecisionModel;
 import org.locationtech.jts.geom.util.AffineTransformation;
 import org.locationtech.jts.io.ParseException;
 import org.locationtech.jts.io.WKTReader;
 import org.locationtech.jts.linearref.LengthIndexedLine;
-import org.locationtech.jts.operation.IsSimpleOp;
+import org.locationtech.jts.operation.valid.IsSimpleOp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -366,7 +367,7 @@ public final class GeometryUtil {
    *
    * A is perpendicular along the line, B is not.
    *
-   * @param wkt The wkt of the linestring.
+   * @param geometry The geometry of the linestring.
    * @param point The point to determine if it's perpendicular along the line
    * @return True if it's perpendicular along the line  (or the WKT did not specify a linestring).
    * @throws AeriusException In case the WKTgeometry did not define a correct geometry.
@@ -389,6 +390,20 @@ public final class GeometryUtil {
       }
     }
     return false;
+  }
+
+  /**
+   * Converts a given polygon to a convex polygon.
+   *
+   * @param polygon polygon to convert to a convex polygon
+   * @param srid srid of the geometry
+   * @return convex polygon
+   * @throws AeriusException
+   */
+  public static nl.overheid.aerius.shared.domain.v2.geojson.Polygon toConvexHull(final nl.overheid.aerius.shared.domain.v2.geojson.Polygon polygon,
+      final int srid) throws AeriusException {
+    return toAeriusPolygon(
+        (Polygon) new ConvexHull(getGeometry(polygon).getCoordinates(), new GeometryFactory(new PrecisionModel(), srid)).getConvexHull());
   }
 
   /**
