@@ -26,3 +26,4 @@ import javax.xml.bind.annotation.XmlNs;
 import javax.xml.bind.annotation.XmlSchema;
 
 import nl.overheid.aerius.gml.base.GMLSchema;
+import nl.overheid.aerius.gml.base.XLinkSchema;
