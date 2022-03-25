@@ -37,14 +37,6 @@ public class PlanProperty extends AbstractProperty<Plan> implements IsGmlPropert
     super(null);
   }
 
-  /**
-   * Convenience constructor.
-   * @param plan The property to use.
-   */
-  public PlanProperty(final Plan plan) {
-    super(plan);
-  }
-
   @Override
   @XmlElement(name = "Plan", namespace = CalculatorSchema.NAMESPACE)
   public Plan getProperty() {

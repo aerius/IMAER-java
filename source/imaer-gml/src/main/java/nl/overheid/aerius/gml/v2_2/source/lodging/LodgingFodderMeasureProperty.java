@@ -37,14 +37,6 @@ public class LodgingFodderMeasureProperty extends AbstractProperty<LodgingFodder
     super(null);
   }
 
-  /**
-   * Convenience constructor.
-   * @param fodderMeasure The property to use.
-   */
-  public LodgingFodderMeasureProperty(final LodgingFodderMeasure fodderMeasure) {
-    super(fodderMeasure);
-  }
-
   @XmlElementRef
   @Override
   public LodgingFodderMeasure getProperty() {

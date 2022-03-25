@@ -35,13 +35,6 @@ public class SRM2RoadLinearReferenceProperty extends AbstractProperty<SRM2RoadLi
     super(null);
   }
 
-  /**
-   * Convenience constructor.
-   * @param linearReference The property to use.
-   */
-  public SRM2RoadLinearReferenceProperty(final SRM2RoadLinearReference linearReference) {
-    super(linearReference);
-  }
 
   @XmlElementRef
   @Override

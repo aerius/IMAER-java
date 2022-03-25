@@ -37,14 +37,6 @@ public class FarmLodgingProperty extends AbstractProperty<AbstractFarmLodging> i
     super(null);
   }
 
-  /**
-   * Convenience constructor.
-   * @param farmLodging The property to use.
-   */
-  public FarmLodgingProperty(final AbstractFarmLodging farmLodging) {
-    super(farmLodging);
-  }
-
   @XmlElementRef
   @Override
   public AbstractFarmLodging getProperty() {

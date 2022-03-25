@@ -34,14 +34,6 @@ public class RoadSideBarrierProperty extends AbstractProperty<RoadSideBarrier> i
     super(null);
   }
 
-  /**
-   * Convenience constructor.
-   * @param roadSideBarrier The property to use.
-   */
-  public RoadSideBarrierProperty(final RoadSideBarrier roadSideBarrier) {
-    super(roadSideBarrier);
-  }
-
   @XmlElementRef
   @Override
   public RoadSideBarrier getProperty() {

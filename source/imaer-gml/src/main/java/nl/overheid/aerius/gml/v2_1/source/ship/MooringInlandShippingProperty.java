@@ -37,14 +37,6 @@ public class MooringInlandShippingProperty extends AbstractProperty<MooringInlan
     super(null);
   }
 
-  /**
-   * Convenience constructor.
-   * @param mooringInlandShipping The property to use.
-   */
-  public MooringInlandShippingProperty(final MooringInlandShipping mooringInlandShipping) {
-    super(mooringInlandShipping);
-  }
-
   @Override
   @XmlElement(name = "MooringInlandShipping", namespace = CalculatorSchema.NAMESPACE)
   public MooringInlandShipping getProperty() {

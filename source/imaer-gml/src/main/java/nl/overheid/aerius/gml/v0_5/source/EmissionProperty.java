@@ -37,14 +37,6 @@ public class EmissionProperty extends AbstractProperty<Emission> implements IsGm
     super(null);
   }
 
-  /**
-   * Convenience constructor.
-   * @param emission The property to use.
-   */
-  public EmissionProperty(final Emission emission) {
-    super(emission);
-  }
-
   @Override
   @XmlElement(name = "Emission", namespace = CalculatorSchema.NAMESPACE)
   public Emission getProperty() {

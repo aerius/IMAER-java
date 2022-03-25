@@ -37,14 +37,6 @@ public class OffRoadMobileSourceProperty extends AbstractProperty<AbstractOffRoa
     super(null);
   }
 
-  /**
-   * Convenience constructor.
-   * @param offRoadMobileSource The property to use.
-   */
-  public OffRoadMobileSourceProperty(final AbstractOffRoadMobileSource offRoadMobileSource) {
-    super(offRoadMobileSource);
-  }
-
   @XmlElementRef
   @Override
   public AbstractOffRoadMobileSource getProperty() {

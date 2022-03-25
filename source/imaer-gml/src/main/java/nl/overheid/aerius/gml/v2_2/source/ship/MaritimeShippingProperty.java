@@ -37,14 +37,6 @@ public class MaritimeShippingProperty extends AbstractProperty<MaritimeShipping>
     super(null);
   }
 
-  /**
-   * Convenience constructor.
-   * @param maritimeShipping The property to use.
-   */
-  public MaritimeShippingProperty(final MaritimeShipping maritimeShipping) {
-    super(maritimeShipping);
-  }
-
   @Override
   @XmlElement(name = "MaritimeShipping", namespace = CalculatorSchema.NAMESPACE)
   public MaritimeShipping getProperty() {

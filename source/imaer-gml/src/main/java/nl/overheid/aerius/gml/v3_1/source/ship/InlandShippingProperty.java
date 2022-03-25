@@ -37,14 +37,6 @@ public class InlandShippingProperty extends AbstractProperty<InlandShipping> imp
     super(null);
   }
 
-  /**
-   * Convenience constructor.
-   * @param inlandShipping The property to use.
-   */
-  public InlandShippingProperty(final InlandShipping inlandShipping) {
-    super(inlandShipping);
-  }
-
   @Override
   @XmlElement(name = "InlandShipping", namespace = CalculatorSchema.NAMESPACE)
   public InlandShipping getProperty() {

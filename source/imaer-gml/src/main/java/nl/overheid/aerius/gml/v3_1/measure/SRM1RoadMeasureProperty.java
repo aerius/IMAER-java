@@ -37,14 +37,6 @@ public class SRM1RoadMeasureProperty extends AbstractProperty<SRM1RoadMeasure> i
     super(null);
   }
 
-  /**
-   * Convenience constructor.
-   * @param srm1RoadMeasure The property to use.
-   */
-  public SRM1RoadMeasureProperty(final SRM1RoadMeasure srm1RoadMeasure) {
-    super(srm1RoadMeasure);
-  }
-
   @Override
   @XmlElement(name = "SRM1RoadMeasure", namespace = CalculatorSchema.NAMESPACE)
   public SRM1RoadMeasure getProperty() {

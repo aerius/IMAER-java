@@ -34,14 +34,6 @@ public class LodgingSystemProperty extends AbstractProperty<AbstractLodgingSyste
     super(null);
   }
 
-  /**
-   * Convenience constructor.
-   * @param lodgingSystem The property to use.
-   */
-  public LodgingSystemProperty(final AbstractLodgingSystem lodgingSystem) {
-    super(lodgingSystem);
-  }
-
   @XmlElementRef
   @Override
   public AbstractLodgingSystem getProperty() {

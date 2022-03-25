@@ -34,14 +34,6 @@ public class VehiclesProperty extends AbstractProperty<AbstractVehicle> implemen
     super(null);
   }
 
-  /**
-   * Convenience constructor.
-   * @param vehicles The property to use.
-   */
-  public VehiclesProperty(final AbstractVehicle vehicles) {
-    super(vehicles);
-  }
-
   @XmlElementRef
   @Override
   public AbstractVehicle getProperty() {
