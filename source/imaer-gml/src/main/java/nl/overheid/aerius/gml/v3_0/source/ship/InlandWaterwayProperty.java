@@ -37,14 +37,6 @@ public class InlandWaterwayProperty extends AbstractProperty<InlandWaterway> imp
     super(null);
   }
 
-  /**
-   * Convenience constructor.
-   * @param inlandWaterway The property to use.
-   */
-  public InlandWaterwayProperty(final InlandWaterway inlandWaterway) {
-    super(inlandWaterway);
-  }
-
   @Override
   @XmlElement(name = "InlandWaterway", namespace = CalculatorSchema.NAMESPACE)
   public InlandWaterway getProperty() {

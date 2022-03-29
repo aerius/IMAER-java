@@ -38,14 +38,6 @@ public class CalculationPointCorrectionProperty extends AbstractProperty<Calcula
     super(null);
   }
 
-  /**
-   * Convenience constructor.
-   * @param calculationPointCorrection The property to use.
-   */
-  public CalculationPointCorrectionProperty(final CalculationPointCorrection calculationPointCorrection) {
-    super(calculationPointCorrection);
-  }
-
   @Override
   @XmlElement(name = "CalculationPointCorrection", namespace = CalculatorSchema.NAMESPACE)
   public CalculationPointCorrection getProperty() {

@@ -20,6 +20,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlTransient;
 
 import nl.overheid.aerius.gml.base.IsGmlReferenceType;
+import nl.overheid.aerius.gml.base.XLinkSchema;
 
 /**
  *

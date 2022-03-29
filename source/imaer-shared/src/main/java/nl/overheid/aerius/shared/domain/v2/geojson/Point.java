@@ -124,4 +124,8 @@ public class Point extends Geometry {
         || (obj != null && getClass() == obj.getClass() && Arrays.equals(coordinates, ((Point) obj).coordinates));
   }
 
+  @Override
+  public String toString() {
+    return "Point [coordinates=" + Arrays.toString(coordinates) + "]";
+  }
 }

@@ -37,14 +37,6 @@ public class FarmlandActivityProperty extends AbstractProperty<FarmlandActivity>
     super(null);
   }
 
-  /**
-   * Convenience constructor.
-   * @param activity The property to use.
-   */
-  public FarmlandActivityProperty(final FarmlandActivity activity) {
-    super(activity);
-  }
-
   @Override
   @XmlElement(name = "FarmlandActivity", namespace = CalculatorSchema.NAMESPACE)
   public FarmlandActivity getProperty() {

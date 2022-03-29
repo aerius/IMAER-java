@@ -26,18 +26,16 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 
 import nl.overheid.aerius.geo.shared.RDNew;
 import nl.overheid.aerius.geo.shared.WKTGeometry;
-import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
+import nl.overheid.aerius.shared.domain.v2.geojson.LineString;
 import nl.overheid.aerius.shared.domain.v2.geojson.Point;
 import nl.overheid.aerius.shared.domain.v2.geojson.Polygon;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
+import nl.overheid.aerius.shared.geometry.GeometryCalculator;
 
 /**
  * Util class for {@link GeometryUtil}.
@@ -46,6 +44,7 @@ class GeometryUtilTest {
 
   private static double EXAMPLE_POINT_X = 7.6;
   private static double EXAMPLE_POINT_Y = 9.1;
+  private static final GeometryCalculator GEOMETRY_CALCULATOR = new GeometryCalculatorImpl();
 
   @Test
   void testValidWKT() {
@@ -84,62 +83,14 @@ class GeometryUtilTest {
   }
 
   @Test
-  void testDetermineLength() {
-    final WKTGeometry lineString = getExampleLineString();
-    final double determinedLength = GeometryUtil.determineLength(lineString.getWKT());
-    assertEquals(lineString.getMeasure(), determinedLength, 0.500, "Length of a line");
-  }
-
-  @Test
-  void testDetermineLengthNullArgument() {
-    Assertions.assertThrows(IllegalArgumentException.class, () -> {
-      GeometryUtil.determineLength(null);
-    });
-  }
-
-  @Test
-  void testDetermineArea() {
-    final WKTGeometry polygon = getExampleWKTPolygon();
-    final double determinedArea = GeometryUtil.determineArea(polygon.getWKT());
-    assertEquals(polygon.getMeasure(), determinedArea, 0.001, "Area of a surface");
-  }
-
-  @Test
-  void testLastPointFromWKT() throws AeriusException {
-    Point point = GeometryUtil.lastPointFromWKT("LINESTRING(1 2,3 4,2 2)");
-    assertEquals(2, point.getX(), 0.001, "X coordinate");
-    assertEquals(2, point.getY(), 0.001, "Y coordinate");
-    point = GeometryUtil.lastPointFromWKT("POINT(3 4)");
-    assertEquals(3, point.getX(), 0.001, "X coordinate");
-    assertEquals(4, point.getY(), 0.001, "Y coordinate");
-    point = GeometryUtil.lastPointFromWKT("POLYGON((8 2,7 9,6 5,8 2))");
-    assertEquals(8, point.getX(), 0.001, "X coordinate");
-    assertEquals(2, point.getY(), 0.001, "Y coordinate");
-  }
-
-  @Test
-  void testLastPointFromWKTIncorrectWKT() throws AeriusException {
-    Assertions.assertThrows(AeriusException.class, () -> {
-      GeometryUtil.lastPointFromWKT("LINESTRNG(1 2,4 5)");
-    });
-  }
-
-  @Test
   void testConvertToPoints() throws AeriusException {
     //create linestring with (0,0), (0,4000), (0,8000), (0,12000), (0,16000)
-    final int numberOfCoordinates = 5;
-    final StringBuilder lineString = new StringBuilder();
-    lineString.append("LINESTRING(0 0");
-    for (int i = 0; i < numberOfCoordinates; i++) {
-      lineString.append(",0 ");
-      lineString.append(4000 * i);
-    }
-    lineString.append(')');
-    final WKTGeometry geometry = new WKTGeometry(lineString.toString());
-    final double length = GeometryUtil.determineLength(geometry.getWKT());
-    assertEquals((numberOfCoordinates - 1) * 4000, length, 1E-5, "Length");
+    final LineString geometry = new LineString();
+    geometry.setCoordinates(new double[][] {{0, 0}, {0, 4000}, {0, 8000}, {0, 12000}, {0, 16000}});
     final Double maxSegementSize = 76.4;
     final List<Point> convertedPoints = GeometryUtil.convertToPoints(geometry, maxSegementSize);
+    final double length = GEOMETRY_CALCULATOR.determineMeasure(geometry);
+
     assertEquals(new BigDecimal(length).divide(new BigDecimal(maxSegementSize),
         RoundingMode.UP).intValue(),
         convertedPoints.size(),
@@ -156,8 +107,9 @@ class GeometryUtilTest {
   @Test
   void testConvertToPointsZigZag() throws AeriusException {
     //create linestring that zigs n zags
-    final WKTGeometry geometry = new WKTGeometry("LINESTRING(0 0,0 4000,1000 4000,1000 12000,3000 12000)");
-    final double length = GeometryUtil.determineLength(geometry.getWKT());
+    final LineString geometry = new LineString();
+    geometry.setCoordinates(new double[][] {{0, 0}, {0, 4000}, {1000, 4000}, {1000, 12000}, {3000, 12000}});
+    final double length = GEOMETRY_CALCULATOR.determineMeasure(geometry);
     final Double maxSegementSize = 76.4;
     final List<Point> convertedPoints = GeometryUtil.convertToPoints(geometry, maxSegementSize);
     assertEquals(new BigDecimal(length).divide(new BigDecimal(maxSegementSize), 0,
@@ -196,23 +148,5 @@ class GeometryUtilTest {
   private WKTGeometry getExamplePoint() {
     return new WKTGeometry(
         "POINT(" + EXAMPLE_POINT_X + " " + EXAMPLE_POINT_Y + ")", 1);
-  }
-
-  private WKTGeometry getExampleLineString() {
-    final double xCoord0 = 7.80;
-    final double yCoord0 = 4.55;
-    final double xCoord1 = 44.77;
-    final double yCoord1 = 2.4;
-    final String wktLineString = "LINESTRING ("
-        + xCoord0 + " " + yCoord0 + ","
-        + xCoord1 + " " + yCoord1 + ")";
-    final double length = Math.sqrt(
-        Math.pow(xCoord0 - xCoord1, 2)
-            + Math.pow(yCoord0 - yCoord1, 2));
-    return new WKTGeometry(wktLineString, (int) Math.round(length));
-  }
-
-  private WKTGeometry getExampleWKTPolygon() {
-    return new WKTGeometry("POLYGON ((0 0,20 0,20 100,0 100, 0 0))", 20 * 100);
   }
 }

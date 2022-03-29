@@ -37,14 +37,6 @@ public class EmissionReductionProperty extends AbstractProperty<EmissionReductio
     super(null);
   }
 
-  /**
-   * Convenience constructor.
-   * @param emissionReduction The property to use.
-   */
-  public EmissionReductionProperty(final EmissionReduction emissionReduction) {
-    super(emissionReduction);
-  }
-
   @Override
   @XmlElement(name = "EmissionReduction", namespace = CalculatorSchema.NAMESPACE)
   public EmissionReduction getProperty() {

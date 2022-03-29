@@ -32,8 +32,6 @@ import nl.overheid.aerius.shared.exception.AeriusException;
  */
 abstract class SpecificSource2GML<T extends EmissionSource> {
 
-  protected static final String ID_SEPARATOR = "_";
-
   abstract nl.overheid.aerius.gml.v4_0.source.EmissionSource convert(T emissionSource) throws AeriusException;
 
   protected static List<EmissionProperty> getEmissions(final Map<Substance, Double> emissionValues, final Substance defaultSubstance) {

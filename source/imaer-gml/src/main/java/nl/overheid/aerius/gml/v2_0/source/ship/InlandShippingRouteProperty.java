@@ -37,14 +37,6 @@ public class InlandShippingRouteProperty extends AbstractProperty<InlandShipping
     super(null);
   }
 
-  /**
-   * Convenience constructor.
-   * @param maritimeShippingRoute The property to use.
-   */
-  public InlandShippingRouteProperty(final InlandShippingRoute maritimeShippingRoute) {
-    super(maritimeShippingRoute);
-  }
-
   @Override
   @XmlElement(name = "InlandShippingRoute", namespace = CalculatorSchema.NAMESPACE)
   public InlandShippingRoute getProperty() {

@@ -35,7 +35,6 @@ import net.opengis.gml.v_3_2_1.LinearRingType;
 import net.opengis.gml.v_3_2_1.PointType;
 import net.opengis.gml.v_3_2_1.PolygonType;
 
-import nl.overheid.aerius.geo.shared.WKTGeometry;
 import nl.overheid.aerius.gml.base.GMLSchema;
 import nl.overheid.aerius.shared.domain.v2.geojson.LineString;
 import nl.overheid.aerius.shared.domain.v2.geojson.Polygon;
@@ -54,57 +53,6 @@ public final class Geo2GeometryUtil {
   public Geo2GeometryUtil(final int srid) {
     this.srid = srid;
     geometryFactory = new GeometryFactory(new PrecisionModel(), srid);
-  }
-
-  /**
-   * Convert a GML-object to a WKTGeometry containing a POINT.
-   * @param pointType point
-   * @return The WKTGeometry containing POINT.
-   * @throws AeriusException When no valid POINT could be made from the gml-object.
-   */
-  public WKTGeometry fromXMLPointWkt(final PointType pointType) throws AeriusException {
-    validateSrs(srid, pointType);
-    final List<Double> values = pointType.getPos().getValue();
-    final Point point = geometryFactory.createPoint(new Coordinate(values.get(0), values.get(1)));
-    return new WKTGeometry(point.toText());
-  }
-
-  /**
-   * Convert a GML-object to a WKTGeometry containing a LINESTRING.
-   * @param lineStringType lineStringType
-   * @return The WKTGeometry containing LINESTRING.
-   * @throws AeriusException When no valid LINESTRING could be made from the gml-object.
-   */
-  public WKTGeometry fromXMLLineStringWkt(final LineStringType lineStringType) throws AeriusException {
-    validateSrs(srid, lineStringType);
-    final Coordinate[] coordinates = lineString2Coordinates(lineStringType.getPosList().getValue());
-    final String wktString = geometryFactory.createLineString(coordinates).toText();
-    validateWKTGeometryString(wktString);
-    final double length = GeometryUtil.determineLength(wktString);
-    return new WKTGeometry(wktString, length);
-  }
-
-  /**
-   * Convert a GML-object Polygon geometries.
-   * @param polygonType polygon
-   * @return The WKTGeometry containing POLYGON.
-   * @throws AeriusException When no valid POLYGON could be made from the gml-object.
-   */
-  @SuppressWarnings("unchecked")
-  public WKTGeometry fromXMLPolygonWkt(final PolygonType polygonType) throws AeriusException {
-    validateSrs(srid, polygonType);
-    final JAXBElement<LinearRingType> exteriorRing = (JAXBElement<LinearRingType>) polygonType.getExterior().getAbstractRing();
-    final List<Double> values = exteriorRing.getValue().getPosList().getValue();
-
-    for (final Iterator<AbstractRingPropertyType> iterator = polygonType.getInterior().iterator(); iterator.hasNext();) {
-      final JAXBElement<LinearRingType> innerRing = (JAXBElement<LinearRingType>) iterator.next().getAbstractRing();
-      values.addAll(innerRing.getValue().getPosList().getValue());
-    }
-    final Coordinate[] coordinates = lineString2Coordinates(values);
-    final String wktString = geometryFactory.createPolygon(coordinates).toText();
-    validateWKTGeometryString(wktString);
-    final double area = GeometryUtil.determineArea(wktString);
-    return new WKTGeometry(wktString, area);
   }
 
   /**

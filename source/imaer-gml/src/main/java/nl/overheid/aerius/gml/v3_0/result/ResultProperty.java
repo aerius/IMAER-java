@@ -37,14 +37,6 @@ public class ResultProperty extends AbstractProperty<Result> implements IsGmlPro
     super(null);
   }
 
-  /**
-   * Convenience constructor.
-   * @param result The property to use.
-   */
-  public ResultProperty(final Result result) {
-    super(result);
-  }
-
   @Override
   @XmlElement(name = "CalculationResult", namespace = CalculatorSchema.NAMESPACE)
   public Result getProperty() {
