@@ -202,7 +202,7 @@ public class GMLReaderTest {
     }
   }
 
-  private MetaData getMetaData() throws AeriusException {
+  private static MetaData getMetaData() throws AeriusException {
     final ScenarioMetaData metaData = new ScenarioMetaData();
     metaData.setReference("SomeReference001");
     metaData.setCorporation("Big Corp");
@@ -216,7 +216,7 @@ public class GMLReaderTest {
     metaDataInput.setVersion(VERSION);
     metaDataInput.setDatabaseVersion(DATABASE_VERSION);
     metaDataInput.getOptions().setCalculationType(CalculationType.PERMIT);
-    metaDataInput.getOptions().setMonitorSrm2Year(MONITOR_SRM2_YEAR);
+    metaDataInput.getOptions().getRblCalculationOptions().setMonitorSrm2Year(MONITOR_SRM2_YEAR);
     metaDataInput.setResultsIncluded(true);
     final InternalGMLWriter writer = new InternalGMLWriter(gridSettings, GMLTestDomain.TEST_REFERENCE_GENERATOR, Boolean.TRUE);
     return writer.getWriter().metaData2GML(metaDataInput);

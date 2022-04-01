@@ -19,19 +19,24 @@ package nl.overheid.aerius.util;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 
+import nl.overheid.aerius.shared.domain.Theme;
+import nl.overheid.aerius.shared.domain.calculation.ADMSOptions;
 import nl.overheid.aerius.shared.domain.calculation.CalculationRoadOPS;
 import nl.overheid.aerius.shared.domain.calculation.CalculationSetOptions;
 import nl.overheid.aerius.shared.domain.calculation.CalculationType;
 import nl.overheid.aerius.shared.domain.calculation.ConnectSuppliedOptions;
+import nl.overheid.aerius.shared.domain.calculation.NCACalculationOptions;
 import nl.overheid.aerius.shared.domain.calculation.OPSOptions;
+import nl.overheid.aerius.shared.domain.calculation.WNBCalculationOptions;
 import nl.overheid.aerius.shared.domain.meteo.Meteo;
 
 /**
- *
+ * Test class for {@link OptionsMetadataUtil}.
  */
 class OptionsMetadataUtilTest {
 
@@ -43,7 +48,7 @@ class OptionsMetadataUtilTest {
   void testDefaultOptionsWithoutAddingDefaults() {
     final CalculationSetOptions options = new CalculationSetOptions();
 
-    final Map<String, String> result = OptionsMetadataUtil.optionsToMap(options, false);
+    final Map<String, String> result = OptionsMetadataUtil.optionsToMap(Theme.WNB, options, false);
 
     assertTrue(result.isEmpty(), "With default options and not adding defaults to map, the map should be empty");
   }
@@ -52,7 +57,7 @@ class OptionsMetadataUtilTest {
   void testDefaultOptionsWithAddingDefaults() {
     final CalculationSetOptions options = new CalculationSetOptions();
 
-    final Map<String, String> result = OptionsMetadataUtil.optionsToMap(options, true);
+    final Map<String, String> result = OptionsMetadataUtil.optionsToMap(Theme.WNB, options, true);
 
     assertEquals(BASIC_OPTIONS, result.size(), "Number of options with default options and when adding defaults to map");
     assertEquals("", result.get("meteo_year"));
@@ -65,18 +70,19 @@ class OptionsMetadataUtilTest {
 
   @Test
   void testNonDefaultOptions() {
-    final CalculationSetOptions options = new CalculationSetOptions();
+    final CalculationSetOptions cso = new CalculationSetOptions();
+    final WNBCalculationOptions options = cso.getWnbCalculationOptions();
     options.setMeteo(new Meteo(2020));
-    options.setStacking(false);
+    cso.setStacking(false);
     // RoadOPS only applies with custom_points.
-    options.setCalculationType(CalculationType.CUSTOM_POINTS);
+    cso.setCalculationType(CalculationType.CUSTOM_POINTS);
     options.setRoadOPS(CalculationRoadOPS.OPS_ROAD);
     options.setForceAggregation(true);
     options.setUseWnbMaxDistance(true);
     options.setUseReceptorHeights(true);
-    options.setMonitorSrm2Year(2023);
+    cso.getRblCalculationOptions().setMonitorSrm2Year(2023);
 
-    final Map<String, String> result = OptionsMetadataUtil.optionsToMap(options, false);
+    final Map<String, String> result = OptionsMetadataUtil.optionsToMap(Theme.WNB, cso, false);
 
     assertEquals(BASIC_OPTIONS, result.size(), "Number of options when options are not default");
     assertEquals("2020", result.get("meteo_year"));
@@ -93,7 +99,7 @@ class OptionsMetadataUtilTest {
     final ConnectSuppliedOptions connectOptions = new ConnectSuppliedOptions();
     options.setConnectSuppliedOptions(connectOptions);
 
-    final Map<String, String> result = OptionsMetadataUtil.optionsToMap(options, true);
+    final Map<String, String> result = OptionsMetadataUtil.optionsToMap(Theme.WNB, options, true);
 
     assertEquals(BASIC_OPTIONS + CONNECT_OPTIONS, result.size(), "Number of options when connectOptions is supplied and when adding defaults to map");
     assertEquals("", result.get("calculation_year"));
@@ -108,7 +114,7 @@ class OptionsMetadataUtilTest {
     connectOptions.setReceptorSetName("SomeRecept or name");
     options.setConnectSuppliedOptions(connectOptions);
 
-    final Map<String, String> result = OptionsMetadataUtil.optionsToMap(options, false);
+    final Map<String, String> result = OptionsMetadataUtil.optionsToMap(Theme.WNB, options, false);
 
     assertEquals(CONNECT_OPTIONS, result.size(), "Number of options when connectOptions is supplied with non default values");
     assertEquals("1999", result.get("calculation_year"));
@@ -119,9 +125,9 @@ class OptionsMetadataUtilTest {
   void testDefaultOptionsOps() {
     final CalculationSetOptions options = new CalculationSetOptions();
     final OPSOptions opsOptions = new OPSOptions();
-    options.setOpsOptions(opsOptions);
+    options.getWnbCalculationOptions().setOpsOptions(opsOptions);
 
-    final Map<String, String> result = OptionsMetadataUtil.optionsToMap(options, true);
+    final Map<String, String> result = OptionsMetadataUtil.optionsToMap(Theme.WNB, options, true);
 
     assertEquals(BASIC_OPTIONS + OPS_OPTIONS, result.size(), "Number of options when opsOptions is supplied and when adding defaults to map");
     assertEquals("false", result.get("ops_raw_input"));
@@ -152,9 +158,9 @@ class OptionsMetadataUtilTest {
     opsOptions.setConvRate("8 out of 10");
     opsOptions.setRoughness(8.19);
     opsOptions.setChemistry(OPSOptions.Chemistry.PROGNOSIS);
-    options.setOpsOptions(opsOptions);
+    options.getWnbCalculationOptions().setOpsOptions(opsOptions);
 
-    final Map<String, String> result = OptionsMetadataUtil.optionsToMap(options, false);
+    final Map<String, String> result = OptionsMetadataUtil.optionsToMap(Theme.WNB, options, false);
 
     assertEquals(OPS_OPTIONS, result.size(), "Number of options when opsOptions is supplied with non default values");
     assertEquals("true", result.get("ops_raw_input"));
@@ -168,5 +174,32 @@ class OptionsMetadataUtilTest {
     assertEquals("8 out of 10", result.get("ops_conv_rate"));
     assertEquals("8.19", result.get("ops_roughness"));
     assertEquals("PROGNOSIS", result.get("ops_chemistry"));
+  }
+
+  @Test
+  void testNcaOptions() {
+    final CalculationSetOptions options = new CalculationSetOptions();
+    final NCACalculationOptions ncaOptions = options.getNcaCalculationOptions();
+
+    ncaOptions.setPermitArea("London");
+    ncaOptions.setMeteoSiteLocation("Near London");
+    ncaOptions.setMeteoYears(List.of("2022", "2023"));
+    final ADMSOptions adms = new ADMSOptions();
+    ncaOptions.setAdmsOptions(adms);
+    adms.setMinMoninObukhovLength(12.3);
+    adms.setSurfaceAlbedo(23.4);
+    adms.setPriestleyTaylorParameter(34.5);
+    adms.setPlumeDepletion(true);
+    adms.setComplexTerrain(true);
+    final Map<String, String> result = OptionsMetadataUtil.optionsToMap(Theme.NCA, options, false);
+
+    assertEquals("London", result.get("adms_permit_area"));
+    assertEquals("Near London", result.get("adms_meteo_site_location"));
+    assertEquals("2022,2023", result.get("adms_meteo_years"));
+    assertEquals("12.3", result.get("adms_min_monin_obukhov_length"));
+    assertEquals("23.4", result.get("adms_surface_albedo"));
+    assertEquals("34.5", result.get("adms_priestley_taylor_parameter"));
+    assertEquals("true", result.get("adms_plume_depletion"));
+    assertEquals("true", result.get("adms_complex_terrain"));
   }
 }

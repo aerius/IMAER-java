@@ -155,10 +155,6 @@ public class GMLWriterTest {
     return "<imaer:" + element + ">" + value + "</imaer:" + element + ">";
   }
 
-  private String getExpectedElement(final String element) {
-    return "<imaer:" + element + ">";
-  }
-
   private MetaDataInput getMetaDataInput(final ScenarioMetaData scenarioMetaData) {
     final MetaDataInput metaDataInput = new MetaDataInput();
     metaDataInput.setScenarioMetaData(scenarioMetaData);
@@ -175,7 +171,7 @@ public class GMLWriterTest {
     final CalculationSetOptions options = new CalculationSetOptions();
     options.setCalculationType(CalculationType.NATURE_AREA);
     options.setCalculateMaximumRange(3);
-    options.setMonitorSrm2Year(2030);
+    options.getRblCalculationOptions().setMonitorSrm2Year(2030);
     options.getSubstances().add(Substance.NOX);
     options.getSubstances().add(Substance.NH3);
     options.getSubstances().add(Substance.NO2);
