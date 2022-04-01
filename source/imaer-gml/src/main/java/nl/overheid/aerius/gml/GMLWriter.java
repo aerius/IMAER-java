@@ -40,6 +40,7 @@ import nl.overheid.aerius.gml.base.AeriusGMLVersion;
 import nl.overheid.aerius.gml.base.FeatureMember;
 import nl.overheid.aerius.gml.base.MetaDataInput;
 import nl.overheid.aerius.gml.base.StringUtils;
+import nl.overheid.aerius.shared.domain.Theme;
 import nl.overheid.aerius.shared.domain.geo.ReceptorGridSettings;
 import nl.overheid.aerius.shared.domain.scenario.IsScenario;
 import nl.overheid.aerius.shared.domain.v2.nsl.NSLCorrection;
@@ -203,10 +204,20 @@ public class GMLWriter {
   }
 
   /**
+   * @deprecated use the write method with theme parameter
+   */
+  @Deprecated
+  public File writeToFile(final File dir, final IsScenario scenario, final MetaDataInput metaData, final int fileId,
+      final Optional<String> fileNamePart, final Optional<Date> fileNameDatePart) throws AeriusException {
+    return writeToFile(dir, Theme.WNB, scenario, metaData, fileId, fileNamePart, fileNameDatePart);
+  }
+
+  /**
    * Build GML and write it directly to file.
    * The file will be generated in the supplied directory.
    *
    * @param dir The directory to write the file to.
+   * @param theme theme this gml is generated for
    * @param scenario Scenario containing all scenario related data
    * @param metaData The metadata to write for this file.
    * @param fileId The ID that should be reflected in the filename.
@@ -214,11 +225,11 @@ public class GMLWriter {
    * @return The file generated.
    * @throws AeriusException When exception occurred generating the GML.
    */
-  public File writeToFile(final File dir, final IsScenario scenario, final MetaDataInput metaData, final int fileId,
+  public File writeToFile(final File dir, final Theme theme, final IsScenario scenario, final MetaDataInput metaData, final int fileId,
       final Optional<String> fileNamePart, final Optional<Date> fileNameDatePart) throws AeriusException {
     final Path file = new File(dir, getFileName(scenario, fileId, fileNamePart, fileNameDatePart)).toPath();
     try (final OutputStream outputStream = Files.newOutputStream(file)) {
-      write(outputStream, scenario, metaData);
+      write(outputStream, theme, scenario, metaData);
     } catch (final IOException e) {
       // catch any exception and put them in a GML exception.
       LOG.error("Internal error occurred.", e);
@@ -248,13 +259,14 @@ public class GMLWriter {
    * Write a list of emission sources to GML.
    *
    * @param outputStream The outputstream to use when writing the GML.
+   * @param theme theme this gml is generated for
    * @param sources Convert these sources to GML.
    * @param metaData Object containing the metadata like version, db-version and target year.
    * @throws AeriusException When the GML in the inputstream could not be converted to objects.
    */
-  public void writeEmissionSources(final OutputStream outputStream, final List<EmissionSourceFeature> sources, final MetaDataInput metaDataInput)
-      throws AeriusException {
-    createInternalWriter().writeEmissionSources(outputStream, sources, metaDataInput);
+  public void writeEmissionSources(final OutputStream outputStream, final Theme theme, final List<EmissionSourceFeature> sources,
+      final MetaDataInput metaDataInput) throws AeriusException {
+    createInternalWriter().writeEmissionSources(theme, outputStream, sources, metaDataInput);
   }
 
   /**
@@ -278,21 +290,32 @@ public class GMLWriter {
    * @param metaData Object containing the metadata like version, db-version and target year.
    * @throws AeriusException When the GML in the inputstream could not be converted to objects.
    */
-  public void writeAeriusPoints(final OutputStream outputStream, final List<CalculationPointFeature> receptors, final MetaDataInput metaDataInput)
+  public void writeAeriusPoints(final OutputStream outputStream, final Theme theme, final List<CalculationPointFeature> receptors,
+      final MetaDataInput metaDataInput) throws AeriusException {
+    createInternalWriter().writeAeriusPoints(outputStream, theme, receptors, metaDataInput);
+  }
+
+  /**
+   * @deprecated use the write method with theme parameter
+   */
+  @Deprecated
+  public void write(final OutputStream outputStream, final IsScenario scenario, final MetaDataInput metaDataInput)
       throws AeriusException {
-    createInternalWriter().writeAeriusPoints(outputStream, receptors, metaDataInput);
+    write(outputStream, Theme.WNB, scenario, metaDataInput);
   }
 
   /**
    * Convert a scenario to GML.
    *
    * @param outputStream The outputstream to use when writing the GML.
+   * @param theme theme this gml is generated for
    * @param scenario Convert this scenario to GML.
    * @param metaDataInput Object containing the information needed for GML metadata.
    * @throws AeriusException When the objects could not be converted to GML.
    */
-  public void write(final OutputStream outputStream, final IsScenario scenario, final MetaDataInput metaDataInput) throws AeriusException {
-    createInternalWriter().write(outputStream, scenario, metaDataInput);
+  public void write(final OutputStream outputStream, final Theme theme, final IsScenario scenario, final MetaDataInput metaDataInput)
+      throws AeriusException {
+    createInternalWriter().write(outputStream, theme, scenario, metaDataInput);
   }
 
   private InternalGMLWriter createInternalWriter() {

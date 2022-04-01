@@ -39,14 +39,14 @@ import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 import nl.overheid.aerius.shared.geometry.GeometryCalculator;
 
-public class ADMSRoadEmissionsCalculator {
+class ADMSRoadEmissionsCalculator {
 
   /**
    * Conversion from gram/meter to kilogram/kilometer.
    */
-  private static final BigDecimal GRAM_PER_KM_TO_KG_PER_METER = BigDecimal.valueOf(1000 * 1000);
+  private static final BigDecimal GRAM_PER_KM_TO_KG_PER_METER = BigDecimal.valueOf(1000L * 1000);
 
-  private static final BigDecimal PER_SECOND_TO_PER_YEAR = BigDecimal.valueOf(365 * 24 * 60 * 60);
+  private static final BigDecimal PER_SECOND_TO_PER_YEAR = BigDecimal.valueOf(365L * 24 * 60 * 60);
 
   private static final BigDecimal FACTOR_FOR_ADMS_EMISSIONS = PER_SECOND_TO_PER_YEAR.divide(GRAM_PER_KM_TO_KG_PER_METER, 5, RoundingMode.HALF_UP);
 

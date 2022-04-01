@@ -20,10 +20,15 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import nl.overheid.aerius.shared.domain.Theme;
+import nl.overheid.aerius.shared.domain.calculation.ADMSOptions;
 import nl.overheid.aerius.shared.domain.calculation.CalculationRoadOPS;
 import nl.overheid.aerius.shared.domain.calculation.CalculationSetOptions;
+import nl.overheid.aerius.shared.domain.calculation.CalculationType;
 import nl.overheid.aerius.shared.domain.calculation.ConnectSuppliedOptions;
+import nl.overheid.aerius.shared.domain.calculation.NCACalculationOptions;
 import nl.overheid.aerius.shared.domain.calculation.OPSOptions;
+import nl.overheid.aerius.shared.domain.calculation.WNBCalculationOptions;
 
 /**
  * Utility class to convert calculation options to metadata.
@@ -56,6 +61,16 @@ public final class OptionsMetadataUtil {
     OPS_CONV_RATE,
     OPS_ROUGHNESS,
     OPS_CHEMISTRY,
+
+    /* ADMS options related */
+    ADMS_PERMIT_AREA,
+    ADMS_METEO_SITE_LOCATION,
+    ADMS_METEO_YEARS,
+    ADMS_MIN_MONIN_OBUKHOV_LENGTH,
+    ADMS_SURFACE_ALBEDO,
+    ADMS_PRIESTLEY_TAYLOR_PARAMETER,
+    ADMS_PLUME_DEPLETION,
+    ADMS_COMPLEX_TERRAIN,
     ;
     // @formatter:on
 
@@ -69,23 +84,32 @@ public final class OptionsMetadataUtil {
     //util class
   }
 
-  public static Map<String, String> optionsToMap(final CalculationSetOptions options, final boolean addDefaults) {
+  public static Map<String, String> optionsToMap(final Theme theme, final CalculationSetOptions options, final boolean addDefaults) {
     final Map<Option, String> mapToAddTo = new LinkedHashMap<>();
-    addValue(mapToAddTo, Option.METEO_YEAR, options.getMeteo(), addDefaults);
     addBooleanValue(mapToAddTo, Option.WITHOUT_SOURCE_STACKING, !options.isStacking(), addDefaults);
+    if (theme == Theme.WNB || theme == Theme.RBL) {
+      wnbOptionsToMap(mapToAddTo, options.getWnbCalculationOptions(), addDefaults, options.getCalculationType());
+      addIntValue(mapToAddTo, Option.MONITOR_SRM2_YEAR, options.getRblCalculationOptions().getMonitorSrm2Year(), addDefaults);
+    } else if (theme == Theme.NCA) {
+      ncaOptionsToMap(mapToAddTo, options.getNcaCalculationOptions(), addDefaults);
+    }
+    addConnectSuppliedOptions(options.getConnectSuppliedOptions(), mapToAddTo, addDefaults);
+
+    final Map<String, String> returnMap = new LinkedHashMap<>();
+    mapToAddTo.forEach((key, value) -> returnMap.put(key.toKey(), value));
+    return returnMap;
+  }
+
+  private static void wnbOptionsToMap(final Map<Option, String> mapToAddTo, final WNBCalculationOptions options, final boolean addDefaults,
+      final CalculationType calculationType) {
+    addValue(mapToAddTo, Option.METEO_YEAR, options.getMeteo(), addDefaults);
     if (addDefaults || options.getRoadOPS() != CalculationRoadOPS.DEFAULT) {
       mapToAddTo.put(Option.OPS_ROAD, options.getRoadOPS().name());
     }
     addBooleanValue(mapToAddTo, Option.FORCED_AGGREGATION, options.isForceAggregation(), addDefaults);
     addBooleanValue(mapToAddTo, Option.USE_RECEPTOR_HEIGHT, options.isUseReceptorHeights(), addDefaults);
     addBooleanValue(mapToAddTo, Option.WITH_WNB_MAX_DISTANCE, options.isUseWNBMaxDistance(), addDefaults);
-    addConnectSuppliedOptions(options.getConnectSuppliedOptions(), mapToAddTo, addDefaults);
-    addIntValue(mapToAddTo, Option.MONITOR_SRM2_YEAR, options.getMonitorSrm2Year(), addDefaults);
     opsOptionsToMap(options.getOpsOptions(), mapToAddTo, addDefaults);
-
-    final Map<String, String> returnMap = new LinkedHashMap<>();
-    mapToAddTo.forEach((key, value) -> returnMap.put(key.toKey(), value));
-    return returnMap;
   }
 
   private static void addConnectSuppliedOptions(final ConnectSuppliedOptions connectSuppliedOptions, final Map<Option, String> mapToAddTo,
@@ -109,6 +133,20 @@ public final class OptionsMetadataUtil {
       addValue(mapToAddTo, Option.OPS_WASHOUT, options.getWashout(), addDefaults);
       addValue(mapToAddTo, Option.OPS_CONV_RATE, options.getConvRate(), addDefaults);
       addValue(mapToAddTo, Option.OPS_ROUGHNESS, options.getRoughness(), addDefaults);
+    }
+  }
+
+  private static void ncaOptionsToMap(final Map<Option, String> mapToAddTo, final NCACalculationOptions options, final boolean addDefaults) {
+    if (options != null) {
+      addValue(mapToAddTo, Option.ADMS_PERMIT_AREA, options.getPermitArea(), false);
+      addValue(mapToAddTo, Option.ADMS_METEO_SITE_LOCATION, options.getMeteoSiteLocation(), false);
+      addValue(mapToAddTo, Option.ADMS_METEO_YEARS, String.join(",", options.getMeteoYears()), false);
+      final ADMSOptions adms = options.getAdmsOptions();
+      addValue(mapToAddTo, Option.ADMS_MIN_MONIN_OBUKHOV_LENGTH, adms.getMinMoninObukhovLength(), false);
+      addValue(mapToAddTo, Option.ADMS_SURFACE_ALBEDO, adms.getSurfaceAlbedo(), false);
+      addValue(mapToAddTo, Option.ADMS_PRIESTLEY_TAYLOR_PARAMETER, adms.getPriestleyTaylorParameter(), false);
+      addBooleanValue(mapToAddTo, Option.ADMS_PLUME_DEPLETION, adms.isPlumeDepletion(), false);
+      addBooleanValue(mapToAddTo, Option.ADMS_COMPLEX_TERRAIN, adms.isComplexTerrain(), false);
     }
   }
 

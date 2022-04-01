@@ -45,6 +45,7 @@ import org.slf4j.LoggerFactory;
 import nl.overheid.aerius.gml.base.AeriusGMLVersion;
 import nl.overheid.aerius.gml.base.MetaDataInput;
 import nl.overheid.aerius.shared.domain.Substance;
+import nl.overheid.aerius.shared.domain.Theme;
 import nl.overheid.aerius.shared.domain.scenario.SituationType;
 import nl.overheid.aerius.shared.domain.v2.importer.ImportParcel;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSource;
@@ -177,7 +178,7 @@ public class GMLOldVersionTest {
     //for good measure, try to export to a current-gen version
     final GMLWriter writer = new GMLWriter(GMLTestDomain.getExampleGridSettings(), r -> Optional.empty());
     try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
-      writer.writeEmissionSources(bos, oldSources, getMetaDataInput(oldResult));
+      writer.writeEmissionSources(bos, Theme.WNB, oldSources, getMetaDataInput(oldResult));
     }
   }
 

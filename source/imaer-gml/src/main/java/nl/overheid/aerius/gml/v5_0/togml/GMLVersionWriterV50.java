@@ -43,6 +43,7 @@ import nl.overheid.aerius.gml.v5_0.metadata.ProjectMetadata;
 import nl.overheid.aerius.gml.v5_0.metadata.SituationMetadata;
 import nl.overheid.aerius.gml.v5_0.metadata.VersionMetadata;
 import nl.overheid.aerius.shared.domain.Substance;
+import nl.overheid.aerius.shared.domain.Theme;
 import nl.overheid.aerius.shared.domain.calculation.CalculationSetOptions;
 import nl.overheid.aerius.shared.domain.calculation.CalculationType;
 import nl.overheid.aerius.shared.domain.geo.HexagonZoomLevel;
@@ -100,10 +101,10 @@ public class GMLVersionWriterV50 implements GMLVersionWriter {
   }
 
   @Override
-  public MetaData metaData2GML(final MetaDataInput metaDataInput) throws AeriusException {
+  public MetaData metaData2GML(final Theme theme, final MetaDataInput metaDataInput) throws AeriusException {
     final MetaDataImpl metaDataImpl = new MetaDataImpl();
     metaDataImpl.setSituation(getSituation(metaDataInput));
-    metaDataImpl.setCalculation(getCalculation(metaDataInput));
+    metaDataImpl.setCalculation(getCalculation(theme, metaDataInput));
     metaDataImpl.setProject(getProject(metaDataInput));
     metaDataImpl.setVersion(getVersion(metaDataInput));
     return metaDataImpl;
@@ -161,7 +162,7 @@ public class GMLVersionWriterV50 implements GMLVersionWriter {
         && !StringUtils.isEmpty(scenarioData.getCity());
   }
 
-  private CalculationMetadata getCalculation(final MetaDataInput input) {
+  private CalculationMetadata getCalculation(final Theme theme, final MetaDataInput input) {
     final CalculationMetadata calculation;
     if (input.isResultsIncluded()) {
       calculation = new CalculationMetadata();
@@ -172,7 +173,7 @@ public class GMLVersionWriterV50 implements GMLVersionWriter {
       }
       calculation.setSubstances(input.getOptions().getSubstances());
       calculation.setResultTypes(determineResultTypes(input.getOptions().getEmissionResultKeys()));
-      calculation.setOptions(options2GML(input.getOptions()));
+      calculation.setOptions(options2GML(theme, input.getOptions()));
     } else {
       calculation = null;
     }
@@ -196,8 +197,8 @@ public class GMLVersionWriterV50 implements GMLVersionWriter {
     return types.stream().sorted().collect(Collectors.toList());
   }
 
-  private List<CalculationOptionProperty> options2GML(final CalculationSetOptions options) {
-    final Map<String, String> gmlOptionsMap = OptionsMetadataUtil.optionsToMap(options, false);
+  private List<CalculationOptionProperty> options2GML(final Theme theme, final CalculationSetOptions options) {
+    final Map<String, String> gmlOptionsMap = OptionsMetadataUtil.optionsToMap(theme, options, false);
     return gmlOptionsMap.entrySet().stream()
         .map(entry -> new CalculationOption(entry.getKey(), entry.getValue()))
         .map(CalculationOptionProperty::new)

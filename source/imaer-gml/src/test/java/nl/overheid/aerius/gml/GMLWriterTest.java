@@ -35,6 +35,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import nl.overheid.aerius.gml.base.MetaDataInput;
 import nl.overheid.aerius.shared.domain.Substance;
+import nl.overheid.aerius.shared.domain.Theme;
 import nl.overheid.aerius.shared.domain.calculation.CalculationSetOptions;
 import nl.overheid.aerius.shared.domain.calculation.CalculationType;
 import nl.overheid.aerius.shared.domain.geo.ReceptorGridSettings;
@@ -91,7 +92,7 @@ public class GMLWriterTest {
 
   private String getConversionResult(final GMLWriter builder, final List<EmissionSourceFeature> sources) throws IOException, AeriusException {
     try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
-      builder.writeEmissionSources(bos, sources, getMetaDataInput(getScenarioMetaData()));
+      builder.writeEmissionSources(bos, Theme.WNB, sources, getMetaDataInput(getScenarioMetaData()));
       return bos.toString(StandardCharsets.UTF_8.name());
     }
   }
@@ -127,7 +128,7 @@ public class GMLWriterTest {
     try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
       final MetaDataInput metaDataInput = getMetaDataInput(metaData);
 
-      writer.write(bos, scenario, metaDataInput);
+      writer.write(bos, Theme.WNB, scenario, metaDataInput);
       result = bos.toString(StandardCharsets.UTF_8.name());
     }
     validateDefaultMetaDataFields(result, metaData);
@@ -155,10 +156,6 @@ public class GMLWriterTest {
     return "<imaer:" + element + ">" + value + "</imaer:" + element + ">";
   }
 
-  private String getExpectedElement(final String element) {
-    return "<imaer:" + element + ">";
-  }
-
   private MetaDataInput getMetaDataInput(final ScenarioMetaData scenarioMetaData) {
     final MetaDataInput metaDataInput = new MetaDataInput();
     metaDataInput.setScenarioMetaData(scenarioMetaData);
@@ -175,7 +172,7 @@ public class GMLWriterTest {
     final CalculationSetOptions options = new CalculationSetOptions();
     options.setCalculationType(CalculationType.NATURE_AREA);
     options.setCalculateMaximumRange(3);
-    options.setMonitorSrm2Year(2030);
+    options.getRblCalculationOptions().setMonitorSrm2Year(2030);
     options.getSubstances().add(Substance.NOX);
     options.getSubstances().add(Substance.NH3);
     options.getSubstances().add(Substance.NO2);
@@ -232,7 +229,7 @@ public class GMLWriterTest {
     final GMLWriter writer = new GMLWriter(RECEPTOR_GRID_SETTINGS, GMLTestDomain.TEST_REFERENCE_GENERATOR);
     String result;
     try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
-      writer.writeAeriusPoints(bos, receptors, metaDataInput);
+      writer.writeAeriusPoints(bos, Theme.WNB, receptors, metaDataInput);
       result = bos.toString(StandardCharsets.UTF_8.name());
     }
     assertFalse(result.isEmpty(), "Result shouldn't be empty for " + receptorFile);
@@ -313,7 +310,7 @@ public class GMLWriterTest {
           .sources(emissionSources)
           .calculationPoints(receptors)
           .build();
-      builder.write(bos, scenario, metaDataInput);
+      builder.write(bos, Theme.WNB, scenario, metaDataInput);
       result = bos.toString(StandardCharsets.UTF_8.name());
     }
     assertFalse(result.isEmpty(), "Result shouldn't be empty");

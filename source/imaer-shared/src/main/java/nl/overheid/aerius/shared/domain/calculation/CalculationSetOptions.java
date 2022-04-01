@@ -37,21 +37,15 @@ public class CalculationSetOptions implements Serializable {
   private double calculateMaximumRange;
   private final ArrayList<Substance> substances = new ArrayList<>();
   private final Set<EmissionResultKey> emissionResultKeys = new HashSet<>();
-  private boolean forceAggregation;
-  private CalculationRoadOPS roadOPS = CalculationRoadOPS.DEFAULT;
-  private int monitorSrm2Year;
-  /**
-   * If true apply the WNB 25km calculation limit. Default true for WNB.
-   */
-  private boolean useWNBMaxDistance;
+  private WNBCalculationOptions wnbCalculationOptions = new WNBCalculationOptions();
+  private RBLCalculationOptions rblCalculationOptions = new RBLCalculationOptions();
+  private NCACalculationOptions ncaCalculationOptions = new NCACalculationOptions();
+
   /**
    * Controls the stacking of Point sources.
    */
   private boolean stacking = true;
-  private Meteo meteo;
-  private boolean useReceptorHeights;
   private ConnectSuppliedOptions connectSuppliedOptions;
-  private OPSOptions opsOptions;
 
   public int getCalculationSetOptionsId() {
     return calculationSetOptionsId;
@@ -65,19 +59,25 @@ public class CalculationSetOptions implements Serializable {
     return calculationType;
   }
 
+  public void setCalculationType(final CalculationType calculationType) {
+    this.calculationType = calculationType;
+  }
+
   public ArrayList<Substance> getSubstances() {
     return substances;
   }
 
+  @Deprecated
   public void setUseWnbMaxDistance(final boolean uswWNBMaxDistance) {
-    this.useWNBMaxDistance = uswWNBMaxDistance;
+    wnbCalculationOptions.setUseWnbMaxDistance(uswWNBMaxDistance);
   }
 
   /**
    * @return Returns true if WNB maximum distance calculation is to be applied.
    */
+  @Deprecated
   public boolean isUseWNBMaxDistance() {
-    return useWNBMaxDistance;
+    return wnbCalculationOptions.isUseWNBMaxDistance();
   }
 
   public boolean isStacking() {
@@ -90,10 +90,6 @@ public class CalculationSetOptions implements Serializable {
 
   public Set<EmissionResultKey> getEmissionResultKeys() {
     return emissionResultKeys;
-  }
-
-  public void setCalculationType(final CalculationType calculationType) {
-    this.calculationType = calculationType;
   }
 
   /**
@@ -119,54 +115,65 @@ public class CalculationSetOptions implements Serializable {
     this.calculateMaximumRange = calculateMaximumRange;
   }
 
+  @Deprecated
   public boolean isForceAggregation() {
-    return forceAggregation;
+    return wnbCalculationOptions.isForceAggregation();
   }
 
   /**
    * By default some sectors are exempt from aggregation. This forces aggregation even for those sectors.
    */
+  @Deprecated
   public void setForceAggregation(final boolean forceAggregation) {
-    this.forceAggregation = forceAggregation;
+    wnbCalculationOptions.setForceAggregation(forceAggregation);
   }
 
+  @Deprecated
   public CalculationRoadOPS getRoadOPS() {
     if (calculationType != CalculationType.CUSTOM_POINTS) {
       return CalculationRoadOPS.DEFAULT;
     }
-    return roadOPS;
+    return wnbCalculationOptions.getRoadOPS();
   }
 
+  @Deprecated
   public void setRoadOPS(final CalculationRoadOPS roadOPS) {
-    this.roadOPS = roadOPS;
+    wnbCalculationOptions.setRoadOPS(roadOPS);
   }
 
+  @Deprecated
   public boolean isIncludeMonitorSrm2Network() {
-    return monitorSrm2Year > 0;
+    return rblCalculationOptions.isIncludeMonitorSrm2Network();
   }
 
+  @Deprecated
   public int getMonitorSrm2Year() {
-    return monitorSrm2Year;
+    return rblCalculationOptions.getMonitorSrm2Year();
   }
 
+  @Deprecated
   public void setMonitorSrm2Year(final int monitorSrm2Year) {
-    this.monitorSrm2Year = monitorSrm2Year;
+    rblCalculationOptions.setMonitorSrm2Year(monitorSrm2Year);
   }
 
+  @Deprecated
   public Meteo getMeteo() {
-    return meteo;
+    return wnbCalculationOptions.getMeteo();
   }
 
+  @Deprecated
   public void setMeteo(final Meteo meteo) {
-    this.meteo = meteo;
+    wnbCalculationOptions.setMeteo(meteo);
   }
 
+  @Deprecated
   public boolean isUseReceptorHeights() {
-    return useReceptorHeights;
+    return wnbCalculationOptions.isUseReceptorHeights();
   }
 
+  @Deprecated
   public void setUseReceptorHeights(final boolean useReceptorHeights) {
-    this.useReceptorHeights = useReceptorHeights;
+    wnbCalculationOptions.setUseReceptorHeights(useReceptorHeights);
   }
 
   public ConnectSuppliedOptions getConnectSuppliedOptions() {
@@ -177,19 +184,33 @@ public class CalculationSetOptions implements Serializable {
     this.connectSuppliedOptions = connectSuppliedOptions;
   }
 
+  @Deprecated
   public OPSOptions getOpsOptions() {
-    return opsOptions;
+    return wnbCalculationOptions.getOpsOptions();
   }
 
+  @Deprecated
   public void setOpsOptions(final OPSOptions opsOptions) {
-    this.opsOptions = opsOptions;
+    wnbCalculationOptions.setOpsOptions(opsOptions);
+  }
+
+  public WNBCalculationOptions getWnbCalculationOptions() {
+    return wnbCalculationOptions;
+  }
+
+  public RBLCalculationOptions getRblCalculationOptions() {
+    return rblCalculationOptions;
+  }
+
+  public NCACalculationOptions getNcaCalculationOptions() {
+    return ncaCalculationOptions;
   }
 
   @Override
   public String toString() {
     return "CalculationSetOptions [calculationSetOptionsId=" + calculationSetOptionsId + ", calculationType=" + calculationType
         + ", calculateMaximumRange=" + calculateMaximumRange + ", substances=" + substances + ", emissionResultKeys=" + emissionResultKeys
-        + ", forceAggregation=" + forceAggregation + ", roadOPS=" + roadOPS + ", monitorSrm2Year=" + monitorSrm2Year + ", stacking=" + stacking
-        + ", meteo=" + meteo + ", useReceptorHeights=" + useReceptorHeights + ", opsOptions=" + opsOptions + "]";
+        + ", stacking=" + stacking + ", connectSuppliedOptions=" + connectSuppliedOptions + ", wnbCalculationOptions=" + wnbCalculationOptions
+        + ", rblCalculationOptions=" + rblCalculationOptions + ", ncaCalculationOptions=" + ncaCalculationOptions + "]";
   }
 }
