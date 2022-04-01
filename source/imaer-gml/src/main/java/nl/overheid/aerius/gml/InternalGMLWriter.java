@@ -46,7 +46,6 @@ import nl.overheid.aerius.gml.base.MetaDataInput;
 import nl.overheid.aerius.gml.v5_0.base.CalculatorSchema;
 import nl.overheid.aerius.gml.v5_0.togml.GMLVersionWriterV50;
 import nl.overheid.aerius.shared.domain.Substance;
-import nl.overheid.aerius.shared.domain.Theme;
 import nl.overheid.aerius.shared.domain.geo.ReceptorGridSettings;
 import nl.overheid.aerius.shared.domain.scenario.IsScenario;
 import nl.overheid.aerius.shared.domain.v2.building.BuildingFeature;
@@ -98,15 +97,14 @@ final class InternalGMLWriter {
   /**
    * Write a list of emission sources to GML.
    *
-   * @param theme theme this gml is generated for
    * @param outputStream The outputstream to use when writing the GML.
    * @param sources Convert these sources to GML.
    * @param metaData Object containing the metadata like version, db-version and target year.
    * @throws AeriusException When the GML in the inputstream could not be converted to objects.
    */
-  void writeEmissionSources(final Theme theme, final OutputStream outputStream, final List<EmissionSourceFeature> sources,
-      final MetaDataInput metaDataInput) throws AeriusException {
-    final MetaData metaData = writer.metaData2GML(theme, metaDataInput);
+  void writeEmissionSources(final OutputStream outputStream, final List<EmissionSourceFeature> sources, final MetaDataInput metaDataInput)
+      throws AeriusException {
+    final MetaData metaData = writer.metaData2GML(metaDataInput);
     final List<FeatureMember> featureMembers = emissionSourcesToFeatures(sources);
     toXMLString(outputStream, featureMembers, metaData, null);
   }
@@ -130,30 +128,27 @@ final class InternalGMLWriter {
    * Write a list of receptor points to GML.
    *
    * @param outputStream The outputstream to use when writing the GML.
-   * @param theme theme this gml is generated for
    * @param receptors Convert these receptor points to GML.
    * @param metaData Object containing the metadata like version, db-version and target year.
    * @throws AeriusException When the GML in the inputstream could not be converted to objects.
    */
-  void writeAeriusPoints(final OutputStream outputStream, final Theme theme, final List<CalculationPointFeature> receptors,
-      final MetaDataInput metaDataInput) throws AeriusException {
+  void writeAeriusPoints(final OutputStream outputStream, final List<CalculationPointFeature> receptors, final MetaDataInput metaDataInput)
+      throws AeriusException {
     final List<FeatureMember> featureMembers = aeriusPointsToFeatures(receptors, Collections.emptyList());
-    toXMLString(outputStream, featureMembers, metaDataInput == null ? null : writer.metaData2GML(theme, metaDataInput), null);
+    toXMLString(outputStream, featureMembers, metaDataInput == null ? null : writer.metaData2GML(metaDataInput), null);
   }
 
   /**
    * Convert a scenario to GML.
    *
    * @param outputStream The outputstream to use when writing the GML.
-   * @param theme theme this gml is generated for
    * @param sources Convert these sources to GML.
    * @param aeriusPoints Convert these points to GML.
    * @param metaDataInput Object containing the information needed for GML metadata.
    * @param sectorId the sectorid, null for total results
    * @throws AeriusException When the objects could not be converted to GML.
    */
-  void write(final OutputStream outputStream, final Theme theme, final IsScenario scenario, final MetaDataInput metaDataInput)
-      throws AeriusException {
+  void write(final OutputStream outputStream, final IsScenario scenario, final MetaDataInput metaDataInput) throws AeriusException {
     final List<FeatureMember> featureMembers = emissionSourcesToFeatures(scenario.getSources());
     featureMembers.addAll(buildingsToFeatures(scenario.getBuildings()));
     featureMembers.addAll(aeriusPointsToFeatures(scenario.getCalculationPoints(), scenario.getNslCorrections()));
@@ -163,7 +158,7 @@ final class InternalGMLWriter {
     metaDataInput.setName(scenario.getName());
     metaDataInput.setSituationType(scenario.getSituationType());
     metaDataInput.setNettingFactor(scenario.getNettingFactor());
-    final MetaData metaDataImpl = writer.metaData2GML(theme, metaDataInput);
+    final MetaData metaDataImpl = writer.metaData2GML(metaDataInput);
     referenceGenerator.updateReferenceIfNeeded(metaDataImpl.getReference()).ifPresent(newReference -> {
       metaDataImpl.setReference(newReference);
       metaDataInput.getScenarioMetaData().setReference(newReference);

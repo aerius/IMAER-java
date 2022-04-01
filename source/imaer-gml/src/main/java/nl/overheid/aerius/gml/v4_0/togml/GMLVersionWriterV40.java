@@ -101,10 +101,10 @@ public class GMLVersionWriterV40 implements GMLVersionWriter {
   }
 
   @Override
-  public MetaData metaData2GML(final Theme theme, final MetaDataInput metaDataInput) throws AeriusException {
+  public MetaData metaData2GML(final MetaDataInput metaDataInput) throws AeriusException {
     final MetaDataImpl metaDataImpl = new MetaDataImpl();
     metaDataImpl.setSituation(getSituation(metaDataInput));
-    metaDataImpl.setCalculation(getCalculation(theme, metaDataInput));
+    metaDataImpl.setCalculation(getCalculation(metaDataInput));
     metaDataImpl.setProject(getProject(metaDataInput));
     metaDataImpl.setVersion(getVersion(metaDataInput));
     return metaDataImpl;
@@ -162,7 +162,7 @@ public class GMLVersionWriterV40 implements GMLVersionWriter {
         && !StringUtils.isEmpty(scenarioData.getCity());
   }
 
-  private CalculationMetadata getCalculation(final Theme theme, final MetaDataInput input) {
+  private CalculationMetadata getCalculation(final MetaDataInput input) {
     final CalculationMetadata calculation;
     if (input.isResultsIncluded()) {
       calculation = new CalculationMetadata();
@@ -173,7 +173,7 @@ public class GMLVersionWriterV40 implements GMLVersionWriter {
       }
       calculation.setSubstances(input.getOptions().getSubstances());
       calculation.setResultTypes(determineResultTypes(input.getOptions().getEmissionResultKeys()));
-      calculation.setOptions(options2GML(theme, input.getOptions()));
+      calculation.setOptions(options2GML(input.getTheme(), input.getOptions()));
     } else {
       calculation = null;
     }

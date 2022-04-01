@@ -87,7 +87,7 @@ public final class OptionsMetadataUtil {
   public static Map<String, String> optionsToMap(final Theme theme, final CalculationSetOptions options, final boolean addDefaults) {
     final Map<Option, String> mapToAddTo = new LinkedHashMap<>();
     addBooleanValue(mapToAddTo, Option.WITHOUT_SOURCE_STACKING, !options.isStacking(), addDefaults);
-    if (theme == Theme.WNB || theme == Theme.RBL) {
+    if (theme == null || theme == Theme.WNB || theme == Theme.RBL) {
       wnbOptionsToMap(mapToAddTo, options.getWnbCalculationOptions(), addDefaults, options.getCalculationType());
       addIntValue(mapToAddTo, Option.MONITOR_SRM2_YEAR, options.getRblCalculationOptions().getMonitorSrm2Year(), addDefaults);
     } else if (theme == Theme.NCA) {
@@ -138,15 +138,18 @@ public final class OptionsMetadataUtil {
 
   private static void ncaOptionsToMap(final Map<Option, String> mapToAddTo, final NCACalculationOptions options, final boolean addDefaults) {
     if (options != null) {
-      addValue(mapToAddTo, Option.ADMS_PERMIT_AREA, options.getPermitArea(), false);
-      addValue(mapToAddTo, Option.ADMS_METEO_SITE_LOCATION, options.getMeteoSiteLocation(), false);
-      addValue(mapToAddTo, Option.ADMS_METEO_YEARS, String.join(",", options.getMeteoYears()), false);
+      addValue(mapToAddTo, Option.ADMS_PERMIT_AREA, options.getPermitArea(), addDefaults);
+      addValue(mapToAddTo, Option.ADMS_METEO_SITE_LOCATION, options.getMeteoSiteLocation(), addDefaults);
+      addValue(mapToAddTo, Option.ADMS_METEO_YEARS, String.join(",", options.getMeteoYears()), addDefaults);
       final ADMSOptions adms = options.getAdmsOptions();
-      addValue(mapToAddTo, Option.ADMS_MIN_MONIN_OBUKHOV_LENGTH, adms.getMinMoninObukhovLength(), false);
-      addValue(mapToAddTo, Option.ADMS_SURFACE_ALBEDO, adms.getSurfaceAlbedo(), false);
-      addValue(mapToAddTo, Option.ADMS_PRIESTLEY_TAYLOR_PARAMETER, adms.getPriestleyTaylorParameter(), false);
-      addBooleanValue(mapToAddTo, Option.ADMS_PLUME_DEPLETION, adms.isPlumeDepletion(), false);
-      addBooleanValue(mapToAddTo, Option.ADMS_COMPLEX_TERRAIN, adms.isComplexTerrain(), false);
+
+      if (adms != null) {
+        addValue(mapToAddTo, Option.ADMS_MIN_MONIN_OBUKHOV_LENGTH, adms.getMinMoninObukhovLength(), addDefaults);
+        addValue(mapToAddTo, Option.ADMS_SURFACE_ALBEDO, adms.getSurfaceAlbedo(), addDefaults);
+        addValue(mapToAddTo, Option.ADMS_PRIESTLEY_TAYLOR_PARAMETER, adms.getPriestleyTaylorParameter(), addDefaults);
+        addBooleanValue(mapToAddTo, Option.ADMS_PLUME_DEPLETION, adms.isPlumeDepletion(), addDefaults);
+        addBooleanValue(mapToAddTo, Option.ADMS_COMPLEX_TERRAIN, adms.isComplexTerrain(), addDefaults);
+      }
     }
   }
 

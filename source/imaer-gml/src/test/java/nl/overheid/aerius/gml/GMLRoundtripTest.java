@@ -43,7 +43,6 @@ import nl.overheid.aerius.gml.base.AeriusGMLVersion;
 import nl.overheid.aerius.gml.base.MetaDataInput;
 import nl.overheid.aerius.importer.ImaerImporter;
 import nl.overheid.aerius.importer.ImportOption;
-import nl.overheid.aerius.shared.domain.Theme;
 import nl.overheid.aerius.shared.domain.scenario.SituationType;
 import nl.overheid.aerius.shared.domain.v2.importer.ImportParcel;
 import nl.overheid.aerius.shared.exception.AeriusException;
@@ -182,7 +181,7 @@ public class GMLRoundtripTest {
           .build();
       final String gml;
       try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
-        gmlc.write(bos, Theme.WNB, scenario, getMetaData(result));
+        gmlc.write(bos, scenario, getMetaData(result));
         gml = bos.toString(StandardCharsets.UTF_8.name());
         assertFalse(gml.isEmpty(), "Generated GML is empty");
       }

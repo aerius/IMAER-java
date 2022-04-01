@@ -47,7 +47,6 @@ import nl.overheid.aerius.gml.base.GMLVersionReaderFactory;
 import nl.overheid.aerius.gml.base.MetaData;
 import nl.overheid.aerius.gml.base.MetaDataInput;
 import nl.overheid.aerius.gml.v0_5.GMLReaderFactoryV05;
-import nl.overheid.aerius.shared.domain.Theme;
 import nl.overheid.aerius.shared.domain.calculation.CalculationType;
 import nl.overheid.aerius.shared.domain.geo.ReceptorGridSettings;
 import nl.overheid.aerius.shared.domain.scenario.SituationType;
@@ -145,7 +144,7 @@ public class GMLReaderTest {
   public void testConvertMetaData() throws AeriusException, IOException {
     final File file = getFile(AssertGML.PATH_LATEST_VERSION, MIXED_FEATURES_FILE);
     final GMLReader reader = getGMLReaderFromFile(file);
-    final MetaData expectedMetaData = getMetaData(Theme.WNB);
+    final MetaData expectedMetaData = getMetaData();
     final GMLMetaDataReader metaDataReader = reader.metaDataReader();
     assertEquals(expectedMetaData.getYear().intValue(), metaDataReader.readYear(), "Metadata year");
     assertEquals(expectedMetaData.getVersion(), metaDataReader.readAeriusVersion(), "Metadata version");
@@ -203,7 +202,7 @@ public class GMLReaderTest {
     }
   }
 
-  private static MetaData getMetaData(final Theme theme) throws AeriusException {
+  private static MetaData getMetaData() throws AeriusException {
     final ScenarioMetaData metaData = new ScenarioMetaData();
     metaData.setReference("SomeReference001");
     metaData.setCorporation("Big Corp");
@@ -220,7 +219,7 @@ public class GMLReaderTest {
     metaDataInput.getOptions().getRblCalculationOptions().setMonitorSrm2Year(MONITOR_SRM2_YEAR);
     metaDataInput.setResultsIncluded(true);
     final InternalGMLWriter writer = new InternalGMLWriter(gridSettings, GMLTestDomain.TEST_REFERENCE_GENERATOR, Boolean.TRUE);
-    return writer.getWriter().metaData2GML(theme, metaDataInput);
+    return writer.getWriter().metaData2GML(metaDataInput);
   }
 
   @Test

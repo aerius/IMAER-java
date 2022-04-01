@@ -16,6 +16,7 @@
  */
 package nl.overheid.aerius.gml.base;
 
+import nl.overheid.aerius.shared.domain.Theme;
 import nl.overheid.aerius.shared.domain.calculation.CalculationSetOptions;
 import nl.overheid.aerius.shared.domain.scenario.SituationType;
 import nl.overheid.aerius.shared.domain.v2.scenario.ScenarioMetaData;
@@ -26,6 +27,7 @@ import nl.overheid.aerius.shared.domain.v2.scenario.ScenarioMetaData;
 public class MetaDataInput {
 
   private ScenarioMetaData scenarioMetaData;
+  private Theme theme;
   private int year;
   private String name;
   private SituationType situationType;
@@ -41,6 +43,14 @@ public class MetaDataInput {
 
   public void setScenarioMetaData(final ScenarioMetaData scenarioMetaData) {
     this.scenarioMetaData = scenarioMetaData;
+  }
+
+  public Theme getTheme() {
+    return theme;
+  }
+
+  public void setTheme(final Theme theme) {
+    this.theme = theme;
   }
 
   public int getYear() {

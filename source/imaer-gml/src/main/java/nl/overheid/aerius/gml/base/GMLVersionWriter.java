@@ -19,7 +19,6 @@ package nl.overheid.aerius.gml.base;
 import java.util.List;
 
 import nl.overheid.aerius.shared.domain.Substance;
-import nl.overheid.aerius.shared.domain.Theme;
 import nl.overheid.aerius.shared.domain.v2.building.BuildingFeature;
 import nl.overheid.aerius.shared.domain.v2.nsl.NSLCorrection;
 import nl.overheid.aerius.shared.domain.v2.nsl.NSLDispersionLineFeature;
@@ -62,7 +61,7 @@ public interface GMLVersionWriter {
    * @param metaDataInput Object containing all information needed for the gml metadata object.
    * @return GML meta data object
    */
-  MetaData metaData2GML(Theme theme, MetaDataInput metaDataInput) throws AeriusException;
+  MetaData metaData2GML(MetaDataInput metaDataInput) throws AeriusException;
 
   /**
    * Converts domain definitions object to GML definitions object.
