@@ -22,33 +22,44 @@ import javax.xml.bind.annotation.XmlType;
 import nl.overheid.aerius.gml.base.building.IsGmlBuilding;
 import nl.overheid.aerius.gml.v5_0.base.CalculatorSchema;
 import nl.overheid.aerius.gml.v5_0.base.FeatureMemberImpl;
-import nl.overheid.aerius.gml.v5_0.geo.Polygon;
+import nl.overheid.aerius.gml.v5_0.geo.BuildingGeometry;
+import nl.overheid.aerius.gml.v5_0.geo.EmissionSourceGeometry;
 import nl.overheid.aerius.shared.domain.v2.geojson.GeometryType;
 
 /**
  *
  */
-@XmlType(name = "BuildingType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"label", "height", "geometry"})
+@XmlType(name = "BuildingType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"label", "height", "buildingGeometryProperty", "diameter"})
 public class Building extends FeatureMemberImpl implements IsGmlBuilding {
 
   private String label;
   private double height;
+  private Double diameter;
 
   @Override
   public boolean isValidGeometry(final GeometryType type) {
-    return type == GeometryType.POLYGON;
+    return type == GeometryType.POINT || type == GeometryType.POLYGON;
   }
 
   @XmlElement(name = "geometry", namespace = CalculatorSchema.NAMESPACE)
-  public Polygon getGeometry() {
-    return super.getEmissionSourceGeometry().getPolygon();
+  public BuildingGeometryProperty getBuildingGeometryProperty() {
+    final BuildingGeometry geometry = new BuildingGeometry();
+    geometry.setPoint(super.getEmissionSourceGeometry().getPoint());
+    geometry.setPolygon(super.getEmissionSourceGeometry().getPolygon());
+    return new BuildingGeometryProperty(geometry);
   }
 
   /**
-   * @param polygon The polygon to set.
+   * Method doesn't actually set the property, but sets the EmissionSourceGeometry of this class based on it.
+   * @param buildingGeometryProperty The property to use.
    */
-  public void setGeometry(final Polygon polygon) {
-    super.getEmissionSourceGeometry().setPolygon(polygon);
+  public void setBuildingGeometryProperty(final BuildingGeometryProperty buildingGeometryProperty) {
+    final EmissionSourceGeometry geometry = new EmissionSourceGeometry();
+    if (buildingGeometryProperty != null && buildingGeometryProperty.getProperty() != null) {
+      geometry.setPoint(buildingGeometryProperty.getProperty().getPoint());
+      geometry.setPolygon(buildingGeometryProperty.getProperty().getPolygon());
+    }
+    super.setEmissionSourceGeometry(geometry);
   }
 
   @Override
@@ -69,6 +80,16 @@ public class Building extends FeatureMemberImpl implements IsGmlBuilding {
 
   public void setHeight(final double height) {
     this.height = height;
+  }
+
+  @Override
+  @XmlElement(namespace = CalculatorSchema.NAMESPACE)
+  public Double getDiameter() {
+    return diameter;
+  }
+
+  public void setDiameter(final Double diameter) {
+    this.diameter = diameter;
   }
 
 }

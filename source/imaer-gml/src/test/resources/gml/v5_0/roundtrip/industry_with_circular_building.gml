@@ -91,17 +91,14 @@
             <imaer:height>13.2</imaer:height>
             <imaer:geometry>
                 <imaer:BuildingGeometry>
-                    <imaer:GM_Surface>
-                        <gml:Polygon srsName="urn:ogc:def:crs:EPSG::28992" gml:id="Building.1.SURFACE">
-                            <gml:exterior>
-<gml:LinearRing>
-    <gml:posList>184099.3539485522 430576.7455135771 184110.88283492287 430593.2104696673 184061.40605144782 430627.8544864229 184049.87716507714 430611.3895303327 184099.3539485522 430576.7455135771</gml:posList>
-</gml:LinearRing>
-                            </gml:exterior>
-                        </gml:Polygon>
-                    </imaer:GM_Surface>
+                    <imaer:GM_Point>
+                        <gml:Point srsName="urn:ogc:def:crs:EPSG::28992" gml:id="Building.1.POINT">
+                            <gml:pos>184080.38 430602.3</gml:pos>
+                        </gml:Point>
+                    </imaer:GM_Point>
                 </imaer:BuildingGeometry>
             </imaer:geometry>
+            <imaer:diameter>21.35</imaer:diameter>
         </imaer:Building>
     </imaer:featureMember>
 </imaer:FeatureCollectionCalculator>

@@ -98,6 +98,7 @@ public class GMLRoundtripTest {
       {"industry_with_calculated_heat_content",},
       {"industry_with_default_emission_temperature",},
       {"industry_with_building",},
+      {"industry_with_circular_building",},
       {"industry_with_custom_diurnal_variation",},
       {"two_networks",},
       {"road_srm1",},
