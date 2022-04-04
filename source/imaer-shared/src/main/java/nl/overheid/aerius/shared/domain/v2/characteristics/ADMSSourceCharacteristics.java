@@ -123,11 +123,11 @@ public class ADMSSourceCharacteristics extends SourceCharacteristics {
     this.diameter = diameter;
   }
 
-  public final double getWidth() {
+  public double getWidth() {
     return width;
   }
 
-  public final void setWidth(final double width) {
+  public void setWidth(final double width) {
     this.width = width;
   }
 
