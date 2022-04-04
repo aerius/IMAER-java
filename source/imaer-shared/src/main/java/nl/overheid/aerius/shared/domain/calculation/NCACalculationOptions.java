@@ -17,6 +17,7 @@
 package nl.overheid.aerius.shared.domain.calculation;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -39,12 +40,12 @@ public class NCACalculationOptions implements Serializable {
   /**
    * List of meteo years to calculate.
    */
-  private List<String> meteoYears;
+  private List<String> meteoYears = new ArrayList<String>();
 
   /**
    * Additional ADMS options.
    */
-  private ADMSOptions admsOptions;
+  private ADMSOptions admsOptions = new ADMSOptions();
 
   public String getPermitArea() {
     return permitArea;
