@@ -103,9 +103,9 @@ public final class ADMSLimits implements BuildingLimits {
   public static final double HORIZONTAL_ANGLE_MIN = 0.0;
   public static final double HORIZONTAL_ANGLE_MAX = 360.0;
 
-  public static final double MIN_MONIN_OBUKHOV_LENGTH_MIN = 0D;
+  public static final double MIN_MONIN_OBUKHOV_LENGTH_MIN = 1D;
   public static final double MIN_MONIN_OBUKHOV_LENGTH_MAX = 200D;
-  public static final double MIN_MONIN_OBUKHOV_LENGTH_DEFAULT = 0D;
+  public static final double MIN_MONIN_OBUKHOV_LENGTH_DEFAULT = 30D;
   public static final double SURFACE_ALBEDO_MIN = 0D;
   public static final double SURFACE_ALBEDO_MAX = 1D;
   public static final double SURFACE_ALBEDO_DEFAULT = 0.23D;
