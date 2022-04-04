@@ -40,6 +40,8 @@ public class ADMSSourceCharacteristics extends SourceCharacteristics {
 
   private double diameter;
 
+  private double width;
+
   private double temperature;
 
   private double density;
@@ -119,6 +121,14 @@ public class ADMSSourceCharacteristics extends SourceCharacteristics {
 
   public void setDiameter(final double diameter) {
     this.diameter = diameter;
+  }
+
+  public final double getWidth() {
+    return width;
+  }
+
+  public final void setWidth(final double width) {
+    this.width = width;
   }
 
   public double getTemperature() {
