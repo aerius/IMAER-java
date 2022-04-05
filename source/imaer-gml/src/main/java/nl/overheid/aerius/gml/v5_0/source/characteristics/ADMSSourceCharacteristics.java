@@ -16,6 +16,8 @@
  */
 package nl.overheid.aerius.gml.v5_0.source.characteristics;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 import nl.overheid.aerius.gml.base.characteristics.IsGmlADMSSourceCharacteristics;
@@ -24,7 +26,20 @@ import nl.overheid.aerius.gml.v5_0.base.CalculatorSchema;
 /**
  *
  */
-@XmlType(name = "ADMSSourceCharacteristicsType", namespace = CalculatorSchema.NAMESPACE, propOrder = {})
+@XmlRootElement(name = "ADMSSourceCharacteristics", namespace = CalculatorSchema.NAMESPACE)
+@XmlType(name = "ADMSSourceCharacteristicsType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"height"})
 public class ADMSSourceCharacteristics extends AbstractSourceCharacteristics implements IsGmlADMSSourceCharacteristics {
+
+  private double height;
+
+  @Override
+  @XmlElement(namespace = CalculatorSchema.NAMESPACE)
+  public double getHeight() {
+    return height;
+  }
+
+  public void setHeight(final double height) {
+    this.height = height;
+  }
 
 }

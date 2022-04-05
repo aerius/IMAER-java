@@ -29,7 +29,7 @@ import nl.overheid.aerius.gml.v5_0.base.ReferenceType;
  *
  */
 @XmlSeeAlso({EmissionSourceCharacteristics.class, ADMSSourceCharacteristics.class})
-@XmlType(name = "SourceCharacteristicsType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"building"})
+@XmlType(name = "AbstractSourceCharacteristicsType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"building"})
 public abstract class AbstractSourceCharacteristics implements IsGmlSourceCharacteristics, HasGmlBuildingReference {
 
   private ReferenceType building;

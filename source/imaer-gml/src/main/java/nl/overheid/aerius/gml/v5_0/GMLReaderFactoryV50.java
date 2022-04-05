@@ -21,6 +21,7 @@ import nl.overheid.aerius.gml.base.GMLConversionData;
 import nl.overheid.aerius.gml.base.GMLLegacyCodesSupplier;
 import nl.overheid.aerius.gml.base.GMLVersionReader;
 import nl.overheid.aerius.gml.base.GMLVersionReaderFactory;
+import nl.overheid.aerius.gml.base.characteristics.GML2ADMSSourceCharacteristics;
 import nl.overheid.aerius.gml.base.characteristics.GML2OPSSourceCharacteristics;
 import nl.overheid.aerius.gml.base.characteristics.GML2SourceCharacteristics;
 import nl.overheid.aerius.gml.v5_0.base.CalculatorSchema;
@@ -53,11 +54,13 @@ public class GMLReaderFactoryV50 extends GMLVersionReaderFactory {
     return new GMLReader<T>(conversionData, gml2SourceCharacteristics);
   }
 
-  private static GML2SourceCharacteristics<?  extends SourceCharacteristics> gml2SourceCharacteristics(final GMLConversionData conversionData) {
+  private static GML2SourceCharacteristics<? extends SourceCharacteristics> gml2SourceCharacteristics(final GMLConversionData conversionData) {
     final CharacteristicsType ct = conversionData.getCharacteristicsType();
 
     if (ct == CharacteristicsType.OPS) {
       return new GML2OPSSourceCharacteristics(conversionData);
+    } else if (ct == CharacteristicsType.ADMS) {
+      return new GML2ADMSSourceCharacteristics(conversionData);
     } else {
       throw new IllegalArgumentException("Can't read GML for characteristics of type " + ct + ". This is not implemented.");
     }

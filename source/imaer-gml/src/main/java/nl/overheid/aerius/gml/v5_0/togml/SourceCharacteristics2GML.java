@@ -26,8 +26,10 @@ import nl.overheid.aerius.gml.v5_0.source.characteristics.SpecifiedHeatContent;
 import nl.overheid.aerius.gml.v5_0.source.characteristics.StandardDiurnalVariation;
 import nl.overheid.aerius.shared.domain.ops.OutflowDirectionType;
 import nl.overheid.aerius.shared.domain.ops.OutflowVelocityType;
+import nl.overheid.aerius.shared.domain.v2.characteristics.ADMSSourceCharacteristics;
 import nl.overheid.aerius.shared.domain.v2.characteristics.HeatContentType;
 import nl.overheid.aerius.shared.domain.v2.characteristics.OPSSourceCharacteristics;
+import nl.overheid.aerius.shared.domain.v2.characteristics.SourceCharacteristics;
 import nl.overheid.aerius.util.gml.GMLIdUtil;
 
 /**
@@ -48,6 +50,15 @@ final class SourceCharacteristics2GML {
     if (includeOptionals) {
       returnCharacteristics.setDiurnalVariation(determineDiurnalVariation(characteristics));
     }
+    returnCharacteristics.setBuilding(determineBuilding(characteristics));
+    return returnCharacteristics;
+  }
+
+  static nl.overheid.aerius.gml.v5_0.source.characteristics.ADMSSourceCharacteristics toGML(
+      final ADMSSourceCharacteristics characteristics, final boolean includeOptionals) {
+    final nl.overheid.aerius.gml.v5_0.source.characteristics.ADMSSourceCharacteristics returnCharacteristics =
+        new nl.overheid.aerius.gml.v5_0.source.characteristics.ADMSSourceCharacteristics();
+    returnCharacteristics.setHeight(characteristics.getHeight());
     returnCharacteristics.setBuilding(determineBuilding(characteristics));
     return returnCharacteristics;
   }
@@ -89,7 +100,7 @@ final class SourceCharacteristics2GML {
     return gmlVariation;
   }
 
-  private static ReferenceType determineBuilding(final OPSSourceCharacteristics characteristics) {
+  private static ReferenceType determineBuilding(final SourceCharacteristics characteristics) {
     final String validBuildingId = characteristics.getBuildingId() == null
         ? null
         : GMLIdUtil.toValidGmlId(characteristics.getBuildingId(), GMLIdUtil.BUILDING_PREFIX);

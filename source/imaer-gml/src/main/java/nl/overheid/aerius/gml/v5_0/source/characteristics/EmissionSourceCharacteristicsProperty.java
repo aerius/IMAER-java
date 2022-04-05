@@ -16,7 +16,7 @@
  */
 package nl.overheid.aerius.gml.v5_0.source.characteristics;
 
-import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlType;
 
 import nl.overheid.aerius.gml.base.AbstractProperty;
@@ -26,7 +26,7 @@ import nl.overheid.aerius.gml.v5_0.base.CalculatorSchema;
  *
  */
 @XmlType(name = "EmissionSourceCharacteristicsPropertyType", namespace = CalculatorSchema.NAMESPACE)
-public class EmissionSourceCharacteristicsProperty extends AbstractProperty<EmissionSourceCharacteristics> {
+public class EmissionSourceCharacteristicsProperty extends AbstractProperty<AbstractSourceCharacteristics> {
 
   /**
    * Default constructor, needed for JAXB.
@@ -37,20 +37,20 @@ public class EmissionSourceCharacteristicsProperty extends AbstractProperty<Emis
 
   /**
    * Convenience constructor.
-   * @param emissionSourceCharacteristics The property to use.
+   * @param sourceCharacteristics The property to use.
    */
-  public EmissionSourceCharacteristicsProperty(final EmissionSourceCharacteristics emissionSourceCharacteristics) {
-    super(emissionSourceCharacteristics);
+  public EmissionSourceCharacteristicsProperty(final AbstractSourceCharacteristics sourceCharacteristics) {
+    super(sourceCharacteristics);
   }
 
+  @XmlElementRef
   @Override
-  @XmlElement(name = "EmissionSourceCharacteristics", namespace = CalculatorSchema.NAMESPACE)
-  public EmissionSourceCharacteristics getProperty() {
+  public AbstractSourceCharacteristics getProperty() {
     return super.getProperty();
   }
 
   @Override
-  public void setProperty(final EmissionSourceCharacteristics property) {
+  public void setProperty(final AbstractSourceCharacteristics property) {
     super.setProperty(property);
   }
 

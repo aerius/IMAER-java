@@ -23,4 +23,6 @@ public interface IsGmlADMSSourceCharacteristics extends IsGmlSourceCharacteristi
   @Override
   IsGmlReferenceType getBuilding();
 
+  double getHeight();
+
 }
