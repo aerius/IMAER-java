@@ -148,9 +148,14 @@ NOTE Deze klasse beschrijft een gebouw, zodat deze bij emissie-berekeningen meeg
               <documentation>(Gemiddelde) gebouwhoogte in meters.</documentation>
             </annotation>
           </element>
-          <element name="geometry" type="gml:SurfacePropertyType">
+          <element name="geometry" type="IMAER:BuildingGeometryPropertyType">
             <annotation>
               <documentation>De geometrie van het gebouw.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="diameter" type="double">
+            <annotation>
+              <documentation>De straal van een gebouw. Wordt alleen verwacht bij een punt geometrie, waarbij dit zorgt voor een cirkelvormig gebouw.</documentation>
             </annotation>
           </element>
         </sequence>
@@ -163,6 +168,31 @@ NOTE Deze klasse beschrijft een gebouw, zodat deze bij emissie-berekeningen meeg
     </sequence>
     <attributeGroup ref="gml:AssociationAttributeGroup"/>
     <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+  </complexType>
+  <element name="BuildingGeometry" substitutionGroup="gml:AbstractObject" type="IMAER:BuildingGeometryType">
+    <annotation>
+      <documentation>Mogelijke geometrie&amp;#235;n van een gebouw.
+NOTE Dit datatype maakt een keuze mogelijk uit verschillende soorten geometrie&amp;#235;n die een gebouw kan aannemen.</documentation>
+    </annotation>
+  </element>
+  <complexType name="BuildingGeometryType">
+    <choice>
+      <element name="GM_Point" type="gml:PointPropertyType">
+        <annotation>
+          <documentation>NEN 3610 punt.</documentation>
+        </annotation>
+      </element>
+      <element name="GM_Surface" type="gml:SurfacePropertyType">
+        <annotation>
+          <documentation>NEN 3610 vlak.</documentation>
+        </annotation>
+      </element>
+    </choice>
+  </complexType>
+  <complexType name="BuildingGeometryPropertyType">
+    <sequence>
+      <element ref="IMAER:BuildingGeometry"/>
+    </sequence>
   </complexType>
   <element name="CalculatedHeatContent" substitutionGroup="IMAER:HeatContent" type="IMAER:CalculatedHeatContentType">
     <annotation>

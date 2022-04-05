@@ -28,6 +28,7 @@ import nl.overheid.aerius.gml.base.geo.GML2Geometry;
 import nl.overheid.aerius.shared.domain.v2.building.Building;
 import nl.overheid.aerius.shared.domain.v2.building.BuildingFeature;
 import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
+import nl.overheid.aerius.shared.domain.v2.geojson.Point;
 import nl.overheid.aerius.shared.domain.v2.geojson.Polygon;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
@@ -77,25 +78,25 @@ public class GML2Building {
     building.setGmlId(gmlBuilding.getId());
     building.setHeight(gmlBuilding.getHeight());
     building.setLabel(gmlBuilding.getLabel());
+    if (feature.getGeometry() instanceof Point && gmlBuilding.getDiameter() != null) {
+      building.setDiameter(gmlBuilding.getDiameter());
+    }
     feature.setProperties(building);
     return feature;
   }
 
-  private Polygon toGeometry(final IsGmlBuilding origin) throws AeriusException {
-    final Polygon polygon;
+  private Geometry toGeometry(final IsGmlBuilding origin) throws AeriusException {
     try {
       final Geometry geometry = gml2geometry.getGeometry(origin);
-      if (geometry instanceof Polygon) {
-        polygon = (Polygon) geometry;
-      } else {
+      if (!(geometry instanceof Polygon || geometry instanceof Point)) {
         LOG.trace("Unexpected geometry type after conversion ({}), throwing AeriusException", geometry);
         throw new AeriusException(ImaerExceptionReason.GML_GEOMETRY_INVALID, origin.getId());
       }
+      return geometry;
     } catch (final AeriusException e) {
       LOG.trace("Geometry exception, rethrown as AeriusException", e);
       throw new AeriusException(ImaerExceptionReason.GML_GEOMETRY_INVALID, origin.getId());
     }
-    return polygon;
   }
 
 }

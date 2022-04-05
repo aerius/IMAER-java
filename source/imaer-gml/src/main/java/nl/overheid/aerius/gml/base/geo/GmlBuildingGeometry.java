@@ -14,14 +14,12 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.gml.base.building;
+package nl.overheid.aerius.gml.base.geo;
 
-import nl.overheid.aerius.gml.base.FeatureMember;
+public interface GmlBuildingGeometry {
 
-public interface IsGmlBuilding extends FeatureMember, IsBaseGmlBuilding {
+  GmlPoint getPoint();
 
-  String getLabel();
-
-  Double getDiameter();
+  GmlPolygon getPolygon();
 
 }

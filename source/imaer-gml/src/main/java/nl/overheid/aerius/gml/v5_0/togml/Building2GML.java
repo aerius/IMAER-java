@@ -48,6 +48,7 @@ final class Building2GML {
     gmlBuilding.setId(id);
     gmlBuilding.setLabel(building.getLabel());
     gmlBuilding.setHeight(building.getHeight());
+    gmlBuilding.setDiameter(building.isCircle() ? building.getDiameter() : null);
 
     return gmlBuilding;
   }

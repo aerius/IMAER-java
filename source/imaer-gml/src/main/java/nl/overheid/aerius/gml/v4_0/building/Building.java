@@ -17,6 +17,7 @@
 package nl.overheid.aerius.gml.v4_0.building;
 
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 import nl.overheid.aerius.gml.base.building.IsGmlBuilding;
@@ -69,6 +70,13 @@ public class Building extends FeatureMemberImpl implements IsGmlBuilding {
 
   public void setHeight(final double height) {
     this.height = height;
+  }
+
+  @XmlTransient
+  @Override
+  public Double getDiameter() {
+    // Not available for this version
+    return null;
   }
 
 }
