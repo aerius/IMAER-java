@@ -36,6 +36,13 @@
                 <imaer:ADMSSourceCharacteristics>
                     <imaer:building xlink:href="#Building.1"/>
                     <imaer:height>35.0</imaer:height>
+                    <imaer:specificHeatCapacity>342.12</imaer:specificHeatCapacity>
+                    <imaer:sourceType>POINT</imaer:sourceType>
+                    <imaer:diameter>4.3</imaer:diameter>
+                    <imaer:buoyancyType>DENSITY</imaer:buoyancyType>
+                    <imaer:density>58.23</imaer:density>
+                    <imaer:effluxType>VELOCITY</imaer:effluxType>
+                    <imaer:verticalVelocity>49.2</imaer:verticalVelocity>
                 </imaer:ADMSSourceCharacteristics>
             </imaer:emissionSourceCharacteristics>
             <imaer:geometry>

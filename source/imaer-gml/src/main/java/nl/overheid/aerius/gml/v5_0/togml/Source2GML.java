@@ -109,7 +109,7 @@ final class Source2GML implements EmissionSourceVisitor<nl.overheid.aerius.gml.v
   }
 
   private void toGMLCharacteristics(final EmissionSourceFeature sourceFeature, final EmissionSource source,
-      final nl.overheid.aerius.gml.v5_0.source.EmissionSource returnSource) {
+      final nl.overheid.aerius.gml.v5_0.source.EmissionSource returnSource) throws AeriusException {
     if (source.getCharacteristics() instanceof OPSSourceCharacteristics) {
       returnSource.setCharacteristics(SourceCharacteristics2GML.toGML((OPSSourceCharacteristics) source.getCharacteristics(), true));
       //ensure spread isn't exported for pointsources.
@@ -122,7 +122,7 @@ final class Source2GML implements EmissionSourceVisitor<nl.overheid.aerius.gml.v
       }
     }
     if (source.getCharacteristics() instanceof ADMSSourceCharacteristics) {
-      returnSource.setCharacteristics(SourceCharacteristics2GML.toGML((ADMSSourceCharacteristics) source.getCharacteristics(), true));
+      returnSource.setCharacteristics(SourceCharacteristics2GML.toGML((ADMSSourceCharacteristics) source.getCharacteristics()));
     }
   }
 

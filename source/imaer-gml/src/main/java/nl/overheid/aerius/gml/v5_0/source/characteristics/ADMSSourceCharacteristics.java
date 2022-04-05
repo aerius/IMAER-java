@@ -22,15 +22,34 @@ import javax.xml.bind.annotation.XmlType;
 
 import nl.overheid.aerius.gml.base.characteristics.IsGmlADMSSourceCharacteristics;
 import nl.overheid.aerius.gml.v5_0.base.CalculatorSchema;
+import nl.overheid.aerius.shared.domain.v2.characteristics.adms.BuoyancyType;
+import nl.overheid.aerius.shared.domain.v2.characteristics.adms.EffluxType;
+import nl.overheid.aerius.shared.domain.v2.characteristics.adms.SourceType;
 
 /**
  *
  */
 @XmlRootElement(name = "ADMSSourceCharacteristics", namespace = CalculatorSchema.NAMESPACE)
-@XmlType(name = "ADMSSourceCharacteristicsType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"height"})
+@XmlType(name = "ADMSSourceCharacteristicsType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"height", "specificHeatCapacity",
+    "sourceType", "diameter", "elevationAngle", "horizontalAngle", "width", "verticalDimension", "buoyancyType", "density",
+    "temperature", "effluxType", "verticalVelocity", "volumetricFlowRate", "massFlux"})
 public class ADMSSourceCharacteristics extends AbstractSourceCharacteristics implements IsGmlADMSSourceCharacteristics {
 
   private double height;
+  private double specificHeatCapacity;
+  private SourceType sourceType;
+  private Double diameter;
+  private Double elevationAngle;
+  private Double horizontalAngle;
+  private Double width;
+  private Double verticalDimension;
+  private BuoyancyType buoyancyType;
+  private Double density;
+  private Double temperature;
+  private EffluxType effluxType;
+  private Double verticalVelocity;
+  private Double volumetricFlowRate;
+  private Double massFlux;
 
   @Override
   @XmlElement(namespace = CalculatorSchema.NAMESPACE)
@@ -40,6 +59,146 @@ public class ADMSSourceCharacteristics extends AbstractSourceCharacteristics imp
 
   public void setHeight(final double height) {
     this.height = height;
+  }
+
+  @Override
+  @XmlElement(namespace = CalculatorSchema.NAMESPACE)
+  public double getSpecificHeatCapacity() {
+    return specificHeatCapacity;
+  }
+
+  public void setSpecificHeatCapacity(final double specificHeatCapacity) {
+    this.specificHeatCapacity = specificHeatCapacity;
+  }
+
+  @Override
+  @XmlElement(namespace = CalculatorSchema.NAMESPACE)
+  public SourceType getSourceType() {
+    return sourceType;
+  }
+
+  public void setSourceType(final SourceType sourceType) {
+    this.sourceType = sourceType;
+  }
+
+  @Override
+  @XmlElement(namespace = CalculatorSchema.NAMESPACE)
+  public Double getDiameter() {
+    return diameter;
+  }
+
+  public void setDiameter(final Double diameter) {
+    this.diameter = diameter;
+  }
+
+  @Override
+  @XmlElement(namespace = CalculatorSchema.NAMESPACE)
+  public Double getElevationAngle() {
+    return elevationAngle;
+  }
+
+  public void setElevationAngle(final Double elevationAngle) {
+    this.elevationAngle = elevationAngle;
+  }
+
+  @Override
+  @XmlElement(namespace = CalculatorSchema.NAMESPACE)
+  public Double getHorizontalAngle() {
+    return horizontalAngle;
+  }
+
+  public void setHorizontalAngle(final Double horizontalAngle) {
+    this.horizontalAngle = horizontalAngle;
+  }
+
+  @Override
+  @XmlElement(namespace = CalculatorSchema.NAMESPACE)
+  public Double getWidth() {
+    return width;
+  }
+
+  public void setWidth(final Double width) {
+    this.width = width;
+  }
+
+  @Override
+  @XmlElement(namespace = CalculatorSchema.NAMESPACE)
+  public Double getVerticalDimension() {
+    return verticalDimension;
+  }
+
+  public void setVerticalDimension(final Double verticalDimension) {
+    this.verticalDimension = verticalDimension;
+  }
+
+  @Override
+  @XmlElement(namespace = CalculatorSchema.NAMESPACE)
+  public BuoyancyType getBuoyancyType() {
+    return buoyancyType;
+  }
+
+  public void setBuoyancyType(final BuoyancyType buoyancyType) {
+    this.buoyancyType = buoyancyType;
+  }
+
+  @Override
+  @XmlElement(namespace = CalculatorSchema.NAMESPACE)
+  public Double getDensity() {
+    return density;
+  }
+
+  public void setDensity(final Double density) {
+    this.density = density;
+  }
+
+  @Override
+  @XmlElement(namespace = CalculatorSchema.NAMESPACE)
+  public Double getTemperature() {
+    return temperature;
+  }
+
+  public void setTemperature(final Double temperature) {
+    this.temperature = temperature;
+  }
+
+  @Override
+  @XmlElement(namespace = CalculatorSchema.NAMESPACE)
+  public EffluxType getEffluxType() {
+    return effluxType;
+  }
+
+  public void setEffluxType(final EffluxType effluxType) {
+    this.effluxType = effluxType;
+  }
+
+  @Override
+  @XmlElement(namespace = CalculatorSchema.NAMESPACE)
+  public Double getVerticalVelocity() {
+    return verticalVelocity;
+  }
+
+  public void setVerticalVelocity(final Double verticalVelocity) {
+    this.verticalVelocity = verticalVelocity;
+  }
+
+  @Override
+  @XmlElement(namespace = CalculatorSchema.NAMESPACE)
+  public Double getVolumetricFlowRate() {
+    return volumetricFlowRate;
+  }
+
+  public void setVolumetricFlowRate(final Double volumetricFlowRate) {
+    this.volumetricFlowRate = volumetricFlowRate;
+  }
+
+  @Override
+  @XmlElement(namespace = CalculatorSchema.NAMESPACE)
+  public Double getMassFlux() {
+    return massFlux;
+  }
+
+  public void setMassFlux(final Double massFlux) {
+    this.massFlux = massFlux;
   }
 
 }

@@ -34,6 +34,52 @@ In IMAER zijn de objecten opgenomen die nodig zijn voor het berekenen van emissi
       </extension>
     </complexContent>
   </complexType>
+  <simpleType name="ADMSBuoyancyTypeType">
+    <annotation>
+      <documentation>ADMS Buoyancy Types
+NOTE ADMS Buoyancy Type, to be used as characteristic property.</documentation>
+    </annotation>
+    <restriction base="string">
+      <enumeration value="AMBIENT">
+        <annotation>
+          <documentation>Buoyancy based on ambient temperature.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="DENSITY">
+        <annotation>
+          <documentation>Buoyancy based on density.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="TEMPERATURE">
+        <annotation>
+          <documentation>Buoyancy based on specified temperature.</documentation>
+        </annotation>
+      </enumeration>
+    </restriction>
+  </simpleType>
+  <simpleType name="ADMSEffluxTypeType">
+    <annotation>
+      <documentation>ADMS Efflux Types
+NOTE ADMS Efflux Type, to be used as characteristic property.</documentation>
+    </annotation>
+    <restriction base="string">
+      <enumeration value="VELOCITY">
+        <annotation>
+          <documentation>Efflux based on velocity.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="VOLUME">
+        <annotation>
+          <documentation>Efflux based on volume.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="MASS">
+        <annotation>
+          <documentation>Efflux based on mass.</documentation>
+        </annotation>
+      </enumeration>
+    </restriction>
+  </simpleType>
   <element name="ADMSSourceCharacteristics" substitutionGroup="IMAER:SourceCharacteristicsType" type="IMAER:ADMSSourceCharacteristicsType">
     <annotation>
       <documentation>Dit datatype beschrijft de (ADMS) karakteristieken van een emissiebron.
@@ -46,7 +92,72 @@ NOTE Iedere emissiebron wordt beschreven aan de hand van een aantal karakteristi
         <sequence>
           <element name="height" type="double">
             <annotation>
-              <documentation>Gemiddelde hoogte van de emissiebron in meters.</documentation>
+              <documentation>Height (m): height of source above the ground. For a volume source, it is the mid-height of the volume above the ground.</documentation>
+            </annotation>
+          </element>
+          <element name="specificHeatCapacity" type="double">
+            <annotation>
+              <documentation>Cp (J/degree C/kg): specific heat capacity of the source material.</documentation>
+            </annotation>
+          </element>
+          <element name="sourceType" type="IMAER:ADMSSourceTypeType">
+            <annotation>
+              <documentation>ADMS source type.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="diameter" type="double">
+            <annotation>
+              <documentation>Diameter (m): internal diameter of a point/jet source.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="elevationAngle" type="double">
+            <annotation>
+              <documentation>Elevation angle of a jet source.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="horizontalAngle" type="double">
+            <annotation>
+              <documentation>Horizontal angle of a jet source.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="width" type="double">
+            <annotation>
+              <documentation>L1 (m): width of a line source.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="verticalDimension" type="double">
+            <annotation>
+              <documentation>L1 (m): vertical dimension of a volume source.</documentation>
+            </annotation>
+          </element>
+          <element name="buoyancyType" type="IMAER:ADMSBuoyancyTypeType">
+            <annotation>
+              <documentation>ADMS buoyancy type.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="density" type="double">
+            <annotation>
+              <documentation>Density (kg/m3): density of the whole release.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="temperature" type="double">
+            <annotation>
+              <documentation>Temperature (degree C): temperature of the release.</documentation>
+            </annotation>
+          </element>
+          <element name="effluxType" type="IMAER:ADMSEffluxTypeType">
+            <annotation>
+              <documentation>ADMS efflux type.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="verticalVelocity" type="double">
+            <annotation>
+              <documentation>Volume flux (m3/s): volume flow rate of the release</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="volumetricFlowRate" type="double">
+            <annotation>
+              <documentation>Mass flux (kg/s): mass flux of the emission.</documentation>
             </annotation>
           </element>
         </sequence>
@@ -58,6 +169,44 @@ NOTE Iedere emissiebron wordt beschreven aan de hand van een aantal karakteristi
       <element ref="IMAER:ADMSSourceCharacteristics"/>
     </sequence>
   </complexType>
+  <simpleType name="ADMSSourceTypeType">
+    <annotation>
+      <documentation>ADMS Source Types
+NOTE ADMS Source Type, to be used as characteristic property.</documentation>
+    </annotation>
+    <restriction base="string">
+      <enumeration value="POINT">
+        <annotation>
+          <documentation>Normal point source.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="AREA">
+        <annotation>
+          <documentation>Normal (surface) area source.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="VOLUME">
+        <annotation>
+          <documentation>Area represents a volume source.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="LINE">
+        <annotation>
+          <documentation>Normal line source.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ROAD">
+        <annotation>
+          <documentation>Line represents a road source.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="JET">
+        <annotation>
+          <documentation>Point represents a jet source.</documentation>
+        </annotation>
+      </enumeration>
+    </restriction>
+  </simpleType>
   <element name="AdditionalLodgingSystem" substitutionGroup="IMAER:LodgingSystem" type="IMAER:AdditionalLodgingSystemType">
     <annotation>
       <documentation>Extra staltechniek beschrijving.

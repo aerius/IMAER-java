@@ -17,6 +17,9 @@
 package nl.overheid.aerius.gml.base.characteristics;
 
 import nl.overheid.aerius.gml.base.IsGmlReferenceType;
+import nl.overheid.aerius.shared.domain.v2.characteristics.adms.BuoyancyType;
+import nl.overheid.aerius.shared.domain.v2.characteristics.adms.EffluxType;
+import nl.overheid.aerius.shared.domain.v2.characteristics.adms.SourceType;
 
 public interface IsGmlADMSSourceCharacteristics extends IsGmlSourceCharacteristics, HasGmlBuildingReference {
 
@@ -24,5 +27,21 @@ public interface IsGmlADMSSourceCharacteristics extends IsGmlSourceCharacteristi
   IsGmlReferenceType getBuilding();
 
   double getHeight();
+
+  double getSpecificHeatCapacity();
+
+  SourceType getSourceType();
+  Double getDiameter();
+  Double getElevationAngle();
+  Double getHorizontalAngle();
+  Double getWidth();
+  Double getVerticalDimension();
+  BuoyancyType getBuoyancyType();
+  Double getDensity();
+  Double getTemperature();
+  EffluxType getEffluxType();
+  Double getVerticalVelocity();
+  Double getVolumetricFlowRate();
+  Double getMassFlux();
 
 }
