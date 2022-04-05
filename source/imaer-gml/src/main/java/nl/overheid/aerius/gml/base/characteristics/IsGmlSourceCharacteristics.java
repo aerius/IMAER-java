@@ -16,12 +16,9 @@
  */
 package nl.overheid.aerius.gml.base.characteristics;
 
-import nl.overheid.aerius.gml.base.IsGmlReferenceType;
-
-public interface IsGmlEmissionSourceCharacteristics extends IsBaseGmlEmissionSourceCharacteristics {
-
-  IsGmlReferenceType getBuilding();
-
-  IsGmlDiurnalVariation getDiurnalVariation();
+/**
+ * 
+ */
+public interface IsGmlSourceCharacteristics {
 
 }

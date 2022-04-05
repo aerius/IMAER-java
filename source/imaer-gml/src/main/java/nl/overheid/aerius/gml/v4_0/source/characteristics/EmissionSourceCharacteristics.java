@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
-import nl.overheid.aerius.gml.base.characteristics.IsGmlEmissionSourceCharacteristics;
+import nl.overheid.aerius.gml.base.characteristics.IsGmlOPSSourceCharacteristics;
 import nl.overheid.aerius.gml.v4_0.base.CalculatorSchema;
 import nl.overheid.aerius.gml.v4_0.base.ReferenceType;
 
@@ -29,7 +29,7 @@ import nl.overheid.aerius.gml.v4_0.base.ReferenceType;
  */
 @XmlType(name = "EmissionSourceCharacteristicsType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"heatContentProperty", "emissionHeight",
     "spread", "diurnalVariationProperty", "building"})
-public class EmissionSourceCharacteristics implements IsGmlEmissionSourceCharacteristics {
+public class EmissionSourceCharacteristics implements IsGmlOPSSourceCharacteristics {
 
   private AbstractHeatContent heatContent;
   private double emissionHeight;

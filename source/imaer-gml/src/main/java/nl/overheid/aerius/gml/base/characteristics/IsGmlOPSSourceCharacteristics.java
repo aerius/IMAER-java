@@ -14,20 +14,15 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.gml.base.source.mobile.v40;
+package nl.overheid.aerius.gml.base.characteristics;
 
-import java.util.List;
+import nl.overheid.aerius.gml.base.IsGmlReferenceType;
 
-import nl.overheid.aerius.gml.base.IsGmlProperty;
-import nl.overheid.aerius.gml.base.characteristics.IsGmlBaseOPSSourceCharacteristics;
-import nl.overheid.aerius.gml.base.source.IsGmlEmission;
+public interface IsGmlOPSSourceCharacteristics extends IsGmlBaseOPSSourceCharacteristics, HasGmlBuildingReference {
 
-public interface IsGmlCustomOffRoadMobileSource extends IsGmlOffRoadMobileSource {
+  @Override
+  IsGmlReferenceType getBuilding();
 
-  List<? extends IsGmlProperty<IsGmlEmission>> getEmissions();
-
-  IsGmlBaseOPSSourceCharacteristics getCharacteristics();
-
-  IsGmlOffRoadVehicleSpecification getOffRoadVehicleSpecification();
+  IsGmlDiurnalVariation getDiurnalVariation();
 
 }

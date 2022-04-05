@@ -20,7 +20,6 @@ import nl.overheid.aerius.gml.base.GMLConversionData;
 import nl.overheid.aerius.shared.domain.ops.DiurnalVariation;
 import nl.overheid.aerius.shared.domain.v2.characteristics.HeatContentType;
 import nl.overheid.aerius.shared.domain.v2.characteristics.OPSSourceCharacteristics;
-import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
 import nl.overheid.aerius.shared.exception.AeriusException;
 
 /**
@@ -33,31 +32,31 @@ public class GML2OPSSourceCharacteristics extends GML2SourceCharacteristics<OPSS
   }
 
   @Override
-  protected OPSSourceCharacteristics fromGMLSpecific(final IsBaseGmlEmissionSourceCharacteristics characteristics,
-      final OPSSourceCharacteristics sectorCharacteristics, final Geometry geometry) throws AeriusException {
+  protected OPSSourceCharacteristics fromGMLSpecific(final IsGmlSourceCharacteristics characteristics,
+      final OPSSourceCharacteristics sectorCharacteristics) throws AeriusException {
+    final IsGmlBaseOPSSourceCharacteristics gmlOPSCharacteristics = (IsGmlBaseOPSSourceCharacteristics) characteristics;
     final OPSSourceCharacteristics defaultCharacteristics = sectorCharacteristics == null ? new OPSSourceCharacteristics() : sectorCharacteristics;
     final OPSSourceCharacteristics returnCharacteristics = new OPSSourceCharacteristics();
-    returnCharacteristics.setEmissionHeight(characteristics.getEmissionHeight());
-    returnCharacteristics.setSpread(getOrDefault(characteristics.getSpread(), defaultCharacteristics.getSpread()));
+    returnCharacteristics.setEmissionHeight(gmlOPSCharacteristics.getEmissionHeight());
+    returnCharacteristics.setSpread(getOrDefault(gmlOPSCharacteristics.getSpread(), defaultCharacteristics.getSpread()));
     returnCharacteristics.setParticleSizeDistribution(defaultCharacteristics.getParticleSizeDistribution());
 
-    fromGMLToDiurnalVariation(characteristics, returnCharacteristics, defaultCharacteristics, geometry);
-    fromGMLToHeatContent(characteristics, returnCharacteristics);
+    fromGMLToDiurnalVariation(gmlOPSCharacteristics, returnCharacteristics, defaultCharacteristics);
+    fromGMLToHeatContent(gmlOPSCharacteristics, returnCharacteristics);
 
     return returnCharacteristics;
   }
 
-  private void fromGMLToDiurnalVariation(final IsBaseGmlEmissionSourceCharacteristics characteristics,
-      final OPSSourceCharacteristics returnCharacteristics, final OPSSourceCharacteristics defaultCharacteristics, final Geometry geometry)
-          throws AeriusException {
-    if (characteristics instanceof IsGmlEmissionSourceCharacteristicsV31) {
-      fromGMLToDiurnalVariation((IsGmlEmissionSourceCharacteristicsV31) characteristics, returnCharacteristics, defaultCharacteristics);
-    } else if (characteristics instanceof IsGmlEmissionSourceCharacteristics) {
-      fromGMLToDiurnalVariation((IsGmlEmissionSourceCharacteristics) characteristics, returnCharacteristics, defaultCharacteristics);
+  private void fromGMLToDiurnalVariation(final IsGmlBaseOPSSourceCharacteristics characteristics,
+      final OPSSourceCharacteristics returnCharacteristics, final OPSSourceCharacteristics defaultCharacteristics) {
+    if (characteristics instanceof IsGmlOPSSourceCharacteristicsV31) {
+      fromGMLToDiurnalVariation((IsGmlOPSSourceCharacteristicsV31) characteristics, returnCharacteristics, defaultCharacteristics);
+    } else if (characteristics instanceof IsGmlOPSSourceCharacteristics) {
+      fromGMLToDiurnalVariation((IsGmlOPSSourceCharacteristics) characteristics, returnCharacteristics, defaultCharacteristics);
     }
   }
 
-  private void fromGMLToDiurnalVariation(final IsGmlEmissionSourceCharacteristicsV31 characteristics,
+  private void fromGMLToDiurnalVariation(final IsGmlOPSSourceCharacteristicsV31 characteristics,
       final OPSSourceCharacteristics returnCharacteristics, final OPSSourceCharacteristics defaultCharacteristics) {
     if (characteristics.getDiurnalVariation() == null) {
       returnCharacteristics.setDiurnalVariation(defaultCharacteristics.getDiurnalVariation());
@@ -67,7 +66,7 @@ public class GML2OPSSourceCharacteristics extends GML2SourceCharacteristics<OPSS
     }
   }
 
-  private void fromGMLToDiurnalVariation(final IsGmlEmissionSourceCharacteristics characteristics,
+  private void fromGMLToDiurnalVariation(final IsGmlOPSSourceCharacteristics characteristics,
       final OPSSourceCharacteristics returnCharacteristics, final OPSSourceCharacteristics defaultCharacteristics) {
     if (characteristics.getDiurnalVariation() == null) {
       returnCharacteristics.setDiurnalVariation(defaultCharacteristics.getDiurnalVariation());
@@ -80,7 +79,7 @@ public class GML2OPSSourceCharacteristics extends GML2SourceCharacteristics<OPSS
     }
   }
 
-  private void fromGMLToHeatContent(final IsBaseGmlEmissionSourceCharacteristics characteristics,
+  private void fromGMLToHeatContent(final IsGmlBaseOPSSourceCharacteristics characteristics,
       final OPSSourceCharacteristics returnCharacteristics) {
     final IsGmlHeatContent gmlHeatContent = characteristics.getHeatContent();
     if (gmlHeatContent instanceof IsGmlSpecifiedHeatContent) {

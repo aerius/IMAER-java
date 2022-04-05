@@ -34,6 +34,30 @@ In IMAER zijn de objecten opgenomen die nodig zijn voor het berekenen van emissi
       </extension>
     </complexContent>
   </complexType>
+  <element name="ADMSSourceCharacteristics" substitutionGroup="IMAER:SourceCharacteristicsType" type="IMAER:ADMSSourceCharacteristicsType">
+    <annotation>
+      <documentation>Dit datatype beschrijft de (ADMS) karakteristieken van een emissiebron.
+NOTE Iedere emissiebron wordt beschreven aan de hand van een aantal karakteristieken, die in dit separate datatype zijn vastgelegd.</documentation>
+    </annotation>
+  </element>
+  <complexType name="ADMSSourceCharacteristicsType">
+    <complexContent>
+      <extension base="IMAER:SourceCharacteristicsTypeType">
+        <sequence>
+          <element name="height" type="double">
+            <annotation>
+              <documentation>Gemiddelde hoogte van de emissiebron in meters.</documentation>
+            </annotation>
+          </element>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="ADMSSourceCharacteristicsPropertyType">
+    <sequence>
+      <element ref="IMAER:ADMSSourceCharacteristics"/>
+    </sequence>
+  </complexType>
   <element name="AdditionalLodgingSystem" substitutionGroup="IMAER:LodgingSystem" type="IMAER:AdditionalLodgingSystemType">
     <annotation>
       <documentation>Extra staltechniek beschrijving.
@@ -801,7 +825,7 @@ NOTE Deze klasse beschrijft een eigen gedefinieerde mobiel werktuig bron, met ge
               <documentation>Totale emissie van een mobiele werktuig bron in een jaar.</documentation>
             </annotation>
           </element>
-          <element name="emissionSourceCharacteristics" type="IMAER:EmissionSourceCharacteristicsPropertyType">
+          <element name="emissionSourceCharacteristics" type="IMAER:SourceCharacteristicsTypePropertyType">
             <annotation>
               <documentation>Karakteristieken van een mobiele werktuig bron.</documentation>
             </annotation>
@@ -972,43 +996,39 @@ NOTE Deze klasse beschrijft een generieke emissiebron inclusief geometrie.</docu
     <attributeGroup ref="gml:AssociationAttributeGroup"/>
     <attributeGroup ref="gml:OwnershipAttributeGroup"/>
   </complexType>
-  <element name="EmissionSourceCharacteristics" substitutionGroup="gml:AbstractObject" type="IMAER:EmissionSourceCharacteristicsType">
+  <element name="EmissionSourceCharacteristics" substitutionGroup="IMAER:SourceCharacteristicsType" type="IMAER:EmissionSourceCharacteristicsType">
     <annotation>
-      <documentation>Dit datatype beschrijft de karakteristieken van een emissiebron.
+      <documentation>Dit datatype beschrijft de (OPS) karakteristieken van een emissiebron.
 NOTE Iedere emissiebron wordt beschreven aan de hand van een aantal karakteristieken, die in dit separate datatype zijn vastgelegd.</documentation>
     </annotation>
   </element>
   <complexType name="EmissionSourceCharacteristicsType">
-    <sequence>
-      <element name="heatContent" type="IMAER:HeatContentPropertyType">
-        <annotation>
-          <documentation>Warmteinhoud van de emissiebron.</documentation>
-        </annotation>
-      </element>
-      <element name="emissionHeight" type="double">
-        <annotation>
-          <documentation>Gemiddelde uitstoothoogte van de emissiebron in meters.</documentation>
-        </annotation>
-      </element>
-      <element minOccurs="0" name="spread" type="double">
-        <annotation>
-          <documentation>Spreiding van de emissiebron in meters. Alleen te gebruiken bij puntbronnen met een hoogte.</documentation>
-        </annotation>
-      </element>
-      <element minOccurs="0" name="diurnalVariation" type="IMAER:DiurnalVariationPropertyType">
-        <annotation>
-          <documentation>Temporele variatie van de emissie van de bron.</documentation>
-        </annotation>
-      </element>
-      <element minOccurs="0" name="building" type="gml:ReferenceType">
-        <annotation>
-          <documentation>Geeft aan, indien er sprake is van gebouw effecten, welk gebouw hoort bij de bron.</documentation>
-          <appinfo>
-            <targetElement xmlns="http://www.opengis.net/gml/3.2">IMAER:Building</targetElement>
-          </appinfo>
-        </annotation>
-      </element>
-    </sequence>
+    <complexContent>
+      <extension base="IMAER:SourceCharacteristicsTypeType">
+        <sequence>
+          <element name="heatContent" type="IMAER:HeatContentPropertyType">
+            <annotation>
+              <documentation>Warmteinhoud van de emissiebron.</documentation>
+            </annotation>
+          </element>
+          <element name="emissionHeight" type="double">
+            <annotation>
+              <documentation>Gemiddelde uitstoothoogte van de emissiebron in meters.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="spread" type="double">
+            <annotation>
+              <documentation>Spreiding van de emissiebron in meters. Alleen te gebruiken bij puntbronnen met een hoogte.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="diurnalVariation" type="IMAER:DiurnalVariationPropertyType">
+            <annotation>
+              <documentation>Temporele variatie van de emissie van de bron.</documentation>
+            </annotation>
+          </element>
+        </sequence>
+      </extension>
+    </complexContent>
   </complexType>
   <complexType name="EmissionSourceCharacteristicsPropertyType">
     <sequence>
@@ -1070,7 +1090,7 @@ NOTE Er zijn verschillende soorten emissiebronnen in het model aanwezig. Deze ab
               <documentation>Een optionele beschrijving voor de emissiebron.</documentation>
             </annotation>
           </element>
-          <element minOccurs="0" name="emissionSourceCharacteristics" type="IMAER:EmissionSourceCharacteristicsPropertyType">
+          <element minOccurs="0" name="emissionSourceCharacteristics" type="IMAER:SourceCharacteristicsTypePropertyType">
             <annotation>
               <documentation>Karakteristieken van een emissiebron.</documentation>
             </annotation>
@@ -2840,6 +2860,29 @@ NOTE Bij een situatie kan aangegeven worden om wat voor soort/type situatie het 
       </enumeration>
     </restriction>
   </simpleType>
+  <element abstract="true" name="SourceCharacteristicsType" substitutionGroup="gml:AbstractObject" type="IMAER:SourceCharacteristicsTypeType">
+    <annotation>
+      <documentation>Dit datatype beschrijft de karakteristieken van een emissiebron.
+NOTE Iedere emissiebron wordt beschreven aan de hand van een aantal karakteristieken, die in dit separate datatype zijn vastgelegd.</documentation>
+    </annotation>
+  </element>
+  <complexType abstract="true" name="SourceCharacteristicsTypeType">
+    <sequence>
+      <element minOccurs="0" name="building" type="gml:ReferenceType">
+        <annotation>
+          <documentation>Geeft aan, indien er sprake is van gebouw effecten, welk gebouw hoort bij de bron.</documentation>
+          <appinfo>
+            <targetElement xmlns="http://www.opengis.net/gml/3.2">IMAER:Building</targetElement>
+          </appinfo>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="SourceCharacteristicsTypePropertyType">
+    <sequence>
+      <element ref="IMAER:SourceCharacteristicsType"/>
+    </sequence>
+  </complexType>
   <element name="SpecificVehicle" substitutionGroup="IMAER:Vehicle" type="IMAER:SpecificVehicleType">
     <annotation>
       <documentation>Karakteristieken van een specifieke type voertuigen met een klasse.

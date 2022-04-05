@@ -20,22 +20,20 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
-import nl.overheid.aerius.gml.base.characteristics.IsGmlEmissionSourceCharacteristics;
+import nl.overheid.aerius.gml.base.characteristics.IsGmlOPSSourceCharacteristics;
 import nl.overheid.aerius.gml.v5_0.base.CalculatorSchema;
-import nl.overheid.aerius.gml.v5_0.base.ReferenceType;
 
 /**
  *
  */
 @XmlType(name = "EmissionSourceCharacteristicsType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"heatContentProperty", "emissionHeight",
-    "spread", "diurnalVariationProperty", "building"})
-public class EmissionSourceCharacteristics implements IsGmlEmissionSourceCharacteristics {
+    "spread", "diurnalVariationProperty"})
+public class EmissionSourceCharacteristics extends AbstractSourceCharacteristics implements IsGmlOPSSourceCharacteristics {
 
   private AbstractHeatContent heatContent;
   private double emissionHeight;
   private Double spread;
   private AbstractDiurnalVariation diurnalVariation;
-  private ReferenceType building;
 
   @XmlElement(name = "heatContent", namespace = CalculatorSchema.NAMESPACE)
   public HeatContentProperty getHeatContentProperty() {
@@ -93,16 +91,6 @@ public class EmissionSourceCharacteristics implements IsGmlEmissionSourceCharact
 
   public void setDiurnalVariation(final AbstractDiurnalVariation diurnalVariation) {
     this.diurnalVariation = diurnalVariation;
-  }
-
-  @Override
-  @XmlElement(namespace = CalculatorSchema.NAMESPACE)
-  public ReferenceType getBuilding() {
-    return building;
-  }
-
-  public void setBuilding(final ReferenceType building) {
-    this.building = building;
   }
 
 }

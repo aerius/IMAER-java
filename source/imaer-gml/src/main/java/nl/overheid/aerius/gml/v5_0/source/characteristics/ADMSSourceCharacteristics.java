@@ -14,20 +14,17 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.gml.base.source.mobile.v40;
+package nl.overheid.aerius.gml.v5_0.source.characteristics;
 
-import java.util.List;
+import javax.xml.bind.annotation.XmlType;
 
-import nl.overheid.aerius.gml.base.IsGmlProperty;
-import nl.overheid.aerius.gml.base.characteristics.IsGmlBaseOPSSourceCharacteristics;
-import nl.overheid.aerius.gml.base.source.IsGmlEmission;
+import nl.overheid.aerius.gml.base.characteristics.IsGmlADMSSourceCharacteristics;
+import nl.overheid.aerius.gml.v5_0.base.CalculatorSchema;
 
-public interface IsGmlCustomOffRoadMobileSource extends IsGmlOffRoadMobileSource {
-
-  List<? extends IsGmlProperty<IsGmlEmission>> getEmissions();
-
-  IsGmlBaseOPSSourceCharacteristics getCharacteristics();
-
-  IsGmlOffRoadVehicleSpecification getOffRoadVehicleSpecification();
+/**
+ *
+ */
+@XmlType(name = "ADMSSourceCharacteristicsType", namespace = CalculatorSchema.NAMESPACE, propOrder = {})
+public class ADMSSourceCharacteristics extends AbstractSourceCharacteristics implements IsGmlADMSSourceCharacteristics {
 
 }

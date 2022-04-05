@@ -16,7 +16,7 @@
  */
 package nl.overheid.aerius.gml.base.characteristics;
 
-public interface IsBaseGmlEmissionSourceCharacteristics {
+public interface IsGmlBaseOPSSourceCharacteristics extends IsGmlSourceCharacteristics {
 
   IsGmlHeatContent getHeatContent();
 

@@ -34,6 +34,7 @@
             <imaer:label>Steenfabriek</imaer:label>
             <imaer:emissionSourceCharacteristics>
                 <imaer:EmissionSourceCharacteristics>
+                    <imaer:building xlink:href="#Building.1"/>
                     <imaer:heatContent>
                         <imaer:SpecifiedHeatContent>
                             <imaer:value>0.22</imaer:value>
@@ -45,7 +46,6 @@
                             <imaer:standardType>INDUSTRIAL_ACTIVITY</imaer:standardType>
                         </imaer:StandardDiurnalVariation>
                     </imaer:diurnalVariation>
-                    <imaer:building xlink:href="#Building.1"/>
                 </imaer:EmissionSourceCharacteristics>
             </imaer:emissionSourceCharacteristics>
             <imaer:geometry>

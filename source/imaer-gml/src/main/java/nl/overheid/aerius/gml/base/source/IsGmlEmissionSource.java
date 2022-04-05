@@ -20,7 +20,7 @@ import java.util.List;
 
 import nl.overheid.aerius.gml.base.FeatureMember;
 import nl.overheid.aerius.gml.base.IsGmlProperty;
-import nl.overheid.aerius.gml.base.characteristics.IsBaseGmlEmissionSourceCharacteristics;
+import nl.overheid.aerius.gml.base.characteristics.IsGmlBaseOPSSourceCharacteristics;
 
 public interface IsGmlEmissionSource extends FeatureMember {
 
@@ -30,7 +30,7 @@ public interface IsGmlEmissionSource extends FeatureMember {
 
   int getSectorId();
 
-  IsBaseGmlEmissionSourceCharacteristics getCharacteristics();
+  IsGmlBaseOPSSourceCharacteristics getCharacteristics();
 
   Integer getJurisdictionId();
 
