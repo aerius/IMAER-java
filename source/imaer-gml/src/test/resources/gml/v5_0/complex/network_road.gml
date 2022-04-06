@@ -85,7 +85,6 @@
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                 </imaer:SpecificVehicle>
             </imaer:vehicles>
-            <imaer:inNetwork xlink:href="#NW.1"/>
             <imaer:elevation>NORMAL</imaer:elevation>
         </imaer:SRM2Road>
     </imaer:featureMember>
@@ -150,21 +149,7 @@
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                 </imaer:SpecificVehicle>
             </imaer:vehicles>
-            <imaer:inNetwork xlink:href="#NW.1"/>
             <imaer:elevation>NORMAL</imaer:elevation>
         </imaer:SRM2Road>
-    </imaer:featureMember>
-    <imaer:featureMember>
-        <imaer:RoadNetwork gml:id="NW.1">
-            <imaer:identifier>
-                <imaer:NEN3610ID>
-                    <imaer:namespace>NL.IMAER</imaer:namespace>
-                    <imaer:localId>NW.1</imaer:localId>
-                </imaer:NEN3610ID>
-            </imaer:identifier>
-            <imaer:label>SomeNetwork</imaer:label>
-            <imaer:element xlink:href="#NWR.1_1"/>
-            <imaer:element xlink:href="#NWR.1_2"/>
-        </imaer:RoadNetwork>
     </imaer:featureMember>
 </imaer:FeatureCollectionCalculator>
