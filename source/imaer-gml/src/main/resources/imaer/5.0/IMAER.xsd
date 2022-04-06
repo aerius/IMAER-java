@@ -80,6 +80,143 @@ NOTE ADMS Efflux Type, to be used as characteristic property.</documentation>
       </enumeration>
     </restriction>
   </simpleType>
+  <element name="ADMSRoad" substitutionGroup="IMAER:RoadEmissionSource" type="IMAER:ADMSRoadType">
+    <annotation>
+      <documentation>ADMS EmissionSource representing a road.
+NOTE This class describes a road emissionsource including geometry. This definition is meant for calculations with ADMS.</documentation>
+    </annotation>
+  </element>
+  <complexType name="ADMSRoadType">
+    <complexContent>
+      <extension base="IMAER:RoadEmissionSourceType">
+        <sequence>
+          <element name="width" type="double">
+            <annotation>
+              <documentation>The width of this road (m).</documentation>
+            </annotation>
+          </element>
+          <element name="elevation" type="double">
+            <annotation>
+              <documentation>The elevation of this road above ground level (m).</documentation>
+            </annotation>
+          </element>
+          <element name="gradient" type="double">
+            <annotation>
+              <documentation>The gradient (percentage) of this road. This gradient is assumed to be from start of the geometry (A) to end of the geometry (B).</documentation>
+            </annotation>
+          </element>
+          <element name="coverage" type="double">
+            <annotation>
+              <documentation>The coverage (percentage) of this road. This describes how much of the road is covered by overhanging features.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="barrierLeft">
+            <annotation>
+              <documentation>The barrier on the left side of the road (compared to the geometry).</documentation>
+            </annotation>
+            <complexType>
+              <complexContent>
+                <extension base="gml:AbstractMemberType">
+                  <sequence minOccurs="0">
+                    <element ref="IMAER:ADMSRoadSideBarrier"/>
+                  </sequence>
+                  <attributeGroup ref="gml:AssociationAttributeGroup"/>
+                </extension>
+              </complexContent>
+            </complexType>
+          </element>
+          <element minOccurs="0" name="barrierRight">
+            <annotation>
+              <documentation>The barrier on the right side of the road (compared to the geometry).</documentation>
+            </annotation>
+            <complexType>
+              <complexContent>
+                <extension base="gml:AbstractMemberType">
+                  <sequence minOccurs="0">
+                    <element ref="IMAER:ADMSRoadSideBarrier"/>
+                  </sequence>
+                  <attributeGroup ref="gml:AssociationAttributeGroup"/>
+                </extension>
+              </complexContent>
+            </complexType>
+          </element>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="ADMSRoadPropertyType">
+    <sequence minOccurs="0">
+      <element ref="IMAER:ADMSRoad"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+    <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+  </complexType>
+  <element name="ADMSRoadSideBarrier" substitutionGroup="gml:AbstractGML" type="IMAER:ADMSRoadSideBarrierType">
+    <annotation>
+      <documentation>Characteristics of a barrier on the side of a road for ADMS.
+NOTE A barrier on the side of the road is described by a few characteristics. Th</documentation>
+    </annotation>
+  </element>
+  <complexType name="ADMSRoadSideBarrierType">
+    <complexContent>
+      <extension base="gml:AbstractGMLType">
+        <sequence>
+          <element name="barrierType" type="IMAER:ADMSRoadSideBarrierTypeType">
+            <annotation>
+              <documentation>The type of this barrier.</documentation>
+            </annotation>
+          </element>
+          <element name="distance" type="double">
+            <annotation>
+              <documentation>The distance from the road centreline to canyon wall (m).</documentation>
+            </annotation>
+          </element>
+          <element name="averageHeight" type="double">
+            <annotation>
+              <documentation>The average height of the barrier (m).</documentation>
+            </annotation>
+          </element>
+          <element name="maximumHeight" type="double">
+            <annotation>
+              <documentation>The maximum height of the barrier (m).</documentation>
+            </annotation>
+          </element>
+          <element name="minimumHeight" type="double">
+            <annotation>
+              <documentation>The minimum height of the barrier (m).</documentation>
+            </annotation>
+          </element>
+          <element name="porosity" type="double">
+            <annotation>
+              <documentation>The porosity percentage that describes how much of the road length is covered by the barrier. 0 is fully covered, while 100 is not covered at all.</documentation>
+            </annotation>
+          </element>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="ADMSRoadSideBarrierPropertyType">
+    <sequence minOccurs="0">
+      <element ref="IMAER:ADMSRoadSideBarrier"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+    <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+  </complexType>
+  <simpleType name="ADMSRoadSideBarrierTypeType">
+    <annotation>
+      <documentation>ADMS road side barrier types</documentation>
+    </annotation>
+    <restriction base="string">
+      <enumeration value="NOISE_BARRIER"/>
+      <enumeration value="BRICK_WALL"/>
+      <enumeration value="STREET_CAYON_TERRACED_HOUSES"/>
+      <enumeration value="STREET_CANYON_SEMIDETACHED_HOUSES"/>
+      <enumeration value="STREET_CANYON_DETACHED_HOUSES"/>
+      <enumeration value="TREE_BARRIER_OPEN"/>
+      <enumeration value="TREE_BARRIER_DENSE"/>
+      <enumeration value="OTHER"/>
+    </restriction>
+  </simpleType>
   <element name="ADMSSourceCharacteristics" substitutionGroup="IMAER:SourceCharacteristicsType" type="IMAER:ADMSSourceCharacteristicsType">
     <annotation>
       <documentation>Dit datatype beschrijft de (ADMS) karakteristieken van een emissiebron.
@@ -2428,15 +2565,6 @@ NOTE Deze klasse beschrijft een weg emissiebron inclusief geometrie.</documentat
               <documentation>Rijrichting van het verkeer op deze weg. Deze rijrichting is ten opzichte van de getekende richting van de weg oftewel de geometrie.</documentation>
             </annotation>
           </element>
-          <element minOccurs="0" name="inNetwork" type="gml:ReferenceType">
-            <annotation>
-              <documentation>Geeft aan bij welk netwerk de weg hoort.</documentation>
-              <appinfo>
-                <targetElement xmlns="http://www.opengis.net/gml/3.2">IMAER:RoadNetwork</targetElement>
-                <reversePropertyName xmlns="http://www.opengis.net/gml/3.2">IMAER:element</reversePropertyName>
-              </appinfo>
-            </annotation>
-          </element>
         </sequence>
         <attribute name="roadAreaType" type="string" use="required">
           <annotation>
@@ -2491,46 +2619,6 @@ NOTE Voor een weg kan aangegeven wat voor partij de wegbeheerder is.</documentat
       </enumeration>
     </restriction>
   </simpleType>
-  <element name="RoadNetwork" substitutionGroup="IMAER:GeoObject" type="IMAER:RoadNetworkType">
-    <annotation>
-      <documentation>Een netwerk van wegen.
-NOTE Deze klasse beschrijft een netwerk, waarbij meerdere elementen gegroupeerd kunnen worden.</documentation>
-    </annotation>
-  </element>
-  <complexType name="RoadNetworkType">
-    <complexContent>
-      <extension base="IMAER:GeoObjectType">
-        <sequence>
-          <element name="identifier" type="IMAER:NEN3610IDPropertyType">
-            <annotation>
-              <documentation>Unieke identificatie van het netwerk binnen het domein van NEN 3610.</documentation>
-            </annotation>
-          </element>
-          <element minOccurs="0" name="label" type="string">
-            <annotation>
-              <documentation>Een optioneel label voor de emissiebron.</documentation>
-            </annotation>
-          </element>
-          <element maxOccurs="unbounded" minOccurs="0" name="element" type="gml:ReferenceType">
-            <annotation>
-              <documentation>Referenties naar alle elementen die horen bij het netwerk.</documentation>
-              <appinfo>
-                <targetElement xmlns="http://www.opengis.net/gml/3.2">IMAER:RoadEmissionSource</targetElement>
-                <reversePropertyName xmlns="http://www.opengis.net/gml/3.2">IMAER:inNetwork</reversePropertyName>
-              </appinfo>
-            </annotation>
-          </element>
-        </sequence>
-      </extension>
-    </complexContent>
-  </complexType>
-  <complexType name="RoadNetworkPropertyType">
-    <sequence minOccurs="0">
-      <element ref="IMAER:RoadNetwork"/>
-    </sequence>
-    <attributeGroup ref="gml:AssociationAttributeGroup"/>
-    <attributeGroup ref="gml:OwnershipAttributeGroup"/>
-  </complexType>
   <simpleType name="RoadProfileType">
     <annotation>
       <documentation>Lijst met verschillende types wegprofiel van een weg
