@@ -52,7 +52,7 @@ public class GML2ADMSRoad<T extends IsGmlADMSRoad> extends GML2Road<T, ADMSRoadE
   @Override
   protected void setOptionalVariables(final T source, final ADMSRoadEmissionSource emissionSource) throws AeriusException {
     emissionSource.setBarrierLeft(source.getBarrierLeft() == null ? getNoneRoadSideBarrier() : getRoadSideBarrier(source.getBarrierLeft()));
-    emissionSource.setBarrierLeft(source.getBarrierRight() == null ? getNoneRoadSideBarrier() : getRoadSideBarrier(source.getBarrierRight()));
+    emissionSource.setBarrierRight(source.getBarrierRight() == null ? getNoneRoadSideBarrier() : getRoadSideBarrier(source.getBarrierRight()));
   }
 
   private ADMSRoadSideBarrier getRoadSideBarrier(final IsGmlProperty<IsGmlADMSRoadSideBarrier> barrierProperty) {

@@ -110,35 +110,15 @@ NOTE This class describes a road emissionsource including geometry. This definit
               <documentation>The coverage (percentage) of this road. This describes how much of the road is covered by overhanging features.</documentation>
             </annotation>
           </element>
-          <element minOccurs="0" name="barrierLeft">
+          <element minOccurs="0" name="barrierLeft" type="IMAER:ADMSRoadSideBarrierPropertyType">
             <annotation>
               <documentation>The barrier on the left side of the road (compared to the geometry).</documentation>
             </annotation>
-            <complexType>
-              <complexContent>
-                <extension base="gml:AbstractMemberType">
-                  <sequence minOccurs="0">
-                    <element ref="IMAER:ADMSRoadSideBarrier"/>
-                  </sequence>
-                  <attributeGroup ref="gml:AssociationAttributeGroup"/>
-                </extension>
-              </complexContent>
-            </complexType>
           </element>
-          <element minOccurs="0" name="barrierRight">
+          <element minOccurs="0" name="barrierRight" type="IMAER:ADMSRoadSideBarrierPropertyType">
             <annotation>
               <documentation>The barrier on the right side of the road (compared to the geometry).</documentation>
             </annotation>
-            <complexType>
-              <complexContent>
-                <extension base="gml:AbstractMemberType">
-                  <sequence minOccurs="0">
-                    <element ref="IMAER:ADMSRoadSideBarrier"/>
-                  </sequence>
-                  <attributeGroup ref="gml:AssociationAttributeGroup"/>
-                </extension>
-              </complexContent>
-            </complexType>
           </element>
         </sequence>
       </extension>
@@ -151,56 +131,50 @@ NOTE This class describes a road emissionsource including geometry. This definit
     <attributeGroup ref="gml:AssociationAttributeGroup"/>
     <attributeGroup ref="gml:OwnershipAttributeGroup"/>
   </complexType>
-  <element name="ADMSRoadSideBarrier" substitutionGroup="gml:AbstractGML" type="IMAER:ADMSRoadSideBarrierType">
+  <element name="ADMSRoadSideBarrier" substitutionGroup="gml:AbstractObject" type="IMAER:ADMSRoadSideBarrierType">
     <annotation>
       <documentation>Characteristics of a barrier on the side of a road for ADMS.
 NOTE A barrier on the side of the road is described by a few characteristics. Th</documentation>
     </annotation>
   </element>
   <complexType name="ADMSRoadSideBarrierType">
-    <complexContent>
-      <extension base="gml:AbstractGMLType">
-        <sequence>
-          <element name="barrierType" type="IMAER:ADMSRoadSideBarrierTypeType">
-            <annotation>
-              <documentation>The type of this barrier.</documentation>
-            </annotation>
-          </element>
-          <element name="distance" type="double">
-            <annotation>
-              <documentation>The distance from the road centreline to canyon wall (m).</documentation>
-            </annotation>
-          </element>
-          <element name="averageHeight" type="double">
-            <annotation>
-              <documentation>The average height of the barrier (m).</documentation>
-            </annotation>
-          </element>
-          <element name="maximumHeight" type="double">
-            <annotation>
-              <documentation>The maximum height of the barrier (m).</documentation>
-            </annotation>
-          </element>
-          <element name="minimumHeight" type="double">
-            <annotation>
-              <documentation>The minimum height of the barrier (m).</documentation>
-            </annotation>
-          </element>
-          <element name="porosity" type="double">
-            <annotation>
-              <documentation>The porosity percentage that describes how much of the road length is covered by the barrier. 0 is fully covered, while 100 is not covered at all.</documentation>
-            </annotation>
-          </element>
-        </sequence>
-      </extension>
-    </complexContent>
+    <sequence>
+      <element name="barrierType" type="IMAER:ADMSRoadSideBarrierTypeType">
+        <annotation>
+          <documentation>The type of this barrier.</documentation>
+        </annotation>
+      </element>
+      <element name="distance" type="double">
+        <annotation>
+          <documentation>The distance from the road centreline to canyon wall (m).</documentation>
+        </annotation>
+      </element>
+      <element name="averageHeight" type="double">
+        <annotation>
+          <documentation>The average height of the barrier (m).</documentation>
+        </annotation>
+      </element>
+      <element name="maximumHeight" type="double">
+        <annotation>
+          <documentation>The maximum height of the barrier (m).</documentation>
+        </annotation>
+      </element>
+      <element name="minimumHeight" type="double">
+        <annotation>
+          <documentation>The minimum height of the barrier (m).</documentation>
+        </annotation>
+      </element>
+      <element name="porosity" type="double">
+        <annotation>
+          <documentation>The porosity percentage that describes how much of the road length is covered by the barrier. 0 is fully covered, while 100 is not covered at all.</documentation>
+        </annotation>
+      </element>
+    </sequence>
   </complexType>
   <complexType name="ADMSRoadSideBarrierPropertyType">
-    <sequence minOccurs="0">
+    <sequence>
       <element ref="IMAER:ADMSRoadSideBarrier"/>
     </sequence>
-    <attributeGroup ref="gml:AssociationAttributeGroup"/>
-    <attributeGroup ref="gml:OwnershipAttributeGroup"/>
   </complexType>
   <simpleType name="ADMSRoadSideBarrierTypeType">
     <annotation>
