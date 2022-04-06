@@ -21,6 +21,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import nl.overheid.aerius.gml.v5_0.source.TimeUnit;
+import nl.overheid.aerius.gml.v5_0.source.road.ADMSRoad;
+import nl.overheid.aerius.gml.v5_0.source.road.ADMSRoadSideBarrierProperty;
 import nl.overheid.aerius.gml.v5_0.source.road.CustomVehicle;
 import nl.overheid.aerius.gml.v5_0.source.road.RoadEmissionSource;
 import nl.overheid.aerius.gml.v5_0.source.road.RoadSideBarrierProperty;
@@ -34,8 +36,11 @@ import nl.overheid.aerius.gml.v5_0.source.road.SpecificVehicle;
 import nl.overheid.aerius.gml.v5_0.source.road.StandardVehicle;
 import nl.overheid.aerius.gml.v5_0.source.road.VehiclesProperty;
 import nl.overheid.aerius.shared.domain.Substance;
+import nl.overheid.aerius.shared.domain.v2.source.ADMSRoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.SRM1RoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.SRM2RoadEmissionSource;
+import nl.overheid.aerius.shared.domain.v2.source.road.ADMSRoadSideBarrier;
+import nl.overheid.aerius.shared.domain.v2.source.road.ADMSRoadSideBarrierType;
 import nl.overheid.aerius.shared.domain.v2.source.road.CustomVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.RoadElevation;
 import nl.overheid.aerius.shared.domain.v2.source.road.SRM1LinearReference;
@@ -60,10 +65,26 @@ class Road2GML extends SpecificSource2GML<nl.overheid.aerius.shared.domain.v2.so
       returnSource = convertSrm1((SRM1RoadEmissionSource) emissionSource);
     } else if (emissionSource instanceof SRM2RoadEmissionSource) {
       returnSource = convertSrm2((SRM2RoadEmissionSource) emissionSource);
-      // TODO: ADMSRoadEmissionSource
+    } else if (emissionSource instanceof ADMSRoadEmissionSource) {
+      returnSource = convertAdms((ADMSRoadEmissionSource) emissionSource);
     } else {
       returnSource = null;
     }
+
+    return returnSource;
+  }
+
+  private ADMSRoad convertAdms(final ADMSRoadEmissionSource emissionSource) {
+    final ADMSRoad returnSource = new ADMSRoad();
+
+    returnSource.setVehicles(toVehicleProperties(emissionSource.getSubSources()));
+
+    handleGenericProperties(emissionSource, returnSource);
+    returnSource.setWidth(emissionSource.getWidth());
+    returnSource.setElevation(emissionSource.getElevation());
+    returnSource.setGradient(emissionSource.getGradient());
+    returnSource.setCoverage(emissionSource.getCoverage());
+    handleBarriers(emissionSource, returnSource);
 
     return returnSource;
   }
@@ -140,7 +161,7 @@ class Road2GML extends SpecificSource2GML<nl.overheid.aerius.shared.domain.v2.so
     }
   }
 
-  private void handleElevation(final nl.overheid.aerius.shared.domain.v2.source.SRM2RoadEmissionSource emissionSource, final SRM2Road returnSource) {
+  private void handleElevation(final SRM2RoadEmissionSource emissionSource, final SRM2Road returnSource) {
     returnSource.setElevation(emissionSource.getElevation());
     //don't set the elevation height if it's normal elevation.
     if (returnSource.getElevation() != RoadElevation.NORMAL) {
@@ -148,7 +169,7 @@ class Road2GML extends SpecificSource2GML<nl.overheid.aerius.shared.domain.v2.so
     }
   }
 
-  private void handleBarriers(final nl.overheid.aerius.shared.domain.v2.source.SRM2RoadEmissionSource emissionSource, final SRM2Road returnSource) {
+  private void handleBarriers(final SRM2RoadEmissionSource emissionSource, final SRM2Road returnSource) {
     if (emissionSource.getBarrierLeft() != null) {
       returnSource.setBarrierLeft(toGMLRoadSideBarrier(emissionSource.getBarrierLeft()));
     }
@@ -163,6 +184,26 @@ class Road2GML extends SpecificSource2GML<nl.overheid.aerius.shared.domain.v2.so
     gmlBarrier.setHeight(barrier.getHeight());
     gmlBarrier.setDistance(barrier.getDistance());
     return new RoadSideBarrierProperty(gmlBarrier);
+  }
+
+  private void handleBarriers(final ADMSRoadEmissionSource emissionSource, final ADMSRoad returnSource) {
+    if (emissionSource.getBarrierLeft() != null && emissionSource.getBarrierLeft().getBarrierType() != ADMSRoadSideBarrierType.NONE) {
+      returnSource.setBarrierLeft(toGMLRoadSideBarrier(emissionSource.getBarrierLeft()));
+    }
+    if (emissionSource.getBarrierRight() != null && emissionSource.getBarrierRight().getBarrierType() != ADMSRoadSideBarrierType.NONE) {
+      returnSource.setBarrierRight(toGMLRoadSideBarrier(emissionSource.getBarrierRight()));
+    }
+  }
+
+  private ADMSRoadSideBarrierProperty toGMLRoadSideBarrier(final ADMSRoadSideBarrier barrier) {
+    final nl.overheid.aerius.gml.v5_0.source.road.ADMSRoadSideBarrier gmlBarrier = new nl.overheid.aerius.gml.v5_0.source.road.ADMSRoadSideBarrier();
+    gmlBarrier.setBarrierType(barrier.getBarrierType());
+    gmlBarrier.setDistance(barrier.getWidth());
+    gmlBarrier.setAverageHeight(barrier.getAverageHeight());
+    gmlBarrier.setMaximumHeight(barrier.getMaximumHeight());
+    gmlBarrier.setMinimumHeight(barrier.getMinimumHeight());
+    gmlBarrier.setPorosity(barrier.getPorosity());
+    return new ADMSRoadSideBarrierProperty(gmlBarrier);
   }
 
   private void handleRoadManager(final nl.overheid.aerius.shared.domain.v2.source.RoadEmissionSource emissionSource,
