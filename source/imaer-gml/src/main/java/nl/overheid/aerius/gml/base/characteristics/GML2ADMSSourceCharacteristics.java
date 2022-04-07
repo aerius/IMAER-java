@@ -1,5 +1,5 @@
 /*
- * Copyright the State of the Netherlands
+ * Crown copyright
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -27,7 +27,7 @@ import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 
 /**
- * GML source characteristics with OPS specific parameters conversion.
+ * GML source characteristics with ADMS specific parameters conversion.
  */
 public class GML2ADMSSourceCharacteristics
     extends GML2SourceCharacteristics<nl.overheid.aerius.shared.domain.v2.characteristics.ADMSSourceCharacteristics> {
@@ -40,68 +40,68 @@ public class GML2ADMSSourceCharacteristics
   protected nl.overheid.aerius.shared.domain.v2.characteristics.ADMSSourceCharacteristics fromGMLSpecific(
       final IsGmlSourceCharacteristics characteristics,
       final nl.overheid.aerius.shared.domain.v2.characteristics.ADMSSourceCharacteristics sectorCharacteristics) throws AeriusException {
-    final IsGmlADMSSourceCharacteristics gmlOPSCharacteristics = (IsGmlADMSSourceCharacteristics) characteristics;
+    final IsGmlADMSSourceCharacteristics gmlADMSCharacteristics = (IsGmlADMSSourceCharacteristics) characteristics;
     final ADMSSourceCharacteristics returnCharacteristics = getDefaultCharacteristics();
-    returnCharacteristics.setHeight(gmlOPSCharacteristics.getHeight());
-    returnCharacteristics.setSpecificHeatCapacity(gmlOPSCharacteristics.getSpecificHeatCapacity());
+    returnCharacteristics.setHeight(gmlADMSCharacteristics.getHeight());
+    returnCharacteristics.setSpecificHeatCapacity(gmlADMSCharacteristics.getSpecificHeatCapacity());
 
-    setSourceTypeProperties(gmlOPSCharacteristics, returnCharacteristics);
-    setBuoyancyTypeProperties(gmlOPSCharacteristics, returnCharacteristics);
-    setEffluxTypeProperties(gmlOPSCharacteristics, returnCharacteristics);
+    setSourceTypeProperties(gmlADMSCharacteristics, returnCharacteristics);
+    setBuoyancyTypeProperties(gmlADMSCharacteristics, returnCharacteristics);
+    setEffluxTypeProperties(gmlADMSCharacteristics, returnCharacteristics);
 
     return returnCharacteristics;
   }
 
-  private void setSourceTypeProperties(final IsGmlADMSSourceCharacteristics gmlOPSCharacteristics,
+  private void setSourceTypeProperties(final IsGmlADMSSourceCharacteristics gmlADMSCharacteristics,
       final ADMSSourceCharacteristics returnCharacteristics) {
-    returnCharacteristics.setSourceType(gmlOPSCharacteristics.getSourceType());
-    switch (gmlOPSCharacteristics.getSourceType()) {
+    returnCharacteristics.setSourceType(gmlADMSCharacteristics.getSourceType());
+    switch (gmlADMSCharacteristics.getSourceType()) {
     case JET:
-      returnCharacteristics.setElevationAngle(gmlOPSCharacteristics.getElevationAngle());
-      returnCharacteristics.setHorizontalAngle(gmlOPSCharacteristics.getHorizontalAngle());
+      returnCharacteristics.setElevationAngle(gmlADMSCharacteristics.getElevationAngle());
+      returnCharacteristics.setHorizontalAngle(gmlADMSCharacteristics.getHorizontalAngle());
       // Intentional fallthrough
     case POINT:
-      returnCharacteristics.setDiameter(gmlOPSCharacteristics.getDiameter());
+      returnCharacteristics.setDiameter(gmlADMSCharacteristics.getDiameter());
       break;
     case AREA:
       break;
     case LINE:
     case ROAD:
-      returnCharacteristics.setWidth(gmlOPSCharacteristics.getWidth());
+      returnCharacteristics.setWidth(gmlADMSCharacteristics.getWidth());
       break;
     case VOLUME:
-      returnCharacteristics.setVerticalDimension(gmlOPSCharacteristics.getVerticalDimension());
+      returnCharacteristics.setVerticalDimension(gmlADMSCharacteristics.getVerticalDimension());
       break;
     }
   }
 
-  private void setBuoyancyTypeProperties(final IsGmlADMSSourceCharacteristics gmlOPSCharacteristics,
+  private void setBuoyancyTypeProperties(final IsGmlADMSSourceCharacteristics gmlADMSCharacteristics,
       final ADMSSourceCharacteristics returnCharacteristics) {
-    returnCharacteristics.setBuoyancyType(gmlOPSCharacteristics.getBuoyancyType());
-    switch (gmlOPSCharacteristics.getBuoyancyType()) {
+    returnCharacteristics.setBuoyancyType(gmlADMSCharacteristics.getBuoyancyType());
+    switch (gmlADMSCharacteristics.getBuoyancyType()) {
     case AMBIENT:
       break;
     case DENSITY:
-      returnCharacteristics.setDensity(gmlOPSCharacteristics.getDensity());
+      returnCharacteristics.setDensity(gmlADMSCharacteristics.getDensity());
       break;
     case TEMPERATURE:
-      returnCharacteristics.setTemperature(gmlOPSCharacteristics.getTemperature());
+      returnCharacteristics.setTemperature(gmlADMSCharacteristics.getTemperature());
       break;
     }
   }
 
-  private void setEffluxTypeProperties(final IsGmlADMSSourceCharacteristics gmlOPSCharacteristics,
+  private void setEffluxTypeProperties(final IsGmlADMSSourceCharacteristics gmlADMSCharacteristics,
       final ADMSSourceCharacteristics returnCharacteristics) throws AeriusException {
-    returnCharacteristics.setEffluxType(gmlOPSCharacteristics.getEffluxType());
-    switch (gmlOPSCharacteristics.getEffluxType()) {
+    returnCharacteristics.setEffluxType(gmlADMSCharacteristics.getEffluxType());
+    switch (gmlADMSCharacteristics.getEffluxType()) {
     case VELOCITY:
-      returnCharacteristics.setVerticalVelocity(gmlOPSCharacteristics.getVerticalVelocity());
+      returnCharacteristics.setVerticalVelocity(gmlADMSCharacteristics.getVerticalVelocity());
       break;
     case VOLUME:
-      returnCharacteristics.setVolumetricFlowRate(gmlOPSCharacteristics.getVolumetricFlowRate());
+      returnCharacteristics.setVolumetricFlowRate(gmlADMSCharacteristics.getVolumetricFlowRate());
       break;
     case MASS:
-      returnCharacteristics.setMassFlux(gmlOPSCharacteristics.getMassFlux());
+      returnCharacteristics.setMassFlux(gmlADMSCharacteristics.getMassFlux());
       break;
     case MOMENTUM:
       // Not (yet) supported
