@@ -14,26 +14,15 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.gml.base.source;
+package nl.overheid.aerius.gml.base.characteristics;
 
-import java.util.List;
+import nl.overheid.aerius.gml.base.IsGmlReferenceType;
 
-import nl.overheid.aerius.gml.base.FeatureMember;
-import nl.overheid.aerius.gml.base.IsGmlProperty;
-import nl.overheid.aerius.gml.base.characteristics.IsGmlSourceCharacteristics;
+/**
+ *
+ */
+public interface HasGmlBuildingReference {
 
-public interface IsGmlEmissionSource extends FeatureMember {
-
-  String getLabel();
-
-  String getDescription();
-
-  int getSectorId();
-
-  IsGmlSourceCharacteristics getCharacteristics();
-
-  Integer getJurisdictionId();
-
-  List<? extends IsGmlProperty<IsGmlEmission>> getEmissionValues();
+  IsGmlReferenceType getBuilding();
 
 }

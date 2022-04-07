@@ -19,14 +19,14 @@ package nl.overheid.aerius.gml.base.source.mobile.v31;
 import java.util.List;
 
 import nl.overheid.aerius.gml.base.IsGmlProperty;
-import nl.overheid.aerius.gml.base.characteristics.IsBaseGmlEmissionSourceCharacteristics;
+import nl.overheid.aerius.gml.base.characteristics.IsGmlBaseOPSSourceCharacteristics;
 import nl.overheid.aerius.gml.base.source.IsGmlEmission;
 
 public interface IsGmlCustomOffRoadMobileSource extends IsGmlOffRoadMobileSource {
 
   List<? extends IsGmlProperty<IsGmlEmission>> getEmissions();
 
-  IsBaseGmlEmissionSourceCharacteristics getCharacteristics();
+  IsGmlBaseOPSSourceCharacteristics getCharacteristics();
 
   IsGmlOffRoadVehicleSpecification getOffRoadVehicleSpecification();
 

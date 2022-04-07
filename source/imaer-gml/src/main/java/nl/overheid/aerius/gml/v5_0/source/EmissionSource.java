@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlType;
 import nl.overheid.aerius.gml.base.source.IsGmlEmissionSource;
 import nl.overheid.aerius.gml.v5_0.base.CalculatorSchema;
 import nl.overheid.aerius.gml.v5_0.base.FeatureMemberImpl;
-import nl.overheid.aerius.gml.v5_0.source.characteristics.EmissionSourceCharacteristics;
+import nl.overheid.aerius.gml.v5_0.source.characteristics.AbstractSourceCharacteristics;
 import nl.overheid.aerius.gml.v5_0.source.characteristics.EmissionSourceCharacteristicsProperty;
 import nl.overheid.aerius.shared.domain.v2.geojson.GeometryType;
 
@@ -41,7 +41,7 @@ public class EmissionSource extends FeatureMemberImpl implements IsGmlEmissionSo
   private String label;
   private String description;
   private int sectorId;
-  private EmissionSourceCharacteristics characteristics;
+  private AbstractSourceCharacteristics characteristics;
   private Integer jurisdictionId;
   private List<EmissionProperty> emissionValues = new ArrayList<>();
 
@@ -50,6 +50,7 @@ public class EmissionSource extends FeatureMemberImpl implements IsGmlEmissionSo
     return type == GeometryType.POINT || type == GeometryType.LINESTRING || type == GeometryType.POLYGON;
   }
 
+  @Override
   @XmlElement(namespace = CalculatorSchema.NAMESPACE)
   public String getLabel() {
     return label;
@@ -59,6 +60,7 @@ public class EmissionSource extends FeatureMemberImpl implements IsGmlEmissionSo
     this.label = label;
   }
 
+  @Override
   @XmlElement(namespace = CalculatorSchema.NAMESPACE)
   public String getDescription() {
     return description;
@@ -68,6 +70,7 @@ public class EmissionSource extends FeatureMemberImpl implements IsGmlEmissionSo
     this.description = description;
   }
 
+  @Override
   @XmlAttribute
   public int getSectorId() {
     return sectorId;
@@ -77,12 +80,13 @@ public class EmissionSource extends FeatureMemberImpl implements IsGmlEmissionSo
     this.sectorId = sectorId;
   }
 
+  @Override
   @XmlTransient
-  public EmissionSourceCharacteristics getCharacteristics() {
+  public AbstractSourceCharacteristics getCharacteristics() {
     return characteristics;
   }
 
-  public void setCharacteristics(final EmissionSourceCharacteristics characteristics) {
+  public void setCharacteristics(final AbstractSourceCharacteristics characteristics) {
     this.characteristics = characteristics;
   }
 
@@ -95,6 +99,7 @@ public class EmissionSource extends FeatureMemberImpl implements IsGmlEmissionSo
     this.characteristics = characteristics == null ? null : characteristics.getProperty();
   }
 
+  @Override
   @XmlElement(namespace = CalculatorSchema.NAMESPACE)
   public Integer getJurisdictionId() {
     return jurisdictionId;

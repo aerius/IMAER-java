@@ -18,7 +18,7 @@ package nl.overheid.aerius.gml.base.characteristics;
 
 import nl.overheid.aerius.gml.base.building.IsGmlBuildingV31;
 
-public interface IsGmlEmissionSourceCharacteristicsV31 extends IsBaseGmlEmissionSourceCharacteristics {
+public interface IsGmlOPSSourceCharacteristicsV31 extends IsGmlBaseOPSSourceCharacteristics {
 
   IsGmlBuildingV31 getBuilding();
 

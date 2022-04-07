@@ -16,42 +16,32 @@
  */
 package nl.overheid.aerius.gml.v5_0.source.characteristics;
 
-import javax.xml.bind.annotation.XmlElementRef;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
-import nl.overheid.aerius.gml.base.AbstractProperty;
+import nl.overheid.aerius.gml.base.characteristics.HasGmlBuildingReference;
+import nl.overheid.aerius.gml.base.characteristics.IsGmlSourceCharacteristics;
 import nl.overheid.aerius.gml.v5_0.base.CalculatorSchema;
+import nl.overheid.aerius.gml.v5_0.base.ReferenceType;
 
 /**
  *
  */
-@XmlType(name = "EmissionSourceCharacteristicsPropertyType", namespace = CalculatorSchema.NAMESPACE)
-public class EmissionSourceCharacteristicsProperty extends AbstractProperty<AbstractSourceCharacteristics> {
+@XmlSeeAlso({EmissionSourceCharacteristics.class, ADMSSourceCharacteristics.class})
+@XmlType(name = "AbstractSourceCharacteristicsType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"building"})
+public abstract class AbstractSourceCharacteristics implements IsGmlSourceCharacteristics, HasGmlBuildingReference {
 
-  /**
-   * Default constructor, needed for JAXB.
-   */
-  public EmissionSourceCharacteristicsProperty() {
-    super(null);
-  }
-
-  /**
-   * Convenience constructor.
-   * @param sourceCharacteristics The property to use.
-   */
-  public EmissionSourceCharacteristicsProperty(final AbstractSourceCharacteristics sourceCharacteristics) {
-    super(sourceCharacteristics);
-  }
-
-  @XmlElementRef
-  @Override
-  public AbstractSourceCharacteristics getProperty() {
-    return super.getProperty();
-  }
+  private ReferenceType building;
 
   @Override
-  public void setProperty(final AbstractSourceCharacteristics property) {
-    super.setProperty(property);
+  @XmlElement(namespace = CalculatorSchema.NAMESPACE)
+  public ReferenceType getBuilding() {
+    return building;
+  }
+
+  public void setBuilding(final ReferenceType building) {
+    this.building = building;
   }
 
 }

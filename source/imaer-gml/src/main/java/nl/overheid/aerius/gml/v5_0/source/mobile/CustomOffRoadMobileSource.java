@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlType;
 import nl.overheid.aerius.gml.base.source.mobile.v40.IsGmlCustomOffRoadMobileSource;
 import nl.overheid.aerius.gml.v5_0.base.CalculatorSchema;
 import nl.overheid.aerius.gml.v5_0.source.EmissionProperty;
-import nl.overheid.aerius.gml.v5_0.source.characteristics.EmissionSourceCharacteristics;
+import nl.overheid.aerius.gml.v5_0.source.characteristics.AbstractSourceCharacteristics;
 import nl.overheid.aerius.gml.v5_0.source.characteristics.EmissionSourceCharacteristicsProperty;
 
 /**
@@ -39,7 +39,7 @@ import nl.overheid.aerius.gml.v5_0.source.characteristics.EmissionSourceCharacte
 public class CustomOffRoadMobileSource extends AbstractOffRoadMobileSource implements IsGmlCustomOffRoadMobileSource {
 
   private List<EmissionProperty> emissions = new ArrayList<>();
-  private EmissionSourceCharacteristics characteristics;
+  private AbstractSourceCharacteristics characteristics;
   private AbstractOffRoadVehicleSpecification offRoadVehicleSpecification;
 
   @Override
@@ -54,11 +54,11 @@ public class CustomOffRoadMobileSource extends AbstractOffRoadMobileSource imple
 
   @Override
   @XmlTransient
-  public EmissionSourceCharacteristics getCharacteristics() {
+  public AbstractSourceCharacteristics getCharacteristics() {
     return characteristics;
   }
 
-  public void setCharacteristics(final EmissionSourceCharacteristics characteristics) {
+  public void setCharacteristics(final AbstractSourceCharacteristics characteristics) {
     this.characteristics = characteristics;
   }
 

@@ -26,7 +26,9 @@ import nl.overheid.aerius.gml.base.FeatureMember;
 import nl.overheid.aerius.gml.base.geo.Geometry2GML;
 import nl.overheid.aerius.gml.v5_0.source.Emission;
 import nl.overheid.aerius.gml.v5_0.source.EmissionProperty;
+import nl.overheid.aerius.gml.v5_0.source.characteristics.EmissionSourceCharacteristics;
 import nl.overheid.aerius.shared.domain.Substance;
+import nl.overheid.aerius.shared.domain.v2.characteristics.ADMSSourceCharacteristics;
 import nl.overheid.aerius.shared.domain.v2.characteristics.OPSSourceCharacteristics;
 import nl.overheid.aerius.shared.domain.v2.geojson.IsFeature;
 import nl.overheid.aerius.shared.domain.v2.geojson.Point;
@@ -95,23 +97,33 @@ final class Source2GML implements EmissionSourceVisitor<nl.overheid.aerius.gml.v
     returnSource.setJurisdictionId(source.getJurisdictionId());
     //getSector always returns a sector, even if it was null.
     returnSource.setSectorId(source.getSectorId());
-    if (source.getCharacteristics() instanceof OPSSourceCharacteristics) {
-      returnSource.setCharacteristics(SourceCharacteristics2GML.toGML((OPSSourceCharacteristics) source.getCharacteristics(), true));
-      //ensure spread isn't exported for pointsources.
-      if (sourceFeature.getGeometry() instanceof Point) {
-        returnSource.getCharacteristics().setSpread(null);
-      }
-      //ensure diurnal variation isn't exported for sources other then generic ones.
-      if (!(source instanceof GenericEmissionSource)) { //
-        returnSource.getCharacteristics().setDiurnalVariation(null);
-      }
-    }
+
+    toGMLCharacteristics(sourceFeature, source, returnSource);
+
     //always set emissionvalues (even for things like farm/road where we won't use them when importing)
     returnSource.setEmissionValues(getEmissions(source, substances));
     if (returnSource.getEmissionValues() == null) {
       throw new IllegalArgumentException("Emissionsource without emission not allowed: " + source);
     }
     return returnSource;
+  }
+
+  private void toGMLCharacteristics(final EmissionSourceFeature sourceFeature, final EmissionSource source,
+      final nl.overheid.aerius.gml.v5_0.source.EmissionSource returnSource) throws AeriusException {
+    if (source.getCharacteristics() instanceof OPSSourceCharacteristics) {
+      returnSource.setCharacteristics(SourceCharacteristics2GML.toGML((OPSSourceCharacteristics) source.getCharacteristics(), true));
+      //ensure spread isn't exported for pointsources.
+      if (sourceFeature.getGeometry() instanceof Point) {
+        ((EmissionSourceCharacteristics) returnSource.getCharacteristics()).setSpread(null);
+      }
+      //ensure diurnal variation isn't exported for sources other then generic ones.
+      if (!(source instanceof GenericEmissionSource)) { //
+        ((EmissionSourceCharacteristics) returnSource.getCharacteristics()).setDiurnalVariation(null);
+      }
+    }
+    if (source.getCharacteristics() instanceof ADMSSourceCharacteristics) {
+      returnSource.setCharacteristics(SourceCharacteristics2GML.toGML((ADMSSourceCharacteristics) source.getCharacteristics()));
+    }
   }
 
   @Override

@@ -35,34 +35,33 @@ public abstract class GML2SourceCharacteristics<T extends SourceCharacteristics>
 
   private final GMLConversionData conversionData;
 
-  public GML2SourceCharacteristics(final GMLConversionData conversionData) {
+  protected GML2SourceCharacteristics(final GMLConversionData conversionData) {
     this.conversionData = conversionData;
   }
 
-  public T fromGML(final IsBaseGmlEmissionSourceCharacteristics characteristics, final T sectorCharacteristics,
-      final Geometry geometry)
-          throws AeriusException {
-    final T returnCharacteristics = fromGMLSpecific(characteristics, sectorCharacteristics, geometry);
+  public T fromGML(final IsGmlSourceCharacteristics characteristics, final T sectorCharacteristics,
+      final Geometry geometry) throws AeriusException {
+    final T returnCharacteristics = fromGMLSpecific(characteristics, sectorCharacteristics);
 
     fromGMLToBuildingProperties(characteristics, returnCharacteristics, geometry);
     return returnCharacteristics;
   }
 
-  protected abstract T fromGMLSpecific(final IsBaseGmlEmissionSourceCharacteristics characteristics,
-      final T sectorCharacteristics, final Geometry geometry) throws AeriusException;
+  protected abstract T fromGMLSpecific(final IsGmlSourceCharacteristics characteristics,
+      final T sectorCharacteristics) throws AeriusException;
 
-  private void fromGMLToBuildingProperties(final IsBaseGmlEmissionSourceCharacteristics characteristics,
+  private void fromGMLToBuildingProperties(final IsGmlSourceCharacteristics characteristics,
       final SourceCharacteristics returnCharacteristics, final Geometry geometry) throws AeriusException {
-    if (characteristics instanceof IsGmlEmissionSourceCharacteristicsV31) {
-      final IsGmlEmissionSourceCharacteristicsV31 oldCharacteristics = (IsGmlEmissionSourceCharacteristicsV31) characteristics;
+    if (characteristics instanceof IsGmlOPSSourceCharacteristicsV31) {
+      final IsGmlOPSSourceCharacteristicsV31 oldCharacteristics = (IsGmlOPSSourceCharacteristicsV31) characteristics;
       fromGMLToBuildingProperties(oldCharacteristics, returnCharacteristics, geometry);
-    } else if (characteristics instanceof IsGmlEmissionSourceCharacteristics) {
-      final IsGmlEmissionSourceCharacteristics newCharacteristics = (IsGmlEmissionSourceCharacteristics) characteristics;
+    } else if (characteristics instanceof HasGmlBuildingReference) {
+      final HasGmlBuildingReference newCharacteristics = (HasGmlBuildingReference) characteristics;
       fromGMLToBuildingProperties(newCharacteristics, returnCharacteristics);
     }
   }
 
-  private void fromGMLToBuildingProperties(final IsGmlEmissionSourceCharacteristicsV31 characteristics,
+  private void fromGMLToBuildingProperties(final IsGmlOPSSourceCharacteristicsV31 characteristics,
       final SourceCharacteristics returnCharacteristics, final Geometry geometry) throws AeriusException {
     final IsGmlBuildingV31 gmlBuilding = characteristics.getBuilding();
     if (gmlBuilding != null && conversionData != null && geometry != null) {
@@ -85,7 +84,7 @@ public abstract class GML2SourceCharacteristics<T extends SourceCharacteristics>
     }
   }
 
-  private void fromGMLToBuildingProperties(final IsGmlEmissionSourceCharacteristics characteristics,
+  private void fromGMLToBuildingProperties(final HasGmlBuildingReference characteristics,
       final SourceCharacteristics returnCharacteristics) {
     final IsGmlReferenceType gmlBuilding = characteristics.getBuilding();
     if (gmlBuilding != null) {

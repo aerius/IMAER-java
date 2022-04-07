@@ -44,6 +44,7 @@ import nl.overheid.aerius.gml.base.MetaDataInput;
 import nl.overheid.aerius.importer.ImaerImporter;
 import nl.overheid.aerius.importer.ImportOption;
 import nl.overheid.aerius.shared.domain.scenario.SituationType;
+import nl.overheid.aerius.shared.domain.v2.characteristics.CharacteristicsType;
 import nl.overheid.aerius.shared.domain.v2.importer.ImportParcel;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.AeriusException.Reason;
@@ -67,49 +68,51 @@ public class GMLRoundtripTest {
   private static final Logger LOG = LoggerFactory.getLogger(GMLRoundtripTest.class);
 
   private static final Object[][] FILES = {
-      {"farm",},
-      {"farm_with_systems",},
-      {"farm_with_systems_and_fodder_measures",},
-      {"farm_with_established",},
-      {"farm_with_custom_animal",},
-      {"industry",},
-      {"inlandshipping",},
-      {"inlandshipping_with_waterway",},
-      {"inlandshipping_custom"},
-      {"maritimeship",},
-      {"maritimeship_custom",},
-      {"mooringinland",},
-      {"mooringinland_custom",},
-      {"mooringmaritime",},
-      {"mooringmaritime_custom",},
-      {"offroad", EnumSet.of(ImaerExceptionReason.GML_SOURCE_NO_EMISSION, ImaerExceptionReason.GML_OFF_ROAD_CATEGORY_CONVERTED)},
-      {"offroad_with_specifications", EnumSet.of(ImaerExceptionReason.GML_OFF_ROAD_CATEGORY_CONVERTED)},
-      {"offroad_idle_and_nh3", EnumSet.of(ImaerExceptionReason.GML_OFF_ROAD_CATEGORY_CONVERTED)},
-      {"offroad_non_idle", EnumSet.of(ImaerExceptionReason.GML_OFF_ROAD_CATEGORY_CONVERTED)},
-      {"offroad_adblue"},
-      {"plan",},
-      {"road",},
-      {"road_non_urban",},
-      {"road_dynamic_segmentation",},
-      {"road_empty", EnumSet.of(ImaerExceptionReason.SRM2_SOURCE_NO_VEHICLES, ImaerExceptionReason.GML_SOURCE_NO_EMISSION)},
-      {"road_direction",},
-      {"road_specific_and_custom",},
-      {"metadata",},
-      {"industry_with_calculated_heat_content",},
-      {"industry_with_default_emission_temperature",},
-      {"industry_with_building",},
-      {"industry_with_circular_building",},
-      {"industry_with_custom_diurnal_variation",},
-      {"two_networks",},
-      {"road_srm1",},
-      {"nsl_full_example",},
-      {"farmland",},
-      {"situation_type_reference",},
-      {"situation_type_proposed",},
-      {"situation_type_temporary",},
-      {"situation_type_netting",},
-      {"situation_type_combination_reference",},
-      {"situation_type_combination_proposed",},
+      {"farm", CharacteristicsType.OPS},
+      {"farm_with_systems", CharacteristicsType.OPS},
+      {"farm_with_systems_and_fodder_measures", CharacteristicsType.OPS},
+      {"farm_with_established", CharacteristicsType.OPS},
+      {"farm_with_custom_animal", CharacteristicsType.OPS},
+      {"industry", CharacteristicsType.OPS},
+      {"inlandshipping", CharacteristicsType.OPS},
+      {"inlandshipping_with_waterway", CharacteristicsType.OPS},
+      {"inlandshipping_custom", CharacteristicsType.OPS},
+      {"maritimeship", CharacteristicsType.OPS},
+      {"maritimeship_custom", CharacteristicsType.OPS},
+      {"mooringinland", CharacteristicsType.OPS},
+      {"mooringinland_custom", CharacteristicsType.OPS},
+      {"mooringmaritime", CharacteristicsType.OPS},
+      {"mooringmaritime_custom", CharacteristicsType.OPS},
+      {"offroad", CharacteristicsType.OPS,
+          EnumSet.of(ImaerExceptionReason.GML_SOURCE_NO_EMISSION, ImaerExceptionReason.GML_OFF_ROAD_CATEGORY_CONVERTED)},
+      {"offroad_with_specifications", CharacteristicsType.OPS, EnumSet.of(ImaerExceptionReason.GML_OFF_ROAD_CATEGORY_CONVERTED)},
+      {"offroad_idle_and_nh3", CharacteristicsType.OPS, EnumSet.of(ImaerExceptionReason.GML_OFF_ROAD_CATEGORY_CONVERTED)},
+      {"offroad_non_idle", CharacteristicsType.OPS, EnumSet.of(ImaerExceptionReason.GML_OFF_ROAD_CATEGORY_CONVERTED)},
+      {"offroad_adblue", CharacteristicsType.OPS},
+      {"plan", CharacteristicsType.OPS,},
+      {"road", CharacteristicsType.OPS,},
+      {"road_non_urban", CharacteristicsType.OPS,},
+      {"road_dynamic_segmentation", CharacteristicsType.OPS,},
+      {"road_empty", CharacteristicsType.OPS, EnumSet.of(ImaerExceptionReason.SRM2_SOURCE_NO_VEHICLES, ImaerExceptionReason.GML_SOURCE_NO_EMISSION)},
+      {"road_direction", CharacteristicsType.OPS},
+      {"road_specific_and_custom", CharacteristicsType.OPS},
+      {"metadata", CharacteristicsType.OPS},
+      {"industry_with_calculated_heat_content", CharacteristicsType.OPS},
+      {"industry_with_default_emission_temperature", CharacteristicsType.OPS},
+      {"industry_with_building", CharacteristicsType.OPS},
+      {"industry_with_circular_building", CharacteristicsType.OPS},
+      {"industry_with_custom_diurnal_variation", CharacteristicsType.OPS},
+      {"two_networks", CharacteristicsType.OPS},
+      {"road_srm1", CharacteristicsType.OPS},
+      {"nsl_full_example", CharacteristicsType.OPS},
+      {"farmland", CharacteristicsType.OPS},
+      {"situation_type_reference", CharacteristicsType.OPS},
+      {"situation_type_proposed", CharacteristicsType.OPS},
+      {"situation_type_temporary", CharacteristicsType.OPS},
+      {"situation_type_netting", CharacteristicsType.OPS},
+      {"situation_type_combination_reference", CharacteristicsType.OPS},
+      {"situation_type_combination_proposed", CharacteristicsType.OPS},
+      {"adms_industry", CharacteristicsType.ADMS},
   };
 
   private static final String LATEST_VERSION = "latest";
@@ -122,10 +125,11 @@ public class GMLRoundtripTest {
     for (final AeriusGMLVersion version : AeriusGMLVersion.values()) {
       for (final Object[] object : FILES) {
         if (!skipThisTest(version, (String) object[0])) {
-          final Object[] f = new Object[3];
+          final Object[] f = new Object[4];
           f[0] = version;
           f[1] = object[0];
-          f[2] = getWarningReasons(object, version);
+          f[2] = object[1];
+          f[3] = getWarningReasons(object, version);
           files.add(f);
         } else {
           LOG.debug("Skipping test '{}' for '{}'", object[0], version);
@@ -146,7 +150,7 @@ public class GMLRoundtripTest {
   }
 
   private static Set<Reason> getWarningReasons(final Object[] object, final AeriusGMLVersion version) {
-    final Set<Reason> warnings = object.length == 2 ? new HashSet<>((Set<Reason>) object[1]) : new HashSet<>();
+    final Set<Reason> warnings = object.length == 3 ? new HashSet<>((Set<Reason>) object[2]) : new HashSet<>();
 
     if (version != CURRENT_GML_VERSION) {
       warnings.add(ImaerExceptionReason.GML_VERSION_NOT_LATEST);
@@ -160,19 +164,19 @@ public class GMLRoundtripTest {
 
   @ParameterizedTest(name = "{0}-{1}")
   @MethodSource("data")
-  public void testRoundTripGML(final AeriusGMLVersion version, final String file, final Set<Reason> expectedWarnings) {
+  void testRoundTripGML(final AeriusGMLVersion version, final String file, final CharacteristicsType ct, final Set<Reason> expectedWarnings) {
     final String versionString = version.name().toLowerCase();
     final String fileVersion = ": " + file + ':' + versionString;
-    final ImportParcel result = importAndCompare(versionString, fileVersion, file);
+    final ImportParcel result = importAndCompare(versionString, fileVersion, file, ct);
 
     assertNoExceptions(result.getExceptions(), fileVersion);
     assertExpectedWarnings(result.getWarnings(), expectedWarnings);
     assertUnExpectedWarnings(result.getWarnings(), expectedWarnings);
   }
 
-  private ImportParcel importAndCompare(final String versionString, final String fileVersion, final String file) {
+  private ImportParcel importAndCompare(final String versionString, final String fileVersion, final String file, final CharacteristicsType ct) {
     try {
-      final ImportParcel result = getImportResult(versionString, TEST_FOLDER, file);
+      final ImportParcel result = getImportResult(versionString, TEST_FOLDER, file, ct);
       final GMLWriter gmlc = new GMLWriter(GMLTestDomain.getExampleGridSettings(), GMLTestDomain.TEST_REFERENCE_GENERATOR);
       if (result.getSituation().getType() == null) {
         result.getSituation().setType(SituationType.PROPOSED);
@@ -253,11 +257,11 @@ public class GMLRoundtripTest {
     return compatibleOld.isEmpty() ? AssertGML.getFileContent(relativePathCurrent, fileNameCurrent) : compatibleOld;
   }
 
-  private ImportParcel getImportResult(final String versionString, final String testFolder, final String file)
+  private ImportParcel getImportResult(final String versionString, final String testFolder, final String file, final CharacteristicsType ct)
       throws IOException, AeriusException {
     final String relativePath = getRelativePath(versionString, testFolder);
     final AtomicReference<String> readVersion = new AtomicReference<>();
-    final ImaerImporter importer = new ImaerImporter(AssertGML.mockGMLHelper()) {
+    final ImaerImporter importer = new ImaerImporter(AssertGML.mockGMLHelper(ct)) {
       @Override
       protected GMLReader createGMLReader(final InputStream inputStream, final Set<ImportOption> importOptions, final ImportParcel result)
           throws AeriusException {

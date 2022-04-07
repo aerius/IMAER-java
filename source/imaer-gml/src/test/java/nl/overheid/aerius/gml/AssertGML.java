@@ -47,8 +47,10 @@ import nl.overheid.aerius.importer.ImportOption;
 import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.geo.ReceptorGridSettings;
 import nl.overheid.aerius.shared.domain.scenario.SituationType;
+import nl.overheid.aerius.shared.domain.v2.characteristics.ADMSSourceCharacteristics;
 import nl.overheid.aerius.shared.domain.v2.characteristics.CharacteristicsType;
 import nl.overheid.aerius.shared.domain.v2.characteristics.OPSSourceCharacteristics;
+import nl.overheid.aerius.shared.domain.v2.characteristics.SourceCharacteristics;
 import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
 import nl.overheid.aerius.shared.domain.v2.geojson.GeometryType;
 import nl.overheid.aerius.shared.domain.v2.importer.ImportParcel;
@@ -89,6 +91,11 @@ public final class AssertGML {
   private static final String REGEX_FEATURE_COLLECTION_ELEMENT = "<imaer:FeatureCollectionCalculator[^>]*>";
 
   private static final ReceptorGridSettings RECEPTOR_GRID_SETTINGS = GMLTestDomain.getExampleGridSettings();
+
+  /**
+   * Due to {@link GMLReaderFactory}'s instance aproach, we need to keep a static reference to the current characteristics type.
+   */
+  private static CharacteristicsType currentCharacteristicsType = CharacteristicsType.OPS;
 
   private AssertGML() {
     //util convenience class.
@@ -179,9 +186,14 @@ public final class AssertGML {
   }
 
   static GMLHelper mockGMLHelper() throws AeriusException {
+    return mockGMLHelper(CharacteristicsType.OPS);
+  }
+
+  static GMLHelper mockGMLHelper(final CharacteristicsType ct) throws AeriusException {
     final GMLHelper gmlHelper = mock(GMLHelper.class);
+    currentCharacteristicsType = ct;
     when(gmlHelper.getReceptorGridSettings()).thenReturn(RECEPTOR_GRID_SETTINGS);
-    when(gmlHelper.getCharacteristicsType()).thenReturn(CharacteristicsType.OPS);
+    when(gmlHelper.getCharacteristicsType()).thenAnswer((i) -> currentCharacteristicsType);
     final TestValidationAndEmissionHelper valiationAndEmissionHelper = new TestValidationAndEmissionHelper();
     doAnswer(invocation -> {
       final List<EmissionSourceFeature> arg1 = (List<EmissionSourceFeature>) invocation.getArgument(1);
@@ -196,9 +208,17 @@ public final class AssertGML {
     when(gmlHelper.getLegacyCodes(any())).thenReturn(TestValidationAndEmissionHelper.legacyCodes());
     when(gmlHelper.getLegacyMobileSourceOffRoadConversions()).thenReturn(TestValidationAndEmissionHelper.legacyMobileSourceOffRoadConversions());
     when(gmlHelper.getLegacyPlanConversions()).thenReturn(TestValidationAndEmissionHelper.legacyPlanConversions());
-    when(gmlHelper.determineDefaultCharacteristicsBySectorId(anyInt())).thenReturn(mock(OPSSourceCharacteristics.class));
+    when(gmlHelper.determineDefaultCharacteristicsBySectorId(anyInt())).thenAnswer((i) -> determineDefaultCharacteristics());
     when(gmlHelper.getValidationHelper()).thenReturn(valiationAndEmissionHelper);
     return gmlHelper;
+  }
+
+  private static SourceCharacteristics determineDefaultCharacteristics() {
+    if (currentCharacteristicsType == CharacteristicsType.ADMS) {
+      return mock(ADMSSourceCharacteristics.class);
+    } else {
+      return mock(OPSSourceCharacteristics.class);
+    }
   }
 
   private static List<InlandWaterway> suggest(final Geometry geometry) throws AeriusException {

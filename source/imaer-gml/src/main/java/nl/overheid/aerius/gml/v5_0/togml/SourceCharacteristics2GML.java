@@ -26,8 +26,12 @@ import nl.overheid.aerius.gml.v5_0.source.characteristics.SpecifiedHeatContent;
 import nl.overheid.aerius.gml.v5_0.source.characteristics.StandardDiurnalVariation;
 import nl.overheid.aerius.shared.domain.ops.OutflowDirectionType;
 import nl.overheid.aerius.shared.domain.ops.OutflowVelocityType;
+import nl.overheid.aerius.shared.domain.v2.characteristics.ADMSSourceCharacteristics;
 import nl.overheid.aerius.shared.domain.v2.characteristics.HeatContentType;
 import nl.overheid.aerius.shared.domain.v2.characteristics.OPSSourceCharacteristics;
+import nl.overheid.aerius.shared.domain.v2.characteristics.SourceCharacteristics;
+import nl.overheid.aerius.shared.exception.AeriusException;
+import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 import nl.overheid.aerius.util.gml.GMLIdUtil;
 
 /**
@@ -89,7 +93,79 @@ final class SourceCharacteristics2GML {
     return gmlVariation;
   }
 
-  private static ReferenceType determineBuilding(final OPSSourceCharacteristics characteristics) {
+  static nl.overheid.aerius.gml.v5_0.source.characteristics.ADMSSourceCharacteristics toGML(
+      final ADMSSourceCharacteristics characteristics) throws AeriusException {
+    final nl.overheid.aerius.gml.v5_0.source.characteristics.ADMSSourceCharacteristics returnCharacteristics =
+        new nl.overheid.aerius.gml.v5_0.source.characteristics.ADMSSourceCharacteristics();
+    returnCharacteristics.setBuilding(determineBuilding(characteristics));
+    returnCharacteristics.setHeight(characteristics.getHeight());
+    returnCharacteristics.setSpecificHeatCapacity(characteristics.getSpecificHeatCapacity());
+
+    determineSourceType(characteristics, returnCharacteristics);
+    determineBuoyancyType(characteristics, returnCharacteristics);
+    determineEffluxType(characteristics, returnCharacteristics);
+
+    return returnCharacteristics;
+  }
+
+  private static void determineSourceType(final ADMSSourceCharacteristics characteristics,
+      final nl.overheid.aerius.gml.v5_0.source.characteristics.ADMSSourceCharacteristics returnCharacteristics) {
+    returnCharacteristics.setSourceType(characteristics.getSourceType());
+    switch (characteristics.getSourceType()) {
+    case JET:
+      returnCharacteristics.setElevationAngle(characteristics.getElevationAngle());
+      returnCharacteristics.setHorizontalAngle(characteristics.getHorizontalAngle());
+      // Intentional fallthrough
+    case POINT:
+      returnCharacteristics.setDiameter(characteristics.getDiameter());
+      break;
+    case AREA:
+      break;
+    case LINE:
+    case ROAD:
+      returnCharacteristics.setWidth(characteristics.getWidth());
+      break;
+    case VOLUME:
+      returnCharacteristics.setVerticalDimension(characteristics.getVerticalDimension());
+      break;
+    }
+  }
+
+  private static void determineBuoyancyType(final ADMSSourceCharacteristics characteristics,
+      final nl.overheid.aerius.gml.v5_0.source.characteristics.ADMSSourceCharacteristics returnCharacteristics) {
+    returnCharacteristics.setBuoyancyType(characteristics.getBuoyancyType());
+    switch (characteristics.getBuoyancyType()) {
+    case AMBIENT:
+      break;
+    case DENSITY:
+      returnCharacteristics.setDensity(characteristics.getDensity());
+      break;
+    case TEMPERATURE:
+      returnCharacteristics.setTemperature(characteristics.getTemperature());
+      break;
+    }
+  }
+
+  private static void determineEffluxType(final ADMSSourceCharacteristics characteristics,
+      final nl.overheid.aerius.gml.v5_0.source.characteristics.ADMSSourceCharacteristics returnCharacteristics) throws AeriusException {
+    returnCharacteristics.setEffluxType(characteristics.getEffluxType());
+    switch (characteristics.getEffluxType()) {
+    case VELOCITY:
+      returnCharacteristics.setVerticalVelocity(characteristics.getVerticalVelocity());
+      break;
+    case VOLUME:
+      returnCharacteristics.setVolumetricFlowRate(characteristics.getVolumetricFlowRate());
+      break;
+    case MASS:
+      returnCharacteristics.setMassFlux(characteristics.getMassFlux());
+      break;
+    case MOMENTUM:
+      // Not (yet) supported
+      throw new AeriusException(ImaerExceptionReason.INTERNAL_ERROR);
+    }
+  }
+
+  private static ReferenceType determineBuilding(final SourceCharacteristics characteristics) {
     final String validBuildingId = characteristics.getBuildingId() == null
         ? null
         : GMLIdUtil.toValidGmlId(characteristics.getBuildingId(), GMLIdUtil.BUILDING_PREFIX);
