@@ -28,9 +28,12 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import nl.overheid.aerius.gml.base.MetaDataInput;
@@ -42,6 +45,7 @@ import nl.overheid.aerius.shared.domain.result.EmissionResultKey;
 import nl.overheid.aerius.shared.domain.result.EmissionResultType;
 import nl.overheid.aerius.shared.domain.scenario.SituationType;
 import nl.overheid.aerius.shared.domain.v2.geojson.Point;
+import nl.overheid.aerius.shared.domain.v2.point.CalculationPoint;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPointFeature;
 import nl.overheid.aerius.shared.domain.v2.point.CustomCalculationPoint;
 import nl.overheid.aerius.shared.domain.v2.point.ReceptorPoint;
@@ -61,6 +65,7 @@ public class GMLWriterTest {
   private static final String SOURCES_ONLY_FILE_UNFORMATTED = SOURCES_ONLY_FILE + "_unformatted";
   private static final String RECEPTORS_DEPOSITION_ONLY_FILE = "test_receptors_deposition_only";
   private static final String RECEPTORS_CONCENTRATION_ONLY_FILE = "test_receptors_concentration_only";
+  private static final String RECEPTORS_OVERLAPPING_FILE = "test_receptors_overlapping";
   private static final String RECEPTORS_ALL_FILE = "test_receptors";
   private static final String MIXED_FEATURES_FILE = "test_mixed_features";
   private static final String PATH_CURRENT_VERSION = GMLWriter.LATEST_WRITER_VERSION.name().toLowerCase() + "/";
@@ -80,7 +85,7 @@ public class GMLWriterTest {
 
   @ParameterizedTest
   @ValueSource(strings = {SOURCES_ONLY_FILE, SOURCES_ONLY_FILE_UNFORMATTED})
-  public void testConvertSources(final String gmlFilename) throws IOException, AeriusException {
+  void testConvertSources(final String gmlFilename) throws IOException, AeriusException {
     final GMLWriter builder = new GMLWriter(RECEPTOR_GRID_SETTINGS, GMLTestDomain.TEST_REFERENCE_GENERATOR);
     builder.setFormattedOutput(SOURCES_ONLY_FILE.equals(gmlFilename));
     final List<EmissionSourceFeature> sources = getExampleEmissionSources();
@@ -97,7 +102,7 @@ public class GMLWriterTest {
   }
 
   @Test
-  public void testConvertInvalidSources() throws IOException, AeriusException {
+  void testConvertInvalidSources() throws IOException, AeriusException {
     final GMLWriter converter = new GMLWriter(RECEPTOR_GRID_SETTINGS, GMLTestDomain.TEST_REFERENCE_GENERATOR);
     final List<EmissionSourceFeature> sources1 = getExampleEmissionSources();
     sources1.get(0).setGeometry(null);
@@ -115,7 +120,7 @@ public class GMLWriterTest {
   }
 
   @Test
-  public void testConvertMetaData() throws IOException, AeriusException {
+  void testConvertMetaData() throws IOException, AeriusException {
     final GMLWriter writer = new GMLWriter(RECEPTOR_GRID_SETTINGS, r -> Optional.of("test"));
     final ScenarioMetaData metaData = getScenarioMetaData();
     final String originalReference = metaData.getReference();
@@ -203,24 +208,19 @@ public class GMLWriterTest {
     return sources;
   }
 
-  @Test
-  public void testConvertReceptorsDepositionOnly() throws IOException, AeriusException {
-    assertConvertReceptors(true, false, RECEPTORS_DEPOSITION_ONLY_FILE);
+  private static Stream<Arguments> convertReceptorsData() {
+    return Stream.of(
+        Arguments.of(RECEPTORS_ALL_FILE, true, true, false),
+        Arguments.of(RECEPTORS_DEPOSITION_ONLY_FILE, true, false, false),
+        Arguments.of(RECEPTORS_CONCENTRATION_ONLY_FILE, false, true, false),
+        Arguments.of(RECEPTORS_OVERLAPPING_FILE, true, true, true));
   }
 
-  @Test
-  public void testConvertReceptorsConcentrationOnly() throws IOException, AeriusException {
-    assertConvertReceptors(false, true, RECEPTORS_CONCENTRATION_ONLY_FILE);
-  }
-
-  @Test
-  public void testConvertReceptorsAll() throws IOException, AeriusException {
-    assertConvertReceptors(true, true, RECEPTORS_ALL_FILE);
-  }
-
-  public void assertConvertReceptors(final boolean includeDeposition, final boolean includeConcentration, final String receptorFile)
-      throws IOException, AeriusException {
-    final ArrayList<CalculationPointFeature> receptors = getExampleAeriusPoints(includeDeposition, includeConcentration);
+  @ParameterizedTest(name = "Testfile: {0}")
+  @MethodSource("convertReceptorsData")
+  void testConvertReceptors(final String receptorFile, final boolean includeDeposition, final boolean includeConcentration,
+      final boolean includeOverlapping) throws IOException, AeriusException {
+    final ArrayList<CalculationPointFeature> receptors = getExampleAeriusPoints(includeDeposition, includeConcentration, includeOverlapping);
     final MetaDataInput metaDataInput = getMetaDataInput(new ScenarioMetaData());
     metaDataInput.setName(null);
     metaDataInput.setSituationType(null);
@@ -235,7 +235,8 @@ public class GMLWriterTest {
     AssertGML.assertEqualsGML(AssertGML.getFileContent(PATH_CURRENT_VERSION, receptorFile), result, receptorFile);
   }
 
-  private ArrayList<CalculationPointFeature> getExampleAeriusPoints(final boolean includeDeposition, final boolean includeConcentration) {
+  private ArrayList<CalculationPointFeature> getExampleAeriusPoints(final boolean includeDeposition, final boolean includeConcentration,
+      final boolean includeOverlapping) {
     final ArrayList<CalculationPointFeature> receptors = new ArrayList<>();
 
     final int xCoord1 = XCOORD_1 + 1000;
@@ -243,17 +244,20 @@ public class GMLWriterTest {
     final CalculationPointFeature feature1 = new CalculationPointFeature();
     final Point point1 = new Point(xCoord1, yCoord1);
     feature1.setGeometry(point1);
-    final ReceptorPoint receptor1 = new ReceptorPoint();
-    receptor1.setReceptorId(1);
+    final ReceptorPoint calculationPoint1 = new ReceptorPoint();
+    calculationPoint1.setReceptorId(1);
     if (includeDeposition) {
-      receptor1.getResults().put(EmissionResultKey.NH3_DEPOSITION, 8546.77);
-      receptor1.getResults().put(EmissionResultKey.NOX_DEPOSITION, 968.3);
+      calculationPoint1.getResults().put(EmissionResultKey.NH3_DEPOSITION, 8546.77);
+      calculationPoint1.getResults().put(EmissionResultKey.NOX_DEPOSITION, 968.3);
     }
     if (includeConcentration) {
-      receptor1.getResults().put(EmissionResultKey.NH3_CONCENTRATION, 95.8);
-      receptor1.getResults().put(EmissionResultKey.NOX_CONCENTRATION, 3.001);
+      calculationPoint1.getResults().put(EmissionResultKey.NH3_CONCENTRATION, 95.8);
+      calculationPoint1.getResults().put(EmissionResultKey.NOX_CONCENTRATION, 3.001);
     }
-    feature1.setProperties(receptor1);
+    if (includeOverlapping) {
+      calculationPoint1.setOverlapping(true);
+    }
+    feature1.setProperties(calculationPoint1);
     receptors.add(feature1);
 
     final int xCoord2 = XCOORD_2 - 1000;
@@ -261,25 +265,34 @@ public class GMLWriterTest {
     final CalculationPointFeature feature2 = new CalculationPointFeature();
     final Point point2 = new Point(xCoord2, yCoord2);
     feature2.setGeometry(point2);
-    final CustomCalculationPoint receptor2 = new CustomCalculationPoint();
-    receptor2.setCustomPointId(2);
-    receptor2.setLabel("DB-team 1e depositie");
-    if (includeConcentration && includeDeposition) {
-      receptor2.getResults().put(EmissionResultKey.NOX_CONCENTRATION, 98.4);
-      receptor2.getResults().put(EmissionResultKey.NO2_CONCENTRATION, 12595.2);
-      receptor2.getResults().put(EmissionResultKey.NOX_DEPOSITION, 49.2);
-      receptor2.getResults().put(EmissionResultKey.NH3_CONCENTRATION, 1574.4);
-      receptor2.getResults().put(EmissionResultKey.NH3_DEPOSITION, 787.2);
-      receptor2.getResults().put(EmissionResultKey.PM10_CONCENTRATION, 50380.8);
-      receptor2.getResults().put(EmissionResultKey.PM25_CONCENTRATION, 201523.2);
-    } else if (includeDeposition) {
-      receptor2.getResults().put(EmissionResultKey.NH3_DEPOSITION, 110.66);
-      receptor2.getResults().put(EmissionResultKey.NOX_DEPOSITION, 89.11);
-    } else if (includeConcentration) {
-      receptor2.getResults().put(EmissionResultKey.NH3_CONCENTRATION, 80.0);
-      receptor2.getResults().put(EmissionResultKey.NOX_CONCENTRATION, 0.001);
+    final CalculationPoint calculationPoint2;
+    if (includeOverlapping) {
+      final ReceptorPoint actualPoint2 = new ReceptorPoint();
+      actualPoint2.setReceptorId(2);
+      actualPoint2.setOverlapping(false);
+      calculationPoint2 = actualPoint2;
+    } else {
+      final CustomCalculationPoint actualPoint2 = new CustomCalculationPoint();
+      actualPoint2.setCustomPointId(2);
+      actualPoint2.setLabel("DB-team 1e depositie");
+      calculationPoint2 = actualPoint2;
     }
-    feature2.setProperties(receptor2);
+    if (includeConcentration && includeDeposition) {
+      calculationPoint2.getResults().put(EmissionResultKey.NOX_CONCENTRATION, 98.4);
+      calculationPoint2.getResults().put(EmissionResultKey.NO2_CONCENTRATION, 12595.2);
+      calculationPoint2.getResults().put(EmissionResultKey.NOX_DEPOSITION, 49.2);
+      calculationPoint2.getResults().put(EmissionResultKey.NH3_CONCENTRATION, 1574.4);
+      calculationPoint2.getResults().put(EmissionResultKey.NH3_DEPOSITION, 787.2);
+      calculationPoint2.getResults().put(EmissionResultKey.PM10_CONCENTRATION, 50380.8);
+      calculationPoint2.getResults().put(EmissionResultKey.PM25_CONCENTRATION, 201523.2);
+    } else if (includeDeposition) {
+      calculationPoint2.getResults().put(EmissionResultKey.NH3_DEPOSITION, 110.66);
+      calculationPoint2.getResults().put(EmissionResultKey.NOX_DEPOSITION, 89.11);
+    } else if (includeConcentration) {
+      calculationPoint2.getResults().put(EmissionResultKey.NH3_CONCENTRATION, 80.0);
+      calculationPoint2.getResults().put(EmissionResultKey.NOX_CONCENTRATION, 0.001);
+    }
+    feature2.setProperties(calculationPoint2);
     receptors.add(feature2);
 
     final int xCoord3 = xCoord2 - 10;
@@ -287,20 +300,20 @@ public class GMLWriterTest {
     final CalculationPointFeature feature3 = new CalculationPointFeature();
     final Point point3 = new Point(xCoord3, yCoord3);
     feature3.setGeometry(point3);
-    final CustomCalculationPoint receptor3 = new CustomCalculationPoint();
-    receptor3.setCustomPointId(3);
-    receptor3.setLabel("DB-team 2e depositie");
-    feature3.setProperties(receptor3);
+    final CustomCalculationPoint calculationPoint3 = new CustomCalculationPoint();
+    calculationPoint3.setCustomPointId(3);
+    calculationPoint3.setLabel("DB-team 2e depositie");
+    feature3.setProperties(calculationPoint3);
     receptors.add(feature3);
 
     return receptors;
   }
 
   @Test
-  public void testConvertMixedFeatures() throws IOException, AeriusException {
+  void testConvertMixedFeatures() throws IOException, AeriusException {
     final GMLWriter builder = new GMLWriter(RECEPTOR_GRID_SETTINGS, GMLTestDomain.TEST_REFERENCE_GENERATOR);
     final List<EmissionSourceFeature> emissionSources = getExampleEmissionSources();
-    final ArrayList<CalculationPointFeature> receptors = getExampleAeriusPoints(true, false);
+    final ArrayList<CalculationPointFeature> receptors = getExampleAeriusPoints(true, false, false);
     String result;
     try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
       final MetaDataInput metaDataInput = getMetaDataInput(getScenarioMetaData());
