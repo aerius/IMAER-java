@@ -29,7 +29,7 @@ import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 /**
  *
  */
-public class GML2SRM1Road<T extends IsGmlSRM1Road> extends GML2SRMRoad<T, SRM1RoadEmissionSource> {
+public class GML2SRM1Road<T extends IsGmlSRM1Road> extends GML2Road<T, SRM1RoadEmissionSource> {
 
   /**
    * @param conversionData

@@ -113,6 +113,7 @@ public class GMLRoundtripTest {
       {"situation_type_combination_reference", CharacteristicsType.OPS},
       {"situation_type_combination_proposed", CharacteristicsType.OPS},
       {"adms_industry", CharacteristicsType.ADMS},
+      {"adms_road", CharacteristicsType.ADMS},
   };
 
   private static final String LATEST_VERSION = "latest";

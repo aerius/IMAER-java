@@ -192,7 +192,16 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
       new RoadConstructHelper("",
           new EmissionHelper(0.1501, 0.016, 0.0276, 0.0287),
           0, "URBAN_ROAD_NORMAL", "LIGHT_TRAFFIC", false,
-          new EmissionHelper(0.1884, 0.018, 0.0369, 0.0289)));
+          new EmissionHelper(0.1884, 0.018, 0.0369, 0.0289)),
+      // Some categories for ADMS (UK), which uses a different units/emission calculation method.
+      new RoadConstructHelper("",
+          new EmissionHelper(1.02e-06, 3.36e-07, 0.0, 0.0),
+          100, "Urb", "Car", false,
+          null),
+      new RoadConstructHelper("",
+          new EmissionHelper(1.69e-06, 1.17e-06, 0.0, 0.0),
+          80, "Urb", "HGV", false,
+          null));
 
   private static final List<String> ON_ROAD_MOBILE_SOURCE_CATEGORIES = Arrays.asList(
       "BA-B-E3",

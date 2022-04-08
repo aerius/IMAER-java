@@ -26,6 +26,7 @@ import nl.overheid.aerius.gml.base.geo.GML2Geometry;
 import nl.overheid.aerius.gml.base.source.IsGmlEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.characteristics.SourceCharacteristics;
 import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
+import nl.overheid.aerius.shared.domain.v2.source.ADMSRoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceFeature;
 import nl.overheid.aerius.shared.domain.v2.source.InlandShippingEmissionSource;
@@ -125,7 +126,8 @@ public abstract class AbstractGML2Source<T extends IsGmlEmissionSource, S extend
         || returnSource instanceof MaritimeShippingEmissionSource
         || returnSource instanceof MooringMaritimeShippingEmissionSource
         || returnSource instanceof OffRoadMobileEmissionSource
-        || returnSource instanceof PlanEmissionSource)) {
+        || returnSource instanceof PlanEmissionSource
+        || returnSource instanceof ADMSRoadEmissionSource)) {
       final S sectorCharacteristics = conversionData.determineDefaultCharacteristicsBySectorId(sectorId);
       if (source.getCharacteristics() == null) {
         // if characteristics weren't supplied in GML, use the sector default.

@@ -38,13 +38,13 @@ import nl.overheid.aerius.shared.exception.AeriusException;
 /**
  *
  */
-abstract class GML2SRMRoad<T extends IsGmlRoadEmissionSource, S extends RoadEmissionSource> extends AbstractGML2Specific<T, S> {
+abstract class GML2Road<T extends IsGmlRoadEmissionSource, S extends RoadEmissionSource> extends AbstractGML2Specific<T, S> {
 
   /**
    * @param conversionData
    *          The conversion data to use.
    */
-  protected GML2SRMRoad(final GMLConversionData conversionData) {
+  protected GML2Road(final GMLConversionData conversionData) {
     super(conversionData);
   }
 

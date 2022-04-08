@@ -25,7 +25,6 @@ import javax.xml.bind.annotation.XmlType;
 
 import nl.overheid.aerius.gml.base.source.road.IsGmlRoadEmissionSource;
 import nl.overheid.aerius.gml.v5_0.base.CalculatorSchema;
-import nl.overheid.aerius.gml.v5_0.base.ReferenceType;
 import nl.overheid.aerius.gml.v5_0.source.EmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.road.RoadManager;
 import nl.overheid.aerius.shared.domain.v2.source.road.TrafficDirection;
@@ -33,14 +32,12 @@ import nl.overheid.aerius.shared.domain.v2.source.road.TrafficDirection;
 /**
  *
  */
-@XmlType(name = "RoadEmissionSourceType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"vehicles", "roadManager", "trafficDirection",
-    "network"})
+@XmlType(name = "RoadEmissionSourceType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"vehicles", "roadManager", "trafficDirection"})
 public abstract class RoadEmissionSource extends EmissionSource implements IsGmlRoadEmissionSource {
 
   private String roadAreaCode;
   private String roadTypeCode;
   private List<VehiclesProperty> vehicles = new ArrayList<>();
-  private ReferenceType network;
   private RoadManager roadManager;
   private TrafficDirection trafficDirection;
 
@@ -72,15 +69,6 @@ public abstract class RoadEmissionSource extends EmissionSource implements IsGml
 
   public void setVehicles(final List<VehiclesProperty> vehicles) {
     this.vehicles = vehicles;
-  }
-
-  @XmlElement(namespace = CalculatorSchema.NAMESPACE, name = "inNetwork")
-  public ReferenceType getNetwork() {
-    return network;
-  }
-
-  public void setNetwork(final ReferenceType network) {
-    this.network = network;
   }
 
   @Override
