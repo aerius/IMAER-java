@@ -12,10 +12,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-        if: github.event_name == 'push'
-      - uses: actions/checkout@v2
-        if: github.event_name == 'pull_request_target'
+      - if: github.event_name == 'push'
+        name: checkout (push)
+        uses: actions/checkout@v2
+      - if: github.event_name == 'pull_request_target'
+        name: checkout (pull_request_target)
+        uses: actions/checkout@v2
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           repository: ${{ github.event.pull_request.head.repo.full_name }}
@@ -35,8 +37,14 @@ jobs:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
-      - name: Build and analyze
+      - if: github.event_name == 'push'
+        name: Build and analyze (push)
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: mvn --no-transfer-progress -f source/pom.xml -P sonar verify sonar:sonar
+      - if: github.event_name == 'pull_request_target'
+        name: Build and analyze (pull_request_target)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: mvn --no-transfer-progress -f source/pom.xml -P sonar verify sonar:sonar -Dsonar.pullrequest.key=${{ github.event.pull_request.number }} -Dsonar.pullrequest.branch=${{ github.event.pull_request.head.ref }} -Dsonar.pullrequest.base=${{ github.event.pull_request.base.ref }}
