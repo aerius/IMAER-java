@@ -36,7 +36,6 @@ public class ImportParcel implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
-  private ImportType type;
   private String version;
   private String databaseVersion;
   private ScenarioMetaData importedMetaData;
@@ -45,14 +44,6 @@ public class ImportParcel implements Serializable {
   private final FeatureCollection<CalculationPointFeature> calculationPoints = new FeatureCollection<>();
   private final List<AeriusException> exceptions = new ArrayList<>();
   private final List<AeriusException> warnings = new ArrayList<>();
-
-  public ImportType getType() {
-    return type;
-  }
-
-  public void setType(final ImportType type) {
-    this.type = type;
-  }
 
   public String getVersion() {
     return version;

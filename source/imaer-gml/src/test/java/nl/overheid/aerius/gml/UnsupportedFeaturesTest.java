@@ -36,7 +36,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 import nl.overheid.aerius.importer.ImaerImporter;
 import nl.overheid.aerius.importer.ImportOption;
 import nl.overheid.aerius.shared.domain.v2.importer.ImportParcel;
-import nl.overheid.aerius.shared.domain.v2.importer.ImportType;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.AeriusException.Reason;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
@@ -52,7 +51,7 @@ public class UnsupportedFeaturesTest {
   private static final FilenameFilter GML_FILENAME_FILTER = new FilenameFilter() {
     @Override
     public boolean accept(final File dir, final String name) {
-      return (name != null) && (ImportType.determineByFilename(name) == ImportType.GML);
+      return name != null && name.endsWith(".gml");
     }
   };
 
