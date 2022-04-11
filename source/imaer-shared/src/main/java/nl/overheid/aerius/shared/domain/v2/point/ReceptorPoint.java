@@ -26,6 +26,7 @@ public class ReceptorPoint extends CalculationPoint {
   private static final long serialVersionUID = 1L;
 
   private int receptorId;
+  private Boolean overlapping;
 
   public int getReceptorId() {
     return receptorId;
@@ -33,6 +34,14 @@ public class ReceptorPoint extends CalculationPoint {
 
   public void setReceptorId(final int receptorId) {
     this.receptorId = receptorId;
+  }
+
+  public Boolean getOverlapping() {
+    return overlapping;
+  }
+
+  public void setOverlapping(final Boolean overlapping) {
+    this.overlapping = overlapping;
   }
 
   @JsonIgnore

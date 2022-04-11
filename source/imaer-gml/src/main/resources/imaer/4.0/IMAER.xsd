@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:IMAER="http://imaer.aerius.nl/4.0" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:gmlsf="http://www.opengis.net/gmlsf/2.0" elementFormDefault="qualified" targetNamespace="http://imaer.aerius.nl/4.0" version="4.0.2">
+<?xml version="1.0" encoding="UTF-8"?><schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:IMAER="http://imaer.aerius.nl/4.0" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:gmlsf="http://www.opengis.net/gmlsf/2.0" elementFormDefault="qualified" targetNamespace="http://imaer.aerius.nl/4.0" version="4.0.3">
   <annotation>
     <documentation>Dit model beschrijft het InformatieModel AERius (IMAER). IMAER is het standaard gegevens uitwisselingsformaat van AERIUS en wordt gebruikt voor het importeren, exporteren en uitwisselen van gegevens met en tussen de verschillende AERIUS producten (o.a. Calculator, Monitor en Register).  
 
@@ -2051,7 +2051,13 @@ NOTE Deze klasse beschrijft een rekenpunt op het AERIUS-grid.</documentation>
   <complexType name="ReceptorPointType">
     <complexContent>
       <extension base="IMAER:CalculationPointTypeType">
-        <sequence/>
+        <sequence>
+          <element minOccurs="0" name="overlapping" type="boolean">
+            <annotation>
+              <documentation>In het geval van een berekening met een maximum rekenafstand kan er sprake zijn van een randeffect doordat niet voor alle bronnen rekenresultaten berekend worden op een receptor. Heeft een receptorpunt resultaten van alle bronnen, dan is de overlapping waarde true en is er geen sprake van randeffect. Heeft een receptorpunt niet resultaten van alle bronnen, dan is de overlapping waarde false en is er wel sprake van een randeffect.</documentation>
+            </annotation>
+          </element>
+        </sequence>
         <attribute name="receptorPointId" type="integer" use="required">
           <annotation>
             <documentation>Identificatienummer van het receptorpunt.</documentation>
