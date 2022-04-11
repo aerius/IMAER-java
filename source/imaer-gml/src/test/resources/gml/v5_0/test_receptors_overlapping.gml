@@ -74,6 +74,7 @@
                     <imaer:value>968.3</imaer:value>
                 </imaer:CalculationResult>
             </imaer:result>
+            <imaer:overlapping>true</imaer:overlapping>
         </imaer:ReceptorPoint>
     </imaer:featureMember>
     <imaer:featureMember>
@@ -133,6 +134,7 @@
                     <imaer:value>201523.2</imaer:value>
                 </imaer:CalculationResult>
             </imaer:result>
+            <imaer:overlapping>false</imaer:overlapping>
         </imaer:ReceptorPoint>
     </imaer:featureMember>
     <imaer:featureMember>
