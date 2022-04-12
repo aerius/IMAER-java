@@ -20,7 +20,6 @@ import nl.overheid.aerius.gml.base.GMLConversionData;
 import nl.overheid.aerius.gml.base.IsGmlProperty;
 import nl.overheid.aerius.shared.domain.v2.source.ADMSRoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.road.ADMSRoadSideBarrier;
-import nl.overheid.aerius.shared.domain.v2.source.road.ADMSRoadSideBarrierType;
 import nl.overheid.aerius.shared.exception.AeriusException;
 
 /**
@@ -51,8 +50,8 @@ public class GML2ADMSRoad<T extends IsGmlADMSRoad> extends GML2Road<T, ADMSRoadE
 
   @Override
   protected void setOptionalVariables(final T source, final ADMSRoadEmissionSource emissionSource) throws AeriusException {
-    emissionSource.setBarrierLeft(source.getBarrierLeft() == null ? getNoneRoadSideBarrier() : getRoadSideBarrier(source.getBarrierLeft()));
-    emissionSource.setBarrierRight(source.getBarrierRight() == null ? getNoneRoadSideBarrier() : getRoadSideBarrier(source.getBarrierRight()));
+    emissionSource.setBarrierLeft(source.getBarrierLeft() == null ? null : getRoadSideBarrier(source.getBarrierLeft()));
+    emissionSource.setBarrierRight(source.getBarrierRight() == null ? null : getRoadSideBarrier(source.getBarrierRight()));
   }
 
   private ADMSRoadSideBarrier getRoadSideBarrier(final IsGmlProperty<IsGmlADMSRoadSideBarrier> barrierProperty) {
@@ -67,9 +66,4 @@ public class GML2ADMSRoad<T extends IsGmlADMSRoad> extends GML2Road<T, ADMSRoadE
     return barrier;
   }
 
-  private ADMSRoadSideBarrier getNoneRoadSideBarrier() {
-    final ADMSRoadSideBarrier barrier = new ADMSRoadSideBarrier();
-    barrier.setBarrierType(ADMSRoadSideBarrierType.NONE);
-    return barrier;
-  }
 }
