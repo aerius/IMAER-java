@@ -2361,7 +2361,13 @@ NOTE Deze klasse beschrijft een rekenpunt op het AERIUS-grid.</documentation>
   <complexType name="ReceptorPointType">
     <complexContent>
       <extension base="IMAER:CalculationPointTypeType">
-        <sequence/>
+        <sequence>
+          <element minOccurs="0" name="edgeEffect" type="boolean">
+            <annotation>
+              <documentation>In het geval van een berekening met een maximum rekenafstand kan er sprake zijn van een randeffect doordat niet voor alle bronnen rekenresultaten berekend worden op een receptor. Heeft een receptorpunt resultaten van alle bronnen, dan is de edgeEffect waarde false en is er geen sprake van randeffect. Heeft een receptorpunt niet resultaten van alle bronnen, dan is de edgeEffect waarde true en is er wel sprake van een randeffect.</documentation>
+            </annotation>
+          </element>
+        </sequence>
         <attribute name="receptorPointId" type="integer" use="required">
           <annotation>
             <documentation>Identificatienummer van het receptorpunt.</documentation>
