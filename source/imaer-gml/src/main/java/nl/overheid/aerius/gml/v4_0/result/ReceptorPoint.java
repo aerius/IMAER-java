@@ -30,7 +30,7 @@ import nl.overheid.aerius.gml.v4_0.base.CalculatorSchema;
 public class ReceptorPoint extends AbstractCalculationPoint implements IsGmlReceptorPoint {
 
   private int receptorPointId;
-  private Boolean overlapping;
+  private Boolean edgeEffect;
 
   @Override
   @XmlAttribute
@@ -43,12 +43,12 @@ public class ReceptorPoint extends AbstractCalculationPoint implements IsGmlRece
   }
 
   @XmlElement(namespace = CalculatorSchema.NAMESPACE)
-  public Boolean getOverlapping() {
-    return overlapping;
+  public Boolean getEdgeEffect() {
+    return edgeEffect;
   }
 
-  public void setOverlapping(final Boolean overlapping) {
-    this.overlapping = overlapping;
+  public void setEdgeEffect(final Boolean edgeEffect) {
+    this.edgeEffect = edgeEffect;
   }
 
 }

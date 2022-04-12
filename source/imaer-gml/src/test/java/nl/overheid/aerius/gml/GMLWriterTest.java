@@ -65,7 +65,7 @@ public class GMLWriterTest {
   private static final String SOURCES_ONLY_FILE_UNFORMATTED = SOURCES_ONLY_FILE + "_unformatted";
   private static final String RECEPTORS_DEPOSITION_ONLY_FILE = "test_receptors_deposition_only";
   private static final String RECEPTORS_CONCENTRATION_ONLY_FILE = "test_receptors_concentration_only";
-  private static final String RECEPTORS_OVERLAPPING_FILE = "test_receptors_overlapping";
+  private static final String RECEPTORS_EDGE_EFFECT_FILE = "test_receptors_edge_effect";
   private static final String RECEPTORS_ALL_FILE = "test_receptors";
   private static final String MIXED_FEATURES_FILE = "test_mixed_features";
   private static final String PATH_CURRENT_VERSION = GMLWriter.LATEST_WRITER_VERSION.name().toLowerCase() + "/";
@@ -213,7 +213,7 @@ public class GMLWriterTest {
         Arguments.of(RECEPTORS_ALL_FILE, true, true, false),
         Arguments.of(RECEPTORS_DEPOSITION_ONLY_FILE, true, false, false),
         Arguments.of(RECEPTORS_CONCENTRATION_ONLY_FILE, false, true, false),
-        Arguments.of(RECEPTORS_OVERLAPPING_FILE, true, true, true));
+        Arguments.of(RECEPTORS_EDGE_EFFECT_FILE, true, true, true));
   }
 
   @ParameterizedTest(name = "Testfile: {0}")
@@ -255,7 +255,7 @@ public class GMLWriterTest {
       calculationPoint1.getResults().put(EmissionResultKey.NOX_CONCENTRATION, 3.001);
     }
     if (includeOverlapping) {
-      calculationPoint1.setOverlapping(true);
+      calculationPoint1.setEdgeEffect(false);
     }
     feature1.setProperties(calculationPoint1);
     receptors.add(feature1);
@@ -269,7 +269,7 @@ public class GMLWriterTest {
     if (includeOverlapping) {
       final ReceptorPoint actualPoint2 = new ReceptorPoint();
       actualPoint2.setReceptorId(2);
-      actualPoint2.setOverlapping(false);
+      actualPoint2.setEdgeEffect(true);
       calculationPoint2 = actualPoint2;
     } else {
       final CustomCalculationPoint actualPoint2 = new CustomCalculationPoint();
