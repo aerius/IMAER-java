@@ -96,6 +96,7 @@ public class GMLReaderTest {
     final List<EmissionSourceFeature> sources = getEmissionSourcesFromFile(file);
     assertNotNull(sources, "Emission sources");
     assertEquals(2, sources.size(), "Number of sources");
+    System.out.println("Test_my_branch: " + System.getenv("sonar.pullrequest.branch"));
   }
 
   @Test
