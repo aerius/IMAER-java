@@ -43,7 +43,7 @@ public final class ADMSLimits implements BuildingLimits {
   public static final double SOURCE_VERTICAL_VELOCITY_DEFAULT = 15;
 
   public static final int SOURCE_TEMPERATURE_MINIMUM = -100;
-  public static final int SOURCE_TEMPERATURE_MAXIMUM = 60;
+  public static final int SOURCE_TEMPERATURE_MAXIMUM = 5000;
   public static final double SOURCE_TEMPERATURE_PRECISION = 0.1;
   public static final int SOURCE_TEMPERATURE_DEFAULT = 15;
 
