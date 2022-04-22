@@ -40,7 +40,7 @@ import nl.overheid.aerius.shared.domain.meteo.Meteo;
  */
 class OptionsMetadataUtilTest {
 
-  private static final int BASIC_OPTIONS = 7;
+  private static final int BASIC_OPTIONS = 8;
   private static final int CONNECT_OPTIONS = 2;
   private static final int OPS_OPTIONS = 11;
 
@@ -80,6 +80,7 @@ class OptionsMetadataUtilTest {
     options.setForceAggregation(true);
     options.setUseWnbMaxDistance(true);
     options.setUseReceptorHeights(true);
+    options.setEnableSubReceptors(true);
     cso.getRblCalculationOptions().setMonitorSrm2Year(2023);
 
     final Map<String, String> result = OptionsMetadataUtil.optionsToMap(Theme.WNB, cso, false);
@@ -90,6 +91,7 @@ class OptionsMetadataUtilTest {
     assertEquals("OPS_ROAD", result.get("ops_road"));
     assertEquals("true", result.get("forced_aggregation"));
     assertEquals("true", result.get("use_receptor_height"));
+    assertEquals("true", result.get("enable_sub_receptors"));
     assertEquals("2023", result.get("monitor_srm2_year"));
   }
 
