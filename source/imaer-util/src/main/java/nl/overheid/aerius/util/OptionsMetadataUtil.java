@@ -110,7 +110,7 @@ public final class OptionsMetadataUtil {
     addBooleanValue(mapToAddTo, Option.FORCED_AGGREGATION, options.isForceAggregation(), addDefaults);
     addBooleanValue(mapToAddTo, Option.USE_RECEPTOR_HEIGHT, options.isUseReceptorHeights(), addDefaults);
     addBooleanValue(mapToAddTo, Option.WITH_WNB_MAX_DISTANCE, options.isUseWNBMaxDistance(), addDefaults);
-    addBooleanValue(mapToAddTo, Option.ENABLE_SUB_RECEPTORS, options.isSubReceptorsEnabled(), addDefaults);
+    addBooleanValue(mapToAddTo, Option.ENABLE_SUB_RECEPTORS, options.isEnableSubReceptors(), addDefaults);
     opsOptionsToMap(options.getOpsOptions(), mapToAddTo, addDefaults);
   }
 

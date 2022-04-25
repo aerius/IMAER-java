@@ -87,7 +87,7 @@ public class WNBCalculationOptions implements Serializable {
     this.useReceptorHeights = useReceptorHeights;
   }
 
-  public boolean isSubReceptorsEnabled() {
+  public boolean isEnableSubReceptors() {
     return enableSubReceptors;
   }
 
