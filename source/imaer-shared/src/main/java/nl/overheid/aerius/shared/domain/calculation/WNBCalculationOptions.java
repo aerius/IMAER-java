@@ -39,7 +39,7 @@ public class WNBCalculationOptions implements Serializable {
   private boolean useReceptorHeights;
   private OPSOptions opsOptions;
 
-  private boolean enableSubReceptors;
+  private boolean disableSubReceptors;
 
   /**
    * @return Returns true if WNB maximum distance calculation is to be applied.
@@ -87,12 +87,12 @@ public class WNBCalculationOptions implements Serializable {
     this.useReceptorHeights = useReceptorHeights;
   }
 
-  public boolean isEnableSubReceptors() {
-    return enableSubReceptors;
+  public boolean isDisableSubReceptors() {
+    return disableSubReceptors;
   }
 
-  public void setEnableSubReceptors(final boolean enableSubReceptors) {
-    this.enableSubReceptors = enableSubReceptors;
+  public void setDisableSubReceptors(final boolean disableSubReceptors) {
+    this.disableSubReceptors = disableSubReceptors;
   }
 
   public OPSOptions getOpsOptions() {

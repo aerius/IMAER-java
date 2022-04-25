@@ -80,7 +80,7 @@ class OptionsMetadataUtilTest {
     options.setForceAggregation(true);
     options.setUseWnbMaxDistance(true);
     options.setUseReceptorHeights(true);
-    options.setEnableSubReceptors(true);
+    options.setDisableSubReceptors(true);
     cso.getRblCalculationOptions().setMonitorSrm2Year(2023);
 
     final Map<String, String> result = OptionsMetadataUtil.optionsToMap(Theme.WNB, cso, false);
@@ -91,7 +91,7 @@ class OptionsMetadataUtilTest {
     assertEquals("OPS_ROAD", result.get("ops_road"));
     assertEquals("true", result.get("forced_aggregation"));
     assertEquals("true", result.get("use_receptor_height"));
-    assertEquals("true", result.get("enable_sub_receptors"));
+    assertEquals("true", result.get("disable_sub_receptors"));
     assertEquals("2023", result.get("monitor_srm2_year"));
   }
 
