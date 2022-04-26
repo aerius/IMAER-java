@@ -70,6 +70,7 @@ class JsonRoundTripTest {
   @ParameterizedTest(name = "{0}")
   @ValueSource(strings = {
       "GenericEmissionSource.json",
+      "GenericADMSEmissionSource.json",
       "FarmLodgingEmissionSource.json",
       "FarmlandEmissionSource.json",
       "PlanEmissionSource.json",
@@ -79,6 +80,7 @@ class JsonRoundTripTest {
       "SRM1RoadEmissionSource_dynamicSegmentation.json",
       "SRM2RoadEmissionSource.json",
       "SRM2RoadEmissionSource_dynamicSegmentation.json",
+      "ADMSRoadEmissionSource.json",
       "InlandShippingEmissionSource.json",
       "MooringInlandShippingEmissionSource.json",
       "InlandMaritimeShippingEmissionSource.json",

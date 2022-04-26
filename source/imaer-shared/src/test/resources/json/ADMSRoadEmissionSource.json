@@ -1,0 +1,81 @@
+{
+  "type" : "Feature",
+  "id" : "ES.2",
+  "geometry" : {
+    "type" : "LineString",
+    "coordinates" : [ [ 136558.0, 455251.0 ], [ 208413.0, 474162.0 ] ]
+  },
+  "properties" : {
+    "emissionSourceType" : "ADMS_ROAD",
+    "sectorId" : 3100,
+    "label" : "SomeRoadSource",
+    "characteristics" : {
+      "type" : "OPS",
+      "heatContent" : 0.28,
+      "emissionHeight" : 0.0
+    },
+    "emissions" : {
+      "NH3" : 1042.1482509823302,
+      "NOX" : 32843.505487667666,
+      "PM10" : 1353.463403522267,
+      "NO2" : 4972.615007349745
+    },
+    "subSources" : [ {
+      "vehicleType" : "STANDARD",
+      "timeUnit" : "DAY",
+      "maximumSpeed" : 100,
+      "strictEnforcement" : false,
+      "valuesPerVehicleTypes" : {
+        "LIGHT_TRAFFIC" : {
+          "vehiclesPerTimeUnit" : 980.0,
+          "stagnationFraction" : 0.2
+        },
+        "HEAVY_FREIGHT" : {
+          "vehiclesPerTimeUnit" : 400.0,
+          "stagnationFraction" : 0.0
+        }
+      }
+    }, {
+      "vehicleType" : "STANDARD",
+      "timeUnit" : "DAY",
+      "maximumSpeed" : 80,
+      "strictEnforcement" : false,
+      "valuesPerVehicleTypes" : {
+        "HEAVY_FREIGHT" : {
+          "vehiclesPerTimeUnit" : 200.0,
+          "stagnationFraction" : 0.0
+        }
+      }
+    }, {
+      "vehicleType" : "CUSTOM",
+      "timeUnit" : "YEAR",
+      "vehiclesPerTimeUnit" : 3000.0,
+      "description" : "Oude eenden",
+      "emissionFactors" : {
+        "NOX" : 4.2,
+        "NH3" : 0.2
+      }
+    }, {
+      "vehicleType" : "SPECIFIC",
+      "timeUnit" : "MONTH",
+      "vehiclesPerTimeUnit" : 500.0,
+      "vehicleCode" : "BA-B-E3"
+    } ],
+    "roadAreaCode" : "NL",
+    "roadTypeCode" : "FREEWAY",
+    "tunnelFactor" : 1.0,
+    "trafficDirection" : "A_TO_B",
+    "width" : 3.2,
+    "elevation" : 1.4,
+    "gradient" : 0.2,
+    "coverage" : 0.8,
+    "barrierLeft" : {
+      "barrierType" : "BRICK_WALL",
+      "width" : 3.2,
+      "maximumHeight" : 3.2,
+      "averageHeight" : 2.6,
+      "minimumHeight" : 1.7,
+      "porosity" : 0.7
+    }
+  }
+}

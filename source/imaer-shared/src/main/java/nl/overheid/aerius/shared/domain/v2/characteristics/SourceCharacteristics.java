@@ -34,9 +34,11 @@ public abstract class SourceCharacteristics implements Serializable {
   private static final long serialVersionUID = 2L;
 
   private String buildingId;
+  private String customDiurnalVariationId;
 
   public <E extends SourceCharacteristics> E copyTo(final E copy) {
     copy.setBuildingId(buildingId);
+    copy.setCustomDiurnalVariationId(customDiurnalVariationId);
     return copy;
   }
 
@@ -47,4 +49,13 @@ public abstract class SourceCharacteristics implements Serializable {
   public void setBuildingId(final String buildingId) {
     this.buildingId = buildingId;
   }
+
+  public String getCustomDiurnalVariationId() {
+    return customDiurnalVariationId;
+  }
+
+  public void setCustomDiurnalVariationId(final String customDiurnalVariationId) {
+    this.customDiurnalVariationId = customDiurnalVariationId;
+  }
+
 }

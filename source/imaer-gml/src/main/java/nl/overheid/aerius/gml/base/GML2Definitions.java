@@ -18,6 +18,7 @@ package nl.overheid.aerius.gml.base;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import nl.overheid.aerius.gml.base.characteristics.IsGmlCustomDiurnalVariation;
 import nl.overheid.aerius.shared.domain.v2.characteristics.CustomDiurnalVariation;
@@ -67,7 +68,7 @@ public class GML2Definitions {
     diurnalVariation.setGmlId(gmlCustomDiurnalVariation.getId());
     diurnalVariation.setLabel(gmlCustomDiurnalVariation.getLabel());
     diurnalVariation.setType(customType);
-    diurnalVariation.setValues(gmlCustomDiurnalVariation.getValues());
+    diurnalVariation.setValues(gmlCustomDiurnalVariation.getValues().stream().map(x -> (double) x).collect(Collectors.toList()));
     return diurnalVariation;
   }
 
@@ -81,8 +82,8 @@ public class GML2Definitions {
           String.valueOf(customType.getExpectedNumberOfValues()),
           String.valueOf(values.size()));
     }
-    final int valuesSum = values.stream().mapToInt(x -> x).sum();
-    final int expectedSum = CustomDiurnalVariation.AVERAGE_VALUE * customType.getExpectedNumberOfValues();
+    final int valuesSum = customType.sum(values);
+    final int expectedSum = CustomDiurnalVariation.AVERAGE_VALUE * customType.getExpectedTotalNumberOfValues();
     if (valuesSum != expectedSum) {
       throw new AeriusException(ImaerExceptionReason.CUSTOM_DIURNAL_VARIATION_INVALID_SUM,
           String.valueOf(expectedSum),

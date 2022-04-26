@@ -82,8 +82,6 @@ public class OPSSourceCharacteristics extends SourceCharacteristics {
    */
   private DiurnalVariation diurnalVariation;
 
-  private String customDiurnalVariationId;
-
   /**
    * particleSizeDistribution - code for distribution of particle sizes (0 for gasses, > 0 for particulate matter)
    */
@@ -183,14 +181,6 @@ public class OPSSourceCharacteristics extends SourceCharacteristics {
 
   public void setDiurnalVariation(final DiurnalVariation diurnalVariation) {
     this.diurnalVariation = diurnalVariation;
-  }
-
-  public String getCustomDiurnalVariationId() {
-    return customDiurnalVariationId;
-  }
-
-  public void setCustomDiurnalVariationId(final String customDiurnalVariationId) {
-    this.customDiurnalVariationId = customDiurnalVariationId;
   }
 
   @JsonIgnore
