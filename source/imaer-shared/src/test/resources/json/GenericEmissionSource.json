@@ -11,6 +11,8 @@
     "label" : "Label 4600",
     "characteristics" : {
       "type" : "OPS",
+      "buildingId" : "SomeBuildingId",
+      "customDiurnalVariationId" : "SomeDiurnalVariation",
       "heatContent" : 123.45,
       "emissionHeight" : 5.0
     },

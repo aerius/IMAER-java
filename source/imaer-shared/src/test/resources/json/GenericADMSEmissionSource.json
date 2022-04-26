@@ -1,0 +1,40 @@
+{
+  "type" : "Feature",
+  "id" : "1",
+  "geometry" : {
+    "type" : "Point",
+    "coordinates" : [ 130.12, -123.99 ]
+  },
+  "properties" : {
+    "emissionSourceType" : "GENERIC",
+    "sectorId" : 4600,
+    "label" : "Label 4600",
+    "characteristics" : {
+      "type" : "ADMS",
+      "buildingId" : "SomeBuildingId",
+      "customDiurnalVariationId" : "SomeDiurnalVariation",
+      "sourceType" : "POINT",
+      "buoyancyType" : "DENSITY",
+      "effluxType" : "MOMENTUM",
+      "height" : 5.0,
+      "diameter" : 2.0,
+      "width" : 4.0,
+      "temperature" : 273.13,
+      "density" : 83.4,
+      "verticalVelocity" : 23.1,
+      "volumetricFlowRate" : 8.1,
+      "specificHeatCapacity" : 9.2,
+      "percentNOxAsNO2" : 22.8,
+      "verticalDimension" : 2.9,
+      "elevationAngle" : 5.6,
+      "horizontalAngle" : 4.7,
+      "momentumFlux" : 94.03,
+      "buoyancyFlux" : 303.11,
+      "massFlux" : 92.1
+    },
+    "emissions" : {
+      "NH3" : 10.0,
+      "NOX" : 11.0
+    }
+  }
+}
