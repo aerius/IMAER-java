@@ -28,7 +28,7 @@ public class CustomDiurnalVariation implements Serializable {
   private String gmlId;
   private String label;
   private CustomDiurnalVariationType type;
-  private List<Integer> values;
+  private List<Double> values;
 
   public String getGmlId() {
     return gmlId;
@@ -54,11 +54,11 @@ public class CustomDiurnalVariation implements Serializable {
     this.type = type;
   }
 
-  public List<Integer> getValues() {
+  public List<Double> getValues() {
     return values;
   }
 
-  public void setValues(final List<Integer> values) {
+  public void setValues(final List<Double> values) {
     this.values = values;
   }
 

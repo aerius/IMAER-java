@@ -18,6 +18,7 @@ package nl.overheid.aerius.gml.base;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import nl.overheid.aerius.gml.base.characteristics.IsGmlCustomDiurnalVariation;
 import nl.overheid.aerius.shared.domain.v2.characteristics.CustomDiurnalVariation;
@@ -67,7 +68,7 @@ public class GML2Definitions {
     diurnalVariation.setGmlId(gmlCustomDiurnalVariation.getId());
     diurnalVariation.setLabel(gmlCustomDiurnalVariation.getLabel());
     diurnalVariation.setType(customType);
-    diurnalVariation.setValues(gmlCustomDiurnalVariation.getValues());
+    diurnalVariation.setValues(gmlCustomDiurnalVariation.getValues().stream().map(x -> (double) x).collect(Collectors.toList()));
     return diurnalVariation;
   }
 
