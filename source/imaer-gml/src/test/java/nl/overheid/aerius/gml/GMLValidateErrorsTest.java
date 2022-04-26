@@ -246,7 +246,7 @@ public class GMLValidateErrorsTest {
         e -> {
           assertEquals(2, e.getArgs().length, "Number of arguments");
           assertEquals("240000", e.getArgs()[0], "Expected count");
-          assertEquals("240", e.getArgs()[1], "Found count");
+          assertEquals("240.0", e.getArgs()[1], "Found count");
         });
   }
 

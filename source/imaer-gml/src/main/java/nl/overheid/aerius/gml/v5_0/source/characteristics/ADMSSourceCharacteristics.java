@@ -18,6 +18,7 @@ package nl.overheid.aerius.gml.v5_0.source.characteristics;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 import nl.overheid.aerius.gml.base.characteristics.IsGmlADMSSourceCharacteristics;
@@ -32,7 +33,7 @@ import nl.overheid.aerius.shared.domain.v2.characteristics.adms.SourceType;
 @XmlRootElement(name = "ADMSSourceCharacteristics", namespace = CalculatorSchema.NAMESPACE)
 @XmlType(name = "ADMSSourceCharacteristicsType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"height", "specificHeatCapacity",
     "sourceType", "diameter", "elevationAngle", "horizontalAngle", "width", "verticalDimension", "buoyancyType", "density",
-    "temperature", "effluxType", "verticalVelocity", "volumetricFlowRate", "massFlux"})
+    "temperature", "effluxType", "verticalVelocity", "volumetricFlowRate", "massFlux", "diurnalVariationProperty"})
 public class ADMSSourceCharacteristics extends AbstractSourceCharacteristics implements IsGmlADMSSourceCharacteristics {
 
   private double height;
@@ -50,6 +51,7 @@ public class ADMSSourceCharacteristics extends AbstractSourceCharacteristics imp
   private Double verticalVelocity;
   private Double volumetricFlowRate;
   private Double massFlux;
+  private AbstractDiurnalVariation diurnalVariation;
 
   @Override
   @XmlElement(namespace = CalculatorSchema.NAMESPACE)
@@ -199,6 +201,25 @@ public class ADMSSourceCharacteristics extends AbstractSourceCharacteristics imp
 
   public void setMassFlux(final Double massFlux) {
     this.massFlux = massFlux;
+  }
+
+  @XmlElement(name = "diurnalVariation", namespace = CalculatorSchema.NAMESPACE)
+  public DiurnalVariationProperty getDiurnalVariationProperty() {
+    return diurnalVariation == null ? null : new DiurnalVariationProperty(diurnalVariation);
+  }
+
+  public void setDiurnalVariationProperty(final DiurnalVariationProperty diurnalVariation) {
+    this.diurnalVariation = diurnalVariation == null ? null : diurnalVariation.getProperty();
+  }
+
+  @Override
+  @XmlTransient
+  public AbstractDiurnalVariation getDiurnalVariation() {
+    return diurnalVariation;
+  }
+
+  public void setDiurnalVariation(final AbstractDiurnalVariation diurnalVariation) {
+    this.diurnalVariation = diurnalVariation;
   }
 
 }

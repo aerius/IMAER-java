@@ -17,16 +17,19 @@
 package nl.overheid.aerius.gml.v5_0.source.road;
 
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 import nl.overheid.aerius.gml.base.source.road.IsGmlADMSRoad;
 import nl.overheid.aerius.gml.v5_0.base.CalculatorSchema;
+import nl.overheid.aerius.gml.v5_0.source.characteristics.AbstractDiurnalVariation;
+import nl.overheid.aerius.gml.v5_0.source.characteristics.DiurnalVariationProperty;
 
 /**
  *
  */
 @XmlType(name = "ADMSRoad", namespace = CalculatorSchema.NAMESPACE, propOrder = {"width", "elevation", "gradient", "coverage",
-    "barrierLeft", "barrierRight"})
+    "barrierLeft", "barrierRight", "diurnalVariationProperty"})
 public class ADMSRoad extends RoadEmissionSource implements IsGmlADMSRoad {
 
   private double width;
@@ -35,6 +38,7 @@ public class ADMSRoad extends RoadEmissionSource implements IsGmlADMSRoad {
   private double coverage;
   private ADMSRoadSideBarrierProperty barrierLeft;
   private ADMSRoadSideBarrierProperty barrierRight;
+  private AbstractDiurnalVariation diurnalVariation;
 
   @Override
   @XmlElement(namespace = CalculatorSchema.NAMESPACE)
@@ -94,6 +98,25 @@ public class ADMSRoad extends RoadEmissionSource implements IsGmlADMSRoad {
 
   public void setBarrierRight(final ADMSRoadSideBarrierProperty barrierRight) {
     this.barrierRight = barrierRight;
+  }
+
+  @XmlElement(name = "diurnalVariation", namespace = CalculatorSchema.NAMESPACE)
+  public DiurnalVariationProperty getDiurnalVariationProperty() {
+    return diurnalVariation == null ? null : new DiurnalVariationProperty(diurnalVariation);
+  }
+
+  public void setDiurnalVariationProperty(final DiurnalVariationProperty diurnalVariation) {
+    this.diurnalVariation = diurnalVariation == null ? null : diurnalVariation.getProperty();
+  }
+
+  @Override
+  @XmlTransient
+  public AbstractDiurnalVariation getDiurnalVariation() {
+    return diurnalVariation;
+  }
+
+  public void setDiurnalVariation(final AbstractDiurnalVariation diurnalVariation) {
+    this.diurnalVariation = diurnalVariation;
   }
 
 }

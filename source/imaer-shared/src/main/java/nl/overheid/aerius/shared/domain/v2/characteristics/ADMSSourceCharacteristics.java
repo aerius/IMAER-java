@@ -26,7 +26,7 @@ import nl.overheid.aerius.shared.domain.v2.characteristics.adms.SourceType;
  */
 public class ADMSSourceCharacteristics extends SourceCharacteristics {
 
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 2L;
 
   private SourceType sourceType;
 
@@ -74,6 +74,8 @@ public class ADMSSourceCharacteristics extends SourceCharacteristics {
    * Mass flux of the emission (kg/s).
    */
   private double massFlux;
+
+  private String standardDiurnalVariationCode;
 
   public SourceType getSourceType() {
     return sourceType;
@@ -226,4 +228,13 @@ public class ADMSSourceCharacteristics extends SourceCharacteristics {
   public void setHorizontalAngle(final double horizontalAngle) {
     this.horizontalAngle = horizontalAngle;
   }
+
+  public String getStandardDiurnalVariationCode() {
+    return standardDiurnalVariationCode;
+  }
+
+  public void setStandardDiurnalVariationCode(final String standardDiurnalVariationCode) {
+    this.standardDiurnalVariationCode = standardDiurnalVariationCode;
+  }
+
 }

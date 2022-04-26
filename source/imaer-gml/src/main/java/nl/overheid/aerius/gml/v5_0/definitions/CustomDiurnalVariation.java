@@ -32,7 +32,7 @@ public class CustomDiurnalVariation implements IsGmlCustomDiurnalVariation {
   private String id;
   private String label;
   private String customType;
-  private List<Integer> values;
+  private List<Double> values;
 
   @Override
   @XmlAttribute(namespace = GMLSchema.NAMESPACE)
@@ -66,11 +66,11 @@ public class CustomDiurnalVariation implements IsGmlCustomDiurnalVariation {
 
   @Override
   @XmlElement(name = "value", namespace = CalculatorSchema.NAMESPACE)
-  public List<Integer> getValues() {
+  public List<Double> getValues() {
     return values;
   }
 
-  public void setValues(final List<Integer> values) {
+  public void setValues(final List<Double> values) {
     this.values = values;
   }
 

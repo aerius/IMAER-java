@@ -4,13 +4,13 @@
         <imaer:AeriusCalculatorMetadata>
             <imaer:project>
                 <imaer:ProjectMetadata>
-                    <imaer:year>2013</imaer:year>
-                    <imaer:name>Bestaande onderneming</imaer:name>
+                    <imaer:year>2023</imaer:year>
+                    <imaer:name>Existing enterprise</imaer:name>
                 </imaer:ProjectMetadata>
             </imaer:project>
             <imaer:situation>
                 <imaer:SituationMetadata>
-                    <imaer:name>Bestaande onderneming</imaer:name>
+                    <imaer:name>Existing enterprise</imaer:name>
                     <imaer:reference>S4R2JDFikdcM</imaer:reference>
                     <imaer:situationType>PROPOSED</imaer:situationType>
                 </imaer:SituationMetadata>
@@ -31,21 +31,24 @@
                     <imaer:localId>ES.1</imaer:localId>
                 </imaer:NEN3610ID>
             </imaer:identifier>
-            <imaer:label>Steenfabriek</imaer:label>
+            <imaer:label>Brick factory</imaer:label>
             <imaer:emissionSourceCharacteristics>
-                <imaer:EmissionSourceCharacteristics>
-                    <imaer:heatContent>
-                        <imaer:SpecifiedHeatContent>
-                            <imaer:value>0.22</imaer:value>
-                        </imaer:SpecifiedHeatContent>
-                    </imaer:heatContent>
-                    <imaer:emissionHeight>35.0</imaer:emissionHeight>
+                <imaer:ADMSSourceCharacteristics>
+                    <imaer:building xlink:href="#Building.1"/>
+                    <imaer:height>35.0</imaer:height>
+                    <imaer:specificHeatCapacity>342.12</imaer:specificHeatCapacity>
+                    <imaer:sourceType>POINT</imaer:sourceType>
+                    <imaer:diameter>4.3</imaer:diameter>
+                    <imaer:buoyancyType>DENSITY</imaer:buoyancyType>
+                    <imaer:density>58.23</imaer:density>
+                    <imaer:effluxType>VELOCITY</imaer:effluxType>
+                    <imaer:verticalVelocity>49.2</imaer:verticalVelocity>
                     <imaer:diurnalVariation>
                         <imaer:ReferenceDiurnalVariation>
                             <imaer:customDiurnalVariation xlink:href="#Custom_DV.1"/>
                         </imaer:ReferenceDiurnalVariation>
                     </imaer:diurnalVariation>
-                </imaer:EmissionSourceCharacteristics>
+                </imaer:ADMSSourceCharacteristics>
             </imaer:emissionSourceCharacteristics>
             <imaer:geometry>
                 <imaer:EmissionSourceGeometry>
@@ -78,12 +81,85 @@
             </imaer:emission>
         </imaer:EmissionSource>
     </imaer:featureMember>
+    <imaer:featureMember>
+        <imaer:Building gml:id="Building.1">
+            <imaer:identifier>
+                <imaer:NEN3610ID>
+                    <imaer:namespace>NL.IMAER</imaer:namespace>
+                    <imaer:localId>Building.1</imaer:localId>
+                </imaer:NEN3610ID>
+            </imaer:identifier>
+            <imaer:label>Building 1</imaer:label>
+            <imaer:height>9.2</imaer:height>
+            <imaer:geometry>
+                <imaer:BuildingGeometry>
+                    <imaer:GM_Surface>
+                        <gml:Polygon srsName="urn:ogc:def:crs:EPSG::28992" gml:id="Building.1.SURFACE">
+                            <gml:exterior>
+<gml:LinearRing>
+    <gml:posList>184099.3539485522 430576.7455135771 184110.88283492287 430593.2104696673 184061.40605144782 430627.8544864229 184049.87716507714 430611.3895303327 184099.3539485522 430576.7455135771</gml:posList>
+</gml:LinearRing>
+                            </gml:exterior>
+                        </gml:Polygon>
+                    </imaer:GM_Surface>
+                </imaer:BuildingGeometry>
+            </imaer:geometry>
+        </imaer:Building>
+    </imaer:featureMember>
     <imaer:definitions>
         <imaer:Definitions>
             <imaer:customDiurnalVariation>
                 <imaer:CustomDiurnalVariation gml:id="Custom_DV.1">
-                    <imaer:label>Voorbeeld eigen spec</imaer:label>
-                    <imaer:customType>DAY</imaer:customType>
+                    <imaer:label>Example own spec</imaer:label>
+                    <imaer:customType>THREE_DAY</imaer:customType>
+                    <imaer:value>7000.0</imaer:value>
+                    <imaer:value>10000.0</imaer:value>
+                    <imaer:value>10000.0</imaer:value>
+                    <imaer:value>10000.0</imaer:value>
+                    <imaer:value>10000.0</imaer:value>
+                    <imaer:value>10000.0</imaer:value>
+                    <imaer:value>10000.0</imaer:value>
+                    <imaer:value>10000.0</imaer:value>
+                    <imaer:value>10000.0</imaer:value>
+                    <imaer:value>10000.0</imaer:value>
+                    <imaer:value>10000.0</imaer:value>
+                    <imaer:value>13000.0</imaer:value>
+                    <imaer:value>12000.0</imaer:value>
+                    <imaer:value>12000.0</imaer:value>
+                    <imaer:value>10000.0</imaer:value>
+                    <imaer:value>10000.0</imaer:value>
+                    <imaer:value>10000.0</imaer:value>
+                    <imaer:value>10000.0</imaer:value>
+                    <imaer:value>10000.0</imaer:value>
+                    <imaer:value>10000.0</imaer:value>
+                    <imaer:value>10000.0</imaer:value>
+                    <imaer:value>10000.0</imaer:value>
+                    <imaer:value>10000.0</imaer:value>
+                    <imaer:value>6000.0</imaer:value>
+                    <imaer:value>7000.0</imaer:value>
+                    <imaer:value>10000.0</imaer:value>
+                    <imaer:value>10000.0</imaer:value>
+                    <imaer:value>10000.0</imaer:value>
+                    <imaer:value>10000.0</imaer:value>
+                    <imaer:value>10000.0</imaer:value>
+                    <imaer:value>10000.0</imaer:value>
+                    <imaer:value>10000.0</imaer:value>
+                    <imaer:value>10000.0</imaer:value>
+                    <imaer:value>10000.0</imaer:value>
+                    <imaer:value>10000.0</imaer:value>
+                    <imaer:value>13000.0</imaer:value>
+                    <imaer:value>12000.0</imaer:value>
+                    <imaer:value>12000.0</imaer:value>
+                    <imaer:value>10000.0</imaer:value>
+                    <imaer:value>10000.0</imaer:value>
+                    <imaer:value>10000.0</imaer:value>
+                    <imaer:value>10000.0</imaer:value>
+                    <imaer:value>10000.0</imaer:value>
+                    <imaer:value>10000.0</imaer:value>
+                    <imaer:value>10000.0</imaer:value>
+                    <imaer:value>10000.0</imaer:value>
+                    <imaer:value>10000.0</imaer:value>
+                    <imaer:value>6000.0</imaer:value>
                     <imaer:value>7000.0</imaer:value>
                     <imaer:value>10000.0</imaer:value>
                     <imaer:value>10000.0</imaer:value>

@@ -72,7 +72,7 @@ public class GML2Definitions {
     return diurnalVariation;
   }
 
-  private CustomDiurnalVariationType convertCustomDiurnalVariationType(final String gmlCustomType, final List<Integer> values)
+  private CustomDiurnalVariationType convertCustomDiurnalVariationType(final String gmlCustomType, final List<Double> values)
       throws AeriusException {
     final CustomDiurnalVariationType customType = CustomDiurnalVariationType.safeValueOf(gmlCustomType);
     if (customType == null) {
@@ -82,9 +82,9 @@ public class GML2Definitions {
           String.valueOf(customType.getExpectedNumberOfValues()),
           String.valueOf(values.size()));
     }
-    final int valuesSum = customType.sum(values);
+    final double valuesSum = customType.sum(values);
     final int expectedSum = CustomDiurnalVariation.AVERAGE_VALUE * customType.getExpectedTotalNumberOfValues();
-    if (valuesSum != expectedSum) {
+    if (Math.round(valuesSum) != expectedSum) {
       throw new AeriusException(ImaerExceptionReason.CUSTOM_DIURNAL_VARIATION_INVALID_SUM,
           String.valueOf(expectedSum),
           String.valueOf(valuesSum));
