@@ -245,7 +245,7 @@ public class GMLValidateErrorsTest {
         ImaerExceptionReason.CUSTOM_DIURNAL_VARIATION_INVALID_SUM,
         e -> {
           assertEquals(2, e.getArgs().length, "Number of arguments");
-          assertEquals("2400", e.getArgs()[0], "Expected count");
+          assertEquals("240000", e.getArgs()[0], "Expected count");
           assertEquals("240", e.getArgs()[1], "Found count");
         });
   }

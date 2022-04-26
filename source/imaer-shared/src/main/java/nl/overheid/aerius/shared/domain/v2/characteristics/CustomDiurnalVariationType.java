@@ -16,21 +16,57 @@
  */
 package nl.overheid.aerius.shared.domain.v2.characteristics;
 
+import java.util.List;
+
 public enum CustomDiurnalVariationType {
 
   /**
    * Diurnal variation over a day, with 1 value for each hour.
    */
-  DAY(24);
+  DAY(24),
+
+  /**
+   * Diurnal variation for 3-day profile, with 1 value for each hour of the day.
+   * First day represents weekdays, second day represents saturday and third day represents sunday.
+   * For validation, the weekday values will be multiplied by 5, and the total should be (roughly) equal to 7x24.
+   */
+  THREE_DAY(72, 168) {
+
+    @Override
+    public int sum(final List<Integer> values) {
+      // Special case here: the first day (24 values) should be multiplied by 5.
+      if (values.size() != getExpectedNumberOfValues()) {
+        throw new IllegalArgumentException("Unexpected number of values for 3-day profile: " + values.size());
+      }
+      final int sumWeekdays = values.subList(0, 24).stream().mapToInt(x -> x * 5).sum();
+      final int sumOtherDays = values.subList(24, values.size()).stream().mapToInt(x -> x).sum();
+      return sumWeekdays + sumOtherDays;
+    }
+
+  };
 
   private final int expectedNumberOfValues;
+  private final int expectedTotalNumberOfValues;
 
   private CustomDiurnalVariationType(final int expectedNumberOfValues) {
+    this(expectedNumberOfValues, expectedNumberOfValues);
+  }
+
+  private CustomDiurnalVariationType(final int expectedNumberOfValues, final int expectedTotalNumberOfValues) {
     this.expectedNumberOfValues = expectedNumberOfValues;
+    this.expectedTotalNumberOfValues = expectedTotalNumberOfValues;
   }
 
   public int getExpectedNumberOfValues() {
     return expectedNumberOfValues;
+  }
+
+  public int getExpectedTotalNumberOfValues() {
+    return expectedTotalNumberOfValues;
+  }
+
+  public int sum(final List<Integer> values) {
+    return values.stream().mapToInt(x -> x).sum();
   }
 
   public static CustomDiurnalVariationType safeValueOf(final String code) {

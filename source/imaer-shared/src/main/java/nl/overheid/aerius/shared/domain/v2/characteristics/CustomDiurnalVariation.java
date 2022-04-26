@@ -23,7 +23,7 @@ public class CustomDiurnalVariation implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
-  public static final int AVERAGE_VALUE = 100;
+  public static final int AVERAGE_VALUE = 10000;
 
   private String gmlId;
   private String label;

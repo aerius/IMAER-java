@@ -81,8 +81,8 @@ public class GML2Definitions {
           String.valueOf(customType.getExpectedNumberOfValues()),
           String.valueOf(values.size()));
     }
-    final int valuesSum = values.stream().mapToInt(x -> x).sum();
-    final int expectedSum = CustomDiurnalVariation.AVERAGE_VALUE * customType.getExpectedNumberOfValues();
+    final int valuesSum = customType.sum(values);
+    final int expectedSum = CustomDiurnalVariation.AVERAGE_VALUE * customType.getExpectedTotalNumberOfValues();
     if (valuesSum != expectedSum) {
       throw new AeriusException(ImaerExceptionReason.CUSTOM_DIURNAL_VARIATION_INVALID_SUM,
           String.valueOf(expectedSum),

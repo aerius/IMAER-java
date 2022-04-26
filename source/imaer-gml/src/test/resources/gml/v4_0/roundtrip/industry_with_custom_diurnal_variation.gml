@@ -84,30 +84,30 @@
                 <imaer:CustomDiurnalVariation gml:id="Custom_DV.1">
                     <imaer:label>Voorbeeld eigen spec</imaer:label>
                     <imaer:customType>DAY</imaer:customType>
-                    <imaer:value>70</imaer:value>
-                    <imaer:value>100</imaer:value>
-                    <imaer:value>100</imaer:value>
-                    <imaer:value>100</imaer:value>
-                    <imaer:value>100</imaer:value>
-                    <imaer:value>100</imaer:value>
-                    <imaer:value>100</imaer:value>
-                    <imaer:value>100</imaer:value>
-                    <imaer:value>100</imaer:value>
-                    <imaer:value>100</imaer:value>
-                    <imaer:value>100</imaer:value>
-                    <imaer:value>130</imaer:value>
-                    <imaer:value>120</imaer:value>
-                    <imaer:value>120</imaer:value>
-                    <imaer:value>100</imaer:value>
-                    <imaer:value>100</imaer:value>
-                    <imaer:value>100</imaer:value>
-                    <imaer:value>100</imaer:value>
-                    <imaer:value>100</imaer:value>
-                    <imaer:value>100</imaer:value>
-                    <imaer:value>100</imaer:value>
-                    <imaer:value>100</imaer:value>
-                    <imaer:value>100</imaer:value>
-                    <imaer:value>60</imaer:value>
+                    <imaer:value>7000</imaer:value>
+                    <imaer:value>10000</imaer:value>
+                    <imaer:value>10000</imaer:value>
+                    <imaer:value>10000</imaer:value>
+                    <imaer:value>10000</imaer:value>
+                    <imaer:value>10000</imaer:value>
+                    <imaer:value>10000</imaer:value>
+                    <imaer:value>10000</imaer:value>
+                    <imaer:value>10000</imaer:value>
+                    <imaer:value>10000</imaer:value>
+                    <imaer:value>10000</imaer:value>
+                    <imaer:value>13000</imaer:value>
+                    <imaer:value>12000</imaer:value>
+                    <imaer:value>12000</imaer:value>
+                    <imaer:value>10000</imaer:value>
+                    <imaer:value>10000</imaer:value>
+                    <imaer:value>10000</imaer:value>
+                    <imaer:value>10000</imaer:value>
+                    <imaer:value>10000</imaer:value>
+                    <imaer:value>10000</imaer:value>
+                    <imaer:value>10000</imaer:value>
+                    <imaer:value>10000</imaer:value>
+                    <imaer:value>10000</imaer:value>
+                    <imaer:value>6000</imaer:value>
                 </imaer:CustomDiurnalVariation>
             </imaer:customDiurnalVariation>
         </imaer:Definitions>
