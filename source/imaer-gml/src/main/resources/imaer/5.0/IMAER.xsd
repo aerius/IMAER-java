@@ -120,6 +120,11 @@ NOTE This class describes a road emissionsource including geometry. This definit
               <documentation>The barrier on the right side of the road (compared to the geometry).</documentation>
             </annotation>
           </element>
+          <element minOccurs="0" name="diurnalVariation" type="IMAER:DiurnalVariationPropertyType">
+            <annotation>
+              <documentation>Diurnal variation profile of the road source.</documentation>
+            </annotation>
+          </element>
         </sequence>
       </extension>
     </complexContent>
@@ -269,6 +274,11 @@ NOTE Iedere emissiebron wordt beschreven aan de hand van een aantal karakteristi
           <element minOccurs="0" name="volumetricFlowRate" type="double">
             <annotation>
               <documentation>Mass flux (kg/s): mass flux of the emission.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="diurnalVariation" type="IMAER:DiurnalVariationPropertyType">
+            <annotation>
+              <documentation>Diurnal variation of the emission of the source.</documentation>
             </annotation>
           </element>
         </sequence>
@@ -839,7 +849,7 @@ Als voorbeeld een definitie voor uren per dag: In dat geval zijn er 24 waardes, 
               <documentation>Het type van deze eigen definitie. Geeft impliciet aan hoeveel waardes worden verwacht: voor een dag definitie worden bijvoorbeeld 24 waardes verwacht.</documentation>
             </annotation>
           </element>
-          <element maxOccurs="unbounded" name="value" type="integer">
+          <element maxOccurs="unbounded" name="value" type="double">
             <annotation>
               <documentation>De waardes van deze eigen definitie. Afhankelijk van het customType wordt een aantal waarden verwacht. Bij gelijke verdeling over alle waardes heeft dit veld de waarde 100.</documentation>
             </annotation>
