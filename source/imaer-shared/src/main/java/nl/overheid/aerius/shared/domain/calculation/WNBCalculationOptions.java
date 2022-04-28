@@ -38,6 +38,7 @@ public class WNBCalculationOptions implements Serializable {
   private Meteo meteo;
   private boolean useReceptorHeights;
   private OPSOptions opsOptions;
+  private String opsVersion;
 
   private boolean disableSubReceptors;
 
@@ -103,4 +104,11 @@ public class WNBCalculationOptions implements Serializable {
     this.opsOptions = opsOptions;
   }
 
+  public String getOpsVersion() {
+    return opsVersion;
+  }
+
+  public void setOpsVersion(final String opsVersion) {
+    this.opsVersion = opsVersion;
+  }
 }
