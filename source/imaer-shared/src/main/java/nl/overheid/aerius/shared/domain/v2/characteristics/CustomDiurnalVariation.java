@@ -23,7 +23,12 @@ public class CustomDiurnalVariation implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
-  public static final int AVERAGE_VALUE = 10000;
+  /**
+   * There is an allowed inaccuracy in the summation of all values.
+   * As long as the sum of all values is equal to the expected sum (which should be 1 * number of values),
+   * it's considered OK.
+   */
+  public static final double ALLOWED_EPSILON = 0.00001;
 
   private String gmlId;
   private String label;
