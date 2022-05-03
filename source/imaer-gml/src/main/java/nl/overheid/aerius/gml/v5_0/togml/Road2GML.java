@@ -21,8 +21,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import nl.overheid.aerius.gml.v5_0.source.TimeUnit;
-import nl.overheid.aerius.gml.v5_0.source.characteristics.ReferenceDiurnalVariation;
-import nl.overheid.aerius.gml.v5_0.source.characteristics.StandardDiurnalVariation;
+import nl.overheid.aerius.gml.v5_0.source.characteristics.AbstractDiurnalVariation;
 import nl.overheid.aerius.gml.v5_0.source.road.ADMSRoad;
 import nl.overheid.aerius.gml.v5_0.source.road.ADMSRoadSideBarrierProperty;
 import nl.overheid.aerius.gml.v5_0.source.road.CustomVehicle;
@@ -52,7 +51,6 @@ import nl.overheid.aerius.shared.domain.v2.source.road.SpecificVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.StandardVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.ValuesPerVehicleType;
 import nl.overheid.aerius.shared.domain.v2.source.road.Vehicles;
-import nl.overheid.aerius.util.gml.GMLIdUtil;
 
 /**
  * Converts {@link nl.overheid.aerius.shared.domain.v2.source.RoadEmissionSource} to GML data object.
@@ -200,16 +198,10 @@ class Road2GML extends SpecificSource2GML<nl.overheid.aerius.shared.domain.v2.so
   }
 
   private void handleDiurnalVariation(final ADMSRoadEmissionSource emissionSource, final ADMSRoad returnSource) {
-    if (emissionSource.getCustomDiurnalVariationId() != null) {
-      final ReferenceDiurnalVariation referenceVariation = new ReferenceDiurnalVariation();
-      referenceVariation.setCustomDiurnalVariation(
-          ToGMLUtil.toReferenceType(emissionSource.getCustomDiurnalVariationId(), GMLIdUtil.DIURNAL_VARIATION_PREFIX));
-      returnSource.setDiurnalVariation(referenceVariation);
-    } else if (emissionSource.getStandardDiurnalVariationCode() != null) {
-      final StandardDiurnalVariation standardVariation = new StandardDiurnalVariation();
-      standardVariation.setCode(emissionSource.getStandardDiurnalVariationCode());
-      returnSource.setDiurnalVariation(standardVariation);
-    }
+    final AbstractDiurnalVariation diurnalVariation = ToGMLUtil.determineDiurnalVariation(
+        emissionSource::getCustomDiurnalVariationId,
+        emissionSource::getStandardDiurnalVariationCode);
+    returnSource.setDiurnalVariation(diurnalVariation);
   }
 
   private ADMSRoadSideBarrierProperty toGMLRoadSideBarrier(final ADMSRoadSideBarrier barrier) {

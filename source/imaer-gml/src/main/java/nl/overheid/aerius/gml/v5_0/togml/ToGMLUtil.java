@@ -16,10 +16,15 @@
  */
 package nl.overheid.aerius.gml.v5_0.togml;
 
+import java.util.function.Supplier;
+
 import nl.overheid.aerius.gml.v5_0.base.ReferenceType;
+import nl.overheid.aerius.gml.v5_0.source.characteristics.AbstractDiurnalVariation;
+import nl.overheid.aerius.gml.v5_0.source.characteristics.ReferenceDiurnalVariation;
+import nl.overheid.aerius.gml.v5_0.source.characteristics.StandardDiurnalVariation;
 import nl.overheid.aerius.util.gml.GMLIdUtil;
 
-public final class ToGMLUtil {
+final class ToGMLUtil {
 
   private ToGMLUtil() {
     // Util class
@@ -28,7 +33,7 @@ public final class ToGMLUtil {
   /**
    * @param gmlId Id to reference, should not be null and already a valid GML ID.
    */
-  public static ReferenceType toReferenceType(final String gmlId) {
+  static ReferenceType toReferenceType(final String gmlId) {
     return toValidReferenceType(gmlId);
   }
 
@@ -36,7 +41,7 @@ public final class ToGMLUtil {
    * @param id Id to reference, can be null and will be made into a valid GML ID if needed.
    * @param validIdPrefixFallback Prefix to use if the ID isn't valid yet and needs a prefix.
    */
-  public static ReferenceType toReferenceType(final String id, final String validIdPrefixFallback) {
+  static ReferenceType toReferenceType(final String id, final String validIdPrefixFallback) {
     final ReferenceType reference;
     if (id == null) {
       reference = null;
@@ -51,6 +56,24 @@ public final class ToGMLUtil {
     final ReferenceType reference = new ReferenceType(null);
     reference.setHref("#" + gmlId);
     return reference;
+  }
+
+  static AbstractDiurnalVariation determineDiurnalVariation(final Supplier<String> customDiurnalVariationIdGetter,
+      final Supplier<String> standardDiurnalVariationCodeGetter) {
+    AbstractDiurnalVariation gmlVariation = null;
+    final String customDiurnalVariationId = customDiurnalVariationIdGetter.get();
+    final String standardDiurnalVariationCode = standardDiurnalVariationCodeGetter.get();
+    if (customDiurnalVariationId != null) {
+      final ReferenceDiurnalVariation referenceVariation = new ReferenceDiurnalVariation();
+      referenceVariation.setCustomDiurnalVariation(
+          ToGMLUtil.toReferenceType(customDiurnalVariationId, GMLIdUtil.DIURNAL_VARIATION_PREFIX));
+      gmlVariation = referenceVariation;
+    } else if (standardDiurnalVariationCode != null) {
+      final StandardDiurnalVariation standardVariation = new StandardDiurnalVariation();
+      standardVariation.setCode(standardDiurnalVariationCode);
+      gmlVariation = standardVariation;
+    }
+    return gmlVariation;
   }
 
 }
