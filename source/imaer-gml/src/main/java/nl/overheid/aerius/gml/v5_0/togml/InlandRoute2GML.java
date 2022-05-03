@@ -36,7 +36,8 @@ class InlandRoute2GML extends SpecificSource2GML<InlandShippingEmissionSource> {
 
   @Override
   public nl.overheid.aerius.gml.v5_0.source.EmissionSource convert(final InlandShippingEmissionSource emissionSource) throws AeriusException {
-    final nl.overheid.aerius.gml.v5_0.source.ship.InlandShippingEmissionSource returnSource = new nl.overheid.aerius.gml.v5_0.source.ship.InlandShippingEmissionSource();
+    final nl.overheid.aerius.gml.v5_0.source.ship.InlandShippingEmissionSource returnSource =
+        new nl.overheid.aerius.gml.v5_0.source.ship.InlandShippingEmissionSource();
     final List<InlandShipping> vesselGroups = emissionSource.getSubSources();
     final List<InlandShippingProperty> ships = new ArrayList<>(vesselGroups.size());
 
@@ -75,7 +76,8 @@ class InlandRoute2GML extends SpecificSource2GML<InlandShippingEmissionSource> {
   }
 
   private nl.overheid.aerius.gml.v5_0.source.ship.InlandShipping toStandard(final StandardInlandShipping inlandShipping) {
-    final nl.overheid.aerius.gml.v5_0.source.ship.StandardInlandShipping gmlShip = new nl.overheid.aerius.gml.v5_0.source.ship.StandardInlandShipping();
+    final nl.overheid.aerius.gml.v5_0.source.ship.StandardInlandShipping gmlShip =
+        new nl.overheid.aerius.gml.v5_0.source.ship.StandardInlandShipping();
     gmlShip.setCode(inlandShipping.getShipCode());
     return gmlShip;
   }
@@ -88,15 +90,7 @@ class InlandRoute2GML extends SpecificSource2GML<InlandShippingEmissionSource> {
   }
 
   private ReferenceType toReferenceType(final String id) {
-    final ReferenceType reference;
-    if (id == null) {
-      reference = null;
-    } else {
-      reference = new ReferenceType(null);
-      final String gmlId = GMLIdUtil.toValidGmlId(id, GMLIdUtil.SOURCE_PREFIX);
-      reference.setHref("#" + gmlId);
-    }
-    return reference;
+    return ToGMLUtil.toReferenceType(id, GMLIdUtil.SOURCE_PREFIX);
   }
 
 }

@@ -16,8 +16,12 @@
  */
 package nl.overheid.aerius.gml.base.source.road;
 
+import java.util.function.Consumer;
+import java.util.function.Supplier;
+
 import nl.overheid.aerius.gml.base.GMLConversionData;
 import nl.overheid.aerius.gml.base.IsGmlProperty;
+import nl.overheid.aerius.gml.base.util.DiurnalVariationUtil;
 import nl.overheid.aerius.shared.domain.v2.source.ADMSRoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.road.ADMSRoadSideBarrier;
 import nl.overheid.aerius.shared.exception.AeriusException;
@@ -50,8 +54,14 @@ public class GML2ADMSRoad<T extends IsGmlADMSRoad> extends GML2Road<T, ADMSRoadE
 
   @Override
   protected void setOptionalVariables(final T source, final ADMSRoadEmissionSource emissionSource) throws AeriusException {
-    emissionSource.setBarrierLeft(source.getBarrierLeft() == null ? null : getRoadSideBarrier(source.getBarrierLeft()));
-    emissionSource.setBarrierRight(source.getBarrierRight() == null ? null : getRoadSideBarrier(source.getBarrierRight()));
+    setRoadSideBarrier(source::getBarrierLeft, emissionSource::setBarrierLeft);
+    setRoadSideBarrier(source::getBarrierRight, emissionSource::setBarrierRight);
+    setDiurnalVariation(source, emissionSource);
+  }
+
+  private void setRoadSideBarrier(final Supplier<IsGmlProperty<IsGmlADMSRoadSideBarrier>> getter, final Consumer<ADMSRoadSideBarrier> setter) {
+    final IsGmlProperty<IsGmlADMSRoadSideBarrier> barrierProperty = getter.get();
+    setter.accept(barrierProperty == null ? null : getRoadSideBarrier(barrierProperty));
   }
 
   private ADMSRoadSideBarrier getRoadSideBarrier(final IsGmlProperty<IsGmlADMSRoadSideBarrier> barrierProperty) {
@@ -64,6 +74,12 @@ public class GML2ADMSRoad<T extends IsGmlADMSRoad> extends GML2Road<T, ADMSRoadE
     barrier.setMinimumHeight(gmlBarrier.getMinimumHeight());
     barrier.setPorosity(gmlBarrier.getPorosity());
     return barrier;
+  }
+
+  private void setDiurnalVariation(final T source, final ADMSRoadEmissionSource emissionSource) {
+    DiurnalVariationUtil.setDiurnalVariation(source.getDiurnalVariation(),
+        emissionSource::setStandardDiurnalVariationCode,
+        emissionSource::setCustomDiurnalVariationId);
   }
 
 }

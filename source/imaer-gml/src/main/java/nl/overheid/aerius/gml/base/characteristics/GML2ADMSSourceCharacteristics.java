@@ -17,6 +17,7 @@
 package nl.overheid.aerius.gml.base.characteristics;
 
 import nl.overheid.aerius.gml.base.GMLConversionData;
+import nl.overheid.aerius.gml.base.util.DiurnalVariationUtil;
 import nl.overheid.aerius.shared.domain.v2.characteristics.ADMSSourceCharacteristics;
 import nl.overheid.aerius.shared.domain.v2.characteristics.adms.ADMSLimits;
 import nl.overheid.aerius.shared.domain.v2.characteristics.adms.BuoyancyType;
@@ -112,18 +113,9 @@ public class GML2ADMSSourceCharacteristics
 
   private void setDiurnalVariation(final IsGmlADMSSourceCharacteristics characteristics,
       final ADMSSourceCharacteristics returnCharacteristics) {
-    if (characteristics.getDiurnalVariation() == null) {
-      returnCharacteristics.setStandardDiurnalVariationCode(null);
-      returnCharacteristics.setCustomDiurnalVariationId(null);
-    } else if (characteristics.getDiurnalVariation() instanceof IsGmlStandardDiurnalVariation) {
-      final String diurnalVariationCode = ((IsGmlStandardDiurnalVariation) characteristics.getDiurnalVariation()).getCode();
-      returnCharacteristics.setStandardDiurnalVariationCode(diurnalVariationCode);
-      returnCharacteristics.setCustomDiurnalVariationId(null);
-    } else if (characteristics.getDiurnalVariation() instanceof IsGmlReferenceDiurnalVariation) {
-      returnCharacteristics.setStandardDiurnalVariationCode(null);
-      final IsGmlReferenceDiurnalVariation gmlReferenceDiurnalVariation = (IsGmlReferenceDiurnalVariation) characteristics.getDiurnalVariation();
-      returnCharacteristics.setCustomDiurnalVariationId(gmlReferenceDiurnalVariation.getCustomDiurnalVariation().getReferredId());
-    }
+    DiurnalVariationUtil.setDiurnalVariation(characteristics.getDiurnalVariation(),
+        returnCharacteristics::setStandardDiurnalVariationCode,
+        returnCharacteristics::setCustomDiurnalVariationId);
   }
 
   private static ADMSSourceCharacteristics getDefaultCharacteristics() {

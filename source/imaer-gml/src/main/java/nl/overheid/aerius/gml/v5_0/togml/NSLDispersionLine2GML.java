@@ -17,7 +17,6 @@
 package nl.overheid.aerius.gml.v5_0.togml;
 
 import nl.overheid.aerius.gml.base.geo.Geometry2GML;
-import nl.overheid.aerius.gml.v5_0.base.ReferenceType;
 import nl.overheid.aerius.gml.v5_0.geo.LineString;
 import nl.overheid.aerius.gml.v5_0.source.road.SRM1RoadDispersionLine;
 import nl.overheid.aerius.shared.domain.v2.nsl.NSLDispersionLine;
@@ -56,20 +55,14 @@ final class NSLDispersionLine2GML {
     gmlDispersionLine.setRoadProfile(dispersionLine.getRoadProfile());
     gmlDispersionLine.setTreeProfile(dispersionLine.getTreeProfile());
 
-    gmlDispersionLine.setRoad(toReferenceType(roadId));
-    gmlDispersionLine.setCalculationPoint(toReferenceType(calculationPointId));
+    gmlDispersionLine.setRoad(ToGMLUtil.toReferenceType(roadId));
+    gmlDispersionLine.setCalculationPoint(ToGMLUtil.toReferenceType(calculationPointId));
 
     if (dispersionLineFeature.getGeometry() != null) {
       gmlDispersionLine.setLineString(geometry2gml.toXMLLineString(dispersionLineFeature.getGeometry(), new LineString()));
     }
 
     return gmlDispersionLine;
-  }
-
-  private ReferenceType toReferenceType(final String id) {
-    final ReferenceType reference = new ReferenceType(null);
-    reference.setHref("#" + id);
-    return reference;
   }
 
 }

@@ -28,6 +28,7 @@ public final class GMLIdUtil {
   public static final String POINT_PREFIX = "CP";
   public static final String MEASURE_PREFIX = "RMA";
   public static final String BUILDING_PREFIX = "Building";
+  public static final String DIURNAL_VARIATION_PREFIX = "DV";
 
   private static final Pattern ID_ALLOWED_PATTERN = Pattern.compile("([\\w\\.])");
   private static final Pattern NOT_STARTING_WITH_NUMBER = Pattern.compile("^[a-zA-Z]");

@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import nl.overheid.aerius.gml.v5_0.source.TimeUnit;
+import nl.overheid.aerius.gml.v5_0.source.characteristics.AbstractDiurnalVariation;
 import nl.overheid.aerius.gml.v5_0.source.road.ADMSRoad;
 import nl.overheid.aerius.gml.v5_0.source.road.ADMSRoadSideBarrierProperty;
 import nl.overheid.aerius.gml.v5_0.source.road.CustomVehicle;
@@ -85,6 +86,7 @@ class Road2GML extends SpecificSource2GML<nl.overheid.aerius.shared.domain.v2.so
     returnSource.setGradient(emissionSource.getGradient());
     returnSource.setCoverage(emissionSource.getCoverage());
     handleBarriers(emissionSource, returnSource);
+    handleDiurnalVariation(emissionSource, returnSource);
 
     return returnSource;
   }
@@ -193,6 +195,13 @@ class Road2GML extends SpecificSource2GML<nl.overheid.aerius.shared.domain.v2.so
     if (emissionSource.getBarrierRight() != null && emissionSource.getBarrierRight().getBarrierType() != ADMSRoadSideBarrierType.NONE) {
       returnSource.setBarrierRight(toGMLRoadSideBarrier(emissionSource.getBarrierRight()));
     }
+  }
+
+  private void handleDiurnalVariation(final ADMSRoadEmissionSource emissionSource, final ADMSRoad returnSource) {
+    final AbstractDiurnalVariation diurnalVariation = ToGMLUtil.determineDiurnalVariation(
+        emissionSource::getCustomDiurnalVariationId,
+        emissionSource::getStandardDiurnalVariationCode);
+    returnSource.setDiurnalVariation(diurnalVariation);
   }
 
   private ADMSRoadSideBarrierProperty toGMLRoadSideBarrier(final ADMSRoadSideBarrier barrier) {

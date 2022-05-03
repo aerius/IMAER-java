@@ -21,9 +21,7 @@ import nl.overheid.aerius.gml.v5_0.source.characteristics.AbstractDiurnalVariati
 import nl.overheid.aerius.gml.v5_0.source.characteristics.AbstractHeatContent;
 import nl.overheid.aerius.gml.v5_0.source.characteristics.CalculatedHeatContent;
 import nl.overheid.aerius.gml.v5_0.source.characteristics.EmissionSourceCharacteristics;
-import nl.overheid.aerius.gml.v5_0.source.characteristics.ReferenceDiurnalVariation;
 import nl.overheid.aerius.gml.v5_0.source.characteristics.SpecifiedHeatContent;
-import nl.overheid.aerius.gml.v5_0.source.characteristics.StandardDiurnalVariation;
 import nl.overheid.aerius.shared.domain.ops.OutflowDirectionType;
 import nl.overheid.aerius.shared.domain.ops.OutflowVelocityType;
 import nl.overheid.aerius.shared.domain.v2.characteristics.ADMSSourceCharacteristics;
@@ -80,17 +78,9 @@ final class SourceCharacteristics2GML {
   }
 
   private static AbstractDiurnalVariation determineDiurnalVariation(final OPSSourceCharacteristics characteristics) {
-    AbstractDiurnalVariation gmlVariation = null;
-    if (characteristics.getCustomDiurnalVariationId() != null) {
-      final ReferenceDiurnalVariation referenceVariation = new ReferenceDiurnalVariation();
-      referenceVariation.setCustomDiurnalVariation(toReferenceType(characteristics.getCustomDiurnalVariationId()));
-      gmlVariation = referenceVariation;
-    } else if (characteristics.getDiurnalVariation() != null) {
-      final StandardDiurnalVariation standardVariation = new StandardDiurnalVariation();
-      standardVariation.setCode(characteristics.getDiurnalVariation().getCode());
-      gmlVariation = standardVariation;
-    }
-    return gmlVariation;
+    return ToGMLUtil.determineDiurnalVariation(
+        characteristics::getCustomDiurnalVariationId,
+        () -> characteristics.getDiurnalVariation() == null ? null : characteristics.getDiurnalVariation().getCode());
   }
 
   static nl.overheid.aerius.gml.v5_0.source.characteristics.ADMSSourceCharacteristics toGML(
@@ -167,35 +157,13 @@ final class SourceCharacteristics2GML {
   }
 
   private static AbstractDiurnalVariation determineDiurnalVariation(final ADMSSourceCharacteristics characteristics) {
-    AbstractDiurnalVariation gmlVariation = null;
-    if (characteristics.getCustomDiurnalVariationId() != null) {
-      final ReferenceDiurnalVariation referenceVariation = new ReferenceDiurnalVariation();
-      referenceVariation.setCustomDiurnalVariation(toReferenceType(characteristics.getCustomDiurnalVariationId()));
-      gmlVariation = referenceVariation;
-    } else if (characteristics.getStandardDiurnalVariationCode() != null) {
-      final StandardDiurnalVariation standardVariation = new StandardDiurnalVariation();
-      standardVariation.setCode(characteristics.getStandardDiurnalVariationCode());
-      gmlVariation = standardVariation;
-    }
-    return gmlVariation;
+    return ToGMLUtil.determineDiurnalVariation(
+        characteristics::getCustomDiurnalVariationId,
+        characteristics::getStandardDiurnalVariationCode);
   }
 
   private static ReferenceType determineBuilding(final SourceCharacteristics characteristics) {
-    final String validBuildingId = characteristics.getBuildingId() == null
-        ? null
-        : GMLIdUtil.toValidGmlId(characteristics.getBuildingId(), GMLIdUtil.BUILDING_PREFIX);
-    return toReferenceType(validBuildingId);
-  }
-
-  private static ReferenceType toReferenceType(final String id) {
-    final ReferenceType reference;
-    if (id == null) {
-      reference = null;
-    } else {
-      reference = new ReferenceType(null);
-      reference.setHref("#" + id);
-    }
-    return reference;
+    return ToGMLUtil.toReferenceType(characteristics.getBuildingId(), GMLIdUtil.BUILDING_PREFIX);
   }
 
 }

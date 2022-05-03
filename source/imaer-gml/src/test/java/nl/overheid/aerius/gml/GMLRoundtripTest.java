@@ -115,6 +115,7 @@ public class GMLRoundtripTest {
       {"adms_industry", CharacteristicsType.ADMS},
       {"adms_industry_with_custom_diurnal_variation", CharacteristicsType.ADMS},
       {"adms_road", CharacteristicsType.ADMS},
+      {"adms_road_with_custom_diurnal_variation", CharacteristicsType.ADMS},
   };
 
   private static final String LATEST_VERSION = "latest";

@@ -79,15 +79,7 @@ class MaritimeRoute2GML extends SpecificSource2GML<MaritimeShippingEmissionSourc
   }
 
   private ReferenceType toReferenceType(final String id) {
-    final ReferenceType reference;
-    if (id == null) {
-      reference = null;
-    } else {
-      reference = new ReferenceType(null);
-      final String gmlId = GMLIdUtil.toValidGmlId(id, GMLIdUtil.SOURCE_PREFIX);
-      reference.setHref("#" + gmlId);
-    }
-    return reference;
+    return ToGMLUtil.toReferenceType(id, GMLIdUtil.SOURCE_PREFIX);
   }
 
 }
