@@ -33,13 +33,13 @@ public enum CustomDiurnalVariationType {
   THREE_DAY(72, 168) {
 
     @Override
-    public int sum(final List<Integer> values) {
+    public double sum(final List<Double> values) {
       // Special case here: the first day (24 values) should be multiplied by 5.
       if (values.size() != getExpectedNumberOfValues()) {
         throw new IllegalArgumentException("Unexpected number of values for 3-day profile: " + values.size());
       }
-      final int sumWeekdays = values.subList(0, 24).stream().mapToInt(x -> x * 5).sum();
-      final int sumOtherDays = values.subList(24, values.size()).stream().mapToInt(x -> x).sum();
+      final double sumWeekdays = values.subList(0, 24).stream().mapToDouble(x -> x * 5).sum();
+      final double sumOtherDays = values.subList(24, values.size()).stream().mapToDouble(x -> x).sum();
       return sumWeekdays + sumOtherDays;
     }
 
@@ -65,8 +65,8 @@ public enum CustomDiurnalVariationType {
     return expectedTotalNumberOfValues;
   }
 
-  public int sum(final List<Integer> values) {
-    return values.stream().mapToInt(x -> x).sum();
+  public double sum(final List<Double> values) {
+    return values.stream().mapToDouble(x -> x).sum();
   }
 
   public static CustomDiurnalVariationType safeValueOf(final String code) {

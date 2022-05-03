@@ -26,6 +26,6 @@ public interface IsGmlCustomDiurnalVariation {
 
   String getCustomType();
 
-  List<Integer> getValues();
+  List<Double> getValues();
 
 }

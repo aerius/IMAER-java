@@ -84,30 +84,30 @@
                 <imaer:CustomDiurnalVariation gml:id="Custom_DV.1">
                     <imaer:label>Voorbeeld eigen spec</imaer:label>
                     <imaer:customType>DAY</imaer:customType>
-                    <imaer:value>7000</imaer:value>
-                    <imaer:value>10000</imaer:value>
-                    <imaer:value>10000</imaer:value>
-                    <imaer:value>10000</imaer:value>
-                    <imaer:value>10000</imaer:value>
-                    <imaer:value>10000</imaer:value>
-                    <imaer:value>10000</imaer:value>
-                    <imaer:value>10000</imaer:value>
-                    <imaer:value>10000</imaer:value>
-                    <imaer:value>10000</imaer:value>
-                    <imaer:value>10000</imaer:value>
-                    <imaer:value>13000</imaer:value>
-                    <imaer:value>12000</imaer:value>
-                    <imaer:value>12000</imaer:value>
-                    <imaer:value>10000</imaer:value>
-                    <imaer:value>10000</imaer:value>
-                    <imaer:value>10000</imaer:value>
-                    <imaer:value>10000</imaer:value>
-                    <imaer:value>10000</imaer:value>
-                    <imaer:value>10000</imaer:value>
-                    <imaer:value>10000</imaer:value>
-                    <imaer:value>10000</imaer:value>
-                    <imaer:value>10000</imaer:value>
-                    <imaer:value>6000</imaer:value>
+                    <imaer:value>0.7</imaer:value>
+                    <imaer:value>1.0</imaer:value>
+                    <imaer:value>1.0</imaer:value>
+                    <imaer:value>1.0</imaer:value>
+                    <imaer:value>1.0</imaer:value>
+                    <imaer:value>1.0</imaer:value>
+                    <imaer:value>1.0</imaer:value>
+                    <imaer:value>1.0</imaer:value>
+                    <imaer:value>1.0</imaer:value>
+                    <imaer:value>1.0</imaer:value>
+                    <imaer:value>1.0</imaer:value>
+                    <imaer:value>1.3</imaer:value>
+                    <imaer:value>1.2</imaer:value>
+                    <imaer:value>1.2</imaer:value>
+                    <imaer:value>1.0</imaer:value>
+                    <imaer:value>1.0</imaer:value>
+                    <imaer:value>1.0</imaer:value>
+                    <imaer:value>1.0</imaer:value>
+                    <imaer:value>1.0</imaer:value>
+                    <imaer:value>1.0</imaer:value>
+                    <imaer:value>1.0</imaer:value>
+                    <imaer:value>1.0</imaer:value>
+                    <imaer:value>1.0</imaer:value>
+                    <imaer:value>0.6</imaer:value>
                 </imaer:CustomDiurnalVariation>
             </imaer:customDiurnalVariation>
         </imaer:Definitions>

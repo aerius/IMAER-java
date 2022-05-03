@@ -104,6 +104,7 @@ final class SourceCharacteristics2GML {
     determineSourceType(characteristics, returnCharacteristics);
     determineBuoyancyType(characteristics, returnCharacteristics);
     determineEffluxType(characteristics, returnCharacteristics);
+    returnCharacteristics.setDiurnalVariation(determineDiurnalVariation(characteristics));
 
     return returnCharacteristics;
   }
@@ -163,6 +164,20 @@ final class SourceCharacteristics2GML {
       // Not (yet) supported
       throw new AeriusException(ImaerExceptionReason.INTERNAL_ERROR);
     }
+  }
+
+  private static AbstractDiurnalVariation determineDiurnalVariation(final ADMSSourceCharacteristics characteristics) {
+    AbstractDiurnalVariation gmlVariation = null;
+    if (characteristics.getCustomDiurnalVariationId() != null) {
+      final ReferenceDiurnalVariation referenceVariation = new ReferenceDiurnalVariation();
+      referenceVariation.setCustomDiurnalVariation(toReferenceType(characteristics.getCustomDiurnalVariationId()));
+      gmlVariation = referenceVariation;
+    } else if (characteristics.getStandardDiurnalVariationCode() != null) {
+      final StandardDiurnalVariation standardVariation = new StandardDiurnalVariation();
+      standardVariation.setCode(characteristics.getStandardDiurnalVariationCode());
+      gmlVariation = standardVariation;
+    }
+    return gmlVariation;
   }
 
   private static ReferenceType determineBuilding(final SourceCharacteristics characteristics) {

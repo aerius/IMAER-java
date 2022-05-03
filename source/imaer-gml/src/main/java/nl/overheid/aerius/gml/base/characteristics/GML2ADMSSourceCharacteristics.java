@@ -48,6 +48,7 @@ public class GML2ADMSSourceCharacteristics
     setSourceTypeProperties(gmlADMSCharacteristics, returnCharacteristics);
     setBuoyancyTypeProperties(gmlADMSCharacteristics, returnCharacteristics);
     setEffluxTypeProperties(gmlADMSCharacteristics, returnCharacteristics);
+    setDiurnalVariation(gmlADMSCharacteristics, returnCharacteristics);
 
     return returnCharacteristics;
   }
@@ -106,6 +107,22 @@ public class GML2ADMSSourceCharacteristics
     case MOMENTUM:
       // Not (yet) supported
       throw new AeriusException(ImaerExceptionReason.INTERNAL_ERROR);
+    }
+  }
+
+  private void setDiurnalVariation(final IsGmlADMSSourceCharacteristics characteristics,
+      final ADMSSourceCharacteristics returnCharacteristics) {
+    if (characteristics.getDiurnalVariation() == null) {
+      returnCharacteristics.setStandardDiurnalVariationCode(null);
+      returnCharacteristics.setCustomDiurnalVariationId(null);
+    } else if (characteristics.getDiurnalVariation() instanceof IsGmlStandardDiurnalVariation) {
+      final String diurnalVariationCode = ((IsGmlStandardDiurnalVariation) characteristics.getDiurnalVariation()).getCode();
+      returnCharacteristics.setStandardDiurnalVariationCode(diurnalVariationCode);
+      returnCharacteristics.setCustomDiurnalVariationId(null);
+    } else if (characteristics.getDiurnalVariation() instanceof IsGmlReferenceDiurnalVariation) {
+      returnCharacteristics.setStandardDiurnalVariationCode(null);
+      final IsGmlReferenceDiurnalVariation gmlReferenceDiurnalVariation = (IsGmlReferenceDiurnalVariation) characteristics.getDiurnalVariation();
+      returnCharacteristics.setCustomDiurnalVariationId(gmlReferenceDiurnalVariation.getCustomDiurnalVariation().getReferredId());
     }
   }
 

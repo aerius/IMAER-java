@@ -225,7 +225,7 @@ public class GMLVersionWriterV50 implements GMLVersionWriter {
     gmlCustomVariation.setId(customVariation.getGmlId());
     gmlCustomVariation.setLabel(customVariation.getLabel());
     gmlCustomVariation.setCustomType(customVariation.getType().name());
-    gmlCustomVariation.setValues(customVariation.getValues().stream().map(x -> (int) Math.round(x)).collect(Collectors.toList()));
+    gmlCustomVariation.setValues(customVariation.getValues());
     return gmlCustomVariation;
   }
 

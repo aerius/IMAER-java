@@ -17,16 +17,18 @@
 package nl.overheid.aerius.gml.v4_0.definitions;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 import nl.overheid.aerius.gml.base.GMLSchema;
 import nl.overheid.aerius.gml.base.characteristics.IsGmlCustomDiurnalVariation;
 import nl.overheid.aerius.gml.v4_0.base.CalculatorSchema;
 
-@XmlType(name = "CustomDiurnalVariation", namespace = CalculatorSchema.NAMESPACE, propOrder = {"label", "customType", "values"})
+@XmlType(name = "CustomDiurnalVariation", namespace = CalculatorSchema.NAMESPACE, propOrder = {"label", "customType", "intValues"})
 public class CustomDiurnalVariation implements IsGmlCustomDiurnalVariation {
 
   private String id;
@@ -65,12 +67,17 @@ public class CustomDiurnalVariation implements IsGmlCustomDiurnalVariation {
   }
 
   @Override
+  @XmlTransient
+  public List<Double> getValues() {
+    return values == null ? null : values.stream().map(Double::valueOf).collect(Collectors.toList());
+  }
+
   @XmlElement(name = "value", namespace = CalculatorSchema.NAMESPACE)
-  public List<Integer> getValues() {
+  public List<Integer> getIntValues() {
     return values;
   }
 
-  public void setValues(final List<Integer> values) {
+  public void setIntValues(final List<Integer> values) {
     this.values = values;
   }
 

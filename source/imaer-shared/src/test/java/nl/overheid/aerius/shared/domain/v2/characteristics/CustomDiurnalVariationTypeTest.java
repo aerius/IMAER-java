@@ -32,7 +32,7 @@ class CustomDiurnalVariationTypeTest {
   @Test
   void testSumDay() {
     final CustomDiurnalVariationType testingType = CustomDiurnalVariationType.DAY;
-    final List<Integer> values = IntStream.range(100, 124).boxed().collect(Collectors.toList());
+    final List<Double> values = IntStream.range(100, 124).asDoubleStream().boxed().collect(Collectors.toList());
     final int expected = IntStream.range(100, 124).sum();
     assertEquals(expected, testingType.sum(values), "Should use normal summation");
   }
@@ -40,7 +40,7 @@ class CustomDiurnalVariationTypeTest {
   @Test
   void testSumThreeDay() {
     final CustomDiurnalVariationType testingType = CustomDiurnalVariationType.THREE_DAY;
-    final List<Integer> values = IntStream.range(100, 172).boxed().collect(Collectors.toList());
+    final List<Double> values = IntStream.range(100, 172).asDoubleStream().boxed().collect(Collectors.toList());
     final int expected = IntStream.range(100, 124).map(x -> x * 5).sum() + IntStream.range(124, 172).sum();
     assertEquals(expected, testingType.sum(values), "Should use special case summation");
   }
