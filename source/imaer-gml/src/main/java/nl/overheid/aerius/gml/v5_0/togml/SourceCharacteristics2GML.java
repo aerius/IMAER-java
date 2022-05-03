@@ -83,7 +83,8 @@ final class SourceCharacteristics2GML {
     AbstractDiurnalVariation gmlVariation = null;
     if (characteristics.getCustomDiurnalVariationId() != null) {
       final ReferenceDiurnalVariation referenceVariation = new ReferenceDiurnalVariation();
-      referenceVariation.setCustomDiurnalVariation(toReferenceType(characteristics.getCustomDiurnalVariationId()));
+      referenceVariation.setCustomDiurnalVariation(
+          ToGMLUtil.toReferenceType(characteristics.getCustomDiurnalVariationId(), GMLIdUtil.DIURNAL_VARIATION_PREFIX));
       gmlVariation = referenceVariation;
     } else if (characteristics.getDiurnalVariation() != null) {
       final StandardDiurnalVariation standardVariation = new StandardDiurnalVariation();
@@ -170,7 +171,8 @@ final class SourceCharacteristics2GML {
     AbstractDiurnalVariation gmlVariation = null;
     if (characteristics.getCustomDiurnalVariationId() != null) {
       final ReferenceDiurnalVariation referenceVariation = new ReferenceDiurnalVariation();
-      referenceVariation.setCustomDiurnalVariation(toReferenceType(characteristics.getCustomDiurnalVariationId()));
+      referenceVariation.setCustomDiurnalVariation(
+          ToGMLUtil.toReferenceType(characteristics.getCustomDiurnalVariationId(), GMLIdUtil.DIURNAL_VARIATION_PREFIX));
       gmlVariation = referenceVariation;
     } else if (characteristics.getStandardDiurnalVariationCode() != null) {
       final StandardDiurnalVariation standardVariation = new StandardDiurnalVariation();
@@ -181,21 +183,7 @@ final class SourceCharacteristics2GML {
   }
 
   private static ReferenceType determineBuilding(final SourceCharacteristics characteristics) {
-    final String validBuildingId = characteristics.getBuildingId() == null
-        ? null
-        : GMLIdUtil.toValidGmlId(characteristics.getBuildingId(), GMLIdUtil.BUILDING_PREFIX);
-    return toReferenceType(validBuildingId);
-  }
-
-  private static ReferenceType toReferenceType(final String id) {
-    final ReferenceType reference;
-    if (id == null) {
-      reference = null;
-    } else {
-      reference = new ReferenceType(null);
-      reference.setHref("#" + id);
-    }
-    return reference;
+    return ToGMLUtil.toReferenceType(characteristics.getBuildingId(), GMLIdUtil.BUILDING_PREFIX);
   }
 
 }

@@ -59,6 +59,7 @@ import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceFeature;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 import nl.overheid.aerius.util.OptionsMetadataUtil;
+import nl.overheid.aerius.util.gml.GMLIdUtil;
 
 /**
  * GML proxy for version 5.0.
@@ -222,7 +223,8 @@ public class GMLVersionWriterV50 implements GMLVersionWriter {
 
   private CustomDiurnalVariation convert(final nl.overheid.aerius.shared.domain.v2.characteristics.CustomDiurnalVariation customVariation) {
     final CustomDiurnalVariation gmlCustomVariation = new CustomDiurnalVariation();
-    gmlCustomVariation.setId(customVariation.getGmlId());
+    final String validGmlId = GMLIdUtil.toValidGmlId(customVariation.getGmlId(), getNameSpace(), GMLIdUtil.DIURNAL_VARIATION_PREFIX);
+    gmlCustomVariation.setId(validGmlId);
     gmlCustomVariation.setLabel(customVariation.getLabel());
     gmlCustomVariation.setCustomType(customVariation.getType().name());
     gmlCustomVariation.setValues(customVariation.getValues());
