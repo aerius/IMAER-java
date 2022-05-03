@@ -17,6 +17,7 @@
 package nl.overheid.aerius.gml.base.characteristics;
 
 import nl.overheid.aerius.gml.base.GMLConversionData;
+import nl.overheid.aerius.gml.base.util.DiurnalVariationUtil;
 import nl.overheid.aerius.shared.domain.ops.DiurnalVariation;
 import nl.overheid.aerius.shared.domain.v2.characteristics.HeatContentType;
 import nl.overheid.aerius.shared.domain.v2.characteristics.OPSSourceCharacteristics;
@@ -68,15 +69,16 @@ public class GML2OPSSourceCharacteristics extends GML2SourceCharacteristics<OPSS
 
   private void fromGMLToDiurnalVariation(final IsGmlOPSSourceCharacteristics characteristics,
       final OPSSourceCharacteristics returnCharacteristics, final OPSSourceCharacteristics defaultCharacteristics) {
-    if (characteristics.getDiurnalVariation() == null) {
-      returnCharacteristics.setDiurnalVariation(defaultCharacteristics.getDiurnalVariation());
-    } else if (characteristics.getDiurnalVariation() instanceof IsGmlStandardDiurnalVariation) {
-      final String diurnalVariationCode = ((IsGmlStandardDiurnalVariation) characteristics.getDiurnalVariation()).getCode();
-      returnCharacteristics.setDiurnalVariation(DiurnalVariation.safeValueOf(diurnalVariationCode));
-    } else if (characteristics.getDiurnalVariation() instanceof IsGmlReferenceDiurnalVariation) {
-      final IsGmlReferenceDiurnalVariation gmlReferenceDiurnalVariation = (IsGmlReferenceDiurnalVariation) characteristics.getDiurnalVariation();
-      returnCharacteristics.setCustomDiurnalVariationId(gmlReferenceDiurnalVariation.getCustomDiurnalVariation().getReferredId());
-    }
+    DiurnalVariationUtil.setDiurnalVariation(characteristics.getDiurnalVariation(),
+        code -> setStandardDiurnalVariation(returnCharacteristics, defaultCharacteristics, code),
+        returnCharacteristics::setCustomDiurnalVariationId);
+  }
+
+  private void setStandardDiurnalVariation(final OPSSourceCharacteristics returnCharacteristics,
+      final OPSSourceCharacteristics defaultCharacteristics, final String code) {
+    returnCharacteristics.setDiurnalVariation(code == null
+        ? defaultCharacteristics.getDiurnalVariation()
+        : DiurnalVariation.safeValueOf(code));
   }
 
   private void fromGMLToHeatContent(final IsGmlBaseOPSSourceCharacteristics characteristics,

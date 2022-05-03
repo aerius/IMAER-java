@@ -19,7 +19,11 @@ package nl.overheid.aerius.gml.v5_0.togml;
 import nl.overheid.aerius.gml.v5_0.base.ReferenceType;
 import nl.overheid.aerius.util.gml.GMLIdUtil;
 
-public class ToGMLUtil {
+public final class ToGMLUtil {
+
+  private ToGMLUtil() {
+    // Util class
+  }
 
   /**
    * @param gmlId Id to reference, should not be null and already a valid GML ID.

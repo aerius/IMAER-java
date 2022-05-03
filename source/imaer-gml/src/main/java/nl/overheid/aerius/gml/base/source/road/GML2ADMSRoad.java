@@ -21,8 +21,7 @@ import java.util.function.Supplier;
 
 import nl.overheid.aerius.gml.base.GMLConversionData;
 import nl.overheid.aerius.gml.base.IsGmlProperty;
-import nl.overheid.aerius.gml.base.characteristics.IsGmlReferenceDiurnalVariation;
-import nl.overheid.aerius.gml.base.characteristics.IsGmlStandardDiurnalVariation;
+import nl.overheid.aerius.gml.base.util.DiurnalVariationUtil;
 import nl.overheid.aerius.shared.domain.v2.source.ADMSRoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.road.ADMSRoadSideBarrier;
 import nl.overheid.aerius.shared.exception.AeriusException;
@@ -78,18 +77,9 @@ public class GML2ADMSRoad<T extends IsGmlADMSRoad> extends GML2Road<T, ADMSRoadE
   }
 
   private void setDiurnalVariation(final T source, final ADMSRoadEmissionSource emissionSource) {
-    if (source.getDiurnalVariation() == null) {
-      emissionSource.setStandardDiurnalVariationCode(null);
-      emissionSource.setCustomDiurnalVariationId(null);
-    } else if (source.getDiurnalVariation() instanceof IsGmlStandardDiurnalVariation) {
-      final String diurnalVariationCode = ((IsGmlStandardDiurnalVariation) source.getDiurnalVariation()).getCode();
-      emissionSource.setStandardDiurnalVariationCode(diurnalVariationCode);
-      emissionSource.setCustomDiurnalVariationId(null);
-    } else if (source.getDiurnalVariation() instanceof IsGmlReferenceDiurnalVariation) {
-      emissionSource.setStandardDiurnalVariationCode(null);
-      final IsGmlReferenceDiurnalVariation gmlReferenceDiurnalVariation = (IsGmlReferenceDiurnalVariation) source.getDiurnalVariation();
-      emissionSource.setCustomDiurnalVariationId(gmlReferenceDiurnalVariation.getCustomDiurnalVariation().getReferredId());
-    }
+    DiurnalVariationUtil.setDiurnalVariation(source.getDiurnalVariation(),
+        emissionSource::setStandardDiurnalVariationCode,
+        emissionSource::setCustomDiurnalVariationId);
   }
 
 }
