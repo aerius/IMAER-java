@@ -39,6 +39,7 @@ public class WNBCalculationOptions implements Serializable {
   private boolean useReceptorHeights;
   private OPSOptions opsOptions;
   private String opsVersion;
+  private String preSRMVersion;
 
   private boolean disableSubReceptors;
 
@@ -110,5 +111,13 @@ public class WNBCalculationOptions implements Serializable {
 
   public void setOpsVersion(final String opsVersion) {
     this.opsVersion = opsVersion;
+  }
+
+  public String getPreSRMVersion() {
+    return preSRMVersion;
+  }
+
+  public void setPreSRMVersion(String preSRMVersion) {
+    this.preSRMVersion = preSRMVersion;
   }
 }
