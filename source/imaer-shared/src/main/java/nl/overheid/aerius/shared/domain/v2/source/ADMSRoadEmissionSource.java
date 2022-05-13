@@ -32,9 +32,6 @@ public class ADMSRoadEmissionSource extends RoadEmissionSource {
   private ADMSRoadSideBarrier barrierLeft;
   private ADMSRoadSideBarrier barrierRight;
 
-  private String standardDiurnalVariationCode;
-  private String customDiurnalVariationId;
-
   public double getWidth() {
     return width;
   }
@@ -81,22 +78,6 @@ public class ADMSRoadEmissionSource extends RoadEmissionSource {
 
   public void setBarrierRight(final ADMSRoadSideBarrier barrierRight) {
     this.barrierRight = barrierRight;
-  }
-
-  public String getStandardDiurnalVariationCode() {
-    return standardDiurnalVariationCode;
-  }
-
-  public void setStandardDiurnalVariationCode(final String standardDiurnalVariationCode) {
-    this.standardDiurnalVariationCode = standardDiurnalVariationCode;
-  }
-
-  public String getCustomDiurnalVariationId() {
-    return customDiurnalVariationId;
-  }
-
-  public void setCustomDiurnalVariationId(final String customDiurnalVariationId) {
-    this.customDiurnalVariationId = customDiurnalVariationId;
   }
 
   @Override
