@@ -28,7 +28,7 @@ public class CustomDiurnalVariation implements Serializable {
    * As long as the sum of all values is equal to the expected sum (which should be 1 * number of values),
    * it's considered OK.
    */
-  public static final double ALLOWED_EPSILON = 0.00001;
+  public static final double ALLOWED_EPSILON = 0.5;
 
   private String gmlId;
   private String label;
