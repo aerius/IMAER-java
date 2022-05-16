@@ -40,6 +40,9 @@ public class WNBCalculationOptions implements Serializable {
   private OPSOptions opsOptions;
   private String opsVersion;
   private String preSRMVersion;
+  private String luVersion;
+  private String depositionVelocityVersion;
+  private String windveldenVersion;
 
   private boolean disableSubReceptors;
 
@@ -119,5 +122,29 @@ public class WNBCalculationOptions implements Serializable {
 
   public void setPreSRMVersion(String preSRMVersion) {
     this.preSRMVersion = preSRMVersion;
+  }
+
+  public String getLuVersion() {
+    return luVersion;
+  }
+
+  public void setLuVersion(String luVersion) {
+    this.luVersion = luVersion;
+  }
+
+  public String getDepositionVelocityVersion() {
+    return depositionVelocityVersion;
+  }
+
+  public void setDepositionVelocityVersion(String depositionVelocityVersion) {
+    this.depositionVelocityVersion = depositionVelocityVersion;
+  }
+
+  public String getWindveldenVersion() {
+    return windveldenVersion;
+  }
+
+  public void setWindveldenVersion(String windveldenVersion) {
+    this.windveldenVersion = windveldenVersion;
   }
 }
