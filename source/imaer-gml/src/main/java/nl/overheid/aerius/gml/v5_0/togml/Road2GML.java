@@ -37,6 +37,7 @@ import nl.overheid.aerius.gml.v5_0.source.road.SpecificVehicle;
 import nl.overheid.aerius.gml.v5_0.source.road.StandardVehicle;
 import nl.overheid.aerius.gml.v5_0.source.road.VehiclesProperty;
 import nl.overheid.aerius.shared.domain.Substance;
+import nl.overheid.aerius.shared.domain.v2.characteristics.ADMSSourceCharacteristics;
 import nl.overheid.aerius.shared.domain.v2.source.ADMSRoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.SRM1RoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.SRM2RoadEmissionSource;
@@ -198,10 +199,13 @@ class Road2GML extends SpecificSource2GML<nl.overheid.aerius.shared.domain.v2.so
   }
 
   private void handleDiurnalVariation(final ADMSRoadEmissionSource emissionSource, final ADMSRoad returnSource) {
-    final AbstractDiurnalVariation diurnalVariation = ToGMLUtil.determineDiurnalVariation(
-        emissionSource::getCustomDiurnalVariationId,
-        emissionSource::getStandardDiurnalVariationCode);
-    returnSource.setDiurnalVariation(diurnalVariation);
+    if (emissionSource.getCharacteristics() instanceof ADMSSourceCharacteristics) {
+      final ADMSSourceCharacteristics characteristics = (ADMSSourceCharacteristics) emissionSource.getCharacteristics();
+      final AbstractDiurnalVariation diurnalVariation = ToGMLUtil.determineDiurnalVariation(
+          characteristics::getCustomDiurnalVariationId,
+          characteristics::getStandardDiurnalVariationCode);
+      returnSource.setDiurnalVariation(diurnalVariation);
+    }
   }
 
   private ADMSRoadSideBarrierProperty toGMLRoadSideBarrier(final ADMSRoadSideBarrier barrier) {

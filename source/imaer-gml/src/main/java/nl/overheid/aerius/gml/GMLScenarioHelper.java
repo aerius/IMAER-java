@@ -62,6 +62,7 @@ public final class GMLScenarioHelper {
         .nslDispersionLines(situation.getNslDispersionLinesList())
         .nslCorrections(situation.getNslCorrections())
         .nslMeasures(situation.getNslMeasuresList())
+        .definitions(situation.getDefinitions())
         .build();
   }
 

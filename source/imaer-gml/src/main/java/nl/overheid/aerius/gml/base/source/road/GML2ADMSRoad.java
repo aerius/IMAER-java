@@ -22,6 +22,8 @@ import java.util.function.Supplier;
 import nl.overheid.aerius.gml.base.GMLConversionData;
 import nl.overheid.aerius.gml.base.IsGmlProperty;
 import nl.overheid.aerius.gml.base.util.DiurnalVariationUtil;
+import nl.overheid.aerius.shared.domain.v2.characteristics.ADMSSourceCharacteristics;
+import nl.overheid.aerius.shared.domain.v2.characteristics.adms.SourceType;
 import nl.overheid.aerius.shared.domain.v2.source.ADMSRoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.road.ADMSRoadSideBarrier;
 import nl.overheid.aerius.shared.exception.AeriusException;
@@ -77,9 +79,12 @@ public class GML2ADMSRoad<T extends IsGmlADMSRoad> extends GML2Road<T, ADMSRoadE
   }
 
   private void setDiurnalVariation(final T source, final ADMSRoadEmissionSource emissionSource) {
+    final ADMSSourceCharacteristics characteristics = new ADMSSourceCharacteristics();
+    characteristics.setSourceType(SourceType.ROAD);
     DiurnalVariationUtil.setDiurnalVariation(source.getDiurnalVariation(),
-        emissionSource::setStandardDiurnalVariationCode,
-        emissionSource::setCustomDiurnalVariationId);
+        characteristics::setStandardDiurnalVariationCode,
+        characteristics::setCustomDiurnalVariationId);
+    emissionSource.setCharacteristics(characteristics);
   }
 
 }
