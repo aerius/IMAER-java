@@ -120,7 +120,7 @@ public class WNBCalculationOptions implements Serializable {
     return preSRMVersion;
   }
 
-  public void setPreSRMVersion(String preSRMVersion) {
+  public void setPreSRMVersion(final String preSRMVersion) {
     this.preSRMVersion = preSRMVersion;
   }
 
@@ -128,7 +128,7 @@ public class WNBCalculationOptions implements Serializable {
     return luVersion;
   }
 
-  public void setLuVersion(String luVersion) {
+  public void setLuVersion(final String luVersion) {
     this.luVersion = luVersion;
   }
 
@@ -136,7 +136,7 @@ public class WNBCalculationOptions implements Serializable {
     return depositionVelocityVersion;
   }
 
-  public void setDepositionVelocityVersion(String depositionVelocityVersion) {
+  public void setDepositionVelocityVersion(final String depositionVelocityVersion) {
     this.depositionVelocityVersion = depositionVelocityVersion;
   }
 
@@ -144,7 +144,7 @@ public class WNBCalculationOptions implements Serializable {
     return windveldenVersion;
   }
 
-  public void setWindveldenVersion(String windveldenVersion) {
+  public void setWindveldenVersion(final String windveldenVersion) {
     this.windveldenVersion = windveldenVersion;
   }
 }
