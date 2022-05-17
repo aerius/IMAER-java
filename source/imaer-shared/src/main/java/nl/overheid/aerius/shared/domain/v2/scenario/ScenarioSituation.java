@@ -43,7 +43,7 @@ public class ScenarioSituation implements Serializable {
   private String name;
   private SituationType type;
   private Double nettingFactor;
-  private Definitions definitions;
+  private Definitions definitions = new Definitions();
   private final FeatureCollection<EmissionSourceFeature> sources = new FeatureCollection<>();
   private final FeatureCollection<NSLDispersionLineFeature> nslDispersionLines = new FeatureCollection<>();
   private final FeatureCollection<NSLMeasureFeature> nslMeasures = new FeatureCollection<>();
