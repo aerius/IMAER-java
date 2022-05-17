@@ -3,6 +3,7 @@
   "year" : 2030,
   "name" : "Voorbeeld situatie",
   "type" : "PROPOSED",
+  "definitions" : { },
   "buildings" : {
     "type" : "FeatureCollection",
     "crs" : {
