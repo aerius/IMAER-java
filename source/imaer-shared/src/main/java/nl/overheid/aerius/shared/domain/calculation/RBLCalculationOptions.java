@@ -27,10 +27,7 @@ public class RBLCalculationOptions implements Serializable {
 
   private int monitorSrm2Year;
 
-  private String preSRMVersion;
-  private String luVersion;
-  private String depositionVelocityVersion;
-  private String windveldenVersion;
+  private final SRMVersionOptions srmVersionOptions = new SRMVersionOptions();
 
   public boolean isIncludeMonitorSrm2Network() {
     return monitorSrm2Year > 0;
@@ -44,35 +41,7 @@ public class RBLCalculationOptions implements Serializable {
     this.monitorSrm2Year = monitorSrm2Year;
   }
 
-  public String getPreSRMVersion() {
-    return preSRMVersion;
-  }
-
-  public void setPreSRMVersion(final String preSRMVersion) {
-    this.preSRMVersion = preSRMVersion;
-  }
-
-  public String getLuVersion() {
-    return luVersion;
-  }
-
-  public void setLuVersion(final String luVersion) {
-    this.luVersion = luVersion;
-  }
-
-  public String getWindveldenVersion() {
-    return windveldenVersion;
-  }
-
-  public void setWindveldenVersion(final String windveldenVersion) {
-    this.windveldenVersion = windveldenVersion;
-  }
-
-  public String getDepositionVelocityVersion() {
-    return depositionVelocityVersion;
-  }
-
-  public void setDepositionVelocityVersion(final String depositionVelocityVersion) {
-    this.depositionVelocityVersion = depositionVelocityVersion;
+  public SRMVersionOptions getSrmVersionOptions() {
+    return srmVersionOptions;
   }
 }
