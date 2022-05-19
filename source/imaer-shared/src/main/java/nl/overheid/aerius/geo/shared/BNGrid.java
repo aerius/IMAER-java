@@ -32,7 +32,7 @@ public class BNGrid extends EPSG {
 
   private static final double[] RESOLUTIONS = {2500, 1000, 500, 200, 100, 50, 25, 10, 5, 2, 1, 0.5, 0.25};
   private static final float MAX_RESOLUTION = 0;
-  private static final int ZOOM_LEVEL = 13;
+  private static final int ZOOM_LEVEL = 15;
   private static final String UNIT = "km";
   /**
    * Official boundaries of the BN grid extent of the map.
