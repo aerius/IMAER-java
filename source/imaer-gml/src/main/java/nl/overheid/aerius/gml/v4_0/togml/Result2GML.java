@@ -110,7 +110,6 @@ final class Result2GML {
       //treat as receptor point.
       final ReceptorPoint returnReceptorPoint = new ReceptorPoint();
       returnReceptorPoint.setReceptorPointId(aeriusPoint.getId());
-      returnReceptorPoint.setEdgeEffect(((nl.overheid.aerius.shared.domain.v2.point.ReceptorPoint) aeriusPoint).getEdgeEffect());
       //receptor are represented by a hexagon.
       final Geometry geometry = HexagonUtil.createHexagon(point, zoomLevel1);
       if (geometry instanceof nl.overheid.aerius.shared.domain.v2.geojson.Polygon) {

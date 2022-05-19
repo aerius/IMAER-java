@@ -17,7 +17,6 @@
 package nl.overheid.aerius.gml.v4_0.result;
 
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 import nl.overheid.aerius.gml.base.result.IsGmlReceptorPoint;
@@ -30,7 +29,6 @@ import nl.overheid.aerius.gml.v4_0.base.CalculatorSchema;
 public class ReceptorPoint extends AbstractCalculationPoint implements IsGmlReceptorPoint {
 
   private int receptorPointId;
-  private Boolean edgeEffect;
 
   @Override
   @XmlAttribute
@@ -40,15 +38,6 @@ public class ReceptorPoint extends AbstractCalculationPoint implements IsGmlRece
 
   public void setReceptorPointId(final int receptorPointId) {
     this.receptorPointId = receptorPointId;
-  }
-
-  @XmlElement(namespace = CalculatorSchema.NAMESPACE)
-  public Boolean getEdgeEffect() {
-    return edgeEffect;
-  }
-
-  public void setEdgeEffect(final Boolean edgeEffect) {
-    this.edgeEffect = edgeEffect;
   }
 
 }

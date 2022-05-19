@@ -74,7 +74,6 @@
                     <imaer:value>968.3</imaer:value>
                 </imaer:CalculationResult>
             </imaer:result>
-            <imaer:edgeEffect>false</imaer:edgeEffect>
         </imaer:ReceptorPoint>
     </imaer:featureMember>
     <imaer:featureMember>
@@ -134,7 +133,6 @@
                     <imaer:value>201523.2</imaer:value>
                 </imaer:CalculationResult>
             </imaer:result>
-            <imaer:edgeEffect>true</imaer:edgeEffect>
         </imaer:ReceptorPoint>
     </imaer:featureMember>
     <imaer:featureMember>
