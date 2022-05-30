@@ -27,6 +27,8 @@ public class RBLCalculationOptions implements Serializable {
 
   private int monitorSrm2Year;
 
+  private String srmVersion;
+
   public boolean isIncludeMonitorSrm2Network() {
     return monitorSrm2Year > 0;
   }
@@ -37,5 +39,13 @@ public class RBLCalculationOptions implements Serializable {
 
   public void setMonitorSrm2Year(final int monitorSrm2Year) {
     this.monitorSrm2Year = monitorSrm2Year;
+  }
+
+  public String getSrmVersion() {
+    return srmVersion;
+  }
+
+  public void setSrmVersion(String srmVersion) {
+    this.srmVersion = srmVersion;
   }
 }
