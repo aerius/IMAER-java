@@ -140,7 +140,7 @@ public class GMLValidateErrorsTest {
 
   @Test
   public void testGMLGeometryInvalid_5215() throws IOException {
-    assertResult("fout_5215_invalid_geometry", "GML Geometry invalid", ImaerExceptionReason.GEOMETRY_INVALID, IllegalArgumentException.class);
+    assertResult("fout_5215_invalid_geometry", "GML Geometry invalid", ImaerExceptionReason.GML_GEOMETRY_INVALID);
   }
 
   @Test

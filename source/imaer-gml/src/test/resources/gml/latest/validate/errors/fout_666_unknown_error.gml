@@ -24,15 +24,12 @@
             </imaer:emissionSourceCharacteristics>
             <imaer:geometry>
                 <imaer:EmissionSourceGeometry>
-                    <imaer:GM_Surface>
-                        <gml:Polygon srsName="urn:ogc:def:crs:EPSG::28992" gml:id="ES.1.SURFACE">
-                            <gml:exterior>
-								<gml:LinearRing> <!-- test with closing coordinate missing (e666) -->
-									<gml:posList>101053.18000000002 449287.4400000002 105031.41999999997 449179.92 107181.81999999998 445094.1599999998 104923.89999999998 441115.91999999987 101160.69999999998 441223.44000000006 98902.78000000001 445094.16 </gml:posList>
-								</gml:LinearRing>
-                            </gml:exterior>
-                        </gml:Polygon>
-                    </imaer:GM_Surface>
+                    <imaer:GM_Curve>
+                        <gml:LineString srsName="urn:ogc:def:crs:EPSG::28992" gml:id="ES.1.CURVE">
+                            <!-- test with invalid number of coordinates (e666) -->
+                            <gml:posList>449287.4400000002 105031.41999999997</gml:posList>
+                        </gml:LineString>
+                    </imaer:GM_Curve>
                 </imaer:EmissionSourceGeometry>
             </imaer:geometry>
             <imaer:emission>
