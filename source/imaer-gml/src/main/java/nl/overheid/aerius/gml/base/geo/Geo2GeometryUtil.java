@@ -98,7 +98,13 @@ public final class Geo2GeometryUtil {
     final JAXBElement<LinearRingType> exteriorRing = (JAXBElement<LinearRingType>) polygonType.getExterior().getAbstractRing();
     final List<Double> values = exteriorRing.getValue().getPosList().getValue();
     final Coordinate[] shellCoordinates = lineString2Coordinates(values);
-    final LinearRing shell = geometryFactory.createLinearRing(shellCoordinates);
+    LinearRing shell;
+    try {
+      shell = geometryFactory.createLinearRing(shellCoordinates);
+      // can occur when the polygon is not closed
+    } catch (final IllegalArgumentException e) {
+      throw new AeriusException(ImaerExceptionReason.GML_GEOMETRY_INVALID);
+    }
 
     final List<LinearRing> holes = new ArrayList<>();
     final List<Coordinate[]> holesCoordinates = new ArrayList<>();
