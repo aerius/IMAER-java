@@ -33,12 +33,18 @@ public interface GeometryCalculator {
   double determineMeasure(Geometry geometry);
 
   /**
-   * Determine the bounding box for a list of geometries
+   * Determine the bounding box for a list of geometries.
+   *
+   * A single point or a set of points at the same coordinates returns a Point.
+   * All other combinations of geometries return a rectangle that bounds all geometries.
    */
   Geometry determineBoundingBox(List<Geometry> geometries) throws AeriusException;
 
   /**
-   * Scale a bounding box around its centre by the scale factor, or up to a size of minDimension
+   * Scale a bounding box around its centre by the scale factor, or a size of minDimension.
+   *
+   * For a Point this will return a square centered at the point of minDimension.
+   * For a Polygon this will return a rectangle of scaled width and height, or minDimension x minDimension, whichever is highest for each dimension.
    */
   Geometry scaleBoundingBox(Geometry geometry, double scale, double minDimension) throws AeriusException;
 }
