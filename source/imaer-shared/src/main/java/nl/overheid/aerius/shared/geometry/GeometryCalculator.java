@@ -16,7 +16,10 @@
  */
 package nl.overheid.aerius.shared.geometry;
 
+import java.util.List;
+
 import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
+import nl.overheid.aerius.shared.exception.AeriusException;
 
 public interface GeometryCalculator {
 
@@ -29,4 +32,13 @@ public interface GeometryCalculator {
    */
   double determineMeasure(Geometry geometry);
 
+  /**
+   * Determine the bounding box for a list of geometries
+   */
+  Geometry determineBoundingBox(List<Geometry> geometries) throws AeriusException;
+
+  /**
+   * Scale a bounding box around its centre by the scale factor, or up to a size of minDimension
+   */
+  Geometry scaleBoundingBox(Geometry geometry, double scale, double minDimension) throws AeriusException;
 }

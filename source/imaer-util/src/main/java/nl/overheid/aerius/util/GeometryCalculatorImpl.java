@@ -16,6 +16,15 @@
  */
 package nl.overheid.aerius.util;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.locationtech.jts.geom.Envelope;
+import org.locationtech.jts.geom.GeometryCollection;
+import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.util.AffineTransformation;
+import org.locationtech.jts.util.GeometricShapeFactory;
+
 import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.geometry.GeometryCalculator;
@@ -65,4 +74,49 @@ public class GeometryCalculatorImpl implements GeometryCalculator {
     return GeometryUtil.getGeometry(geometry);
   }
 
+  @Override
+  public Geometry determineBoundingBox(final List<Geometry> geometries) throws AeriusException {
+    final GeometryCollection geometryCollection = toGeometryCollection(geometries);
+    final org.locationtech.jts.geom.Geometry envelope = geometryCollection.getEnvelope();
+    return GeometryUtil.getAeriusGeometry(envelope);
+  }
+
+  private GeometryCollection toGeometryCollection(final List<Geometry> geometries) throws AeriusException {
+    final List<org.locationtech.jts.geom.Geometry> list = new ArrayList<>();
+    for (final Geometry geometry : geometries) {
+      final org.locationtech.jts.geom.Geometry jtsGeometry = toJtsGeometry(geometry);
+      list.add(jtsGeometry);
+    }
+
+    final org.locationtech.jts.geom.Geometry[] objects = list.toArray(new org.locationtech.jts.geom.Geometry[0]);
+    return new GeometryCollection(objects, new GeometryFactory());
+  }
+
+  @Override
+  public Geometry scaleBoundingBox(final Geometry boundingBox, final double scale, final double minDimension) throws AeriusException {
+    final org.locationtech.jts.geom.Geometry geometry = toJtsGeometry(boundingBox);
+
+    if (org.locationtech.jts.geom.Geometry.TYPENAME_POINT.equals(geometry.getGeometryType())) {
+      final GeometricShapeFactory geometricShapeFactory = new GeometricShapeFactory();
+      geometricShapeFactory.setCentre(geometry.getCoordinate());
+      geometricShapeFactory.setSize(minDimension);
+      geometricShapeFactory.setNumPoints(4);
+      return GeometryUtil.getAeriusGeometry(geometricShapeFactory.createRectangle());
+    }
+
+    return scaleRectangle(geometry, scale, minDimension);
+  }
+
+  private Geometry scaleRectangle(final org.locationtech.jts.geom.Geometry geometry, final double scale, final double minDimension)
+      throws AeriusException {
+    final Envelope envelopeInternal = geometry.getEnvelopeInternal();
+
+    final AffineTransformation scaling = AffineTransformation.scaleInstance(
+        Math.max(scale * envelopeInternal.getWidth(), minDimension / envelopeInternal.getWidth()),
+        Math.max(scale * envelopeInternal.getHeight(), minDimension / envelopeInternal.getHeight()),
+        envelopeInternal.centre().x,
+        envelopeInternal.centre().y);
+
+    return GeometryUtil.getAeriusGeometry(scaling.transform(geometry));
+  }
 }

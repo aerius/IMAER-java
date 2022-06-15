@@ -17,12 +17,18 @@
 package nl.overheid.aerius.util;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.Arrays;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
 import nl.overheid.aerius.shared.domain.v2.geojson.LineString;
 import nl.overheid.aerius.shared.domain.v2.geojson.Point;
 import nl.overheid.aerius.shared.domain.v2.geojson.Polygon;
+import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.geometry.GeometryCalculator;
 
 class GeometryCalculatorImplTest {
@@ -71,4 +77,116 @@ class GeometryCalculatorImplTest {
     assertEquals(0.0, calculator.determineMeasure(polygon));
   }
 
+  @Test
+  void testDetermineBoundingBoxForPoint() throws AeriusException {
+    final GeometryCalculator calculator = new GeometryCalculatorImpl();
+    final Point p = new Point(0, 0);
+
+    assertEquals(p, calculator.determineBoundingBox(List.of(p)),"The bounding box of a single point should be that point.");
+  }
+
+  @Test
+  void testDetermineBoundingBoxForLine() throws AeriusException {
+    final GeometryCalculator calculator = new GeometryCalculatorImpl();
+    final LineString l = new LineString();
+    l.setCoordinates(new double[][] {{0, 0}, {1, 1}});
+
+    final Polygon expectedEnvelope = new Polygon();
+    expectedEnvelope.setCoordinates(new double[][][] {{{0, 0}, {0, 1}, {1, 1}, {1, 0}, {0, 0}}});
+    assertEquals(expectedEnvelope, calculator.determineBoundingBox(List.of(l)),
+        "The bounding box of a line should be a polygon around that line aligned with the grid");
+  }
+
+  @Test
+  void testDetermineBoundingBoxForPolygon() throws AeriusException {
+    final GeometryCalculator calculator = new GeometryCalculatorImpl();
+    final Polygon p = new Polygon();
+    p.setCoordinates(new double[][][] {{{0.5, 0}, {0, 0.5}, {0.5, 1}, {1, 0.5}, {0.5, 0}}});
+
+    final Polygon expectedEnvelope = new Polygon();
+    expectedEnvelope.setCoordinates(new double[][][] {{{0, 0}, {0, 1}, {1, 1}, {1, 0}, {0, 0}}});
+    assertEquals(expectedEnvelope, calculator.determineBoundingBox(List.of(p)),
+        "The bounding box of an angled polygon should align with grid");
+  }
+
+  @Test
+  void testDetermineBoundingBoxForGeometryCombination() throws AeriusException {
+    final GeometryCalculator calculator = new GeometryCalculatorImpl();
+    final Point p = new Point(0, 0);
+
+    final LineString l = new LineString();
+    l.setCoordinates(new double[][] {{1, 1}, {2, 2}});
+
+    final Polygon polygon = new Polygon();
+    polygon.setCoordinates(new double[][][] {{{2, 2}, {2, 3}, {3, 3}, {3, 2}, {2, 2}}});
+
+    final Polygon expectedEnvelope = new Polygon();
+    expectedEnvelope.setCoordinates(new double[][][] {{{0, 0}, {0, 3}, {3, 3}, {3, 0}, {0, 0}}});
+
+    assertEquals(expectedEnvelope, calculator.determineBoundingBox(List.of(p, l, polygon)),
+        "The bounding box of an multiple geometries should align with grid and contain all geometries.");
+  }
+
+  @Test
+  void testScaleBoundingBoxPoint() throws AeriusException {
+    final GeometryCalculator calculator = new GeometryCalculatorImpl();
+
+    final Point point = new Point(0.5, 0.5);
+
+    final double[][] expected = {{0, 0}, {0, 1}, {1, 1}, {1, 0}, {0, 0}};
+    final Polygon actual = (Polygon) calculator.scaleBoundingBox(point, 2, 1);
+
+    assertEquals(1, actual.getCoordinates().length, "Bounding box geometry does not contain holes");
+    assertEquals(expected.length, actual.getCoordinates()[0].length, "Bounding box should contain 5 coordinates");
+    assertTrue(Arrays.stream(actual.getCoordinates()[0]).allMatch(c1 -> Arrays.stream(expected).anyMatch(c2 -> c2[0] == c1[0] && c2[1] == c1[1])),
+        "Scaling a zero area rectangle should result in a square of min dimensions around the coordinate.");
+  }
+
+  @Test
+  void testScaleBoundingBoxMinDimensionExceeded() throws AeriusException {
+    final GeometryCalculator calculator = new GeometryCalculatorImpl();
+
+    // 1 x 1 square around (0.5 0.5)
+    final Polygon polygon = new Polygon();
+    polygon.setCoordinates(new double[][][] {{{0, 0}, {1, 0}, {1, 1}, {0, 1}, {0, 0}}});
+
+    // 2 x 2 square around (0.5 0.5)
+    final double[][] expected = {{-0.5, -0.5}, {-0.5, 1.5}, {1.5, 1.5}, {1.5, -0.5}, {-0.5, -0.5}};
+    final Polygon actual = (Polygon) calculator.scaleBoundingBox(polygon, 2, 1);
+
+    assertEquals(1, actual.getCoordinates().length, "Bounding box geometry does not contain holes");
+    assertEquals(expected.length, actual.getCoordinates()[0].length, "Bounding box should contain 5 coordinates");
+    assertTrue(Arrays.stream(actual.getCoordinates()[0]).allMatch(c1 -> Arrays.stream(expected).anyMatch(c2 -> c2[0] == c1[0] && c2[1] == c1[1])),
+        "Scaling a 1 x 1 square by 2 should result in a 2 x 2 square around the original center.");
+  }
+
+  @Test
+  void testScaleBoundingBoxMinDimensionNotExceeded() throws AeriusException {
+    final GeometryCalculator calculator = new GeometryCalculatorImpl();
+
+    // 1 x 1 square around (0.5 0.5)
+    final Polygon polygon = new Polygon();
+    polygon.setCoordinates(new double[][][] {{{0, 0}, {1, 0}, {1, 1}, {0, 1}, {0, 0}}});
+
+    // 3 x 3 square around (0.5 0.5)
+    final double[][] expected = {{-1, -1}, {-1, 2}, {2, 2}, {2, -1}, {-1, -1}};
+    final Polygon actual = (Polygon) calculator.scaleBoundingBox(polygon, 2, 3);
+
+    assertEquals(1, actual.getCoordinates().length, "Bounding box geometry does not contain holes");
+    assertEquals(expected.length, actual.getCoordinates()[0].length, "Bounding box should contain 5 coordinates");
+    assertTrue(Arrays.stream(actual.getCoordinates()[0]).allMatch(c1 -> Arrays.stream(expected).anyMatch(c2 -> c2[0] == c1[0] && c2[1] == c1[1])),
+        "Scaling a 1 x 1 square by 2 and minimum dimension 3 should result in a 3 x 3 square around the original center.");
+  }
+
+  @Test
+  void testScaleBoundingBoxInvalidGeometry() {
+    final GeometryCalculator calculator = new GeometryCalculatorImpl();
+
+    // Non-rectangle polygon
+    final Polygon polygon = new Polygon();
+    polygon.setCoordinates(new double[][][] {{{0, 0}, {2, 0}, {2, 2}, {1, 1}, {0, 2}, {0, 0}}});
+
+    assertThrows(IllegalArgumentException.class, () -> calculator.scaleBoundingBox(polygon, 1, 1),
+        "Scaling a non-rectangle should result in an illegalargumen exception.");
+  }
 }
