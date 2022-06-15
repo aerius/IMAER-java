@@ -17,6 +17,7 @@
 package nl.overheid.aerius.util;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -75,6 +76,13 @@ class GeometryCalculatorImplTest {
     final Polygon polygon = new Polygon();
     polygon.setCoordinates(new double[][][] {{{100, 100}, {100, 300}}});
     assertEquals(0.0, calculator.determineMeasure(polygon));
+  }
+
+  @Test
+  void testDetermingBoundingBoxEmptyList() throws AeriusException {
+    final GeometryCalculator calculator = new GeometryCalculatorImpl();
+
+    assertNull(calculator.determineBoundingBox(List.of()), "Bounding box of empty list should be null");
   }
 
   @Test

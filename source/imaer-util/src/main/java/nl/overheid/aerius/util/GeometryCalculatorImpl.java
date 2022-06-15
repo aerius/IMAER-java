@@ -76,6 +76,10 @@ public class GeometryCalculatorImpl implements GeometryCalculator {
 
   @Override
   public Geometry determineBoundingBox(final List<Geometry> geometries) throws AeriusException {
+    if (geometries.isEmpty()) {
+      return null;
+    }
+
     final GeometryCollection geometryCollection = toGeometryCollection(geometries);
     final org.locationtech.jts.geom.Geometry envelope = geometryCollection.getEnvelope();
     return GeometryUtil.getAeriusGeometry(envelope);
