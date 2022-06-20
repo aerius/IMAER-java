@@ -191,7 +191,8 @@ class OptionsMetadataUtilTest {
     adms.setMinMoninObukhovLength(12.3);
     adms.setSurfaceAlbedo(23.4);
     adms.setPriestleyTaylorParameter(34.5);
-    adms.setPlumeDepletion(true);
+    adms.setPlumeDepletionNH3(true);
+    adms.setPlumeDepletionNOX(true);
     adms.setComplexTerrain(true);
     final Map<String, String> result = OptionsMetadataUtil.optionsToMap(Theme.NCA, options, false);
 
@@ -201,7 +202,8 @@ class OptionsMetadataUtilTest {
     assertEquals("12.3", result.get("adms_min_monin_obukhov_length"));
     assertEquals("23.4", result.get("adms_surface_albedo"));
     assertEquals("34.5", result.get("adms_priestley_taylor_parameter"));
-    assertEquals("true", result.get("adms_plume_depletion"));
+    assertEquals("true", result.get("adms_plume_depletion_nh3"));
+    assertEquals("true", result.get("adms_plume_depletion_nox"));
     assertEquals("true", result.get("adms_complex_terrain"));
   }
 }
