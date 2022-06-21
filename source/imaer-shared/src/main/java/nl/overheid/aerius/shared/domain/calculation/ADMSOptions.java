@@ -28,7 +28,8 @@ public class ADMSOptions implements Serializable {
   private double minMoninObukhovLength;
   private double surfaceAlbedo;
   private double priestleyTaylorParameter;
-  private boolean plumeDepletion;
+  private boolean plumeDepletionNH3;
+  private boolean plumeDepletionNOX;
   private boolean complexTerrain;
 
   public double getMinMoninObukhovLength() {
@@ -55,14 +56,6 @@ public class ADMSOptions implements Serializable {
     this.priestleyTaylorParameter = priestleyTaylorParameter;
   }
 
-  public boolean isPlumeDepletion() {
-    return plumeDepletion;
-  }
-
-  public void setPlumeDepletion(final boolean plumeDepletion) {
-    this.plumeDepletion = plumeDepletion;
-  }
-
   public boolean isComplexTerrain() {
     return complexTerrain;
   }
@@ -71,9 +64,26 @@ public class ADMSOptions implements Serializable {
     this.complexTerrain = complexTerrain;
   }
 
+  public boolean isPlumeDepletionNH3() {
+    return plumeDepletionNH3;
+  }
+
+  public void setPlumeDepletionNH3(final boolean plumeDepletionNH3) {
+    this.plumeDepletionNH3 = plumeDepletionNH3;
+  }
+
+  public boolean isPlumeDepletionNOX() {
+    return plumeDepletionNOX;
+  }
+
+  public void setPlumeDepletionNOX(final boolean plumeDepletionNOX) {
+    this.plumeDepletionNOX = plumeDepletionNOX;
+  }
+
   @Override
   public String toString() {
     return "ADMSOptions [minMoninObukhovLength=" + minMoninObukhovLength + ", surfaceAlbedo=" + surfaceAlbedo + ", priestleyTaylorParameter="
-        + priestleyTaylorParameter + ", plumeDepletion=" + plumeDepletion + ", complexTerrain=" + complexTerrain + "]";
+        + priestleyTaylorParameter + ", plumeDepletionNH3=" + plumeDepletionNH3 + ", plumeDepletionNOX=" + plumeDepletionNOX + ", complexTerrain="
+        + complexTerrain + "]";
   }
 }

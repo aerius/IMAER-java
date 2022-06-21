@@ -70,7 +70,8 @@ public final class OptionsMetadataUtil {
     ADMS_MIN_MONIN_OBUKHOV_LENGTH,
     ADMS_SURFACE_ALBEDO,
     ADMS_PRIESTLEY_TAYLOR_PARAMETER,
-    ADMS_PLUME_DEPLETION,
+    ADMS_PLUME_DEPLETION_NH3,
+    ADMS_PLUME_DEPLETION_NOX,
     ADMS_COMPLEX_TERRAIN,
     ;
     // @formatter:on
@@ -149,7 +150,8 @@ public final class OptionsMetadataUtil {
         addValue(mapToAddTo, Option.ADMS_MIN_MONIN_OBUKHOV_LENGTH, adms.getMinMoninObukhovLength(), addDefaults);
         addValue(mapToAddTo, Option.ADMS_SURFACE_ALBEDO, adms.getSurfaceAlbedo(), addDefaults);
         addValue(mapToAddTo, Option.ADMS_PRIESTLEY_TAYLOR_PARAMETER, adms.getPriestleyTaylorParameter(), addDefaults);
-        addBooleanValue(mapToAddTo, Option.ADMS_PLUME_DEPLETION, adms.isPlumeDepletion(), addDefaults);
+        addBooleanValue(mapToAddTo, Option.ADMS_PLUME_DEPLETION_NH3, adms.isPlumeDepletionNH3(), addDefaults);
+        addBooleanValue(mapToAddTo, Option.ADMS_PLUME_DEPLETION_NOX, adms.isPlumeDepletionNOX(), addDefaults);
         addBooleanValue(mapToAddTo, Option.ADMS_COMPLEX_TERRAIN, adms.isComplexTerrain(), addDefaults);
       }
     }
