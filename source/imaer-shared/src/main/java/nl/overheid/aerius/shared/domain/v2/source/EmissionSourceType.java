@@ -33,6 +33,10 @@ public enum EmissionSourceType {
    */
   GENERIC(Names.GENERIC),
   /**
+   * Medium combustion plant values.
+   */
+  MEDIUM_COMBUSTION_PLANT(Names.MEDIUM_COMBUSTION_PLANT),
+  /**
    * Mobile off road emission values.
    */
   OFFROAD_MOBILE(Names.OFFROAD_MOBILE),
@@ -77,6 +81,7 @@ public enum EmissionSourceType {
     public static final String FARM_LODGE = "FARM_LODGE";
     public static final String FARMLAND = "FARMLAND";
     public static final String GENERIC = "GENERIC";
+    public static final String MEDIUM_COMBUSTION_PLANT = "MEDIUM_COMBUSTION_PLANT";
     public static final String OFFROAD_MOBILE = "OFFROAD_MOBILE";
     public static final String PLAN = "PLAN";
     public static final String SRM1_ROAD = "SRM1_ROAD";
