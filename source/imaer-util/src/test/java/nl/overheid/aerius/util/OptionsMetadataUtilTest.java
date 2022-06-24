@@ -194,7 +194,7 @@ class OptionsMetadataUtilTest {
     adms.setPlumeDepletionNH3(true);
     adms.setPlumeDepletionNOX(true);
     adms.setComplexTerrain(true);
-    adms.setMsId(100);
+    adms.setMetSiteId(100);
     adms.setMsRoughness(0.8);
     adms.setMsMinMoninObukhovLength(1.1);
     adms.setMsSurfaceAlbedo(1.2);

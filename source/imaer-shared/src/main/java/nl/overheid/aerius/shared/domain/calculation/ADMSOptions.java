@@ -28,7 +28,7 @@ public class ADMSOptions implements Serializable {
   private double minMoninObukhovLength;
   private double surfaceAlbedo;
   private double priestleyTaylorParameter;
-  private int msId;
+  private int metSiteId;
   private double msRoughness;
   private double msMinMoninObukhovLength;
   private double msSurfaceAlbedo;
@@ -61,12 +61,12 @@ public class ADMSOptions implements Serializable {
     this.priestleyTaylorParameter = priestleyTaylorParameter;
   }
 
-  public int getMsId() {
-    return msId;
+  public int getMetSiteId() {
+    return metSiteId;
   }
 
-  public void setMsId(final int msId) {
-    this.msId = msId;
+  public void setMetSiteId(final int metSiteId) {
+    this.metSiteId = metSiteId;
   }
 
   public double getMsRoughness() {
@@ -128,7 +128,7 @@ public class ADMSOptions implements Serializable {
   @Override
   public String toString() {
     return "ADMSOptions [minMoninObukhovLength=" + minMoninObukhovLength + ", surfaceAlbedo=" + surfaceAlbedo + ", priestleyTaylorParameter="
-        + priestleyTaylorParameter + ", msId=" + msId + ", msRoughness=" + msRoughness + ", msMinMoninObukhovLength=" + msMinMoninObukhovLength
+        + priestleyTaylorParameter + ", metSiteId=" + metSiteId + ", msRoughness=" + msRoughness + ", msMinMoninObukhovLength=" + msMinMoninObukhovLength
         + ", msSurfaceAlbedo=" + msSurfaceAlbedo + ", msPriestleyTaylorParameter=" + msPriestleyTaylorParameter + ", plumeDepletionNH3="
         + plumeDepletionNH3 + ", plumeDepletionNOX=" + plumeDepletionNOX + ", complexTerrain=" + complexTerrain + "]";
   }

@@ -155,7 +155,7 @@ public final class OptionsMetadataUtil {
         addValue(mapToAddTo, Option.ADMS_MIN_MONIN_OBUKHOV_LENGTH, adms.getMinMoninObukhovLength(), addDefaults);
         addValue(mapToAddTo, Option.ADMS_SURFACE_ALBEDO, adms.getSurfaceAlbedo(), addDefaults);
         addValue(mapToAddTo, Option.ADMS_PRIESTLEY_TAYLOR_PARAMETER, adms.getPriestleyTaylorParameter(), addDefaults);
-        addIntValue(mapToAddTo, Option.ADMS_MET_SITE_ID, adms.getMsId(), addDefaults);
+        addIntValue(mapToAddTo, Option.ADMS_MET_SITE_ID, adms.getMetSiteId(), addDefaults);
         addValue(mapToAddTo, Option.ADMS_MET_SITE_ROUGHNESS, adms.getMsRoughness(), addDefaults);
         addValue(mapToAddTo, Option.ADMS_MET_SITE_MIN_MONIN_OBUKHOV_LENGTH, adms.getMsMinMoninObukhovLength(), addDefaults);
         addValue(mapToAddTo, Option.ADMS_MET_SITE_SURFACE_ALBEDO, adms.getMsSurfaceAlbedo(), addDefaults);
