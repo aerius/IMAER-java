@@ -194,6 +194,11 @@ class OptionsMetadataUtilTest {
     adms.setPlumeDepletionNH3(true);
     adms.setPlumeDepletionNOX(true);
     adms.setComplexTerrain(true);
+    adms.setMsId(100);
+    adms.setMsRoughness(0.8);
+    adms.setMsMinMoninObukhovLength(1.1);
+    adms.setMsSurfaceAlbedo(1.2);
+    adms.setMsPriestleyTaylorParameter(1.3);
     final Map<String, String> result = OptionsMetadataUtil.optionsToMap(Theme.NCA, options, false);
 
     assertEquals("London", result.get("adms_permit_area"));
@@ -205,5 +210,10 @@ class OptionsMetadataUtilTest {
     assertEquals("true", result.get("adms_plume_depletion_nh3"));
     assertEquals("true", result.get("adms_plume_depletion_nox"));
     assertEquals("true", result.get("adms_complex_terrain"));
+    assertEquals("100", result.get("adms_met_site_id"));
+    assertEquals("0.1", result.get("adms_met_site_roughness"));
+    assertEquals("1.1", result.get("adms_met_site_min_monin_obukhov_length"));
+    assertEquals("1.2", result.get("adms_met_site_surface_albedo"));
+    assertEquals("1.3", result.get("adms_met_site_priestley_taylor_parameter"));
   }
 }
