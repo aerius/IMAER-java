@@ -211,7 +211,7 @@ class OptionsMetadataUtilTest {
     assertEquals("true", result.get("adms_plume_depletion_nox"));
     assertEquals("true", result.get("adms_complex_terrain"));
     assertEquals("100", result.get("adms_met_site_id"));
-    assertEquals("0.1", result.get("adms_met_site_roughness"));
+    assertEquals("0.8", result.get("adms_met_site_roughness"));
     assertEquals("1.1", result.get("adms_met_site_min_monin_obukhov_length"));
     assertEquals("1.2", result.get("adms_met_site_surface_albedo"));
     assertEquals("1.3", result.get("adms_met_site_priestley_taylor_parameter"));
