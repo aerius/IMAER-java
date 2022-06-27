@@ -28,6 +28,11 @@ public class ADMSOptions implements Serializable {
   private double minMoninObukhovLength;
   private double surfaceAlbedo;
   private double priestleyTaylorParameter;
+  private int metSiteId;
+  private double msRoughness;
+  private double msMinMoninObukhovLength;
+  private double msSurfaceAlbedo;
+  private double msPriestleyTaylorParameter;
   private boolean plumeDepletionNH3;
   private boolean plumeDepletionNOX;
   private boolean complexTerrain;
@@ -54,6 +59,46 @@ public class ADMSOptions implements Serializable {
 
   public void setPriestleyTaylorParameter(final double priestleyTaylorParameter) {
     this.priestleyTaylorParameter = priestleyTaylorParameter;
+  }
+
+  public int getMetSiteId() {
+    return metSiteId;
+  }
+
+  public void setMetSiteId(final int metSiteId) {
+    this.metSiteId = metSiteId;
+  }
+
+  public double getMsRoughness() {
+    return msRoughness;
+  }
+
+  public void setMsRoughness(double msRoughness) {
+    this.msRoughness = msRoughness;
+  }
+
+  public double getMsMinMoninObukhovLength() {
+    return msMinMoninObukhovLength;
+  }
+
+  public void setMsMinMoninObukhovLength(double msMinMoninObukhovLength) {
+    this.msMinMoninObukhovLength = msMinMoninObukhovLength;
+  }
+
+  public double getMsSurfaceAlbedo() {
+    return msSurfaceAlbedo;
+  }
+
+  public void setMsSurfaceAlbedo(double msSurfaceAlbedo) {
+    this.msSurfaceAlbedo = msSurfaceAlbedo;
+  }
+
+  public double getMsPriestleyTaylorParameter() {
+    return msPriestleyTaylorParameter;
+  }
+
+  public void setMsPriestleyTaylorParameter(double msPriestleyTaylorParameter) {
+    this.msPriestleyTaylorParameter = msPriestleyTaylorParameter;
   }
 
   public boolean isComplexTerrain() {
@@ -83,7 +128,8 @@ public class ADMSOptions implements Serializable {
   @Override
   public String toString() {
     return "ADMSOptions [minMoninObukhovLength=" + minMoninObukhovLength + ", surfaceAlbedo=" + surfaceAlbedo + ", priestleyTaylorParameter="
-        + priestleyTaylorParameter + ", plumeDepletionNH3=" + plumeDepletionNH3 + ", plumeDepletionNOX=" + plumeDepletionNOX + ", complexTerrain="
-        + complexTerrain + "]";
+        + priestleyTaylorParameter + ", metSiteId=" + metSiteId + ", msRoughness=" + msRoughness + ", msMinMoninObukhovLength=" + msMinMoninObukhovLength
+        + ", msSurfaceAlbedo=" + msSurfaceAlbedo + ", msPriestleyTaylorParameter=" + msPriestleyTaylorParameter + ", plumeDepletionNH3="
+        + plumeDepletionNH3 + ", plumeDepletionNOX=" + plumeDepletionNOX + ", complexTerrain=" + complexTerrain + "]";
   }
 }
