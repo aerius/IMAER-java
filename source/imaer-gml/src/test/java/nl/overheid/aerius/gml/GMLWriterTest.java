@@ -49,6 +49,7 @@ import nl.overheid.aerius.shared.domain.v2.point.CalculationPoint;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPointFeature;
 import nl.overheid.aerius.shared.domain.v2.point.CustomCalculationPoint;
 import nl.overheid.aerius.shared.domain.v2.point.ReceptorPoint;
+import nl.overheid.aerius.shared.domain.v2.point.SubPoint;
 import nl.overheid.aerius.shared.domain.v2.scenario.ScenarioMetaData;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceFeature;
 import nl.overheid.aerius.shared.domain.v2.source.GenericEmissionSource;
@@ -305,6 +306,26 @@ public class GMLWriterTest {
     calculationPoint3.setLabel("DB-team 2e depositie");
     feature3.setProperties(calculationPoint3);
     receptors.add(feature3);
+
+    final int xCoord4 = xCoord1 - 10;
+    final int yCoord4 = xCoord1 - 10;
+    final CalculationPointFeature feature4 = new CalculationPointFeature();
+    final Point point4 = new Point(xCoord4, yCoord4);
+    feature4.setGeometry(point4);
+    final SubPoint calculationPoint4 = new SubPoint();
+    calculationPoint4.setSubPointId(19);
+    calculationPoint4.setReceptorId(calculationPoint1.getId());
+    calculationPoint4.setLevel(2);
+    if (includeDeposition) {
+      calculationPoint4.getResults().put(EmissionResultKey.NH3_DEPOSITION, 382.11);
+      calculationPoint4.getResults().put(EmissionResultKey.NOX_DEPOSITION, 32.1);
+    }
+    if (includeConcentration) {
+      calculationPoint4.getResults().put(EmissionResultKey.NH3_CONCENTRATION, 223.03);
+      calculationPoint4.getResults().put(EmissionResultKey.NOX_CONCENTRATION, 9.006);
+    }
+    feature4.setProperties(calculationPoint4);
+    receptors.add(feature4);
 
     return receptors;
   }

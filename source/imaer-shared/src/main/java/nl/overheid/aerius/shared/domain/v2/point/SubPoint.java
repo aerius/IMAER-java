@@ -16,19 +16,52 @@
  */
 package nl.overheid.aerius.shared.domain.v2.point;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import nl.overheid.aerius.shared.domain.v2.geojson.IsFeature;
 import nl.overheid.aerius.shared.exception.AeriusException;
 
-/**
- * Classes operating on calculation points can implement this interface to create a visitor pattern implementation.
- * @param <T> visitor specific data type
- */
-public interface CalculationPointVisitor<T> {
+public class SubPoint extends CalculationPoint {
 
-  T visit(ReceptorPoint calculationPoint, IsFeature feature) throws AeriusException;
+  private static final long serialVersionUID = 1L;
 
-  T visit(CustomCalculationPoint emissionSource, IsFeature feature) throws AeriusException;
+  private int subPointId;
+  private int receptorId;
+  private int level;
 
-  T visit(SubPoint emissionSource, IsFeature feature) throws AeriusException;
+  public int getSubPointId() {
+    return subPointId;
+  }
+
+  public void setSubPointId(final int subPointId) {
+    this.subPointId = subPointId;
+  }
+
+  public int getReceptorId() {
+    return receptorId;
+  }
+
+  public void setReceptorId(final int receptorId) {
+    this.receptorId = receptorId;
+  }
+
+  public int getLevel() {
+    return level;
+  }
+
+  public void setLevel(final int level) {
+    this.level = level;
+  }
+
+  @JsonIgnore
+  @Override
+  public int getId() {
+    return subPointId;
+  }
+
+  @Override
+  <T> T accept(final CalculationPointVisitor<T> visitor, final IsFeature feature) throws AeriusException {
+    return visitor.visit(this, feature);
+  }
 
 }

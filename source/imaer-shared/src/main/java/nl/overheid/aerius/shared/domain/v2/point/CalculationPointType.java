@@ -28,12 +28,17 @@ public enum CalculationPointType {
   /**
    * NSL calculation point.
    */
-  NSL_CALCULATION_POINT(Names.NSL_CALCULATION_POINT);
+  NSL_CALCULATION_POINT(Names.NSL_CALCULATION_POINT),
+  /**
+   * Sub calculation point.
+   */
+  SUB_POINT(Names.SUB_POINT);
 
   public static final class Names {
     public static final String RECEPTOR = "RECEPTOR";
     public static final String CUSTOM_CALCULATION_POINT = "CUSTOM_CALCULATION_POINT";
     public static final String NSL_CALCULATION_POINT = "NSL_CALCULATION_POINT";
+    public static final String SUB_POINT = "SUB_POINT";
 
     private Names() {}
   }

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:IMAER="http://imaer.aerius.nl/5.0" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:gmlsf="http://www.opengis.net/gmlsf/2.0" elementFormDefault="qualified" targetNamespace="http://imaer.aerius.nl/5.0" version="5.0.0">
+<?xml version="1.0" encoding="UTF-8"?><schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:IMAER="http://imaer.aerius.nl/5.0" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:gmlsf="http://www.opengis.net/gmlsf/2.0" elementFormDefault="qualified" targetNamespace="http://imaer.aerius.nl/5.0" version="5.0.1">
   <annotation>
     <documentation>Dit model beschrijft het InformatieModel AERius (IMAER). IMAER is het standaard gegevens uitwisselingsformaat van AERIUS en wordt gebruikt voor het importeren, exporteren en uitwisselen van gegevens met en tussen de verschillende AERIUS producten (o.a. Calculator, Monitor en Register).  
 
@@ -3387,6 +3387,42 @@ NOTE Mobiele werktuig worden beschreven aan de hand van een aantal karakteristie
     <sequence>
       <element ref="IMAER:StandardVehicle"/>
     </sequence>
+  </complexType>
+  <element name="SubPoint" substitutionGroup="IMAER:CalculationPointType" type="IMAER:SubPointType">
+    <annotation>
+      <documentation>Subrekenpunt.
+NOTE Deze klasse beschrijft een subrekenpunt van een receptorpunt op het AERIUS-grid.</documentation>
+    </annotation>
+  </element>
+  <complexType name="SubPointType">
+    <complexContent>
+      <extension base="IMAER:CalculationPointTypeType">
+        <sequence>
+          <element name="level" type="integer">
+            <annotation>
+              <documentation>Het level waarmee dit subrekenpunt bepaald is. Hoe dichter bij een bron, hoe hoger level en hoe meer subrekenpunten worden gebruikt voor het receptorpunt.</documentation>
+            </annotation>
+          </element>
+        </sequence>
+        <attribute name="subPointId" type="integer" use="required">
+          <annotation>
+            <documentation>Identificatienummer van het subrekenpunt.</documentation>
+          </annotation>
+        </attribute>
+        <attribute name="receptorPointId" type="integer" use="required">
+          <annotation>
+            <documentation>Identificatienummer van het receptorpunt waar dit subrekenpunt op gebaseerd is.</documentation>
+          </annotation>
+        </attribute>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="SubPointPropertyType">
+    <sequence minOccurs="0">
+      <element ref="IMAER:SubPoint"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+    <attributeGroup ref="gml:OwnershipAttributeGroup"/>
   </complexType>
   <simpleType name="SubstanceType">
     <annotation>

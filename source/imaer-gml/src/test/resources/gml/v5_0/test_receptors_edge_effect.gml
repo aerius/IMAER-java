@@ -153,4 +153,40 @@
             <imaer:label>DB-team 2e depositie</imaer:label>
         </imaer:CalculationPoint>
     </imaer:featureMember>
+    <imaer:featureMember>
+        <imaer:SubPoint receptorPointId="1" subPointId="19" gml:id="CP.19">
+            <imaer:identifier>
+                <imaer:NEN3610ID>
+                    <imaer:namespace>NL.IMAER</imaer:namespace>
+                    <imaer:localId>CP.19</imaer:localId>
+                </imaer:NEN3610ID>
+            </imaer:identifier>
+            <imaer:GM_Point>
+                <gml:Point srsName="urn:ogc:def:crs:EPSG::28992" gml:id="CP.19.POINT">
+                    <gml:pos>137548.0 137548.0</gml:pos>
+                </gml:Point>
+            </imaer:GM_Point>
+            <imaer:result>
+                <imaer:CalculationResult resultType="CONCENTRATION" substance="NH3">
+                    <imaer:value>223.03</imaer:value>
+                </imaer:CalculationResult>
+            </imaer:result>
+            <imaer:result>
+                <imaer:CalculationResult resultType="DEPOSITION" substance="NH3">
+                    <imaer:value>382.11</imaer:value>
+                </imaer:CalculationResult>
+            </imaer:result>
+            <imaer:result>
+                <imaer:CalculationResult resultType="CONCENTRATION" substance="NOX">
+                    <imaer:value>9.006</imaer:value>
+                </imaer:CalculationResult>
+            </imaer:result>
+            <imaer:result>
+                <imaer:CalculationResult resultType="DEPOSITION" substance="NOX">
+                    <imaer:value>32.1</imaer:value>
+                </imaer:CalculationResult>
+            </imaer:result>
+            <imaer:level>2</imaer:level>
+        </imaer:SubPoint>
+    </imaer:featureMember>
 </imaer:FeatureCollectionCalculator>
