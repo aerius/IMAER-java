@@ -22,6 +22,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import nl.overheid.aerius.shared.domain.calculation.ADMSOptions;
 import nl.overheid.aerius.shared.domain.v2.geojson.FeatureCollection;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPointFeature;
 import nl.overheid.aerius.shared.domain.v2.scenario.ScenarioMetaData;
@@ -41,6 +42,7 @@ public class ImportParcel implements Serializable {
   private ScenarioMetaData importedMetaData;
   private final ScenarioSituation situation = new ScenarioSituation();
   private ScenarioSituationResults situationResults;
+  private ADMSOptions admsOptions;
   private final FeatureCollection<CalculationPointFeature> calculationPoints = new FeatureCollection<>();
   private final List<AeriusException> exceptions = new ArrayList<>();
   private final List<AeriusException> warnings = new ArrayList<>();
@@ -98,4 +100,11 @@ public class ImportParcel implements Serializable {
     return warnings;
   }
 
+  public ADMSOptions getAdmsOptions() {
+    return admsOptions;
+  }
+
+  public void setAdmsOptions(ADMSOptions admsOptions) {
+    this.admsOptions = admsOptions;
+  }
 }
