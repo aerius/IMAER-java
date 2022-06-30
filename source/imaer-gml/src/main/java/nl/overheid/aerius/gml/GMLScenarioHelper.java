@@ -40,6 +40,7 @@ public final class GMLScenarioHelper {
   public static MetaDataInput constructMetaData(final Scenario scenario, final ScenarioSituation situation, final BooleanSupplier resultsIncluded,
       final String aeriusVersion, final String databaseVersion) {
     final MetaDataInput metaData = new MetaDataInput();
+    metaData.setTheme(scenario.getTheme());
     metaData.setScenarioMetaData(scenario.getMetaData());
     metaData.setYear(situation.getYear());
     metaData.setVersion(aeriusVersion);
