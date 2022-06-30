@@ -31,9 +31,6 @@ public abstract class EPSG implements Serializable {
 
   private int srid;
   private BBox bounds;
-  private double[] resolutions;
-  private float maxResolution;
-  private String unit;
   private int zoomLevel;
 
   private Point center;
@@ -43,19 +40,12 @@ public abstract class EPSG implements Serializable {
    * @param srid The SRID to set.
    * @param bounds The bounds to set.
    * @param center The center of the map
-   * @param resolutions The resolutions to set.
-   * @param maxResolution The max resolution to set.
-   * @param unit The unit to set.
    * @param zoomLevel The zoomLevel to set.
    */
-  public EPSG(final int srid, final BBox bounds, final Point center, final double[] resolutions, final float maxResolution, final String unit,
-      final int zoomLevel) {
+  public EPSG(final int srid, final BBox bounds, final Point center, final int zoomLevel) {
     this.srid = srid;
     this.bounds = bounds;
     this.center = center;
-    this.resolutions = resolutions;
-    this.maxResolution = maxResolution;
-    this.unit = unit;
     this.zoomLevel = zoomLevel;
   }
 
@@ -73,18 +63,6 @@ public abstract class EPSG implements Serializable {
 
   public Point getCenter() {
     return center;
-  }
-
-  public double[] getResolutions() {
-    return resolutions;
-  }
-
-  public float getMaxResolution() {
-    return maxResolution;
-  }
-
-  public String getUnit() {
-    return unit;
   }
 
   public int getZoomLevel() {
