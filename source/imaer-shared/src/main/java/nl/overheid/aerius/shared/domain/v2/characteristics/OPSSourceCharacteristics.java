@@ -192,21 +192,26 @@ public class OPSSourceCharacteristics extends SourceCharacteristics {
     this.particleSizeDistribution = particleSizeDistribution;
   }
 
-  public <E extends OPSSourceCharacteristics> E copyTo(final E copy) {
+  @Override
+  public <E extends SourceCharacteristics> E copyTo(final E copy) {
     super.copyTo(copy);
-    copy.setHeatContentType(heatContentType);
-    copy.setHeatContent(heatContent);
-    copy.setEmissionHeight(emissionHeight);
-    copy.setDiameter(diameter);
-    copy.setSpread(spread);
-    copy.setDiurnalVariation(diurnalVariation);
-    copy.setParticleSizeDistribution(particleSizeDistribution);
-    copy.setHeatContentType(getHeatContentType());
-    copy.setEmissionTemperature(emissionTemperature);
-    copy.setOutflowDiameter(outflowDiameter);
-    copy.setOutflowDirection(outflowDirection);
-    copy.setOutflowVelocity(outflowVelocity);
-    copy.setOutflowVelocityType(outflowVelocityType);
+    if (copy instanceof OPSSourceCharacteristics) {
+      final OPSSourceCharacteristics copyOPS = (OPSSourceCharacteristics) copy;
+
+      copyOPS.setHeatContentType(heatContentType);
+      copyOPS.setHeatContent(heatContent);
+      copyOPS.setEmissionHeight(emissionHeight);
+      copyOPS.setDiameter(diameter);
+      copyOPS.setSpread(spread);
+      copyOPS.setDiurnalVariation(diurnalVariation);
+      copyOPS.setParticleSizeDistribution(particleSizeDistribution);
+      copyOPS.setHeatContentType(getHeatContentType());
+      copyOPS.setEmissionTemperature(emissionTemperature);
+      copyOPS.setOutflowDiameter(outflowDiameter);
+      copyOPS.setOutflowDirection(outflowDirection);
+      copyOPS.setOutflowVelocity(outflowVelocity);
+      copyOPS.setOutflowVelocityType(outflowVelocityType);
+    }
     return copy;
   }
 

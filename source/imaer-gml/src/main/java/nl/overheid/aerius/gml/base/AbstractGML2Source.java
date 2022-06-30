@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import nl.overheid.aerius.gml.base.GMLLegacyCodeConverter.GMLLegacyCodeType;
 import nl.overheid.aerius.gml.base.characteristics.GML2SourceCharacteristics;
 import nl.overheid.aerius.gml.base.geo.GML2Geometry;
 import nl.overheid.aerius.gml.base.source.IsGmlEmissionSource;
@@ -119,7 +118,8 @@ public abstract class AbstractGML2Source<T extends IsGmlEmissionSource, S extend
     returnSource.setLabel(source.getLabel());
     returnSource.setDescription(source.getDescription());
     returnSource.setJurisdictionId(source.getJurisdictionId());
-    final int sectorId = Integer.parseInt(conversionData.getCode(GMLLegacyCodeType.SECTOR, String.valueOf(source.getSectorId()), source.getLabel()));
+    final int sectorId = conversionData.getSectorId(source.getSectorId(), source.getLabel());
+
     returnSource.setSectorId(sectorId);
     if (!(returnSource instanceof InlandShippingEmissionSource
         || returnSource instanceof MooringInlandShippingEmissionSource

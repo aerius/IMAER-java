@@ -29,7 +29,6 @@ import nl.overheid.aerius.shared.domain.geo.HexagonZoomLevel;
 import nl.overheid.aerius.shared.domain.geo.ReceptorGridSettings;
 import nl.overheid.aerius.shared.domain.ops.DiurnalVariation;
 import nl.overheid.aerius.shared.domain.result.EmissionResultKey;
-import nl.overheid.aerius.shared.domain.sector.Sector;
 import nl.overheid.aerius.shared.domain.v2.characteristics.HeatContentType;
 import nl.overheid.aerius.shared.domain.v2.characteristics.OPSSourceCharacteristics;
 import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
@@ -73,6 +72,11 @@ public class GMLTestDomain {
 
   public static final ReferenceGenerator TEST_REFERENCE_GENERATOR = r -> Optional.empty();
 
+  /**
+   * Sector default is the sector in case no specific sector is specified, because it's unknown. Therefore the sector industry generic can be used.
+   */
+  public static final int DEFAULT_SECTOR_ID = 1800;
+
   public static GenericEmissionSource getGenericEmissionSource() {
     return getGenericEmissionSource(new GenericEmissionSource());
   }
@@ -88,7 +92,7 @@ public class GMLTestDomain {
     feature.setId(String.valueOf(id));
     feature.setGeometry(geometry);
     source.setLabel(label);
-    source.setSectorId(Sector.SECTOR_DEFAULT.getSectorId());
+    source.setSectorId(DEFAULT_SECTOR_ID);
     //default characteristics for this sector.
     source.setCharacteristics(getDefaultCharacteristics());
     feature.setProperties(source);
