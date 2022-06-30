@@ -91,6 +91,16 @@
                     <imaer:porosity>11.5</imaer:porosity>
                 </imaer:ADMSRoadSideBarrier>
             </imaer:barrierLeft>
+            <imaer:barrierRight>
+                <imaer:ADMSRoadSideBarrier>
+                    <imaer:barrierType>STREET_CANYON_TERRACED_HOUSES</imaer:barrierType>
+                    <imaer:distance>5.1</imaer:distance>
+                    <imaer:averageHeight>0.6</imaer:averageHeight>
+                    <imaer:maximumHeight>1.2</imaer:maximumHeight>
+                    <imaer:minimumHeight>0.6</imaer:minimumHeight>
+                    <imaer:porosity>55.1</imaer:porosity>
+                </imaer:ADMSRoadSideBarrier>
+            </imaer:barrierRight>
         </imaer:ADMSRoad>
     </imaer:featureMember>
 </imaer:FeatureCollectionCalculator>

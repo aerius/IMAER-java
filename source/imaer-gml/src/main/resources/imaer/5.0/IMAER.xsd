@@ -188,7 +188,7 @@ NOTE A barrier on the side of the road is described by a few characteristics. Th
     <restriction base="string">
       <enumeration value="NOISE_BARRIER"/>
       <enumeration value="BRICK_WALL"/>
-      <enumeration value="STREET_CAYON_TERRACED_HOUSES"/>
+      <enumeration value="STREET_CANYON_TERRACED_HOUSES"/>
       <enumeration value="STREET_CANYON_SEMIDETACHED_HOUSES"/>
       <enumeration value="STREET_CANYON_DETACHED_HOUSES"/>
       <enumeration value="TREE_BARRIER_OPEN"/>
