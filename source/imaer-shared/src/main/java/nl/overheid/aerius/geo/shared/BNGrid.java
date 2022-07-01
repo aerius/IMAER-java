@@ -30,17 +30,11 @@ public class BNGrid extends EPSG {
 
   private static final long serialVersionUID = 1L;
 
-  private static final double[] RESOLUTIONS = {2500, 1000, 500, 200, 100, 50, 25, 10, 5, 2, 1, 0.5, 0.25};
-  private static final float MAX_RESOLUTION = 0;
   private static final int ZOOM_LEVEL = 15;
-  private static final String UNIT = "km";
-  /**
-   * Official boundaries of the BN grid extent of the map.
-   */
-  private static final BBox BOUNDS = new BBox(1393.0196, 13494.9764, 671196.3657, 1230275.0454);
+  private static final BBox BOUNDS = new BBox(-4000, 4000, 660000, 1222000);
   private static final Point CENTER = new Point(308188.48, 608846.16);
 
   BNGrid() {
-    super(SRID, BOUNDS, CENTER, RESOLUTIONS, MAX_RESOLUTION, UNIT, ZOOM_LEVEL);
+    super(SRID, BOUNDS, CENTER, ZOOM_LEVEL);
   }
 }
