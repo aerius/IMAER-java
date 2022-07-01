@@ -27,7 +27,7 @@ import nl.overheid.aerius.validation.ValidationHelper;
 /**
  * Helper interface for retrieving data or operations that were done in the database.
  */
-public interface GMLHelper extends GMLInlandShippingSupplier, GMLLegacyCodesSupplier, GMLCharacteristicsSupplier {
+public interface GMLHelper extends GMLInlandShippingSupplier, GMLLegacyCodesSupplier, GMLCharacteristicsSupplier, GMLSectorSupplier {
 
   /**
    * Recalculates the emissions on all given emission sources for the given emission keys.

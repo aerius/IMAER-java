@@ -62,6 +62,7 @@ public class GMLConversionData {
   private final List<BuildingFeature> extraBuildings = new ArrayList<>();
   private final GMLCharacteristicsSupplier characteristicsSupplier;
   private final InlandShippingUtil inlandRouteUtil;
+  private final GMLHelper helper;
 
   /**
    * @param gmlHelper Inland shipping supplier, and characteristics supplier for default characteristics
@@ -72,6 +73,7 @@ public class GMLConversionData {
    */
   public GMLConversionData(final GMLHelper helper, final GMLLegacyCodeConverter legacyCodeConverter, final List<AeriusException> errors,
       final List<AeriusException> warnings) throws AeriusException {
+    this.helper = helper;
     this.legacyCodeConverter = legacyCodeConverter;
     this.characteristicsSupplier = helper;
     this.srid = helper.getReceptorGridSettings().getEpsg().getSrid();
@@ -137,6 +139,28 @@ public class GMLConversionData {
       returnCode = oldCode;
     }
     return returnCode;
+  }
+
+  /**
+   * Returns a valid sector id. If the sector id is not know it first looks up the sector id in the legacy table. If that doesn't result
+   * in a valid sector id it will return the default sector id and put a warning is the warnings list.
+   *
+   * @param sectorId sector id to check
+   * @param forSource source for which this sector id is checked
+   * @return valid sector id
+   */
+  public int getSectorId(final Integer sectorId, final String forSource) {
+    final String sectorIdString = String.valueOf(sectorId);
+    final int checkSectorId = Integer.parseInt(getCode(GMLLegacyCodeType.SECTOR, sectorIdString, forSource));
+    final int actualSectorId;
+
+    if (helper.isValidSectorId(checkSectorId)) {
+      actualSectorId = checkSectorId;
+    } else {
+      actualSectorId = helper.getDefaultSector().getSectorId();
+      warnings.add(new AeriusException(ImaerExceptionReason.GML_INVALID_CATEGORY_MATCH, sectorIdString, String.valueOf(actualSectorId), forSource));
+    }
+    return actualSectorId;
   }
 
   public int estimageOffRoadOperatingHours(final String oldCode, final int literFuelPerYear) {

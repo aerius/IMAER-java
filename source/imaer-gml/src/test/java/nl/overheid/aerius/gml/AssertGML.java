@@ -47,6 +47,8 @@ import nl.overheid.aerius.importer.ImportOption;
 import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.geo.ReceptorGridSettings;
 import nl.overheid.aerius.shared.domain.scenario.SituationType;
+import nl.overheid.aerius.shared.domain.sector.Sector;
+import nl.overheid.aerius.shared.domain.sector.SectorGroup;
 import nl.overheid.aerius.shared.domain.v2.characteristics.ADMSSourceCharacteristics;
 import nl.overheid.aerius.shared.domain.v2.characteristics.CharacteristicsType;
 import nl.overheid.aerius.shared.domain.v2.characteristics.OPSSourceCharacteristics;
@@ -210,6 +212,8 @@ public final class AssertGML {
     when(gmlHelper.getLegacyPlanConversions()).thenReturn(TestValidationAndEmissionHelper.legacyPlanConversions());
     when(gmlHelper.determineDefaultCharacteristicsBySectorId(anyInt())).thenAnswer((i) -> determineDefaultCharacteristics());
     when(gmlHelper.getValidationHelper()).thenReturn(valiationAndEmissionHelper);
+    when(gmlHelper.getDefaultSector()).thenReturn(new Sector(GMLTestDomain.DEFAULT_SECTOR_ID, SectorGroup.INDUSTRY, ""));
+    when(gmlHelper.isValidSectorId(anyInt())).thenReturn(true);
     return gmlHelper;
   }
 
