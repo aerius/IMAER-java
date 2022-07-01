@@ -19,6 +19,7 @@ package nl.overheid.aerius.gml;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -81,12 +82,10 @@ public class GMLReaderTest {
   private static final SituationType SITUATION_TYPE = SituationType.PROPOSED;
   private static final Integer MONITOR_SRM2_YEAR = 2030;
 
-  private static GMLTestDomain testDomain;
   private static ReceptorGridSettings gridSettings;
 
   @BeforeAll
   public static void setUpBeforeClass() throws IOException {
-    testDomain = new GMLTestDomain();
     gridSettings = GMLTestDomain.getExampleGridSettings();
   }
 
@@ -111,7 +110,7 @@ public class GMLReaderTest {
     final File file = getFile(AssertGML.PATH_LATEST_VERSION, RECEPTORS_FILE);
     final List<CalculationPointFeature> points = getAeriusPointsFromFile(file, true);
     assertNotNull(points, "Receptor points");
-    assertEquals(3, points.size(), "Number of receptor points");
+    assertEquals(4, points.size(), "Number of receptor points");
   }
 
   @Test
@@ -133,7 +132,7 @@ public class GMLReaderTest {
     final File file = getFile(AssertGML.PATH_LATEST_VERSION, MIXED_FEATURES_FILE);
     final List<CalculationPointFeature> points = getAeriusPointsFromFile(file, true);
     assertNotNull(points, "Receptor points");
-    assertEquals(3, points.size(), "Number of receptor points");
+    assertEquals(4, points.size(), "Number of receptor points");
 
     final List<EmissionSourceFeature> sources = getEmissionSourcesFromFile(file);
     assertNotNull(sources, "Emission sources");
@@ -143,7 +142,8 @@ public class GMLReaderTest {
   @Test
   public void testConvertMetaData() throws AeriusException, IOException {
     final File file = getFile(AssertGML.PATH_LATEST_VERSION, MIXED_FEATURES_FILE);
-    final GMLReader reader = getGMLReaderFromFile(file);
+    final List<AeriusException> errors = new ArrayList<>();
+    final GMLReader reader = getGMLReaderFromFile(file, errors);
     final MetaData expectedMetaData = getMetaData();
     final GMLMetaDataReader metaDataReader = reader.metaDataReader();
     assertEquals(expectedMetaData.getYear().intValue(), metaDataReader.readYear(), "Metadata year");
@@ -155,14 +155,17 @@ public class GMLReaderTest {
     assertEquals(expectedMetaData.getReference(), MetaData.getReference(), "Metadata reference");
     assertEquals(expectedMetaData.getCorporation(), MetaData.getCorporation(), "Metadata corporation");
     assertEquals(expectedMetaData.getDescription(), MetaData.getDescription(), "Metadata description");
+    assertTrue(errors.isEmpty(), "Expected no errors");
   }
 
   @Test
   public void testMetaData() throws IOException, AeriusException {
     final File file = getFile(AssertGML.PATH_LATEST_VERSION, METADATA_FILE);
-    final GMLReader reader = getGMLReaderFromFile(file);
+    final List<AeriusException> errors = new ArrayList<>();
+    final GMLReader reader = getGMLReaderFromFile(file, errors);
     final GMLMetaDataReader metaDataReader = reader.metaDataReader();
     assertNotNull(metaDataReader, "Should have meta data reader");
+    assertTrue(errors.isEmpty(), "Expected no errors");
   }
 
   @Test
@@ -242,14 +245,15 @@ public class GMLReaderTest {
     for (final File file : files) {
       final List<CalculationPointFeature> points = getAeriusPointsFromFile(file, true);
       assertNotNull(points, "Receptor points");
-      assertEquals(3, points.size(), "Number of receptor points");
-
+      // In older versions there are only a receptor and 2 calculation points
+      // In newer versions (> 5.0) a sub point is added
+      assertTrue(3 == points.size() || 4 == points.size(), "Number of receptor points");
     }
     files = getFiles(PATH_ALL, MIXED_FEATURES_FILE);
     for (final File file : files) {
       final List<CalculationPointFeature> points = getAeriusPointsFromFile(file, true);
       assertNotNull(points, "Receptor points");
-      assertEquals(3, points.size(), "Number of receptor points");
+      assertTrue(3 == points.size() || 4 == points.size(), "Number of receptor points");
       assertFalse(points.get(0).getProperties().getResults().isEmpty(), "Results included");
       final List<EmissionSourceFeature> sources = getEmissionSourcesFromFile(file);
       assertNotNull(sources, "Emission sources for " + file);
@@ -278,7 +282,8 @@ public class GMLReaderTest {
   }
 
   private List<EmissionSourceFeature> getEmissionSourcesFromFile(final File file) throws IOException, AeriusException {
-    final GMLReader reader = getGMLReaderFromFile(file);
+    final List<AeriusException> errors = new ArrayList<>();
+    final GMLReader reader = getGMLReaderFromFile(file, errors);
     List<EmissionSourceFeature> sources = null;
     try (InputStream inputStream = new FileInputStream(file)) {
       sources = reader.readEmissionSourceList();
@@ -288,19 +293,23 @@ public class GMLReaderTest {
       LOG.error("File in error during convertToEmissionSources: " + file);
       throw e;
     }
+    assertTrue(errors.isEmpty(), "Expected no errors");
     return sources;
   }
 
   private List<CalculationPointFeature> getAeriusPointsFromFile(final File file, final boolean includeReceptors)
       throws IOException, AeriusException {
-    final GMLReader reader = getGMLReaderFromFile(file);
-    return reader.getAeriusPoints(includeReceptors);
+    final List<AeriusException> errors = new ArrayList<>();
+    final GMLReader reader = getGMLReaderFromFile(file, errors);
+    final List<CalculationPointFeature> points = reader.getAeriusPoints(includeReceptors);
+    assertTrue(errors.isEmpty(), "Expected no errors");
+    return points;
   }
 
-  private GMLReader getGMLReaderFromFile(final File file) throws IOException, AeriusException {
+  private GMLReader getGMLReaderFromFile(final File file, final List<AeriusException> errors) throws IOException, AeriusException {
     final GMLReaderFactory factory = GMLReaderFactory.getFactory(mockGmlHelper());
     try (InputStream inputStream = new FileInputStream(file)) {
-      return factory.createReader(inputStream, true, new ArrayList<AeriusException>(), new ArrayList<AeriusException>());
+      return factory.createReader(inputStream, true, errors, new ArrayList<>());
     } catch (final AeriusException e) {
       LOG.error("File in error during convertToCollection: " + file);
       throw e;

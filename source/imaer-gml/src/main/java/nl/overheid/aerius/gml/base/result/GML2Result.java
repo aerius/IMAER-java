@@ -34,6 +34,7 @@ import nl.overheid.aerius.shared.domain.v2.point.CalculationPointFeature;
 import nl.overheid.aerius.shared.domain.v2.point.CustomCalculationPoint;
 import nl.overheid.aerius.shared.domain.v2.point.NSLCalculationPoint;
 import nl.overheid.aerius.shared.domain.v2.point.ReceptorPoint;
+import nl.overheid.aerius.shared.domain.v2.point.SubPoint;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 import nl.overheid.aerius.shared.geometry.ReceptorUtil;
@@ -93,13 +94,11 @@ public class GML2Result {
   private CalculationPoint determineSpecificType(final IsGmlCalculationPoint calculationPoint) throws AeriusException {
     final CalculationPoint returnPoint;
     if (calculationPoint instanceof IsGmlReceptorPoint) {
-      final ReceptorPoint receptor = new ReceptorPoint();
-      fillReceptorPoint((IsGmlReceptorPoint) calculationPoint, receptor);
-      returnPoint = receptor;
+      returnPoint = createReceptorPoint((IsGmlReceptorPoint) calculationPoint);
+    } else if (calculationPoint instanceof IsGmlSubPoint) {
+      returnPoint = createSubPoint((IsGmlSubPoint) calculationPoint);
     } else if (calculationPoint instanceof IsGmlNSLCalculationPoint) {
-      final NSLCalculationPoint nslPoint = new NSLCalculationPoint();
-      fillNSLCalculationPoint((IsGmlNSLCalculationPoint) calculationPoint, nslPoint);
-      returnPoint = nslPoint;
+      returnPoint = createNSLCalculationPoint((IsGmlNSLCalculationPoint) calculationPoint);
     } else if (calculationPoint instanceof IsGmlCustomCalculationPoint) {
       returnPoint = new CustomCalculationPoint();
     } else {
@@ -147,13 +146,25 @@ public class GML2Result {
     target.setJurisdictionId(origin.getJurisdictionId());
   }
 
-  private void fillReceptorPoint(final IsGmlReceptorPoint origin, final ReceptorPoint target) {
+  private ReceptorPoint createReceptorPoint(final IsGmlReceptorPoint origin) {
+    final ReceptorPoint target = new ReceptorPoint();
     target.setReceptorId(origin.getReceptorPointId());
+    return target;
   }
 
-  private void fillNSLCalculationPoint(final IsGmlNSLCalculationPoint origin, final NSLCalculationPoint target) {
+  private SubPoint createSubPoint(final IsGmlSubPoint origin) {
+    final SubPoint target = new SubPoint();
+    target.setSubPointId(origin.getSubPointId());
+    target.setReceptorId(origin.getReceptorPointId());
+    target.setLevel(origin.getLevel());
+    return target;
+  }
+
+  private NSLCalculationPoint createNSLCalculationPoint(final IsGmlNSLCalculationPoint origin) {
+    final NSLCalculationPoint target = new NSLCalculationPoint();
     target.setRejectionGrounds(origin.getRejectionGrounds());
     target.setMonitorSubstance(origin.getMonitorSubstance());
+    return target;
   }
 
   /**

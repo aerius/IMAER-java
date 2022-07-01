@@ -20,18 +20,20 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
+import nl.overheid.aerius.gml.base.result.IsGmlSubPoint;
 import nl.overheid.aerius.gml.v5_0.base.CalculatorSchema;
 
 /**
  *
  */
 @XmlType(name = "SubPointType", namespace = CalculatorSchema.NAMESPACE)
-public class SubPoint extends AbstractCalculationPoint {
+public class SubPoint extends AbstractCalculationPoint implements IsGmlSubPoint {
 
   private int subPointId;
   private int receptorPointId;
   private int level;
 
+  @Override
   @XmlAttribute
   public int getSubPointId() {
     return subPointId;
@@ -41,6 +43,7 @@ public class SubPoint extends AbstractCalculationPoint {
     this.subPointId = subPointId;
   }
 
+  @Override
   @XmlAttribute
   public int getReceptorPointId() {
     return receptorPointId;
@@ -50,6 +53,7 @@ public class SubPoint extends AbstractCalculationPoint {
     this.receptorPointId = receptorPointId;
   }
 
+  @Override
   @XmlElement(namespace = CalculatorSchema.NAMESPACE)
   public int getLevel() {
     return level;
