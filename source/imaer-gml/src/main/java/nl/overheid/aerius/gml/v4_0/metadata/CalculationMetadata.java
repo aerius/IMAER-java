@@ -21,6 +21,7 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
+import nl.overheid.aerius.gml.base.IsCalculationMetaData;
 import nl.overheid.aerius.gml.v4_0.base.CalculatorSchema;
 import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.calculation.CalculationType;
@@ -31,7 +32,7 @@ import nl.overheid.aerius.shared.domain.result.EmissionResultType;
  */
 @XmlType(name = "CalculationMetadataType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"calculationType", "substances", "resultTypes",
     "maximumRange", "researchArea", "monitorSrm2Year", "options"})
-public class CalculationMetadata {
+public class CalculationMetadata implements IsCalculationMetaData {
 
   private String calculationType;
   private List<Substance> substances;

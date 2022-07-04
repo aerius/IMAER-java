@@ -19,13 +19,14 @@ package nl.overheid.aerius.gml.v4_0.metadata;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
+import nl.overheid.aerius.gml.base.IsCalculationOption;
 import nl.overheid.aerius.gml.v4_0.base.CalculatorSchema;
 
 /**
  *
  */
 @XmlType(name = "CalculationOptionType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"key", "value"})
-public class CalculationOption {
+public class CalculationOption implements IsCalculationOption {
 
   private String key;
   private String value;

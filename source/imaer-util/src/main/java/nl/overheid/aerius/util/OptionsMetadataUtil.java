@@ -16,6 +16,7 @@
  */
 package nl.overheid.aerius.util;
 
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -35,7 +36,9 @@ import nl.overheid.aerius.shared.domain.calculation.WNBCalculationOptions;
  */
 public final class OptionsMetadataUtil {
 
-  private enum Option {
+  private static final String METEO_YEARS_SEPARATOR = ",";
+
+  public enum Option {
     // @formatter:off
     METEO_YEAR,
     WITHOUT_SOURCE_STACKING,
@@ -91,6 +94,13 @@ public final class OptionsMetadataUtil {
     //util class
   }
 
+  public static void addOptionsFromMap(final Map<Option, String> map, final CalculationSetOptions options) {
+    options.setStacking(!Boolean.parseBoolean(map.get(Option.WITHOUT_SOURCE_STACKING)));
+
+    final NCACalculationOptions ncaCalculationOptions = options.getNcaCalculationOptions();
+    ncaOptionsFromMap(ncaCalculationOptions, map);
+  }
+
   public static Map<String, String> optionsToMap(final Theme theme, final CalculationSetOptions options, final boolean addDefaults) {
     final Map<Option, String> mapToAddTo = new LinkedHashMap<>();
     addBooleanValue(mapToAddTo, Option.WITHOUT_SOURCE_STACKING, !options.isStacking(), addDefaults);
@@ -144,11 +154,29 @@ public final class OptionsMetadataUtil {
     }
   }
 
+  private static void ncaOptionsFromMap(final NCACalculationOptions options, final Map<Option, String> map) {
+    options.setPermitArea(map.get(Option.ADMS_PERMIT_AREA));
+    options.setMeteoSiteLocation(map.get(Option.ADMS_METEO_SITE_LOCATION));
+    options.setMeteoYears(Arrays.asList(map.get(Option.ADMS_METEO_YEARS).split(METEO_YEARS_SEPARATOR)));
+
+    options.getAdmsOptions().setMinMoninObukhovLength(Double.parseDouble(map.get(Option.ADMS_MIN_MONIN_OBUKHOV_LENGTH )));
+    options.getAdmsOptions().setSurfaceAlbedo(Double.parseDouble(map.get(Option.ADMS_SURFACE_ALBEDO )));
+    options.getAdmsOptions().setPriestleyTaylorParameter(Double.parseDouble(map.get(Option.ADMS_PRIESTLEY_TAYLOR_PARAMETER )));
+    options.getAdmsOptions().setMetSiteId(Integer.parseInt(map.get(Option.ADMS_MET_SITE_ID )));
+    options.getAdmsOptions().setMsRoughness(Double.parseDouble(map.get(Option.ADMS_MET_SITE_ROUGHNESS )));
+    options.getAdmsOptions().setMsMinMoninObukhovLength(Double.parseDouble(map.get(Option.ADMS_MET_SITE_MIN_MONIN_OBUKHOV_LENGTH )));
+    options.getAdmsOptions().setMsSurfaceAlbedo(Double.parseDouble(map.get(Option.ADMS_MET_SITE_SURFACE_ALBEDO )));
+    options.getAdmsOptions().setMsPriestleyTaylorParameter(Double.parseDouble(map.get(Option.ADMS_MET_SITE_PRIESTLEY_TAYLOR_PARAMETER )));
+    options.getAdmsOptions().setPlumeDepletionNH3(Boolean.parseBoolean(map.get(Option.ADMS_PLUME_DEPLETION_NH3 )));
+    options.getAdmsOptions().setPlumeDepletionNOX(Boolean.parseBoolean(map.get(Option.ADMS_PLUME_DEPLETION_NOX )));
+    options.getAdmsOptions().setComplexTerrain(Boolean.parseBoolean(map.get(Option.ADMS_COMPLEX_TERRAIN )));
+  }
+
   private static void ncaOptionsToMap(final Map<Option, String> mapToAddTo, final NCACalculationOptions options, final boolean addDefaults) {
     if (options != null) {
       addValue(mapToAddTo, Option.ADMS_PERMIT_AREA, options.getPermitArea(), addDefaults);
       addValue(mapToAddTo, Option.ADMS_METEO_SITE_LOCATION, options.getMeteoSiteLocation(), addDefaults);
-      addValue(mapToAddTo, Option.ADMS_METEO_YEARS, String.join(",", options.getMeteoYears()), addDefaults);
+      addValue(mapToAddTo, Option.ADMS_METEO_YEARS, String.join(METEO_YEARS_SEPARATOR, options.getMeteoYears()), addDefaults);
       final ADMSOptions adms = options.getAdmsOptions();
 
       if (adms != null) {

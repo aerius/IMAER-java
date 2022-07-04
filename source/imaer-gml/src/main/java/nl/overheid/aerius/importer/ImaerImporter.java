@@ -136,7 +136,13 @@ public class ImaerImporter {
     addBuildings(reader, importOptions, situation);
     addDefinitions(reader, importOptions, situation);
     setCrs(result);
+
+    addCalculationSetOptions(reader, result);
     LOGGER.info("GML imported with GML version: {}", version);
+  }
+
+  private static void addCalculationSetOptions(GMLReader reader, ImportParcel parcel) {
+    parcel.setCalculationSetOptions(reader.readCalculationSetOptions());
   }
 
   protected GMLReader createGMLReader(final InputStream inputStream, final Set<ImportOption> importOptions, final ImportParcel result)

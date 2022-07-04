@@ -95,4 +95,10 @@ public interface MetaData {
     return null;
   }
 
+  /**
+   * @return the Calculation MetaData
+   */
+  default IsCalculationMetaData getCalculation() {
+    return null;
+  }
 }

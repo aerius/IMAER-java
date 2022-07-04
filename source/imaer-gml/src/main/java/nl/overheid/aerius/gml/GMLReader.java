@@ -25,6 +25,7 @@ import nl.overheid.aerius.gml.base.GMLConversionData;
 import nl.overheid.aerius.gml.base.GMLHelper;
 import nl.overheid.aerius.gml.base.GMLVersionReader;
 import nl.overheid.aerius.gml.base.GMLVersionReaderFactory;
+import nl.overheid.aerius.shared.domain.calculation.CalculationSetOptions;
 import nl.overheid.aerius.shared.domain.scenario.SituationType;
 import nl.overheid.aerius.shared.domain.v2.building.BuildingFeature;
 import nl.overheid.aerius.shared.domain.v2.nsl.NSLCorrection;
@@ -47,6 +48,7 @@ public final class GMLReader {
   private final GMLMetaDataReader metaDataReader;
   private final GMLVersionReader versionReader;
   private final GMLConversionData conversionData;
+  private final GMLCalculationSetOptionsReader calculationSetOptionsReader;
 
   /**
    * Constructor.
@@ -64,6 +66,7 @@ public final class GMLReader {
     this.factory = factory;
     this.featureCollection = featureCollection;
     metaDataReader = new GMLMetaDataReader(featureCollection);
+    calculationSetOptionsReader = new GMLCalculationSetOptionsReader(featureCollection);
     conversionData = new GMLConversionData(gmlHelper, factory.getLegacyCodeConverter(), errors, warnings);
     versionReader = factory.createReader(conversionData);
   }
@@ -84,6 +87,10 @@ public final class GMLReader {
    */
   public List<EmissionSourceFeature> readEmissionSourceList() {
     return toEmissionSources();
+  }
+
+  public CalculationSetOptions readCalculationSetOptions() {
+    return calculationSetOptionsReader.readCalculationSetOptions();
   }
 
   /**

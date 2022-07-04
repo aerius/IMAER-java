@@ -20,7 +20,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
@@ -215,5 +217,37 @@ class OptionsMetadataUtilTest {
     assertEquals("1.1", result.get("adms_met_site_min_monin_obukhov_length"));
     assertEquals("1.2", result.get("adms_met_site_surface_albedo"));
     assertEquals("1.3", result.get("adms_met_site_priestley_taylor_parameter"));
+  }
+
+  @Test
+  public void NcaOptionsRoundtripTest() {
+    final CalculationSetOptions options = new CalculationSetOptions();
+    final NCACalculationOptions ncaOptions = options.getNcaCalculationOptions();
+
+    ncaOptions.setPermitArea("London");
+    ncaOptions.setMeteoSiteLocation("Near London");
+    ncaOptions.setMeteoYears(List.of("2022", "2023"));
+    final ADMSOptions adms = new ADMSOptions();
+    ncaOptions.setAdmsOptions(adms);
+    adms.setMinMoninObukhovLength(12.3);
+    adms.setSurfaceAlbedo(23.4);
+    adms.setPriestleyTaylorParameter(34.5);
+    adms.setPlumeDepletionNH3(true);
+    adms.setPlumeDepletionNOX(true);
+    adms.setComplexTerrain(true);
+    adms.setMetSiteId(100);
+    adms.setMsRoughness(0.8);
+    adms.setMsMinMoninObukhovLength(1.1);
+    adms.setMsSurfaceAlbedo(1.2);
+    adms.setMsPriestleyTaylorParameter(1.3);
+
+    final Map<String, String> result1 = OptionsMetadataUtil.optionsToMap(Theme.NCA, options, false);
+    final CalculationSetOptions roundTripOptions = new CalculationSetOptions();
+    OptionsMetadataUtil.addOptionsFromMap(result1.entrySet().stream()
+            .collect(Collectors.toMap(entry -> OptionsMetadataUtil.Option.valueOf(entry.getKey().toUpperCase(Locale.ROOT)), Map.Entry::getValue)),
+        roundTripOptions);
+    final Map<String, String> result2 = OptionsMetadataUtil.optionsToMap(Theme.NCA, roundTripOptions, false);
+
+    assertEquals(result1, result2, "Reading Calculation options to, from and to map should return the same exact map.");
   }
 }
