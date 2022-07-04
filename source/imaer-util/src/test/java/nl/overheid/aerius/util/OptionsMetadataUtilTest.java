@@ -183,6 +183,7 @@ class OptionsMetadataUtilTest {
     final CalculationSetOptions options = new CalculationSetOptions();
     final NCACalculationOptions ncaOptions = options.getNcaCalculationOptions();
 
+    ncaOptions.setAdmsVersion("5.0.0.1");
     ncaOptions.setPermitArea("London");
     ncaOptions.setMeteoSiteLocation("Near London");
     ncaOptions.setMeteoYears(List.of("2022", "2023"));
@@ -201,6 +202,7 @@ class OptionsMetadataUtilTest {
     adms.setMsPriestleyTaylorParameter(1.3);
     final Map<String, String> result = OptionsMetadataUtil.optionsToMap(Theme.NCA, options, false);
 
+    assertEquals("5.0.0.1", result.get("adms_version"));
     assertEquals("London", result.get("adms_permit_area"));
     assertEquals("Near London", result.get("adms_meteo_site_location"));
     assertEquals("2022,2023", result.get("adms_meteo_years"));

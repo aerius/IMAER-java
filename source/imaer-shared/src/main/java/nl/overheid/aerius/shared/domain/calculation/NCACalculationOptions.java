@@ -43,6 +43,11 @@ public class NCACalculationOptions implements Serializable {
   private List<String> meteoYears = new ArrayList<String>();
 
   /**
+   * ADMS version to use.
+   */
+  private String admsVersion;
+
+  /**
    * Additional ADMS options.
    */
   private ADMSOptions admsOptions = new ADMSOptions();
@@ -77,5 +82,13 @@ public class NCACalculationOptions implements Serializable {
 
   public void setAdmsOptions(final ADMSOptions admsOptions) {
     this.admsOptions = admsOptions;
+  }
+
+  public String getAdmsVersion() {
+    return admsVersion;
+  }
+
+  public void setAdmsVersion(final String admsVersion) {
+    this.admsVersion = admsVersion;
   }
 }

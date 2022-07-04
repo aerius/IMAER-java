@@ -64,6 +64,7 @@ public final class OptionsMetadataUtil {
     OPS_CHEMISTRY,
 
     /* ADMS options related */
+    ADMS_VERSION,
     ADMS_PERMIT_AREA,
     ADMS_METEO_SITE_LOCATION,
     ADMS_METEO_YEARS,
@@ -146,6 +147,7 @@ public final class OptionsMetadataUtil {
 
   private static void ncaOptionsToMap(final Map<Option, String> mapToAddTo, final NCACalculationOptions options, final boolean addDefaults) {
     if (options != null) {
+      addValue(mapToAddTo, Option.ADMS_VERSION, options.getAdmsVersion(), addDefaults);
       addValue(mapToAddTo, Option.ADMS_PERMIT_AREA, options.getPermitArea(), addDefaults);
       addValue(mapToAddTo, Option.ADMS_METEO_SITE_LOCATION, options.getMeteoSiteLocation(), addDefaults);
       addValue(mapToAddTo, Option.ADMS_METEO_YEARS, String.join(",", options.getMeteoYears()), addDefaults);
