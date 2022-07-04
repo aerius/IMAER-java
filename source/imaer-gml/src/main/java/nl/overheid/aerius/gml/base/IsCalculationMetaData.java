@@ -25,14 +25,23 @@ import nl.overheid.aerius.gml.v5_0.base.CalculatorSchema;
 
 public interface IsCalculationMetaData {
 
+  /**
+   * @return the type of calculation
+   */
   default String getCalculationType() {
     return null;
   }
 
+  /**
+   * @return the maximum range for this calculation
+   */
   default Double getMaximumRange() {
     return null;
   }
 
+  /**
+   * @return a list of calculation options.
+   */
   @XmlElement(name = "option", namespace = CalculatorSchema.NAMESPACE)
   default List<? extends IsGmlProperty<IsCalculationOption>> getOptions() {
     return new ArrayList<>();

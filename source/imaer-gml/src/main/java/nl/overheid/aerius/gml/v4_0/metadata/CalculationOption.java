@@ -43,6 +43,7 @@ public class CalculationOption implements IsCalculationOption {
     this.value = value;
   }
 
+  @Override
   @XmlElement(namespace = CalculatorSchema.NAMESPACE)
   public String getKey() {
     return key;
@@ -52,6 +53,7 @@ public class CalculationOption implements IsCalculationOption {
     this.key = key;
   }
 
+  @Override
   @XmlElement(namespace = CalculatorSchema.NAMESPACE)
   public String getValue() {
     return value;

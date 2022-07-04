@@ -74,6 +74,7 @@ public class CalculationMetadata implements IsCalculationMetaData {
     this.resultTypes = resultTypes;
   }
 
+  @Override
   @XmlElement(namespace = CalculatorSchema.NAMESPACE)
   public Double getMaximumRange() {
     return maximumRange;

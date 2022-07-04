@@ -45,13 +45,13 @@ public class GMLCalculationSetOptionsReader {
   public CalculationSetOptions readCalculationSetOptions() {
     final IsCalculationMetaData calculationMetaData = featureCollection.getMetaData().getCalculation();
     final CalculationSetOptions options = new CalculationSetOptions();
-    Map<OptionsMetadataUtil.Option, String> optionsMap = calculationMetaData.getOptions().stream()
+    final Map<OptionsMetadataUtil.Option, String> optionsMap = calculationMetaData.getOptions().stream()
         .collect(Collectors.toMap(prop -> OptionsMetadataUtil.Option.valueOf(prop.getProperty().getKey().toUpperCase(Locale.ROOT)),
             prop -> prop.getProperty().getValue()));
     OptionsMetadataUtil.addOptionsFromMap(optionsMap, options);
 
     options.setCalculationType(CalculationType.valueOf(calculationMetaData.getCalculationType()));
     options.setCalculateMaximumRange(calculationMetaData.getMaximumRange());
-    return new CalculationSetOptions();
+    return options;
   }
 }

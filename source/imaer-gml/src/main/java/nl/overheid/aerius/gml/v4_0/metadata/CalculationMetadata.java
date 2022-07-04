@@ -42,6 +42,7 @@ public class CalculationMetadata implements IsCalculationMetaData {
   private Integer monitorSrm2Year;
   private List<CalculationOptionProperty> options;
 
+  @Override
   @XmlElement(name = "type", namespace = CalculatorSchema.NAMESPACE)
   public String getCalculationType() {
     return calculationType;
@@ -73,6 +74,7 @@ public class CalculationMetadata implements IsCalculationMetaData {
     this.resultTypes = resultTypes;
   }
 
+  @Override
   @XmlElement(namespace = CalculatorSchema.NAMESPACE)
   public Double getMaximumRange() {
     return maximumRange;

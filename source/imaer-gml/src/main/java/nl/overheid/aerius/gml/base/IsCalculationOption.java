@@ -16,9 +16,18 @@
  */
 package nl.overheid.aerius.gml.base;
 
+/**
+ * Key-Value combination representing a calculation option.
+ */
 public interface IsCalculationOption {
 
+  /**
+   * @return the key
+   */
   String getKey();
 
+  /**
+   * @return the value
+   */
   String getValue();
 }
