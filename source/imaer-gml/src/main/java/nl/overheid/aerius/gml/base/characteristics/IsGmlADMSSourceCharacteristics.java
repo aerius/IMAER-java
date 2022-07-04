@@ -44,6 +44,5 @@ public interface IsGmlADMSSourceCharacteristics extends IsGmlSourceCharacteristi
   EffluxType getEffluxType();
   Double getVerticalVelocity();
   Double getVolumetricFlowRate();
-  Double getMassFlux();
 
 }

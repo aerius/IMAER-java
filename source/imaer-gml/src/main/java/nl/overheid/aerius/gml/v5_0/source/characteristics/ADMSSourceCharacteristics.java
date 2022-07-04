@@ -33,7 +33,7 @@ import nl.overheid.aerius.shared.domain.v2.characteristics.adms.SourceType;
 @XmlRootElement(name = "ADMSSourceCharacteristics", namespace = CalculatorSchema.NAMESPACE)
 @XmlType(name = "ADMSSourceCharacteristicsType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"height", "specificHeatCapacity",
     "sourceType", "diameter", "elevationAngle", "horizontalAngle", "width", "verticalDimension", "buoyancyType", "density",
-    "temperature", "effluxType", "verticalVelocity", "volumetricFlowRate", "massFlux", "diurnalVariationProperty"})
+    "temperature", "effluxType", "verticalVelocity", "volumetricFlowRate", "diurnalVariationProperty"})
 public class ADMSSourceCharacteristics extends AbstractSourceCharacteristics implements IsGmlADMSSourceCharacteristics {
 
   private double height;
@@ -50,7 +50,6 @@ public class ADMSSourceCharacteristics extends AbstractSourceCharacteristics imp
   private EffluxType effluxType;
   private Double verticalVelocity;
   private Double volumetricFlowRate;
-  private Double massFlux;
   private AbstractDiurnalVariation diurnalVariation;
 
   @Override
@@ -191,16 +190,6 @@ public class ADMSSourceCharacteristics extends AbstractSourceCharacteristics imp
 
   public void setVolumetricFlowRate(final Double volumetricFlowRate) {
     this.volumetricFlowRate = volumetricFlowRate;
-  }
-
-  @Override
-  @XmlElement(namespace = CalculatorSchema.NAMESPACE)
-  public Double getMassFlux() {
-    return massFlux;
-  }
-
-  public void setMassFlux(final Double massFlux) {
-    this.massFlux = massFlux;
   }
 
   @XmlElement(name = "diurnalVariation", namespace = CalculatorSchema.NAMESPACE)

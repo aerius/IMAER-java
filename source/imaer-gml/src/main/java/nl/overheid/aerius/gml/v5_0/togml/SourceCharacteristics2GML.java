@@ -148,7 +148,6 @@ final class SourceCharacteristics2GML {
       returnCharacteristics.setVolumetricFlowRate(characteristics.getVolumetricFlowRate());
       break;
     case MASS:
-      returnCharacteristics.setMassFlux(characteristics.getMassFlux());
       break;
     case MOMENTUM:
       // Not (yet) supported
