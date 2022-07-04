@@ -17,6 +17,7 @@
 package nl.overheid.aerius.gml.v2_0.metadata;
 
 import java.util.List;
+import java.util.Locale;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
@@ -44,6 +45,10 @@ public class CalculationMetadata implements IsCalculationMetaData {
   @XmlElement(name = "type", namespace = CalculatorSchema.NAMESPACE)
   public String getCalculationType() {
     return calculationType.type();
+  }
+
+  public void setCalculationType(final String calculationType) {
+    this.calculationType = CalculationType.valueOf(calculationType.toUpperCase(Locale.ROOT));
   }
 
   public void setCalculationType(final CalculationType calculationType) {

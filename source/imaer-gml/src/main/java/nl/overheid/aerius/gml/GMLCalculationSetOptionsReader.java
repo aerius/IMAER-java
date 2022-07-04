@@ -44,6 +44,10 @@ public class GMLCalculationSetOptionsReader {
    */
   public CalculationSetOptions readCalculationSetOptions() {
     final IsCalculationMetaData calculationMetaData = featureCollection.getMetaData().getCalculation();
+    if (calculationMetaData == null) {
+      return new CalculationSetOptions();
+    }
+
     final CalculationSetOptions options = new CalculationSetOptions();
     final Map<OptionsMetadataUtil.Option, String> optionsMap = calculationMetaData.getOptions().stream()
         .collect(Collectors.toMap(prop -> OptionsMetadataUtil.Option.valueOf(prop.getProperty().getKey().toUpperCase(Locale.ROOT)),
