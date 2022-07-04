@@ -115,6 +115,10 @@ public final class ADMSLimits implements BuildingLimits {
   public static final double PRIESTLEY_TAYLOR_PARAMETER_MAX = 3D;
   public static final double PRIESTLEY_TAYLOR_PARAMETER_DEFAULT = 1D;
 
+  public static final boolean ADMS_PLUME_DEPLETION_NH3_DEFAULT = false;
+  public static final boolean ADMS_PLUME_DEPLETION_NOX_DEFAULT = false;
+  public static final boolean ADMS_COMPLEX_TERRAIN_DEFAULT = false;
+
   public static final ADMSLimits INSTANCE = new ADMSLimits();
 
   private ADMSLimits() {
