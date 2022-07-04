@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 
 import nl.overheid.aerius.gml.base.FeatureCollection;
 import nl.overheid.aerius.gml.base.IsCalculationMetaData;
+import nl.overheid.aerius.shared.domain.Theme;
 import nl.overheid.aerius.shared.domain.calculation.CalculationSetOptions;
 import nl.overheid.aerius.shared.domain.calculation.CalculationType;
 import nl.overheid.aerius.shared.domain.v2.scenario.ScenarioMetaData;
@@ -42,7 +43,7 @@ public class GMLCalculationSetOptionsReader {
    * Returns the {@link ScenarioMetaData} from the GML data.
    * @return ScenarioMetaData object
    */
-  public CalculationSetOptions readCalculationSetOptions() {
+  public CalculationSetOptions readCalculationSetOptions(final Theme theme) {
     final IsCalculationMetaData calculationMetaData = featureCollection.getMetaData().getCalculation();
     if (calculationMetaData == null) {
       return new CalculationSetOptions();
@@ -52,7 +53,7 @@ public class GMLCalculationSetOptionsReader {
     final Map<OptionsMetadataUtil.Option, String> optionsMap = calculationMetaData.getOptions().stream()
         .collect(Collectors.toMap(prop -> OptionsMetadataUtil.Option.valueOf(prop.getProperty().getKey().toUpperCase(Locale.ROOT)),
             prop -> prop.getProperty().getValue()));
-    OptionsMetadataUtil.addOptionsFromMap(optionsMap, options);
+    OptionsMetadataUtil.addOptionsFromMap(theme, optionsMap, options);
 
     options.setCalculationType(CalculationType.valueOf(calculationMetaData.getCalculationType()));
     options.setCalculateMaximumRange(calculationMetaData.getMaximumRange());

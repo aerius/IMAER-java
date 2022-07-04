@@ -243,7 +243,7 @@ class OptionsMetadataUtilTest {
 
     final Map<String, String> result1 = OptionsMetadataUtil.optionsToMap(Theme.NCA, options, false);
     final CalculationSetOptions roundTripOptions = new CalculationSetOptions();
-    OptionsMetadataUtil.addOptionsFromMap(result1.entrySet().stream()
+    OptionsMetadataUtil.addOptionsFromMap(Theme.NCA, result1.entrySet().stream()
             .collect(Collectors.toMap(entry -> OptionsMetadataUtil.Option.valueOf(entry.getKey().toUpperCase(Locale.ROOT)), Map.Entry::getValue)),
         roundTripOptions);
     final Map<String, String> result2 = OptionsMetadataUtil.optionsToMap(Theme.NCA, roundTripOptions, false);

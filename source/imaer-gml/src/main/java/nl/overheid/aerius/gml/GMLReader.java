@@ -25,6 +25,7 @@ import nl.overheid.aerius.gml.base.GMLConversionData;
 import nl.overheid.aerius.gml.base.GMLHelper;
 import nl.overheid.aerius.gml.base.GMLVersionReader;
 import nl.overheid.aerius.gml.base.GMLVersionReaderFactory;
+import nl.overheid.aerius.shared.domain.Theme;
 import nl.overheid.aerius.shared.domain.calculation.CalculationSetOptions;
 import nl.overheid.aerius.shared.domain.scenario.SituationType;
 import nl.overheid.aerius.shared.domain.v2.building.BuildingFeature;
@@ -81,16 +82,19 @@ public final class GMLReader {
 
   /**
    * Returns the {@link EmissionSourceFeature}s from the feature collection.
-   * @param categories source categories.
-   * @param year year used to set the emissions values.
    * @return List of sources
    */
   public List<EmissionSourceFeature> readEmissionSourceList() {
     return toEmissionSources();
   }
 
-  public CalculationSetOptions readCalculationSetOptions() {
-    return calculationSetOptionsReader.readCalculationSetOptions();
+  /**
+   * Returns the {@link CalculationSetOptions} from the feature collection.
+   * @param theme the theme for which to read options.
+   * @return the {@link CalculationSetOptions}
+   */
+  public CalculationSetOptions readCalculationSetOptions(final Theme theme) {
+    return calculationSetOptionsReader.readCalculationSetOptions(theme);
   }
 
   /**

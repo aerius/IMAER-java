@@ -94,11 +94,13 @@ public final class OptionsMetadataUtil {
     //util class
   }
 
-  public static void addOptionsFromMap(final Map<Option, String> map, final CalculationSetOptions options) {
+  public static void addOptionsFromMap(final Theme theme, final Map<Option, String> map, final CalculationSetOptions options) {
     options.setStacking(!Boolean.parseBoolean(map.get(Option.WITHOUT_SOURCE_STACKING)));
 
-    final NCACalculationOptions ncaCalculationOptions = options.getNcaCalculationOptions();
-    ncaOptionsFromMap(ncaCalculationOptions, map);
+    if (theme == Theme.NCA) {
+      final NCACalculationOptions ncaCalculationOptions = options.getNcaCalculationOptions();
+      ncaOptionsFromMap(ncaCalculationOptions, map);
+    }
   }
 
   public static Map<String, String> optionsToMap(final Theme theme, final CalculationSetOptions options, final boolean addDefaults) {
@@ -142,7 +144,8 @@ public final class OptionsMetadataUtil {
     if (options != null) {
       addBooleanValue(mapToAddTo, Option.OPS_RAW_INPUT, options.isRawInput(), addDefaults);
       addValue(mapToAddTo, Option.OPS_YEAR, options.getYear(), addDefaults);
-      addValue(mapToAddTo, Option.OPS_CHEMISTRY, Optional.ofNullable(options.getChemistry()).map(OPSOptions.Chemistry::name).orElse(null), addDefaults);
+      addValue(mapToAddTo, Option.OPS_CHEMISTRY, Optional.ofNullable(options.getChemistry()).map(OPSOptions.Chemistry::name).orElse(null),
+          addDefaults);
       addValue(mapToAddTo, Option.OPS_COMP_CODE, options.getCompCode(), addDefaults);
       addValue(mapToAddTo, Option.OPS_MOL_WEIGHT, options.getMolWeight(), addDefaults);
       addValue(mapToAddTo, Option.OPS_PHASE, options.getPhase(), addDefaults);
@@ -157,19 +160,29 @@ public final class OptionsMetadataUtil {
   private static void ncaOptionsFromMap(final NCACalculationOptions options, final Map<Option, String> map) {
     options.setPermitArea(map.get(Option.ADMS_PERMIT_AREA));
     options.setMeteoSiteLocation(map.get(Option.ADMS_METEO_SITE_LOCATION));
-    options.setMeteoYears(Arrays.asList(map.get(Option.ADMS_METEO_YEARS).split(METEO_YEARS_SEPARATOR)));
+    parseMeteoYears(options, map);
 
-    options.getAdmsOptions().setMinMoninObukhovLength(Double.parseDouble(map.get(Option.ADMS_MIN_MONIN_OBUKHOV_LENGTH )));
-    options.getAdmsOptions().setSurfaceAlbedo(Double.parseDouble(map.get(Option.ADMS_SURFACE_ALBEDO )));
-    options.getAdmsOptions().setPriestleyTaylorParameter(Double.parseDouble(map.get(Option.ADMS_PRIESTLEY_TAYLOR_PARAMETER )));
-    options.getAdmsOptions().setMetSiteId(Integer.parseInt(map.get(Option.ADMS_MET_SITE_ID )));
-    options.getAdmsOptions().setMsRoughness(Double.parseDouble(map.get(Option.ADMS_MET_SITE_ROUGHNESS )));
-    options.getAdmsOptions().setMsMinMoninObukhovLength(Double.parseDouble(map.get(Option.ADMS_MET_SITE_MIN_MONIN_OBUKHOV_LENGTH )));
-    options.getAdmsOptions().setMsSurfaceAlbedo(Double.parseDouble(map.get(Option.ADMS_MET_SITE_SURFACE_ALBEDO )));
-    options.getAdmsOptions().setMsPriestleyTaylorParameter(Double.parseDouble(map.get(Option.ADMS_MET_SITE_PRIESTLEY_TAYLOR_PARAMETER )));
-    options.getAdmsOptions().setPlumeDepletionNH3(Boolean.parseBoolean(map.get(Option.ADMS_PLUME_DEPLETION_NH3 )));
-    options.getAdmsOptions().setPlumeDepletionNOX(Boolean.parseBoolean(map.get(Option.ADMS_PLUME_DEPLETION_NOX )));
-    options.getAdmsOptions().setComplexTerrain(Boolean.parseBoolean(map.get(Option.ADMS_COMPLEX_TERRAIN )));
+    options.getAdmsOptions().setMinMoninObukhovLength(Double.parseDouble(map.get(Option.ADMS_MIN_MONIN_OBUKHOV_LENGTH)));
+    options.getAdmsOptions().setSurfaceAlbedo(Double.parseDouble(map.get(Option.ADMS_SURFACE_ALBEDO)));
+    options.getAdmsOptions().setPriestleyTaylorParameter(Double.parseDouble(map.get(Option.ADMS_PRIESTLEY_TAYLOR_PARAMETER)));
+    options.getAdmsOptions().setMetSiteId(Integer.parseInt(map.get(Option.ADMS_MET_SITE_ID)));
+    options.getAdmsOptions().setMsRoughness(Double.parseDouble(map.get(Option.ADMS_MET_SITE_ROUGHNESS)));
+    options.getAdmsOptions().setMsMinMoninObukhovLength(Double.parseDouble(map.get(Option.ADMS_MET_SITE_MIN_MONIN_OBUKHOV_LENGTH)));
+    options.getAdmsOptions().setMsSurfaceAlbedo(Double.parseDouble(map.get(Option.ADMS_MET_SITE_SURFACE_ALBEDO)));
+    options.getAdmsOptions().setMsPriestleyTaylorParameter(Double.parseDouble(map.get(Option.ADMS_MET_SITE_PRIESTLEY_TAYLOR_PARAMETER)));
+    options.getAdmsOptions().setPlumeDepletionNH3(Boolean.parseBoolean(map.get(Option.ADMS_PLUME_DEPLETION_NH3)));
+    options.getAdmsOptions().setPlumeDepletionNOX(Boolean.parseBoolean(map.get(Option.ADMS_PLUME_DEPLETION_NOX)));
+    options.getAdmsOptions().setComplexTerrain(Boolean.parseBoolean(map.get(Option.ADMS_COMPLEX_TERRAIN)));
+  }
+
+  private static void parseMeteoYears(final NCACalculationOptions options, final Map<Option, String> map) {
+    final String meteoYearString = map.get(Option.ADMS_METEO_YEARS);
+    if (meteoYearString != null && !meteoYearString.isBlank() ) {
+      final String[] meteoYears = meteoYearString.split(METEO_YEARS_SEPARATOR);
+      if (meteoYears.length > 0) {
+        options.setMeteoYears(Arrays.asList(meteoYears));
+      }
+    }
   }
 
   private static void ncaOptionsToMap(final Map<Option, String> mapToAddTo, final NCACalculationOptions options, final boolean addDefaults) {
