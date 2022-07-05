@@ -103,7 +103,6 @@ public class GML2ADMSSourceCharacteristics
       returnCharacteristics.setVolumetricFlowRate(gmlADMSCharacteristics.getVolumetricFlowRate());
       break;
     case MASS:
-      returnCharacteristics.setMassFlux(gmlADMSCharacteristics.getMassFlux());
       break;
     case MOMENTUM:
       // Not (yet) supported

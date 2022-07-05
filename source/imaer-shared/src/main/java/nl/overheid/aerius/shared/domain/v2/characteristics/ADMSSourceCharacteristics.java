@@ -197,10 +197,12 @@ public class ADMSSourceCharacteristics extends SourceCharacteristics {
     this.buoyancyFlux = buoyancyFlux;
   }
 
+  @Deprecated
   public double getMassFlux() {
     return massFlux;
   }
 
+  @Deprecated
   public void setMassFlux(final double massFlux) {
     this.massFlux = massFlux;
   }
