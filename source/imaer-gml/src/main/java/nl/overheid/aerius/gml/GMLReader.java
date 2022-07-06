@@ -25,6 +25,8 @@ import nl.overheid.aerius.gml.base.GMLConversionData;
 import nl.overheid.aerius.gml.base.GMLHelper;
 import nl.overheid.aerius.gml.base.GMLVersionReader;
 import nl.overheid.aerius.gml.base.GMLVersionReaderFactory;
+import nl.overheid.aerius.shared.domain.Theme;
+import nl.overheid.aerius.shared.domain.calculation.CalculationSetOptions;
 import nl.overheid.aerius.shared.domain.scenario.SituationType;
 import nl.overheid.aerius.shared.domain.v2.building.BuildingFeature;
 import nl.overheid.aerius.shared.domain.v2.nsl.NSLCorrection;
@@ -47,6 +49,7 @@ public final class GMLReader {
   private final GMLMetaDataReader metaDataReader;
   private final GMLVersionReader versionReader;
   private final GMLConversionData conversionData;
+  private final GMLCalculationSetOptionsReader calculationSetOptionsReader;
 
   /**
    * Constructor.
@@ -64,6 +67,7 @@ public final class GMLReader {
     this.factory = factory;
     this.featureCollection = featureCollection;
     metaDataReader = new GMLMetaDataReader(featureCollection);
+    calculationSetOptionsReader = new GMLCalculationSetOptionsReader(featureCollection);
     conversionData = new GMLConversionData(gmlHelper, factory.getLegacyCodeConverter(), errors, warnings);
     versionReader = factory.createReader(conversionData);
   }
@@ -78,12 +82,19 @@ public final class GMLReader {
 
   /**
    * Returns the {@link EmissionSourceFeature}s from the feature collection.
-   * @param categories source categories.
-   * @param year year used to set the emissions values.
    * @return List of sources
    */
   public List<EmissionSourceFeature> readEmissionSourceList() {
     return toEmissionSources();
+  }
+
+  /**
+   * Returns the {@link CalculationSetOptions} from the feature collection.
+   * @param theme the theme for which to read options.
+   * @return the {@link CalculationSetOptions}
+   */
+  public CalculationSetOptions readCalculationSetOptions(final Theme theme) {
+    return calculationSetOptionsReader.readCalculationSetOptions(theme);
   }
 
   /**

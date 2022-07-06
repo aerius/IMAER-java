@@ -65,6 +65,7 @@ public class MetaDataImpl implements MetaData {
   }
 
   @XmlTransient
+  @Override
   public CalculationMetadata getCalculation() {
     return calculation;
   }

@@ -16,6 +16,7 @@
  */
 package nl.overheid.aerius.util;
 
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -29,13 +30,16 @@ import nl.overheid.aerius.shared.domain.calculation.ConnectSuppliedOptions;
 import nl.overheid.aerius.shared.domain.calculation.NCACalculationOptions;
 import nl.overheid.aerius.shared.domain.calculation.OPSOptions;
 import nl.overheid.aerius.shared.domain.calculation.WNBCalculationOptions;
+import nl.overheid.aerius.shared.domain.v2.characteristics.adms.ADMSLimits;
 
 /**
  * Utility class to convert calculation options to metadata.
  */
 public final class OptionsMetadataUtil {
 
-  private enum Option {
+  private static final String METEO_YEARS_SEPARATOR = ",";
+
+  public enum Option {
     // @formatter:off
     METEO_YEAR,
     WITHOUT_SOURCE_STACKING,
@@ -91,6 +95,15 @@ public final class OptionsMetadataUtil {
     //util class
   }
 
+  public static void addOptionsFromMap(final Theme theme, final Map<Option, String> map, final CalculationSetOptions options) {
+    options.setStacking(!Boolean.parseBoolean(map.get(Option.WITHOUT_SOURCE_STACKING)));
+
+    if (theme == Theme.NCA) {
+      final NCACalculationOptions ncaCalculationOptions = options.getNcaCalculationOptions();
+      ncaOptionsFromMap(ncaCalculationOptions, map);
+    }
+  }
+
   public static Map<String, String> optionsToMap(final Theme theme, final CalculationSetOptions options, final boolean addDefaults) {
     final Map<Option, String> mapToAddTo = new LinkedHashMap<>();
     addBooleanValue(mapToAddTo, Option.WITHOUT_SOURCE_STACKING, !options.isStacking(), addDefaults);
@@ -132,7 +145,8 @@ public final class OptionsMetadataUtil {
     if (options != null) {
       addBooleanValue(mapToAddTo, Option.OPS_RAW_INPUT, options.isRawInput(), addDefaults);
       addValue(mapToAddTo, Option.OPS_YEAR, options.getYear(), addDefaults);
-      addValue(mapToAddTo, Option.OPS_CHEMISTRY, Optional.ofNullable(options.getChemistry()).map(OPSOptions.Chemistry::name).orElse(null), addDefaults);
+      addValue(mapToAddTo, Option.OPS_CHEMISTRY, Optional.ofNullable(options.getChemistry()).map(OPSOptions.Chemistry::name).orElse(null),
+          addDefaults);
       addValue(mapToAddTo, Option.OPS_COMP_CODE, options.getCompCode(), addDefaults);
       addValue(mapToAddTo, Option.OPS_MOL_WEIGHT, options.getMolWeight(), addDefaults);
       addValue(mapToAddTo, Option.OPS_PHASE, options.getPhase(), addDefaults);
@@ -144,11 +158,55 @@ public final class OptionsMetadataUtil {
     }
   }
 
+  private static void ncaOptionsFromMap(final NCACalculationOptions options, final Map<Option, String> map) {
+    options.setPermitArea(map.get(Option.ADMS_PERMIT_AREA));
+    options.setMeteoSiteLocation(map.get(Option.ADMS_METEO_SITE_LOCATION));
+    parseMeteoYears(options, map);
+
+    options.getAdmsOptions()
+        .setMinMoninObukhovLength(getOrDefault(map, Option.ADMS_MIN_MONIN_OBUKHOV_LENGTH, ADMSLimits.MIN_MONIN_OBUKHOV_LENGTH_DEFAULT));
+    options.getAdmsOptions().setSurfaceAlbedo(getOrDefault(map, Option.ADMS_SURFACE_ALBEDO, ADMSLimits.SURFACE_ALBEDO_DEFAULT));
+    options.getAdmsOptions()
+        .setPriestleyTaylorParameter(getOrDefault(map, Option.ADMS_PRIESTLEY_TAYLOR_PARAMETER, ADMSLimits.PRIESTLEY_TAYLOR_PARAMETER_DEFAULT));
+
+    if (map.get(Option.ADMS_MET_SITE_ID) != null) {
+      options.getAdmsOptions().setMetSiteId(Integer.parseInt(map.get(Option.ADMS_MET_SITE_ID)));
+      options.getAdmsOptions().setMsRoughness(getOrDefault(map, Option.ADMS_MET_SITE_ROUGHNESS, ADMSLimits.ROUGHNESS_DEFAULT));
+      options.getAdmsOptions()
+          .setMsMinMoninObukhovLength(getOrDefault(map, Option.ADMS_MET_SITE_MIN_MONIN_OBUKHOV_LENGTH, ADMSLimits.MIN_MONIN_OBUKHOV_LENGTH_DEFAULT));
+      options.getAdmsOptions().setMsSurfaceAlbedo(getOrDefault(map, Option.ADMS_MET_SITE_SURFACE_ALBEDO, ADMSLimits.SURFACE_ALBEDO_DEFAULT));
+      options.getAdmsOptions().setMsPriestleyTaylorParameter(
+          getOrDefault(map, Option.ADMS_MET_SITE_PRIESTLEY_TAYLOR_PARAMETER, ADMSLimits.PRIESTLEY_TAYLOR_PARAMETER_DEFAULT));
+    }
+
+    options.getAdmsOptions().setPlumeDepletionNH3(getOrDefault(map, Option.ADMS_PLUME_DEPLETION_NH3, ADMSLimits.ADMS_PLUME_DEPLETION_NH3_DEFAULT));
+    options.getAdmsOptions().setPlumeDepletionNOX(getOrDefault(map, Option.ADMS_PLUME_DEPLETION_NOX, ADMSLimits.ADMS_PLUME_DEPLETION_NOX_DEFAULT));
+    options.getAdmsOptions().setComplexTerrain(getOrDefault(map, Option.ADMS_COMPLEX_TERRAIN, ADMSLimits.ADMS_COMPLEX_TERRAIN_DEFAULT));
+  }
+
+  private static double getOrDefault(final Map<Option, String> map, final Option option, final double defaultValue) {
+    return Optional.ofNullable(map.get(option)).map(Double::parseDouble).orElse(defaultValue);
+  }
+
+  private static boolean getOrDefault(final Map<Option, String> map, final Option option, final boolean defaultValue) {
+    return Optional.ofNullable(map.get(option)).map(Boolean::parseBoolean).orElse(defaultValue);
+  }
+
+  private static void parseMeteoYears(final NCACalculationOptions options, final Map<Option, String> map) {
+    final String meteoYearString = map.get(Option.ADMS_METEO_YEARS);
+    if (meteoYearString != null && !meteoYearString.isBlank()) {
+      final String[] meteoYears = meteoYearString.split(METEO_YEARS_SEPARATOR);
+      if (meteoYears.length > 0) {
+        options.setMeteoYears(Arrays.asList(meteoYears));
+      }
+    }
+  }
+
   private static void ncaOptionsToMap(final Map<Option, String> mapToAddTo, final NCACalculationOptions options, final boolean addDefaults) {
     if (options != null) {
       addValue(mapToAddTo, Option.ADMS_PERMIT_AREA, options.getPermitArea(), addDefaults);
       addValue(mapToAddTo, Option.ADMS_METEO_SITE_LOCATION, options.getMeteoSiteLocation(), addDefaults);
-      addValue(mapToAddTo, Option.ADMS_METEO_YEARS, String.join(",", options.getMeteoYears()), addDefaults);
+      addValue(mapToAddTo, Option.ADMS_METEO_YEARS, String.join(METEO_YEARS_SEPARATOR, options.getMeteoYears()), addDefaults);
       final ADMSOptions adms = options.getAdmsOptions();
 
       if (adms != null) {

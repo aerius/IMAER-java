@@ -19,12 +19,14 @@ package nl.overheid.aerius.gml.v4_0.metadata;
 import javax.xml.bind.annotation.XmlElement;
 
 import nl.overheid.aerius.gml.base.AbstractProperty;
+import nl.overheid.aerius.gml.base.IsCalculationOption;
+import nl.overheid.aerius.gml.base.IsGmlProperty;
 import nl.overheid.aerius.gml.v4_0.base.CalculatorSchema;
 
 /**
  *
  */
-public class CalculationOptionProperty extends AbstractProperty<CalculationOption> {
+public class CalculationOptionProperty extends AbstractProperty<CalculationOption> implements IsGmlProperty<IsCalculationOption> {
 
   /**
    * Default constructor, needed for JAXB.

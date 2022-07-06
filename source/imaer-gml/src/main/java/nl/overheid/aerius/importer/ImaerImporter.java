@@ -41,6 +41,7 @@ import nl.overheid.aerius.gml.GMLReaderFactory;
 import nl.overheid.aerius.gml.GMLValidator;
 import nl.overheid.aerius.gml.base.AeriusGMLVersion;
 import nl.overheid.aerius.gml.base.GMLHelper;
+import nl.overheid.aerius.shared.domain.Theme;
 import nl.overheid.aerius.shared.domain.v2.building.BuildingFeature;
 import nl.overheid.aerius.shared.domain.v2.geojson.Crs;
 import nl.overheid.aerius.shared.domain.v2.geojson.Crs.CrsContent;
@@ -84,7 +85,7 @@ public class ImaerImporter {
    * @throws AeriusException error in case of fatal exception
    */
   public void importStream(final InputStream inputStream, final Set<ImportOption> importOptions, final ImportParcel result) throws AeriusException {
-    importStream(inputStream, importOptions, result, Optional.empty());
+    importStream(inputStream, importOptions, result, Optional.empty(), Theme.WNB);
   }
 
   /**
@@ -98,7 +99,7 @@ public class ImaerImporter {
    */
   public void importStream(final InputStream inputStream, final Set<ImportOption> importOptions, final ImportParcel result,
       final int importYear) throws AeriusException {
-    importStream(inputStream, importOptions, result, Optional.of(importYear));
+    importStream(inputStream, importOptions, result, Optional.of(importYear), Theme.WNB);
   }
 
   /**
@@ -110,7 +111,7 @@ public class ImaerImporter {
    * @throws AeriusException error in case of fatal exception
    */
   public void importStream(final InputStream inputStream, final Set<ImportOption> importOptions, final ImportParcel result,
-      final Optional<Integer> importYear) throws AeriusException {
+      final Optional<Integer> importYear, final Theme theme) throws AeriusException {
     final GMLReader reader;
     try {
       reader = createGMLReader(inputStream, importOptions, result);
@@ -136,7 +137,13 @@ public class ImaerImporter {
     addBuildings(reader, importOptions, situation);
     addDefinitions(reader, importOptions, situation);
     setCrs(result);
+
+    addCalculationSetOptions(theme, reader, result);
     LOGGER.info("GML imported with GML version: {}", version);
+  }
+
+  private static void addCalculationSetOptions(final Theme theme, final GMLReader reader, final ImportParcel parcel) {
+    parcel.setCalculationSetOptions(reader.readCalculationSetOptions(theme));
   }
 
   protected GMLReader createGMLReader(final InputStream inputStream, final Set<ImportOption> importOptions, final ImportParcel result)
