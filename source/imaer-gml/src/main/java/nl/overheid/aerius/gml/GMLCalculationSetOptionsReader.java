@@ -16,12 +16,15 @@
  */
 package nl.overheid.aerius.gml;
 
+import java.util.EnumMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 import nl.overheid.aerius.gml.base.FeatureCollection;
 import nl.overheid.aerius.gml.base.IsCalculationMetaData;
+import nl.overheid.aerius.gml.base.IsGmlProperty;
+import nl.overheid.aerius.gml.base.MetaData;
 import nl.overheid.aerius.shared.domain.Theme;
 import nl.overheid.aerius.shared.domain.calculation.CalculationSetOptions;
 import nl.overheid.aerius.shared.domain.calculation.CalculationType;
@@ -44,19 +47,29 @@ public class GMLCalculationSetOptionsReader {
    * @return ScenarioMetaData object
    */
   public CalculationSetOptions readCalculationSetOptions(final Theme theme) {
-    final IsCalculationMetaData calculationMetaData = featureCollection.getMetaData().getCalculation();
-    if (calculationMetaData == null) {
+    final Optional<IsCalculationMetaData> optionalCheck = Optional.ofNullable(featureCollection.getMetaData()).map(MetaData::getCalculation);
+    if (optionalCheck.isEmpty()) {
       return new CalculationSetOptions();
     }
 
-    final CalculationSetOptions options = new CalculationSetOptions();
-    final Map<OptionsMetadataUtil.Option, String> optionsMap = calculationMetaData.getOptions().stream()
-        .collect(Collectors.toMap(prop -> OptionsMetadataUtil.Option.valueOf(prop.getProperty().getKey().toUpperCase(Locale.ROOT)),
-            prop -> prop.getProperty().getValue()));
-    OptionsMetadataUtil.addOptionsFromMap(theme, optionsMap, options);
+    final IsCalculationMetaData calculationMetaData = optionalCheck.get();
 
-    options.setCalculationType(CalculationType.valueOf(calculationMetaData.getCalculationType()));
-    options.setCalculateMaximumRange(calculationMetaData.getMaximumRange());
+    final CalculationSetOptions options = new CalculationSetOptions();
+    if (calculationMetaData.getOptions() != null) {
+      final Map<OptionsMetadataUtil.Option, String> optionsMap = new EnumMap<>(OptionsMetadataUtil.Option.class);
+      calculationMetaData.getOptions().stream()
+          .map(IsGmlProperty::getProperty)
+          .forEach(option -> {
+            final OptionsMetadataUtil.Option parsed = OptionsMetadataUtil.Option.safeValueOf(option.getKey().toUpperCase(Locale.ROOT));
+            if (parsed != null) {
+              optionsMap.put(parsed, option.getValue());
+            }
+          });
+      OptionsMetadataUtil.addOptionsFromMap(theme, optionsMap, options);
+    }
+
+    options.setCalculationType(CalculationType.safeValueOf(calculationMetaData.getCalculationType()));
+    options.setCalculateMaximumRange(calculationMetaData.getMaximumRange() == null ? 0.0 : calculationMetaData.getMaximumRange());
     return options;
   }
 }
