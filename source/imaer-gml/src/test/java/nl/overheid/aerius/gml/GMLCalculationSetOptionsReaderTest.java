@@ -134,7 +134,7 @@ class GMLCalculationSetOptionsReaderTest {
 
     final List<IsGmlProperty<IsCalculationOption>> suppliedOptions = new ArrayList<>();
     suppliedOptions.add(mockCalculationOption("Our Unknown Key", "some value"));
-    when(calculationMetaData.getOptions()).thenReturn(suppliedOptions);
+    when(calculationMetaData.getOptions()).thenAnswer(a -> suppliedOptions);
 
     final GMLCalculationSetOptionsReader reader = new GMLCalculationSetOptionsReader(featureCollection);
 
@@ -155,7 +155,7 @@ class GMLCalculationSetOptionsReaderTest {
     final List<IsGmlProperty<IsCalculationOption>> suppliedOptions = new ArrayList<>();
     suppliedOptions.add(mockCalculationOption("adms_permit_area", "somewhere"));
     suppliedOptions.add(mockCalculationOption("adms_permit_area", "somewhere else"));
-    when(calculationMetaData.getOptions()).thenReturn(suppliedOptions);
+    when(calculationMetaData.getOptions()).thenAnswer(a -> suppliedOptions);
 
     final GMLCalculationSetOptionsReader reader = new GMLCalculationSetOptionsReader(featureCollection);
 
@@ -189,7 +189,7 @@ class GMLCalculationSetOptionsReaderTest {
     suppliedOptions.add(mockCalculationOption("adms_plume_depletion_nh3", "true"));
     suppliedOptions.add(mockCalculationOption("adms_plume_depletion_nox", "true"));
     suppliedOptions.add(mockCalculationOption("adms_complex_terrain", "true"));
-    when(calculationMetaData.getOptions()).thenReturn(suppliedOptions);
+    when(calculationMetaData.getOptions()).thenAnswer(a -> suppliedOptions);
     when(calculationMetaData.getMaximumRange()).thenReturn(40.0);
 
     final GMLCalculationSetOptionsReader reader = new GMLCalculationSetOptionsReader(featureCollection);
@@ -225,7 +225,7 @@ class GMLCalculationSetOptionsReaderTest {
     when(metaData.getCalculation()).thenReturn(calculationMetaData);
 
     final List<IsGmlProperty<IsCalculationOption>> suppliedOptions = new ArrayList<>();
-    when(calculationMetaData.getOptions()).thenReturn(suppliedOptions);
+    when(calculationMetaData.getOptions()).thenAnswer(a -> suppliedOptions);
 
     final GMLCalculationSetOptionsReader reader = new GMLCalculationSetOptionsReader(featureCollection);
 
@@ -276,7 +276,7 @@ class GMLCalculationSetOptionsReaderTest {
     suppliedOptions.add(mockCalculationOption("adms_plume_depletion_nh3", "true"));
     suppliedOptions.add(mockCalculationOption("adms_plume_depletion_nox", "true"));
     suppliedOptions.add(mockCalculationOption("adms_complex_terrain", "true"));
-    when(calculationMetaData.getOptions()).thenReturn(suppliedOptions);
+    when(calculationMetaData.getOptions()).thenAnswer(a -> suppliedOptions);
     when(calculationMetaData.getMaximumRange()).thenReturn(40.0);
 
     final GMLCalculationSetOptionsReader reader = new GMLCalculationSetOptionsReader(featureCollection);
@@ -316,7 +316,7 @@ class GMLCalculationSetOptionsReaderTest {
     suppliedOptions.add(mockCalculationOption("adms_plume_depletion_nh3", "maybe"));
     suppliedOptions.add(mockCalculationOption("adms_plume_depletion_nox", "maybe"));
     suppliedOptions.add(mockCalculationOption("adms_complex_terrain", "maybe"));
-    when(calculationMetaData.getOptions()).thenReturn(suppliedOptions);
+    when(calculationMetaData.getOptions()).thenAnswer(a -> suppliedOptions);
     when(calculationMetaData.getMaximumRange()).thenReturn(40.0);
 
     final GMLCalculationSetOptionsReader reader = new GMLCalculationSetOptionsReader(featureCollection);
@@ -345,7 +345,7 @@ class GMLCalculationSetOptionsReaderTest {
       suppliedOptions.add(mockCalculationOption("adms_met_site_id", "1"));
     }
     suppliedOptions.add(mockCalculationOption(key, value));
-    when(calculationMetaData.getOptions()).thenReturn(suppliedOptions);
+    when(calculationMetaData.getOptions()).thenAnswer(a -> suppliedOptions);
 
     final GMLCalculationSetOptionsReader reader = new GMLCalculationSetOptionsReader(featureCollection);
 
