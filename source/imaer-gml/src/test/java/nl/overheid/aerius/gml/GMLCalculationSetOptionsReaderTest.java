@@ -43,7 +43,7 @@ import nl.overheid.aerius.shared.domain.calculation.CalculationType;
 import nl.overheid.aerius.shared.domain.v2.characteristics.adms.ADMSLimits;
 
 /**
- *
+ * Test class for {@link GMLCalculationSetOptionsReader}.
  */
 class GMLCalculationSetOptionsReaderTest {
 
