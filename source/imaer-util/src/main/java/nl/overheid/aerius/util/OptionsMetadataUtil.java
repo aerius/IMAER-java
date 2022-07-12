@@ -18,6 +18,7 @@ package nl.overheid.aerius.util;
 
 import java.util.Arrays;
 import java.util.LinkedHashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 
@@ -89,6 +90,14 @@ public final class OptionsMetadataUtil {
       return name().toLowerCase();
     }
 
+    public static Option safeValueOf(final String value) {
+      try {
+        return value == null ? null : valueOf(value.toUpperCase(Locale.ROOT));
+      } catch (final IllegalArgumentException e) {
+        return null;
+      }
+    }
+
   }
 
   private OptionsMetadataUtil() {
@@ -96,8 +105,6 @@ public final class OptionsMetadataUtil {
   }
 
   public static void addOptionsFromMap(final Theme theme, final Map<Option, String> map, final CalculationSetOptions options) {
-    options.setStacking(!Boolean.parseBoolean(map.get(Option.WITHOUT_SOURCE_STACKING)));
-
     if (theme == Theme.NCA) {
       final NCACalculationOptions ncaCalculationOptions = options.getNcaCalculationOptions();
       ncaOptionsFromMap(ncaCalculationOptions, map);
