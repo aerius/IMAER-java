@@ -4,6 +4,15 @@
   "name" : "Voorbeeld situatie",
   "type" : "PROPOSED",
   "definitions" : { },
+  "nslCorrections" : [ {
+    "label" : "Leiden_WT",
+    "jurisdictionId" : 546,
+    "calculationPointGmlId" : "CP.15851291",
+    "substance" : "PM10",
+    "resultType" : "CONCENTRATION",
+    "value" : -0.480923,
+    "description" : "2 99528 POLYGON((92955.5 464370.5,92956.5 464370.5,92956.5 464369.5,92955.5 464369.5,92955.5 464370.5))"
+  } ],
   "buildings" : {
     "type" : "FeatureCollection",
     "crs" : {

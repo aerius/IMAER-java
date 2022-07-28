@@ -128,7 +128,6 @@ public class ScenarioSituation implements Serializable {
     return nslMeasures.getFeatures();
   }
 
-  @JsonIgnore
   public List<NSLCorrection> getNslCorrections() {
     return nslCorrections;
   }
