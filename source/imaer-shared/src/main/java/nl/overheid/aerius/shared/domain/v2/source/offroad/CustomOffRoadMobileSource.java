@@ -23,7 +23,6 @@ public class CustomOffRoadMobileSource extends OffRoadMobileSource {
   private static final long serialVersionUID = 2L;
 
   private SourceCharacteristics characteristics;
-  private OffRoadVehicleSpecification vehicleSpecification;
 
   public SourceCharacteristics getCharacteristics() {
     return characteristics;
@@ -31,14 +30,6 @@ public class CustomOffRoadMobileSource extends OffRoadMobileSource {
 
   public void setCharacteristics(final SourceCharacteristics characteristics) {
     this.characteristics = characteristics;
-  }
-
-  public OffRoadVehicleSpecification getVehicleSpecification() {
-    return vehicleSpecification;
-  }
-
-  public void setVehicleSpecification(final OffRoadVehicleSpecification vehicleSpecification) {
-    this.vehicleSpecification = vehicleSpecification;
   }
 
 }
