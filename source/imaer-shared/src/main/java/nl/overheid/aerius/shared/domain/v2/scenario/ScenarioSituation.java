@@ -118,7 +118,6 @@ public class ScenarioSituation implements Serializable {
     return nslDispersionLines.getFeatures();
   }
 
-  @JsonIgnore
   public FeatureCollection<NSLMeasureFeature> getNslMeasures() {
     return nslMeasures;
   }

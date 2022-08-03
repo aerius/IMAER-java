@@ -4,6 +4,9 @@
   "name" : "Voorbeeld situatie",
   "type" : "PROPOSED",
   "definitions" : { },
+  "nslMeasures" : {
+    "type" : "FeatureCollection"
+  },
   "buildings" : {
     "type" : "FeatureCollection",
     "crs" : {

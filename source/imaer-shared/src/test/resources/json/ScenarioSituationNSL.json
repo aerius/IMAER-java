@@ -4,6 +4,42 @@
   "name" : "Voorbeeld situatie",
   "type" : "PROPOSED",
   "definitions" : { },
+  "nslMeasures" : {
+    "type" : "FeatureCollection",
+    "features" : [ {
+      "type" : "Feature",
+      "geometry" : {
+        "type" : "Polygon",
+        "coordinates" : [ [ [ 129710.955600001, 479494.7742 ], [ 129724.197299998, 479534.499299999 ], [ 129562.648200002, 479595.4113 ], [ 129554.703200001, 479579.521200001 ] ] ]
+      },
+      "properties" : {
+        "gmlId" : "RMA.768",
+        "jurisdictionId" : 363,
+        "label" : "WPNL EURO6 of Elektrisch",
+        "description" : "3 f WPNL EURO6 of Elektrisch",
+        "vehicleMeasures" : [ {
+          "vehicleTypeCode" : "LIGHT_TRAFFIC",
+          "roadTypeCode" : "URBAN_ROAD_NORMAL",
+          "emissionReductions" : [ {
+            "substance" : "NO2",
+            "factor" : 0.97224576732
+          }, {
+            "substance" : "PM10",
+            "factor" : 0.99855847372
+          }, {
+            "substance" : "NOX",
+            "factor" : 0.97570218476
+          }, {
+            "substance" : "EC",
+            "factor" : 0.99693910648
+          }, {
+            "substance" : "PM25",
+            "factor" : 0.99527427169
+          } ]
+        } ]
+      }
+    } ]
+  },
   "nslCorrections" : [ {
     "label" : "Leiden_WT",
     "jurisdictionId" : 546,
