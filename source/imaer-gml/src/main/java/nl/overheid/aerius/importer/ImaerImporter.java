@@ -288,6 +288,7 @@ public class ImaerImporter {
 
     if (result.getSituation().getYear() == 0) {
       result.getSituation().setYear(metaDataReader.readYear());
+      result.getWarnings().add(new AeriusException(null, "TODO: Write error message"));
     }
   }
 
