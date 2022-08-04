@@ -283,9 +283,12 @@ public class ImaerImporter {
   private void setImportResultMetaData(final ImportParcel result, final GMLReader reader) {
     final GMLMetaDataReader metaDataReader = reader.metaDataReader();
     result.setImportedMetaData(metaDataReader.readMetaData());
-    result.getSituation().setYear(metaDataReader.readYear());
     result.setVersion(metaDataReader.readAeriusVersion());
     result.setDatabaseVersion(metaDataReader.readDatabaseVersion());
+
+    if (result.getSituation().getYear() == 0) {
+      result.getSituation().setYear(metaDataReader.readYear());
+    }
   }
 
   private static void addNslMeasures(final GMLReader reader, final Set<ImportOption> importOptions, final ScenarioSituation situation) {
