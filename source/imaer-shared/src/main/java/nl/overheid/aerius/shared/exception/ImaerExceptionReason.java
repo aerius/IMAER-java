@@ -368,6 +368,12 @@ public enum ImaerExceptionReason implements Reason {
    * @param 2 the label of the source.
    */
   GML_OFF_ROAD_CATEGORY_CONVERTED(5234),
+  /**
+   * GML year has been adjusted already due to not being in range, and is therefore not equal to the one in the metadata
+   *
+   * @param 0 the year field in the meta data
+   */
+  GML_METADATA_YEAR_NOT_WITHIN_RANGE(5240),
 
   // Cohesion (between files) errors.
 
