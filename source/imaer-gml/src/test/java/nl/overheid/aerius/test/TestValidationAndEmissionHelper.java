@@ -77,7 +77,9 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
       new FarmConstructHelper("A4.2", 1.1, true, "BWL2011.12"),
       new FarmConstructHelper("A3.100", 4.4, false),
       new FarmConstructHelper("A2.100", 4.1, false),
-      new FarmConstructHelper("A1.1", 5.7, false));
+      new FarmConstructHelper("A1.1", 5.7, false),
+      new FarmConstructHelper("A1.28", 4.1, false),
+      new FarmConstructHelper("A1.100", 4.1, false));
 
   private static final List<FarmConstructHelper> FARM_ADDITIONAL_SYSTEM_CATEGORIES = Arrays.asList(
       new FarmConstructHelper("E6.1.a", 0.01, false),
@@ -94,17 +96,20 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
 
   private static final List<String> FARMLAND_CATEGORIES = Arrays.asList(
       "PASTURE",
-      "MANURE");
+      "MANURE",
+      "FERTILIZER");
 
   private static final List<String> INLAND_SHIPPING_TYPES = Arrays.asList(
       "BI",
       "BII-1",
       "BII-6L",
       "C1B",
-      "C3B");
+      "C3B",
+      "M10");
 
   private static final List<String> INLAND_WATERWAYS = Arrays.asList(
       "CEMT_VIb",
+      "CEMT_Va",
       "CEMT_Vb");
 
   private static final List<String> MARITIME_SHIPPING_TYPES = Arrays.asList(
@@ -113,7 +118,10 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
       "KV10000",
       "OO100",
       "OO1600",
-      "OO10000");
+      "OO10000",
+      "S10000",
+      "S60000",
+      "S30000");
 
   private static final List<OffRoadConstructHelper> OFF_ROAD_MOBILE_SOURCE_CATEGORIES = Arrays.asList(
       new OffRoadConstructHelper("SI75560DSN", new EmissionHelper(0.03, 0.0000075), new EmissionHelper(0.005, 0.0), null),
@@ -122,7 +130,15 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
       new OffRoadConstructHelper("SI75560DSN", new EmissionHelper(0.03, 0.0000075), new EmissionHelper(0.005, 0.0), null),
       new OffRoadConstructHelper("SV560DSJ", new EmissionHelper(0.025, 0.00024),
           new EmissionHelper(0.005, 0.0),
-          new EmissionHelper(-0.46, 0.0)));
+          new EmissionHelper(-0.46, 0.0)),
+      new OffRoadConstructHelper("SIIIA5675DSN", new EmissionHelper(0.025, 0.00024), new EmissionHelper(0.005, 0.0), null),
+      new OffRoadConstructHelper("SIIIB5675DSN", new EmissionHelper(0.027, 0.00024), new EmissionHelper(0.005, 0.0), null),
+      new OffRoadConstructHelper("SIIIA75560DSN", new EmissionHelper(0.002, 0.00024), new EmissionHelper(0.005, 0.0), null),
+      new OffRoadConstructHelper("SII5675DSN", new EmissionHelper(0.005, 0.00024), new EmissionHelper(0.005, 0.0), null),
+      new OffRoadConstructHelper("SI5675DSN", new EmissionHelper(0.035, 0.00024), new EmissionHelper(0.005, 0.0), null),
+      new OffRoadConstructHelper("SI56DSN", new EmissionHelper(0.045, 0.00024), new EmissionHelper(0.005, 0.0), null),
+      new OffRoadConstructHelper("SIV75560DSJ", new EmissionHelper(0.055, 0.00024), new EmissionHelper(0.005, 0.0), null),
+      new OffRoadConstructHelper("SIIIA56DSN", new EmissionHelper(0.040, 0.00024), new EmissionHelper(0.005, 0.0), null));
 
   private static final List<OffRoadOldCodesHelper> OFF_ROAD_MOBILE_SOURCE_OLD_CODES = Arrays.asList(
       new OffRoadOldCodesHelper("S1A", "SI75560DSN", 19.54),
@@ -193,6 +209,62 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
           new EmissionHelper(0.1501, 0.016, 0.0276, 0.0287),
           0, "URBAN_ROAD_NORMAL", "LIGHT_TRAFFIC", false,
           new EmissionHelper(0.1884, 0.018, 0.0369, 0.0289)),
+      new RoadConstructHelper("",
+          new EmissionHelper(1.6297, 0.052, 0.28405, 0.0905),
+          80, "FREEWAY", "AUTO_BUS", false,
+          new EmissionHelper(1.6297, 0.052, 0.28405, 0.1566)),
+      new RoadConstructHelper("",
+          new EmissionHelper(1.8623, 0.0679, 0.4899, 0.08225),
+          100, "FREEWAY", "HEAVY_FREIGHT", false,
+          new EmissionHelper(1.8623, 0.0679, 0.4899, 0.08225)),
+      new RoadConstructHelper("",
+          new EmissionHelper(1.8623, 0.0679, 0.4899, 0.08225),
+          100, "FREEWAY", "HEAVY_FREIGHT", true,
+          new EmissionHelper(1.8623, 0.0679, 0.4899, 0.08225)),
+      new RoadConstructHelper("",
+          new EmissionHelper(2.0069, 0.0542, 0.34395, 0.0889),
+          80, "NON_URBAN_ROAD_NATIONAL", "NORMAL_FREIGHT", false,
+          new EmissionHelper(2.0069, 0.0542, 0.34395, 0.0889)),
+      new RoadConstructHelper("",
+          new EmissionHelper(1.30925, 0.00675, 0.16735, 0.0789),
+          80, "NON_URBAN_ROAD_NATIONAL", "AUTO_BUS", false,
+          new EmissionHelper(1.30925, 0.00675, 0.16735, 0.0789)),
+      new RoadConstructHelper("",
+          new EmissionHelper(2.35645, 0.05515, 0.48535, 0.14195),
+          0, "URBAN_ROAD_FREE_FLOW", "NORMAL_FREIGHT", false,
+          new EmissionHelper(2.35645, 0.05515, 0.48535, 0.14195)),
+      new RoadConstructHelper("",
+          new EmissionHelper(1.67905, 0.00675, 0.20925, 0.11385),
+          0, "URBAN_ROAD_FREE_FLOW", "AUTO_BUS", false,
+          new EmissionHelper(1.67905, 0.00675, 0.20925, 0.11385)),
+      new RoadConstructHelper("",
+          new EmissionHelper(5.24835, 0.07245, 1.30055, 0.1481),
+          0, "URBAN_ROAD_NORMAL", "HEAVY_FREIGHT", false,
+          new EmissionHelper(5.24835, 0.07245, 1.30055, 0.1481)),
+      new RoadConstructHelper("",
+          new EmissionHelper(3.61985, 0.05515, 0.74705, 0.15445),
+          0, "URBAN_ROAD_NORMAL", "NORMAL_FREIGHT", false,
+          new EmissionHelper(3.61985, 0.05515, 0.74705, 0.15445)),
+      new RoadConstructHelper("",
+          new EmissionHelper(2.23685, 0.00675, 0.2676, 0.12755),
+          0, "URBAN_ROAD_NORMAL", "AUTO_BUS", false,
+          new EmissionHelper(2.23685, 0.00675, 0.2676, 0.12755)),
+      new RoadConstructHelper("",
+          new EmissionHelper(0.20095, 0.02325, 0.04485, 0.016),
+          0, "NON_URBAN_ROAD_GENERAL", "LIGHT_TRAFFIC", false,
+          new EmissionHelper(0.20095, 0.02325, 0.04485, 0.016)),
+      new RoadConstructHelper("",
+          new EmissionHelper(2.0069, 0.0542, 0.34395, 0.0889),
+          0, "NON_URBAN_ROAD_GENERAL", "NORMAL_FREIGHT", false,
+          new EmissionHelper(2.0069, 0.0542, 0.34395, 0.0889)),
+      new RoadConstructHelper("",
+          new EmissionHelper(3.45565, 0.0831, 0.9577, 0.0821),
+          0, "NON_URBAN_ROAD_GENERAL", "HEAVY_FREIGHT", false,
+          new EmissionHelper(3.45565, 0.018, 0.9577, 0.0821)),
+      new RoadConstructHelper("",
+          new EmissionHelper(1.30925, 0.00675, 0.16735, 0.0789),
+          0, "NON_URBAN_ROAD_GENERAL", "AUTO_BUS", false,
+          new EmissionHelper(1.30925, 0.00675, 0.16735, 0.0789)),
       // Some categories for ADMS (UK), which uses a different units/emission calculation method.
       new RoadConstructHelper("",
           new EmissionHelper(1.02e-06, 3.36e-07, 0.0, 0.0),
