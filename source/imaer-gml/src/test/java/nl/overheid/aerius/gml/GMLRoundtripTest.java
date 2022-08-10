@@ -116,6 +116,19 @@ public class GMLRoundtripTest {
       {"adms_industry_with_custom_diurnal_variation", CharacteristicsType.ADMS},
       {"adms_road", CharacteristicsType.ADMS},
       {"adms_road_with_custom_diurnal_variation", CharacteristicsType.ADMS},
+      {"scenario_composting_proposed", CharacteristicsType.OPS},
+      {"scenario_composting_reference", CharacteristicsType.OPS},
+      {"scenario_greenhouse_reference", CharacteristicsType.OPS},
+      {"scenario_greenhouse_proposed", CharacteristicsType.OPS},
+      {"scenario_livestock_farming_proposed", CharacteristicsType.OPS},
+      {"scenario_livestock_farming_reference", CharacteristicsType.OPS},
+      {"scenario_livestock_farming_netting", CharacteristicsType.OPS},
+      {"scenario_powerplant", CharacteristicsType.OPS, EnumSet.of(ImaerExceptionReason.GML_SOURCE_NO_EMISSION)},
+      {"scenario_smokehouse_proposed", CharacteristicsType.OPS},
+      {"scenario_smokehouse_reference", CharacteristicsType.OPS},
+      {"scenario_farmland_proposed", CharacteristicsType.OPS, EnumSet.of(ImaerExceptionReason.GML_SOURCE_NO_EMISSION)},
+      {"scenario_traffic_network_reference", CharacteristicsType.OPS},
+      {"scenario_traffic_network_proposed", CharacteristicsType.OPS}
   };
 
   private static final String LATEST_VERSION = "latest";
