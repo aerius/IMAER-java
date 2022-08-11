@@ -29,10 +29,6 @@
   <name>IMAER :: Shared Data</name>
   <description>All data objects of IMAER shared data objects</description>
 
-  <properties>
-    <validation-api.version>2.0.1.Final</validation-api.version>
-  </properties>
-
   <dependencies>
     <dependency>
       <groupId>com.google.jsinterop</groupId>
@@ -46,14 +42,16 @@
     </dependency>
 
     <dependency>
-      <groupId>com.fasterxml.jackson.core</groupId>
-      <artifactId>jackson-databind</artifactId>
-      <version>${jackson.version}</version>
-    </dependency>
-    <dependency>
       <groupId>com.fasterxml.jackson.datatype</groupId>
       <artifactId>jackson-datatype-jsr310</artifactId>
       <version>${jackson.version}</version>
+    </dependency>
+
+    <!-- internal dependencies -->
+    <dependency>
+      <groupId>nl.aerius</groupId>
+      <artifactId>commons-geo</artifactId>
+      <version>${project.version}</version>
     </dependency>
 
     <!-- Logging -->
