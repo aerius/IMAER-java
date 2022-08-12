@@ -201,7 +201,6 @@ public class GMLValidateErrorsTest {
         e -> assertEquals(50D, Double.parseDouble(e.getArgs()[0]), EPSILON, "Expected road segment position to be 50"));
   }
 
-
   @Test
   public void testGMLMissingNettingFactor() throws IOException {
     assertResult("fout_5235_netting_without_factor", "GML missing netting factor", ImaerExceptionReason.GML_MISSING_NETTING_FACTOR);
