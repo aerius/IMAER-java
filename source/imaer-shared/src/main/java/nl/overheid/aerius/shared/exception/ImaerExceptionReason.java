@@ -368,6 +368,10 @@ public enum ImaerExceptionReason implements Reason {
    * @param 2 the label of the source.
    */
   GML_OFF_ROAD_CATEGORY_CONVERTED(5234),
+  /**
+   * GML with netting situation contained no netting factor.
+   */
+  GML_MISSING_NETTING_FACTOR(5235),
 
   // Cohesion (between files) errors.
 

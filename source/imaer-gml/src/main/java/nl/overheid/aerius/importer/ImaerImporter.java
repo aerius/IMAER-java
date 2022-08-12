@@ -42,6 +42,7 @@ import nl.overheid.aerius.gml.GMLValidator;
 import nl.overheid.aerius.gml.base.AeriusGMLVersion;
 import nl.overheid.aerius.gml.base.GMLHelper;
 import nl.overheid.aerius.shared.domain.Theme;
+import nl.overheid.aerius.shared.domain.scenario.SituationType;
 import nl.overheid.aerius.shared.domain.v2.building.BuildingFeature;
 import nl.overheid.aerius.shared.domain.v2.geojson.Crs;
 import nl.overheid.aerius.shared.domain.v2.geojson.Crs.CrsContent;
@@ -125,10 +126,7 @@ public class ImaerImporter {
     GMLValidator.validateYear(result.getSituation().getYear(), result.getExceptions());
     GMLValidator.validateGMLVersion(version, result.getWarnings());
 
-    final ScenarioSituation situation = result.getSituation();
-    situation.setName(reader.getName());
-    situation.setType(reader.getSituationType());
-    situation.setNettingFactor(reader.getNettingFactor());
+    final ScenarioSituation situation = addSituationProperties(reader, result);
     addEmissionSources(reader, importOptions, result, importYear);
     addAeriusPoints(reader, importOptions, result);
     addNslMeasures(reader, importOptions, situation);
@@ -140,6 +138,22 @@ public class ImaerImporter {
 
     addCalculationSetOptions(theme, reader, result);
     LOGGER.info("GML imported with GML version: {}", version);
+  }
+
+  private static ScenarioSituation addSituationProperties(final GMLReader reader, final ImportParcel result) {
+    final ScenarioSituation situation = result.getSituation();
+    situation.setName(reader.getName());
+    final SituationType type = reader.getSituationType();
+    situation.setType(type);
+    if (type == SituationType.NETTING) {
+      final Double nettingFactor = reader.getNettingFactor();
+      if (nettingFactor == null) {
+        result.getWarnings().add(new AeriusException(ImaerExceptionReason.GML_MISSING_NETTING_FACTOR));
+      } else {
+        situation.setNettingFactor(nettingFactor);
+      }
+    }
+    return situation;
   }
 
   private static void addCalculationSetOptions(final Theme theme, final GMLReader reader, final ImportParcel parcel) {
