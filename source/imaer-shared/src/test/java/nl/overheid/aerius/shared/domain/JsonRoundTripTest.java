@@ -75,7 +75,6 @@ class JsonRoundTripTest {
       "FarmlandEmissionSource.json",
       "PlanEmissionSource.json",
       "OffRoadMobileEmissionSource.json",
-      "OffRoadMobileEmissionSource_specifications.json",
       "SRM1RoadEmissionSource.json",
       "SRM1RoadEmissionSource_dynamicSegmentation.json",
       "SRM2RoadEmissionSource.json",

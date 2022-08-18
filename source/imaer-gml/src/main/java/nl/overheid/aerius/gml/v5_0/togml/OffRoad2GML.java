@@ -18,21 +18,13 @@ package nl.overheid.aerius.gml.v5_0.togml;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
-import nl.overheid.aerius.gml.v5_0.source.Emission;
-import nl.overheid.aerius.gml.v5_0.source.EmissionProperty;
-import nl.overheid.aerius.gml.v5_0.source.mobile.AbstractOffRoadVehicleSpecification;
 import nl.overheid.aerius.gml.v5_0.source.mobile.CustomOffRoadMobileSource;
 import nl.overheid.aerius.gml.v5_0.source.mobile.OffRoadMobileSource;
 import nl.overheid.aerius.gml.v5_0.source.mobile.OffRoadMobileSourceProperty;
 import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.v2.characteristics.OPSSourceCharacteristics;
 import nl.overheid.aerius.shared.domain.v2.source.OffRoadMobileEmissionSource;
-import nl.overheid.aerius.shared.domain.v2.source.offroad.ConsumptionOffRoadVehicleSpecification;
-import nl.overheid.aerius.shared.domain.v2.source.offroad.OffRoadVehicleSpecification;
-import nl.overheid.aerius.shared.domain.v2.source.offroad.OperatingHoursOffRoadVehicleSpecification;
 
 /**
  *
@@ -65,54 +57,7 @@ class OffRoad2GML extends SpecificSource2GML<OffRoadMobileEmissionSource> {
     gmlMobileSource.setCharacteristics(SourceCharacteristics2GML.toGML((OPSSourceCharacteristics) vehicleEmissionValues.getCharacteristics(), false));
     gmlMobileSource.setEmissions(getEmissions(vehicleEmissionValues.getEmissions(), Substance.NOX));
     gmlMobileSource.setDescription(vehicleEmissionValues.getDescription());
-    setAdditionalSpecifications(vehicleEmissionValues.getVehicleSpecification(), gmlMobileSource);
     return new OffRoadMobileSourceProperty(gmlMobileSource);
-  }
-
-  private void setAdditionalSpecifications(final OffRoadVehicleSpecification vehicleSpecification, final CustomOffRoadMobileSource gmlMobileSource) {
-    // if no fuelType don't store anything.
-    if (vehicleSpecification != null && vehicleSpecification.getFuelCode() != null) {
-      if (vehicleSpecification instanceof ConsumptionOffRoadVehicleSpecification) {
-        gmlMobileSource.setOffRoadVehicleSpecification(toConsuming((ConsumptionOffRoadVehicleSpecification) vehicleSpecification));
-      } else if (vehicleSpecification instanceof OperatingHoursOffRoadVehicleSpecification) {
-        gmlMobileSource.setOffRoadVehicleSpecification(toOperatingHours((OperatingHoursOffRoadVehicleSpecification) vehicleSpecification));
-      }
-    }
-  }
-
-  private AbstractOffRoadVehicleSpecification toConsuming(final ConsumptionOffRoadVehicleSpecification specification) {
-    final nl.overheid.aerius.gml.v5_0.source.mobile.ConsumptionOffRoadVehicleSpecification gmlSpecification = new nl.overheid.aerius.gml.v5_0.source.mobile.ConsumptionOffRoadVehicleSpecification();
-    gmlSpecification.setEmissionFactors(toGmlEmissionFactors(specification.getEmissionFactors()));
-    gmlSpecification.setEnergyEfficiency(specification.getEnergyEfficiency());
-    gmlSpecification.setConsumption(specification.getConsumption());
-    setCategories(specification, gmlSpecification);
-    return gmlSpecification;
-  }
-
-  private AbstractOffRoadVehicleSpecification toOperatingHours(final OperatingHoursOffRoadVehicleSpecification specification) {
-    final nl.overheid.aerius.gml.v5_0.source.mobile.OperatingHoursOffRoadVehicleSpecification gmlSpecification = new nl.overheid.aerius.gml.v5_0.source.mobile.OperatingHoursOffRoadVehicleSpecification();
-    gmlSpecification.setEmissionFactors(toGmlEmissionFactors(specification.getEmissionFactors()));
-    gmlSpecification.setLoad(specification.getLoad());
-    gmlSpecification.setPower(specification.getPower());
-    gmlSpecification.setOperatingHours(specification.getOperatingHours());
-    setCategories(specification, gmlSpecification);
-    return gmlSpecification;
-  }
-
-  private List<EmissionProperty> toGmlEmissionFactors(final Map<Substance, Double> emissionFactors) {
-    final List<EmissionProperty> gmlEmissionFactors = new ArrayList<>();
-    for (final Entry<Substance, Double> entry : emissionFactors.entrySet()) {
-      final Emission emission = new Emission();
-      emission.setSubstance(entry.getKey());
-      emission.setValue(entry.getValue());
-      gmlEmissionFactors.add(new EmissionProperty(emission));
-    }
-    return gmlEmissionFactors;
-  }
-
-  private void setCategories(final OffRoadVehicleSpecification specification, final AbstractOffRoadVehicleSpecification gmlSpecification) {
-    gmlSpecification.setFuelCode(specification.getFuelCode());
-    //No need to do anything with the machinery type.
   }
 
   private OffRoadMobileSourceProperty toStandard(
