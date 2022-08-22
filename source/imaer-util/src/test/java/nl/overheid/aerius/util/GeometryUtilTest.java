@@ -27,9 +27,11 @@ import java.math.RoundingMode;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+import org.locationtech.jts.geom.Geometry;
 
 import nl.overheid.aerius.geo.shared.RDNew;
 import nl.overheid.aerius.geo.shared.WKTGeometry;
+import nl.overheid.aerius.shared.domain.v2.geojson.GeometryType;
 import nl.overheid.aerius.shared.domain.v2.geojson.LineString;
 import nl.overheid.aerius.shared.domain.v2.geojson.Point;
 import nl.overheid.aerius.shared.domain.v2.geojson.Polygon;
@@ -143,6 +145,61 @@ class GeometryUtilTest {
     final Polygon expectedGeometry = (Polygon) GeometryUtil.getAeriusGeometry(GeometryUtil.getGeometry("POLYGON ((0 0, 0 100, 20 100, 20 0, 0 0))"));
 
     assertEquals(expectedGeometry, convexHull, "Should be expected convex geometry");
+  }
+
+  @Test
+  void testGetGeometry() throws AeriusException {
+    final Point point = new Point();
+    point.setCoordinates(new double[] {1000, 4000});
+    final Geometry convertedPoint = GeometryUtil.getGeometry(point);
+
+    assertTrue(convertedPoint instanceof org.locationtech.jts.geom.Point, "Point should conver to JTS point");
+
+    final LineString lineString = new LineString();
+    lineString.setCoordinates(new double[][] {{0, 0}, {0, 4000}, {0, 8000}, {0, 12000}, {0, 16000}});
+    final Geometry convertedLineString = GeometryUtil.getGeometry(lineString);
+
+    assertTrue(convertedLineString instanceof org.locationtech.jts.geom.LineString, "LineString should conver to JTS LineString");
+
+    final Polygon polygon = new Polygon();
+    polygon.setCoordinates(new double[][][] {{{0, 0}, {0, 4000}, {1000, 4000}, {1000, 12000}, {3000, 12000}, {0, 0}}});
+    final Geometry convertedPolygon = GeometryUtil.getGeometry(polygon);
+
+    assertTrue(convertedPolygon instanceof org.locationtech.jts.geom.Polygon, "Polygon should conver to JTS polygon");
+
+    final Polygon polygonWithHole = new Polygon();
+    polygonWithHole.setCoordinates(new double[][][] {{{0, 0}, {0, 4000}, {1000, 4000}, {1000, 12000}, {3000, 12000}, {0, 0}},
+        {{200, 300}, {400, 300}, {400, 600}, {200, 600}, {200, 300}}});
+    final Geometry convertedPolygonWithHole = GeometryUtil.getGeometry(polygonWithHole);
+
+    assertTrue(convertedPolygonWithHole instanceof org.locationtech.jts.geom.Polygon, "Polygon with hole should convert to JTS polygon");
+
+    final nl.overheid.aerius.shared.domain.v2.geojson.Geometry anonymousGeometry = new nl.overheid.aerius.shared.domain.v2.geojson.Geometry() {
+      private static final long serialVersionUID = 1L;
+
+      @Override
+      public GeometryType type() {
+        return null;
+      }
+    };
+    final AeriusException exceptionOnUnknownType = assertThrows(AeriusException.class, () -> GeometryUtil.getGeometry(anonymousGeometry));
+    assertEquals(ImaerExceptionReason.GEOMETRY_INVALID, exceptionOnUnknownType.getReason(), "Reason for unknown type");
+
+    final LineString lineStringWithoutCoords = new LineString();
+    lineStringWithoutCoords.setCoordinates(new double[][] {{}});
+    final AeriusException exceptionOnLineStringWithoutCoords = assertThrows(AeriusException.class, () -> GeometryUtil.getGeometry(lineStringWithoutCoords));
+    assertEquals(ImaerExceptionReason.GEOMETRY_INVALID, exceptionOnLineStringWithoutCoords.getReason(), "Reason for linestring with 1 coord");
+
+    final LineString lineStringWithIncorrectCoord = new LineString();
+    lineStringWithIncorrectCoord.setCoordinates(new double[][] {{939, 32423, 234}});
+    final AeriusException exceptionOnLineStringWithIncorrectCoord = assertThrows(AeriusException.class, () -> GeometryUtil.getGeometry(lineStringWithIncorrectCoord));
+    assertEquals(ImaerExceptionReason.GEOMETRY_INVALID, exceptionOnLineStringWithIncorrectCoord.getReason(), "Reason for linestring with 1 coord");
+
+
+    final Polygon polygonWithoutCoords = new Polygon();
+    polygonWithoutCoords.setCoordinates(new double[][][] {});
+    final AeriusException exceptionOnPolygonWithoutCoords = assertThrows(AeriusException.class, () -> GeometryUtil.getGeometry(polygonWithoutCoords));
+    assertEquals(ImaerExceptionReason.GEOMETRY_INVALID, exceptionOnPolygonWithoutCoords.getReason(), "Reason for polygon with 2 coord");
   }
 
   private WKTGeometry getExamplePoint() {
