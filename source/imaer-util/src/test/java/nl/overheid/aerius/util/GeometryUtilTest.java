@@ -179,7 +179,6 @@ class GeometryUtilTest {
 
       @Override
       public GeometryType type() {
-        // TODO Auto-generated method stub
         return null;
       }
     };
