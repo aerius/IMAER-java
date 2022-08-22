@@ -140,7 +140,7 @@ public final class GeometryUtil {
     final LinearRing[] holes = new LinearRing[numberOfShells];
     for (int i = 1; i <= numberOfShells; i++) {
       final LinearRing hole = toJtsLinearRing(geometryFactory, aeriusPolygon.getCoordinates()[i], aeriusPolygon);
-      holes[i] = hole;
+      holes[i - 1] = hole;
     }
 
     return geometryFactory.createPolygon(shell, holes);
