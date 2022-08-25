@@ -258,7 +258,7 @@ public class GMLValidateErrorsTest {
   @Test
   public void testGMLBuildingHeightZero() throws IOException {
     assertResult("fout_5522_building_height_zero", "GML with building height zero",
-        ImaerExceptionReason.BUILDING_HEIGHT_ZERO,
+        ImaerExceptionReason.BUILDING_HEIGHT_TOO_LOW,
         e -> {
           assertEquals(1, e.getArgs().length, "Number of arguments");
         });
