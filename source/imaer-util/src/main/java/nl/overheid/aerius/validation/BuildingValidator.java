@@ -35,7 +35,7 @@ public final class BuildingValidator {
   private static void checkBuildingHeight(List<BuildingFeature> buildings, List<AeriusException> warnings) {
     for (final BuildingFeature building : buildings) {
       if (building.getProperties().getHeight() <= 0) {
-        warnings.add(new AeriusException(ImaerExceptionReason.BUILDING_HEIGHT_ZERO, building.getProperties().getLabel()));
+        warnings.add(new AeriusException(ImaerExceptionReason.BUILDING_HEIGHT_TOO_LOW, building.getProperties().getLabel()));
       }
     }
   }

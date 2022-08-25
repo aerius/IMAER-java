@@ -255,6 +255,15 @@ public class GMLValidateErrorsTest {
         });
   }
 
+  @Test
+  public void testGMLBuildingHeightZero() throws IOException {
+    assertResult("fout_5522_building_height_zero", "GML with building height zero",
+        ImaerExceptionReason.BUILDING_HEIGHT_ZERO,
+        e -> {
+          assertEquals(1, e.getArgs().length, "Number of arguments");
+        });
+  }
+
   private void assertResult(final String fileName, final String expectedReasonTxt, final Reason expectedReason,
       final Consumer<AeriusException> check) throws IOException {
     check.accept(assertResult(fileName, expectedReasonTxt, expectedReason));

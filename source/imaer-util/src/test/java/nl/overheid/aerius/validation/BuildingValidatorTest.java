@@ -79,7 +79,7 @@ class BuildingValidatorTest {
 
     assertTrue(errors.isEmpty(), "No errors");
     assertEquals(1, warnings.size(), "Number of warnings");
-    assertEquals(ImaerExceptionReason.BUILDING_HEIGHT_ZERO, warnings.get(0).getReason(), "Error reason");
+    assertEquals(ImaerExceptionReason.BUILDING_HEIGHT_TOO_LOW, warnings.get(0).getReason(), "Error reason");
     assertArrayEquals(new Object[] {BUILDING_LABEL}, warnings.get(0).getArgs(), "Arguments");
 
   }
