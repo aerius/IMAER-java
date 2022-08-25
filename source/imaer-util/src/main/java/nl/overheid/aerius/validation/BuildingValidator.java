@@ -24,7 +24,7 @@ import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 
 public final class BuildingValidator {
 
-  private BuildingValidator() {
+  BuildingValidator() {
     // Util class
   }
 
