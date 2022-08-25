@@ -59,6 +59,7 @@ import nl.overheid.aerius.shared.domain.v2.scenario.ScenarioSituationResults;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceFeature;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
+import nl.overheid.aerius.validation.BuildingValidator;
 import nl.overheid.aerius.validation.EmissionSourceValidator;
 
 /**
@@ -171,9 +172,11 @@ public class ImaerImporter {
       final Optional<Integer> importYear) throws AeriusException {
     if (ImportOption.INCLUDE_SOURCES.in(importOptions)) {
       final List<EmissionSourceFeature> sources = reader.readEmissionSourceList();
+      final List<BuildingFeature> buildings = reader.getBuildings();
       if (ImportOption.VALIDATE_SOURCES.in(importOptions)) {
         EmissionSourceValidator.validateSources(sources, result.getExceptions(), result.getWarnings(),
             factory.createValidationHelper());
+        BuildingValidator.validateBuildings(buildings, result.getExceptions(), result.getWarnings());
       }
       reader.enforceEmissions(sources, importYear.orElse(result.getSituation().getYear()));
       if (ImportOption.VALIDATE_SOURCES.in(importOptions)) {
