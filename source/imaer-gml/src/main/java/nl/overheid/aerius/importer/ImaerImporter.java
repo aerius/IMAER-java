@@ -178,6 +178,7 @@ public class ImaerImporter {
             factory.createValidationHelper());
         BuildingValidator.validateBuildings(buildings, result.getExceptions(), result.getWarnings());
       }
+      BuildingValidator.validateBuildings(buildings, result.getExceptions(), result.getWarnings());
       reader.enforceEmissions(sources, importYear.orElse(result.getSituation().getYear()));
       if (ImportOption.VALIDATE_SOURCES.in(importOptions)) {
         EmissionSourceValidator.validateSourcesWithEmissions(sources, result.getExceptions(), result.getWarnings());
