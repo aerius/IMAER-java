@@ -38,7 +38,8 @@ public class ScenarioSituation implements Serializable {
 
   private static final long serialVersionUID = 3L;
 
-  private String id = String.valueOf(Math.random());
+  // Initialize with random number, and strip first '0.' to make a dot-less number.
+  private String id = String.valueOf(Math.random()).substring(2);
   private int year;
   private String name;
   private SituationType type;
