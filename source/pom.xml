@@ -67,7 +67,7 @@
     <org.codehaus.mojo.gwtmavenplugin.version>${com.google.gwt.version}</org.codehaus.mojo.gwtmavenplugin.version>
 
     <maven.surefire.plugin.version>2.22.2</maven.surefire.plugin.version>
-    <aerius-tools.version>1.1.0</aerius-tools.version>
+    <aerius-tools.version>1.2.0-SNAPSHOT</aerius-tools.version>
     <spotless.version>2.5.0</spotless.version>
     <docker.maven.plugin.version>0.30.0</docker.maven.plugin.version>
 
@@ -297,6 +297,22 @@
               </configuration>
             </execution>
           </executions>
+        </plugin>
+
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>versions-maven-plugin</artifactId>
+          <version>2.11.0</version>
+          <configuration>
+            <rulesUri>classpath:///versions_maven_plugin_rules.xml</rulesUri>
+          </configuration>
+          <dependencies>
+            <dependency>
+              <groupId>nl.aerius</groupId>
+              <artifactId>tools</artifactId>
+              <version>${aerius-tools.version}</version>
+            </dependency>
+          </dependencies>
         </plugin>
       </plugins>
     </pluginManagement>
