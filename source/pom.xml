@@ -63,7 +63,7 @@
 
     <com.google.gwt.version>2.9.0</com.google.gwt.version>
     <validation-api.version>2.0.1.Final</validation-api.version>
-    <jackson.version>2.11.3</jackson.version>
+    <jackson.version>2.13.3</jackson.version>
     <org.codehaus.mojo.gwtmavenplugin.version>${com.google.gwt.version}</org.codehaus.mojo.gwtmavenplugin.version>
 
     <maven.surefire.plugin.version>2.22.2</maven.surefire.plugin.version>
