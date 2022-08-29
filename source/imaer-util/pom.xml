@@ -31,7 +31,7 @@
   <description>The Information Model AERIUS Util Library.</description>
 
   <properties>
-    <jts.version>1.18.2</jts.version>
+    <jts.version>1.19.0</jts.version>
   </properties>
 
   <dependencies>
