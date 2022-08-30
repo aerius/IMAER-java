@@ -40,6 +40,7 @@ import org.locationtech.jts.operation.valid.IsSimpleOp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import nl.aerius.shared.domain.geojson.Point;
 import nl.overheid.aerius.shared.domain.geo.OrientedEnvelope;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
@@ -98,28 +99,28 @@ public final class GeometryUtil {
    * @return The (JTS) geometry that is contained in the WKT.
    * @throws AeriusException exception in case of geometry problems
    */
-  public static Geometry getGeometry(final nl.overheid.aerius.shared.domain.v2.geojson.Geometry aeriusGeometry) throws AeriusException {
+  public static Geometry getGeometry(final nl.aerius.shared.domain.geojson.Geometry aeriusGeometry) throws AeriusException {
     final Geometry geometry;
-    if (aeriusGeometry instanceof nl.overheid.aerius.shared.domain.v2.geojson.Point) {
-      geometry = toJtsPoint((nl.overheid.aerius.shared.domain.v2.geojson.Point) aeriusGeometry);
-    } else if (aeriusGeometry instanceof nl.overheid.aerius.shared.domain.v2.geojson.LineString) {
-      geometry = toJtsLineString((nl.overheid.aerius.shared.domain.v2.geojson.LineString) aeriusGeometry);
-    } else if (aeriusGeometry instanceof nl.overheid.aerius.shared.domain.v2.geojson.Polygon) {
-      geometry = toJtsPolygon((nl.overheid.aerius.shared.domain.v2.geojson.Polygon) aeriusGeometry);
+    if (aeriusGeometry instanceof Point) {
+      geometry = toJtsPoint((Point) aeriusGeometry);
+    } else if (aeriusGeometry instanceof nl.aerius.shared.domain.geojson.LineString) {
+      geometry = toJtsLineString((nl.aerius.shared.domain.geojson.LineString) aeriusGeometry);
+    } else if (aeriusGeometry instanceof nl.aerius.shared.domain.geojson.Polygon) {
+      geometry = toJtsPolygon((nl.aerius.shared.domain.geojson.Polygon) aeriusGeometry);
     } else {
       throw new AeriusException(ImaerExceptionReason.GEOMETRY_INVALID, String.valueOf(aeriusGeometry));
     }
     return geometry;
   }
 
-  private static org.locationtech.jts.geom.Point toJtsPoint(final nl.overheid.aerius.shared.domain.v2.geojson.Point aeriusPoint)
+  private static org.locationtech.jts.geom.Point toJtsPoint(final Point aeriusPoint)
       throws AeriusException {
     final GeometryFactory geometryFactory = new GeometryFactory();
     final Coordinate coordinate = toJtsCoordinate(aeriusPoint.getCoordinates(), aeriusPoint);
     return geometryFactory.createPoint(coordinate);
   }
 
-  private static LineString toJtsLineString(final nl.overheid.aerius.shared.domain.v2.geojson.LineString aeriusLineString) throws AeriusException {
+  private static LineString toJtsLineString(final nl.aerius.shared.domain.geojson.LineString aeriusLineString) throws AeriusException {
     final GeometryFactory geometryFactory = new GeometryFactory();
     final int numberOfCoordinates = aeriusLineString.getCoordinates().length;
     final Coordinate[] coordinates = new Coordinate[numberOfCoordinates];
@@ -130,7 +131,7 @@ public final class GeometryUtil {
     return geometryFactory.createLineString(coordinates);
   }
 
-  private static Polygon toJtsPolygon(final nl.overheid.aerius.shared.domain.v2.geojson.Polygon aeriusPolygon) throws AeriusException {
+  private static Polygon toJtsPolygon(final nl.aerius.shared.domain.geojson.Polygon aeriusPolygon) throws AeriusException {
     final GeometryFactory geometryFactory = new GeometryFactory();
     if (aeriusPolygon.getCoordinates().length < 1) {
       throw new AeriusException(ImaerExceptionReason.GEOMETRY_INVALID, String.valueOf(aeriusPolygon));
@@ -146,7 +147,7 @@ public final class GeometryUtil {
     return geometryFactory.createPolygon(shell, holes);
   }
 
-  private static Coordinate toJtsCoordinate(final double[] coordinate, final nl.overheid.aerius.shared.domain.v2.geojson.Geometry originalGeometry)
+  private static Coordinate toJtsCoordinate(final double[] coordinate, final nl.aerius.shared.domain.geojson.Geometry originalGeometry)
       throws AeriusException {
     if (coordinate == null || coordinate.length != 2) {
       throw new AeriusException(ImaerExceptionReason.GEOMETRY_INVALID, String.valueOf(originalGeometry));
@@ -155,7 +156,7 @@ public final class GeometryUtil {
   }
 
   private static LinearRing toJtsLinearRing(final GeometryFactory geometryFactory, final double[][] coordinates,
-      final nl.overheid.aerius.shared.domain.v2.geojson.Geometry originalGeometry) throws AeriusException {
+      final nl.aerius.shared.domain.geojson.Geometry originalGeometry) throws AeriusException {
     final int numberOfCoordinates = coordinates.length;
     final Coordinate[] coordinatesJts = new Coordinate[numberOfCoordinates];
     for (int i = 0; i < numberOfCoordinates; i++) {
@@ -171,8 +172,8 @@ public final class GeometryUtil {
    * @return The (JTS) geometry that is contained in the WKT.
    * @throws AeriusException exception in case of geometry problems
    */
-  public static final nl.overheid.aerius.shared.domain.v2.geojson.Geometry getAeriusGeometry(final Geometry jtsGeometry) throws AeriusException {
-    final nl.overheid.aerius.shared.domain.v2.geojson.Geometry aeriusGeometry;
+  public static final nl.aerius.shared.domain.geojson.Geometry getAeriusGeometry(final Geometry jtsGeometry) throws AeriusException {
+    final nl.aerius.shared.domain.geojson.Geometry aeriusGeometry;
     if (jtsGeometry instanceof org.locationtech.jts.geom.Point) {
       aeriusGeometry = toAeriusPoint((org.locationtech.jts.geom.Point) jtsGeometry);
     } else if (jtsGeometry instanceof org.locationtech.jts.geom.LineString) {
@@ -185,21 +186,21 @@ public final class GeometryUtil {
     return aeriusGeometry;
   }
 
-  private static nl.overheid.aerius.shared.domain.v2.geojson.Point toAeriusPoint(final org.locationtech.jts.geom.Point jtsPoint) {
-    return new nl.overheid.aerius.shared.domain.v2.geojson.Point(jtsPoint.getX(), jtsPoint.getY());
+  private static Point toAeriusPoint(final org.locationtech.jts.geom.Point jtsPoint) {
+    return new Point(jtsPoint.getX(), jtsPoint.getY());
   }
 
-  private static nl.overheid.aerius.shared.domain.v2.geojson.LineString toAeriusLineString(
+  private static nl.aerius.shared.domain.geojson.LineString toAeriusLineString(
       final org.locationtech.jts.geom.LineString jtsLineString) {
-    final nl.overheid.aerius.shared.domain.v2.geojson.LineString aeriusLinestring = new nl.overheid.aerius.shared.domain.v2.geojson.LineString();
+    final nl.aerius.shared.domain.geojson.LineString aeriusLinestring = new nl.aerius.shared.domain.geojson.LineString();
     final double[][] aeriusCoordinates = toAeriusCoordinates(jtsLineString);
     aeriusLinestring.setCoordinates(aeriusCoordinates);
     return aeriusLinestring;
   }
 
-  private static nl.overheid.aerius.shared.domain.v2.geojson.Polygon toAeriusPolygon(
+  private static nl.aerius.shared.domain.geojson.Polygon toAeriusPolygon(
       final org.locationtech.jts.geom.Polygon jtsPolygon) {
-    final nl.overheid.aerius.shared.domain.v2.geojson.Polygon aeriusPolygon = new nl.overheid.aerius.shared.domain.v2.geojson.Polygon();
+    final nl.aerius.shared.domain.geojson.Polygon aeriusPolygon = new nl.aerius.shared.domain.geojson.Polygon();
     final double[][][] aeriusCoordinates = new double[jtsPolygon.getNumInteriorRing() + 1][][];
     aeriusCoordinates[0] = toAeriusCoordinates(jtsPolygon.getExteriorRing());
     for (int i = 0; i < jtsPolygon.getNumInteriorRing(); i++) {
@@ -252,12 +253,12 @@ public final class GeometryUtil {
    * @return The converted points that represent the line.
    * @throws AeriusException When the geometry wasn't right.
    */
-  public static List<nl.overheid.aerius.shared.domain.v2.geojson.Point> convertToPoints(
-      final nl.overheid.aerius.shared.domain.v2.geojson.LineString line, final double maxSegmentSize) throws AeriusException {
-    final List<nl.overheid.aerius.shared.domain.v2.geojson.Point> points;
+  public static List<Point> convertToPoints(
+      final nl.aerius.shared.domain.geojson.LineString line, final double maxSegmentSize) throws AeriusException {
+    final List<Point> points;
     final Geometry geometry = getGeometry(line);
     if (geometry instanceof LineString) {
-      points = convertToPoints((LineString) geometry, maxSegmentSize, (x, y) -> new nl.overheid.aerius.shared.domain.v2.geojson.Point(x, y));
+      points = convertToPoints((LineString) geometry, maxSegmentSize, (x, y) -> new Point(x, y));
     } else {
       LOG.error("Can't convert {}. It is not a valid linestring geometry.", line);
       throw new AeriusException(ImaerExceptionReason.INTERNAL_ERROR);
@@ -295,7 +296,7 @@ public final class GeometryUtil {
    * @return True if it's perpendicular along the line  (or the WKT did not specify a linestring).
    * @throws AeriusException In case the WKTgeometry did not define a correct geometry.
    */
-  public static boolean isPerpendicularAlongLine(final Geometry geometry, final nl.overheid.aerius.shared.domain.v2.geojson.Point point) {
+  public static boolean isPerpendicularAlongLine(final Geometry geometry, final Point point) {
     final Coordinate pointCoordinate = new Coordinate(point.getX(), point.getY());
     if (geometry instanceof LineString) {
       Coordinate firstCoordinate = null;
@@ -323,7 +324,7 @@ public final class GeometryUtil {
    * @return convex polygon
    * @throws AeriusException
    */
-  public static nl.overheid.aerius.shared.domain.v2.geojson.Polygon toConvexHull(final nl.overheid.aerius.shared.domain.v2.geojson.Polygon polygon,
+  public static nl.aerius.shared.domain.geojson.Polygon toConvexHull(final nl.aerius.shared.domain.geojson.Polygon polygon,
       final int srid) throws AeriusException {
     return toAeriusPolygon(
         (Polygon) new ConvexHull(getGeometry(polygon).getCoordinates(), new GeometryFactory(new PrecisionModel(), srid)).getConvexHull());
@@ -336,8 +337,8 @@ public final class GeometryUtil {
    * @param orientationXAxis The orientation with respect to the x-axis. That is, from X positive counter-clockwise.
    * @return The corresponding polygon.
    */
-  public static nl.overheid.aerius.shared.domain.v2.geojson.Polygon constructPolygonFromXAxisDimensions(
-      final nl.overheid.aerius.shared.domain.v2.geojson.Geometry geometry, final double length, final double width, final double orientationXAxis)
+  public static nl.aerius.shared.domain.geojson.Polygon constructPolygonFromXAxisDimensions(
+      final nl.aerius.shared.domain.geojson.Geometry geometry, final double length, final double width, final double orientationXAxis)
       throws AeriusException {
     final Geometry jtsGeometry = getGeometry(geometry);
     return constructPolygonFromDimensions(jtsGeometry.getCentroid(), length, width, orientationXToNorth(orientationXAxis));
@@ -350,8 +351,8 @@ public final class GeometryUtil {
    * @param orientationNorth The orientation with respect to the North. That is, from North positive clockwise.
    * @return The corresponding polygon.
    */
-  public static nl.overheid.aerius.shared.domain.v2.geojson.Polygon constructPolygonFromDimensions(
-      final nl.overheid.aerius.shared.domain.v2.geojson.Geometry geometry, final double length, final double width, final double orientationNorth)
+  public static nl.aerius.shared.domain.geojson.Polygon constructPolygonFromDimensions(
+      final nl.aerius.shared.domain.geojson.Geometry geometry, final double length, final double width, final double orientationNorth)
       throws AeriusException {
     final Geometry jtsGeometry = getGeometry(geometry);
     return constructPolygonFromDimensions(jtsGeometry.getCentroid(), length, width, orientationNorth);
@@ -364,10 +365,10 @@ public final class GeometryUtil {
    * @param orientation The orientation with respect to the x-axis. That is, from X positive counter-clockwise.
    * @return The corresponding polygon.
    */
-  private static nl.overheid.aerius.shared.domain.v2.geojson.Polygon constructPolygonFromDimensions(
+  private static nl.aerius.shared.domain.geojson.Polygon constructPolygonFromDimensions(
       final org.locationtech.jts.geom.Point point, final double length, final double width, final double orientationToNorth)
       throws AeriusException {
-    final nl.overheid.aerius.shared.domain.v2.geojson.Polygon polygon = toBasePolygon(length, width);
+    final nl.aerius.shared.domain.geojson.Polygon polygon = toBasePolygon(length, width);
     final Geometry jtsPolygon = toJtsPolygon(polygon);
     final double rotationInRadians = -Math.toRadians(orientationToNorth);
     final AffineTransformation rotate = AffineTransformation.rotationInstance(rotationInRadians);
@@ -408,8 +409,8 @@ public final class GeometryUtil {
         .doubleValue();
   }
 
-  private static nl.overheid.aerius.shared.domain.v2.geojson.Polygon toBasePolygon(final double length, final double width) {
-    final nl.overheid.aerius.shared.domain.v2.geojson.Polygon polygon = new nl.overheid.aerius.shared.domain.v2.geojson.Polygon();
+  private static nl.aerius.shared.domain.geojson.Polygon toBasePolygon(final double length, final double width) {
+    final nl.aerius.shared.domain.geojson.Polygon polygon = new nl.aerius.shared.domain.geojson.Polygon();
     final double[][][] coordinates = new double[1][5][2];
     coordinates[0][0] = toBasePolygonCoordinate(length, width, true, true);
     coordinates[0][1] = toBasePolygonCoordinate(length, width, false, true);
@@ -426,20 +427,20 @@ public final class GeometryUtil {
     return new double[] {east ? xCoord : -xCoord, north ? yCoord : -yCoord};
   }
 
-  public static nl.overheid.aerius.shared.domain.v2.geojson.Point determineCenter(final nl.overheid.aerius.shared.domain.v2.geojson.Geometry geometry)
+  public static Point determineCenter(final nl.aerius.shared.domain.geojson.Geometry geometry)
       throws AeriusException {
-    if (geometry instanceof nl.overheid.aerius.shared.domain.v2.geojson.Point) {
-      return (nl.overheid.aerius.shared.domain.v2.geojson.Point) geometry;
-    } else if (geometry instanceof nl.overheid.aerius.shared.domain.v2.geojson.Polygon) {
-      final Coordinate centroid = toJtsPolygon((nl.overheid.aerius.shared.domain.v2.geojson.Polygon) geometry).getCentroid().getCoordinate();
+    if (geometry instanceof Point) {
+      return (Point) geometry;
+    } else if (geometry instanceof nl.aerius.shared.domain.geojson.Polygon) {
+      final Coordinate centroid = toJtsPolygon((nl.aerius.shared.domain.geojson.Polygon) geometry).getCentroid().getCoordinate();
 
-      return new nl.overheid.aerius.shared.domain.v2.geojson.Point(centroid.getOrdinate(Coordinate.X), centroid.getOrdinate(Coordinate.Y));
+      return new Point(centroid.getOrdinate(Coordinate.X), centroid.getOrdinate(Coordinate.Y));
     } else {
       throw new AeriusException(ImaerExceptionReason.GEOMETRY_INVALID, String.valueOf(geometry));
     }
   }
 
-  public static OrientedEnvelope determineOrientedEnvelope(final nl.overheid.aerius.shared.domain.v2.geojson.Polygon polygon) throws AeriusException {
+  public static OrientedEnvelope determineOrientedEnvelope(final nl.aerius.shared.domain.geojson.Polygon polygon) throws AeriusException {
     final Polygon jtsPolygon = toJtsPolygon(polygon);
     return determineOrientedEnvelope(jtsPolygon);
   }

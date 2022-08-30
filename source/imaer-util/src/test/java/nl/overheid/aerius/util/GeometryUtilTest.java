@@ -29,12 +29,12 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.locationtech.jts.geom.Geometry;
 
-import nl.overheid.aerius.geo.shared.RDNew;
-import nl.overheid.aerius.geo.shared.WKTGeometry;
-import nl.overheid.aerius.shared.domain.v2.geojson.GeometryType;
-import nl.overheid.aerius.shared.domain.v2.geojson.LineString;
-import nl.overheid.aerius.shared.domain.v2.geojson.Point;
-import nl.overheid.aerius.shared.domain.v2.geojson.Polygon;
+import nl.aerius.shared.domain.geo.RDNew;
+import nl.aerius.shared.domain.geo.WKTGeometry;
+import nl.aerius.shared.domain.geojson.GeometryType;
+import nl.aerius.shared.domain.geojson.LineString;
+import nl.aerius.shared.domain.geojson.Point;
+import nl.aerius.shared.domain.geojson.Polygon;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 import nl.overheid.aerius.shared.geometry.GeometryCalculator;
@@ -174,7 +174,7 @@ class GeometryUtilTest {
 
     assertTrue(convertedPolygonWithHole instanceof org.locationtech.jts.geom.Polygon, "Polygon with hole should convert to JTS polygon");
 
-    final nl.overheid.aerius.shared.domain.v2.geojson.Geometry anonymousGeometry = new nl.overheid.aerius.shared.domain.v2.geojson.Geometry() {
+    final nl.aerius.shared.domain.geojson.Geometry anonymousGeometry = new nl.aerius.shared.domain.geojson.Geometry() {
       private static final long serialVersionUID = 1L;
 
       @Override

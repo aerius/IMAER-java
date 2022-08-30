@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlType;
 import nl.overheid.aerius.gml.base.source.IsGmlEmissionSource;
 import nl.overheid.aerius.gml.v0_5.base.CalculatorSchema;
 import nl.overheid.aerius.gml.v0_5.base.FeatureMemberImpl;
-import nl.overheid.aerius.shared.domain.v2.geojson.GeometryType;
+import nl.aerius.shared.domain.geojson.GeometryType;
 
 /**
  *

@@ -14,26 +14,47 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.geo.shared;
+package nl.aerius.shared.domain.geojson;
 
-import nl.overheid.aerius.shared.domain.v2.geojson.Point;
+import java.io.Serializable;
 
-/**
- * Constants for RD New coordinates (EPSG:28992).
- */
-public final class RDNew extends EPSG {
-  /**
-   * SRID of EPSG:28992.
-   */
-  public static final int SRID = 28992;
+public class Crs implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
-  private static final int ZOOM_LEVEL = 14;
-  private static final BBox BOUNDS = new BBox(-285401.920, 22598.080, 595401.920, 903401.920);
-  private static final Point CENTER = new Point(155000, 463000);
+  public static class CrsContent implements Serializable {
 
-  RDNew() {
-    super(SRID, BOUNDS, CENTER, ZOOM_LEVEL);
+    private static final long serialVersionUID = 1L;
+
+    private String name;
+
+    public String getName() {
+      return name;
+    }
+
+    public void setName(final String name) {
+      this.name = name;
+    }
+
   }
+
+  private String type = "name";
+  private CrsContent properties;
+
+  public String getType() {
+    return type;
+  }
+
+  public void setType(final String type) {
+    this.type = type;
+  }
+
+  public CrsContent getProperties() {
+    return properties;
+  }
+
+  public void setProperties(final CrsContent properties) {
+    this.properties = properties;
+  }
+
 }

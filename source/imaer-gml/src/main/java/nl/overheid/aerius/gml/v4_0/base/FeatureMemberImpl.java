@@ -27,7 +27,7 @@ import nl.overheid.aerius.gml.v4_0.geo.EmissionSourceGeometry;
 import nl.overheid.aerius.gml.v4_0.geo.LineString;
 import nl.overheid.aerius.gml.v4_0.geo.Point;
 import nl.overheid.aerius.gml.v4_0.geo.Polygon;
-import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
+import nl.aerius.shared.domain.geojson.Geometry;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 
@@ -92,13 +92,13 @@ public abstract class FeatureMemberImpl implements FeatureMember {
     }
     if (!isValidGeometry(geometry.type())) {
       throw new AeriusException(ImaerExceptionReason.GML_GEOMETRY_NOT_PERMITTED, getId());
-    } else if (geometry instanceof nl.overheid.aerius.shared.domain.v2.geojson.Point) {
-      emissionSourceGeometry.setPoint(geometry2gml.toXMLPoint((nl.overheid.aerius.shared.domain.v2.geojson.Point) geometry, new Point()));
-    } else if (geometry instanceof nl.overheid.aerius.shared.domain.v2.geojson.LineString) {
+    } else if (geometry instanceof nl.aerius.shared.domain.geojson.Point) {
+      emissionSourceGeometry.setPoint(geometry2gml.toXMLPoint((nl.aerius.shared.domain.geojson.Point) geometry, new Point()));
+    } else if (geometry instanceof nl.aerius.shared.domain.geojson.LineString) {
       emissionSourceGeometry
-          .setLineString(geometry2gml.toXMLLineString((nl.overheid.aerius.shared.domain.v2.geojson.LineString) geometry, new LineString()));
-    } else if (geometry instanceof nl.overheid.aerius.shared.domain.v2.geojson.Polygon) {
-      emissionSourceGeometry.setPolygon(geometry2gml.toXMLPolygon((nl.overheid.aerius.shared.domain.v2.geojson.Polygon) geometry, new Polygon()));
+          .setLineString(geometry2gml.toXMLLineString((nl.aerius.shared.domain.geojson.LineString) geometry, new LineString()));
+    } else if (geometry instanceof nl.aerius.shared.domain.geojson.Polygon) {
+      emissionSourceGeometry.setPolygon(geometry2gml.toXMLPolygon((nl.aerius.shared.domain.geojson.Polygon) geometry, new Polygon()));
     } else {
       throw new AeriusException(ImaerExceptionReason.GML_GEOMETRY_UNKNOWN, getId());
     }

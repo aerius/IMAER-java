@@ -32,7 +32,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
-import nl.overheid.aerius.shared.domain.v2.geojson.FeatureCollection;
+import nl.aerius.shared.domain.geojson.FeatureCollection;
 import nl.overheid.aerius.shared.domain.v2.nsl.NSLDispersionLineFeature;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPointFeature;
 import nl.overheid.aerius.shared.domain.v2.scenario.ScenarioSituation;

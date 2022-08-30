@@ -29,7 +29,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 
 import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.v2.characteristics.SourceCharacteristics;
-import nl.overheid.aerius.shared.domain.v2.geojson.IsFeature;
+import nl.aerius.shared.domain.geojson.IsFeature;
 import nl.overheid.aerius.shared.exception.AeriusException;
 
 @JsonTypeInfo(property = "emissionSourceType", use = Id.NAME)

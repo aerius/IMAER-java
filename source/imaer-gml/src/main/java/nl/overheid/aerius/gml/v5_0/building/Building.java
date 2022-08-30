@@ -24,7 +24,7 @@ import nl.overheid.aerius.gml.v5_0.base.CalculatorSchema;
 import nl.overheid.aerius.gml.v5_0.base.FeatureMemberImpl;
 import nl.overheid.aerius.gml.v5_0.geo.BuildingGeometry;
 import nl.overheid.aerius.gml.v5_0.geo.EmissionSourceGeometry;
-import nl.overheid.aerius.shared.domain.v2.geojson.GeometryType;
+import nl.aerius.shared.domain.geojson.GeometryType;
 
 /**
  *

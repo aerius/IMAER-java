@@ -30,7 +30,7 @@ import nl.overheid.aerius.gml.v2_1.base.CalculatorSchema;
 import nl.overheid.aerius.gml.v2_1.base.FeatureMemberImpl;
 import nl.overheid.aerius.gml.v2_1.geo.Point;
 import nl.overheid.aerius.gml.v2_1.geo.Polygon;
-import nl.overheid.aerius.shared.domain.v2.geojson.GeometryType;
+import nl.aerius.shared.domain.geojson.GeometryType;
 
 /**
  *

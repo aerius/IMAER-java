@@ -30,8 +30,8 @@ import nl.overheid.aerius.gml.v5_0.source.characteristics.EmissionSourceCharacte
 import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.v2.characteristics.ADMSSourceCharacteristics;
 import nl.overheid.aerius.shared.domain.v2.characteristics.OPSSourceCharacteristics;
-import nl.overheid.aerius.shared.domain.v2.geojson.IsFeature;
-import nl.overheid.aerius.shared.domain.v2.geojson.Point;
+import nl.aerius.shared.domain.geojson.IsFeature;
+import nl.aerius.shared.domain.geojson.Point;
 import nl.overheid.aerius.shared.domain.v2.source.ADMSRoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceFeature;

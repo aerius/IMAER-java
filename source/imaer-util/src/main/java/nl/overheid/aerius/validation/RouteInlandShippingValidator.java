@@ -19,8 +19,8 @@ package nl.overheid.aerius.validation;
 import java.util.List;
 import java.util.Optional;
 
-import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
-import nl.overheid.aerius.shared.domain.v2.geojson.GeometryType;
+import nl.aerius.shared.domain.geojson.Geometry;
+import nl.aerius.shared.domain.geojson.GeometryType;
 import nl.overheid.aerius.shared.domain.v2.source.InlandShippingEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.shipping.base.IsStandardShipping;
 import nl.overheid.aerius.shared.domain.v2.source.shipping.inland.InlandShipping;

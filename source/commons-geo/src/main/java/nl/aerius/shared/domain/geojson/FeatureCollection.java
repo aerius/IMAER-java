@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.shared.domain.v2.geojson;
+package nl.aerius.shared.domain.geojson;
 
 import java.io.Serializable;
 import java.util.ArrayList;

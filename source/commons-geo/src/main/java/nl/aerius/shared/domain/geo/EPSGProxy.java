@@ -14,15 +14,35 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.shared.domain.v2.geojson;
+package nl.aerius.shared.domain.geo;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- *
+ * Proxy class to get an EPSG object.
  */
-public interface IsFeature {
+public final class EPSGProxy {
 
-  String getId();
+  private static final Map<Integer, EPSG> MAP;
+  static {
+    final Map<Integer, EPSG> map = new HashMap<>();
+    map.put(RDNew.SRID, new RDNew());
+    map.put(BNGrid.SRID, new BNGrid());
+    MAP = Collections.unmodifiableMap(map);
+  }
 
-  Geometry getGeometry();
+  private EPSGProxy() {
+    // util class
+  }
 
+  public static EPSG defaultEpsg() {
+    return MAP.get(RDNew.SRID);
+  }
+
+  public static EPSG getEPSG(final int srid) {
+    final EPSG epsg = MAP.get(srid);
+    return epsg == null ? defaultEpsg() : epsg;
+  }
 }

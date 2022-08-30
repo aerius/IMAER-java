@@ -17,10 +17,10 @@
 package nl.overheid.aerius.gml.base.geo;
 
 import nl.overheid.aerius.gml.base.FeatureMember;
-import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
-import nl.overheid.aerius.shared.domain.v2.geojson.LineString;
-import nl.overheid.aerius.shared.domain.v2.geojson.Point;
-import nl.overheid.aerius.shared.domain.v2.geojson.Polygon;
+import nl.aerius.shared.domain.geojson.Geometry;
+import nl.aerius.shared.domain.geojson.LineString;
+import nl.aerius.shared.domain.geojson.Point;
+import nl.aerius.shared.domain.geojson.Polygon;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 

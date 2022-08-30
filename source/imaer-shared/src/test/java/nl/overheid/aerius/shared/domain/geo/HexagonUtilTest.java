@@ -19,8 +19,8 @@ package nl.overheid.aerius.shared.domain.geo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import nl.overheid.aerius.shared.domain.v2.geojson.Point;
-import nl.overheid.aerius.shared.domain.v2.geojson.Polygon;
+import nl.aerius.shared.domain.geojson.Point;
+import nl.aerius.shared.domain.geojson.Polygon;
 
 /**
  * Test class for {@link HexagonUtil}.

@@ -24,7 +24,7 @@ import java.util.Map.Entry;
 import java.util.OptionalDouble;
 
 import nl.overheid.aerius.shared.domain.Substance;
-import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
+import nl.aerius.shared.domain.geojson.Geometry;
 import nl.overheid.aerius.shared.domain.v2.source.RoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.SRM1RoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.SRM2RoadEmissionSource;

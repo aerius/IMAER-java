@@ -28,8 +28,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import nl.overheid.aerius.shared.domain.geo.OrientedEnvelope;
-import nl.overheid.aerius.shared.domain.v2.geojson.Point;
-import nl.overheid.aerius.shared.domain.v2.geojson.Polygon;
+import nl.aerius.shared.domain.geojson.Point;
+import nl.aerius.shared.domain.geojson.Polygon;
 import nl.overheid.aerius.shared.exception.AeriusException;
 
 /**
@@ -107,7 +107,7 @@ class ConstructPolygonTest {
 
   private static Arguments testCase(final double centerX, final double centerY, final double width, final double length, final double orientation,
       final double[][] expectedCoordinates) {
-    final nl.overheid.aerius.shared.domain.v2.geojson.Point point = new nl.overheid.aerius.shared.domain.v2.geojson.Point(centerX, centerY);
+    final Point point = new Point(centerX, centerY);
     return Arguments.of(point, width, length, orientation, expectedCoordinates);
   }
 

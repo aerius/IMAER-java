@@ -18,7 +18,7 @@ package nl.overheid.aerius.shared.domain.v2.source;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import nl.overheid.aerius.shared.domain.v2.geojson.IsFeature;
+import nl.aerius.shared.domain.geojson.IsFeature;
 import nl.overheid.aerius.shared.domain.v2.source.shipping.maritime.MaritimeShipping;
 import nl.overheid.aerius.shared.domain.v2.source.shipping.maritime.ShippingMovementType;
 import nl.overheid.aerius.shared.exception.AeriusException;

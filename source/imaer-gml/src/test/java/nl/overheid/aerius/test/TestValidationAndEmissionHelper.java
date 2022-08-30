@@ -31,7 +31,7 @@ import nl.overheid.aerius.gml.base.conversion.PlanConversion;
 import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.ops.DiurnalVariation;
 import nl.overheid.aerius.shared.domain.v2.characteristics.OPSSourceCharacteristics;
-import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
+import nl.aerius.shared.domain.geojson.Geometry;
 import nl.overheid.aerius.shared.domain.v2.source.road.RoadStandardEmissionFactorsKey;
 import nl.overheid.aerius.shared.domain.v2.source.road.RoadStandardsInterpolationValues;
 import nl.overheid.aerius.shared.domain.v2.source.shipping.inland.InlandWaterway;

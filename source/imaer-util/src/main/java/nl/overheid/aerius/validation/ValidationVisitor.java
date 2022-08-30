@@ -19,7 +19,7 @@ package nl.overheid.aerius.validation;
 import java.util.ArrayList;
 import java.util.List;
 
-import nl.overheid.aerius.shared.domain.v2.geojson.IsFeature;
+import nl.aerius.shared.domain.geojson.IsFeature;
 import nl.overheid.aerius.shared.domain.v2.source.ADMSRoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceFeature;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceVisitor;

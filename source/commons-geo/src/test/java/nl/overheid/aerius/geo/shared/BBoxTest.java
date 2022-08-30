@@ -19,7 +19,8 @@ package nl.overheid.aerius.geo.shared;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import nl.overheid.aerius.shared.domain.v2.geojson.Point;
+import nl.aerius.shared.domain.geo.BBox;
+import nl.aerius.shared.domain.geojson.Point;
 
 /**
  * Test class for {@link BBox}.

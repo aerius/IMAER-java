@@ -16,8 +16,8 @@
  */
 package nl.overheid.aerius.shared.domain.v2.nsl;
 
-import nl.overheid.aerius.shared.domain.v2.geojson.Feature;
-import nl.overheid.aerius.shared.domain.v2.geojson.LineString;
+import nl.aerius.shared.domain.geojson.Feature;
+import nl.aerius.shared.domain.geojson.LineString;
 
 public class NSLDispersionLineFeature extends Feature<NSLDispersionLine, LineString> {
 

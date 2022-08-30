@@ -17,8 +17,8 @@
 package nl.overheid.aerius.shared.domain.geo;
 
 import nl.overheid.aerius.shared.MathUtil;
-import nl.overheid.aerius.shared.domain.v2.geojson.Point;
-import nl.overheid.aerius.shared.domain.v2.geojson.Polygon;
+import nl.aerius.shared.domain.geojson.Point;
+import nl.aerius.shared.domain.geojson.Polygon;
 
 /**
  * Utility class for hexagons.

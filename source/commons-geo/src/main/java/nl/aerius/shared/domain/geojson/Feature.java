@@ -14,41 +14,54 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.shared.domain.v2.geojson;
+package nl.aerius.shared.domain.geojson;
 
-import java.util.Arrays;
+import java.io.Serializable;
 
-public class LineString extends Geometry {
+import javax.validation.Valid;
+
+public class Feature<T extends Serializable, G extends Geometry> implements Serializable, IsFeature {
 
   private static final long serialVersionUID = 1L;
 
-  private double[][] coordinates;
+  private String type = "Feature";
+  private String id;
+  private G geometry;
+  private T properties;
 
-  public double[][] getCoordinates() {
-    return coordinates;
+  public String getType() {
+    return type;
   }
 
-  public void setCoordinates(final double[][] coordinates) {
-    this.coordinates = coordinates;
-  }
-
-  @Override
-  public GeometryType type() {
-    return GeometryType.LINESTRING;
-  }
-
-  @Override
-  public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + Arrays.deepHashCode(coordinates);
-    return result;
+  public void setType(final String type) {
+    this.type = type;
   }
 
   @Override
-  public boolean equals(final Object obj) {
-    return this == obj
-        || (obj != null && getClass() == obj.getClass() && Arrays.deepEquals(coordinates, ((LineString) obj).coordinates));
+  public String getId() {
+    return id;
+  }
+
+  public void setId(final String id) {
+    this.id = id;
+  }
+
+  @Valid
+  public T getProperties() {
+    return properties;
+  }
+
+  public void setProperties(final T properties) {
+    this.properties = properties;
+  }
+
+  @Override
+  public G getGeometry() {
+    return geometry;
+  }
+
+  public void setGeometry(final G geometry) {
+    this.geometry = geometry;
   }
 
 }

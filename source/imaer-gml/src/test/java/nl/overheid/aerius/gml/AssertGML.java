@@ -53,8 +53,8 @@ import nl.overheid.aerius.shared.domain.v2.characteristics.ADMSSourceCharacteris
 import nl.overheid.aerius.shared.domain.v2.characteristics.CharacteristicsType;
 import nl.overheid.aerius.shared.domain.v2.characteristics.OPSSourceCharacteristics;
 import nl.overheid.aerius.shared.domain.v2.characteristics.SourceCharacteristics;
-import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
-import nl.overheid.aerius.shared.domain.v2.geojson.GeometryType;
+import nl.aerius.shared.domain.geojson.Geometry;
+import nl.aerius.shared.domain.geojson.GeometryType;
 import nl.overheid.aerius.shared.domain.v2.importer.ImportParcel;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceFeature;

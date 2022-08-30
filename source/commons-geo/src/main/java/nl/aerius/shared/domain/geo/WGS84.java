@@ -14,35 +14,27 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.geo.shared;
-
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+package nl.aerius.shared.domain.geo;
 
 /**
- * Proxy class to get an EPSG object.
+ * Constants for WGS84 (EPSG::4326).
+ *
+ * The coordinates are not fully supported in AERIUS. This is only available to set points with these coordinates from OPS brn files.
+ * This is used only to calculated foreign depositions.
  */
-public final class EPSGProxy {
+public final class WGS84 {
 
-  private static final Map<Integer, EPSG> MAP;
-  static {
-    final Map<Integer, EPSG> map = new HashMap<>();
-    map.put(RDNew.SRID, new RDNew());
-    map.put(BNGrid.SRID, new BNGrid());
-    MAP = Collections.unmodifiableMap(map);
-  }
+  /**
+   * SRID of EPSG:4326.
+   */
+  public static final int SRID = 4326;
 
-  private EPSGProxy() {
-    // util class
-  }
+  /**
+   * EPSG code for WGS84.
+   */
+  public static final String EPSG_CODE = "EPSG:" + SRID;
 
-  public static EPSG defaultEpsg() {
-    return MAP.get(RDNew.SRID);
-  }
-
-  public static EPSG getEPSG(final int srid) {
-    final EPSG epsg = MAP.get(srid);
-    return epsg == null ? defaultEpsg() : epsg;
+  private WGS84() {
+    // Only available for SRID reference.
   }
 }

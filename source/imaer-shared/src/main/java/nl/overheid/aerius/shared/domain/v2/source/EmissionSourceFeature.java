@@ -16,8 +16,8 @@
  */
 package nl.overheid.aerius.shared.domain.v2.source;
 
-import nl.overheid.aerius.shared.domain.v2.geojson.Feature;
-import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
+import nl.aerius.shared.domain.geojson.Feature;
+import nl.aerius.shared.domain.geojson.Geometry;
 import nl.overheid.aerius.shared.exception.AeriusException;
 
 public class EmissionSourceFeature extends Feature<EmissionSource, Geometry> {

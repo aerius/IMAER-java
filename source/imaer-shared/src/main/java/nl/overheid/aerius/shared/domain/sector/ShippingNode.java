@@ -18,7 +18,7 @@ package nl.overheid.aerius.shared.domain.sector;
 
 import java.io.Serializable;
 
-import nl.overheid.aerius.shared.domain.v2.geojson.Point;
+import nl.aerius.shared.domain.geojson.Point;
 
 /**
  * Shipping nodes are part of the main route network(s).

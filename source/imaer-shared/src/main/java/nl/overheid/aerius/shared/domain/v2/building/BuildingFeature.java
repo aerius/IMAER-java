@@ -16,8 +16,8 @@
  */
 package nl.overheid.aerius.shared.domain.v2.building;
 
-import nl.overheid.aerius.shared.domain.v2.geojson.Feature;
-import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
+import nl.aerius.shared.domain.geojson.Feature;
+import nl.aerius.shared.domain.geojson.Geometry;
 
 public class BuildingFeature extends Feature<Building, Geometry> {
 

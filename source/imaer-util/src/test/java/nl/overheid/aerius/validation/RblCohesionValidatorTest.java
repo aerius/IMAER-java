@@ -28,8 +28,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import nl.overheid.aerius.shared.domain.Theme;
-import nl.overheid.aerius.shared.domain.v2.geojson.LineString;
-import nl.overheid.aerius.shared.domain.v2.geojson.Point;
+import nl.aerius.shared.domain.geojson.LineString;
+import nl.aerius.shared.domain.geojson.Point;
 import nl.overheid.aerius.shared.domain.v2.nsl.NSLCorrection;
 import nl.overheid.aerius.shared.domain.v2.nsl.NSLDispersionLine;
 import nl.overheid.aerius.shared.domain.v2.nsl.NSLDispersionLineFeature;

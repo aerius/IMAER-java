@@ -26,7 +26,7 @@ import java.util.function.ToIntFunction;
 
 import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.v2.base.TimeUnit;
-import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
+import nl.aerius.shared.domain.geojson.Geometry;
 import nl.overheid.aerius.shared.domain.v2.source.InlandShippingEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.MooringInlandShippingEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.shipping.inland.CustomInlandShipping;

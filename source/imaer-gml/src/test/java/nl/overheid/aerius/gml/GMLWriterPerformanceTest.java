@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
 import nl.overheid.aerius.gml.base.FeatureMember;
 import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.v2.base.TimeUnit;
-import nl.overheid.aerius.shared.domain.v2.geojson.LineString;
+import nl.aerius.shared.domain.geojson.LineString;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceFeature;
 import nl.overheid.aerius.shared.domain.v2.source.SRM2RoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.road.StandardVehicles;

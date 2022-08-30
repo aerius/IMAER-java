@@ -41,8 +41,8 @@ import nl.overheid.aerius.shared.domain.geo.HexagonUtil;
 import nl.overheid.aerius.shared.domain.geo.HexagonZoomLevel;
 import nl.overheid.aerius.shared.domain.result.EmissionResultKey;
 import nl.overheid.aerius.shared.domain.result.EmissionResultType;
-import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
-import nl.overheid.aerius.shared.domain.v2.geojson.Point;
+import nl.aerius.shared.domain.geojson.Geometry;
+import nl.aerius.shared.domain.geojson.Point;
 import nl.overheid.aerius.shared.domain.v2.nsl.NSLCorrection;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPoint;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPointFeature;
@@ -134,9 +134,9 @@ final class Result2GML {
     returnReceptorPoint.setEdgeEffect(aeriusPoint.getEdgeEffect());
     //receptor are represented by a hexagon.
     final Geometry geometry = HexagonUtil.createHexagon(point, zoomLevel1);
-    if (geometry instanceof nl.overheid.aerius.shared.domain.v2.geojson.Polygon) {
+    if (geometry instanceof nl.aerius.shared.domain.geojson.Polygon) {
       returnReceptorPoint.setRepresentation(
-          geometry2gml.toXMLPolygon((nl.overheid.aerius.shared.domain.v2.geojson.Polygon) geometry, new Polygon()));
+          geometry2gml.toXMLPolygon((nl.aerius.shared.domain.geojson.Polygon) geometry, new Polygon()));
     }
     return returnReceptorPoint;
   }

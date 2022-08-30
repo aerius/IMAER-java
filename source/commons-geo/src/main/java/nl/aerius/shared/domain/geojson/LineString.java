@@ -14,27 +14,41 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.geo.shared;
+package nl.aerius.shared.domain.geojson;
 
-import nl.overheid.aerius.shared.domain.v2.geojson.Point;
+import java.util.Arrays;
 
-/**
- * Constants for British National Grid -- United Kingdom (EPSG:27700).
- * Derived from the settings as provided by the jncc.
- */
-public class BNGrid extends EPSG {
-  /**
-   * SRID of EPSG:27700.
-   */
-  public static final int SRID = 27700;
+public class LineString extends Geometry {
 
   private static final long serialVersionUID = 1L;
 
-  private static final int ZOOM_LEVEL = 15;
-  private static final BBox BOUNDS = new BBox(-4000, 4000, 660000, 1222000);
-  private static final Point CENTER = new Point(308188.48, 608846.16);
+  private double[][] coordinates;
 
-  BNGrid() {
-    super(SRID, BOUNDS, CENTER, ZOOM_LEVEL);
+  public double[][] getCoordinates() {
+    return coordinates;
   }
+
+  public void setCoordinates(final double[][] coordinates) {
+    this.coordinates = coordinates;
+  }
+
+  @Override
+  public GeometryType type() {
+    return GeometryType.LINESTRING;
+  }
+
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + Arrays.deepHashCode(coordinates);
+    return result;
+  }
+
+  @Override
+  public boolean equals(final Object obj) {
+    return this == obj
+        || (obj != null && getClass() == obj.getClass() && Arrays.deepEquals(coordinates, ((LineString) obj).coordinates));
+  }
+
 }

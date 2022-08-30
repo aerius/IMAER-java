@@ -14,47 +14,27 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.shared.domain.v2.geojson;
+package nl.aerius.shared.domain.geo;
 
-import java.io.Serializable;
+import nl.aerius.shared.domain.geojson.Point;
 
-public class Crs implements Serializable {
+/**
+ * Constants for British National Grid -- United Kingdom (EPSG:27700).
+ * Derived from the settings as provided by the jncc.
+ */
+public class BNGrid extends EPSG {
+  /**
+   * SRID of EPSG:27700.
+   */
+  public static final int SRID = 27700;
 
   private static final long serialVersionUID = 1L;
 
-  public static class CrsContent implements Serializable {
+  private static final int ZOOM_LEVEL = 15;
+  private static final BBox BOUNDS = new BBox(-4000, 4000, 660000, 1222000);
+  private static final Point CENTER = new Point(308188.48, 608846.16);
 
-    private static final long serialVersionUID = 1L;
-
-    private String name;
-
-    public String getName() {
-      return name;
-    }
-
-    public void setName(final String name) {
-      this.name = name;
-    }
-
+  BNGrid() {
+    super(SRID, BOUNDS, CENTER, ZOOM_LEVEL);
   }
-
-  private String type = "name";
-  private CrsContent properties;
-
-  public String getType() {
-    return type;
-  }
-
-  public void setType(final String type) {
-    this.type = type;
-  }
-
-  public CrsContent getProperties() {
-    return properties;
-  }
-
-  public void setProperties(final CrsContent properties) {
-    this.properties = properties;
-  }
-
 }
