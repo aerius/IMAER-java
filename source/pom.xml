@@ -355,6 +355,12 @@
             </dependency>
           </dependencies>
         </plugin>
+
+        <plugin>
+          <groupId>org.owasp</groupId>
+          <artifactId>dependency-check-maven</artifactId>
+          <version>7.1.2</version>
+        </plugin>
       </plugins>
     </pluginManagement>
 
@@ -460,6 +466,35 @@
         <module>shared-geo</module>
         <module>imaer-sonar-report</module>
       </modules>
+    </profile>
+    <profile>
+      <id>dependency-check</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.owasp</groupId>
+            <artifactId>dependency-check-maven</artifactId>
+            <inherited>false</inherited>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>aggregate</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <!-- If we ever want to fail on high CVSS scores, this is an example how -->
+              <!-- <failBuildOnCVSS>8</failBuildOnCVSS> -->
+              <!-- Generate all report formats -->
+              <format>ALL</format>
+              <!-- Don't use Nexus Analyzer -->
+              <centralAnalyzerEnabled>false</centralAnalyzerEnabled>
+              <!-- Am I the latest version? -->
+              <versionCheckEnabled>true</versionCheckEnabled>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
     </profile>
   </profiles>
 </project>
