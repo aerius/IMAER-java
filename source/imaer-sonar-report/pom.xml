@@ -33,6 +33,11 @@
     <dependencies>
       <dependency>
         <groupId>nl.aerius</groupId>
+        <artifactId>shared-geo</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>nl.aerius</groupId>
         <artifactId>imaer-shared</artifactId>
         <version>${project.version}</version>
       </dependency>

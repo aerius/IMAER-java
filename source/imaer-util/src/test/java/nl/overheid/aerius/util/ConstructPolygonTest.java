@@ -107,7 +107,7 @@ class ConstructPolygonTest {
 
   private static Arguments testCase(final double centerX, final double centerY, final double width, final double length, final double orientation,
       final double[][] expectedCoordinates) {
-    final nl.overheid.aerius.shared.domain.v2.geojson.Point point = new nl.overheid.aerius.shared.domain.v2.geojson.Point(centerX, centerY);
+    final Point point = new Point(centerX, centerY);
     return Arguments.of(point, width, length, orientation, expectedCoordinates);
   }
 

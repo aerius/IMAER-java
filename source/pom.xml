@@ -62,6 +62,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
     <com.google.gwt.version>2.9.0</com.google.gwt.version>
+    <validation-api.version>2.0.1.Final</validation-api.version>
     <jackson.version>2.11.3</jackson.version>
     <org.codehaus.mojo.gwtmavenplugin.version>${com.google.gwt.version}</org.codehaus.mojo.gwtmavenplugin.version>
 
@@ -348,6 +349,7 @@
         <module>imaer-gml</module>
         <module>imaer-xsd-server</module>
         <module>imaer-xsd-server-standalone</module>
+        <module>shared-geo</module>
       </modules>
     </profile>
 
@@ -360,6 +362,7 @@
         <module>imaer-gml</module>
         <module>imaer-xsd-server</module>
         <module>imaer-xsd-server-standalone</module>
+        <module>shared-geo</module>
         <module>imaer-sonar-report</module>
       </modules>
     </profile>
