@@ -38,9 +38,9 @@ import net.opengis.gml.v_3_2_1.PolygonType;
 
 import nl.aerius.shared.domain.geo.RDNew;
 import nl.overheid.aerius.gml.base.geo.Geo2GeometryUtil;
-import nl.aerius.shared.domain.geojson.Geometry;
-import nl.aerius.shared.domain.geojson.Point;
-import nl.aerius.shared.domain.geojson.Polygon;
+import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
+import nl.overheid.aerius.shared.domain.v2.geojson.Point;
+import nl.overheid.aerius.shared.domain.v2.geojson.Polygon;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 

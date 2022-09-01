@@ -17,7 +17,7 @@
 package nl.overheid.aerius.gml.base;
 
 import nl.overheid.aerius.gml.base.geo.GmlEmissionSourceGeometry;
-import nl.aerius.shared.domain.geojson.GeometryType;
+import nl.overheid.aerius.shared.domain.v2.geojson.GeometryType;
 
 /**
  * Interface for an AERIUS GML featurecollection, intended for use with JAXB-objects.

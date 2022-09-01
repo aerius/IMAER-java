@@ -25,7 +25,7 @@ import nl.overheid.aerius.gml.base.source.road.IsGmlRoadNetwork;
 import nl.overheid.aerius.gml.v0_5.base.CalculatorSchema;
 import nl.overheid.aerius.gml.v0_5.base.FeatureMemberImpl;
 import nl.overheid.aerius.gml.v0_5.base.ReferenceType;
-import nl.aerius.shared.domain.geojson.GeometryType;
+import nl.overheid.aerius.shared.domain.v2.geojson.GeometryType;
 
 /**
  *

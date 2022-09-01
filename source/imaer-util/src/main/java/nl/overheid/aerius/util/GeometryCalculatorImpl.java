@@ -16,7 +16,7 @@
  */
 package nl.overheid.aerius.util;
 
-import nl.aerius.shared.domain.geojson.Geometry;
+import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.geometry.GeometryCalculator;
 

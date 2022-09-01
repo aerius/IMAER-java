@@ -32,7 +32,7 @@ import nl.aerius.shared.domain.geo.BBox;
 import nl.aerius.shared.domain.geo.EPSGProxy;
 import nl.overheid.aerius.shared.domain.geo.HexagonZoomLevel;
 import nl.overheid.aerius.shared.domain.geo.ReceptorGridSettings;
-import nl.aerius.shared.domain.geojson.Point;
+import nl.overheid.aerius.shared.domain.v2.geojson.Point;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPointFeature;
 import nl.overheid.aerius.shared.domain.v2.point.ReceptorPoint;
 

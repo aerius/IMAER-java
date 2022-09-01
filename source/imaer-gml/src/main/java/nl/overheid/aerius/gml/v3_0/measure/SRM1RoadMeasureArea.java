@@ -26,7 +26,7 @@ import nl.overheid.aerius.gml.base.measure.v40.IsGmlSRM1RoadMeasureArea;
 import nl.overheid.aerius.gml.v3_0.base.CalculatorSchema;
 import nl.overheid.aerius.gml.v3_0.base.FeatureMemberImpl;
 import nl.overheid.aerius.gml.v3_0.geo.Polygon;
-import nl.aerius.shared.domain.geojson.GeometryType;
+import nl.overheid.aerius.shared.domain.v2.geojson.GeometryType;
 
 /**
  *

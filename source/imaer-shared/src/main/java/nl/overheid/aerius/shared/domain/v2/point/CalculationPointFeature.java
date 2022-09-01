@@ -16,9 +16,9 @@
  */
 package nl.overheid.aerius.shared.domain.v2.point;
 
-import nl.aerius.shared.domain.geojson.Feature;
-import nl.aerius.shared.domain.geojson.IsFeature;
-import nl.aerius.shared.domain.geojson.Point;
+import nl.overheid.aerius.shared.domain.v2.geojson.Feature;
+import nl.overheid.aerius.shared.domain.v2.geojson.IsFeature;
+import nl.overheid.aerius.shared.domain.v2.geojson.Point;
 import nl.overheid.aerius.shared.exception.AeriusException;
 
 public class CalculationPointFeature extends Feature<CalculationPoint, Point> implements IsFeature {

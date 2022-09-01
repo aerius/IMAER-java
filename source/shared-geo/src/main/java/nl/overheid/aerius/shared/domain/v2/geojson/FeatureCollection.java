@@ -14,41 +14,42 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.aerius.shared.domain.geojson;
+package nl.overheid.aerius.shared.domain.v2.geojson;
 
-import java.util.Arrays;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-public class LineString extends Geometry {
+public class FeatureCollection<T extends Serializable> implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
-  private double[][] coordinates;
+  private String type = "FeatureCollection";
+  private Crs crs;
+  private List<T> features = new ArrayList<>();
 
-  public double[][] getCoordinates() {
-    return coordinates;
+  public String getType() {
+    return type;
   }
 
-  public void setCoordinates(final double[][] coordinates) {
-    this.coordinates = coordinates;
+  public void setType(final String type) {
+    this.type = type;
   }
 
-  @Override
-  public GeometryType type() {
-    return GeometryType.LINESTRING;
+  public Crs getCrs() {
+    return crs;
   }
 
-  @Override
-  public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + Arrays.deepHashCode(coordinates);
-    return result;
+  public void setCrs(final Crs crs) {
+    this.crs = crs;
   }
 
-  @Override
-  public boolean equals(final Object obj) {
-    return this == obj
-        || (obj != null && getClass() == obj.getClass() && Arrays.deepEquals(coordinates, ((LineString) obj).coordinates));
+  public List<T> getFeatures() {
+    return features;
+  }
+
+  public void setFeatures(final List<T> features) {
+    this.features = features;
   }
 
 }

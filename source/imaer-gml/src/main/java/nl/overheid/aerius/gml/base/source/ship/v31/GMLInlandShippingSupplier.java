@@ -18,7 +18,7 @@ package nl.overheid.aerius.gml.base.source.ship.v31;
 
 import java.util.List;
 
-import nl.aerius.shared.domain.geojson.Geometry;
+import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
 import nl.overheid.aerius.shared.domain.v2.source.shipping.inland.InlandWaterway;
 import nl.overheid.aerius.shared.exception.AeriusException;
 

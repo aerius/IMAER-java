@@ -16,8 +16,8 @@
  */
 package nl.overheid.aerius.shared.domain.v2.nsl;
 
-import nl.aerius.shared.domain.geojson.Feature;
-import nl.aerius.shared.domain.geojson.Polygon;
+import nl.overheid.aerius.shared.domain.v2.geojson.Feature;
+import nl.overheid.aerius.shared.domain.v2.geojson.Polygon;
 
 public class NSLMeasureFeature extends Feature<NSLMeasure, Polygon> {
 

@@ -20,8 +20,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-import nl.aerius.shared.domain.geojson.Point;
-
 /**
  * Unit test for {@link Point}.
  */

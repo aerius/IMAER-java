@@ -36,8 +36,8 @@ import net.opengis.gml.v_3_2_1.PointType;
 import net.opengis.gml.v_3_2_1.PolygonType;
 
 import nl.overheid.aerius.gml.base.GMLSchema;
-import nl.aerius.shared.domain.geojson.LineString;
-import nl.aerius.shared.domain.geojson.Polygon;
+import nl.overheid.aerius.shared.domain.v2.geojson.LineString;
+import nl.overheid.aerius.shared.domain.v2.geojson.Polygon;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 import nl.overheid.aerius.util.GeometryUtil;
@@ -61,11 +61,11 @@ public final class Geo2GeometryUtil {
    * @return The Geometry containing POINT.
    * @throws AeriusException When no valid POINT could be made from the gml-object.
    */
-  public nl.aerius.shared.domain.geojson.Point fromXMLPoint(final PointType pointType) throws AeriusException {
+  public nl.overheid.aerius.shared.domain.v2.geojson.Point fromXMLPoint(final PointType pointType) throws AeriusException {
     validateSrs(srid, pointType);
     final List<Double> values = pointType.getPos().getValue();
     final Point point = geometryFactory.createPoint(new Coordinate(values.get(0), values.get(1)));
-    final nl.aerius.shared.domain.geojson.Point aeriusPoint = new nl.aerius.shared.domain.geojson.Point();
+    final nl.overheid.aerius.shared.domain.v2.geojson.Point aeriusPoint = new nl.overheid.aerius.shared.domain.v2.geojson.Point();
     aeriusPoint.setCoordinates(coordinate2AeriusCoordinate(point.getCoordinate()));
     return aeriusPoint;
   }

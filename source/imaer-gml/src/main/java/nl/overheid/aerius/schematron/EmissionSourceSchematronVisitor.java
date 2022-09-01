@@ -23,7 +23,7 @@ import java.util.List;
 
 import com.helger.commons.io.stream.StringInputStream;
 
-import nl.aerius.shared.domain.geojson.IsFeature;
+import nl.overheid.aerius.shared.domain.v2.geojson.IsFeature;
 import nl.overheid.aerius.shared.domain.v2.source.ADMSRoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceVisitor;
 import nl.overheid.aerius.shared.domain.v2.source.FarmLodgingEmissionSource;

@@ -16,7 +16,7 @@
  */
 package nl.overheid.aerius.shared.domain.v2.source;
 
-import nl.aerius.shared.domain.geojson.IsFeature;
+import nl.overheid.aerius.shared.domain.v2.geojson.IsFeature;
 import nl.overheid.aerius.shared.exception.AeriusException;
 
 /**

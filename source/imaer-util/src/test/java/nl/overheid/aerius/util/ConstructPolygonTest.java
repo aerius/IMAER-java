@@ -28,8 +28,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import nl.overheid.aerius.shared.domain.geo.OrientedEnvelope;
-import nl.aerius.shared.domain.geojson.Point;
-import nl.aerius.shared.domain.geojson.Polygon;
+import nl.overheid.aerius.shared.domain.v2.geojson.Point;
+import nl.overheid.aerius.shared.domain.v2.geojson.Polygon;
 import nl.overheid.aerius.shared.exception.AeriusException;
 
 /**

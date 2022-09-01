@@ -21,7 +21,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import nl.overheid.aerius.shared.domain.Substance;
-import nl.aerius.shared.domain.geojson.Geometry;
+import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
 import nl.overheid.aerius.shared.domain.v2.source.shipping.inland.InlandWaterway;
 import nl.overheid.aerius.shared.domain.v2.source.shipping.inland.WaterwayDirection;
 import nl.overheid.aerius.shared.emissions.shipping.InlandShippingRouteEmissionPoint;

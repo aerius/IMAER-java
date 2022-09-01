@@ -18,8 +18,8 @@ package nl.overheid.aerius.validation;
 
 import java.util.List;
 
-import nl.aerius.shared.domain.geojson.Geometry;
-import nl.aerius.shared.domain.geojson.IsFeature;
+import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
+import nl.overheid.aerius.shared.domain.v2.geojson.IsFeature;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSource;
 import nl.overheid.aerius.shared.exception.AeriusException;
 

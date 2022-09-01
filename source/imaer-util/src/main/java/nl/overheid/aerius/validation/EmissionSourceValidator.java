@@ -27,7 +27,7 @@ import javax.validation.Validator;
 import org.locationtech.jts.geom.Geometry;
 
 import nl.overheid.aerius.shared.MathUtil;
-import nl.aerius.shared.domain.geojson.GeometryType;
+import nl.overheid.aerius.shared.domain.v2.geojson.GeometryType;
 import nl.overheid.aerius.shared.domain.v2.scenario.ScenarioSituation;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceFeature;

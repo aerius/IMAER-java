@@ -26,7 +26,7 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import nl.aerius.shared.domain.geojson.Feature;
+import nl.overheid.aerius.shared.domain.v2.geojson.Feature;
 import nl.overheid.aerius.shared.domain.v2.nsl.NSLCorrection;
 import nl.overheid.aerius.shared.domain.v2.nsl.NSLDispersionLine;
 import nl.overheid.aerius.shared.domain.v2.nsl.NSLMeasure;

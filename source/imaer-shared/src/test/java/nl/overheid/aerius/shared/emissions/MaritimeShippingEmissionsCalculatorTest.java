@@ -33,7 +33,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.v2.base.TimeUnit;
-import nl.aerius.shared.domain.geojson.Geometry;
+import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceWithSubSources;
 import nl.overheid.aerius.shared.domain.v2.source.InlandMaritimeShippingEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.MaritimeShippingEmissionSource;
