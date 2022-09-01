@@ -349,7 +349,7 @@
         <module>imaer-gml</module>
         <module>imaer-xsd-server</module>
         <module>imaer-xsd-server-standalone</module>
-        <module>commons-geo</module>
+        <module>shared-geo</module>
       </modules>
     </profile>
 
@@ -362,7 +362,7 @@
         <module>imaer-gml</module>
         <module>imaer-xsd-server</module>
         <module>imaer-xsd-server-standalone</module>
-        <module>commons-geo</module>
+        <module>shared-geo</module>
         <module>imaer-sonar-report</module>
       </modules>
     </profile>

@@ -33,7 +33,7 @@
     <dependencies>
       <dependency>
         <groupId>nl.aerius</groupId>
-        <artifactId>commons-geo</artifactId>
+        <artifactId>shared-geo</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
