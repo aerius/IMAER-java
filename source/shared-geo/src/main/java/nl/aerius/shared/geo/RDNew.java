@@ -14,27 +14,26 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.aerius.shared.domain.geo;
+package nl.aerius.shared.geo;
 
 import nl.overheid.aerius.shared.domain.v2.geojson.Point;
 
 /**
- * Constants for British National Grid -- United Kingdom (EPSG:27700).
- * Derived from the settings as provided by the jncc.
+ * Constants for RD New coordinates (EPSG:28992).
  */
-public class BNGrid extends EPSG {
+public final class RDNew extends EPSG {
   /**
-   * SRID of EPSG:27700.
+   * SRID of EPSG:28992.
    */
-  public static final int SRID = 27700;
+  public static final int SRID = 28992;
 
   private static final long serialVersionUID = 1L;
 
-  private static final int ZOOM_LEVEL = 15;
-  private static final BBox BOUNDS = new BBox(-4000, 4000, 660000, 1222000);
-  private static final Point CENTER = new Point(308188.48, 608846.16);
+  private static final int ZOOM_LEVEL = 14;
+  private static final BBox BOUNDS = new BBox(-285401.920, 22598.080, 595401.920, 903401.920);
+  private static final Point CENTER = new Point(155000, 463000);
 
-  BNGrid() {
+  RDNew() {
     super(SRID, BOUNDS, CENTER, ZOOM_LEVEL);
   }
 }

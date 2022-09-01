@@ -20,9 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import nl.aerius.shared.domain.geo.BBox;
-import nl.aerius.shared.domain.geo.EPSG;
-import nl.aerius.shared.domain.geo.EPSGProxy;
+import nl.aerius.shared.geo.BBox;
+import nl.aerius.shared.geo.EPSG;
+import nl.aerius.shared.geo.EPSGProxy;
 import nl.overheid.aerius.gml.ReferenceGenerator;
 import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.geo.HexagonZoomLevel;

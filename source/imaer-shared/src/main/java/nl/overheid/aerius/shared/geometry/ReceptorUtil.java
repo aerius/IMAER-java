@@ -18,7 +18,7 @@ package nl.overheid.aerius.shared.geometry;
 
 import java.util.List;
 
-import nl.aerius.shared.domain.geo.BBox;
+import nl.aerius.shared.geo.BBox;
 import nl.overheid.aerius.shared.domain.geo.HexagonZoomLevel;
 import nl.overheid.aerius.shared.domain.geo.ReceptorGridSettings;
 import nl.overheid.aerius.shared.domain.v2.geojson.Point;

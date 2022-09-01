@@ -14,35 +14,27 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.aerius.shared.domain.geo;
+package nl.aerius.shared.geo;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import nl.overheid.aerius.shared.domain.v2.geojson.Point;
 
 /**
- * Proxy class to get an EPSG object.
+ * Constants for British National Grid -- United Kingdom (EPSG:27700).
+ * Derived from the settings as provided by the jncc.
  */
-public final class EPSGProxy {
+public class BNGrid extends EPSG {
+  /**
+   * SRID of EPSG:27700.
+   */
+  public static final int SRID = 27700;
 
-  private static final Map<Integer, EPSG> MAP;
-  static {
-    final Map<Integer, EPSG> map = new HashMap<>();
-    map.put(RDNew.SRID, new RDNew());
-    map.put(BNGrid.SRID, new BNGrid());
-    MAP = Collections.unmodifiableMap(map);
-  }
+  private static final long serialVersionUID = 1L;
 
-  private EPSGProxy() {
-    // util class
-  }
+  private static final int ZOOM_LEVEL = 15;
+  private static final BBox BOUNDS = new BBox(-4000, 4000, 660000, 1222000);
+  private static final Point CENTER = new Point(308188.48, 608846.16);
 
-  public static EPSG defaultEpsg() {
-    return MAP.get(RDNew.SRID);
-  }
-
-  public static EPSG getEPSG(final int srid) {
-    final EPSG epsg = MAP.get(srid);
-    return epsg == null ? defaultEpsg() : epsg;
+  BNGrid() {
+    super(SRID, BOUNDS, CENTER, ZOOM_LEVEL);
   }
 }

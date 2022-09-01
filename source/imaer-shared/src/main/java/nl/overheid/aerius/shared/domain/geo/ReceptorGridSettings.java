@@ -22,8 +22,8 @@ import java.util.List;
 
 import jsinterop.annotations.JsProperty;
 
-import nl.aerius.shared.domain.geo.BBox;
-import nl.aerius.shared.domain.geo.EPSG;
+import nl.aerius.shared.geo.BBox;
+import nl.aerius.shared.geo.EPSG;
 
 /**
  * Application settings related to the variables of the receptor grid used as basis of the application.
