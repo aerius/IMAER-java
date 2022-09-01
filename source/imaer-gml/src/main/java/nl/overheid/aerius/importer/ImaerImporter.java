@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
 import com.github.rwitzel.streamflyer.core.ModifyingReader;
 import com.github.rwitzel.streamflyer.regex.RegexModifier;
 
-import nl.aerius.shared.geo.EPSG;
+import nl.overheid.aerius.geo.shared.EPSG;
 import nl.overheid.aerius.gml.GMLMetaDataReader;
 import nl.overheid.aerius.gml.GMLReader;
 import nl.overheid.aerius.gml.GMLReaderFactory;

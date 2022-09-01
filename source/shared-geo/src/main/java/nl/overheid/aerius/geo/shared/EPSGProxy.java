@@ -14,26 +14,35 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.aerius.shared.geo;
+package nl.overheid.aerius.geo.shared;
 
-import nl.overheid.aerius.shared.domain.v2.geojson.Point;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * Constants for RD New coordinates (EPSG:28992).
+ * Proxy class to get an EPSG object.
  */
-public final class RDNew extends EPSG {
-  /**
-   * SRID of EPSG:28992.
-   */
-  public static final int SRID = 28992;
+public final class EPSGProxy {
 
-  private static final long serialVersionUID = 1L;
+  private static final Map<Integer, EPSG> MAP;
+  static {
+    final Map<Integer, EPSG> map = new HashMap<>();
+    map.put(RDNew.SRID, new RDNew());
+    map.put(BNGrid.SRID, new BNGrid());
+    MAP = Collections.unmodifiableMap(map);
+  }
 
-  private static final int ZOOM_LEVEL = 14;
-  private static final BBox BOUNDS = new BBox(-285401.920, 22598.080, 595401.920, 903401.920);
-  private static final Point CENTER = new Point(155000, 463000);
+  private EPSGProxy() {
+    // util class
+  }
 
-  RDNew() {
-    super(SRID, BOUNDS, CENTER, ZOOM_LEVEL);
+  public static EPSG defaultEpsg() {
+    return MAP.get(RDNew.SRID);
+  }
+
+  public static EPSG getEPSG(final int srid) {
+    final EPSG epsg = MAP.get(srid);
+    return epsg == null ? defaultEpsg() : epsg;
   }
 }

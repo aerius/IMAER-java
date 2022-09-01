@@ -29,8 +29,8 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.locationtech.jts.geom.Geometry;
 
-import nl.aerius.shared.geo.RDNew;
-import nl.aerius.shared.geo.WKTGeometry;
+import nl.overheid.aerius.geo.shared.RDNew;
+import nl.overheid.aerius.geo.shared.WKTGeometry;
 import nl.overheid.aerius.shared.domain.v2.geojson.GeometryType;
 import nl.overheid.aerius.shared.domain.v2.geojson.LineString;
 import nl.overheid.aerius.shared.domain.v2.geojson.Point;

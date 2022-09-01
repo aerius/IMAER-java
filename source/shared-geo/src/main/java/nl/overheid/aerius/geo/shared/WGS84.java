@@ -14,27 +14,27 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.aerius.shared.geo;
-
-import nl.overheid.aerius.shared.domain.v2.geojson.Point;
+package nl.overheid.aerius.geo.shared;
 
 /**
- * Constants for British National Grid -- United Kingdom (EPSG:27700).
- * Derived from the settings as provided by the jncc.
+ * Constants for WGS84 (EPSG::4326).
+ *
+ * The coordinates are not fully supported in AERIUS. This is only available to set points with these coordinates from OPS brn files.
+ * This is used only to calculated foreign depositions.
  */
-public class BNGrid extends EPSG {
+public final class WGS84 {
+
   /**
-   * SRID of EPSG:27700.
+   * SRID of EPSG:4326.
    */
-  public static final int SRID = 27700;
+  public static final int SRID = 4326;
 
-  private static final long serialVersionUID = 1L;
+  /**
+   * EPSG code for WGS84.
+   */
+  public static final String EPSG_CODE = "EPSG:" + SRID;
 
-  private static final int ZOOM_LEVEL = 15;
-  private static final BBox BOUNDS = new BBox(-4000, 4000, 660000, 1222000);
-  private static final Point CENTER = new Point(308188.48, 608846.16);
-
-  BNGrid() {
-    super(SRID, BOUNDS, CENTER, ZOOM_LEVEL);
+  private WGS84() {
+    // Only available for SRID reference.
   }
 }

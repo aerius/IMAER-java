@@ -28,8 +28,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import nl.aerius.shared.geo.BBox;
-import nl.aerius.shared.geo.EPSGProxy;
+import nl.overheid.aerius.geo.shared.BBox;
+import nl.overheid.aerius.geo.shared.EPSGProxy;
 import nl.overheid.aerius.shared.domain.geo.HexagonZoomLevel;
 import nl.overheid.aerius.shared.domain.geo.ReceptorGridSettings;
 import nl.overheid.aerius.shared.domain.v2.geojson.Point;
