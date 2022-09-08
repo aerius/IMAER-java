@@ -17,11 +17,13 @@
 package nl.overheid.aerius.shared.emissions;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import nl.overheid.aerius.shared.ImaerConstants;
 import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.v2.source.FarmLodgingEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.farm.AdditionalLodgingSystem;
@@ -65,13 +67,20 @@ public class FarmLodgingEmissionsCalculator {
   }
 
   private Map<Substance, BigDecimal> calculateEmissions(final FarmLodging lodging) throws AeriusException {
+    final Map<Substance, BigDecimal> emissions;
     if (lodging instanceof CustomFarmLodging) {
-      return calculateEmissions((CustomFarmLodging) lodging);
+      emissions = calculateEmissions((CustomFarmLodging) lodging);
     } else if (lodging instanceof StandardFarmLodging) {
-      return calculateEmissions((StandardFarmLodging) lodging);
+      emissions = calculateEmissions((StandardFarmLodging) lodging);
     } else {
       throw new AeriusException(ImaerExceptionReason.INTERNAL_ERROR, "Unknown farmlodging type");
     }
+
+    // Process operational days per year
+    emissions.replaceAll(((substance, emission) ->
+        emission.multiply(BigDecimal.valueOf(lodging.getNumberOfDays()))
+            .divide(BigDecimal.valueOf(ImaerConstants.DAYS_PER_YEAR), RoundingMode.HALF_UP)));
+    return emissions;
   }
 
   Map<Substance, BigDecimal> calculateEmissions(final CustomFarmLodging customLodging) {
