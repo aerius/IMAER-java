@@ -21,8 +21,6 @@ import java.util.List;
 import java.util.Optional;
 
 import nl.overheid.aerius.geo.shared.BBox;
-import nl.overheid.aerius.geo.shared.EPSG;
-import nl.overheid.aerius.geo.shared.EPSGProxy;
 import nl.overheid.aerius.gml.ReferenceGenerator;
 import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.geo.HexagonZoomLevel;
@@ -36,6 +34,7 @@ import nl.overheid.aerius.shared.domain.v2.geojson.Point;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceFeature;
 import nl.overheid.aerius.shared.domain.v2.source.GenericEmissionSource;
+import nl.overheid.aerius.shared.geo.EPSG;
 
 /**
  * Convenience class to avoid having to write the same test code over and over again.
@@ -134,14 +133,13 @@ public class GMLTestDomain {
   }
 
   public static ReceptorGridSettings getExampleGridSettings() {
-    final EPSG epsg = EPSGProxy.getEPSG(28992);
     final BBox bbox = new BBox(3604.0, 287959.0, 296800.0, 629300.0);
     final ArrayList<HexagonZoomLevel> zoomLevels = new ArrayList<HexagonZoomLevel>();
     for (int i = 1; i <= 5; i++) {
       zoomLevels.add(new HexagonZoomLevel(i, 10000));
     }
     final int hexHor = 1529;
-    return new ReceptorGridSettings(bbox, epsg, hexHor, zoomLevels);
+    return new ReceptorGridSettings(bbox, EPSG.RDNEW, hexHor, zoomLevels);
   }
 
 }

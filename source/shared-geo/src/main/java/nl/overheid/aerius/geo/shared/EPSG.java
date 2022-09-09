@@ -22,7 +22,10 @@ import nl.overheid.aerius.shared.domain.v2.geojson.Point;
 
 /**
  * EPSG map constants.
+ *
+ * @deprecated will be replaced by {@link nl.overheid.aerius.shared.geo.EPSG}.
  */
+@Deprecated
 public abstract class EPSG implements Serializable {
 
   private static final long serialVersionUID = 1L;
