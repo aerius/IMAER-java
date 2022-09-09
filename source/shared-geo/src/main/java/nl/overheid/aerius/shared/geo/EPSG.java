@@ -41,7 +41,7 @@ public enum EPSG {
    */
   TM75(29903);
 
-  private static final String EPSG_PRE_TEXT = "EPSG:";
+  private static final String EPSG_PREFIX = "EPSG:";
 
   private int srid;
 
@@ -71,6 +71,6 @@ public enum EPSG {
   }
 
   public String getEpsgCode() {
-    return EPSG_PRE_TEXT + srid;
+    return EPSG_PREFIX + srid;
   }
 }
