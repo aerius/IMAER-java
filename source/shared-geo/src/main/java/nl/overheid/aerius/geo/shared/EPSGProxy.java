@@ -22,7 +22,9 @@ import java.util.Map;
 
 /**
  * Proxy class to get an EPSG object.
+ * @deprecated Will be replaced by {@link nl.overheid.aerius.shared.geo.EPSG} enum.
  */
+@Deprecated
 public final class EPSGProxy {
 
   private static final Map<Integer, EPSG> MAP;

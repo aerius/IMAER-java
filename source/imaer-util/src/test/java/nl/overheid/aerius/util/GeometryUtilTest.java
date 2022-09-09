@@ -29,7 +29,6 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.locationtech.jts.geom.Geometry;
 
-import nl.overheid.aerius.geo.shared.RDNew;
 import nl.overheid.aerius.geo.shared.WKTGeometry;
 import nl.overheid.aerius.shared.domain.v2.geojson.GeometryType;
 import nl.overheid.aerius.shared.domain.v2.geojson.LineString;
@@ -37,6 +36,7 @@ import nl.overheid.aerius.shared.domain.v2.geojson.Point;
 import nl.overheid.aerius.shared.domain.v2.geojson.Polygon;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
+import nl.overheid.aerius.shared.geo.EPSG;
 import nl.overheid.aerius.shared.geometry.GeometryCalculator;
 
 /**
@@ -141,7 +141,7 @@ class GeometryUtilTest {
   @Test
   void testToConvexHull() throws AeriusException {
     final Polygon geometry = (Polygon) GeometryUtil.getAeriusGeometry(GeometryUtil.getGeometry("POLYGON ((0 0, 0 100, 20 100, 15 50, 20 0, 0 0))"));
-    final Polygon convexHull = GeometryUtil.toConvexHull(geometry, RDNew.SRID);
+    final Polygon convexHull = GeometryUtil.toConvexHull(geometry, EPSG.RDNEW.getSrid());
     final Polygon expectedGeometry = (Polygon) GeometryUtil.getAeriusGeometry(GeometryUtil.getGeometry("POLYGON ((0 0, 0 100, 20 100, 20 0, 0 0))"));
 
     assertEquals(expectedGeometry, convexHull, "Should be expected convex geometry");

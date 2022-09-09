@@ -34,7 +34,6 @@ import org.slf4j.LoggerFactory;
 import com.github.rwitzel.streamflyer.core.ModifyingReader;
 import com.github.rwitzel.streamflyer.regex.RegexModifier;
 
-import nl.overheid.aerius.geo.shared.EPSG;
 import nl.overheid.aerius.gml.GMLMetaDataReader;
 import nl.overheid.aerius.gml.GMLReader;
 import nl.overheid.aerius.gml.GMLReaderFactory;
@@ -59,6 +58,7 @@ import nl.overheid.aerius.shared.domain.v2.scenario.ScenarioSituationResults;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceFeature;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
+import nl.overheid.aerius.shared.geo.EPSG;
 import nl.overheid.aerius.validation.BuildingValidator;
 import nl.overheid.aerius.validation.EmissionSourceValidator;
 
@@ -74,7 +74,7 @@ public class ImaerImporter {
 
   public ImaerImporter(final GMLHelper gmlHelper) throws AeriusException {
     factory = GMLReaderFactory.getFactory(gmlHelper);
-    epsg = gmlHelper.getReceptorGridSettings().getEpsg();
+    epsg = gmlHelper.getReceptorGridSettings().getEPSG();
   }
 
   /**

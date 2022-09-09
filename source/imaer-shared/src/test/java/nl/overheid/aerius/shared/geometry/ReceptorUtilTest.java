@@ -29,12 +29,12 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import nl.overheid.aerius.geo.shared.BBox;
-import nl.overheid.aerius.geo.shared.EPSGProxy;
 import nl.overheid.aerius.shared.domain.geo.HexagonZoomLevel;
 import nl.overheid.aerius.shared.domain.geo.ReceptorGridSettings;
 import nl.overheid.aerius.shared.domain.v2.geojson.Point;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPointFeature;
 import nl.overheid.aerius.shared.domain.v2.point.ReceptorPoint;
+import nl.overheid.aerius.shared.geo.EPSG;
 
 /**
  * Test class for {@link ReceptorUtil}.
@@ -58,7 +58,7 @@ class ReceptorUtilTest {
   private static final BBox RECEPTOR_BBOX = new BBox(3604, 296800, 287959, 629300);
 
   private static final ArrayList<HexagonZoomLevel> hexagonZoomLevels = createZoomLevels();
-  private static final ReceptorGridSettings RGS = new ReceptorGridSettings(RECEPTOR_BBOX, EPSGProxy.defaultEpsg(), 1529, hexagonZoomLevels);
+  private static final ReceptorGridSettings RGS = new ReceptorGridSettings(RECEPTOR_BBOX, EPSG.RDNEW, 1529, hexagonZoomLevels);
   private static final ReceptorUtil RECEPTOR_UTIL = new ReceptorUtil(RGS);
 
   @Test
