@@ -76,10 +76,9 @@ public class FarmLodgingEmissionsCalculator {
       throw new AeriusException(ImaerExceptionReason.INTERNAL_ERROR, "Unknown farmlodging type");
     }
 
-    // Process operational days per year
-    emissions.replaceAll(((substance, emission) ->
-        emission.multiply(BigDecimal.valueOf(lodging.getNumberOfDays()))
-            .divide(BigDecimal.valueOf(ImaerConstants.DAYS_PER_YEAR), RoundingMode.HALF_UP)));
+    if (lodging.getFarmEmissionFactorType() ==  FarmEmissionFactorType.PER_ANIMAL_PER_DAY) {
+      emissions.replaceAll((substance, emission) -> emission.multiply(BigDecimal.valueOf(lodging.getNumberOfDays())));
+    }
     return emissions;
   }
 

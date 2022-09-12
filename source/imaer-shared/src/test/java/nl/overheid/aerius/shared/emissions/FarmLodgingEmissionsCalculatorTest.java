@@ -98,8 +98,9 @@ class FarmLodgingEmissionsCalculatorTest {
   @Test
   void testCalculateEmissionsWithNumberOfDays() throws AeriusException {
     final CustomFarmLodging lodging = new CustomFarmLodging();
-    lodging.getEmissionFactors().put(Substance.NOX, 12.34567);
+    lodging.getEmissionFactors().put(Substance.NOX, 0.034567);
     lodging.setNumberOfAnimals(56);
+    lodging.setFarmEmissionFactorType(FarmEmissionFactorType.PER_ANIMAL_PER_DAY);
     lodging.setNumberOfDays(100);
 
     final FarmLodgingEmissionSource emissionSource = new FarmLodgingEmissionSource();
@@ -107,10 +108,7 @@ class FarmLodgingEmissionsCalculatorTest {
 
     final Map<Substance, Double> results = emissionsCalculator.calculateEmissions(emissionSource);
 
-    final double expected = BigDecimal.valueOf(691.35752) // expected outcome without number of days taken into account
-        .multiply(BigDecimal.valueOf(100)) // number of days
-        .divide(BigDecimal.valueOf(ImaerConstants.DAYS_PER_YEAR), RoundingMode.HALF_UP).doubleValue(); // days per year
-    assertEquals(expected, results.get(Substance.NOX));
+    assertEquals(193.5752, results.get(Substance.NOX));
   }
 
   @Test
@@ -118,6 +116,7 @@ class FarmLodgingEmissionsCalculatorTest {
     final CustomFarmLodging lodging = new CustomFarmLodging();
     lodging.getEmissionFactors().put(Substance.NOX, 12.34567);
     lodging.setNumberOfAnimals(56);
+    lodging.setFarmEmissionFactorType(FarmEmissionFactorType.PER_ANIMAL_PER_DAY);
     lodging.setNumberOfDays(0);
 
     final FarmLodgingEmissionSource emissionSource = new FarmLodgingEmissionSource();
@@ -126,20 +125,6 @@ class FarmLodgingEmissionsCalculatorTest {
     final Map<Substance, Double> results = emissionsCalculator.calculateEmissions(emissionSource);
 
     assertEquals(0, results.get(Substance.NOX));
-  }
-
-  @Test
-  void testCalculateEmissionsWithMaxNumberOfDays() throws AeriusException {
-    final CustomFarmLodging lodging = new CustomFarmLodging();
-    lodging.getEmissionFactors().put(Substance.NOX, 12.34567);
-    lodging.setNumberOfAnimals(56);
-    lodging.setNumberOfDays(365);
-
-    final FarmLodgingEmissionSource emissionSource = new FarmLodgingEmissionSource();
-    emissionSource.getSubSources().add(lodging);
-    final Map<Substance, Double> results = emissionsCalculator.calculateEmissions(emissionSource);
-
-    assertEquals(691.35752, results.get(Substance.NOX));
   }
 
   @Test
