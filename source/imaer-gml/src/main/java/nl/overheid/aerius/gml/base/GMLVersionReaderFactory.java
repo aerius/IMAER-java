@@ -67,11 +67,13 @@ public abstract class GMLVersionReaderFactory {
 
   private static Schema createSchema(final String schemaLocation) throws AeriusException {
     final CatalogResolver catalogResolver = new CatalogResolver(GMLVersionReaderFactory.class.getResource(CATALOG_LOCATION).toString());
-    final SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-    // use a catalogresolver to avoid calling non-local xsd's
-    sf.setResourceResolver(catalogResolver);
     final URL xsdURL = GMLVersionReaderFactory.class.getResource(schemaLocation);
     try {
+      final SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+      // disable DOCTYPE declarations, fixes XXE vulnerability
+      sf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+      // use a catalogresolver to avoid calling non-local xsd's
+      sf.setResourceResolver(catalogResolver);
       return sf.newSchema(xsdURL);
     } catch (final SAXException e) {
       LOG.error("Parsing the AERIUS GML schema {} failed.", schemaLocation, e);
