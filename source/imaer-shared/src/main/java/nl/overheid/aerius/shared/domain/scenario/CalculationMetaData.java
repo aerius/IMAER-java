@@ -77,14 +77,14 @@ public class CalculationMetaData implements Serializable {
     if (o == this) {
       return true;
     }
-    if (o instanceof CalculationMetaData) {
-      final CalculationMetaData that = (CalculationMetaData) o;
-      return (this.calculationType == null ? that.calculationType() == null : this.calculationType.equals(that.calculationType()))
-          && (this.substances == null ? that.substances() == null : this.substances.equals(that.substances()))
-          && (this.resultTypes == null ? that.resultTypes() == null : this.resultTypes.equals(that.resultTypes()))
-          && (this.monitorSrm2Year == that.monitorSrm2Year());
+    if (o == null || getClass() != o.getClass()) {
+      return false;
     }
-    return false;
+    final CalculationMetaData that = (CalculationMetaData) o;
+    return (this.calculationType == null ? that.calculationType() == null : this.calculationType.equals(that.calculationType()))
+        && (this.substances == null ? that.substances() == null : this.substances.equals(that.substances()))
+        && (this.resultTypes == null ? that.resultTypes() == null : this.resultTypes.equals(that.resultTypes()))
+        && (this.monitorSrm2Year == that.monitorSrm2Year());
   }
 
   @Override

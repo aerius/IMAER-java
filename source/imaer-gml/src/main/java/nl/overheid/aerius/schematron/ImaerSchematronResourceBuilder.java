@@ -76,7 +76,7 @@ final class ImaerSchematronResourceBuilder {
    * @throws IOException if read fails for any reason
    */
   static String getResourceFileAsString(final String fileName) throws IOException {
-    final ClassLoader classLoader = ImaerSchematronResourceBuilder.class.getClassLoader();
+    final ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
     try (InputStream is = classLoader.getResourceAsStream(fileName);
         InputStreamReader isr = new InputStreamReader(is, StandardCharsets.UTF_8);
         BufferedReader reader = new BufferedReader(isr)) {
