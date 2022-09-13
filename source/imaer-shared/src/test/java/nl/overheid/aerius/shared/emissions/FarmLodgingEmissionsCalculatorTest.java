@@ -128,6 +128,22 @@ class FarmLodgingEmissionsCalculatorTest {
   }
 
   @Test
+  void testCalculateEmissionsWithNumberOfDaysAndEmissionFactorPerYear() throws AeriusException {
+    final CustomFarmLodging lodging = new CustomFarmLodging();
+    lodging.getEmissionFactors().put(Substance.NOX, 12.34567);
+    lodging.setNumberOfAnimals(56);
+    lodging.setFarmEmissionFactorType(FarmEmissionFactorType.PER_ANIMAL_PER_YEAR);
+    lodging.setNumberOfDays(100);
+
+    final FarmLodgingEmissionSource emissionSource = new FarmLodgingEmissionSource();
+    emissionSource.getSubSources().add(lodging);
+
+    final Map<Substance, Double> results = emissionsCalculator.calculateEmissions(emissionSource);
+
+    assertEquals(691.35752, results.get(Substance.NOX));
+  }
+
+  @Test
   void testCalculateEmissionsCustomFarmLodging() {
     final CustomFarmLodging lodging = new CustomFarmLodging();
     lodging.getEmissionFactors().put(Substance.NOX, 12.34567);
