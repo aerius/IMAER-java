@@ -23,7 +23,6 @@ import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -32,7 +31,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import nl.overheid.aerius.shared.ImaerConstants;
 import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.v2.source.FarmLodgingEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.farm.AdditionalLodgingSystem;
@@ -97,15 +95,7 @@ class FarmLodgingEmissionsCalculatorTest {
 
   @Test
   void testCalculateEmissionsWithNumberOfDays() throws AeriusException {
-    final CustomFarmLodging lodging = new CustomFarmLodging();
-    lodging.getEmissionFactors().put(Substance.NOX, 0.034567);
-    lodging.setNumberOfAnimals(56);
-    lodging.setFarmEmissionFactorType(FarmEmissionFactorType.PER_ANIMAL_PER_DAY);
-    lodging.setNumberOfDays(100);
-
-    final FarmLodgingEmissionSource emissionSource = new FarmLodgingEmissionSource();
-    emissionSource.getSubSources().add(lodging);
-
+    final FarmLodgingEmissionSource emissionSource = getCustomFarmLodgingTestCase(0.034567, FarmEmissionFactorType.PER_ANIMAL_PER_DAY, 100);
     final Map<Substance, Double> results = emissionsCalculator.calculateEmissions(emissionSource);
 
     assertEquals(193.5752, results.get(Substance.NOX));
@@ -113,15 +103,7 @@ class FarmLodgingEmissionsCalculatorTest {
 
   @Test
   void testCalculateEmissionsWithMinNumberOfDays() throws AeriusException {
-    final CustomFarmLodging lodging = new CustomFarmLodging();
-    lodging.getEmissionFactors().put(Substance.NOX, 12.34567);
-    lodging.setNumberOfAnimals(56);
-    lodging.setFarmEmissionFactorType(FarmEmissionFactorType.PER_ANIMAL_PER_DAY);
-    lodging.setNumberOfDays(0);
-
-    final FarmLodgingEmissionSource emissionSource = new FarmLodgingEmissionSource();
-    emissionSource.getSubSources().add(lodging);
-
+    final FarmLodgingEmissionSource emissionSource = getCustomFarmLodgingTestCase(12.34567, FarmEmissionFactorType.PER_ANIMAL_PER_DAY, 0);
     final Map<Substance, Double> results = emissionsCalculator.calculateEmissions(emissionSource);
 
     assertEquals(0, results.get(Substance.NOX));
@@ -129,18 +111,23 @@ class FarmLodgingEmissionsCalculatorTest {
 
   @Test
   void testCalculateEmissionsWithNumberOfDaysAndEmissionFactorPerYear() throws AeriusException {
-    final CustomFarmLodging lodging = new CustomFarmLodging();
-    lodging.getEmissionFactors().put(Substance.NOX, 12.34567);
-    lodging.setNumberOfAnimals(56);
-    lodging.setFarmEmissionFactorType(FarmEmissionFactorType.PER_ANIMAL_PER_YEAR);
-    lodging.setNumberOfDays(100);
-
-    final FarmLodgingEmissionSource emissionSource = new FarmLodgingEmissionSource();
-    emissionSource.getSubSources().add(lodging);
-
+    final FarmLodgingEmissionSource emissionSource = getCustomFarmLodgingTestCase(12.34567, FarmEmissionFactorType.PER_ANIMAL_PER_YEAR, 100);
     final Map<Substance, Double> results = emissionsCalculator.calculateEmissions(emissionSource);
 
     assertEquals(691.35752, results.get(Substance.NOX));
+  }
+
+  private FarmLodgingEmissionSource getCustomFarmLodgingTestCase(final double noxEmissionFactor, final FarmEmissionFactorType farmEmissionFactorType,
+      final int numberOfDays) {
+    final CustomFarmLodging lodging = new CustomFarmLodging();
+    lodging.getEmissionFactors().put(Substance.NOX, noxEmissionFactor);
+    lodging.setNumberOfAnimals(56);
+    lodging.setFarmEmissionFactorType(farmEmissionFactorType);
+    lodging.setNumberOfDays(numberOfDays);
+
+    final FarmLodgingEmissionSource emissionSource = new FarmLodgingEmissionSource();
+    emissionSource.getSubSources().add(lodging);
+    return emissionSource;
   }
 
   @Test
