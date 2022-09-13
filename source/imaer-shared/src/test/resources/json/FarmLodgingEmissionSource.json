@@ -20,6 +20,7 @@
     "subSources" : [ {
       "farmLodgingType" : "STANDARD",
       "numberOfAnimals" : 3,
+      "numberOfDays" : 100,
       "farmLodgingCode" : "D3.1",
       "systemDefinitionCode" : "BWL2001.21.V1",
       "fodderMeasures" : [ {
@@ -46,10 +47,12 @@
     }, {
       "farmLodgingType" : "STANDARD",
       "numberOfAnimals" : 100,
+      "numberOfDays" : 365,
       "farmLodgingCode" : "A3.100"
     }, {
       "farmLodgingType" : "CUSTOM",
       "numberOfAnimals" : 324,
+      "numberOfDays" : 365,
       "animalCode" : "A",
       "description" : "Koetje",
       "emissionFactors" : {
@@ -59,6 +62,7 @@
     }, {
       "farmLodgingType" : "CUSTOM",
       "numberOfAnimals" : 908,
+      "numberOfDays" : 365,
       "description" : "Schaap",
       "emissionFactors" : {
         "NH3" : 2000.0
