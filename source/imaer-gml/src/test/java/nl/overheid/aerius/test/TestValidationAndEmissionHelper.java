@@ -32,6 +32,7 @@ import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.ops.DiurnalVariation;
 import nl.overheid.aerius.shared.domain.v2.characteristics.OPSSourceCharacteristics;
 import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
+import nl.overheid.aerius.shared.emissions.FarmlandEmissionFactorSupplier;
 import nl.overheid.aerius.shared.domain.v2.source.road.RoadStandardEmissionFactorsKey;
 import nl.overheid.aerius.shared.domain.v2.source.road.RoadStandardsInterpolationValues;
 import nl.overheid.aerius.shared.domain.v2.source.shipping.inland.InlandWaterway;
@@ -61,7 +62,7 @@ import nl.overheid.aerius.validation.ValidationHelper;
  * Test data for validation.
  */
 public class TestValidationAndEmissionHelper implements ValidationHelper, EmissionFactorSupplier,
-    FarmLodgingEmissionFactorSupplier, PlanEmissionFactorSupplier, OffRoadMobileEmissionFactorSupplier, RoadEmissionFactorSupplier,
+    FarmLodgingEmissionFactorSupplier, FarmlandEmissionFactorSupplier, PlanEmissionFactorSupplier, OffRoadMobileEmissionFactorSupplier, RoadEmissionFactorSupplier,
     InlandShippingEmissionFactorSupplier, MaritimeShippingEmissionFactorSupplier,
     FarmLodgingValidationHelper, FarmlandValidationHelper, OffRoadValidationHelper, PlanValidationHelper, RoadValidationHelper,
     InlandShippingValidationHelper, MaritimeShippingValidationHelper {
@@ -466,6 +467,11 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
   }
 
   @Override
+  public FarmlandEmissionFactorSupplier farmland() {
+    return this;
+  }
+
+  @Override
   public PlanEmissionFactorSupplier plan() {
     return this;
   }
@@ -530,6 +536,11 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
     return farmLodging(lodgingCode)
         .map(c -> Map.of(Substance.NH3, c.emissionFactor))
         .orElse(Map.of());
+  }
+
+  @Override
+  public Map<Substance, Double> getGrazingEmissionFactors(final String grazingCategoryCode) {
+    return Map.of(Substance.NH3, 0.5);
   }
 
   @Override

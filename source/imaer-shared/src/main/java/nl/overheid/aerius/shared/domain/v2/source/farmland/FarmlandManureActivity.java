@@ -14,25 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.shared.emissions;
+package nl.overheid.aerius.shared.domain.v2.source.farmland;
 
-/**
- * Supplier container for source type specific emission factor supppliers.
- */
-public interface EmissionFactorSupplier {
-
-  FarmLodgingEmissionFactorSupplier farmLodging();
-
-  FarmlandEmissionFactorSupplier farmland();
-
-  PlanEmissionFactorSupplier plan();
-
-  OffRoadMobileEmissionFactorSupplier offRoadMobile();
-
-  RoadEmissionFactorSupplier road();
-
-  InlandShippingEmissionFactorSupplier inlandShipping();
-
-  MaritimeShippingEmissionFactorSupplier maritimeShipping();
-
+public class FarmlandManureActivity extends FarmlandActivity{
 }

@@ -49,7 +49,7 @@ class EmissionsCalculator implements EmissionSourceVisitor<Map<Substance, Double
 
   public EmissionsCalculator(final EmissionFactorSupplier emissionFactorSupplier, final GeometryCalculator geometryCalculator) {
     this(new FarmLodgingEmissionsCalculator(emissionFactorSupplier.farmLodging()),
-        new FarmlandEmissionsCalculator(),
+        new FarmlandEmissionsCalculator(emissionFactorSupplier.farmland()),
         new PlanEmissionsCalculator(emissionFactorSupplier.plan()),
         new OffRoadMobileEmissionsCalculator(emissionFactorSupplier.offRoadMobile()),
         new SRMRoadEmissionsCalculator(emissionFactorSupplier.road(), geometryCalculator),
@@ -83,7 +83,7 @@ class EmissionsCalculator implements EmissionSourceVisitor<Map<Substance, Double
 
   @Override
   public Map<Substance, Double> visit(final FarmlandEmissionSource emissionSource, final IsFeature feature) throws AeriusException {
-    return farmlandEmissionsCalculator.calculateEmissions(emissionSource);
+    return farmlandEmissionsCalculator.updateEmissions(emissionSource);
   }
 
   @Override
