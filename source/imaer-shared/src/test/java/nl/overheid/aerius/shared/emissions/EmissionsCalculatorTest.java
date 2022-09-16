@@ -80,7 +80,7 @@ class EmissionsCalculatorTest {
   void testVisitFarmland() throws AeriusException {
     final Map<Substance, Double> calculatedEmissions = Map.of(Substance.NH3, 324.0);
     final FarmlandEmissionSource emissionSource = mock(FarmlandEmissionSource.class);
-    when(farmlandCalculator.calculateEmissions(emissionSource)).thenReturn(calculatedEmissions);
+    when(farmlandCalculator.updateEmissions(emissionSource)).thenReturn(calculatedEmissions);
 
     final Map<Substance, Double> result = emissionsCalculator.visit(emissionSource, null);
 

@@ -23,20 +23,50 @@ import java.util.Map;
 import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.v2.source.FarmlandEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.farmland.FarmlandActivity;
+import nl.overheid.aerius.shared.domain.v2.source.farmland.FarmlandGrazingActivity;
 
 public class FarmlandEmissionsCalculator {
 
-  public Map<Substance, Double> calculateEmissions(final FarmlandEmissionSource farmlandSource) {
+  private final FarmlandEmissionFactorSupplier farmlandEmissionFactorSupplier;
+
+  public FarmlandEmissionsCalculator(final FarmlandEmissionFactorSupplier farmlandEmissionFactorSupplier) {
+    this.farmlandEmissionFactorSupplier = farmlandEmissionFactorSupplier;
+  }
+
+  public Map<Substance, Double> updateEmissions(final FarmlandEmissionSource farmlandSource) {
     final Map<Substance, BigDecimal> summed = new EnumMap<>(Substance.class);
     for (final FarmlandActivity activity : farmlandSource.getSubSources()) {
-      final Map<Substance, Double> emissionsForActivity = activity.getEmissions();
-      emissionsForActivity.forEach(
-          (key, value) -> summed.merge(key, BigDecimal.valueOf(value), (v1, v2) -> v1.add(v2)));
+
+      if (activity instanceof FarmlandGrazingActivity) {
+        updateEmissions((FarmlandGrazingActivity) activity, summed);
+      } else {
+        updateEmissions(activity.getEmissions(), summed);
+      }
     }
+
     final Map<Substance, Double> result = new EnumMap<>(Substance.class);
-    summed.forEach(
-        (key, value) -> result.put(key, value.doubleValue()));
+    summed.forEach((key, value) -> result.put(key, value.doubleValue()));
     return result;
   }
 
+  private void updateEmissions(final Map<Substance, Double> emissions, final Map<Substance, BigDecimal> summedEmissions) {
+    emissions.forEach(
+        (key, value) -> summedEmissions.merge(key, BigDecimal.valueOf(value), (v1, v2) -> v1.add(v2)));
+  }
+
+  private void updateEmissions(final FarmlandGrazingActivity activity, final Map<Substance, BigDecimal> summedEmissions) {
+    Map<Substance, Double> repositoryEmissions = farmlandEmissionFactorSupplier.getGrazingEmissionFactors(activity.getGrazingCategoryCode());
+    Map<Substance, Double> userEmissions = activity.getEmissions();
+
+    // Prefer emission factors supplied by the farmlandEmissionFactorSupplier
+    Map<Substance, Double> activityEmissionFactors = repositoryEmissions.isEmpty() ? userEmissions : repositoryEmissions;
+
+    if (activity.getFarmEmissionFactorType() == FarmEmissionFactorType.PER_ANIMAL_PER_DAY) {
+      activityEmissionFactors.forEach((key, value) ->
+          summedEmissions.merge(key, BigDecimal.valueOf(value).multiply(BigDecimal.valueOf(activity.getDays())), (v1, v2) -> v1.add(v2))
+      );
+    } else {
+      updateEmissions(activityEmissionFactors, summedEmissions);
+    }
+  }
 }
