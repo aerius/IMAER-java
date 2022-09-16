@@ -40,7 +40,7 @@ public class FarmlandEmissionsCalculator {
       if (activity instanceof FarmlandGrazingActivity) {
         updateEmissions((FarmlandGrazingActivity) activity, summed);
       } else {
-        updateEmissions(activity, summed);
+        updateEmissions(activity.getEmissions(), summed);
       }
     }
 
@@ -49,12 +49,12 @@ public class FarmlandEmissionsCalculator {
     return result;
   }
 
-  private void updateEmissions(FarmlandActivity activity, Map<Substance, BigDecimal> summedEmissions) {
-    activity.getEmissions().forEach(
+  private void updateEmissions(final Map<Substance, Double> emissions, final Map<Substance, BigDecimal> summedEmissions) {
+    emissions.forEach(
         (key, value) -> summedEmissions.merge(key, BigDecimal.valueOf(value), (v1, v2) -> v1.add(v2)));
   }
 
-  private void updateEmissions(final FarmlandGrazingActivity activity, Map<Substance, BigDecimal> summedEmissions) {
+  private void updateEmissions(final FarmlandGrazingActivity activity, final Map<Substance, BigDecimal> summedEmissions) {
     Map<Substance, Double> repositoryEmissions = farmlandEmissionFactorSupplier.getGrazingEmissionFactors(activity.getGrazingCategoryCode());
     Map<Substance, Double> userEmissions = activity.getEmissions();
 
@@ -62,13 +62,11 @@ public class FarmlandEmissionsCalculator {
     Map<Substance, Double> activityEmissionFactors = repositoryEmissions.isEmpty() ? userEmissions : repositoryEmissions;
 
     if (activity.getFarmEmissionFactorType() == FarmEmissionFactorType.PER_ANIMAL_PER_DAY) {
-      activityEmissionFactors.forEach((key, value) -> {
-        summedEmissions.merge(key, BigDecimal.valueOf(value).multiply(BigDecimal.valueOf(activity.getDays())), (v1, v2) -> v1.add(v2));
-      });
+      activityEmissionFactors.forEach((key, value) ->
+          summedEmissions.merge(key, BigDecimal.valueOf(value).multiply(BigDecimal.valueOf(activity.getDays())), (v1, v2) -> v1.add(v2))
+      );
     } else {
-      activityEmissionFactors.forEach(
-          (key, value) -> summedEmissions.merge(key, BigDecimal.valueOf(value), (v1, v2) -> v1.add(v2)));
+      updateEmissions(activityEmissionFactors, summedEmissions);
     }
   }
-
 }
