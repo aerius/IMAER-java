@@ -540,7 +540,7 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
   }
 
   @Override
-  public Map<Substance, Double> getGrazingEmissionFactors(final String grazingCategoryCode) {
+  public Map<Substance, Double> getPastureActivityEmissionFactors(final String pastureCategoryCode) {
     return Collections.emptyMap();
   }
 

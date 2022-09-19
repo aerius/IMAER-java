@@ -38,7 +38,7 @@ import nl.overheid.aerius.shared.exception.AeriusException;
 @ExtendWith(MockitoExtension.class)
 class FarmlandEmissionsCalculatorTest {
 
-  private static final String GRAZING_CATEGORY_CODE = "grazingCategoryCode";
+  private static final String PASTURE_CATEGORY_CODE = "pastureCategoryCode";
   @Mock FarmlandEmissionFactorSupplier emissionFactorSupplier;
   FarmlandEmissionsCalculator emissionsCalculator;
 
@@ -85,7 +85,7 @@ class FarmlandEmissionsCalculatorTest {
   @Test
   void testCalculateGrazingEmissionsWithSuppliedFactor() {
     final FarmlandEmissionSource emissionSource = getGrazingEmissionSource(FarmEmissionFactorType.PER_ANIMAL_PER_DAY);
-    doReturn(Map.of(Substance.NOX, 1.0)).when(emissionFactorSupplier).getGrazingEmissionFactors(GRAZING_CATEGORY_CODE);
+    doReturn(Map.of(Substance.NOX, 1.0)).when(emissionFactorSupplier).getPastureActivityEmissionFactors(PASTURE_CATEGORY_CODE);
 
     final Map<Substance, Double> results = emissionsCalculator.updateEmissions(emissionSource);
 
@@ -95,7 +95,7 @@ class FarmlandEmissionsCalculatorTest {
   private static FarmlandEmissionSource getGrazingEmissionSource(FarmEmissionFactorType farmEmissionFactorType) {
     final FarmlandEmissionSource emissionSource = new FarmlandEmissionSource();
     final FarmlandPastureActivity activity = new FarmlandPastureActivity();
-    activity.setGrazingCategoryCode(GRAZING_CATEGORY_CODE);
+    activity.setPastureCategoryCode(PASTURE_CATEGORY_CODE);
     activity.getEmissions().put(Substance.NOX, 0.5);
     activity.setFarmEmissionFactorType(farmEmissionFactorType);
     activity.setDays(100);

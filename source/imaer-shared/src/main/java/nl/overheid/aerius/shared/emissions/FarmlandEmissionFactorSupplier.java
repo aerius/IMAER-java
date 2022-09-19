@@ -6,5 +6,5 @@ import nl.overheid.aerius.shared.domain.Substance;
 
 public interface FarmlandEmissionFactorSupplier {
 
-  Map<Substance, Double> getGrazingEmissionFactors(String grazingCategoryCode);
+  Map<Substance, Double> getPastureActivityEmissionFactors(String pastureCategoryCode);
 }

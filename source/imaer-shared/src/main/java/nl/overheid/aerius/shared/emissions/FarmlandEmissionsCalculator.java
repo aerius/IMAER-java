@@ -74,7 +74,7 @@ public class FarmlandEmissionsCalculator implements FarmlandActivityVisitor<Map<
   }
 
   private void updateEmissions(final FarmlandPastureActivity activity, final Map<Substance, BigDecimal> summedEmissions) {
-    Map<Substance, Double> repositoryEmissions = farmlandEmissionFactorSupplier.getGrazingEmissionFactors(activity.getGrazingCategoryCode());
+    Map<Substance, Double> repositoryEmissions = farmlandEmissionFactorSupplier.getPastureActivityEmissionFactors(activity.getPastureCategoryCode());
     Map<Substance, Double> userEmissions = activity.getEmissions();
 
     // Prefer emission factors supplied by the farmlandEmissionFactorSupplier

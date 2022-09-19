@@ -21,16 +21,16 @@ import nl.overheid.aerius.shared.emissions.FarmEmissionFactorType;
 public class FarmlandPastureActivity extends AbstractFarmlandActivity {
 
   private static final long serialVersionUID = 1L;
-  private String grazingCategoryCode;
+  private String pastureCategoryCode;
   private int days;
   private FarmEmissionFactorType farmEmissionFactorType;
 
-  public String getGrazingCategoryCode() {
-    return grazingCategoryCode;
+  public String getPastureCategoryCode() {
+    return pastureCategoryCode;
   }
 
-  public void setGrazingCategoryCode(String grazingCategoryCode) {
-    this.grazingCategoryCode = grazingCategoryCode;
+  public void setPastureCategoryCode(String pastureCategoryCode) {
+    this.pastureCategoryCode = pastureCategoryCode;
   }
   public int getDays() {
     return days;
