@@ -23,6 +23,7 @@ import nl.overheid.aerius.gml.v5_0.source.farmland.FarmlandActivity;
 import nl.overheid.aerius.gml.v5_0.source.farmland.FarmlandActivityProperty;
 import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.v2.source.FarmlandEmissionSource;
+import nl.overheid.aerius.shared.domain.v2.source.farmland.AbstractFarmlandActivity;
 
 /**
  *
@@ -34,10 +35,10 @@ class Farmland2GML extends SpecificSource2GML<FarmlandEmissionSource> {
   @Override
   public nl.overheid.aerius.gml.v5_0.source.EmissionSource convert(final FarmlandEmissionSource emissionSource) {
     final nl.overheid.aerius.gml.v5_0.source.farmland.FarmlandEmissionSource returnSource = new nl.overheid.aerius.gml.v5_0.source.farmland.FarmlandEmissionSource();
-    final List<nl.overheid.aerius.shared.domain.v2.source.farmland.FarmlandActivity> landSources = emissionSource.getSubSources();
+    final List<AbstractFarmlandActivity> landSources = emissionSource.getSubSources();
     final List<FarmlandActivityProperty> activities = new ArrayList<>(landSources.size());
 
-    for (final nl.overheid.aerius.shared.domain.v2.source.farmland.FarmlandActivity landSource : landSources) {
+    for (final AbstractFarmlandActivity landSource : landSources) {
       final FarmlandActivity gmlLandSource = new FarmlandActivity();
       gmlLandSource.setCode(landSource.getActivityCode());
       gmlLandSource.setEmissions(getEmissions(landSource.getEmissions(), FALLBACK_SUBSTANCE));

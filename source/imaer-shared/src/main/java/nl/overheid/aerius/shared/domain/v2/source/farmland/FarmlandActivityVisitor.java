@@ -14,19 +14,16 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.shared.domain.v2.source;
+package nl.overheid.aerius.shared.domain.v2.source.farmland;
 
-import nl.overheid.aerius.shared.domain.v2.geojson.IsFeature;
-import nl.overheid.aerius.shared.domain.v2.source.farmland.AbstractFarmlandActivity;
-import nl.overheid.aerius.shared.exception.AeriusException;
+public interface FarmlandActivityVisitor<T> {
 
-public class FarmlandEmissionSource extends EmissionSourceWithSubSources<AbstractFarmlandActivity> {
+  void visit(FarmlandManureActivity activity, T summedEmissions);
 
-  private static final long serialVersionUID = 1L;
+  void visit(FarmlandOrganicProcessesActivity activity, T summedEmissions);
 
-  @Override
-  <T> T accept(final EmissionSourceVisitor<T> visitor, final IsFeature feature) throws AeriusException {
-    return visitor.visit(this, feature);
-  }
+  void visit(FarmlandFertilizerActivity activity, T summedEmissions);
+
+  void visit(FarmlandPastureActivity activity, T summedEmissions);
 
 }

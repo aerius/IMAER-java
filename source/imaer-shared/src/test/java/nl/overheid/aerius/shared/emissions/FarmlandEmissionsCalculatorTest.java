@@ -29,10 +29,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.v2.source.FarmlandEmissionSource;
-import nl.overheid.aerius.shared.domain.v2.source.farmland.FarmlandActivity;
-import nl.overheid.aerius.shared.domain.v2.source.farmland.FarmlandGrazingActivity;
+import nl.overheid.aerius.shared.domain.v2.source.farmland.AbstractFarmlandActivity;
 import nl.overheid.aerius.shared.domain.v2.source.farmland.FarmlandManureActivity;
 import nl.overheid.aerius.shared.domain.v2.source.farmland.FarmlandOrganicProcessesActivity;
+import nl.overheid.aerius.shared.domain.v2.source.farmland.FarmlandPastureActivity;
 import nl.overheid.aerius.shared.exception.AeriusException;
 
 @ExtendWith(MockitoExtension.class)
@@ -50,10 +50,10 @@ class FarmlandEmissionsCalculatorTest {
   @Test
   void testCalculateEmissions() {
     final FarmlandEmissionSource emissionSource = new FarmlandEmissionSource();
-    final FarmlandActivity activity1 = new FarmlandManureActivity();
+    final AbstractFarmlandActivity activity1 = new FarmlandManureActivity();
     activity1.getEmissions().put(Substance.NOX, 993.23);
     emissionSource.getSubSources().add(activity1);
-    final FarmlandActivity activity2 = new FarmlandOrganicProcessesActivity();
+    final AbstractFarmlandActivity activity2 = new FarmlandOrganicProcessesActivity();
     activity2.getEmissions().put(Substance.NOX, 5.423321);
     activity2.getEmissions().put(Substance.NH3, 7.9);
     emissionSource.getSubSources().add(activity2);
@@ -94,7 +94,7 @@ class FarmlandEmissionsCalculatorTest {
 
   private static FarmlandEmissionSource getGrazingEmissionSource(FarmEmissionFactorType farmEmissionFactorType) {
     final FarmlandEmissionSource emissionSource = new FarmlandEmissionSource();
-    final FarmlandGrazingActivity activity = new FarmlandGrazingActivity();
+    final FarmlandPastureActivity activity = new FarmlandPastureActivity();
     activity.setGrazingCategoryCode(GRAZING_CATEGORY_CODE);
     activity.getEmissions().put(Substance.NOX, 0.5);
     activity.setFarmEmissionFactorType(farmEmissionFactorType);

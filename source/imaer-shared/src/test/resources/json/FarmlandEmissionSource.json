@@ -18,7 +18,7 @@
       "NH3" : 1000.0
     },
     "subSources" : [ {
-      "activityCode" : "PASTURE",
+      "activityCode" : "ORGANIC_PROCESSES",
       "emissions" : {
         "NH3" : 500.0
       }
@@ -28,7 +28,7 @@
         "NH3" : 500.0
       }
     }, {
-      "activityCode" : "GRAZING",
+      "activityCode" : "PASTURE",
       "emissions" : {
         "NH3" : 500.0
       },

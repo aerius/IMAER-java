@@ -22,10 +22,14 @@ import java.util.Map;
 
 import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.v2.source.FarmlandEmissionSource;
-import nl.overheid.aerius.shared.domain.v2.source.farmland.FarmlandActivity;
-import nl.overheid.aerius.shared.domain.v2.source.farmland.FarmlandGrazingActivity;
+import nl.overheid.aerius.shared.domain.v2.source.farmland.AbstractFarmlandActivity;
+import nl.overheid.aerius.shared.domain.v2.source.farmland.FarmlandActivityVisitor;
+import nl.overheid.aerius.shared.domain.v2.source.farmland.FarmlandFertilizerActivity;
+import nl.overheid.aerius.shared.domain.v2.source.farmland.FarmlandManureActivity;
+import nl.overheid.aerius.shared.domain.v2.source.farmland.FarmlandOrganicProcessesActivity;
+import nl.overheid.aerius.shared.domain.v2.source.farmland.FarmlandPastureActivity;
 
-public class FarmlandEmissionsCalculator {
+public class FarmlandEmissionsCalculator implements FarmlandActivityVisitor<Map<Substance, BigDecimal>> {
 
   private final FarmlandEmissionFactorSupplier farmlandEmissionFactorSupplier;
 
@@ -35,13 +39,8 @@ public class FarmlandEmissionsCalculator {
 
   public Map<Substance, Double> updateEmissions(final FarmlandEmissionSource farmlandSource) {
     final Map<Substance, BigDecimal> summed = new EnumMap<>(Substance.class);
-    for (final FarmlandActivity activity : farmlandSource.getSubSources()) {
-
-      if (activity instanceof FarmlandGrazingActivity) {
-        updateEmissions((FarmlandGrazingActivity) activity, summed);
-      } else {
-        updateEmissions(activity.getEmissions(), summed);
-      }
+    for (final AbstractFarmlandActivity activity : farmlandSource.getSubSources()) {
+      activity.accept(this, summed);
     }
 
     final Map<Substance, Double> result = new EnumMap<>(Substance.class);
@@ -49,12 +48,32 @@ public class FarmlandEmissionsCalculator {
     return result;
   }
 
-  private void updateEmissions(final Map<Substance, Double> emissions, final Map<Substance, BigDecimal> summedEmissions) {
+  @Override
+  public void visit(FarmlandManureActivity activity, Map<Substance, BigDecimal> summedEmissions) {
+    updateEmissions(activity.getEmissions(), summedEmissions);
+  }
+
+  @Override
+  public void visit(FarmlandOrganicProcessesActivity activity, Map<Substance, BigDecimal> summedEmissions) {
+    updateEmissions(activity.getEmissions(), summedEmissions);
+  }
+
+  @Override
+  public void visit(FarmlandFertilizerActivity activity, Map<Substance, BigDecimal> summedEmissions) {
+    updateEmissions(activity.getEmissions(), summedEmissions);
+  }
+
+  @Override
+  public void visit(FarmlandPastureActivity activity, Map<Substance, BigDecimal> summedEmissions) {
+    updateEmissions(activity, summedEmissions);
+  }
+
+  private static void updateEmissions(final Map<Substance, Double> emissions, final Map<Substance, BigDecimal> summedEmissions) {
     emissions.forEach(
         (key, value) -> summedEmissions.merge(key, BigDecimal.valueOf(value), (v1, v2) -> v1.add(v2)));
   }
 
-  private void updateEmissions(final FarmlandGrazingActivity activity, final Map<Substance, BigDecimal> summedEmissions) {
+  private void updateEmissions(final FarmlandPastureActivity activity, final Map<Substance, BigDecimal> summedEmissions) {
     Map<Substance, Double> repositoryEmissions = farmlandEmissionFactorSupplier.getGrazingEmissionFactors(activity.getGrazingCategoryCode());
     Map<Substance, Double> userEmissions = activity.getEmissions();
 

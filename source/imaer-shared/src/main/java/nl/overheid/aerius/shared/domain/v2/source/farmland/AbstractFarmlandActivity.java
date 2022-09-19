@@ -23,12 +23,12 @@ import nl.overheid.aerius.shared.domain.v2.source.base.AbstractSubSource;
 
 @JsonTypeInfo(property = "activityCode", use = JsonTypeInfo.Id.NAME)
 @JsonSubTypes({
-    @JsonSubTypes.Type(value = FarmlandGrazingActivity.class, name = "GRAZING"),
+    @JsonSubTypes.Type(value = FarmlandPastureActivity.class, name = "PASTURE"),
     @JsonSubTypes.Type(value = FarmlandManureActivity.class, name = "MANURE"),
     @JsonSubTypes.Type(value = FarmlandOrganicProcessesActivity.class, name = "ORGANIC_PROCESSES"),
-    @JsonSubTypes.Type(value = FarmlandPastureActivity.class, name = "PASTURE"),
+    @JsonSubTypes.Type(value = FarmlandFertilizerActivity.class, name = "FERTILIZER"),
 })
-public class FarmlandActivity extends AbstractSubSource {
+public abstract class AbstractFarmlandActivity extends AbstractSubSource {
 
   private static final long serialVersionUID = 2L;
 
@@ -41,4 +41,6 @@ public class FarmlandActivity extends AbstractSubSource {
   public void setActivityCode(final String activityCode) {
     this.activityCode = activityCode;
   }
+
+  public abstract <T> void accept(FarmlandActivityVisitor<T> visitor, T summedEmissions);
 }

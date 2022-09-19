@@ -19,7 +19,7 @@ package nl.overheid.aerius.validation;
 import java.util.List;
 
 import nl.overheid.aerius.shared.domain.v2.source.FarmlandEmissionSource;
-import nl.overheid.aerius.shared.domain.v2.source.farmland.FarmlandActivity;
+import nl.overheid.aerius.shared.domain.v2.source.farmland.AbstractFarmlandActivity;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 
@@ -35,13 +35,13 @@ class FarmlandValidator extends SourceValidator<FarmlandEmissionSource> {
   @Override
   boolean validate(final FarmlandEmissionSource source) {
     boolean valid = true;
-    for (final FarmlandActivity subSource : source.getSubSources()) {
+    for (final AbstractFarmlandActivity subSource : source.getSubSources()) {
       valid = validateActivity(subSource, source.getGmlId()) && valid;
     }
     return valid;
   }
 
-  private boolean validateActivity(final FarmlandActivity subSource, final String sourceId) {
+  private boolean validateActivity(final AbstractFarmlandActivity subSource, final String sourceId) {
     final String code = subSource.getActivityCode();
     boolean valid = true;
     if (!validationHelper.isValidFarmlandActivityCode(code)) {

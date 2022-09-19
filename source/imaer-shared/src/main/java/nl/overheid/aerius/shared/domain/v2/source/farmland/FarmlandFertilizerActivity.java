@@ -16,37 +16,8 @@
  */
 package nl.overheid.aerius.shared.domain.v2.source.farmland;
 
-import nl.overheid.aerius.shared.emissions.FarmEmissionFactorType;
-
-public class FarmlandPastureActivity extends AbstractFarmlandActivity {
-
+public class FarmlandFertilizerActivity extends AbstractFarmlandActivity {
   private static final long serialVersionUID = 1L;
-  private String grazingCategoryCode;
-  private int days;
-  private FarmEmissionFactorType farmEmissionFactorType;
-
-  public String getGrazingCategoryCode() {
-    return grazingCategoryCode;
-  }
-
-  public void setGrazingCategoryCode(String grazingCategoryCode) {
-    this.grazingCategoryCode = grazingCategoryCode;
-  }
-  public int getDays() {
-    return days;
-  }
-
-  public void setDays(final int days) {
-    this.days = days;
-  }
-
-  public FarmEmissionFactorType getFarmEmissionFactorType() {
-    return farmEmissionFactorType;
-  }
-
-  public void setFarmEmissionFactorType(final FarmEmissionFactorType farmEmissionFactorType) {
-    this.farmEmissionFactorType = farmEmissionFactorType;
-  }
 
   @Override
   public <T> void accept(FarmlandActivityVisitor<T> visitor, T summedEmissions) {
