@@ -17,6 +17,7 @@
 package nl.overheid.aerius.test;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -540,7 +541,7 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
 
   @Override
   public Map<Substance, Double> getGrazingEmissionFactors(final String grazingCategoryCode) {
-    return Map.of(Substance.NH3, 0.5);
+    return Collections.emptyMap();
   }
 
   @Override
