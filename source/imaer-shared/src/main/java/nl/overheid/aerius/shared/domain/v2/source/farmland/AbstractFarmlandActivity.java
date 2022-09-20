@@ -20,6 +20,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import nl.overheid.aerius.shared.domain.v2.source.base.AbstractSubSource;
+import nl.overheid.aerius.shared.exception.AeriusException;
 
 @JsonTypeInfo(property = "activityType", use = JsonTypeInfo.Id.NAME)
 @JsonSubTypes({
@@ -49,5 +50,5 @@ public abstract class AbstractFarmlandActivity extends AbstractSubSource {
     this.activityCode = activityCode;
   }
 
-  public abstract <T> void accept(FarmlandActivityVisitor<T> visitor, T summedEmissions);
+  public abstract <T> void accept(FarmlandActivityVisitor<T> visitor, T summedEmissions) throws AeriusException;
 }

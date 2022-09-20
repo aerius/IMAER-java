@@ -23,4 +23,6 @@ import nl.overheid.aerius.shared.domain.Substance;
 public interface FarmlandEmissionFactorSupplier {
 
   Map<Substance, Double> getFarmSourceEmissionFactors(String farmSourceCategoryCode);
+
+  FarmEmissionFactorType getFarmEmissionFactorType(String farmSourceCategoryCode);
 }

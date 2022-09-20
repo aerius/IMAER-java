@@ -16,7 +16,7 @@
  */
 package nl.overheid.aerius.shared.domain.v2.source.farmland;
 
-import nl.overheid.aerius.shared.emissions.FarmEmissionFactorType;
+import nl.overheid.aerius.shared.exception.AeriusException;
 
 public class StandardFarmlandActivity extends AbstractFarmlandActivity {
 
@@ -24,7 +24,6 @@ public class StandardFarmlandActivity extends AbstractFarmlandActivity {
   private String farmSourceCategoryCode;
   private int numberOfAnimals;
   private int numberOfDays;
-  private FarmEmissionFactorType farmEmissionFactorType;
 
   public String getFarmSourceCategoryCode() {
     return farmSourceCategoryCode;
@@ -50,16 +49,8 @@ public class StandardFarmlandActivity extends AbstractFarmlandActivity {
     this.numberOfDays = numberOfDays;
   }
 
-  public FarmEmissionFactorType getFarmEmissionFactorType() {
-    return farmEmissionFactorType;
-  }
-
-  public void setFarmEmissionFactorType(final FarmEmissionFactorType farmEmissionFactorType) {
-    this.farmEmissionFactorType = farmEmissionFactorType;
-  }
-
   @Override
-  public <T> void accept(final FarmlandActivityVisitor<T> visitor, final T summedEmissions) {
+  public <T> void accept(final FarmlandActivityVisitor<T> visitor, final T summedEmissions) throws AeriusException {
     visitor.visit(this, summedEmissions);
   }
 }

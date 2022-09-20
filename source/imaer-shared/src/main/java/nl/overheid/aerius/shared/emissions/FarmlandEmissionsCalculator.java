@@ -37,7 +37,7 @@ public class FarmlandEmissionsCalculator implements FarmlandActivityVisitor<Map<
     this.farmlandEmissionFactorSupplier = farmlandEmissionFactorSupplier;
   }
 
-  public Map<Substance, Double> updateEmissions(final FarmlandEmissionSource farmlandSource) {
+  public Map<Substance, Double> updateEmissions(final FarmlandEmissionSource farmlandSource) throws AeriusException {
     final Map<Substance, BigDecimal> summed = new EnumMap<>(Substance.class);
     for (final AbstractFarmlandActivity activity : farmlandSource.getSubSources()) {
       activity.accept(this, summed);
@@ -59,13 +59,13 @@ public class FarmlandEmissionsCalculator implements FarmlandActivityVisitor<Map<
     final Map<Substance, Double> emissionFactors = farmlandEmissionFactorSupplier
         .getFarmSourceEmissionFactors(activity.getFarmSourceCategoryCode());
 
-    final FarmEmissionFactorType farmEmissionFactorType = activity.getFarmEmissionFactorType();
-    if (farmEmissionFactorType == FarmEmissionFactorType.PER_ANIMAL_PER_DAY) {
+    final FarmEmissionFactorType emissionFactorType = farmlandEmissionFactorSupplier.getFarmEmissionFactorType(activity.getFarmSourceCategoryCode());
+    if (emissionFactorType == FarmEmissionFactorType.PER_ANIMAL_PER_DAY) {
       emissionFactors.forEach((key, value) ->
           summedEmissions.merge(key, BigDecimal.valueOf(value).multiply(BigDecimal.valueOf(activity.getNumberOfDays()))
               .multiply(BigDecimal.valueOf(activity.getNumberOfAnimals())), BigDecimal::add)
       );
-    } else if (farmEmissionFactorType == FarmEmissionFactorType.PER_ANIMAL_PER_YEAR) {
+    } else if (emissionFactorType == FarmEmissionFactorType.PER_ANIMAL_PER_YEAR) {
       emissionFactors.forEach((key, value) ->
           summedEmissions.merge(key, BigDecimal.valueOf(value).multiply(BigDecimal.valueOf(activity.getNumberOfAnimals())), BigDecimal::add)
       );

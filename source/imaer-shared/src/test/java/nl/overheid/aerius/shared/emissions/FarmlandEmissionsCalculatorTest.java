@@ -48,7 +48,7 @@ class FarmlandEmissionsCalculatorTest {
   }
 
   @Test
-  void testCalculateEmissions() {
+  void testCalculateCustomEmissions() throws AeriusException {
     final FarmlandEmissionSource emissionSource = new FarmlandEmissionSource();
     final AbstractFarmlandActivity activity1 = new CustomFarmlandActivity();
     activity1.getEmissions().put(Substance.NOX, 993.23);
@@ -65,8 +65,9 @@ class FarmlandEmissionsCalculatorTest {
   }
 
   @Test
-  void testCalculateGrazingEmissionsWithSuppliedFactor() {
-    final FarmlandEmissionSource emissionSource = getGrazingEmissionSource(FarmEmissionFactorType.PER_ANIMAL_PER_DAY);
+  void testCalculateStandardEmissionsWithSuppliedFactor() throws AeriusException {
+    final FarmlandEmissionSource emissionSource = getEmissionSourceWitStandardFarmlandActivity();
+    doReturn(FarmEmissionFactorType.PER_ANIMAL_PER_DAY).when(emissionFactorSupplier).getFarmEmissionFactorType(CATEGORY_CODE);
     doReturn(Map.of(Substance.NOX, 1.0)).when(emissionFactorSupplier).getFarmSourceEmissionFactors(CATEGORY_CODE);
 
     final Map<Substance, Double> results = emissionsCalculator.updateEmissions(emissionSource);
@@ -75,8 +76,20 @@ class FarmlandEmissionsCalculatorTest {
   }
 
   @Test
-  void testCalculateGrazingEmissionsWithoutSuppliedFactor() {
-    final FarmlandEmissionSource emissionSource = getGrazingEmissionSource(FarmEmissionFactorType.PER_ANIMAL_PER_DAY);
+  void testCalculateStandardEmissionsPerAnimalPerYear() throws AeriusException {
+    final FarmlandEmissionSource emissionSource = getEmissionSourceWitStandardFarmlandActivity();
+    doReturn(FarmEmissionFactorType.PER_ANIMAL_PER_YEAR).when(emissionFactorSupplier).getFarmEmissionFactorType(CATEGORY_CODE);
+    doReturn(Map.of(Substance.NOX, 1.0)).when(emissionFactorSupplier).getFarmSourceEmissionFactors(CATEGORY_CODE);
+
+    final Map<Substance, Double> results = emissionsCalculator.updateEmissions(emissionSource);
+
+    assertEquals(2, results.get(Substance.NOX), "Emissions should be calculated based on factor, number of animals, and number of days.");
+  }
+
+  @Test
+  void testCalculateStandardEmissionsWithoutSuppliedFactor() throws AeriusException {
+    final FarmlandEmissionSource emissionSource = getEmissionSourceWitStandardFarmlandActivity();
+    doReturn(FarmEmissionFactorType.PER_ANIMAL_PER_DAY).when(emissionFactorSupplier).getFarmEmissionFactorType(CATEGORY_CODE);
     doReturn(Collections.emptyMap()).when(emissionFactorSupplier).getFarmSourceEmissionFactors(CATEGORY_CODE);
 
     final Map<Substance, Double> results = emissionsCalculator.updateEmissions(emissionSource);
@@ -84,12 +97,11 @@ class FarmlandEmissionsCalculatorTest {
     assertEquals(0, results.size(), "When no emission factors are present, no emissions should be returned.");
   }
 
-  private static FarmlandEmissionSource getGrazingEmissionSource(final FarmEmissionFactorType farmEmissionFactorType) {
+  private static FarmlandEmissionSource getEmissionSourceWitStandardFarmlandActivity() {
     final FarmlandEmissionSource emissionSource = new FarmlandEmissionSource();
     final StandardFarmlandActivity activity = new StandardFarmlandActivity();
     activity.setFarmSourceCategoryCode(CATEGORY_CODE);
     activity.getEmissions().put(Substance.NOX, 0.5);
-    activity.setFarmEmissionFactorType(farmEmissionFactorType);
     activity.setNumberOfDays(100);
     activity.setNumberOfAnimals(2);
     emissionSource.getSubSources().add(activity);
