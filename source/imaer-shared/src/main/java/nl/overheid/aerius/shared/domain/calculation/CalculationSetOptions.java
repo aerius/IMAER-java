@@ -40,6 +40,7 @@ public class CalculationSetOptions implements Serializable {
   private WNBCalculationOptions wnbCalculationOptions = new WNBCalculationOptions();
   private RBLCalculationOptions rblCalculationOptions = new RBLCalculationOptions();
   private NCACalculationOptions ncaCalculationOptions = new NCACalculationOptions();
+  private Serializable experimentalOptions;
 
   /**
    * Controls the stacking of Point sources.
@@ -204,6 +205,20 @@ public class CalculationSetOptions implements Serializable {
 
   public NCACalculationOptions getNcaCalculationOptions() {
     return ncaCalculationOptions;
+  }
+
+  /**
+   * Experimental options for experimenting/testing purposes.
+   * Can be used to add another set of options without having to change the imaer-shared library.
+   *
+   * Not intended for use in production code.
+   */
+  public Serializable getExperimentalOptions() {
+    return experimentalOptions;
+  }
+
+  public void setExperimentalOptions(final Serializable experimentalOptions) {
+    this.experimentalOptions = experimentalOptions;
   }
 
   @Override
