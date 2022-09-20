@@ -32,7 +32,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import nl.overheid.aerius.shared.domain.v2.source.FarmlandEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.farmland.AbstractFarmlandActivity;
-import nl.overheid.aerius.shared.domain.v2.source.farmland.FarmlandFertilizerActivity;
+import nl.overheid.aerius.shared.domain.v2.source.farmland.CustomFarmlandActivity;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 
@@ -46,7 +46,7 @@ class FarmlandValidatorTest {
   @Test
   void testValidActivityCode() {
     final FarmlandEmissionSource source = constructSource();
-    final AbstractFarmlandActivity subSource = new FarmlandFertilizerActivity();
+    final AbstractFarmlandActivity subSource = new CustomFarmlandActivity();
     final String activityCode = "SomeActivityCode";
     mockActivityCategory(activityCode);
     subSource.setActivityCode(activityCode);
@@ -66,7 +66,7 @@ class FarmlandValidatorTest {
   @Test
   void testInvalidActivityCode() {
     final FarmlandEmissionSource source = constructSource();
-    final AbstractFarmlandActivity subSource = new FarmlandFertilizerActivity();
+    final AbstractFarmlandActivity subSource = new CustomFarmlandActivity();
     final String activityCode = "SomeActivityCode";
     subSource.setActivityCode(activityCode);
     source.getSubSources().add(subSource);

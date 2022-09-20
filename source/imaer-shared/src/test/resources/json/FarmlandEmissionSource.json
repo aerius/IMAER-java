@@ -18,21 +18,25 @@
       "NH3" : 1000.0
     },
     "subSources" : [ {
-      "activityCode" : "ORGANIC_PROCESSES",
-      "emissions" : {
-        "NH3" : 500.0
-      }
-    }, {
-      "activityCode" : "MANURE",
-      "emissions" : {
-        "NH3" : 500.0
-      }
-    }, {
-      "activityCode" : "PASTURE",
+      "activityType" : "CUSTOM",
       "emissions" : {
         "NH3" : 500.0
       },
-      "days" : 100
+      "activityCode" : "ORGANIC_PROCESSES"
+    }, {
+      "activityType" : "CUSTOM",
+      "emissions" : {
+        "NH3" : 500.0
+      },
+      "activityCode" : "MANURE"
+    }, {
+      "activityType" : "STANDARD",
+      "emissions" : {
+        "NH3" : 500.0
+      },
+      "activityCode" : "PASTURE",
+      "numberOfAnimals" : 1,
+      "numberOfDays" : 100
     } ]
   }
 }

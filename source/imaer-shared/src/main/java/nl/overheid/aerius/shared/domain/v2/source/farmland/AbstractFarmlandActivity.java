@@ -21,18 +21,25 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import nl.overheid.aerius.shared.domain.v2.source.base.AbstractSubSource;
 
-@JsonTypeInfo(property = "activityCode", use = JsonTypeInfo.Id.NAME)
+@JsonTypeInfo(property = "activityType", use = JsonTypeInfo.Id.NAME)
 @JsonSubTypes({
-    @JsonSubTypes.Type(value = FarmlandPastureActivity.class, name = "PASTURE"),
-    @JsonSubTypes.Type(value = FarmlandManureActivity.class, name = "MANURE"),
-    @JsonSubTypes.Type(value = FarmlandOrganicProcessesActivity.class, name = "ORGANIC_PROCESSES"),
-    @JsonSubTypes.Type(value = FarmlandFertilizerActivity.class, name = "FERTILIZER"),
+    @JsonSubTypes.Type(value = CustomFarmlandActivity.class, name = "CUSTOM"),
+    @JsonSubTypes.Type(value = StandardFarmlandActivity.class, name = "STANDARD"),
 })
 public abstract class AbstractFarmlandActivity extends AbstractSubSource {
 
   private static final long serialVersionUID = 2L;
 
+  private String activityType;
   private String activityCode;
+
+  public String getActivityType() {
+    return activityType;
+  }
+
+  public void setActivityType(final String activityType) {
+    this.activityType = activityType;
+  }
 
   public String getActivityCode() {
     return activityCode;

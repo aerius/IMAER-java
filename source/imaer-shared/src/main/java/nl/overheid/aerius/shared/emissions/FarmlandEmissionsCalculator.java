@@ -23,11 +23,9 @@ import java.util.Map;
 import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.v2.source.FarmlandEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.farmland.AbstractFarmlandActivity;
+import nl.overheid.aerius.shared.domain.v2.source.farmland.CustomFarmlandActivity;
 import nl.overheid.aerius.shared.domain.v2.source.farmland.FarmlandActivityVisitor;
-import nl.overheid.aerius.shared.domain.v2.source.farmland.FarmlandFertilizerActivity;
-import nl.overheid.aerius.shared.domain.v2.source.farmland.FarmlandManureActivity;
-import nl.overheid.aerius.shared.domain.v2.source.farmland.FarmlandOrganicProcessesActivity;
-import nl.overheid.aerius.shared.domain.v2.source.farmland.FarmlandPastureActivity;
+import nl.overheid.aerius.shared.domain.v2.source.farmland.StandardFarmlandActivity;
 
 public class FarmlandEmissionsCalculator implements FarmlandActivityVisitor<Map<Substance, BigDecimal>> {
 
@@ -49,43 +47,27 @@ public class FarmlandEmissionsCalculator implements FarmlandActivityVisitor<Map<
   }
 
   @Override
-  public void visit(FarmlandManureActivity activity, Map<Substance, BigDecimal> summedEmissions) {
-    updateEmissions(activity.getEmissions(), summedEmissions);
-  }
-
-  @Override
-  public void visit(FarmlandOrganicProcessesActivity activity, Map<Substance, BigDecimal> summedEmissions) {
-    updateEmissions(activity.getEmissions(), summedEmissions);
-  }
-
-  @Override
-  public void visit(FarmlandFertilizerActivity activity, Map<Substance, BigDecimal> summedEmissions) {
-    updateEmissions(activity.getEmissions(), summedEmissions);
-  }
-
-  @Override
-  public void visit(FarmlandPastureActivity activity, Map<Substance, BigDecimal> summedEmissions) {
-    updateEmissions(activity, summedEmissions);
-  }
-
-  private static void updateEmissions(final Map<Substance, Double> emissions, final Map<Substance, BigDecimal> summedEmissions) {
-    emissions.forEach(
+  public void visit(final CustomFarmlandActivity activity, final Map<Substance, BigDecimal> summedEmissions) {
+    activity.getEmissions().forEach(
         (key, value) -> summedEmissions.merge(key, BigDecimal.valueOf(value), (v1, v2) -> v1.add(v2)));
   }
 
-  private void updateEmissions(final FarmlandPastureActivity activity, final Map<Substance, BigDecimal> summedEmissions) {
-    Map<Substance, Double> repositoryEmissions = farmlandEmissionFactorSupplier.getPastureActivityEmissionFactors(activity.getPastureCategoryCode());
-    Map<Substance, Double> userEmissions = activity.getEmissions();
-
-    // Prefer emission factors supplied by the farmlandEmissionFactorSupplier
-    Map<Substance, Double> activityEmissionFactors = repositoryEmissions.isEmpty() ? userEmissions : repositoryEmissions;
+  @Override
+  public void visit(final StandardFarmlandActivity activity, final Map<Substance, BigDecimal> summedEmissions) {
+    final Map<Substance, Double> emissionFactors = farmlandEmissionFactorSupplier
+        .getFarmSourceEmissionFactors(activity.getFarmSourceCategoryCode());
 
     if (activity.getFarmEmissionFactorType() == FarmEmissionFactorType.PER_ANIMAL_PER_DAY) {
-      activityEmissionFactors.forEach((key, value) ->
-          summedEmissions.merge(key, BigDecimal.valueOf(value).multiply(BigDecimal.valueOf(activity.getDays())), (v1, v2) -> v1.add(v2))
+      emissionFactors.forEach((key, value) ->
+          summedEmissions.merge(key, BigDecimal.valueOf(value).multiply(BigDecimal.valueOf(activity.getNumberOfDays()))
+              .multiply(BigDecimal.valueOf(activity.getNumberOfAnimals())), (v1, v2) -> v1.add(v2))
       );
-    } else {
-      updateEmissions(activityEmissionFactors, summedEmissions);
+    }
+
+    if (activity.getFarmEmissionFactorType() == FarmEmissionFactorType.PER_ANIMAL_PER_YEAR) {
+      emissionFactors.forEach((key, value) ->
+          summedEmissions.merge(key, BigDecimal.valueOf(value).multiply(BigDecimal.valueOf(activity.getNumberOfAnimals())), (v1, v2) -> v1.add(v2))
+      );
     }
   }
 }

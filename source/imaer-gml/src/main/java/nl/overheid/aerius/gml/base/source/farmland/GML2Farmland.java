@@ -16,28 +16,19 @@
  */
 package nl.overheid.aerius.gml.base.source.farmland;
 
-import java.util.Arrays;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-
 import nl.overheid.aerius.gml.base.AbstractGML2Specific;
 import nl.overheid.aerius.gml.base.GMLConversionData;
 import nl.overheid.aerius.gml.base.IsGmlProperty;
 import nl.overheid.aerius.gml.base.source.IsGmlEmission;
 import nl.overheid.aerius.shared.domain.v2.source.FarmlandEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.farmland.AbstractFarmlandActivity;
+import nl.overheid.aerius.shared.domain.v2.source.farmland.CustomFarmlandActivity;
 import nl.overheid.aerius.shared.exception.AeriusException;
-import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 
 /**
  *
  */
 public class GML2Farmland<T extends IsGmlFarmlandEmissionSource> extends AbstractGML2Specific<T, FarmlandEmissionSource> {
-
-  private static final Logger LOG = LoggerFactory.getLogger(GML2Farmland.class);
 
   /**
    * @param conversionData The conversion data to use.
@@ -51,7 +42,7 @@ public class GML2Farmland<T extends IsGmlFarmlandEmissionSource> extends Abstrac
     final FarmlandEmissionSource emissionSource = new FarmlandEmissionSource();
     for (final IsGmlProperty<IsGmlFarmlandActivity> landActivityProperty : source.getActivities()) {
       final IsGmlFarmlandActivity gmlActivity = landActivityProperty.getProperty();
-      final AbstractFarmlandActivity activity = getFarmlandActivity(gmlActivity);
+      final AbstractFarmlandActivity activity = new CustomFarmlandActivity();
       activity.setActivityCode(gmlActivity.getCode());
       for (final IsGmlProperty<IsGmlEmission> emissionProperty : gmlActivity.getEmissions()) {
         final IsGmlEmission emission = emissionProperty.getProperty();
@@ -60,28 +51,5 @@ public class GML2Farmland<T extends IsGmlFarmlandEmissionSource> extends Abstrac
       emissionSource.getSubSources().add(activity);
     }
     return emissionSource;
-  }
-
-  private static AbstractFarmlandActivity getFarmlandActivity(IsGmlFarmlandActivity gmlActivity) throws AeriusException {
-    Class<?> subType = Arrays.stream(AbstractFarmlandActivity.class.getAnnotations())
-        .filter(JsonSubTypes.class::isInstance)
-        .map(JsonSubTypes.class::cast)
-        .flatMap(jsonSubTypes -> Arrays.stream(jsonSubTypes.value()))
-        .filter(v -> v.name().equals(gmlActivity.getCode()))
-        .map(JsonSubTypes.Type::value)
-        .filter(AbstractFarmlandActivity.class::isAssignableFrom)
-        .findFirst()
-        .orElseThrow(() -> {
-          LOG.error("Don't know how to treat farmland type: {}", gmlActivity.getCode());
-          return new AeriusException(ImaerExceptionReason.INTERNAL_ERROR);
-        });
-
-    try {
-      Object farmLandActivity = subType.getDeclaredConstructor().newInstance();
-      return (AbstractFarmlandActivity) farmLandActivity;
-    } catch (final ReflectiveOperationException e) {
-      LOG.error("Unexpected reflection error for farmland type: {}", gmlActivity.getCode(), e);
-      throw new AeriusException(ImaerExceptionReason.INTERNAL_ERROR);
-    }
   }
 }

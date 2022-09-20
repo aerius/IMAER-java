@@ -18,12 +18,8 @@ package nl.overheid.aerius.shared.domain.v2.source.farmland;
 
 public interface FarmlandActivityVisitor<T> {
 
-  void visit(FarmlandManureActivity activity, T summedEmissions);
+  void visit(CustomFarmlandActivity activity, T summedEmissions);
 
-  void visit(FarmlandOrganicProcessesActivity activity, T summedEmissions);
-
-  void visit(FarmlandFertilizerActivity activity, T summedEmissions);
-
-  void visit(FarmlandPastureActivity activity, T summedEmissions);
+  void visit(StandardFarmlandActivity activity, T summedEmissions);
 
 }
