@@ -17,6 +17,7 @@
 package nl.overheid.aerius.test;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,14 +33,15 @@ import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.ops.DiurnalVariation;
 import nl.overheid.aerius.shared.domain.v2.characteristics.OPSSourceCharacteristics;
 import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
-import nl.overheid.aerius.shared.emissions.FarmlandEmissionFactorSupplier;
 import nl.overheid.aerius.shared.domain.v2.source.road.RoadStandardEmissionFactorsKey;
 import nl.overheid.aerius.shared.domain.v2.source.road.RoadStandardsInterpolationValues;
 import nl.overheid.aerius.shared.domain.v2.source.shipping.inland.InlandWaterway;
 import nl.overheid.aerius.shared.domain.v2.source.shipping.inland.WaterwayDirection;
 import nl.overheid.aerius.shared.domain.v2.source.shipping.maritime.ShippingMovementType;
 import nl.overheid.aerius.shared.emissions.EmissionFactorSupplier;
+import nl.overheid.aerius.shared.emissions.FarmEmissionFactorType;
 import nl.overheid.aerius.shared.emissions.FarmLodgingEmissionFactorSupplier;
+import nl.overheid.aerius.shared.emissions.FarmlandEmissionFactorSupplier;
 import nl.overheid.aerius.shared.emissions.InlandShippingEmissionFactorSupplier;
 import nl.overheid.aerius.shared.emissions.MaritimeShippingEmissionFactorSupplier;
 import nl.overheid.aerius.shared.emissions.OffRoadMobileEmissionFactorSupplier;
@@ -539,8 +541,13 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
   }
 
   @Override
-  public Map<Substance, Double> getGrazingEmissionFactors(final String grazingCategoryCode) {
-    return Map.of(Substance.NH3, 0.5);
+  public Map<Substance, Double> getFarmSourceEmissionFactors(final String farmSourceCategoryCode) {
+    return Collections.emptyMap();
+  }
+
+  @Override
+  public FarmEmissionFactorType getFarmEmissionFactorType(final String farmSourceCategoryCode) {
+    return FarmEmissionFactorType.PER_ANIMAL_PER_YEAR;
   }
 
   @Override

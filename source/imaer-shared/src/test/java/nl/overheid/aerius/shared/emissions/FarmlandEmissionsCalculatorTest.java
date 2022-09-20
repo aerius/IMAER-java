@@ -19,6 +19,7 @@ package nl.overheid.aerius.shared.emissions;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doReturn;
 
+import java.util.Collections;
 import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -29,16 +30,15 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.v2.source.FarmlandEmissionSource;
-import nl.overheid.aerius.shared.domain.v2.source.farmland.FarmlandActivity;
-import nl.overheid.aerius.shared.domain.v2.source.farmland.FarmlandGrazingActivity;
-import nl.overheid.aerius.shared.domain.v2.source.farmland.FarmlandManureActivity;
-import nl.overheid.aerius.shared.domain.v2.source.farmland.FarmlandOrganicProcessesActivity;
+import nl.overheid.aerius.shared.domain.v2.source.farmland.AbstractFarmlandActivity;
+import nl.overheid.aerius.shared.domain.v2.source.farmland.CustomFarmlandActivity;
+import nl.overheid.aerius.shared.domain.v2.source.farmland.StandardFarmlandActivity;
 import nl.overheid.aerius.shared.exception.AeriusException;
 
 @ExtendWith(MockitoExtension.class)
 class FarmlandEmissionsCalculatorTest {
 
-  private static final String GRAZING_CATEGORY_CODE = "grazingCategoryCode";
+  private static final String CATEGORY_CODE = "someCategoryCode";
   @Mock FarmlandEmissionFactorSupplier emissionFactorSupplier;
   FarmlandEmissionsCalculator emissionsCalculator;
 
@@ -48,57 +48,62 @@ class FarmlandEmissionsCalculatorTest {
   }
 
   @Test
-  void testCalculateEmissions() {
+  void testCalculateCustomEmissions() throws AeriusException {
     final FarmlandEmissionSource emissionSource = new FarmlandEmissionSource();
-    final FarmlandActivity activity1 = new FarmlandManureActivity();
+    final AbstractFarmlandActivity activity1 = new CustomFarmlandActivity();
     activity1.getEmissions().put(Substance.NOX, 993.23);
     emissionSource.getSubSources().add(activity1);
-    final FarmlandActivity activity2 = new FarmlandOrganicProcessesActivity();
+    final AbstractFarmlandActivity activity2 = new CustomFarmlandActivity();
     activity2.getEmissions().put(Substance.NOX, 5.423321);
     activity2.getEmissions().put(Substance.NH3, 7.9);
     emissionSource.getSubSources().add(activity2);
 
     final Map<Substance, Double> results = emissionsCalculator.updateEmissions(emissionSource);
 
-    assertEquals(998.653321, results.get(Substance.NOX));
-    assertEquals(7.9, results.get(Substance.NH3));
+    assertEquals(998.653321, results.get(Substance.NOX), "Emissions should be summed over all activities for a farmland source.");
+    assertEquals(7.9, results.get(Substance.NH3), "Emission of each substance is summed individually.");
   }
 
   @Test
-  void testCalculateGrazingEmissions() {
-    final FarmlandEmissionSource emissionSource = getGrazingEmissionSource(FarmEmissionFactorType.PER_ANIMAL_PER_DAY);
+  void testCalculateStandardEmissionsWithSuppliedFactor() throws AeriusException {
+    final FarmlandEmissionSource emissionSource = getEmissionSourceWitStandardFarmlandActivity();
+    doReturn(FarmEmissionFactorType.PER_ANIMAL_PER_DAY).when(emissionFactorSupplier).getFarmEmissionFactorType(CATEGORY_CODE);
+    doReturn(Map.of(Substance.NOX, 1.0)).when(emissionFactorSupplier).getFarmSourceEmissionFactors(CATEGORY_CODE);
 
     final Map<Substance, Double> results = emissionsCalculator.updateEmissions(emissionSource);
 
-    assertEquals(50, results.get(Substance.NOX));
+    assertEquals(200, results.get(Substance.NOX), "Emissions should be calculated based on factor, number of animals, and number of days.");
   }
 
   @Test
-  void testCalculateGrazingEmissionsPerYear() {
-    final FarmlandEmissionSource emissionSource = getGrazingEmissionSource(FarmEmissionFactorType.PER_ANIMAL_PER_YEAR);
+  void testCalculateStandardEmissionsPerAnimalPerYear() throws AeriusException {
+    final FarmlandEmissionSource emissionSource = getEmissionSourceWitStandardFarmlandActivity();
+    doReturn(FarmEmissionFactorType.PER_ANIMAL_PER_YEAR).when(emissionFactorSupplier).getFarmEmissionFactorType(CATEGORY_CODE);
+    doReturn(Map.of(Substance.NOX, 1.0)).when(emissionFactorSupplier).getFarmSourceEmissionFactors(CATEGORY_CODE);
 
     final Map<Substance, Double> results = emissionsCalculator.updateEmissions(emissionSource);
 
-    assertEquals(0.5, results.get(Substance.NOX));
+    assertEquals(2, results.get(Substance.NOX), "Emissions should be calculated based on factor, number of animals, and number of days.");
   }
 
   @Test
-  void testCalculateGrazingEmissionsWithSuppliedFactor() {
-    final FarmlandEmissionSource emissionSource = getGrazingEmissionSource(FarmEmissionFactorType.PER_ANIMAL_PER_DAY);
-    doReturn(Map.of(Substance.NOX, 1.0)).when(emissionFactorSupplier).getGrazingEmissionFactors(GRAZING_CATEGORY_CODE);
+  void testCalculateStandardEmissionsWithoutSuppliedFactor() throws AeriusException {
+    final FarmlandEmissionSource emissionSource = getEmissionSourceWitStandardFarmlandActivity();
+    doReturn(FarmEmissionFactorType.PER_ANIMAL_PER_DAY).when(emissionFactorSupplier).getFarmEmissionFactorType(CATEGORY_CODE);
+    doReturn(Collections.emptyMap()).when(emissionFactorSupplier).getFarmSourceEmissionFactors(CATEGORY_CODE);
 
     final Map<Substance, Double> results = emissionsCalculator.updateEmissions(emissionSource);
 
-    assertEquals(100, results.get(Substance.NOX));
+    assertEquals(0, results.size(), "When no emission factors are present, no emissions should be returned.");
   }
 
-  private static FarmlandEmissionSource getGrazingEmissionSource(FarmEmissionFactorType farmEmissionFactorType) {
+  private static FarmlandEmissionSource getEmissionSourceWitStandardFarmlandActivity() {
     final FarmlandEmissionSource emissionSource = new FarmlandEmissionSource();
-    final FarmlandGrazingActivity activity = new FarmlandGrazingActivity();
-    activity.setGrazingCategoryCode(GRAZING_CATEGORY_CODE);
+    final StandardFarmlandActivity activity = new StandardFarmlandActivity();
+    activity.setFarmSourceCategoryCode(CATEGORY_CODE);
     activity.getEmissions().put(Substance.NOX, 0.5);
-    activity.setFarmEmissionFactorType(farmEmissionFactorType);
-    activity.setDays(100);
+    activity.setNumberOfDays(100);
+    activity.setNumberOfAnimals(2);
     emissionSource.getSubSources().add(activity);
     return emissionSource;
   }

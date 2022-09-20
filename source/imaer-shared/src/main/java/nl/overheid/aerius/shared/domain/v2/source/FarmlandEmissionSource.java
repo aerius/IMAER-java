@@ -17,10 +17,10 @@
 package nl.overheid.aerius.shared.domain.v2.source;
 
 import nl.overheid.aerius.shared.domain.v2.geojson.IsFeature;
-import nl.overheid.aerius.shared.domain.v2.source.farmland.FarmlandActivity;
+import nl.overheid.aerius.shared.domain.v2.source.farmland.AbstractFarmlandActivity;
 import nl.overheid.aerius.shared.exception.AeriusException;
 
-public class FarmlandEmissionSource extends EmissionSourceWithSubSources<FarmlandActivity> {
+public class FarmlandEmissionSource extends EmissionSourceWithSubSources<AbstractFarmlandActivity> {
 
   private static final long serialVersionUID = 1L;
 

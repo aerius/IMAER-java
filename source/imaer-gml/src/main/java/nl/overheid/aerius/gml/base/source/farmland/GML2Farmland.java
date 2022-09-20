@@ -21,7 +21,8 @@ import nl.overheid.aerius.gml.base.GMLConversionData;
 import nl.overheid.aerius.gml.base.IsGmlProperty;
 import nl.overheid.aerius.gml.base.source.IsGmlEmission;
 import nl.overheid.aerius.shared.domain.v2.source.FarmlandEmissionSource;
-import nl.overheid.aerius.shared.domain.v2.source.farmland.FarmlandActivity;
+import nl.overheid.aerius.shared.domain.v2.source.farmland.AbstractFarmlandActivity;
+import nl.overheid.aerius.shared.domain.v2.source.farmland.CustomFarmlandActivity;
 import nl.overheid.aerius.shared.exception.AeriusException;
 
 /**
@@ -41,7 +42,7 @@ public class GML2Farmland<T extends IsGmlFarmlandEmissionSource> extends Abstrac
     final FarmlandEmissionSource emissionSource = new FarmlandEmissionSource();
     for (final IsGmlProperty<IsGmlFarmlandActivity> landActivityProperty : source.getActivities()) {
       final IsGmlFarmlandActivity gmlActivity = landActivityProperty.getProperty();
-      final FarmlandActivity activity = new FarmlandActivity();
+      final AbstractFarmlandActivity activity = new CustomFarmlandActivity();
       activity.setActivityCode(gmlActivity.getCode());
       for (final IsGmlProperty<IsGmlEmission> emissionProperty : gmlActivity.getEmissions()) {
         final IsGmlEmission emission = emissionProperty.getProperty();
@@ -51,5 +52,4 @@ public class GML2Farmland<T extends IsGmlFarmlandEmissionSource> extends Abstrac
     }
     return emissionSource;
   }
-
 }

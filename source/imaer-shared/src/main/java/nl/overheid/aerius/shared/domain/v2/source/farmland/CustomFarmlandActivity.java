@@ -16,5 +16,12 @@
  */
 package nl.overheid.aerius.shared.domain.v2.source.farmland;
 
-public class FarmlandOrganicProcessesActivity extends FarmlandActivity{
+public class CustomFarmlandActivity extends AbstractFarmlandActivity {
+
+  private static final long serialVersionUID = 1L;
+
+  @Override
+  public <T> void accept(FarmlandActivityVisitor<T> visitor, T summedEmissions) {
+    visitor.visit(this, summedEmissions);
+  }
 }
