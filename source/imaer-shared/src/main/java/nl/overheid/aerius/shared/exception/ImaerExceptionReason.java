@@ -373,11 +373,6 @@ public enum ImaerExceptionReason implements Reason {
    */
   GML_MISSING_NETTING_FACTOR(5235),
 
-  /**
-   * The farm emission factor type is unknown (in the current context)
-   */
-  GML_FARM_EMISSION_FACTOR_TYPE_UNKNOWN(5236),
-
   // Cohesion (between files) errors.
 
   /**
