@@ -16,10 +16,12 @@
  */
 package nl.overheid.aerius.shared.domain.v2.source.farmland;
 
+import nl.overheid.aerius.shared.exception.AeriusException;
+
 public interface FarmlandActivityVisitor<T> {
 
   void visit(CustomFarmlandActivity activity, T summedEmissions);
 
-  void visit(StandardFarmlandActivity activity, T summedEmissions);
+  void visit(StandardFarmlandActivity activity, T summedEmissions) throws AeriusException;
 
 }

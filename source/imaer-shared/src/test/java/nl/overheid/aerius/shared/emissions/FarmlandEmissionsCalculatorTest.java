@@ -38,7 +38,7 @@ import nl.overheid.aerius.shared.exception.AeriusException;
 @ExtendWith(MockitoExtension.class)
 class FarmlandEmissionsCalculatorTest {
 
-  private static final String PASTURE_CATEGORY_CODE = "pastureCategoryCode";
+  private static final String CATEGORY_CODE = "someCategoryCode";
   @Mock FarmlandEmissionFactorSupplier emissionFactorSupplier;
   FarmlandEmissionsCalculator emissionsCalculator;
 
@@ -67,7 +67,7 @@ class FarmlandEmissionsCalculatorTest {
   @Test
   void testCalculateGrazingEmissionsWithSuppliedFactor() {
     final FarmlandEmissionSource emissionSource = getGrazingEmissionSource(FarmEmissionFactorType.PER_ANIMAL_PER_DAY);
-    doReturn(Map.of(Substance.NOX, 1.0)).when(emissionFactorSupplier).getFarmSourceEmissionFactors(PASTURE_CATEGORY_CODE);
+    doReturn(Map.of(Substance.NOX, 1.0)).when(emissionFactorSupplier).getFarmSourceEmissionFactors(CATEGORY_CODE);
 
     final Map<Substance, Double> results = emissionsCalculator.updateEmissions(emissionSource);
 
@@ -77,7 +77,7 @@ class FarmlandEmissionsCalculatorTest {
   @Test
   void testCalculateGrazingEmissionsWithoutSuppliedFactor() {
     final FarmlandEmissionSource emissionSource = getGrazingEmissionSource(FarmEmissionFactorType.PER_ANIMAL_PER_DAY);
-    doReturn(Collections.emptyMap()).when(emissionFactorSupplier).getFarmSourceEmissionFactors(PASTURE_CATEGORY_CODE);
+    doReturn(Collections.emptyMap()).when(emissionFactorSupplier).getFarmSourceEmissionFactors(CATEGORY_CODE);
 
     final Map<Substance, Double> results = emissionsCalculator.updateEmissions(emissionSource);
 
@@ -87,7 +87,7 @@ class FarmlandEmissionsCalculatorTest {
   private static FarmlandEmissionSource getGrazingEmissionSource(final FarmEmissionFactorType farmEmissionFactorType) {
     final FarmlandEmissionSource emissionSource = new FarmlandEmissionSource();
     final StandardFarmlandActivity activity = new StandardFarmlandActivity();
-    activity.setFarmSourceCategoryCode(PASTURE_CATEGORY_CODE);
+    activity.setFarmSourceCategoryCode(CATEGORY_CODE);
     activity.getEmissions().put(Substance.NOX, 0.5);
     activity.setFarmEmissionFactorType(farmEmissionFactorType);
     activity.setNumberOfDays(100);
