@@ -55,9 +55,9 @@ class BBoxTest {
 
   @Test
   void testEquals() {
-    final BBox TEST_BBOX_EQUAL = new BBox(3604, 296800, 287959, 629300);
-    Assertions.assertEquals(RECEPTOR_BBOX, TEST_BBOX_EQUAL, "should be equal");
-    final BBox TEST_BBOX_NOT_EQUAL = new BBox(3604, 296800, 287960, 629300);
-    Assertions.assertNotEquals(RECEPTOR_BBOX, TEST_BBOX_NOT_EQUAL, "should not be equal");
+    final BBox testBBoxEqual = new BBox(3604, 296800, 287959, 629300);
+    Assertions.assertEquals(RECEPTOR_BBOX, testBBoxEqual, "should be equal");
+    final BBox testBBoxNotEqual = new BBox(3604, 296800, 287960, 629300);
+    Assertions.assertNotEquals(RECEPTOR_BBOX, testBBoxNotEqual, "should not be equal");
   }
 }
