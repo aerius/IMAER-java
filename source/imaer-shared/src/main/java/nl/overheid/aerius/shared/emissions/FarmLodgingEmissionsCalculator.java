@@ -17,13 +17,11 @@
 package nl.overheid.aerius.shared.emissions;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import nl.overheid.aerius.shared.ImaerConstants;
 import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.v2.source.FarmLodgingEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.farm.AdditionalLodgingSystem;
@@ -76,17 +74,17 @@ public class FarmLodgingEmissionsCalculator {
       throw new AeriusException(ImaerExceptionReason.INTERNAL_ERROR, "Unknown farmlodging type");
     }
 
-    if (lodging.getFarmEmissionFactorType() ==  FarmEmissionFactorType.PER_ANIMAL_PER_DAY) {
-      emissions.replaceAll((substance, emission) -> emission.multiply(BigDecimal.valueOf(lodging.getNumberOfDays())));
-    }
     return emissions;
   }
 
   Map<Substance, BigDecimal> calculateEmissions(final CustomFarmLodging customLodging) {
     final Map<Substance, BigDecimal> results = new EnumMap<>(Substance.class);
     final BigDecimal numberOfAnimals = BigDecimal.valueOf(customLodging.getNumberOfAnimals());
+    final BigDecimal periodFactor = customLodging.getFarmEmissionFactorType() == FarmEmissionFactorType.PER_ANIMAL_PER_DAY
+        ? BigDecimal.valueOf(customLodging.getNumberOfDays())
+        : BigDecimal.ONE;
     customLodging.getEmissionFactors().forEach(
-        (key, value) -> results.put(key, BigDecimal.valueOf(value).multiply(numberOfAnimals)));
+        (key, value) -> results.put(key, BigDecimal.valueOf(value).multiply(numberOfAnimals).multiply(periodFactor)));
     return results;
   }
 
@@ -100,6 +98,15 @@ public class FarmLodgingEmissionsCalculator {
     processReductiveSystems(emissions, standardLodging.getReductiveLodgingSystems());
     // Reduce emission based on fodder measures
     processFodderMeasures(emissions, standardLodging.getFodderMeasures(), standardLodging.getFarmLodgingCode());
+
+    final BigDecimal periodFactor =
+        emissionFactorSupplier.getLodgingEmissionFactorType(standardLodging.getFarmLodgingCode()) == FarmEmissionFactorType.PER_ANIMAL_PER_DAY
+            ? BigDecimal.valueOf(standardLodging.getNumberOfDays())
+            : BigDecimal.ONE;
+
+    emissions.forEach(
+        (key, value) -> emissions.put(key, value.multiply(periodFactor)));
+
     return emissions;
   }
 

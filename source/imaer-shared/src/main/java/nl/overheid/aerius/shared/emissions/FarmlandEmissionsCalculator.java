@@ -59,7 +59,7 @@ public class FarmlandEmissionsCalculator implements FarmlandActivityVisitor<Map<
     final Map<Substance, Double> emissionFactors = farmlandEmissionFactorSupplier
         .getFarmSourceEmissionFactors(activity.getFarmSourceCategoryCode());
 
-    final FarmEmissionFactorType emissionFactorType = farmlandEmissionFactorSupplier.getFarmEmissionFactorType(activity.getFarmSourceCategoryCode());
+    final FarmEmissionFactorType emissionFactorType = farmlandEmissionFactorSupplier.getFarmSourceEmissionFactorType(activity.getFarmSourceCategoryCode());
     if (emissionFactorType == FarmEmissionFactorType.PER_ANIMAL_PER_DAY) {
       emissionFactors.forEach((key, value) ->
           summedEmissions.merge(key, BigDecimal.valueOf(value).multiply(BigDecimal.valueOf(activity.getNumberOfDays()))

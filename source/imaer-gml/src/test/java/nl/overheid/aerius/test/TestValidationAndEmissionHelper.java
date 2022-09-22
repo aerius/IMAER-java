@@ -541,12 +541,17 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
   }
 
   @Override
+  public FarmEmissionFactorType getLodgingEmissionFactorType(final String lodgingCode) {
+    return FarmEmissionFactorType.PER_ANIMAL_PER_YEAR;
+  }
+
+  @Override
   public Map<Substance, Double> getFarmSourceEmissionFactors(final String farmSourceCategoryCode) {
     return Collections.emptyMap();
   }
 
   @Override
-  public FarmEmissionFactorType getFarmEmissionFactorType(final String farmSourceCategoryCode) {
+  public FarmEmissionFactorType getFarmSourceEmissionFactorType(final String farmSourceCategoryCode) {
     return FarmEmissionFactorType.PER_ANIMAL_PER_YEAR;
   }
 
