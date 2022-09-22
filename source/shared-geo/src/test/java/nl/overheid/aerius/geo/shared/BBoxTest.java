@@ -24,7 +24,7 @@ import nl.overheid.aerius.shared.domain.v2.geojson.Point;
 /**
  * Test class for {@link BBox}.
  */
-public class BBoxTest {
+class BBoxTest {
 
   /**
    * Bounding box of the Netherlands receptor grid.
@@ -32,7 +32,7 @@ public class BBoxTest {
   private static final BBox RECEPTOR_BBOX = new BBox(3604, 296800, 287959, 629300);
 
   @Test
-  public void testIsPointWithinBoundingBox() {
+  void testIsPointWithinBoundingBox() {
     final Point point1 = new Point(0, 0);
     Assertions.assertFalse(RECEPTOR_BBOX.isPointWithinBoundingBox(point1), "New point shouldn't be");
     point1.setX(135583);
@@ -51,5 +51,13 @@ public class BBoxTest {
     point2.setX(RECEPTOR_BBOX.getMaxX());
     point2.setY(RECEPTOR_BBOX.getMaxY());
     Assertions.assertTrue(RECEPTOR_BBOX.isPointWithinBoundingBox(point2), "maximum should be included");
+  }
+
+  @Test
+  void testEquals() {
+    final BBox testBBoxEqual = new BBox(3604, 296800, 287959, 629300);
+    Assertions.assertEquals(RECEPTOR_BBOX, testBBoxEqual, "should be equal");
+    final BBox testBBoxNotEqual = new BBox(3604, 296800, 287960, 629300);
+    Assertions.assertNotEquals(RECEPTOR_BBOX, testBBoxNotEqual, "should not be equal");
   }
 }

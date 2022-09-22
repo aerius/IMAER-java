@@ -20,8 +20,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-import javax.validation.constraints.NotNull;
-
 import nl.overheid.aerius.shared.domain.Substance;
 
 /**
@@ -112,7 +110,6 @@ public enum EmissionResultKey implements Comparable<EmissionResultKey> {
    * @param emissionResultType emission result type
    * @return {@link EmissionResultKey}
    */
-  @NotNull
   public static EmissionResultKey safeValueOf(final Substance substance, final EmissionResultType emissionResultType) {
     EmissionResultKey erk = valueOf(substance, emissionResultType);
 

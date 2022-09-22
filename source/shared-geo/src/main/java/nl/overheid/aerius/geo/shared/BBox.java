@@ -162,10 +162,8 @@ public class BBox implements Serializable {
     boolean equal = false;
     if (obj != null && this.getClass() == obj.getClass()) {
       final BBox other = (BBox) obj;
-      equal = minX == other.minX
-          && minY == other.minY
-          && maxX == other.maxX
-          && maxY == other.maxY;
+      equal = Double.compare(other.minX, minX) == 0 && Double.compare(other.maxX, maxX) == 0
+          && Double.compare(other.minY, minY) == 0 && Double.compare(other.maxY, maxY) == 0;
     }
     return equal;
   }

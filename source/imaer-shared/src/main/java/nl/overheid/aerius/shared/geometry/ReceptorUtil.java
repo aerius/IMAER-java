@@ -65,7 +65,7 @@ public final class ReceptorUtil {
     yMinGuarantee = boundingBox.getMinY();
     yMaxGuarantee = boundingBox.getMaxY() + zoomLevel1.getHexagonHeight();
 
-    doubleHexRow = hexHor * 2;
+    doubleHexRow = hexHor * 2.0;
     oneAndHalfRadius = zoomLevel1.getHexagonRadius() * ONE_AND_HALF;
     halfHeight = zoomLevel1.getHexagonHeight() / 2;
 

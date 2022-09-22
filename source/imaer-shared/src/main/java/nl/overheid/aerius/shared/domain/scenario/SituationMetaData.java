@@ -73,14 +73,14 @@ public class SituationMetaData implements Serializable {
     if (o == this) {
       return true;
     }
-    if (o instanceof SituationMetaData) {
-      final SituationMetaData that = (SituationMetaData) o;
-      return this.name.equals(that.getName())
-          && this.year == that.getYear()
-          && this.aeriusVersion.equals(that.getAeriusVersion())
-          && this.databaseVersion.equals(that.getDatabaseVersion());
+    if (o == null || getClass() != o.getClass()) {
+      return false;
     }
-    return false;
+    SituationMetaData that = (SituationMetaData) o;
+    return this.name.equals(that.getName())
+        && this.year == that.getYear()
+        && this.aeriusVersion.equals(that.getAeriusVersion())
+        && this.databaseVersion.equals(that.getDatabaseVersion());
   }
 
   @Override

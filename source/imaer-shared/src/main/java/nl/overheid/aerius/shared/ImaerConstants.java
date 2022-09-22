@@ -66,7 +66,7 @@ public class ImaerConstants {
   /**
    * Conversion ratio of m2 to hectare.
    */
-  public static final double M2_TO_HA = 100 * 100;
+  public static final double M2_TO_HA = 100.0 * 100.0;
 
   /**
    * The amount of days in a year AERIUS uses by default.

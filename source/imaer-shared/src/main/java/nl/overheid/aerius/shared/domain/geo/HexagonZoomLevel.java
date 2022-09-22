@@ -139,7 +139,7 @@ public class HexagonZoomLevel implements Serializable {
    * @return surface
    */
   private double calculateSurface(final int level, final int surfaceLevel1) {
-    return surfaceLevel1 * Math.pow(4, level - 1);
+    return surfaceLevel1 * Math.pow(4, level - 1.0);
   }
 
   /**
