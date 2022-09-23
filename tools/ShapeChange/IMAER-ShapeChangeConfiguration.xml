@@ -3,7 +3,7 @@
 	<input id="AERIUS" >
 		<parameter name="inputModelType" value="EA7"/>
 		<parameter name="inputFile" value="IMAER.EAP"/>
-		<parameter name="appSchemaNamespaceRegex" value="^http://imaer\.aerius\.nl/5\.0"/>
+		<parameter name="appSchemaNamespaceRegex" value="^http://imaer\.aerius\.nl/5\.1"/>
 		<parameter name="publicOnly" value="true"/>
 		<parameter name="checkingConstraints" value="disabled"/>
 		<parameter name="sortedSchemaOutput" value="true"/>
@@ -40,7 +40,7 @@
 			<targetParameter name="outputFormat" value="HTML"/>
 			<targetParameter name="name" value=" 'IMAER'"/>
 			<targetParameter name="scope" value="IMAER, het informatiemodel voor AERIUS, is een toepassing van Basismodel Geo-Informatie (NEN 3610) voor het beleidsveld van stikstofdepositieberekeningen. Het is hiermee één van de bestaande toepassingen van deze norm. In IMAER wordt, zoals ook bij NEN3610, voor het uitwisselingsformaat van bestanden (het technische formaat voor uitwisseling) gerefereerd aan GML 3.2.1 Simple Features Profile 2 (GML-SF2)."/>
-			<targetParameter name="versionNumber" value="5.0"/>
+			<targetParameter name="versionNumber" value="5.1"/>
 			<targetParameter name="versionDate" value="2021"/>
 			<targetParameter name="producer" value="AERIUS"/>
 			<targetParameter name="xsltPath" value=".\fc_xsl"/>
