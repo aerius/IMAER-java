@@ -30,6 +30,7 @@ import nl.overheid.aerius.shared.domain.v2.source.farm.FarmLodging;
 import nl.overheid.aerius.shared.domain.v2.source.farm.LodgingFodderMeasure;
 import nl.overheid.aerius.shared.domain.v2.source.farm.ReductiveLodgingSystem;
 import nl.overheid.aerius.shared.domain.v2.source.farm.StandardFarmLodging;
+import nl.overheid.aerius.shared.emissions.FarmEmissionFactorType;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 
@@ -48,16 +49,16 @@ public class GML2Farm<T extends IsGmlFarmLodgingEmissionSource> extends Abstract
   public FarmLodgingEmissionSource convert(final T source) throws AeriusException {
     final FarmLodgingEmissionSource emissionValues = new FarmLodgingEmissionSource();
     for (final IsGmlProperty<IsGmlFarmLodging> lodging : source.getFarmLodgings()) {
-      emissionValues.getSubSources().add(getFarmLodging(lodging.getProperty()));
+      emissionValues.getSubSources().add(getFarmLodging(lodging.getProperty(), source.getId()));
     }
     emissionValues.setEstablished(source.getEstablished());
     return emissionValues;
   }
 
-  private FarmLodging getFarmLodging(final IsGmlFarmLodging lodging) throws AeriusException {
+  private FarmLodging getFarmLodging(final IsGmlFarmLodging lodging, final String sourceId) throws AeriusException {
     final FarmLodging returnLodging;
     if (lodging instanceof IsGmlCustomFarmLodging) {
-      returnLodging = convertCustom((IsGmlCustomFarmLodging) lodging);
+      returnLodging = convertCustom((IsGmlCustomFarmLodging) lodging, sourceId);
     } else if (lodging instanceof IsGmlStandardFarmLodging) {
       returnLodging = convertStandard((IsGmlStandardFarmLodging) lodging);
     } else {
@@ -65,18 +66,32 @@ public class GML2Farm<T extends IsGmlFarmLodgingEmissionSource> extends Abstract
       throw new AeriusException(ImaerExceptionReason.INTERNAL_ERROR);
     }
     returnLodging.setNumberOfAnimals(lodging.getNumberOfAnimals());
+    returnLodging.setNumberOfDays(lodging.getNumberOfDays());
     return returnLodging;
   }
 
-  private CustomFarmLodging convertCustom(final IsGmlCustomFarmLodging customLodging) {
+  private CustomFarmLodging convertCustom(final IsGmlCustomFarmLodging customLodging, final String sourceId) throws AeriusException {
     final CustomFarmLodging customEmissions = new CustomFarmLodging();
     customEmissions.setAnimalCode(customLodging.getAnimalCode());
     customEmissions.setDescription(customLodging.getDescription());
+    customEmissions.setFarmEmissionFactorType(determineEmissionFactorType(customLodging.getEmissionFactorType(), sourceId));
     for (final IsGmlProperty<IsGmlEmission> emissionProperty : customLodging.getEmissionFactors()) {
       final IsGmlEmission emission = emissionProperty.getProperty();
       customEmissions.getEmissionFactors().put(emission.getSubstance(), emission.getValue());
     }
     return customEmissions;
+  }
+
+  private FarmEmissionFactorType determineEmissionFactorType(final String gmlEmissionFactorType, final String sourceId) throws AeriusException {
+    if (gmlEmissionFactorType == null) {
+      return FarmEmissionFactorType.PER_ANIMAL_PER_YEAR;
+    }
+    final FarmEmissionFactorType type = FarmEmissionFactorType.safeValueOf(gmlEmissionFactorType);
+    if (type == null) {
+      throw new AeriusException(ImaerExceptionReason.GML_UNKNOWN_FARMLAND_ACTIVITY_CODE, sourceId, gmlEmissionFactorType);
+    }
+
+    return type;
   }
 
   private StandardFarmLodging convertStandard(final IsGmlStandardFarmLodging standardLodging) {

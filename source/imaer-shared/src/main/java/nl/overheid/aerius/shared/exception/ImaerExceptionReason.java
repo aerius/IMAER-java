@@ -372,6 +372,13 @@ public enum ImaerExceptionReason implements Reason {
    * GML with netting situation contained no netting factor.
    */
   GML_MISSING_NETTING_FACTOR(5235),
+  /**
+   *  GML contains a unknown farm emission factor type code.
+   *
+   * @param 0 the id of the object containing the error.
+   * @param 1 The code that is unknown.
+   */
+  GML_UNKNOWN_FARM_EMISSION_FACTOR_TYPE(5236),
 
   // Cohesion (between files) errors.
 

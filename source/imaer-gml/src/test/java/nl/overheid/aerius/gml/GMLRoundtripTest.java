@@ -73,6 +73,7 @@ public class GMLRoundtripTest {
       {"farm_with_systems_and_fodder_measures", CharacteristicsType.OPS},
       {"farm_with_established", CharacteristicsType.OPS},
       {"farm_with_custom_animal", CharacteristicsType.OPS},
+      {"farm_with_custom_emission_factor_type", CharacteristicsType.OPS},
       {"industry", CharacteristicsType.OPS},
       {"inlandshipping", CharacteristicsType.OPS},
       {"inlandshipping_with_waterway", CharacteristicsType.OPS},

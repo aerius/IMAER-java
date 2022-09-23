@@ -29,6 +29,10 @@ public interface IsGmlCustomFarmLodging extends IsGmlFarmLodging {
 
   String getDescription();
 
+  default String getEmissionFactorType() {
+    return null;
+  }
+
   List<? extends IsGmlProperty<IsGmlEmission>> getEmissionFactors();
 
 }

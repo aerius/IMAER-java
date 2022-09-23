@@ -31,11 +31,13 @@ import nl.overheid.aerius.gml.v5_1.source.EmissionProperty;
  *
  */
 @XmlRootElement(name = "CustomFarmLodging", namespace = CalculatorSchema.NAMESPACE)
-@XmlType(name = "CustomFarmLodgingType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"animalCode", "description", "emissionFactors"})
+@XmlType(name = "CustomFarmLodgingType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"animalCode", "description", "emissionFactors",
+    "emissionFactorType"})
 public class CustomFarmLodging extends AbstractFarmLodging implements IsGmlCustomFarmLodging {
 
   private String animalCode;
   private String description;
+  private String emissionFactorType;
   private List<EmissionProperty> emissionFactors = new ArrayList<>();
 
   @Override
@@ -56,6 +58,16 @@ public class CustomFarmLodging extends AbstractFarmLodging implements IsGmlCusto
 
   public void setDescription(final String description) {
     this.description = description;
+  }
+
+  @Override
+  @XmlElement(namespace = CalculatorSchema.NAMESPACE)
+  public String getEmissionFactorType() {
+    return emissionFactorType;
+  }
+
+  public void setEmissionFactorType(final String emissionFactorType) {
+    this.emissionFactorType = emissionFactorType;
   }
 
   @Override
