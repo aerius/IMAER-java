@@ -101,6 +101,10 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
       "MANURE",
       "FERTILIZER");
 
+  private static final List<String> FARM_SOURCE_CATEGORIES = Arrays.asList(
+      "A1.123",
+      "B2.123");
+
   private static final List<String> INLAND_SHIPPING_TYPES = Arrays.asList(
       "BI",
       "BII-1",
@@ -653,9 +657,30 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
   }
 
   @Override
+  public boolean expectsFarmLodgingNumberOfDays(final String systemCode) {
+    return systemCode.charAt(0) == 'X';
+  }
+
+  @Override
   public boolean isValidFarmlandActivityCode(final String activityCode) {
     return FARMLAND_CATEGORIES.stream()
         .anyMatch(c -> c.equalsIgnoreCase(activityCode));
+  }
+
+  @Override
+  public boolean isValidFarmlandStandardActivityCode(final String activityCode) {
+    return FARM_SOURCE_CATEGORIES.stream()
+        .anyMatch(c -> c.equalsIgnoreCase(activityCode));
+  }
+
+  @Override
+  public boolean expectsFarmlandNumberOfAnimals(final String activityCode) {
+    return activityCode.charAt(0) == 'A' || activityCode.charAt(0) == 'B';
+  }
+
+  @Override
+  public boolean expectsFarmlandNumberOfDays(final String activityCode) {
+    return activityCode.charAt(0) == 'B';
   }
 
   @Override

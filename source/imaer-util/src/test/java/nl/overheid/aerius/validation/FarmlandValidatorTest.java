@@ -19,6 +19,7 @@ package nl.overheid.aerius.validation;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
@@ -33,6 +34,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import nl.overheid.aerius.shared.domain.v2.source.FarmlandEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.farmland.AbstractFarmlandActivity;
 import nl.overheid.aerius.shared.domain.v2.source.farmland.CustomFarmlandActivity;
+import nl.overheid.aerius.shared.domain.v2.source.farmland.StandardFarmlandActivity;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 
@@ -44,7 +46,7 @@ class FarmlandValidatorTest {
   @Mock FarmlandValidationHelper validationHelper;
 
   @Test
-  void testValidActivityCode() {
+  void testValidCustom() {
     final FarmlandEmissionSource source = constructSource();
     final AbstractFarmlandActivity subSource = new CustomFarmlandActivity();
     final String activityCode = "SomeActivityCode";
@@ -86,6 +88,147 @@ class FarmlandValidatorTest {
     assertTrue(warnings.isEmpty(), "No warnings");
   }
 
+  @Test
+  void testValidStandardActivityEmpty() {
+    final FarmlandEmissionSource source = constructSource();
+    final StandardFarmlandActivity subSource = new StandardFarmlandActivity();
+    final String activityCode = "SomeActivityCode";
+    final String standardActivityCode = "SomethingStandard";
+    mockActivityCategory(activityCode);
+    mockStandardActivityCategory(standardActivityCode, false, false);
+    subSource.setActivityCode(activityCode);
+    subSource.setFarmSourceCategoryCode(standardActivityCode);
+    subSource.setNumberOfAnimals(1000);
+    subSource.setNumberOfDays(150);
+
+    source.getSubSources().add(subSource);
+
+    final List<AeriusException> errors = new ArrayList<>();
+    final List<AeriusException> warnings = new ArrayList<>();
+    final FarmlandValidator validator = new FarmlandValidator(errors, warnings, validationHelper);
+
+    final boolean valid = validator.validate(source);
+
+    assertTrue(valid, "Valid test case");
+    assertTrue(errors.isEmpty(), "No errors");
+    assertTrue(warnings.isEmpty(), "No warnings");
+    assertNull(subSource.getNumberOfAnimals(), "Number of animals now set to null");
+    assertNull(subSource.getNumberOfDays(), "Number of days now set to null");
+  }
+
+  @Test
+  void testValidStandardActivityFull() {
+    final FarmlandEmissionSource source = constructSource();
+    final StandardFarmlandActivity subSource = new StandardFarmlandActivity();
+    final String activityCode = "SomeActivityCode";
+    final String standardActivityCode = "SomethingStandard";
+    mockActivityCategory(activityCode);
+    mockStandardActivityCategory(standardActivityCode, true, true);
+    subSource.setActivityCode(activityCode);
+    subSource.setFarmSourceCategoryCode(standardActivityCode);
+    subSource.setNumberOfAnimals(1000);
+    subSource.setNumberOfDays(150);
+
+    source.getSubSources().add(subSource);
+
+    final List<AeriusException> errors = new ArrayList<>();
+    final List<AeriusException> warnings = new ArrayList<>();
+    final FarmlandValidator validator = new FarmlandValidator(errors, warnings, validationHelper);
+
+    final boolean valid = validator.validate(source);
+
+    assertTrue(valid, "Valid test case");
+    assertTrue(errors.isEmpty(), "No errors");
+    assertTrue(warnings.isEmpty(), "No warnings");
+  }
+
+  @Test
+  void testInvalidStandardActivityCode() {
+    final FarmlandEmissionSource source = constructSource();
+    final StandardFarmlandActivity subSource = new StandardFarmlandActivity();
+    final String activityCode = "SomeActivityCode";
+    final String standardActivityCode = "SomethingStandard";
+    mockActivityCategory(activityCode);
+    subSource.setActivityCode(activityCode);
+    subSource.setFarmSourceCategoryCode(standardActivityCode);
+    subSource.setNumberOfAnimals(1000);
+    subSource.setNumberOfDays(150);
+
+    source.getSubSources().add(subSource);
+
+    final List<AeriusException> errors = new ArrayList<>();
+    final List<AeriusException> warnings = new ArrayList<>();
+    final FarmlandValidator validator = new FarmlandValidator(errors, warnings, validationHelper);
+
+    final boolean valid = validator.validate(source);
+
+    assertFalse(valid, "Invalid test case");
+    assertEquals(1, errors.size(), "Number of errors");
+    assertEquals(ImaerExceptionReason.GML_UNKNOWN_FARMLAND_ACTIVITY_CODE, errors.get(0).getReason(), "Error reason");
+    assertArrayEquals(new Object[] {
+        SOURCE_ID, standardActivityCode
+    }, errors.get(0).getArgs(), "Arguments");
+    assertTrue(warnings.isEmpty(), "No warnings");
+  }
+
+  @Test
+  void testStandardMissingAnimals() {
+    final FarmlandEmissionSource source = constructSource();
+    final StandardFarmlandActivity subSource = new StandardFarmlandActivity();
+    final String activityCode = "SomeActivityCode";
+    final String standardActivityCode = "SomethingStandard";
+    mockActivityCategory(activityCode);
+    mockStandardActivityCategory(standardActivityCode, true, true);
+    subSource.setActivityCode(activityCode);
+    subSource.setFarmSourceCategoryCode(standardActivityCode);
+    subSource.setNumberOfDays(150);
+
+    source.getSubSources().add(subSource);
+
+    final List<AeriusException> errors = new ArrayList<>();
+    final List<AeriusException> warnings = new ArrayList<>();
+    final FarmlandValidator validator = new FarmlandValidator(errors, warnings, validationHelper);
+
+    final boolean valid = validator.validate(source);
+
+    assertFalse(valid, "Invalid test case");
+    assertEquals(1, errors.size(), "Number of errors");
+    assertEquals(ImaerExceptionReason.GML_MISSING_NUMBER_OF_ANIMALS, errors.get(0).getReason(), "Error reason");
+    assertArrayEquals(new Object[] {
+        SOURCE_ID
+    }, errors.get(0).getArgs(), "Arguments");
+    assertTrue(warnings.isEmpty(), "No warnings");
+  }
+
+  @Test
+  void testStandardMissingDays() {
+    final FarmlandEmissionSource source = constructSource();
+    final StandardFarmlandActivity subSource = new StandardFarmlandActivity();
+    final String activityCode = "SomeActivityCode";
+    final String standardActivityCode = "SomethingStandard";
+    mockActivityCategory(activityCode);
+    mockStandardActivityCategory(standardActivityCode, true, true);
+    subSource.setActivityCode(activityCode);
+    subSource.setFarmSourceCategoryCode(standardActivityCode);
+    subSource.setNumberOfAnimals(1000);
+
+    source.getSubSources().add(subSource);
+
+    final List<AeriusException> errors = new ArrayList<>();
+    final List<AeriusException> warnings = new ArrayList<>();
+    final FarmlandValidator validator = new FarmlandValidator(errors, warnings, validationHelper);
+
+    final boolean valid = validator.validate(source);
+
+    assertFalse(valid, "Invalid test case");
+    assertEquals(1, errors.size(), "Number of errors");
+    assertEquals(ImaerExceptionReason.GML_MISSING_NUMBER_OF_DAYS, errors.get(0).getReason(), "Error reason");
+    assertArrayEquals(new Object[] {
+        SOURCE_ID
+    }, errors.get(0).getArgs(), "Arguments");
+    assertTrue(warnings.isEmpty(), "No warnings");
+  }
+
   private FarmlandEmissionSource constructSource() {
     final FarmlandEmissionSource source = new FarmlandEmissionSource();
     source.setGmlId(SOURCE_ID);
@@ -95,6 +238,12 @@ class FarmlandValidatorTest {
 
   private void mockActivityCategory(final String code) {
     when(validationHelper.isValidFarmlandActivityCode(code)).thenReturn(true);
+  }
+
+  private void mockStandardActivityCategory(final String code, final boolean expectsAnimals, final boolean expectsDays) {
+    when(validationHelper.isValidFarmlandStandardActivityCode(code)).thenReturn(true);
+    when(validationHelper.expectsFarmlandNumberOfAnimals(code)).thenReturn(expectsAnimals);
+    when(validationHelper.expectsFarmlandNumberOfDays(code)).thenReturn(expectsDays);
   }
 
 }
