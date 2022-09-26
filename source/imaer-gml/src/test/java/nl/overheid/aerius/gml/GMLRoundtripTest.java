@@ -107,6 +107,7 @@ public class GMLRoundtripTest {
       {"road_srm1", CharacteristicsType.OPS},
       {"nsl_full_example", CharacteristicsType.OPS},
       {"farmland", CharacteristicsType.OPS},
+      {"farmland_standard", CharacteristicsType.OPS},
       {"situation_type_reference", CharacteristicsType.OPS},
       {"situation_type_proposed", CharacteristicsType.OPS},
       {"situation_type_temporary", CharacteristicsType.OPS},

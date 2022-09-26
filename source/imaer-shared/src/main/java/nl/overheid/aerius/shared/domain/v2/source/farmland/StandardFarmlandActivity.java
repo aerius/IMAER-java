@@ -33,19 +33,19 @@ public class StandardFarmlandActivity extends AbstractFarmlandActivity {
     this.farmSourceCategoryCode = farmSourceCategoryCode;
   }
 
-  public int getNumberOfAnimals() {
+  public Integer getNumberOfAnimals() {
     return numberOfAnimals;
   }
 
-  public void setNumberOfAnimals(final int numberOfAnimals) {
+  public void setNumberOfAnimals(final Integer numberOfAnimals) {
     this.numberOfAnimals = numberOfAnimals;
   }
 
-  public int getNumberOfDays() {
+  public Integer getNumberOfDays() {
     return numberOfDays;
   }
 
-  public void setNumberOfDays(final int numberOfDays) {
+  public void setNumberOfDays(final Integer numberOfDays) {
     this.numberOfDays = numberOfDays;
   }
 

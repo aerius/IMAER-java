@@ -17,7 +17,6 @@
 package nl.overheid.aerius.test;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,8 +63,8 @@ import nl.overheid.aerius.validation.ValidationHelper;
  * Test data for validation.
  */
 public class TestValidationAndEmissionHelper implements ValidationHelper, EmissionFactorSupplier,
-    FarmLodgingEmissionFactorSupplier, FarmlandEmissionFactorSupplier, PlanEmissionFactorSupplier, OffRoadMobileEmissionFactorSupplier, RoadEmissionFactorSupplier,
-    InlandShippingEmissionFactorSupplier, MaritimeShippingEmissionFactorSupplier,
+    FarmLodgingEmissionFactorSupplier, FarmlandEmissionFactorSupplier, PlanEmissionFactorSupplier, OffRoadMobileEmissionFactorSupplier,
+    RoadEmissionFactorSupplier, InlandShippingEmissionFactorSupplier, MaritimeShippingEmissionFactorSupplier,
     FarmLodgingValidationHelper, FarmlandValidationHelper, OffRoadValidationHelper, PlanValidationHelper, RoadValidationHelper,
     InlandShippingValidationHelper, MaritimeShippingValidationHelper {
 
@@ -547,12 +546,14 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
 
   @Override
   public Map<Substance, Double> getFarmSourceEmissionFactors(final String farmSourceCategoryCode) {
-    return Collections.emptyMap();
+    return Map.of(Substance.NH3, 0.104);
   }
 
   @Override
   public FarmEmissionFactorType getFarmSourceEmissionFactorType(final String farmSourceCategoryCode) {
-    return FarmEmissionFactorType.PER_ANIMAL_PER_YEAR;
+    return farmSourceCategoryCode.charAt(0) == 'B'
+        ? FarmEmissionFactorType.PER_ANIMAL_PER_DAY
+        : FarmEmissionFactorType.PER_ANIMAL_PER_YEAR;
   }
 
   @Override

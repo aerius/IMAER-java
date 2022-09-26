@@ -64,6 +64,7 @@ class Farmland2GML extends SpecificSource2GML<FarmlandEmissionSource> {
     final nl.overheid.aerius.gml.v5_1.source.farmland.StandardFarmlandActivity gmlLandSource =
         new nl.overheid.aerius.gml.v5_1.source.farmland.StandardFarmlandActivity();
     gmlLandSource.setCode(landSource.getActivityCode());
+    gmlLandSource.setStandardActivityCode(landSource.getFarmSourceCategoryCode());
     gmlLandSource.setNumberOfAnimals(landSource.getNumberOfAnimals());
     gmlLandSource.setNumberOfDays(landSource.getNumberOfDays());
     return gmlLandSource;
