@@ -81,6 +81,7 @@
                             <imaer:value>0.3</imaer:value>
                         </imaer:Emission>
                     </imaer:emissionFactor>
+                    <imaer:emissionFactorType>PER_ANIMAL_PER_YEAR</imaer:emissionFactorType>
                 </imaer:CustomFarmLodging>
             </imaer:farmLodging>
         </imaer:FarmLodgingEmissionSource>
