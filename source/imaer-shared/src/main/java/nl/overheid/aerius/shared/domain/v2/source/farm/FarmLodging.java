@@ -33,7 +33,7 @@ public abstract class FarmLodging extends AbstractSubSource {
   private static final long serialVersionUID = 3L;
 
   private int numberOfAnimals;
-  private int numberOfDays;
+  private Integer numberOfDays;
 
   public int getNumberOfAnimals() {
     return numberOfAnimals;
@@ -43,11 +43,11 @@ public abstract class FarmLodging extends AbstractSubSource {
     this.numberOfAnimals = numberOfAnimals;
   }
 
-  public int getNumberOfDays() {
+  public Integer getNumberOfDays() {
     return numberOfDays;
   }
 
-  public void setNumberOfDays(final int numberOfDays) {
+  public void setNumberOfDays(final Integer numberOfDays) {
     this.numberOfDays = numberOfDays;
   }
 }

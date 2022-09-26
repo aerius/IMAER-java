@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-import nl.overheid.aerius.gml.base.source.farmland.IsGmlFarmlandActivity;
+import nl.overheid.aerius.gml.base.source.farmland.IsGmlCustomFarmlandActivity;
 import nl.overheid.aerius.gml.v4_0.base.CalculatorSchema;
 import nl.overheid.aerius.gml.v4_0.source.EmissionProperty;
 
@@ -31,7 +31,7 @@ import nl.overheid.aerius.gml.v4_0.source.EmissionProperty;
  *
  */
 @XmlType(name = "FarmlandActivityType", namespace = CalculatorSchema.NAMESPACE)
-public class FarmlandActivity implements IsGmlFarmlandActivity {
+public class FarmlandActivity implements IsGmlCustomFarmlandActivity {
 
   private List<EmissionProperty> emissions = new ArrayList<>();
   private String code;

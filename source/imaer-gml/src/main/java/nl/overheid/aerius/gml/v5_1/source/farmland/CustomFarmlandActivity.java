@@ -14,27 +14,27 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.gml.v3_1.source.farmland;
+package nl.overheid.aerius.gml.v5_1.source.farmland;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 import nl.overheid.aerius.gml.base.source.farmland.IsGmlCustomFarmlandActivity;
-import nl.overheid.aerius.gml.v3_1.base.CalculatorSchema;
-import nl.overheid.aerius.gml.v3_1.source.EmissionProperty;
+import nl.overheid.aerius.gml.v5_1.base.CalculatorSchema;
+import nl.overheid.aerius.gml.v5_1.source.EmissionProperty;
 
 /**
  *
  */
-@XmlType(name = "FarmlandActivityType", namespace = CalculatorSchema.NAMESPACE)
-public class FarmlandActivity implements IsGmlCustomFarmlandActivity {
+@XmlRootElement(name = "FarmlandActivity", namespace = CalculatorSchema.NAMESPACE)
+@XmlType(name = "CustomFarmlandActivityType", namespace = CalculatorSchema.NAMESPACE)
+public class CustomFarmlandActivity extends AbstractFarmlandActivity implements IsGmlCustomFarmlandActivity {
 
   private List<EmissionProperty> emissions = new ArrayList<>();
-  private String code;
 
   @Override
   @XmlElement(name = "emission", namespace = CalculatorSchema.NAMESPACE)
@@ -44,16 +44,6 @@ public class FarmlandActivity implements IsGmlCustomFarmlandActivity {
 
   public void setEmissions(final List<EmissionProperty> emissions) {
     this.emissions = emissions;
-  }
-
-  @Override
-  @XmlAttribute(name = "activityType")
-  public String getCode() {
-    return code;
-  }
-
-  public void setCode(final String code) {
-    this.code = code;
   }
 
 }

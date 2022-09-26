@@ -16,35 +16,21 @@
  */
 package nl.overheid.aerius.gml.v5_1.source.farmland;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
 import nl.overheid.aerius.gml.base.source.farmland.IsGmlFarmlandActivity;
 import nl.overheid.aerius.gml.v5_1.base.CalculatorSchema;
-import nl.overheid.aerius.gml.v5_1.source.EmissionProperty;
 
 /**
  *
  */
-@XmlType(name = "FarmlandActivityType", namespace = CalculatorSchema.NAMESPACE)
-public class FarmlandActivity implements IsGmlFarmlandActivity {
+@XmlSeeAlso({StandardFarmlandActivity.class, CustomFarmlandActivity.class})
+@XmlType(name = "AbstractFarmlandActivityType", namespace = CalculatorSchema.NAMESPACE)
+public abstract class AbstractFarmlandActivity implements IsGmlFarmlandActivity {
 
-  private List<EmissionProperty> emissions = new ArrayList<>();
   private String code;
-
-  @Override
-  @XmlElement(name = "emission", namespace = CalculatorSchema.NAMESPACE)
-  public List<EmissionProperty> getEmissions() {
-    return emissions;
-  }
-
-  public void setEmissions(final List<EmissionProperty> emissions) {
-    this.emissions = emissions;
-  }
 
   @Override
   @XmlAttribute(name = "activityType")

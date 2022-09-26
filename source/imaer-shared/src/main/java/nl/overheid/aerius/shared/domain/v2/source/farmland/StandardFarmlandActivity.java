@@ -22,8 +22,8 @@ public class StandardFarmlandActivity extends AbstractFarmlandActivity {
 
   private static final long serialVersionUID = 1L;
   private String farmSourceCategoryCode;
-  private int numberOfAnimals;
-  private int numberOfDays;
+  private Integer numberOfAnimals;
+  private Integer numberOfDays;
 
   public String getFarmSourceCategoryCode() {
     return farmSourceCategoryCode;

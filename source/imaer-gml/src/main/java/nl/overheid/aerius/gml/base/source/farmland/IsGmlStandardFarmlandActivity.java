@@ -16,8 +16,12 @@
  */
 package nl.overheid.aerius.gml.base.source.farmland;
 
-public interface IsGmlFarmlandActivity {
+public interface IsGmlStandardFarmlandActivity extends IsGmlFarmlandActivity {
 
-  public String getCode();
+  String getStandardActivityCode();
+
+  Integer getNumberOfAnimals();
+
+  Integer getNumberOfDays();
 
 }

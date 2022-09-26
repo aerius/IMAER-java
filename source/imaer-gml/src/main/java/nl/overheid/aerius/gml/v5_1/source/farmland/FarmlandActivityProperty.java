@@ -16,7 +16,7 @@
  */
 package nl.overheid.aerius.gml.v5_1.source.farmland;
 
-import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlType;
 
 import nl.overheid.aerius.gml.base.AbstractProperty;
@@ -28,7 +28,7 @@ import nl.overheid.aerius.gml.v5_1.base.CalculatorSchema;
  *
  */
 @XmlType(name = "FarmlandActivityPropertyType", namespace = CalculatorSchema.NAMESPACE)
-public class FarmlandActivityProperty extends AbstractProperty<FarmlandActivity> implements IsGmlProperty<IsGmlFarmlandActivity> {
+public class FarmlandActivityProperty extends AbstractProperty<AbstractFarmlandActivity> implements IsGmlProperty<IsGmlFarmlandActivity> {
 
   /**
    * Default constructor, needed for JAXB.
@@ -41,18 +41,18 @@ public class FarmlandActivityProperty extends AbstractProperty<FarmlandActivity>
    * Convenience constructor.
    * @param activity The property to use.
    */
-  public FarmlandActivityProperty(final FarmlandActivity activity) {
+  public FarmlandActivityProperty(final AbstractFarmlandActivity activity) {
     super(activity);
   }
 
+  @XmlElementRef
   @Override
-  @XmlElement(name = "FarmlandActivity", namespace = CalculatorSchema.NAMESPACE)
-  public FarmlandActivity getProperty() {
+  public AbstractFarmlandActivity getProperty() {
     return super.getProperty();
   }
 
   @Override
-  public void setProperty(final FarmlandActivity property) {
+  public void setProperty(final AbstractFarmlandActivity property) {
     super.setProperty(property);
   }
 
