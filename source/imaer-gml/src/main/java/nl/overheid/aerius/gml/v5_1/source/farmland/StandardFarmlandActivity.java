@@ -14,25 +14,39 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.shared.domain.v2.source.farmland;
+package nl.overheid.aerius.gml.v5_1.source.farmland;
 
-import nl.overheid.aerius.shared.exception.AeriusException;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
-public class StandardFarmlandActivity extends AbstractFarmlandActivity {
+import nl.overheid.aerius.gml.base.source.farmland.IsGmlStandardFarmlandActivity;
+import nl.overheid.aerius.gml.v5_1.base.CalculatorSchema;
 
-  private static final long serialVersionUID = 1L;
-  private String farmSourceCategoryCode;
+/**
+ *
+ */
+@XmlRootElement(name = "StandardFarmlandActivity", namespace = CalculatorSchema.NAMESPACE)
+@XmlType(name = "StandardFarmlandActivityType", namespace = CalculatorSchema.NAMESPACE)
+public class StandardFarmlandActivity extends AbstractFarmlandActivity implements IsGmlStandardFarmlandActivity {
+
+  private String standardActivityCode;
   private Integer numberOfAnimals;
   private Integer numberOfDays;
 
-  public String getFarmSourceCategoryCode() {
-    return farmSourceCategoryCode;
+  @Override
+  @XmlAttribute(name = "standardActivityType")
+  public String getStandardActivityCode() {
+    return standardActivityCode;
   }
 
-  public void setFarmSourceCategoryCode(final String farmSourceCategoryCode) {
-    this.farmSourceCategoryCode = farmSourceCategoryCode;
+  public void setStandardActivityCode(final String standardActivityCode) {
+    this.standardActivityCode = standardActivityCode;
   }
 
+  @Override
+  @XmlElement(namespace = CalculatorSchema.NAMESPACE)
   public Integer getNumberOfAnimals() {
     return numberOfAnimals;
   }
@@ -41,6 +55,8 @@ public class StandardFarmlandActivity extends AbstractFarmlandActivity {
     this.numberOfAnimals = numberOfAnimals;
   }
 
+  @Override
+  @XmlElement(namespace = CalculatorSchema.NAMESPACE)
   public Integer getNumberOfDays() {
     return numberOfDays;
   }
@@ -49,8 +65,4 @@ public class StandardFarmlandActivity extends AbstractFarmlandActivity {
     this.numberOfDays = numberOfDays;
   }
 
-  @Override
-  public <T> void accept(final FarmlandActivityVisitor<T> visitor, final T summedEmissions) throws AeriusException {
-    visitor.visit(this, summedEmissions);
-  }
 }

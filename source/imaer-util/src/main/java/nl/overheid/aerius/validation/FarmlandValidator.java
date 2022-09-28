@@ -20,6 +20,7 @@ import java.util.List;
 
 import nl.overheid.aerius.shared.domain.v2.source.FarmlandEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.farmland.AbstractFarmlandActivity;
+import nl.overheid.aerius.shared.domain.v2.source.farmland.StandardFarmlandActivity;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 
@@ -44,8 +45,39 @@ class FarmlandValidator extends SourceValidator<FarmlandEmissionSource> {
   private boolean validateActivity(final AbstractFarmlandActivity subSource, final String sourceId) {
     final String code = subSource.getActivityCode();
     boolean valid = true;
-    if (!validationHelper.isValidFarmlandActivityCode(code)) {
+    if (validationHelper.isValidFarmlandActivityCode(code)) {
+      if (subSource instanceof StandardFarmlandActivity) {
+        valid = validateStandard((StandardFarmlandActivity) subSource, sourceId) && valid;
+      }
+    } else {
       getErrors().add(new AeriusException(ImaerExceptionReason.GML_UNKNOWN_FARMLAND_ACTIVITY_CODE, sourceId, code));
+      valid = false;
+    }
+    return valid;
+  }
+
+  private boolean validateStandard(final StandardFarmlandActivity activity, final String sourceId) {
+    boolean valid = true;
+    final String standardCode = activity.getFarmSourceCategoryCode();
+    if (validationHelper.isValidFarmlandStandardActivityCode(standardCode)) {
+      if (validationHelper.expectsFarmlandNumberOfAnimals(standardCode)) {
+        if (activity.getNumberOfAnimals() == null) {
+          getErrors().add(new AeriusException(ImaerExceptionReason.GML_MISSING_NUMBER_OF_ANIMALS, sourceId));
+          valid = false;
+        }
+      } else {
+        activity.setNumberOfAnimals(null);
+      }
+      if (validationHelper.expectsFarmlandNumberOfDays(standardCode)) {
+        if (activity.getNumberOfDays() == null) {
+          getErrors().add(new AeriusException(ImaerExceptionReason.GML_MISSING_NUMBER_OF_DAYS, sourceId));
+          valid = false;
+        }
+      } else {
+        activity.setNumberOfDays(null);
+      }
+    } else {
+      getErrors().add(new AeriusException(ImaerExceptionReason.GML_UNKNOWN_FARMLAND_ACTIVITY_CODE, sourceId, standardCode));
       valid = false;
     }
     return valid;

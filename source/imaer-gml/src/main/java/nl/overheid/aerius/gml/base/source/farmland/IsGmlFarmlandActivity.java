@@ -16,14 +16,7 @@
  */
 package nl.overheid.aerius.gml.base.source.farmland;
 
-import java.util.List;
-
-import nl.overheid.aerius.gml.base.IsGmlProperty;
-import nl.overheid.aerius.gml.base.source.IsGmlEmission;
-
 public interface IsGmlFarmlandActivity {
-
-  List<? extends IsGmlProperty<IsGmlEmission>> getEmissions();
 
   public String getCode();
 

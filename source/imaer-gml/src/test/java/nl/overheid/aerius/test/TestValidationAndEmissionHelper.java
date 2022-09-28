@@ -17,7 +17,6 @@
 package nl.overheid.aerius.test;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,8 +63,8 @@ import nl.overheid.aerius.validation.ValidationHelper;
  * Test data for validation.
  */
 public class TestValidationAndEmissionHelper implements ValidationHelper, EmissionFactorSupplier,
-    FarmLodgingEmissionFactorSupplier, FarmlandEmissionFactorSupplier, PlanEmissionFactorSupplier, OffRoadMobileEmissionFactorSupplier, RoadEmissionFactorSupplier,
-    InlandShippingEmissionFactorSupplier, MaritimeShippingEmissionFactorSupplier,
+    FarmLodgingEmissionFactorSupplier, FarmlandEmissionFactorSupplier, PlanEmissionFactorSupplier, OffRoadMobileEmissionFactorSupplier,
+    RoadEmissionFactorSupplier, InlandShippingEmissionFactorSupplier, MaritimeShippingEmissionFactorSupplier,
     FarmLodgingValidationHelper, FarmlandValidationHelper, OffRoadValidationHelper, PlanValidationHelper, RoadValidationHelper,
     InlandShippingValidationHelper, MaritimeShippingValidationHelper {
 
@@ -101,6 +100,10 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
       "PASTURE",
       "MANURE",
       "FERTILIZER");
+
+  private static final List<String> FARM_SOURCE_CATEGORIES = Arrays.asList(
+      "A1.123",
+      "B2.123");
 
   private static final List<String> INLAND_SHIPPING_TYPES = Arrays.asList(
       "BI",
@@ -541,13 +544,20 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
   }
 
   @Override
-  public Map<Substance, Double> getFarmSourceEmissionFactors(final String farmSourceCategoryCode) {
-    return Collections.emptyMap();
+  public FarmEmissionFactorType getLodgingEmissionFactorType(final String lodgingCode) {
+    return FarmEmissionFactorType.PER_ANIMAL_PER_YEAR;
   }
 
   @Override
-  public FarmEmissionFactorType getFarmEmissionFactorType(final String farmSourceCategoryCode) {
-    return FarmEmissionFactorType.PER_ANIMAL_PER_YEAR;
+  public Map<Substance, Double> getFarmSourceEmissionFactors(final String farmSourceCategoryCode) {
+    return Map.of(Substance.NH3, 0.104);
+  }
+
+  @Override
+  public FarmEmissionFactorType getFarmSourceEmissionFactorType(final String farmSourceCategoryCode) {
+    return farmSourceCategoryCode.charAt(0) == 'B'
+        ? FarmEmissionFactorType.PER_ANIMAL_PER_DAY
+        : FarmEmissionFactorType.PER_ANIMAL_PER_YEAR;
   }
 
   @Override
@@ -647,9 +657,30 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
   }
 
   @Override
+  public boolean expectsFarmLodgingNumberOfDays(final String systemCode) {
+    return systemCode.charAt(0) == 'X';
+  }
+
+  @Override
   public boolean isValidFarmlandActivityCode(final String activityCode) {
     return FARMLAND_CATEGORIES.stream()
         .anyMatch(c -> c.equalsIgnoreCase(activityCode));
+  }
+
+  @Override
+  public boolean isValidFarmlandStandardActivityCode(final String activityCode) {
+    return FARM_SOURCE_CATEGORIES.stream()
+        .anyMatch(c -> c.equalsIgnoreCase(activityCode));
+  }
+
+  @Override
+  public boolean expectsFarmlandNumberOfAnimals(final String activityCode) {
+    return activityCode.charAt(0) == 'A' || activityCode.charAt(0) == 'B';
+  }
+
+  @Override
+  public boolean expectsFarmlandNumberOfDays(final String activityCode) {
+    return activityCode.charAt(0) == 'B';
   }
 
   @Override

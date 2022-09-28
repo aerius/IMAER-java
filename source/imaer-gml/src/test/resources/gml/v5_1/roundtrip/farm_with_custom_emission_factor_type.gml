@@ -53,7 +53,7 @@
             </imaer:geometry>
             <imaer:emission>
                 <imaer:Emission substance="NH3">
-                    <imaer:value>300.0</imaer:value>
+                    <imaer:value>600.0</imaer:value>
                 </imaer:Emission>
             </imaer:emission>
             <imaer:emission>
@@ -74,14 +74,15 @@
             <imaer:farmLodging>
                 <imaer:CustomFarmLodging>
                     <imaer:numberOfAnimals>1000</imaer:numberOfAnimals>
+                    <imaer:numberOfDays>200</imaer:numberOfDays>
                     <imaer:animalType>A</imaer:animalType>
                     <imaer:description>Koeien, extra luchtwasser</imaer:description>
                     <imaer:emissionFactor>
                         <imaer:Emission substance="NH3">
-                            <imaer:value>0.3</imaer:value>
+                            <imaer:value>0.003</imaer:value>
                         </imaer:Emission>
                     </imaer:emissionFactor>
-                    <imaer:emissionFactorType>PER_ANIMAL_PER_YEAR</imaer:emissionFactorType>
+                    <imaer:emissionFactorType>PER_ANIMAL_PER_DAY</imaer:emissionFactorType>
                 </imaer:CustomFarmLodging>
             </imaer:farmLodging>
         </imaer:FarmLodgingEmissionSource>

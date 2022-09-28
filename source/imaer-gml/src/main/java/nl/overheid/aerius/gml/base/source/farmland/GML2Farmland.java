@@ -16,6 +16,9 @@
  */
 package nl.overheid.aerius.gml.base.source.farmland;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import nl.overheid.aerius.gml.base.AbstractGML2Specific;
 import nl.overheid.aerius.gml.base.GMLConversionData;
 import nl.overheid.aerius.gml.base.IsGmlProperty;
@@ -23,12 +26,16 @@ import nl.overheid.aerius.gml.base.source.IsGmlEmission;
 import nl.overheid.aerius.shared.domain.v2.source.FarmlandEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.farmland.AbstractFarmlandActivity;
 import nl.overheid.aerius.shared.domain.v2.source.farmland.CustomFarmlandActivity;
+import nl.overheid.aerius.shared.domain.v2.source.farmland.StandardFarmlandActivity;
 import nl.overheid.aerius.shared.exception.AeriusException;
+import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 
 /**
  *
  */
 public class GML2Farmland<T extends IsGmlFarmlandEmissionSource> extends AbstractGML2Specific<T, FarmlandEmissionSource> {
+
+  private static final Logger LOG = LoggerFactory.getLogger(GML2Farmland.class);
 
   /**
    * @param conversionData The conversion data to use.
@@ -42,14 +49,36 @@ public class GML2Farmland<T extends IsGmlFarmlandEmissionSource> extends Abstrac
     final FarmlandEmissionSource emissionSource = new FarmlandEmissionSource();
     for (final IsGmlProperty<IsGmlFarmlandActivity> landActivityProperty : source.getActivities()) {
       final IsGmlFarmlandActivity gmlActivity = landActivityProperty.getProperty();
-      final AbstractFarmlandActivity activity = new CustomFarmlandActivity();
-      activity.setActivityCode(gmlActivity.getCode());
-      for (final IsGmlProperty<IsGmlEmission> emissionProperty : gmlActivity.getEmissions()) {
-        final IsGmlEmission emission = emissionProperty.getProperty();
-        activity.getEmissions().put(emission.getSubstance(), emission.getValue());
+      final AbstractFarmlandActivity activity;
+      if (gmlActivity instanceof IsGmlCustomFarmlandActivity) {
+        activity = convertCustom((IsGmlCustomFarmlandActivity) gmlActivity);
+      } else if (gmlActivity instanceof IsGmlStandardFarmlandActivity) {
+        activity = convertStandard((IsGmlStandardFarmlandActivity) gmlActivity);
+      } else {
+        LOG.error("Don't know how to treat farmland type: {}", gmlActivity.getClass());
+        throw new AeriusException(ImaerExceptionReason.INTERNAL_ERROR);
       }
+      activity.setActivityCode(gmlActivity.getCode());
+
       emissionSource.getSubSources().add(activity);
     }
     return emissionSource;
+  }
+
+  private CustomFarmlandActivity convertCustom(final IsGmlCustomFarmlandActivity gmlActivity) {
+    final CustomFarmlandActivity activity = new CustomFarmlandActivity();
+    for (final IsGmlProperty<IsGmlEmission> emissionProperty : gmlActivity.getEmissions()) {
+      final IsGmlEmission emission = emissionProperty.getProperty();
+      activity.getEmissions().put(emission.getSubstance(), emission.getValue());
+    }
+    return activity;
+  }
+
+  private StandardFarmlandActivity convertStandard(final IsGmlStandardFarmlandActivity gmlActivity) {
+    final StandardFarmlandActivity activity = new StandardFarmlandActivity();
+    activity.setFarmSourceCategoryCode(gmlActivity.getStandardActivityCode());
+    activity.setNumberOfAnimals(gmlActivity.getNumberOfAnimals());
+    activity.setNumberOfDays(gmlActivity.getNumberOfDays());
+    return activity;
   }
 }

@@ -328,6 +328,29 @@ NOTE ADMS Source Type, to be used as characteristic property.</documentation>
       </enumeration>
     </restriction>
   </simpleType>
+  <element abstract="true" name="AbstractFarmlandActivity" substitutionGroup="IMAER:EmissionValueType" type="IMAER:AbstractFarmlandActivityType">
+    <annotation>
+      <documentation>Karakteristieken van een emissietype voor activiteit op landbouwgrond.
+NOTE Er zijn verschillende soorten gebruik van landbouwgrond in het model aanwezig. Deze abstracte basisklasse is een generalisatie van de verschillende typen in het model.</documentation>
+    </annotation>
+  </element>
+  <complexType abstract="true" name="AbstractFarmlandActivityType">
+    <complexContent>
+      <extension base="IMAER:EmissionValueTypeType">
+        <sequence/>
+        <attribute name="activityType" type="string" use="required">
+          <annotation>
+            <documentation>Het type van gebruik of activiteit van de landbouwgrond.</documentation>
+          </annotation>
+        </attribute>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="AbstractFarmlandActivityPropertyType">
+    <sequence>
+      <element ref="IMAER:AbstractFarmlandActivity"/>
+    </sequence>
+  </complexType>
   <element name="AdditionalLodgingSystem" substitutionGroup="IMAER:LodgingSystem" type="IMAER:AdditionalLodgingSystemType">
     <annotation>
       <documentation>Extra staltechniek beschrijving.
@@ -890,6 +913,11 @@ NOTE Deze klasse beschrijft een zelfgedefinieerde stal.</documentation>
               <documentation>De emissiefactor(en) per dierplaats per jaar die gehanteerd moet worden.</documentation>
             </annotation>
           </element>
+          <element minOccurs="0" name="emissionFactorType" type="string">
+            <annotation>
+              <documentation>Het type van emissie factor. Indien niet opgegeven dan wordt uitgegaan van een emissiefactor in kg per dierplaats per jaar.</documentation>
+            </annotation>
+          </element>
         </sequence>
       </extension>
     </complexContent>
@@ -1420,6 +1448,11 @@ NOTE Er zijn verschillende soorten stallen in het model aanwezig. Deze abstracte
               <documentation>Aantal dieren in deze stal.</documentation>
             </annotation>
           </element>
+          <element minOccurs="0" name="numberOfDays" type="integer">
+            <annotation>
+              <documentation>Aantal dagen dat de dieren in deze stal staan. Heeft alleen effect bij bepaalde combinaties.</documentation>
+            </annotation>
+          </element>
         </sequence>
       </extension>
     </complexContent>
@@ -1465,15 +1498,15 @@ NOTE Deze klasse beschrijft een stal inclusief geometrie.</documentation>
     <attributeGroup ref="gml:AssociationAttributeGroup"/>
     <attributeGroup ref="gml:OwnershipAttributeGroup"/>
   </complexType>
-  <element name="FarmlandActivity" substitutionGroup="IMAER:EmissionValueType" type="IMAER:FarmlandActivityType">
+  <element name="FarmlandActivity" substitutionGroup="IMAER:AbstractFarmlandActivity" type="IMAER:FarmlandActivityType">
     <annotation>
-      <documentation>Karakteristieken van een emissietype voor activiteit op landbouwgrond.
-NOTE Ieder gebruik of activiteit emissietype voor landbouwgrond wordt beschreven aan de hand van een aantal karakteristieken. Deze zijn in dit datatype zijn vastgelegd</documentation>
+      <documentation>Karakteristieken van een zelfgedefinieerde emissietype voor activiteit op landbouwgrond.
+NOTE Het gebruik van landbouw kan direct als emissie vastgelegd worden. Dat is in dit datatype vastgelegd.</documentation>
     </annotation>
   </element>
   <complexType name="FarmlandActivityType">
     <complexContent>
-      <extension base="IMAER:EmissionValueTypeType">
+      <extension base="IMAER:AbstractFarmlandActivityType">
         <sequence>
           <element maxOccurs="unbounded" name="emission" type="IMAER:EmissionPropertyType">
             <annotation>
@@ -1481,11 +1514,6 @@ NOTE Ieder gebruik of activiteit emissietype voor landbouwgrond wordt beschreven
             </annotation>
           </element>
         </sequence>
-        <attribute name="activityType" type="string" use="required">
-          <annotation>
-            <documentation>Het type van gebruik of activiteit van de landbouwgrond.</documentation>
-          </annotation>
-        </attribute>
       </extension>
     </complexContent>
   </complexType>
@@ -1509,7 +1537,7 @@ NOTE Deze klasse beschrijft landbouwgrond, inclusief geometrie.</documentation>
               <documentation>Emissietypen van de landbouwgrond.</documentation>
             </annotation>
           </element>
-          <element maxOccurs="unbounded" name="activity" type="IMAER:FarmlandActivityPropertyType">
+          <element maxOccurs="unbounded" name="activity" type="IMAER:AbstractFarmlandActivityPropertyType">
             <annotation>
               <documentation>Manier waarop de landbouwgrond wordt gebruikt waarbij emissies vrij komen.</documentation>
             </annotation>
@@ -3217,6 +3245,40 @@ NOTE Deze klasse beschrijft een algemene stal, gebruik makend van een voorgedefi
   <complexType name="StandardFarmLodgingPropertyType">
     <sequence>
       <element ref="IMAER:StandardFarmLodging"/>
+    </sequence>
+  </complexType>
+  <element name="StandardFarmlandActivity" substitutionGroup="IMAER:AbstractFarmlandActivity" type="IMAER:StandardFarmlandActivityType">
+    <annotation>
+      <documentation>Karakteristieken van een standaard emissietype voor activiteit op landbouwgrond.
+NOTE Ieder gebruik of activiteit emissietype voor landbouwgrond wordt beschreven aan de hand van een aantal karakteristieken. Deze zijn in dit datatype zijn vastgelegd.</documentation>
+    </annotation>
+  </element>
+  <complexType name="StandardFarmlandActivityType">
+    <complexContent>
+      <extension base="IMAER:AbstractFarmlandActivityType">
+        <sequence>
+          <element minOccurs="0" name="numberOfAnimals" type="integer">
+            <annotation>
+              <documentation>Aantal dieren waarvoor deze activiteit is gedefinieerd. Afhankelijk van het standaard activiteit type is dit wel of niet van belang/verwacht.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="numberOfDays" type="integer">
+            <annotation>
+              <documentation>Aantal dagen waarvoor deze activiteit is gedefinieerd. Afhankelijk van het standaard activiteit type is dit wel of niet van belang/verwacht.</documentation>
+            </annotation>
+          </element>
+        </sequence>
+        <attribute name="standardActivityType" type="string" use="required">
+          <annotation>
+            <documentation>Het specifiekere type van gebruik of activiteit van de landbouwgrond.</documentation>
+          </annotation>
+        </attribute>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="StandardFarmlandActivityPropertyType">
+    <sequence>
+      <element ref="IMAER:StandardFarmlandActivity"/>
     </sequence>
   </complexType>
   <element name="StandardInlandShipping" substitutionGroup="IMAER:InlandShipping" type="IMAER:StandardInlandShippingType">

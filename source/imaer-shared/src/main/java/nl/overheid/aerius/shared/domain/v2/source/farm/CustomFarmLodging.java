@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import nl.overheid.aerius.shared.domain.Substance;
+import nl.overheid.aerius.shared.emissions.FarmEmissionFactorType;
 
 public class CustomFarmLodging extends FarmLodging {
 
@@ -27,6 +28,7 @@ public class CustomFarmLodging extends FarmLodging {
 
   private String animalCode;
   private String description;
+  private FarmEmissionFactorType farmEmissionFactorType;
   private final Map<Substance, Double> emissionFactors = new HashMap<>();
 
   public String getAnimalCode() {
@@ -41,6 +43,14 @@ public class CustomFarmLodging extends FarmLodging {
     return description;
   }
 
+  public FarmEmissionFactorType getFarmEmissionFactorType() {
+    return farmEmissionFactorType;
+  }
+
+  public void setFarmEmissionFactorType(final FarmEmissionFactorType farmEmissionFactorType) {
+    this.farmEmissionFactorType = farmEmissionFactorType;
+  }
+
   public void setDescription(final String description) {
     this.description = description;
   }
@@ -48,5 +58,4 @@ public class CustomFarmLodging extends FarmLodging {
   public Map<Substance, Double> getEmissionFactors() {
     return emissionFactors;
   }
-
 }

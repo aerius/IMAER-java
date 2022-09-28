@@ -20,4 +20,8 @@ public interface IsGmlFarmLodging {
 
   int getNumberOfAnimals();
 
+  default Integer getNumberOfDays() {
+    return null;
+  }
+
 }

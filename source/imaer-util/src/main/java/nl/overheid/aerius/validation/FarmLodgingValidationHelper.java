@@ -28,4 +28,6 @@ public interface FarmLodgingValidationHelper {
 
   boolean canFodderApplyToLodging(String fodderMeasureCode, String lodgingCode);
 
+  boolean expectsFarmLodgingNumberOfDays(String systemCode);
+
 }

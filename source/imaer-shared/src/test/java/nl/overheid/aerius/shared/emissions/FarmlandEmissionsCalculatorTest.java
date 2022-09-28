@@ -67,7 +67,7 @@ class FarmlandEmissionsCalculatorTest {
   @Test
   void testCalculateStandardEmissionsWithSuppliedFactor() throws AeriusException {
     final FarmlandEmissionSource emissionSource = getEmissionSourceWitStandardFarmlandActivity();
-    doReturn(FarmEmissionFactorType.PER_ANIMAL_PER_DAY).when(emissionFactorSupplier).getFarmEmissionFactorType(CATEGORY_CODE);
+    doReturn(FarmEmissionFactorType.PER_ANIMAL_PER_DAY).when(emissionFactorSupplier).getFarmSourceEmissionFactorType(CATEGORY_CODE);
     doReturn(Map.of(Substance.NOX, 1.0)).when(emissionFactorSupplier).getFarmSourceEmissionFactors(CATEGORY_CODE);
 
     final Map<Substance, Double> results = emissionsCalculator.updateEmissions(emissionSource);
@@ -78,7 +78,7 @@ class FarmlandEmissionsCalculatorTest {
   @Test
   void testCalculateStandardEmissionsPerAnimalPerYear() throws AeriusException {
     final FarmlandEmissionSource emissionSource = getEmissionSourceWitStandardFarmlandActivity();
-    doReturn(FarmEmissionFactorType.PER_ANIMAL_PER_YEAR).when(emissionFactorSupplier).getFarmEmissionFactorType(CATEGORY_CODE);
+    doReturn(FarmEmissionFactorType.PER_ANIMAL_PER_YEAR).when(emissionFactorSupplier).getFarmSourceEmissionFactorType(CATEGORY_CODE);
     doReturn(Map.of(Substance.NOX, 1.0)).when(emissionFactorSupplier).getFarmSourceEmissionFactors(CATEGORY_CODE);
 
     final Map<Substance, Double> results = emissionsCalculator.updateEmissions(emissionSource);
@@ -89,7 +89,7 @@ class FarmlandEmissionsCalculatorTest {
   @Test
   void testCalculateStandardEmissionsWithoutSuppliedFactor() throws AeriusException {
     final FarmlandEmissionSource emissionSource = getEmissionSourceWitStandardFarmlandActivity();
-    doReturn(FarmEmissionFactorType.PER_ANIMAL_PER_DAY).when(emissionFactorSupplier).getFarmEmissionFactorType(CATEGORY_CODE);
+    doReturn(FarmEmissionFactorType.PER_ANIMAL_PER_DAY).when(emissionFactorSupplier).getFarmSourceEmissionFactorType(CATEGORY_CODE);
     doReturn(Collections.emptyMap()).when(emissionFactorSupplier).getFarmSourceEmissionFactors(CATEGORY_CODE);
 
     final Map<Substance, Double> results = emissionsCalculator.updateEmissions(emissionSource);

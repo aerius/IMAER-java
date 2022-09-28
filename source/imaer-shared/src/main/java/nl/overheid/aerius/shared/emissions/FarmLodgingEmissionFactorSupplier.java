@@ -29,6 +29,11 @@ public interface FarmLodgingEmissionFactorSupplier {
   Map<Substance, Double> getLodgingEmissionFactors(final String lodgingCode);
 
   /**
+   * Determine the emission factor type for the lodging.
+   */
+  FarmEmissionFactorType getLodgingEmissionFactorType(final String lodgingCode);
+
+  /**
    * For some lodgings, the emission factor can be constrained if scrubbers are stacked on it.
    *
    * If that's a possibility, this method should return true.

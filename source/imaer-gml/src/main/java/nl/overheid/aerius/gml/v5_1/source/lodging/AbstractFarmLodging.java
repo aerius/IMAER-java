@@ -27,10 +27,11 @@ import nl.overheid.aerius.gml.v5_1.base.CalculatorSchema;
  *
  */
 @XmlSeeAlso({FarmLodging.class, CustomFarmLodging.class})
-@XmlType(name = "FarmLodgingType", namespace = CalculatorSchema.NAMESPACE)
+@XmlType(name = "FarmLodgingType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"numberOfAnimals", "numberOfDays"})
 public class AbstractFarmLodging implements IsGmlFarmLodging {
 
   private int numberOfAnimals;
+  private Integer numberOfDays;
 
   @Override
   @XmlElement(name = "numberOfAnimals", namespace = CalculatorSchema.NAMESPACE)
@@ -40,6 +41,16 @@ public class AbstractFarmLodging implements IsGmlFarmLodging {
 
   public void setNumberOfAnimals(final int numberOfAnimals) {
     this.numberOfAnimals = numberOfAnimals;
+  }
+
+  @Override
+  @XmlElement(name = "numberOfDays", namespace = CalculatorSchema.NAMESPACE)
+  public Integer getNumberOfDays() {
+    return numberOfDays;
+  }
+
+  public void setNumberOfDays(final Integer numberOfDays) {
+    this.numberOfDays = numberOfDays;
   }
 
 }

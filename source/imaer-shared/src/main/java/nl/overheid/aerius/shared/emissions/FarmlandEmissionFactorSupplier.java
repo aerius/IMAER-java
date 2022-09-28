@@ -24,5 +24,5 @@ public interface FarmlandEmissionFactorSupplier {
 
   Map<Substance, Double> getFarmSourceEmissionFactors(String farmSourceCategoryCode);
 
-  FarmEmissionFactorType getFarmEmissionFactorType(String farmSourceCategoryCode);
+  FarmEmissionFactorType getFarmSourceEmissionFactorType(String farmSourceCategoryCode);
 }

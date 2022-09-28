@@ -20,4 +20,10 @@ public interface FarmlandValidationHelper {
 
   boolean isValidFarmlandActivityCode(String activityCode);
 
+  boolean isValidFarmlandStandardActivityCode(String activityCode);
+
+  boolean expectsFarmlandNumberOfAnimals(String activityCode);
+
+  boolean expectsFarmlandNumberOfDays(String activityCode);
+
 }

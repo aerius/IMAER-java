@@ -295,6 +295,55 @@ class FarmLodgingValidatorTest {
     assertTrue(warnings.isEmpty(), "No warnings");
   }
 
+  @Test
+  void testValidStandardLodgingCodeWithDays() {
+    final FarmLodgingEmissionSource source = constructSource();
+    final StandardFarmLodging subSource = new StandardFarmLodging();
+    final String lodgingCode = "SomeStandardLodging";
+    mockLodgingCategory(lodgingCode);
+    when(validationHelper.expectsFarmLodgingNumberOfDays(lodgingCode)).thenReturn(true);
+
+    subSource.setFarmLodgingCode(lodgingCode);
+    subSource.setNumberOfDays(40);
+    source.getSubSources().add(subSource);
+
+    final List<AeriusException> errors = new ArrayList<>();
+    final List<AeriusException> warnings = new ArrayList<>();
+    final FarmLodgingValidator validator = new FarmLodgingValidator(errors, warnings, validationHelper);
+
+    final boolean valid = validator.validate(source);
+
+    assertTrue(valid, "Valid test case");
+    assertTrue(errors.isEmpty(), "No errors");
+    assertTrue(warnings.isEmpty(), "No warnings");
+  }
+
+  @Test
+  void testInvalidStandardLodgingCodeWithDays() {
+    final FarmLodgingEmissionSource source = constructSource();
+    final StandardFarmLodging subSource = new StandardFarmLodging();
+    final String lodgingCode = "SomeStandardLodging";
+    mockLodgingCategory(lodgingCode);
+    when(validationHelper.expectsFarmLodgingNumberOfDays(lodgingCode)).thenReturn(true);
+
+    subSource.setFarmLodgingCode(lodgingCode);
+    source.getSubSources().add(subSource);
+
+    final List<AeriusException> errors = new ArrayList<>();
+    final List<AeriusException> warnings = new ArrayList<>();
+    final FarmLodgingValidator validator = new FarmLodgingValidator(errors, warnings, validationHelper);
+
+    final boolean valid = validator.validate(source);
+
+    assertFalse(valid, "Invalid test case");
+    assertEquals(1, errors.size(), "Number of errors");
+    assertEquals(ImaerExceptionReason.GML_MISSING_NUMBER_OF_DAYS, errors.get(0).getReason(), "Error reason");
+    assertArrayEquals(new Object[] {
+        SOURCE_ID
+    }, errors.get(0).getArgs(), "Arguments");
+    assertTrue(warnings.isEmpty(), "No warnings");
+  }
+
   private FarmLodgingEmissionSource constructSource() {
     final FarmLodgingEmissionSource source = new FarmLodgingEmissionSource();
     source.setGmlId(SOURCE_ID);

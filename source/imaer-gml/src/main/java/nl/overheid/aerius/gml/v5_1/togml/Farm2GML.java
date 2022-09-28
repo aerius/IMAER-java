@@ -19,6 +19,7 @@ package nl.overheid.aerius.gml.v5_1.togml;
 import java.util.ArrayList;
 import java.util.List;
 
+import nl.overheid.aerius.gml.v5_1.source.lodging.AbstractFarmLodging;
 import nl.overheid.aerius.gml.v5_1.source.lodging.AdditionalLodgingSystem;
 import nl.overheid.aerius.gml.v5_1.source.lodging.CustomFarmLodging;
 import nl.overheid.aerius.gml.v5_1.source.lodging.FarmLodging;
@@ -59,7 +60,7 @@ class Farm2GML extends SpecificSource2GML<nl.overheid.aerius.shared.domain.v2.so
   private FarmLodgingProperty convert(final StandardFarmLodging lodging) {
     final FarmLodging gmlLodging = new FarmLodging();
     gmlLodging.setCode(lodging.getFarmLodgingCode());
-    gmlLodging.setNumberOfAnimals(lodging.getNumberOfAnimals());
+    copyGenericProperties(lodging, gmlLodging);
 
     gmlLodging.setLodgingSystemDefinitionCode(lodging.getSystemDefinitionCode());
 
@@ -80,12 +81,19 @@ class Farm2GML extends SpecificSource2GML<nl.overheid.aerius.shared.domain.v2.so
 
   private FarmLodgingProperty convert(final nl.overheid.aerius.shared.domain.v2.source.farm.CustomFarmLodging lodging) {
     final CustomFarmLodging gmlLodging = new CustomFarmLodging();
-    gmlLodging.setNumberOfAnimals(lodging.getNumberOfAnimals());
+    copyGenericProperties(lodging, gmlLodging);
     gmlLodging.setAnimalCode(lodging.getAnimalCode());
     gmlLodging.setEmissionFactors(getEmissions(lodging.getEmissionFactors(), Substance.NH3));
     gmlLodging.setDescription(lodging.getDescription());
+    gmlLodging.setEmissionFactorType(lodging.getFarmEmissionFactorType().name());
     //custom farm does NOT have a code other than the optional animal code.
     return new FarmLodgingProperty(gmlLodging);
+  }
+
+  private void copyGenericProperties(final nl.overheid.aerius.shared.domain.v2.source.farm.FarmLodging lodging,
+      final AbstractFarmLodging gmlLodging) {
+    gmlLodging.setNumberOfAnimals(lodging.getNumberOfAnimals());
+    gmlLodging.setNumberOfDays(lodging.getNumberOfDays());
   }
 
   private AdditionalLodgingSystem convert(final nl.overheid.aerius.shared.domain.v2.source.farm.AdditionalLodgingSystem farmLodgingAdditional) {

@@ -14,25 +14,15 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.gml.base.source.lodging;
+package nl.overheid.aerius.gml.base.source.farmland;
 
 import java.util.List;
 
 import nl.overheid.aerius.gml.base.IsGmlProperty;
 import nl.overheid.aerius.gml.base.source.IsGmlEmission;
 
-public interface IsGmlCustomFarmLodging extends IsGmlFarmLodging {
+public interface IsGmlCustomFarmlandActivity extends IsGmlFarmlandActivity {
 
-  default String getAnimalCode() {
-    return null;
-  }
-
-  String getDescription();
-
-  default String getEmissionFactorType() {
-    return null;
-  }
-
-  List<? extends IsGmlProperty<IsGmlEmission>> getEmissionFactors();
+  List<? extends IsGmlProperty<IsGmlEmission>> getEmissions();
 
 }
