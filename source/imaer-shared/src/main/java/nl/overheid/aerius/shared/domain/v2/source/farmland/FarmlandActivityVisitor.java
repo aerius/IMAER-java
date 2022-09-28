@@ -20,8 +20,8 @@ import nl.overheid.aerius.shared.exception.AeriusException;
 
 public interface FarmlandActivityVisitor<T> {
 
-  void visit(CustomFarmlandActivity activity, T summedEmissions);
+  T visit(CustomFarmlandActivity activity);
 
-  void visit(StandardFarmlandActivity activity, T summedEmissions) throws AeriusException;
+  T visit(StandardFarmlandActivity activity) throws AeriusException;
 
 }

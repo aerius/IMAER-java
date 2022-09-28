@@ -50,5 +50,5 @@ public abstract class AbstractFarmlandActivity extends AbstractSubSource {
     this.activityCode = activityCode;
   }
 
-  public abstract <T> void accept(FarmlandActivityVisitor<T> visitor, T summedEmissions) throws AeriusException;
+  public abstract <T> T accept(FarmlandActivityVisitor<T> visitor) throws AeriusException;
 }

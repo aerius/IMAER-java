@@ -50,7 +50,7 @@ public class StandardFarmlandActivity extends AbstractFarmlandActivity {
   }
 
   @Override
-  public <T> void accept(final FarmlandActivityVisitor<T> visitor, final T summedEmissions) throws AeriusException {
-    visitor.visit(this, summedEmissions);
+  public <T> T accept(final FarmlandActivityVisitor<T> visitor) throws AeriusException {
+    return visitor.visit(this);
   }
 }
