@@ -73,6 +73,7 @@ class FarmlandEmissionsCalculatorTest {
     final Map<Substance, Double> results = emissionsCalculator.updateEmissions(emissionSource);
 
     assertEquals(200, results.get(Substance.NOX), "Emissions should be calculated based on factor, number of animals, and number of days.");
+    assertEquals(200, emissionSource.getSubSources().get(0).getEmissions().get(Substance.NOX), "Emissions should be set on subsource as well");
   }
 
   @Test
@@ -84,6 +85,7 @@ class FarmlandEmissionsCalculatorTest {
     final Map<Substance, Double> results = emissionsCalculator.updateEmissions(emissionSource);
 
     assertEquals(2, results.get(Substance.NOX), "Emissions should be calculated based on factor, number of animals, and number of days.");
+    assertEquals(2, emissionSource.getSubSources().get(0).getEmissions().get(Substance.NOX), "Emissions should be set on subsource as well");
   }
 
   @Test

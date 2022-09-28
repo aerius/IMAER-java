@@ -40,7 +40,12 @@ public class FarmlandEmissionsCalculator implements FarmlandActivityVisitor<Map<
   public Map<Substance, Double> updateEmissions(final FarmlandEmissionSource farmlandSource) throws AeriusException {
     final Map<Substance, BigDecimal> summed = new EnumMap<>(Substance.class);
     for (final AbstractFarmlandActivity activity : farmlandSource.getSubSources()) {
-      activity.accept(this, summed);
+      final Map<Substance, BigDecimal> activityEmissions = activity.accept(this);
+      activityEmissions.forEach(
+          (key, value) -> {
+            activity.getEmissions().put(key, value.doubleValue());
+            summed.merge(key, value, BigDecimal::add);
+          });
     }
 
     final Map<Substance, Double> result = new EnumMap<>(Substance.class);
@@ -49,28 +54,33 @@ public class FarmlandEmissionsCalculator implements FarmlandActivityVisitor<Map<
   }
 
   @Override
-  public void visit(final CustomFarmlandActivity activity, final Map<Substance, BigDecimal> summedEmissions) {
+  public Map<Substance, BigDecimal> visit(final CustomFarmlandActivity activity) {
+    final Map<Substance, BigDecimal> activityEmissions = new EnumMap<>(Substance.class);
     activity.getEmissions().forEach(
-        (key, value) -> summedEmissions.merge(key, BigDecimal.valueOf(value), BigDecimal::add));
+        (key, value) -> activityEmissions.put(key, BigDecimal.valueOf(value)));
+    return activityEmissions;
   }
 
   @Override
-  public void visit(final StandardFarmlandActivity activity, final Map<Substance, BigDecimal> summedEmissions) throws AeriusException {
+  public Map<Substance, BigDecimal> visit(final StandardFarmlandActivity activity) throws AeriusException {
+    final Map<Substance, BigDecimal> activityEmissions = new EnumMap<>(Substance.class);
     final Map<Substance, Double> emissionFactors = farmlandEmissionFactorSupplier
         .getFarmSourceEmissionFactors(activity.getFarmSourceCategoryCode());
 
-    final FarmEmissionFactorType emissionFactorType = farmlandEmissionFactorSupplier.getFarmSourceEmissionFactorType(activity.getFarmSourceCategoryCode());
+    final FarmEmissionFactorType emissionFactorType =
+        farmlandEmissionFactorSupplier.getFarmSourceEmissionFactorType(activity.getFarmSourceCategoryCode());
     if (emissionFactorType == FarmEmissionFactorType.PER_ANIMAL_PER_DAY) {
-      emissionFactors.forEach((key, value) ->
-          summedEmissions.merge(key, BigDecimal.valueOf(value).multiply(BigDecimal.valueOf(activity.getNumberOfDays()))
-              .multiply(BigDecimal.valueOf(activity.getNumberOfAnimals())), BigDecimal::add)
-      );
+      emissionFactors.forEach((key, value) -> activityEmissions.put(key,
+          BigDecimal.valueOf(value)
+              .multiply(BigDecimal.valueOf(activity.getNumberOfDays()))
+              .multiply(BigDecimal.valueOf(activity.getNumberOfAnimals()))));
     } else if (emissionFactorType == FarmEmissionFactorType.PER_ANIMAL_PER_YEAR) {
-      emissionFactors.forEach((key, value) ->
-          summedEmissions.merge(key, BigDecimal.valueOf(value).multiply(BigDecimal.valueOf(activity.getNumberOfAnimals())), BigDecimal::add)
-      );
+      emissionFactors.forEach((key, value) -> activityEmissions.put(key,
+          BigDecimal.valueOf(value)
+              .multiply(BigDecimal.valueOf(activity.getNumberOfAnimals()))));
     } else {
       throw new AeriusException(ImaerExceptionReason.INTERNAL_ERROR, "Invalid farm emission factor type for StandardFarmlandActivity.");
     }
+    return activityEmissions;
   }
 }

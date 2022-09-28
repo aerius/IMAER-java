@@ -21,7 +21,7 @@ public class CustomFarmlandActivity extends AbstractFarmlandActivity {
   private static final long serialVersionUID = 1L;
 
   @Override
-  public <T> void accept(FarmlandActivityVisitor<T> visitor, T summedEmissions) {
-    visitor.visit(this, summedEmissions);
+  public <T> T accept(final FarmlandActivityVisitor<T> visitor) {
+    return visitor.visit(this);
   }
 }
