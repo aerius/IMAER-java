@@ -138,6 +138,20 @@ public enum ImaerExceptionReason implements Reason {
    */
   MOBILE_SOURCE_HIGH_ADBLUE_FUEL_RATIO(1029),
 
+  /**
+   * Number of animals was missing on an object.
+   *
+   * @param 0 the id of the object containing the error.
+   */
+  MISSING_NUMBER_OF_ANIMALS(1031),
+
+  /**
+   * Number of days was missing on an object.
+   *
+   * @param 0 the id of the object containing the error.
+   */
+  MISSING_NUMBER_OF_DAYS(1032),
+
   // Import GML file errors/warnings.
   /**
    * Uploaded file should contain no calculation points.
@@ -373,24 +387,12 @@ public enum ImaerExceptionReason implements Reason {
    */
   GML_MISSING_NETTING_FACTOR(5235),
   /**
-   * GML contains a unknown farm emission factor type code.
+   * GML contains unknown farm emission factor type code.
    *
    * @param 0 the id of the object containing the error.
    * @param 1 The code that is unknown.
    */
   GML_UNKNOWN_FARM_EMISSION_FACTOR_TYPE(5236),
-  /**
-   * Number of animals was missing on an object.
-   *
-   * @param 0 the id of the object containing the error.
-   */
-  GML_MISSING_NUMBER_OF_ANIMALS(5237),
-  /**
-   * Number of days was missing on an object.
-   *
-   * @param 0 the id of the object containing the error.
-   */
-  GML_MISSING_NUMBER_OF_DAYS(5238),
 
   // Cohesion (between files) errors.
 
