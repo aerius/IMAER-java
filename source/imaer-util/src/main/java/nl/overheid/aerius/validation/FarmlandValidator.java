@@ -62,7 +62,7 @@ class FarmlandValidator extends SourceValidator<FarmlandEmissionSource> {
     if (validationHelper.isValidFarmlandStandardActivityCode(standardCode)) {
       if (validationHelper.expectsFarmlandNumberOfAnimals(standardCode)) {
         if (activity.getNumberOfAnimals() == null) {
-          getErrors().add(new AeriusException(ImaerExceptionReason.GML_MISSING_NUMBER_OF_ANIMALS, sourceId));
+          getErrors().add(new AeriusException(ImaerExceptionReason.MISSING_NUMBER_OF_ANIMALS, sourceId));
           valid = false;
         }
       } else {
@@ -70,7 +70,7 @@ class FarmlandValidator extends SourceValidator<FarmlandEmissionSource> {
       }
       if (validationHelper.expectsFarmlandNumberOfDays(standardCode)) {
         if (activity.getNumberOfDays() == null) {
-          getErrors().add(new AeriusException(ImaerExceptionReason.GML_MISSING_NUMBER_OF_DAYS, sourceId));
+          getErrors().add(new AeriusException(ImaerExceptionReason.MISSING_NUMBER_OF_DAYS, sourceId));
           valid = false;
         }
       } else {

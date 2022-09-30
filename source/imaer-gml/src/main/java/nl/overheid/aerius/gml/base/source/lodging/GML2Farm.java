@@ -88,7 +88,7 @@ public class GML2Farm<T extends IsGmlFarmLodgingEmissionSource> extends Abstract
     }
     final FarmEmissionFactorType type = FarmEmissionFactorType.safeValueOf(gmlEmissionFactorType);
     if (type == null) {
-      throw new AeriusException(ImaerExceptionReason.GML_UNKNOWN_FARMLAND_ACTIVITY_CODE, sourceId, gmlEmissionFactorType);
+      throw new AeriusException(ImaerExceptionReason.GML_UNKNOWN_FARM_EMISSION_FACTOR_TYPE, sourceId, gmlEmissionFactorType);
     }
 
     return type;

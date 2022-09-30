@@ -193,7 +193,7 @@ class FarmlandValidatorTest {
 
     assertFalse(valid, "Invalid test case");
     assertEquals(1, errors.size(), "Number of errors");
-    assertEquals(ImaerExceptionReason.GML_MISSING_NUMBER_OF_ANIMALS, errors.get(0).getReason(), "Error reason");
+    assertEquals(ImaerExceptionReason.MISSING_NUMBER_OF_ANIMALS, errors.get(0).getReason(), "Error reason");
     assertArrayEquals(new Object[] {
         SOURCE_ID
     }, errors.get(0).getArgs(), "Arguments");
@@ -222,7 +222,7 @@ class FarmlandValidatorTest {
 
     assertFalse(valid, "Invalid test case");
     assertEquals(1, errors.size(), "Number of errors");
-    assertEquals(ImaerExceptionReason.GML_MISSING_NUMBER_OF_DAYS, errors.get(0).getReason(), "Error reason");
+    assertEquals(ImaerExceptionReason.MISSING_NUMBER_OF_DAYS, errors.get(0).getReason(), "Error reason");
     assertArrayEquals(new Object[] {
         SOURCE_ID
     }, errors.get(0).getArgs(), "Arguments");
