@@ -18,4 +18,8 @@ package nl.overheid.aerius.gml.base.result;
 
 public interface IsGmlCustomCalculationPoint extends IsGmlCalculationPoint {
 
+  default Double getRoadLocalFractionNO2() {
+    return null;
+  }
+
 }

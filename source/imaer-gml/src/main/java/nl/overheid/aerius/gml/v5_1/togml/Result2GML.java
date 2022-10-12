@@ -94,14 +94,9 @@ final class Result2GML {
   private AbstractCalculationPoint determineSpecificType(final CalculationPoint aeriusPoint, final Point point) throws AeriusException {
     final AbstractCalculationPoint returnPoint;
     if (aeriusPoint instanceof nl.overheid.aerius.shared.domain.v2.point.NSLCalculationPoint) {
-      //treat as a custom calculation point with added properties
       returnPoint = fromNslCalculationPoint((nl.overheid.aerius.shared.domain.v2.point.NSLCalculationPoint) aeriusPoint);
     } else if (aeriusPoint instanceof nl.overheid.aerius.shared.domain.v2.point.CustomCalculationPoint) {
-      //treat as a custom calculation point
-      //The proper representation of a custompoint would be a circle with a surface of 1ha.
-      //Unclear at this point if this is required for GML and if it should be implemented by a GML polygon, arc or circle.
-      //for now, just let the representation be as it isn't as specific as the hexagon.
-      returnPoint = new CustomCalculationPoint();
+      returnPoint = fromCustomPoint((nl.overheid.aerius.shared.domain.v2.point.CustomCalculationPoint) aeriusPoint);
     } else if (aeriusPoint instanceof nl.overheid.aerius.shared.domain.v2.point.SubPoint) {
       returnPoint = fromSubPoint((nl.overheid.aerius.shared.domain.v2.point.SubPoint) aeriusPoint);
     } else {
@@ -111,10 +106,21 @@ final class Result2GML {
   }
 
   private AbstractCalculationPoint fromNslCalculationPoint(final nl.overheid.aerius.shared.domain.v2.point.NSLCalculationPoint aeriusNSLPoint) {
+    //treat as a custom calculation point with added properties
     final NSLCalculationPoint nslPoint = new NSLCalculationPoint();
     nslPoint.setRejectionGrounds(aeriusNSLPoint.getRejectionGrounds());
     nslPoint.setMonitorSubstance(aeriusNSLPoint.getMonitorSubstance());
     return nslPoint;
+  }
+
+  private AbstractCalculationPoint fromCustomPoint(final nl.overheid.aerius.shared.domain.v2.point.CustomCalculationPoint aeriusPoint) {
+    //treat as a custom calculation point
+    //The proper representation of a custompoint would be a circle with a surface of 1ha.
+    //Unclear at this point if this is required for GML and if it should be implemented by a GML polygon, arc or circle.
+    //for now, just let the representation be as it isn't as specific as the hexagon.
+    final CustomCalculationPoint returnPoint = new CustomCalculationPoint();
+    returnPoint.setRoadLocalFractionNO2(aeriusPoint.getRoadLocalFractionNO2());
+    return returnPoint;
   }
 
   private AbstractCalculationPoint fromSubPoint(final nl.overheid.aerius.shared.domain.v2.point.SubPoint aeriusPoint) {

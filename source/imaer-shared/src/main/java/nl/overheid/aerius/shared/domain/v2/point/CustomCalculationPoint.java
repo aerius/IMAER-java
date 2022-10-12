@@ -27,6 +27,7 @@ public class CustomCalculationPoint extends CalculationPoint {
 
   private int customPointId;
   private Double height;
+  private Double roadLocalFractionNO2;
 
   public Double getHeight() {
     return height;
@@ -34,6 +35,14 @@ public class CustomCalculationPoint extends CalculationPoint {
 
   public void setHeight(final Double height) {
     this.height = height;
+  }
+
+  public Double getRoadLocalFractionNO2() {
+    return roadLocalFractionNO2;
+  }
+
+  public void setRoadLocalFractionNO2(final Double roadLocalFractionNO2) {
+    this.roadLocalFractionNO2 = roadLocalFractionNO2;
   }
 
   public int getCustomPointId() {

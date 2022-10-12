@@ -100,7 +100,7 @@ public class GML2Result {
     } else if (calculationPoint instanceof IsGmlNSLCalculationPoint) {
       returnPoint = createNSLCalculationPoint((IsGmlNSLCalculationPoint) calculationPoint);
     } else if (calculationPoint instanceof IsGmlCustomCalculationPoint) {
-      returnPoint = new CustomCalculationPoint();
+      returnPoint = createCustomPoint((IsGmlCustomCalculationPoint) calculationPoint);
     } else {
       throw new AeriusException(ImaerExceptionReason.INTERNAL_ERROR, "Could not handle calculation point: " + calculationPoint.getClass());
     }
@@ -157,6 +157,12 @@ public class GML2Result {
     target.setSubPointId(origin.getSubPointId());
     target.setReceptorId(origin.getReceptorPointId());
     target.setLevel(origin.getLevel());
+    return target;
+  }
+
+  private CustomCalculationPoint createCustomPoint(final IsGmlCustomCalculationPoint origin) {
+    final CustomCalculationPoint target = new CustomCalculationPoint();
+    target.setRoadLocalFractionNO2(origin.getRoadLocalFractionNO2());
     return target;
   }
 

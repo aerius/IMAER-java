@@ -16,6 +16,7 @@
  */
 package nl.overheid.aerius.gml.v5_1.result;
 
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 import nl.overheid.aerius.gml.base.result.IsGmlCustomCalculationPoint;
@@ -26,5 +27,17 @@ import nl.overheid.aerius.gml.v5_1.base.CalculatorSchema;
  */
 @XmlType(name = "CalculationPointType", namespace = CalculatorSchema.NAMESPACE)
 public class CustomCalculationPoint extends AbstractCalculationPoint implements IsGmlCustomCalculationPoint {
+
+  private Double roadLocalFractionNO2;
+
+  @Override
+  @XmlElement(namespace = CalculatorSchema.NAMESPACE)
+  public Double getRoadLocalFractionNO2() {
+    return roadLocalFractionNO2;
+  }
+
+  public void setRoadLocalFractionNO2(final Double roadLocalFractionNO2) {
+    this.roadLocalFractionNO2 = roadLocalFractionNO2;
+  }
 
 }
