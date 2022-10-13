@@ -34,6 +34,7 @@ import nl.overheid.aerius.shared.exception.AeriusException;
 @JsonSubTypes({
     @Type(value = ReceptorPoint.class, name = CalculationPointType.Names.RECEPTOR),
     @Type(value = CustomCalculationPoint.class, name = CalculationPointType.Names.CUSTOM_CALCULATION_POINT),
+    @Type(value = NcaCustomCalculationPoint.class, name = CalculationPointType.Names.NCA_CUSTOM_CALCULATION_POINT),
     @Type(value = NSLCalculationPoint.class, name = CalculationPointType.Names.NSL_CALCULATION_POINT),
     @Type(value = SubPoint.class, name = CalculationPointType.Names.SUB_POINT)
 })

@@ -124,6 +124,7 @@ class JsonRoundTripTest {
       "ReceptorPoint.json",
       "CustomCalculationPoint.json",
       "CustomCalculationPointWithoutResults.json",
+      "NcaCustomCalculationPoint.json",
   })
   void testConvertCalculationPointTypes(final String fileName) throws IOException {
     final String originalJson = getFileContent(fileName);

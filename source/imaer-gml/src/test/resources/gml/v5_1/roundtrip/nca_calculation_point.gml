@@ -21,7 +21,7 @@
         </imaer:AeriusCalculatorMetadata>
     </imaer:metadata>
     <imaer:featureMember>
-        <imaer:CalculationPoint gml:id="CP.1">
+        <imaer:NcaCustomCalculationPoint gml:id="CP.1">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -35,6 +35,6 @@
             </imaer:GM_Point>
             <imaer:label>DB-team 1e depositie</imaer:label>
             <imaer:roadLocalFractionNO2>0.432</imaer:roadLocalFractionNO2>
-        </imaer:CalculationPoint>
+        </imaer:NcaCustomCalculationPoint>
     </imaer:featureMember>
 </imaer:FeatureCollectionCalculator>

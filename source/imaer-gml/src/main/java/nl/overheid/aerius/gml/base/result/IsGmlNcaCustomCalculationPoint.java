@@ -1,5 +1,5 @@
 /*
- * Copyright the State of the Netherlands
+ * Crown copyright
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -14,17 +14,10 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.gml.v5_1.result;
+package nl.overheid.aerius.gml.base.result;
 
-import javax.xml.bind.annotation.XmlType;
+public interface IsGmlNcaCustomCalculationPoint extends IsGmlCalculationPoint {
 
-import nl.overheid.aerius.gml.base.result.IsGmlCustomCalculationPoint;
-import nl.overheid.aerius.gml.v5_1.base.CalculatorSchema;
-
-/**
- *
- */
-@XmlType(name = "CalculationPointType", namespace = CalculatorSchema.NAMESPACE)
-public class CustomCalculationPoint extends AbstractCalculationPoint implements IsGmlCustomCalculationPoint {
+  Double getRoadLocalFractionNO2();
 
 }

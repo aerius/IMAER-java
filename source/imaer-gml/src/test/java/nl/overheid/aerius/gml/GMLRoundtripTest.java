@@ -131,7 +131,7 @@ public class GMLRoundtripTest {
       {"scenario_farmland_proposed", CharacteristicsType.OPS, EnumSet.of(ImaerExceptionReason.GML_SOURCE_NO_EMISSION)},
       {"scenario_traffic_network_reference", CharacteristicsType.OPS},
       {"scenario_traffic_network_proposed", CharacteristicsType.OPS},
-      {"calculationpoint_fraction_no2", CharacteristicsType.OPS}
+      {"nca_calculation_point", CharacteristicsType.ADMS}
   };
 
   private static final String LATEST_VERSION = "latest";

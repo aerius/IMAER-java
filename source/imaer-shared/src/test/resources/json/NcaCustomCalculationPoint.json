@@ -1,0 +1,14 @@
+{
+  "type" : "Feature",
+  "id" : "CP.2",
+  "geometry" : {
+    "type" : "Point",
+    "coordinates" : [ 207413.0, 475162.0 ]
+  },
+  "properties" : {
+    "calculationPointType" : "NCA_CUSTOM_CALCULATION_POINT",
+    "label" : "DB-team 1e depositie",
+    "customPointId" : 234,
+    "roadLocalFractionNO2" : 0.423
+  }
+}
