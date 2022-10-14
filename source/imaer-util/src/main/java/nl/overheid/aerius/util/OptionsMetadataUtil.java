@@ -30,6 +30,7 @@ import nl.overheid.aerius.shared.domain.calculation.CalculationType;
 import nl.overheid.aerius.shared.domain.calculation.ConnectSuppliedOptions;
 import nl.overheid.aerius.shared.domain.calculation.NCACalculationOptions;
 import nl.overheid.aerius.shared.domain.calculation.OPSOptions;
+import nl.overheid.aerius.shared.domain.calculation.RoadLocalFractionNO2Option;
 import nl.overheid.aerius.shared.domain.calculation.WNBCalculationOptions;
 import nl.overheid.aerius.shared.domain.v2.characteristics.adms.ADMSLimits;
 
@@ -83,7 +84,11 @@ public final class OptionsMetadataUtil {
     ADMS_MET_SITE_ROUGHNESS,
     ADMS_MET_SITE_MIN_MONIN_OBUKHOV_LENGTH,
     ADMS_MET_SITE_SURFACE_ALBEDO,
-    ADMS_MET_SITE_PRIESTLEY_TAYLOR_PARAMETER
+    ADMS_MET_SITE_PRIESTLEY_TAYLOR_PARAMETER,
+
+    /* Road NOX - NO2 calculation related */
+    ROAD_LOCAL_FRACTION_NO2_OPTION,
+    ROAD_LOCAL_FRACTION_NO2_CUSTOM_VALUE,
     ;
     // @formatter:on
 
@@ -169,6 +174,11 @@ public final class OptionsMetadataUtil {
   private static void ncaOptionsFromMap(final NCACalculationOptions options, final Map<Option, String> map) {
     options.setPermitArea(map.get(Option.ADMS_PERMIT_AREA));
     options.setMeteoSiteLocation(map.get(Option.ADMS_METEO_SITE_LOCATION));
+    options.setRoadLocalFractionNO2Option(RoadLocalFractionNO2Option.safeValueOf(map.get(Option.ROAD_LOCAL_FRACTION_NO2_OPTION)));
+    if (options.getRoadLocalFractionNO2Option() == RoadLocalFractionNO2Option.ONE_CUSTOM_VALUE) {
+      options.setRoadLocalFractionNO2(
+          Optional.ofNullable(map.get(Option.ROAD_LOCAL_FRACTION_NO2_CUSTOM_VALUE)).map(Double::parseDouble).orElse(null));
+    }
     parseMeteoYears(options, map);
 
     options.getAdmsOptions()
@@ -216,6 +226,10 @@ public final class OptionsMetadataUtil {
       addValue(mapToAddTo, Option.ADMS_PERMIT_AREA, options.getPermitArea(), addDefaults);
       addValue(mapToAddTo, Option.ADMS_METEO_SITE_LOCATION, options.getMeteoSiteLocation(), addDefaults);
       addValue(mapToAddTo, Option.ADMS_METEO_YEARS, String.join(METEO_YEARS_SEPARATOR, options.getMeteoYears()), addDefaults);
+      addValue(mapToAddTo, Option.ROAD_LOCAL_FRACTION_NO2_OPTION, options.getRoadLocalFractionNO2Option(), addDefaults);
+      if (options.getRoadLocalFractionNO2Option() == RoadLocalFractionNO2Option.ONE_CUSTOM_VALUE) {
+        addValue(mapToAddTo, Option.ROAD_LOCAL_FRACTION_NO2_CUSTOM_VALUE, options.getRoadLocalFractionNO2(), addDefaults);
+      }
       final ADMSOptions adms = options.getAdmsOptions();
 
       if (adms != null) {

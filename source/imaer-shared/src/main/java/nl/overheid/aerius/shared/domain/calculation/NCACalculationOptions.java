@@ -52,6 +52,10 @@ public class NCACalculationOptions implements Serializable {
    */
   private ADMSOptions admsOptions = new ADMSOptions();
 
+  private RoadLocalFractionNO2Option roadLocalFractionNO2Option = RoadLocalFractionNO2Option.LOCATION_BASED;
+
+  private Double roadLocalFractionNO2;
+
   public String getPermitArea() {
     return permitArea;
   }
@@ -91,4 +95,21 @@ public class NCACalculationOptions implements Serializable {
   public void setAdmsVersion(final String admsVersion) {
     this.admsVersion = admsVersion;
   }
+
+  public RoadLocalFractionNO2Option getRoadLocalFractionNO2Option() {
+    return roadLocalFractionNO2Option;
+  }
+
+  public void setRoadLocalFractionNO2Option(final RoadLocalFractionNO2Option roadLocalFractionNO2Option) {
+    this.roadLocalFractionNO2Option = roadLocalFractionNO2Option;
+  }
+
+  public Double getRoadLocalFractionNO2() {
+    return roadLocalFractionNO2;
+  }
+
+  public void setRoadLocalFractionNO2(final Double roadLocalFractionNO2) {
+    this.roadLocalFractionNO2 = roadLocalFractionNO2;
+  }
+
 }

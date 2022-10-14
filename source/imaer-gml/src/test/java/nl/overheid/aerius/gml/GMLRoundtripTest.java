@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
@@ -43,6 +44,10 @@ import nl.overheid.aerius.gml.base.AeriusGMLVersion;
 import nl.overheid.aerius.gml.base.MetaDataInput;
 import nl.overheid.aerius.importer.ImaerImporter;
 import nl.overheid.aerius.importer.ImportOption;
+import nl.overheid.aerius.shared.domain.Substance;
+import nl.overheid.aerius.shared.domain.Theme;
+import nl.overheid.aerius.shared.domain.result.EmissionResultKey;
+import nl.overheid.aerius.shared.domain.result.EmissionResultType;
 import nl.overheid.aerius.shared.domain.scenario.SituationType;
 import nl.overheid.aerius.shared.domain.v2.characteristics.CharacteristicsType;
 import nl.overheid.aerius.shared.domain.v2.importer.ImportParcel;
@@ -131,13 +136,16 @@ public class GMLRoundtripTest {
       {"scenario_farmland_proposed", CharacteristicsType.OPS, EnumSet.of(ImaerExceptionReason.GML_SOURCE_NO_EMISSION)},
       {"scenario_traffic_network_reference", CharacteristicsType.OPS},
       {"scenario_traffic_network_proposed", CharacteristicsType.OPS},
-      {"nca_calculation_point", CharacteristicsType.ADMS}
+      {"nca_calculation_point", CharacteristicsType.ADMS},
+      {"nca_calculation_options", CharacteristicsType.ADMS}
   };
 
   private static final String LATEST_VERSION = "latest";
   private static final String TEST_FOLDER = "/roundtrip/";
   private static final AeriusGMLVersion CURRENT_GML_VERSION = GMLWriter.LATEST_WRITER_VERSION;
   private static final String CURRENT_VERSION = CURRENT_GML_VERSION.name().toLowerCase();
+
+  private static final List<Substance> SUBSTANCES = List.of(Substance.NOX, Substance.NO2, Substance.NH3);
 
   public static List<Object[]> data() throws FileNotFoundException {
     final List<Object[]> files = new ArrayList<>();
@@ -205,7 +213,9 @@ public class GMLRoundtripTest {
           .build();
       final String gml;
       try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
-        gmlc.write(bos, scenario, getMetaData(result));
+        final MetaDataInput metaDataInput = getMetaData(result, file.startsWith("nca") ? Theme.NCA : Theme.WNB,
+            file.contains("calculation_options"));
+        gmlc.write(bos, scenario, metaDataInput);
         gml = bos.toString(StandardCharsets.UTF_8.name());
         assertFalse(gml.isEmpty(), "Generated GML is empty");
       }
@@ -243,12 +253,20 @@ public class GMLRoundtripTest {
     }
   }
 
-  private MetaDataInput getMetaData(final ImportParcel result) {
+  private MetaDataInput getMetaData(final ImportParcel result, final Theme theme, final boolean resultsIncluded) {
     final MetaDataInput input = new MetaDataInput();
     input.setScenarioMetaData(result.getImportedMetaData());
     input.setYear(result.getSituation().getYear());
     input.setVersion("DEV");
     input.setDatabaseVersion(result.getDatabaseVersion());
+    input.setOptions(result.getCalculationSetOptions());
+    input.getOptions().getSubstances().addAll(SUBSTANCES);
+    input.getOptions().getEmissionResultKeys()
+        .addAll(EmissionResultKey.getEmissionResultKeys(SUBSTANCES, EmissionResultType.CONCENTRATION));
+    input.getOptions().getEmissionResultKeys()
+        .addAll(EmissionResultKey.getEmissionResultKeys(SUBSTANCES, EmissionResultType.DEPOSITION));
+    input.setTheme(theme);
+    input.setResultsIncluded(resultsIncluded);
     return input;
   }
 
@@ -291,7 +309,7 @@ public class GMLRoundtripTest {
     };
     final ImportParcel result = new ImportParcel();
     try (final InputStream inputStream = AssertGML.getFileInputStream(relativePath, file)) {
-      importer.importStream(inputStream, ImportOption.getDefaultOptions(), result);
+      importer.importStream(inputStream, ImportOption.getDefaultOptions(), result, Optional.empty(), file.startsWith("nca") ? Theme.NCA : Theme.WNB);
     }
     assertNoExceptions(result.getExceptions(), " for version " + versionString + " with file " + file);
     assertEquals(versionString, readVersion.get(), "GML imported is not of expected version");
