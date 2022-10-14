@@ -19,8 +19,14 @@ package nl.overheid.aerius.shared.emissions;
 import java.util.Locale;
 
 public enum FarmEmissionFactorType {
+  PER_YEAR,
   PER_ANIMAL_PER_YEAR,
-  PER_ANIMAL_PER_DAY;
+  PER_ANIMAL_PER_DAY,
+  PER_METERS_CUBED_PER_APPLICATION,
+  PER_TONNES_PER_APPLICATION,
+  PER_TONNES_PER_YEAR,
+  PER_METERS_SQUARED_PER_DAY,
+  PER_METERS_SQUARED_PER_YEAR;
 
   public static FarmEmissionFactorType safeValueOf(final String value) {
     try {
