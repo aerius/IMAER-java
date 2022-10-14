@@ -36,6 +36,7 @@ import nl.overheid.aerius.shared.domain.v2.source.farm.CustomFarmLodging;
 import nl.overheid.aerius.shared.domain.v2.source.farm.LodgingFodderMeasure;
 import nl.overheid.aerius.shared.domain.v2.source.farm.ReductiveLodgingSystem;
 import nl.overheid.aerius.shared.domain.v2.source.farm.StandardFarmLodging;
+import nl.overheid.aerius.shared.emissions.FarmEmissionFactorType;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 
@@ -50,6 +51,8 @@ class FarmLodgingValidatorTest {
   void testValidSubSourceCustom() {
     final FarmLodgingEmissionSource source = constructSource();
     final CustomFarmLodging subSource = new CustomFarmLodging();
+    subSource.setFarmEmissionFactorType(FarmEmissionFactorType.PER_ANIMAL_PER_DAY);
+    subSource.setNumberOfDays(5);
     source.getSubSources().add(subSource);
 
     final List<AeriusException> errors = new ArrayList<>();
@@ -60,6 +63,49 @@ class FarmLodgingValidatorTest {
 
     assertTrue(valid, "Valid test case");
     assertTrue(errors.isEmpty(), "No errors");
+    assertTrue(warnings.isEmpty(), "No warnings");
+  }
+
+  @Test
+  void testInvalidSubSourceCustom() {
+    final FarmLodgingEmissionSource source = constructSource();
+    final CustomFarmLodging subSource = new CustomFarmLodging();
+    source.getSubSources().add(subSource);
+
+    final List<AeriusException> errors = new ArrayList<>();
+    final List<AeriusException> warnings = new ArrayList<>();
+    final FarmLodgingValidator validator = new FarmLodgingValidator(errors, warnings, validationHelper);
+
+    final boolean valid = validator.validate(source);
+
+    assertFalse(valid, "Invalid test case");
+    assertEquals(1, errors.size(), "Number of errors");
+    assertEquals(ImaerExceptionReason.GML_UNKNOWN_FARM_EMISSION_FACTOR_TYPE, errors.get(0).getReason(), "Error reason");
+    assertArrayEquals(new Object[] {
+        SOURCE_ID, "null"
+    }, errors.get(0).getArgs(), "Arguments");
+    assertTrue(warnings.isEmpty(), "No warnings");
+  }
+
+  @Test
+  void testInvalidSubSourceCustomWithoutDays() {
+    final FarmLodgingEmissionSource source = constructSource();
+    final CustomFarmLodging subSource = new CustomFarmLodging();
+    subSource.setFarmEmissionFactorType(FarmEmissionFactorType.PER_ANIMAL_PER_DAY);
+    source.getSubSources().add(subSource);
+
+    final List<AeriusException> errors = new ArrayList<>();
+    final List<AeriusException> warnings = new ArrayList<>();
+    final FarmLodgingValidator validator = new FarmLodgingValidator(errors, warnings, validationHelper);
+
+    final boolean valid = validator.validate(source);
+
+    assertFalse(valid, "Invalid test case");
+    assertEquals(1, errors.size(), "Number of errors");
+    assertEquals(ImaerExceptionReason.MISSING_NUMBER_OF_DAYS, errors.get(0).getReason(), "Error reason");
+    assertArrayEquals(new Object[] {
+        SOURCE_ID
+    }, errors.get(0).getArgs(), "Arguments");
     assertTrue(warnings.isEmpty(), "No warnings");
   }
 
