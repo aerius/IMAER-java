@@ -213,7 +213,9 @@ public class GMLRoundtripTest {
           .build();
       final String gml;
       try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
-        gmlc.write(bos, scenario, getMetaData(result, file.startsWith("nca") ? Theme.NCA : Theme.WNB));
+        final MetaDataInput metaDataInput = getMetaData(result, file.startsWith("nca") ? Theme.NCA : Theme.WNB,
+            file.contains("calculation_options"));
+        gmlc.write(bos, scenario, metaDataInput);
         gml = bos.toString(StandardCharsets.UTF_8.name());
         assertFalse(gml.isEmpty(), "Generated GML is empty");
       }
@@ -251,7 +253,7 @@ public class GMLRoundtripTest {
     }
   }
 
-  private MetaDataInput getMetaData(final ImportParcel result, final Theme theme) {
+  private MetaDataInput getMetaData(final ImportParcel result, final Theme theme, final boolean resultsIncluded) {
     final MetaDataInput input = new MetaDataInput();
     input.setScenarioMetaData(result.getImportedMetaData());
     input.setYear(result.getSituation().getYear());
@@ -264,7 +266,7 @@ public class GMLRoundtripTest {
     input.getOptions().getEmissionResultKeys()
         .addAll(EmissionResultKey.getEmissionResultKeys(SUBSTANCES, EmissionResultType.DEPOSITION));
     input.setTheme(theme);
-    input.setResultsIncluded(theme == Theme.NCA);
+    input.setResultsIncluded(resultsIncluded);
     return input;
   }
 
