@@ -16,6 +16,8 @@
  */
 package nl.overheid.aerius.validation;
 
+import nl.overheid.aerius.shared.emissions.FarmEmissionFactorType;
+
 public interface FarmLodgingValidationHelper {
 
   boolean isValidFarmLodgingCode(String lodgingCode);
@@ -28,6 +30,6 @@ public interface FarmLodgingValidationHelper {
 
   boolean canFodderApplyToLodging(String fodderMeasureCode, String lodgingCode);
 
-  boolean expectsFarmLodgingNumberOfDays(String systemCode);
+  FarmEmissionFactorType getLodgingEmissionFactorType(final String lodgingCode);
 
 }

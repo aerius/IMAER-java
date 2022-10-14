@@ -657,11 +657,6 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
   }
 
   @Override
-  public boolean expectsFarmLodgingNumberOfDays(final String systemCode) {
-    return systemCode.charAt(0) == 'X';
-  }
-
-  @Override
   public boolean isValidFarmlandActivityCode(final String activityCode) {
     return FARMLAND_CATEGORIES.stream()
         .anyMatch(c -> c.equalsIgnoreCase(activityCode));

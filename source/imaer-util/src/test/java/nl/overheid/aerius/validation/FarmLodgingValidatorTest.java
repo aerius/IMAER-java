@@ -347,7 +347,7 @@ class FarmLodgingValidatorTest {
     final StandardFarmLodging subSource = new StandardFarmLodging();
     final String lodgingCode = "SomeStandardLodging";
     mockLodgingCategory(lodgingCode);
-    when(validationHelper.expectsFarmLodgingNumberOfDays(lodgingCode)).thenReturn(true);
+    when(validationHelper.getLodgingEmissionFactorType(lodgingCode)).thenReturn(FarmEmissionFactorType.PER_ANIMAL_PER_DAY);
 
     subSource.setFarmLodgingCode(lodgingCode);
     subSource.setNumberOfDays(40);
@@ -370,7 +370,7 @@ class FarmLodgingValidatorTest {
     final StandardFarmLodging subSource = new StandardFarmLodging();
     final String lodgingCode = "SomeStandardLodging";
     mockLodgingCategory(lodgingCode);
-    when(validationHelper.expectsFarmLodgingNumberOfDays(lodgingCode)).thenReturn(true);
+    when(validationHelper.getLodgingEmissionFactorType(lodgingCode)).thenReturn(FarmEmissionFactorType.PER_ANIMAL_PER_DAY);
 
     subSource.setFarmLodgingCode(lodgingCode);
     source.getSubSources().add(subSource);
@@ -399,6 +399,7 @@ class FarmLodgingValidatorTest {
 
   private void mockLodgingCategory(final String code) {
     when(validationHelper.isValidFarmLodgingCode(code)).thenReturn(true);
+    when(validationHelper.getLodgingEmissionFactorType(code)).thenReturn(FarmEmissionFactorType.PER_ANIMAL_PER_YEAR);
   }
 
   private void mockAdditionalSystemCategory(final String code) {

@@ -79,16 +79,8 @@ class FarmLodgingValidator extends SourceValidator<FarmLodgingEmissionSource> {
 
   private boolean validateNumberOfDays(final StandardFarmLodging subSource, final String sourceId) {
     final String code = subSource.getFarmLodgingCode();
-    boolean valid = true;
-    if (validationHelper.expectsFarmLodgingNumberOfDays(code)) {
-      if (subSource.getNumberOfDays() == null) {
-        getErrors().add(new AeriusException(ImaerExceptionReason.MISSING_NUMBER_OF_DAYS, sourceId));
-        valid = false;
-      }
-    } else {
-      subSource.setNumberOfDays(null);
-    }
-    return valid;
+    final FarmEmissionFactorType emissionFactorType = validationHelper.getLodgingEmissionFactorType(code);
+    return FarmEmissionFactorTypeValidatorUtil.validate(EXPECTED_EMISSION_FACTOR_TYPES, emissionFactorType, subSource, sourceId, getErrors());
   }
 
   private boolean validateAdditionalSystem(final AdditionalLodgingSystem lodgingSystem, final String sourceId) {
