@@ -152,6 +152,34 @@ public enum ImaerExceptionReason implements Reason {
    */
   MISSING_NUMBER_OF_DAYS(1032),
 
+  /**
+   * Number of applications was missing on an object.
+   *
+   * @param 0 the id of the object containing the error.
+   */
+  MISSING_NUMBER_OF_APPLICATIONS(1033),
+
+  /**
+   * Meters cubed was missing on an object.
+   *
+   * @param 0 the id of the object containing the error.
+   */
+  MISSING_METERS_CUBED(1034),
+
+  /**
+   * Tonnes was missing on an object.
+   *
+   * @param 0 the id of the object containing the error.
+   */
+  MISSING_TONNES(1035),
+
+  /**
+   * Meters squared was missing on an object.
+   *
+   * @param 0 the id of the object containing the error.
+   */
+  MISSING_METERS_SQUARED(1036),
+
   // Import GML file errors/warnings.
   /**
    * Uploaded file should contain no calculation points.

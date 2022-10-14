@@ -22,20 +22,22 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 
 import nl.overheid.aerius.shared.domain.v2.source.base.AbstractSubSource;
+import nl.overheid.aerius.shared.emissions.IsFarmEmissionFactorTypeObject;
 
 @JsonTypeInfo(property = "farmLodgingType", use = Id.NAME)
 @JsonSubTypes({
     @Type(value = CustomFarmLodging.class, name = "CUSTOM"),
     @Type(value = StandardFarmLodging.class, name = "STANDARD"),
 })
-public abstract class FarmLodging extends AbstractSubSource {
+public abstract class FarmLodging extends AbstractSubSource implements IsFarmEmissionFactorTypeObject {
 
   private static final long serialVersionUID = 3L;
 
   private int numberOfAnimals;
   private Integer numberOfDays;
 
-  public int getNumberOfAnimals() {
+  @Override
+  public Integer getNumberOfAnimals() {
     return numberOfAnimals;
   }
 
@@ -43,10 +45,12 @@ public abstract class FarmLodging extends AbstractSubSource {
     this.numberOfAnimals = numberOfAnimals;
   }
 
+  @Override
   public Integer getNumberOfDays() {
     return numberOfDays;
   }
 
+  @Override
   public void setNumberOfDays(final Integer numberOfDays) {
     this.numberOfDays = numberOfDays;
   }

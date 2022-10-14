@@ -16,9 +16,10 @@
  */
 package nl.overheid.aerius.shared.domain.v2.source.farmland;
 
+import nl.overheid.aerius.shared.emissions.IsFarmEmissionFactorTypeObject;
 import nl.overheid.aerius.shared.exception.AeriusException;
 
-public class StandardFarmlandActivity extends AbstractFarmlandActivity {
+public class StandardFarmlandActivity extends AbstractFarmlandActivity implements IsFarmEmissionFactorTypeObject {
 
   private static final long serialVersionUID = 1L;
   private String farmSourceCategoryCode;
@@ -33,18 +34,22 @@ public class StandardFarmlandActivity extends AbstractFarmlandActivity {
     this.farmSourceCategoryCode = farmSourceCategoryCode;
   }
 
+  @Override
   public Integer getNumberOfAnimals() {
     return numberOfAnimals;
   }
 
+  @Override
   public void setNumberOfAnimals(final Integer numberOfAnimals) {
     this.numberOfAnimals = numberOfAnimals;
   }
 
+  @Override
   public Integer getNumberOfDays() {
     return numberOfDays;
   }
 
+  @Override
   public void setNumberOfDays(final Integer numberOfDays) {
     this.numberOfDays = numberOfDays;
   }

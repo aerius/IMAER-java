@@ -674,16 +674,6 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
   }
 
   @Override
-  public boolean expectsFarmlandNumberOfAnimals(final String activityCode) {
-    return activityCode.charAt(0) == 'A' || activityCode.charAt(0) == 'B';
-  }
-
-  @Override
-  public boolean expectsFarmlandNumberOfDays(final String activityCode) {
-    return activityCode.charAt(0) == 'B';
-  }
-
-  @Override
   public boolean isValidPlanCode(final String planCode) {
     return plan(planCode).isPresent();
   }

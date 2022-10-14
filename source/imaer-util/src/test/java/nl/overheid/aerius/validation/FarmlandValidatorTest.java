@@ -19,7 +19,6 @@ package nl.overheid.aerius.validation;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
@@ -35,6 +34,7 @@ import nl.overheid.aerius.shared.domain.v2.source.FarmlandEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.farmland.AbstractFarmlandActivity;
 import nl.overheid.aerius.shared.domain.v2.source.farmland.CustomFarmlandActivity;
 import nl.overheid.aerius.shared.domain.v2.source.farmland.StandardFarmlandActivity;
+import nl.overheid.aerius.shared.emissions.FarmEmissionFactorType;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 
@@ -89,41 +89,13 @@ class FarmlandValidatorTest {
   }
 
   @Test
-  void testValidStandardActivityEmpty() {
-    final FarmlandEmissionSource source = constructSource();
-    final StandardFarmlandActivity subSource = new StandardFarmlandActivity();
-    final String activityCode = "SomeActivityCode";
-    final String standardActivityCode = "SomethingStandard";
-    mockActivityCategory(activityCode);
-    mockStandardActivityCategory(standardActivityCode, false, false);
-    subSource.setActivityCode(activityCode);
-    subSource.setFarmSourceCategoryCode(standardActivityCode);
-    subSource.setNumberOfAnimals(1000);
-    subSource.setNumberOfDays(150);
-
-    source.getSubSources().add(subSource);
-
-    final List<AeriusException> errors = new ArrayList<>();
-    final List<AeriusException> warnings = new ArrayList<>();
-    final FarmlandValidator validator = new FarmlandValidator(errors, warnings, validationHelper);
-
-    final boolean valid = validator.validate(source);
-
-    assertTrue(valid, "Valid test case");
-    assertTrue(errors.isEmpty(), "No errors");
-    assertTrue(warnings.isEmpty(), "No warnings");
-    assertNull(subSource.getNumberOfAnimals(), "Number of animals now set to null");
-    assertNull(subSource.getNumberOfDays(), "Number of days now set to null");
-  }
-
-  @Test
   void testValidStandardActivityFull() {
     final FarmlandEmissionSource source = constructSource();
     final StandardFarmlandActivity subSource = new StandardFarmlandActivity();
     final String activityCode = "SomeActivityCode";
     final String standardActivityCode = "SomethingStandard";
     mockActivityCategory(activityCode);
-    mockStandardActivityCategory(standardActivityCode, true, true);
+    mockStandardActivityCategory(standardActivityCode, FarmEmissionFactorType.PER_ANIMAL_PER_DAY);
     subSource.setActivityCode(activityCode);
     subSource.setFarmSourceCategoryCode(standardActivityCode);
     subSource.setNumberOfAnimals(1000);
@@ -178,7 +150,7 @@ class FarmlandValidatorTest {
     final String activityCode = "SomeActivityCode";
     final String standardActivityCode = "SomethingStandard";
     mockActivityCategory(activityCode);
-    mockStandardActivityCategory(standardActivityCode, true, true);
+    mockStandardActivityCategory(standardActivityCode, FarmEmissionFactorType.PER_ANIMAL_PER_DAY);
     subSource.setActivityCode(activityCode);
     subSource.setFarmSourceCategoryCode(standardActivityCode);
     subSource.setNumberOfDays(150);
@@ -207,7 +179,7 @@ class FarmlandValidatorTest {
     final String activityCode = "SomeActivityCode";
     final String standardActivityCode = "SomethingStandard";
     mockActivityCategory(activityCode);
-    mockStandardActivityCategory(standardActivityCode, true, true);
+    mockStandardActivityCategory(standardActivityCode, FarmEmissionFactorType.PER_ANIMAL_PER_DAY);
     subSource.setActivityCode(activityCode);
     subSource.setFarmSourceCategoryCode(standardActivityCode);
     subSource.setNumberOfAnimals(1000);
@@ -240,10 +212,9 @@ class FarmlandValidatorTest {
     when(validationHelper.isValidFarmlandActivityCode(code)).thenReturn(true);
   }
 
-  private void mockStandardActivityCategory(final String code, final boolean expectsAnimals, final boolean expectsDays) {
+  private void mockStandardActivityCategory(final String code, final FarmEmissionFactorType emissionFactorType) {
     when(validationHelper.isValidFarmlandStandardActivityCode(code)).thenReturn(true);
-    when(validationHelper.expectsFarmlandNumberOfAnimals(code)).thenReturn(expectsAnimals);
-    when(validationHelper.expectsFarmlandNumberOfDays(code)).thenReturn(expectsDays);
+    when(validationHelper.getFarmSourceEmissionFactorType(code)).thenReturn(emissionFactorType);
   }
 
 }

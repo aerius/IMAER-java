@@ -16,14 +16,14 @@
  */
 package nl.overheid.aerius.validation;
 
+import nl.overheid.aerius.shared.emissions.FarmEmissionFactorType;
+
 public interface FarmlandValidationHelper {
 
   boolean isValidFarmlandActivityCode(String activityCode);
 
   boolean isValidFarmlandStandardActivityCode(String activityCode);
 
-  boolean expectsFarmlandNumberOfAnimals(String activityCode);
-
-  boolean expectsFarmlandNumberOfDays(String activityCode);
+  FarmEmissionFactorType getFarmSourceEmissionFactorType(String farmSourceCategoryCode);
 
 }
