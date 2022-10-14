@@ -33,6 +33,7 @@ import nl.overheid.aerius.shared.domain.v2.point.CalculationPoint;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPointFeature;
 import nl.overheid.aerius.shared.domain.v2.point.CustomCalculationPoint;
 import nl.overheid.aerius.shared.domain.v2.point.NSLCalculationPoint;
+import nl.overheid.aerius.shared.domain.v2.point.NcaCustomCalculationPoint;
 import nl.overheid.aerius.shared.domain.v2.point.ReceptorPoint;
 import nl.overheid.aerius.shared.domain.v2.point.SubPoint;
 import nl.overheid.aerius.shared.exception.AeriusException;
@@ -99,8 +100,10 @@ public class GML2Result {
       returnPoint = createSubPoint((IsGmlSubPoint) calculationPoint);
     } else if (calculationPoint instanceof IsGmlNSLCalculationPoint) {
       returnPoint = createNSLCalculationPoint((IsGmlNSLCalculationPoint) calculationPoint);
+    } else if (calculationPoint instanceof IsGmlNcaCustomCalculationPoint) {
+      returnPoint = createNcaCustomCalculationPoint((IsGmlNcaCustomCalculationPoint) calculationPoint);
     } else if (calculationPoint instanceof IsGmlCustomCalculationPoint) {
-      returnPoint = new CustomCalculationPoint();
+      returnPoint = createCustomPoint((IsGmlCustomCalculationPoint) calculationPoint);
     } else {
       throw new AeriusException(ImaerExceptionReason.INTERNAL_ERROR, "Could not handle calculation point: " + calculationPoint.getClass());
     }
@@ -160,10 +163,20 @@ public class GML2Result {
     return target;
   }
 
+  private CustomCalculationPoint createCustomPoint(final IsGmlCustomCalculationPoint origin) {
+    return new CustomCalculationPoint();
+  }
+
   private NSLCalculationPoint createNSLCalculationPoint(final IsGmlNSLCalculationPoint origin) {
     final NSLCalculationPoint target = new NSLCalculationPoint();
     target.setRejectionGrounds(origin.getRejectionGrounds());
     target.setMonitorSubstance(origin.getMonitorSubstance());
+    return target;
+  }
+
+  private NcaCustomCalculationPoint createNcaCustomCalculationPoint(final IsGmlNcaCustomCalculationPoint origin) {
+    final NcaCustomCalculationPoint target = new NcaCustomCalculationPoint();
+    target.setRoadLocalFractionNO2(origin.getRoadLocalFractionNO2());
     return target;
   }
 

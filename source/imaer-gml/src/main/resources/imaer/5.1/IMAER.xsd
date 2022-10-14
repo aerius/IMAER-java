@@ -2125,6 +2125,32 @@ NOTE Het attribuut 'versionId' maakt geen deel uit van de identificatie van het 
     <attributeGroup ref="gml:AssociationAttributeGroup"/>
     <attributeGroup ref="gml:OwnershipAttributeGroup"/>
   </complexType>
+  <element name="NcaCustomCalculationPoint" substitutionGroup="IMAER:CalculationPointType" type="IMAER:NcaCustomCalculationPointType">
+    <annotation>
+      <documentation>Zelfgedefinieerd rekenpunt in kader van NCA.
+NOTE Deze klasse beschrijft een zelfgedefinieerd rekenpunt in het kader van NCA (Nature Conservation Act).</documentation>
+    </annotation>
+  </element>
+  <complexType name="NcaCustomCalculationPointType">
+    <complexContent>
+      <extension base="IMAER:CalculationPointTypeType">
+        <sequence>
+          <element minOccurs="0" name="roadLocalFractionNO2" type="double">
+            <annotation>
+              <documentation>Een optionele waarde voor de lokale fractie NO2 die gehanteerd moet worden bij bepalen van de concentratie NO2 op basis van NOx als gevolg van wegverkeer. Wordt alleen gebruikt bij specifieke rekeninstellingen.</documentation>
+            </annotation>
+          </element>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="NcaCustomCalculationPointPropertyType">
+    <sequence minOccurs="0">
+      <element ref="IMAER:NcaCustomCalculationPoint"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+    <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+  </complexType>
   <element abstract="true" name="OffRoadMobileSource" substitutionGroup="IMAER:EmissionValueType" type="IMAER:OffRoadMobileSourceType">
     <annotation>
       <documentation>Abstracte basisklasse voor de beschrijving van mobiele werktuig bronnen.

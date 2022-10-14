@@ -26,7 +26,11 @@ public enum CalculationPointType {
    */
   CUSTOM_CALCULATION_POINT(Names.CUSTOM_CALCULATION_POINT),
   /**
-   * NSL calculation point.
+   * NCA custom calculation point
+   */
+  NCA_CUSTOM_CALCULATION_POINT(Names.NCA_CUSTOM_CALCULATION_POINT),
+  /**
+   * NSL (custom) calculation point.
    */
   NSL_CALCULATION_POINT(Names.NSL_CALCULATION_POINT),
   /**
@@ -37,6 +41,7 @@ public enum CalculationPointType {
   public static final class Names {
     public static final String RECEPTOR = "RECEPTOR";
     public static final String CUSTOM_CALCULATION_POINT = "CUSTOM_CALCULATION_POINT";
+    public static final String NCA_CUSTOM_CALCULATION_POINT = "NCA_CUSTOM_CALCULATION_POINT";
     public static final String NSL_CALCULATION_POINT = "NSL_CALCULATION_POINT";
     public static final String SUB_POINT = "SUB_POINT";
 
