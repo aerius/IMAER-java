@@ -16,8 +16,10 @@
  */
 package nl.overheid.aerius.shared.domain.v2.point;
 
+import nl.overheid.aerius.shared.domain.v2.geojson.IsFeature;
 import nl.overheid.aerius.shared.domain.v2.nsl.NSLMonitorSubstance;
 import nl.overheid.aerius.shared.domain.v2.nsl.NSLRejectionGrounds;
+import nl.overheid.aerius.shared.exception.AeriusException;
 
 public class NSLCalculationPoint extends CustomCalculationPoint {
 
@@ -40,6 +42,11 @@ public class NSLCalculationPoint extends CustomCalculationPoint {
 
   public void setRejectionGrounds(final NSLRejectionGrounds rejectionGrounds) {
     this.rejectionGrounds = rejectionGrounds;
+  }
+
+  @Override
+  <T> T accept(final CalculationPointVisitor<T> visitor, final IsFeature feature) throws AeriusException {
+    return visitor.visit(this, feature);
   }
 
 }

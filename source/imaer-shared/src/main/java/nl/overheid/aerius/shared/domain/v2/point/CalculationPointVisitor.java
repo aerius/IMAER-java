@@ -27,8 +27,12 @@ public interface CalculationPointVisitor<T> {
 
   T visit(ReceptorPoint calculationPoint, IsFeature feature) throws AeriusException;
 
-  T visit(CustomCalculationPoint emissionSource, IsFeature feature) throws AeriusException;
+  T visit(CustomCalculationPoint calculationPoint, IsFeature feature) throws AeriusException;
 
-  T visit(SubPoint emissionSource, IsFeature feature) throws AeriusException;
+  T visit(NcaCustomCalculationPoint calculationPoint, IsFeature feature) throws AeriusException;
+
+  T visit(NSLCalculationPoint calculationPoint, IsFeature feature) throws AeriusException;
+
+  T visit(SubPoint calculationPoint, IsFeature feature) throws AeriusException;
 
 }
