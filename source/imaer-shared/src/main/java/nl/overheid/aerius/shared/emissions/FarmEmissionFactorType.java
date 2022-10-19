@@ -19,8 +19,38 @@ package nl.overheid.aerius.shared.emissions;
 import java.util.Locale;
 
 public enum FarmEmissionFactorType {
+  PER_YEAR,
   PER_ANIMAL_PER_YEAR,
-  PER_ANIMAL_PER_DAY;
+  PER_ANIMAL_PER_DAY,
+  PER_METERS_CUBED_PER_APPLICATION,
+  PER_TONNES_PER_APPLICATION,
+  PER_TONNES_PER_YEAR,
+  PER_METERS_SQUARED_PER_DAY,
+  PER_METERS_SQUARED_PER_YEAR;
+
+  public static boolean expectsNumberOfAnimals(final FarmEmissionFactorType emissionFactorType) {
+    return emissionFactorType == PER_ANIMAL_PER_DAY || emissionFactorType == PER_ANIMAL_PER_YEAR;
+  }
+
+  public static boolean expectsNumberOfDays(final FarmEmissionFactorType emissionFactorType) {
+    return emissionFactorType == PER_ANIMAL_PER_DAY || emissionFactorType == PER_METERS_SQUARED_PER_DAY;
+  }
+
+  public static boolean expectsNumberOfApplications(final FarmEmissionFactorType emissionFactorType) {
+    return emissionFactorType == PER_METERS_CUBED_PER_APPLICATION || emissionFactorType == PER_TONNES_PER_APPLICATION;
+  }
+
+  public static boolean expectsMetersCubed(final FarmEmissionFactorType emissionFactorType) {
+    return emissionFactorType == PER_METERS_CUBED_PER_APPLICATION;
+  }
+
+  public static boolean expectsTonnes(final FarmEmissionFactorType emissionFactorType) {
+    return emissionFactorType == PER_TONNES_PER_APPLICATION || emissionFactorType == PER_TONNES_PER_YEAR;
+  }
+
+  public static boolean expectsMetersSquared(final FarmEmissionFactorType emissionFactorType) {
+    return emissionFactorType == PER_METERS_SQUARED_PER_DAY || emissionFactorType == PER_METERS_SQUARED_PER_YEAR;
+  }
 
   public static FarmEmissionFactorType safeValueOf(final String value) {
     try {

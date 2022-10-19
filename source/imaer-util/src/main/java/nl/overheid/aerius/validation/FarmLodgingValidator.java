@@ -16,18 +16,25 @@
  */
 package nl.overheid.aerius.validation;
 
+import java.util.EnumSet;
 import java.util.List;
+import java.util.Set;
 
 import nl.overheid.aerius.shared.domain.v2.source.FarmLodgingEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.farm.AdditionalLodgingSystem;
+import nl.overheid.aerius.shared.domain.v2.source.farm.CustomFarmLodging;
 import nl.overheid.aerius.shared.domain.v2.source.farm.FarmLodging;
 import nl.overheid.aerius.shared.domain.v2.source.farm.LodgingFodderMeasure;
 import nl.overheid.aerius.shared.domain.v2.source.farm.ReductiveLodgingSystem;
 import nl.overheid.aerius.shared.domain.v2.source.farm.StandardFarmLodging;
+import nl.overheid.aerius.shared.emissions.FarmEmissionFactorType;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 
 class FarmLodgingValidator extends SourceValidator<FarmLodgingEmissionSource> {
+
+  private static final Set<FarmEmissionFactorType> EXPECTED_EMISSION_FACTOR_TYPES =
+      EnumSet.of(FarmEmissionFactorType.PER_ANIMAL_PER_DAY, FarmEmissionFactorType.PER_ANIMAL_PER_YEAR);
 
   private final FarmLodgingValidationHelper validationHelper;
 
@@ -42,6 +49,8 @@ class FarmLodgingValidator extends SourceValidator<FarmLodgingEmissionSource> {
     for (final FarmLodging subSource : source.getSubSources()) {
       if (subSource instanceof StandardFarmLodging) {
         valid = validateStandardLodging((StandardFarmLodging) subSource, source.getGmlId()) && valid;
+      } else if (subSource instanceof CustomFarmLodging) {
+        valid = validateCustomLodging((CustomFarmLodging) subSource, source.getGmlId()) && valid;
       }
     }
     return valid;
@@ -51,14 +60,7 @@ class FarmLodgingValidator extends SourceValidator<FarmLodgingEmissionSource> {
     final String code = subSource.getFarmLodgingCode();
     boolean valid = true;
     if (validationHelper.isValidFarmLodgingCode(code)) {
-      if (validationHelper.expectsFarmLodgingNumberOfDays(code)) {
-        if (subSource.getNumberOfDays() == null) {
-          getErrors().add(new AeriusException(ImaerExceptionReason.MISSING_NUMBER_OF_DAYS, sourceId));
-          valid = false;
-        }
-      } else {
-        subSource.setNumberOfDays(null);
-      }
+      valid = validateNumberOfDays(subSource, sourceId) && valid;
       for (final AdditionalLodgingSystem additionalSystem : subSource.getAdditionalLodgingSystems()) {
         valid = validateAdditionalSystem(additionalSystem, sourceId) && valid;
       }
@@ -73,6 +75,12 @@ class FarmLodgingValidator extends SourceValidator<FarmLodgingEmissionSource> {
       valid = false;
     }
     return valid;
+  }
+
+  private boolean validateNumberOfDays(final StandardFarmLodging subSource, final String sourceId) {
+    final String code = subSource.getFarmLodgingCode();
+    final FarmEmissionFactorType emissionFactorType = validationHelper.getLodgingEmissionFactorType(code);
+    return FarmEmissionFactorTypeValidatorUtil.validate(EXPECTED_EMISSION_FACTOR_TYPES, emissionFactorType, subSource, sourceId, getErrors());
   }
 
   private boolean validateAdditionalSystem(final AdditionalLodgingSystem lodgingSystem, final String sourceId) {
@@ -107,6 +115,11 @@ class FarmLodgingValidator extends SourceValidator<FarmLodgingEmissionSource> {
       valid = false;
     }
     return valid;
+  }
+
+  private boolean validateCustomLodging(final CustomFarmLodging subSource, final String sourceId) {
+    final FarmEmissionFactorType emissionFactorType = subSource.getFarmEmissionFactorType();
+    return FarmEmissionFactorTypeValidatorUtil.validate(EXPECTED_EMISSION_FACTOR_TYPES, emissionFactorType, subSource, sourceId, getErrors());
   }
 
 }

@@ -16,14 +16,30 @@
  */
 package nl.overheid.aerius.validation;
 
+import nl.overheid.aerius.shared.emissions.FarmEmissionFactorType;
+
 public interface FarmlandValidationHelper {
 
   boolean isValidFarmlandActivityCode(String activityCode);
 
   boolean isValidFarmlandStandardActivityCode(String activityCode);
 
-  boolean expectsFarmlandNumberOfAnimals(String activityCode);
+  /**
+   * @Deprecated Candidate for removal, should no longer be used.
+   */
+  @Deprecated(forRemoval = true)
+  default boolean expectsFarmlandNumberOfAnimals(final String activityCode) {
+    return false;
+  }
 
-  boolean expectsFarmlandNumberOfDays(String activityCode);
+  /**
+   * @Deprecated Candidate for removal, should no longer be used.
+   */
+  @Deprecated(forRemoval = true)
+  default boolean expectsFarmlandNumberOfDays(final String activityCode) {
+    return false;
+  }
+
+  FarmEmissionFactorType getFarmSourceEmissionFactorType(String farmSourceCategoryCode);
 
 }

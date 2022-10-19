@@ -16,15 +16,24 @@
  */
 package nl.overheid.aerius.validation;
 
+import java.util.EnumSet;
 import java.util.List;
+import java.util.Set;
 
 import nl.overheid.aerius.shared.domain.v2.source.FarmlandEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.farmland.AbstractFarmlandActivity;
 import nl.overheid.aerius.shared.domain.v2.source.farmland.StandardFarmlandActivity;
+import nl.overheid.aerius.shared.emissions.FarmEmissionFactorType;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 
 class FarmlandValidator extends SourceValidator<FarmlandEmissionSource> {
+
+  private static final Set<FarmEmissionFactorType> EXPECTED_EMISSION_FACTOR_TYPES = EnumSet.of(
+      FarmEmissionFactorType.PER_ANIMAL_PER_DAY,
+      FarmEmissionFactorType.PER_ANIMAL_PER_YEAR,
+      FarmEmissionFactorType.PER_METERS_CUBED_PER_APPLICATION,
+      FarmEmissionFactorType.PER_TONNES_PER_APPLICATION);
 
   private final FarmlandValidationHelper validationHelper;
 
@@ -60,22 +69,8 @@ class FarmlandValidator extends SourceValidator<FarmlandEmissionSource> {
     boolean valid = true;
     final String standardCode = activity.getFarmSourceCategoryCode();
     if (validationHelper.isValidFarmlandStandardActivityCode(standardCode)) {
-      if (validationHelper.expectsFarmlandNumberOfAnimals(standardCode)) {
-        if (activity.getNumberOfAnimals() == null) {
-          getErrors().add(new AeriusException(ImaerExceptionReason.MISSING_NUMBER_OF_ANIMALS, sourceId));
-          valid = false;
-        }
-      } else {
-        activity.setNumberOfAnimals(null);
-      }
-      if (validationHelper.expectsFarmlandNumberOfDays(standardCode)) {
-        if (activity.getNumberOfDays() == null) {
-          getErrors().add(new AeriusException(ImaerExceptionReason.MISSING_NUMBER_OF_DAYS, sourceId));
-          valid = false;
-        }
-      } else {
-        activity.setNumberOfDays(null);
-      }
+      final FarmEmissionFactorType emissionFactorType = validationHelper.getFarmSourceEmissionFactorType(standardCode);
+      valid = FarmEmissionFactorTypeValidatorUtil.validate(EXPECTED_EMISSION_FACTOR_TYPES, emissionFactorType, activity, sourceId, getErrors());
     } else {
       getErrors().add(new AeriusException(ImaerExceptionReason.GML_UNKNOWN_FARMLAND_ACTIVITY_CODE, sourceId, standardCode));
       valid = false;
