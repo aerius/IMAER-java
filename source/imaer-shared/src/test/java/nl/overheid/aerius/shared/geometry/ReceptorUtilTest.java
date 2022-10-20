@@ -70,7 +70,7 @@ class ReceptorUtilTest {
       final int receptorId1 = random.nextInt(9184376);
       final Point r = RECEPTOR_UTIL.getPointFromReceptorId(receptorId1);
       final int receptorId2 = RECEPTOR_UTIL.getReceptorIdFromPoint(r);
-      final int receptorId3 = RECEPTOR_UTIL.getReceptorIdFromPoint(r);
+      final int receptorId3 = RECEPTOR_UTIL.getReceptorIdFromCoordinate(r.getX(), r.getY());
       Assertions.assertEquals(receptorId1, receptorId2, "Random check for values (exact)");
       Assertions.assertEquals(receptorId1, receptorId3, "Random check for values");
     }
