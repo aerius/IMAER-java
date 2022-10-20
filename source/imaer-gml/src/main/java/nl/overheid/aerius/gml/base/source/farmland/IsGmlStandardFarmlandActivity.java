@@ -24,4 +24,10 @@ public interface IsGmlStandardFarmlandActivity extends IsGmlFarmlandActivity {
 
   Integer getNumberOfDays();
 
+  Double getTonnes();
+
+  Double getMetersCubed();
+
+  Integer getNumberOfApplications();
+
 }

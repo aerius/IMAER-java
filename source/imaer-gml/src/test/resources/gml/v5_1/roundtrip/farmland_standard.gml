@@ -58,7 +58,7 @@
             </imaer:geometry>
             <imaer:emission>
                 <imaer:Emission substance="NH3">
-                    <imaer:value>18772.0</imaer:value>
+                    <imaer:value>18792.8832</imaer:value>
                 </imaer:Emission>
             </imaer:emission>
             <imaer:emission>
@@ -85,6 +85,18 @@
                 <imaer:StandardFarmlandActivity standardActivityType="B2.123" activityType="PASTURE">
                     <imaer:numberOfAnimals>900</imaer:numberOfAnimals>
                     <imaer:numberOfDays>200</imaer:numberOfDays>
+                </imaer:StandardFarmlandActivity>
+            </imaer:activity>
+            <imaer:activity>
+                <imaer:StandardFarmlandActivity standardActivityType="C3.123" activityType="MANURE">
+                    <imaer:tonnes>50.6</imaer:tonnes>
+                    <imaer:numberOfApplications>2</imaer:numberOfApplications>
+                </imaer:StandardFarmlandActivity>
+            </imaer:activity>
+            <imaer:activity>
+                <imaer:StandardFarmlandActivity standardActivityType="D4.123" activityType="MANURE">
+                    <imaer:metersCubed>33.2</imaer:metersCubed>
+                    <imaer:numberOfApplications>3</imaer:numberOfApplications>
                 </imaer:StandardFarmlandActivity>
             </imaer:activity>
         </imaer:FarmlandEmissionSource>

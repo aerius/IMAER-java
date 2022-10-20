@@ -21,10 +21,14 @@ import static org.mockito.Mockito.doReturn;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -64,28 +68,30 @@ class FarmlandEmissionsCalculatorTest {
     assertEquals(7.9, results.get(Substance.NH3), "Emission of each substance is summed individually.");
   }
 
-  @Test
-  void testCalculateStandardEmissionsWithSuppliedFactor() throws AeriusException {
+  @ParameterizedTest
+  @MethodSource("casesPerEmissionFactorType")
+  void testCalculateStandardEmissionsPerAnimalPerDay(final FarmEmissionFactorType emissionFactorType, final double expectedNOxResult)
+      throws AeriusException {
     final FarmlandEmissionSource emissionSource = getEmissionSourceWitStandardFarmlandActivity();
-    doReturn(FarmEmissionFactorType.PER_ANIMAL_PER_DAY).when(emissionFactorSupplier).getFarmSourceEmissionFactorType(CATEGORY_CODE);
+    doReturn(emissionFactorType).when(emissionFactorSupplier).getFarmSourceEmissionFactorType(CATEGORY_CODE);
     doReturn(Map.of(Substance.NOX, 1.0)).when(emissionFactorSupplier).getFarmSourceEmissionFactors(CATEGORY_CODE);
 
     final Map<Substance, Double> results = emissionsCalculator.updateEmissions(emissionSource);
 
-    assertEquals(200, results.get(Substance.NOX), "Emissions should be calculated based on factor, number of animals, and number of days.");
-    assertEquals(200, emissionSource.getSubSources().get(0).getEmissions().get(Substance.NOX), "Emissions should be set on subsource as well");
+    assertEquals(expectedNOxResult, results.get(Substance.NOX),
+        "Emissions should be calculated based on factor, number of animals, and number of days.");
+    assertEquals(expectedNOxResult, emissionSource.getSubSources().get(0).getEmissions().get(Substance.NOX),
+        "Emissions should be set on subsource as well");
   }
 
-  @Test
-  void testCalculateStandardEmissionsPerAnimalPerYear() throws AeriusException {
-    final FarmlandEmissionSource emissionSource = getEmissionSourceWitStandardFarmlandActivity();
-    doReturn(FarmEmissionFactorType.PER_ANIMAL_PER_YEAR).when(emissionFactorSupplier).getFarmSourceEmissionFactorType(CATEGORY_CODE);
-    doReturn(Map.of(Substance.NOX, 1.0)).when(emissionFactorSupplier).getFarmSourceEmissionFactors(CATEGORY_CODE);
-
-    final Map<Substance, Double> results = emissionsCalculator.updateEmissions(emissionSource);
-
-    assertEquals(2, results.get(Substance.NOX), "Emissions should be calculated based on factor, number of animals, and number of days.");
-    assertEquals(2, emissionSource.getSubSources().get(0).getEmissions().get(Substance.NOX), "Emissions should be set on subsource as well");
+  private static Stream<Arguments> casesPerEmissionFactorType() {
+    return Stream.of(
+        Arguments.of(FarmEmissionFactorType.PER_YEAR, 1),
+        Arguments.of(FarmEmissionFactorType.PER_ANIMAL_PER_DAY, 200),
+        Arguments.of(FarmEmissionFactorType.PER_ANIMAL_PER_YEAR, 2),
+        Arguments.of(FarmEmissionFactorType.PER_METERS_CUBED_PER_APPLICATION, 90.6),
+        Arguments.of(FarmEmissionFactorType.PER_TONNES_PER_APPLICATION, 120.9),
+        Arguments.of(FarmEmissionFactorType.PER_TONNES_PER_YEAR, 40.3));
   }
 
   @Test
@@ -106,6 +112,9 @@ class FarmlandEmissionsCalculatorTest {
     activity.getEmissions().put(Substance.NOX, 0.5);
     activity.setNumberOfDays(100);
     activity.setNumberOfAnimals(2);
+    activity.setMetersCubed(30.2);
+    activity.setTonnes(40.3);
+    activity.setNumberOfApplications(3);
     emissionSource.getSubSources().add(activity);
     return emissionSource;
   }

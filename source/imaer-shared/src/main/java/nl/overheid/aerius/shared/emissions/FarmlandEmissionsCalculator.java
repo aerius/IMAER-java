@@ -27,7 +27,6 @@ import nl.overheid.aerius.shared.domain.v2.source.farmland.CustomFarmlandActivit
 import nl.overheid.aerius.shared.domain.v2.source.farmland.FarmlandActivityVisitor;
 import nl.overheid.aerius.shared.domain.v2.source.farmland.StandardFarmlandActivity;
 import nl.overheid.aerius.shared.exception.AeriusException;
-import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 
 public class FarmlandEmissionsCalculator implements FarmlandActivityVisitor<Map<Substance, BigDecimal>> {
 
@@ -63,24 +62,11 @@ public class FarmlandEmissionsCalculator implements FarmlandActivityVisitor<Map<
 
   @Override
   public Map<Substance, BigDecimal> visit(final StandardFarmlandActivity activity) throws AeriusException {
-    final Map<Substance, BigDecimal> activityEmissions = new EnumMap<>(Substance.class);
     final Map<Substance, Double> emissionFactors = farmlandEmissionFactorSupplier
         .getFarmSourceEmissionFactors(activity.getFarmSourceCategoryCode());
 
     final FarmEmissionFactorType emissionFactorType =
         farmlandEmissionFactorSupplier.getFarmSourceEmissionFactorType(activity.getFarmSourceCategoryCode());
-    if (emissionFactorType == FarmEmissionFactorType.PER_ANIMAL_PER_DAY) {
-      emissionFactors.forEach((key, value) -> activityEmissions.put(key,
-          BigDecimal.valueOf(value)
-              .multiply(BigDecimal.valueOf(activity.getNumberOfDays()))
-              .multiply(BigDecimal.valueOf(activity.getNumberOfAnimals()))));
-    } else if (emissionFactorType == FarmEmissionFactorType.PER_ANIMAL_PER_YEAR) {
-      emissionFactors.forEach((key, value) -> activityEmissions.put(key,
-          BigDecimal.valueOf(value)
-              .multiply(BigDecimal.valueOf(activity.getNumberOfAnimals()))));
-    } else {
-      throw new AeriusException(ImaerExceptionReason.INTERNAL_ERROR, "Invalid farm emission factor type for StandardFarmlandActivity.");
-    }
-    return activityEmissions;
+    return FarmSourceEmissionsUtil.calculate(activity, emissionFactors, emissionFactorType);
   }
 }

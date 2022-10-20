@@ -103,7 +103,9 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
 
   private static final List<String> FARM_SOURCE_CATEGORIES = Arrays.asList(
       "A1.123",
-      "B2.123");
+      "B2.123",
+      "C3.123",
+      "D4.123");
 
   private static final List<String> INLAND_SHIPPING_TYPES = Arrays.asList(
       "BI",
@@ -555,9 +557,16 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
 
   @Override
   public FarmEmissionFactorType getFarmSourceEmissionFactorType(final String farmSourceCategoryCode) {
-    return farmSourceCategoryCode.charAt(0) == 'B'
-        ? FarmEmissionFactorType.PER_ANIMAL_PER_DAY
-        : FarmEmissionFactorType.PER_ANIMAL_PER_YEAR;
+    switch (farmSourceCategoryCode.charAt(0)) {
+    case 'B':
+      return FarmEmissionFactorType.PER_ANIMAL_PER_DAY;
+    case 'C':
+      return FarmEmissionFactorType.PER_TONNES_PER_APPLICATION;
+    case 'D':
+      return FarmEmissionFactorType.PER_METERS_CUBED_PER_APPLICATION;
+    default:
+      return FarmEmissionFactorType.PER_ANIMAL_PER_YEAR;
+    }
   }
 
   @Override
