@@ -1831,7 +1831,7 @@ NOTE Er zijn verschillende soorten mestopslag in het model aanwezig. Deze abstra
     <complexContent>
       <extension base="IMAER:EmissionValueTypeType">
         <sequence>
-          <element minOccurs="0" name="tonnes" type="integer">
+          <element minOccurs="0" name="tonnes" type="double">
             <annotation>
               <documentation>Gewicht in ton aan mest.</documentation>
             </annotation>
@@ -3389,7 +3389,7 @@ NOTE Ieder gebruik of activiteit emissietype voor landbouwgrond wordt beschreven
               <documentation>Aantal dagen waarvoor deze activiteit is gedefinieerd. Afhankelijk van het standaard activiteit type is dit wel of niet van belang/verwacht.</documentation>
             </annotation>
           </element>
-          <element minOccurs="0" name="tonnes" type="integer">
+          <element minOccurs="0" name="tonnes" type="double">
             <annotation>
               <documentation>Gewicht in ton waarvoor deze activiteit is gedefinieerd. Afhankelijk van het standaard activiteit type is dit wel of niet van belang/verwacht.</documentation>
             </annotation>
