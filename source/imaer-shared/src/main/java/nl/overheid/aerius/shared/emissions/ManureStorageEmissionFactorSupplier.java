@@ -1,5 +1,5 @@
 /*
- * Copyright the State of the Netherlands
+ * Crown copyright
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -16,25 +16,13 @@
  */
 package nl.overheid.aerius.shared.emissions;
 
-/**
- * Supplier container for source type specific emission factor supppliers.
- */
-public interface EmissionFactorSupplier {
+import java.util.Map;
 
-  FarmLodgingEmissionFactorSupplier farmLodging();
+import nl.overheid.aerius.shared.domain.Substance;
 
-  FarmlandEmissionFactorSupplier farmland();
+public interface ManureStorageEmissionFactorSupplier {
 
-  ManureStorageEmissionFactorSupplier manureStorage();
+  Map<Substance, Double> getManureStorageEmissionFactors(String manureStorageCode);
 
-  PlanEmissionFactorSupplier plan();
-
-  OffRoadMobileEmissionFactorSupplier offRoadMobile();
-
-  RoadEmissionFactorSupplier road();
-
-  InlandShippingEmissionFactorSupplier inlandShipping();
-
-  MaritimeShippingEmissionFactorSupplier maritimeShipping();
-
+  FarmEmissionFactorType getManureStorageEmissionFactorType(String manureStorageCode);
 }

@@ -25,6 +25,8 @@ public interface ValidationHelper {
 
   FarmlandValidationHelper farmlandValidation();
 
+  ManureStorageValidationHelper manureStorageValidation();
+
   OffRoadValidationHelper offRoadMobileValidation();
 
   PlanValidationHelper planValidation();

@@ -30,6 +30,7 @@ import nl.overheid.aerius.shared.domain.v2.source.FarmLodgingEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.FarmlandEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.GenericEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.InlandShippingEmissionSource;
+import nl.overheid.aerius.shared.domain.v2.source.ManureStorageEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.MaritimeShippingEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.MooringInlandShippingEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.MooringMaritimeShippingEmissionSource;
@@ -63,6 +64,12 @@ public class EmissionSourceSchematronVisitor implements EmissionSourceVisitor<Vo
 
   @Override
   public Void visit(final FarmlandEmissionSource emissionSource, final IsFeature feature) throws AeriusException {
+    //NO-OP
+    return null;
+  }
+
+  @Override
+  public Void visit(final ManureStorageEmissionSource emissionSource, final IsFeature feature) throws AeriusException {
     //NO-OP
     return null;
   }

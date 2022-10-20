@@ -35,6 +35,7 @@ import nl.overheid.aerius.shared.domain.v2.source.FarmLodgingEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.FarmlandEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.GenericEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.InlandShippingEmissionSource;
+import nl.overheid.aerius.shared.domain.v2.source.ManureStorageEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.MaritimeShippingEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.MooringInlandShippingEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.MooringMaritimeShippingEmissionSource;
@@ -49,6 +50,7 @@ class EmissionsCalculatorTest {
 
   @Mock FarmLodgingEmissionsCalculator farmLodgingCalculator;
   @Mock FarmlandEmissionsCalculator farmlandCalculator;
+  @Mock ManureStorageEmissionsCalculator manureStorageCalculator;
   @Mock PlanEmissionsCalculator planCalculator;
   @Mock OffRoadMobileEmissionsCalculator offRoadMobileCalculator;
   @Mock SRMRoadEmissionsCalculator srmRoadCalculator;
@@ -60,8 +62,9 @@ class EmissionsCalculatorTest {
 
   @BeforeEach
   void beforeEach() throws AeriusException {
-    emissionsCalculator = new EmissionsCalculator(farmLodgingCalculator, farmlandCalculator, planCalculator, offRoadMobileCalculator,
-        srmRoadCalculator, admsRoadCalculator, inlandShippingCalculator, maritimeShippingCalculator);
+    emissionsCalculator =
+        new EmissionsCalculator(farmLodgingCalculator, farmlandCalculator, manureStorageCalculator, planCalculator, offRoadMobileCalculator,
+            srmRoadCalculator, admsRoadCalculator, inlandShippingCalculator, maritimeShippingCalculator);
   }
 
   @Test
@@ -86,6 +89,18 @@ class EmissionsCalculatorTest {
 
     assertEquals(calculatedEmissions, result,
         "Calculated emission values from FarmlandEmissionsCalculator should be returned for farmland source");
+  }
+
+  @Test
+  void testVisitManureStorage() throws AeriusException {
+    final Map<Substance, Double> calculatedEmissions = Map.of(Substance.NH3, 324.0);
+    final ManureStorageEmissionSource emissionSource = mock(ManureStorageEmissionSource.class);
+    when(manureStorageCalculator.updateEmissions(emissionSource)).thenReturn(calculatedEmissions);
+
+    final Map<Substance, Double> result = emissionsCalculator.visit(emissionSource, null);
+
+    assertEquals(calculatedEmissions, result,
+        "Calculated emission values from ManureStorageEmissionsCalculator should be returned for manure storage source");
   }
 
   @Test
