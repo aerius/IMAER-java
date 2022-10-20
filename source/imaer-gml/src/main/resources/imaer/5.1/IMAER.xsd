@@ -1865,7 +1865,7 @@ NOTE Deze klasse beschrijft mestopslag, inclusief geometrie.</documentation>
     <complexContent>
       <extension base="IMAER:EmissionSourceTypeType">
         <sequence>
-          <element minOccurs="0" name="emission" type="IMAER:EmissionPropertyType"/>
+          <element maxOccurs="unbounded" minOccurs="0" name="emission" type="IMAER:EmissionPropertyType"/>
           <element maxOccurs="unbounded" name="manureStorage" type="IMAER:ManureStoragePropertyType"/>
         </sequence>
       </extension>
