@@ -29,6 +29,8 @@ public interface EmissionSourceVisitor<T> {
 
   T visit(FarmlandEmissionSource emissionSource, IsFeature feature) throws AeriusException;
 
+  T visit(ManureStorageEmissionSource emissionSource, IsFeature feature) throws AeriusException;
+
   T visit(PlanEmissionSource emissionSource, IsFeature feature) throws AeriusException;
 
   T visit(OffRoadMobileEmissionSource emissionSource, IsFeature feature) throws AeriusException;
