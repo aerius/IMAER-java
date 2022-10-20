@@ -98,28 +98,39 @@ public final class ReceptorUtil {
   }
 
   /**
-   * Gets the receptor id based on the given X and Y coordinates. Only works for X and Y within NL bounding box.
+   * Gets the receptor id based on the given X and Y coordinates.
    *
-   * @param rec AeriusPoint to set id for
+   * @param point AeriusPoint to set id for
    * @return AeriusPoint with id
    */
-  public int getReceptorIdFromPoint(final Point rec) {
-    return getReceptorIdFromPoint(rec, zoomLevel1);
+  public int getReceptorIdFromPoint(final Point point) {
+    return getReceptorIdFromPoint(point, zoomLevel1);
   }
 
   /**
-   * Calculates the receptor id based on the x/y and zoomlevel. Only works for X and Y within NL bounding box.
+   * Calculates the receptor id based on the x/y and zoomlevel.
    *
-   * @param rp point to set id on
+   * @param point point to set id on
    * @param zl zoomlevel the id is on
    * @return reference to input point
    */
-  private int getReceptorIdFromPoint(final Point rp, final HexagonZoomLevel zl) {
-    return getReceptorIdFromCoordinate(rp.getX(), rp.getY(), zl);
+  private int getReceptorIdFromPoint(final Point point, final HexagonZoomLevel zl) {
+    return getReceptorIdFromCoordinate(point.getX(), point.getY(), zl);
   }
 
   /**
-   * Calculates the receptor id based on the x/y and zoomlevel. Only works for X and Y within NL bounding box.
+   * Calculates the receptor id based on the x/y at zoomlevel 1.
+   *
+   * @param x The x coordinate for the point.
+   * @param y The y coordinate for the point.
+   * @return The receptor id for the coordinate.
+   */
+  public int getReceptorIdFromCoordinate(final double x, final double y) {
+    return getReceptorIdFromCoordinate(x, y, zoomLevel1);
+  }
+
+  /**
+   * Calculates the receptor id based on the x/y and zoomlevel.
    *
    * @param x The x coordinate for the point.
    * @param y The y coordinate for the point.
