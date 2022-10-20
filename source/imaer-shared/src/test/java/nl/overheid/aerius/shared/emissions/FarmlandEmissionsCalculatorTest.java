@@ -70,9 +70,9 @@ class FarmlandEmissionsCalculatorTest {
 
   @ParameterizedTest
   @MethodSource("casesPerEmissionFactorType")
-  void testCalculateStandardEmissionsPerAnimalPerDay(final FarmEmissionFactorType emissionFactorType, final double expectedNOxResult)
+  void testCalculateStandardEmissions(final FarmEmissionFactorType emissionFactorType, final double expectedNOxResult)
       throws AeriusException {
-    final FarmlandEmissionSource emissionSource = getEmissionSourceWitStandardFarmlandActivity();
+    final FarmlandEmissionSource emissionSource = getEmissionSourceWithStandardFarmlandActivity();
     doReturn(emissionFactorType).when(emissionFactorSupplier).getFarmSourceEmissionFactorType(CATEGORY_CODE);
     doReturn(Map.of(Substance.NOX, 1.0)).when(emissionFactorSupplier).getFarmSourceEmissionFactors(CATEGORY_CODE);
 
@@ -96,7 +96,7 @@ class FarmlandEmissionsCalculatorTest {
 
   @Test
   void testCalculateStandardEmissionsWithoutSuppliedFactor() throws AeriusException {
-    final FarmlandEmissionSource emissionSource = getEmissionSourceWitStandardFarmlandActivity();
+    final FarmlandEmissionSource emissionSource = getEmissionSourceWithStandardFarmlandActivity();
     doReturn(FarmEmissionFactorType.PER_ANIMAL_PER_DAY).when(emissionFactorSupplier).getFarmSourceEmissionFactorType(CATEGORY_CODE);
     doReturn(Collections.emptyMap()).when(emissionFactorSupplier).getFarmSourceEmissionFactors(CATEGORY_CODE);
 
@@ -105,7 +105,7 @@ class FarmlandEmissionsCalculatorTest {
     assertEquals(0, results.size(), "When no emission factors are present, no emissions should be returned.");
   }
 
-  private static FarmlandEmissionSource getEmissionSourceWitStandardFarmlandActivity() {
+  private static FarmlandEmissionSource getEmissionSourceWithStandardFarmlandActivity() {
     final FarmlandEmissionSource emissionSource = new FarmlandEmissionSource();
     final StandardFarmlandActivity activity = new StandardFarmlandActivity();
     activity.setFarmSourceCategoryCode(CATEGORY_CODE);
