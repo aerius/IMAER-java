@@ -25,7 +25,11 @@ public interface EmissionFactorSupplier {
 
   FarmlandEmissionFactorSupplier farmland();
 
-  ManureStorageEmissionFactorSupplier manureStorage();
+  default ManureStorageEmissionFactorSupplier manureStorage() {
+    // Temporary default while projects implement this method.
+    // TODO: remove after a week or so.
+    return null;
+  }
 
   PlanEmissionFactorSupplier plan();
 
