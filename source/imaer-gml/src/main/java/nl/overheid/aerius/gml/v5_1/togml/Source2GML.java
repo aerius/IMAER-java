@@ -40,6 +40,7 @@ import nl.overheid.aerius.shared.domain.v2.source.FarmLodgingEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.FarmlandEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.GenericEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.InlandShippingEmissionSource;
+import nl.overheid.aerius.shared.domain.v2.source.ManureStorageEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.MaritimeShippingEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.MooringInlandShippingEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.MooringMaritimeShippingEmissionSource;
@@ -180,6 +181,12 @@ final class Source2GML implements EmissionSourceVisitor<nl.overheid.aerius.gml.v
   public nl.overheid.aerius.gml.v5_1.source.EmissionSource visit(final FarmlandEmissionSource emissionSource, final IsFeature feature)
       throws AeriusException {
     return new Farmland2GML().convert(emissionSource);
+  }
+
+  @Override
+  public nl.overheid.aerius.gml.v5_1.source.EmissionSource visit(final ManureStorageEmissionSource emissionSource, final IsFeature feature)
+      throws AeriusException {
+    return new ManureStorage2GML().convert(emissionSource);
   }
 
   @Override
