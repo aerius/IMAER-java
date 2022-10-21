@@ -421,6 +421,13 @@ public enum ImaerExceptionReason implements Reason {
    * @param 1 The code that is unknown.
    */
   GML_UNKNOWN_FARM_EMISSION_FACTOR_TYPE(5236),
+  /**
+   * GML contains a unknown manure storage code.
+   *
+   * @param 0 the id of the object containing the error.
+   * @param 1 The code that is unknown.
+   */
+  GML_UNKNOWN_MANURE_STORAGE_CODE(5237),
 
   // Cohesion (between files) errors.
 

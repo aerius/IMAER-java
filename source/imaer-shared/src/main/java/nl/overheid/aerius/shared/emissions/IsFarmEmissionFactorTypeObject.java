@@ -46,11 +46,11 @@ public interface IsFarmEmissionFactorTypeObject {
   default void setMetersCubed(final Double metersCubed) {
   }
 
-  default Integer getTonnes() {
+  default Double getTonnes() {
     return null;
   }
 
-  default void setTonnes(final Integer tonnes) {
+  default void setTonnes(final Double tonnes) {
   }
 
   default Double getMetersSquared() {

@@ -123,6 +123,7 @@ public class GMLRoundtripTest {
       {"adms_industry_with_custom_diurnal_variation", CharacteristicsType.ADMS},
       {"adms_road", CharacteristicsType.ADMS},
       {"adms_road_with_custom_diurnal_variation", CharacteristicsType.ADMS},
+      {"adms_manure_storage", CharacteristicsType.ADMS},
       {"scenario_composting_proposed", CharacteristicsType.OPS},
       {"scenario_composting_reference", CharacteristicsType.OPS},
       {"scenario_greenhouse_reference", CharacteristicsType.OPS},

@@ -67,6 +67,9 @@ class Farmland2GML extends SpecificSource2GML<FarmlandEmissionSource> {
     gmlLandSource.setStandardActivityCode(landSource.getFarmSourceCategoryCode());
     gmlLandSource.setNumberOfAnimals(landSource.getNumberOfAnimals());
     gmlLandSource.setNumberOfDays(landSource.getNumberOfDays());
+    gmlLandSource.setTonnes(landSource.getTonnes());
+    gmlLandSource.setMetersCubed(landSource.getMetersCubed());
+    gmlLandSource.setNumberOfApplications(landSource.getNumberOfApplications());
     return gmlLandSource;
   }
 

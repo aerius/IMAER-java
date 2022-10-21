@@ -28,12 +28,16 @@ import nl.overheid.aerius.gml.v5_1.base.CalculatorSchema;
  *
  */
 @XmlRootElement(name = "StandardFarmlandActivity", namespace = CalculatorSchema.NAMESPACE)
-@XmlType(name = "StandardFarmlandActivityType", namespace = CalculatorSchema.NAMESPACE)
+@XmlType(name = "StandardFarmlandActivityType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"numberOfAnimals", "numberOfDays",
+    "tonnes", "metersCubed", "numberOfApplications"})
 public class StandardFarmlandActivity extends AbstractFarmlandActivity implements IsGmlStandardFarmlandActivity {
 
   private String standardActivityCode;
   private Integer numberOfAnimals;
   private Integer numberOfDays;
+  private Double tonnes;
+  private Double metersCubed;
+  private Integer numberOfApplications;
 
   @Override
   @XmlAttribute(name = "standardActivityType")
@@ -63,6 +67,36 @@ public class StandardFarmlandActivity extends AbstractFarmlandActivity implement
 
   public void setNumberOfDays(final Integer numberOfDays) {
     this.numberOfDays = numberOfDays;
+  }
+
+  @Override
+  @XmlElement(namespace = CalculatorSchema.NAMESPACE)
+  public Double getTonnes() {
+    return tonnes;
+  }
+
+  public void setTonnes(final Double tonnes) {
+    this.tonnes = tonnes;
+  }
+
+  @Override
+  @XmlElement(namespace = CalculatorSchema.NAMESPACE)
+  public Double getMetersCubed() {
+    return metersCubed;
+  }
+
+  public void setMetersCubed(final Double metersCubed) {
+    this.metersCubed = metersCubed;
+  }
+
+  @Override
+  @XmlElement(namespace = CalculatorSchema.NAMESPACE)
+  public Integer getNumberOfApplications() {
+    return numberOfApplications;
+  }
+
+  public void setNumberOfApplications(final Integer numberOfApplications) {
+    this.numberOfApplications = numberOfApplications;
   }
 
 }

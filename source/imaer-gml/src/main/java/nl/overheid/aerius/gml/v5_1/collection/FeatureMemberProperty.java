@@ -33,6 +33,7 @@ import nl.overheid.aerius.gml.v5_1.result.SubPoint;
 import nl.overheid.aerius.gml.v5_1.source.EmissionSource;
 import nl.overheid.aerius.gml.v5_1.source.farmland.FarmlandEmissionSource;
 import nl.overheid.aerius.gml.v5_1.source.lodging.FarmLodgingEmissionSource;
+import nl.overheid.aerius.gml.v5_1.source.manure.ManureStorageEmissionSource;
 import nl.overheid.aerius.gml.v5_1.source.mobile.OffRoadMobileEmissionSource;
 import nl.overheid.aerius.gml.v5_1.source.plan.PlanEmissionSource;
 import nl.overheid.aerius.gml.v5_1.source.road.ADMSRoad;
@@ -70,6 +71,7 @@ public class FeatureMemberProperty extends AbstractProperty<FeatureMemberImpl> {
       @XmlElement(namespace = CalculatorSchema.NAMESPACE, name = "EmissionSource", type = EmissionSource.class),
       @XmlElement(namespace = CalculatorSchema.NAMESPACE, name = "FarmLodgingEmissionSource", type = FarmLodgingEmissionSource.class),
       @XmlElement(namespace = CalculatorSchema.NAMESPACE, name = "FarmlandEmissionSource", type = FarmlandEmissionSource.class),
+      @XmlElement(namespace = CalculatorSchema.NAMESPACE, name = "ManureStorageEmissionSource", type = ManureStorageEmissionSource.class),
       @XmlElement(namespace = CalculatorSchema.NAMESPACE, name = "ADMSRoad", type = ADMSRoad.class),
       @XmlElement(namespace = CalculatorSchema.NAMESPACE, name = "SRM2Road", type = SRM2Road.class),
       @XmlElement(namespace = CalculatorSchema.NAMESPACE, name = "SRM1Road", type = SRM1Road.class),

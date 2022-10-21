@@ -42,6 +42,7 @@ import nl.overheid.aerius.shared.emissions.FarmEmissionFactorType;
 import nl.overheid.aerius.shared.emissions.FarmLodgingEmissionFactorSupplier;
 import nl.overheid.aerius.shared.emissions.FarmlandEmissionFactorSupplier;
 import nl.overheid.aerius.shared.emissions.InlandShippingEmissionFactorSupplier;
+import nl.overheid.aerius.shared.emissions.ManureStorageEmissionFactorSupplier;
 import nl.overheid.aerius.shared.emissions.MaritimeShippingEmissionFactorSupplier;
 import nl.overheid.aerius.shared.emissions.OffRoadMobileEmissionFactorSupplier;
 import nl.overheid.aerius.shared.emissions.PlanEmissionFactorSupplier;
@@ -53,6 +54,7 @@ import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.validation.FarmLodgingValidationHelper;
 import nl.overheid.aerius.validation.FarmlandValidationHelper;
 import nl.overheid.aerius.validation.InlandShippingValidationHelper;
+import nl.overheid.aerius.validation.ManureStorageValidationHelper;
 import nl.overheid.aerius.validation.MaritimeShippingValidationHelper;
 import nl.overheid.aerius.validation.OffRoadValidationHelper;
 import nl.overheid.aerius.validation.PlanValidationHelper;
@@ -63,10 +65,10 @@ import nl.overheid.aerius.validation.ValidationHelper;
  * Test data for validation.
  */
 public class TestValidationAndEmissionHelper implements ValidationHelper, EmissionFactorSupplier,
-    FarmLodgingEmissionFactorSupplier, FarmlandEmissionFactorSupplier, PlanEmissionFactorSupplier, OffRoadMobileEmissionFactorSupplier,
-    RoadEmissionFactorSupplier, InlandShippingEmissionFactorSupplier, MaritimeShippingEmissionFactorSupplier,
-    FarmLodgingValidationHelper, FarmlandValidationHelper, OffRoadValidationHelper, PlanValidationHelper, RoadValidationHelper,
-    InlandShippingValidationHelper, MaritimeShippingValidationHelper {
+    FarmLodgingEmissionFactorSupplier, FarmlandEmissionFactorSupplier, ManureStorageEmissionFactorSupplier, PlanEmissionFactorSupplier,
+    OffRoadMobileEmissionFactorSupplier, RoadEmissionFactorSupplier, InlandShippingEmissionFactorSupplier, MaritimeShippingEmissionFactorSupplier,
+    FarmLodgingValidationHelper, FarmlandValidationHelper, ManureStorageValidationHelper, OffRoadValidationHelper, PlanValidationHelper,
+    RoadValidationHelper, InlandShippingValidationHelper, MaritimeShippingValidationHelper {
 
   private static final List<FarmConstructHelper> FARM_LODGING_CATEGORIES = Arrays.asList(
       new FarmConstructHelper("A1.4", 9.2, false),
@@ -103,7 +105,14 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
 
   private static final List<String> FARM_SOURCE_CATEGORIES = Arrays.asList(
       "A1.123",
-      "B2.123");
+      "B2.123",
+      "C3.123",
+      "D4.123");
+
+  private static final List<String> MANURE_STORAGE_CATEGORIES = Arrays.asList(
+      "Z1.123",
+      "Y2.123",
+      "X3.123");
 
   private static final List<String> INLAND_SHIPPING_TYPES = Arrays.asList(
       "BI",
@@ -477,6 +486,11 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
   }
 
   @Override
+  public ManureStorageEmissionFactorSupplier manureStorage() {
+    return this;
+  }
+
+  @Override
   public PlanEmissionFactorSupplier plan() {
     return this;
   }
@@ -508,6 +522,11 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
 
   @Override
   public FarmlandValidationHelper farmlandValidation() {
+    return this;
+  }
+
+  @Override
+  public ManureStorageValidationHelper manureStorageValidation() {
     return this;
   }
 
@@ -555,9 +574,34 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
 
   @Override
   public FarmEmissionFactorType getFarmSourceEmissionFactorType(final String farmSourceCategoryCode) {
-    return farmSourceCategoryCode.charAt(0) == 'B'
-        ? FarmEmissionFactorType.PER_ANIMAL_PER_DAY
-        : FarmEmissionFactorType.PER_ANIMAL_PER_YEAR;
+    switch (farmSourceCategoryCode.charAt(0)) {
+    case 'B':
+      return FarmEmissionFactorType.PER_ANIMAL_PER_DAY;
+    case 'C':
+      return FarmEmissionFactorType.PER_TONNES_PER_APPLICATION;
+    case 'D':
+      return FarmEmissionFactorType.PER_METERS_CUBED_PER_APPLICATION;
+    default:
+      return FarmEmissionFactorType.PER_ANIMAL_PER_YEAR;
+    }
+  }
+
+  @Override
+  public Map<Substance, Double> getManureStorageEmissionFactors(final String manureStorageCode) {
+    return Map.of(Substance.NH3, 0.203);
+  }
+
+  @Override
+  public FarmEmissionFactorType getManureStorageEmissionFactorType(final String manureStorageCode) {
+    switch (manureStorageCode.charAt(0)) {
+    case 'Y':
+      return FarmEmissionFactorType.PER_METERS_SQUARED_PER_YEAR;
+    case 'X':
+      return FarmEmissionFactorType.PER_METERS_SQUARED_PER_DAY;
+    case 'Z':
+    default:
+      return FarmEmissionFactorType.PER_TONNES_PER_YEAR;
+    }
   }
 
   @Override
@@ -666,6 +710,12 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
   public boolean isValidFarmlandStandardActivityCode(final String activityCode) {
     return FARM_SOURCE_CATEGORIES.stream()
         .anyMatch(c -> c.equalsIgnoreCase(activityCode));
+  }
+
+  @Override
+  public boolean isValidManureStorageCode(final String manureStorageCode) {
+    return MANURE_STORAGE_CATEGORIES.stream()
+        .anyMatch(c -> c.equalsIgnoreCase(manureStorageCode));
   }
 
   @Override

@@ -24,7 +24,7 @@
         </imaer:AeriusCalculatorMetadata>
     </imaer:metadata>
     <imaer:featureMember>
-        <imaer:FarmlandEmissionSource sectorId="4150" gml:id="ES.1">
+        <imaer:ManureStorageEmissionSource sectorId="4120" gml:id="ES.1">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -33,15 +33,15 @@
             </imaer:identifier>
             <imaer:label>Bron 1</imaer:label>
             <imaer:emissionSourceCharacteristics>
-                <imaer:EmissionSourceCharacteristics>
-                    <imaer:heatContent>
-                        <imaer:SpecifiedHeatContent>
-                            <imaer:value>0.0</imaer:value>
-                        </imaer:SpecifiedHeatContent>
-                    </imaer:heatContent>
-                    <imaer:emissionHeight>0.5</imaer:emissionHeight>
-                    <imaer:spread>0.3</imaer:spread>
-                </imaer:EmissionSourceCharacteristics>
+                <imaer:ADMSSourceCharacteristics>
+                    <imaer:height>1.0</imaer:height>
+                    <imaer:specificHeatCapacity>342.12</imaer:specificHeatCapacity>
+                    <imaer:sourceType>AREA</imaer:sourceType>
+                    <imaer:buoyancyType>DENSITY</imaer:buoyancyType>
+                    <imaer:density>58.23</imaer:density>
+                    <imaer:effluxType>VELOCITY</imaer:effluxType>
+                    <imaer:verticalVelocity>49.2</imaer:verticalVelocity>
+                </imaer:ADMSSourceCharacteristics>
             </imaer:emissionSourceCharacteristics>
             <imaer:geometry>
                 <imaer:EmissionSourceGeometry>
@@ -58,12 +58,12 @@
             </imaer:geometry>
             <imaer:emission>
                 <imaer:Emission substance="NH3">
-                    <imaer:value>18792.8832</imaer:value>
+                    <imaer:value>134.5484</imaer:value>
                 </imaer:Emission>
             </imaer:emission>
             <imaer:emission>
                 <imaer:Emission substance="NOX">
-                    <imaer:value>0.0</imaer:value>
+                    <imaer:value>18.72</imaer:value>
                 </imaer:Emission>
             </imaer:emission>
             <imaer:emission>
@@ -76,29 +76,36 @@
                     <imaer:value>0.0</imaer:value>
                 </imaer:Emission>
             </imaer:emission>
-            <imaer:activity>
-                <imaer:StandardFarmlandActivity standardActivityType="A1.123" activityType="PASTURE">
-                    <imaer:numberOfAnimals>500</imaer:numberOfAnimals>
-                </imaer:StandardFarmlandActivity>
-            </imaer:activity>
-            <imaer:activity>
-                <imaer:StandardFarmlandActivity standardActivityType="B2.123" activityType="PASTURE">
-                    <imaer:numberOfAnimals>900</imaer:numberOfAnimals>
+            <imaer:manureStorage>
+                <imaer:StandardManureStorage manureStorageType="Z1.123">
+                    <imaer:tonnes>40.5</imaer:tonnes>
+                </imaer:StandardManureStorage>
+            </imaer:manureStorage>
+            <imaer:manureStorage>
+                <imaer:StandardManureStorage manureStorageType="Y2.123">
+                    <imaer:metersSquared>2.3</imaer:metersSquared>
+                </imaer:StandardManureStorage>
+            </imaer:manureStorage>
+            <imaer:manureStorage>
+                <imaer:StandardManureStorage manureStorageType="X3.123">
+                    <imaer:metersSquared>3.1</imaer:metersSquared>
                     <imaer:numberOfDays>200</imaer:numberOfDays>
-                </imaer:StandardFarmlandActivity>
-            </imaer:activity>
-            <imaer:activity>
-                <imaer:StandardFarmlandActivity standardActivityType="C3.123" activityType="MANURE">
-                    <imaer:tonnes>50.6</imaer:tonnes>
-                    <imaer:numberOfApplications>2</imaer:numberOfApplications>
-                </imaer:StandardFarmlandActivity>
-            </imaer:activity>
-            <imaer:activity>
-                <imaer:StandardFarmlandActivity standardActivityType="D4.123" activityType="MANURE">
-                    <imaer:metersCubed>33.2</imaer:metersCubed>
-                    <imaer:numberOfApplications>3</imaer:numberOfApplications>
-                </imaer:StandardFarmlandActivity>
-            </imaer:activity>
-        </imaer:FarmlandEmissionSource>
+                </imaer:StandardManureStorage>
+            </imaer:manureStorage>
+            <imaer:manureStorage>
+                <imaer:CustomManureStorage>
+                    <imaer:metersSquared>5.2</imaer:metersSquared>
+                    <imaer:numberOfDays>300</imaer:numberOfDays>
+                    <imaer:description>Eigen mest</imaer:description>
+                    <imaer:animalType>MANBEARPIG</imaer:animalType>
+                    <imaer:emissionFactorType>PER_METERS_SQUARED_PER_DAY</imaer:emissionFactorType>
+                    <imaer:emissionFactor>
+                        <imaer:Emission substance="NOX">
+                            <imaer:value>0.012</imaer:value>
+                        </imaer:Emission>
+                    </imaer:emissionFactor>
+                </imaer:CustomManureStorage>
+            </imaer:manureStorage>
+        </imaer:ManureStorageEmissionSource>
     </imaer:featureMember>
 </imaer:FeatureCollectionCalculator>

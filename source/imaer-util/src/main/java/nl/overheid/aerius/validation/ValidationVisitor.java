@@ -27,6 +27,7 @@ import nl.overheid.aerius.shared.domain.v2.source.FarmLodgingEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.FarmlandEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.GenericEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.InlandShippingEmissionSource;
+import nl.overheid.aerius.shared.domain.v2.source.ManureStorageEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.MaritimeShippingEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.MooringInlandShippingEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.MooringMaritimeShippingEmissionSource;
@@ -78,6 +79,11 @@ public class ValidationVisitor implements EmissionSourceVisitor<Boolean> {
   @Override
   public Boolean visit(final FarmlandEmissionSource emissionSource, final IsFeature feature) throws AeriusException {
     return new FarmlandValidator(errors, warnings, validationHelper.farmlandValidation()).validate(emissionSource, feature);
+  }
+
+  @Override
+  public Boolean visit(final ManureStorageEmissionSource emissionSource, final IsFeature feature) throws AeriusException {
+    return new ManureStorageValidator(errors, warnings, validationHelper.manureStorageValidation()).validate(emissionSource, feature);
   }
 
   @Override

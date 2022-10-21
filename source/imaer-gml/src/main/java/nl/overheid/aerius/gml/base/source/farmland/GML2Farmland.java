@@ -79,6 +79,9 @@ public class GML2Farmland<T extends IsGmlFarmlandEmissionSource> extends Abstrac
     activity.setFarmSourceCategoryCode(gmlActivity.getStandardActivityCode());
     activity.setNumberOfAnimals(gmlActivity.getNumberOfAnimals());
     activity.setNumberOfDays(gmlActivity.getNumberOfDays());
+    activity.setTonnes(gmlActivity.getTonnes());
+    activity.setMetersCubed(gmlActivity.getMetersCubed());
+    activity.setNumberOfApplications(gmlActivity.getNumberOfApplications());
     return activity;
   }
 }

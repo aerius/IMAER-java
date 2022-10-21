@@ -29,6 +29,10 @@ public enum EmissionSourceType {
    */
   FARMLAND(Names.FARMLAND),
   /**
+   * Manure storage emission values.
+   */
+  MANURE_STORAGE(Names.MANURE_STORAGE),
+  /**
    * Generic for all others.
    */
   GENERIC(Names.GENERIC),
@@ -80,6 +84,7 @@ public enum EmissionSourceType {
   public static final class Names {
     public static final String FARM_LODGE = "FARM_LODGE";
     public static final String FARMLAND = "FARMLAND";
+    public static final String MANURE_STORAGE = "MANURE_STORAGE";
     public static final String GENERIC = "GENERIC";
     public static final String MEDIUM_COMBUSTION_PLANT = "MEDIUM_COMBUSTION_PLANT";
     public static final String OFFROAD_MOBILE = "OFFROAD_MOBILE";

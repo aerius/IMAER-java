@@ -1,5 +1,5 @@
 /*
- * Copyright the State of the Netherlands
+ * Crown copyright
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -14,20 +14,15 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.gml.base.source.farmland;
+package nl.overheid.aerius.gml.base.source.manure;
 
-public interface IsGmlStandardFarmlandActivity extends IsGmlFarmlandActivity {
+import java.util.List;
 
-  String getStandardActivityCode();
+import nl.overheid.aerius.gml.base.IsGmlProperty;
+import nl.overheid.aerius.gml.base.source.IsGmlEmissionSource;
 
-  Integer getNumberOfAnimals();
+public interface IsGmlManureStorageEmissionSource extends IsGmlEmissionSource {
 
-  Integer getNumberOfDays();
-
-  Double getTonnes();
-
-  Double getMetersCubed();
-
-  Integer getNumberOfApplications();
+  List<? extends IsGmlProperty<IsGmlManureStorage>> getManureStorages();
 
 }

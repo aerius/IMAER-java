@@ -25,6 +25,9 @@ public class StandardFarmlandActivity extends AbstractFarmlandActivity implement
   private String farmSourceCategoryCode;
   private Integer numberOfAnimals;
   private Integer numberOfDays;
+  private Double tonnes;
+  private Double metersCubed;
+  private Integer numberOfApplications;
 
   public String getFarmSourceCategoryCode() {
     return farmSourceCategoryCode;
@@ -52,6 +55,36 @@ public class StandardFarmlandActivity extends AbstractFarmlandActivity implement
   @Override
   public void setNumberOfDays(final Integer numberOfDays) {
     this.numberOfDays = numberOfDays;
+  }
+
+  @Override
+  public Double getTonnes() {
+    return tonnes;
+  }
+
+  @Override
+  public void setTonnes(final Double tonnes) {
+    this.tonnes = tonnes;
+  }
+
+  @Override
+  public Double getMetersCubed() {
+    return metersCubed;
+  }
+
+  @Override
+  public void setMetersCubed(final Double metersCubed) {
+    this.metersCubed = metersCubed;
+  }
+
+  @Override
+  public Integer getNumberOfApplications() {
+    return numberOfApplications;
+  }
+
+  @Override
+  public void setNumberOfApplications(final Integer numberOfApplications) {
+    this.numberOfApplications = numberOfApplications;
   }
 
   @Override

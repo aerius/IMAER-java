@@ -1001,6 +1001,45 @@ NOTE Eigenschappen beschreven in dit object worden voor standaard bronnen direct
       <element ref="IMAER:CustomInlandShippingEmissionProperties"/>
     </sequence>
   </complexType>
+  <element name="CustomManureStorage" substitutionGroup="IMAER:ManureStorage" type="IMAER:CustomManureStorageType">
+    <annotation>
+      <documentation>Zelfgedefinieerde mestopslag beschrijving.
+NOTE Deze klasse beschrijft een zelfgedefinieerde mestopslag techniek.</documentation>
+    </annotation>
+  </element>
+  <complexType name="CustomManureStorageType">
+    <complexContent>
+      <extension base="IMAER:ManureStorageType">
+        <sequence>
+          <element name="description" type="string">
+            <annotation>
+              <documentation>Beschrijving van de mestopslag techniek.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="animalType" type="string">
+            <annotation>
+              <documentation>Code die aangeeft van welk dier de mest afkomstig is.</documentation>
+            </annotation>
+          </element>
+          <element name="emissionFactorType" type="string">
+            <annotation>
+              <documentation>Het type van emissie factor. Aan de hand van dit type wordt afgeleid welke optionele kenmerken verwacht worden.</documentation>
+            </annotation>
+          </element>
+          <element name="emissionFactor" type="IMAER:EmissionPropertyType">
+            <annotation>
+              <documentation>De emissiefactor(en) die gehanteerd moet worden, eenheid afhankelijk van de gebruikte emissionFactorType.</documentation>
+            </annotation>
+          </element>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="CustomManureStoragePropertyType">
+    <sequence>
+      <element ref="IMAER:CustomManureStorage"/>
+    </sequence>
+  </complexType>
   <element name="CustomMaritimeShipping" substitutionGroup="IMAER:MaritimeShipping" type="IMAER:CustomMaritimeShippingType">
     <annotation>
       <documentation>Zelfgedefinieerde  schepen op een vaarroute voor zeescheepvaart.
@@ -1781,6 +1820,63 @@ NOTE Er zijn verschillende soorten extra staltechnieken in het model aanwezig. D
     <sequence>
       <element ref="IMAER:LodgingSystem"/>
     </sequence>
+  </complexType>
+  <element abstract="true" name="ManureStorage" substitutionGroup="IMAER:EmissionValueType" type="IMAER:ManureStorageType">
+    <annotation>
+      <documentation>Karakteristieken van een emissietype voor mestopslag.
+NOTE Er zijn verschillende soorten mestopslag in het model aanwezig. Deze abstracte basisklasse is een generalisatie van de verschillende typen in het model.</documentation>
+    </annotation>
+  </element>
+  <complexType abstract="true" name="ManureStorageType">
+    <complexContent>
+      <extension base="IMAER:EmissionValueTypeType">
+        <sequence>
+          <element minOccurs="0" name="tonnes" type="double">
+            <annotation>
+              <documentation>Gewicht in ton aan mest.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="metersSquared" type="double">
+            <annotation>
+              <documentation>Oppervlakte van de mest in vierkante meters.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="numberOfDays" type="integer">
+            <annotation>
+              <documentation>Aantal dagen  in het jaar dat van de mestopslag gebruik wordt gemaakt.</documentation>
+            </annotation>
+          </element>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="ManureStoragePropertyType">
+    <sequence>
+      <element ref="IMAER:ManureStorage"/>
+    </sequence>
+  </complexType>
+  <element name="ManureStorageEmissionSource" substitutionGroup="IMAER:EmissionSourceType" type="IMAER:ManureStorageEmissionSourceType">
+    <annotation>
+      <documentation>Emissiebron van mestopslag.
+NOTE Deze klasse beschrijft mestopslag, inclusief geometrie.</documentation>
+    </annotation>
+  </element>
+  <complexType name="ManureStorageEmissionSourceType">
+    <complexContent>
+      <extension base="IMAER:EmissionSourceTypeType">
+        <sequence>
+          <element maxOccurs="unbounded" minOccurs="0" name="emission" type="IMAER:EmissionPropertyType"/>
+          <element maxOccurs="unbounded" name="manureStorage" type="IMAER:ManureStoragePropertyType"/>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="ManureStorageEmissionSourcePropertyType">
+    <sequence minOccurs="0">
+      <element ref="IMAER:ManureStorageEmissionSource"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+    <attributeGroup ref="gml:OwnershipAttributeGroup"/>
   </complexType>
   <element abstract="true" name="MaritimeShipping" substitutionGroup="IMAER:EmissionValueType" type="IMAER:MaritimeShippingType">
     <annotation>
@@ -3293,6 +3389,21 @@ NOTE Ieder gebruik of activiteit emissietype voor landbouwgrond wordt beschreven
               <documentation>Aantal dagen waarvoor deze activiteit is gedefinieerd. Afhankelijk van het standaard activiteit type is dit wel of niet van belang/verwacht.</documentation>
             </annotation>
           </element>
+          <element minOccurs="0" name="tonnes" type="double">
+            <annotation>
+              <documentation>Gewicht in ton waarvoor deze activiteit is gedefinieerd. Afhankelijk van het standaard activiteit type is dit wel of niet van belang/verwacht.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="metersCubed" type="double">
+            <annotation>
+              <documentation>Kubieke meter volume waarvoor deze activiteit is gedefinieerd. Afhankelijk van het standaard activiteit type is dit wel of niet van belang/verwacht.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="numberOfApplications" type="integer">
+            <annotation>
+              <documentation>Aantal keer aanwending waarvoor deze activiteit is gedefinieerd. Afhankelijk van het standaard activiteit type is dit wel of niet van belang/verwacht.</documentation>
+            </annotation>
+          </element>
         </sequence>
         <attribute name="standardActivityType" type="string" use="required">
           <annotation>
@@ -3328,6 +3439,29 @@ NOTE Deze klasse beschrijft een schip op een vaarroute, gebruik makend van een v
   <complexType name="StandardInlandShippingPropertyType">
     <sequence>
       <element ref="IMAER:StandardInlandShipping"/>
+    </sequence>
+  </complexType>
+  <element name="StandardManureStorage" substitutionGroup="IMAER:ManureStorage" type="IMAER:StandardManureStorageType">
+    <annotation>
+      <documentation>Standaard mestopslag beschrijving.
+NOTE Deze klasse beschrijft een standaard mestopslag, gebruik makend van een voorgedefinieerde mestopslag techniek code.</documentation>
+    </annotation>
+  </element>
+  <complexType name="StandardManureStorageType">
+    <complexContent>
+      <extension base="IMAER:ManureStorageType">
+        <sequence/>
+        <attribute name="manureStorageType" type="string" use="required">
+          <annotation>
+            <documentation>Vaststaande code die aangeeft om wat voor mestopslag techniek het gaat. Aan de hand van deze code wordt afgeleid welke optionele kenmerken verwacht worden.</documentation>
+          </annotation>
+        </attribute>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="StandardManureStoragePropertyType">
+    <sequence>
+      <element ref="IMAER:StandardManureStorage"/>
     </sequence>
   </complexType>
   <element name="StandardMaritimeShipping" substitutionGroup="IMAER:MaritimeShipping" type="IMAER:StandardMaritimeShippingType">
