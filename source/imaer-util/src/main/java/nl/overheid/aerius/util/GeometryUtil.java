@@ -36,12 +36,12 @@ import org.locationtech.jts.geom.util.AffineTransformation;
 import org.locationtech.jts.io.ParseException;
 import org.locationtech.jts.io.WKTReader;
 import org.locationtech.jts.linearref.LengthIndexedLine;
-import org.locationtech.jts.operation.valid.IsSimpleOp;
+import org.locationtech.jts.operation.IsSimpleOp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import nl.overheid.aerius.shared.domain.v2.geojson.Point;
 import nl.overheid.aerius.shared.domain.geo.OrientedEnvelope;
+import nl.overheid.aerius.shared.domain.v2.geojson.Point;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 
