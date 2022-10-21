@@ -53,15 +53,7 @@ class ManureStorageValidatorTest {
     subSource.setNumberOfDays(40);
     source.getSubSources().add(subSource);
 
-    final List<AeriusException> errors = new ArrayList<>();
-    final List<AeriusException> warnings = new ArrayList<>();
-    final ManureStorageValidator validator = new ManureStorageValidator(errors, warnings, validationHelper);
-
-    final boolean valid = validator.validate(source);
-
-    assertTrue(valid, "Valid test case");
-    assertTrue(errors.isEmpty(), "No errors");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertCorrectCase(source);
   }
 
   @Test
@@ -73,19 +65,9 @@ class ManureStorageValidatorTest {
     subSource.setNumberOfDays(40);
     source.getSubSources().add(subSource);
 
-    final List<AeriusException> errors = new ArrayList<>();
-    final List<AeriusException> warnings = new ArrayList<>();
-    final ManureStorageValidator validator = new ManureStorageValidator(errors, warnings, validationHelper);
-
-    final boolean valid = validator.validate(source);
-
-    assertFalse(valid, "Invalid test case");
-    assertEquals(1, errors.size(), "Number of errors");
-    assertEquals(ImaerExceptionReason.GML_UNKNOWN_FARM_EMISSION_FACTOR_TYPE, errors.get(0).getReason(), "Error reason");
-    assertArrayEquals(new Object[] {
+    assertInvalidCase(source, ImaerExceptionReason.GML_UNKNOWN_FARM_EMISSION_FACTOR_TYPE, new Object[] {
         SOURCE_ID, "PER_ANIMAL_PER_DAY"
-    }, errors.get(0).getArgs(), "Arguments");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    });
   }
 
   @Test
@@ -99,15 +81,7 @@ class ManureStorageValidatorTest {
 
     source.getSubSources().add(subSource);
 
-    final List<AeriusException> errors = new ArrayList<>();
-    final List<AeriusException> warnings = new ArrayList<>();
-    final ManureStorageValidator validator = new ManureStorageValidator(errors, warnings, validationHelper);
-
-    final boolean valid = validator.validate(source);
-
-    assertTrue(valid, "Valid test case");
-    assertTrue(errors.isEmpty(), "No errors");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertCorrectCase(source);
   }
 
   @Test
@@ -120,19 +94,9 @@ class ManureStorageValidatorTest {
 
     source.getSubSources().add(subSource);
 
-    final List<AeriusException> errors = new ArrayList<>();
-    final List<AeriusException> warnings = new ArrayList<>();
-    final ManureStorageValidator validator = new ManureStorageValidator(errors, warnings, validationHelper);
-
-    final boolean valid = validator.validate(source);
-
-    assertFalse(valid, "Invalid test case");
-    assertEquals(1, errors.size(), "Number of errors");
-    assertEquals(ImaerExceptionReason.GML_UNKNOWN_MANURE_STORAGE_CODE, errors.get(0).getReason(), "Error reason");
-    assertArrayEquals(new Object[] {
+    assertInvalidCase(source, ImaerExceptionReason.GML_UNKNOWN_MANURE_STORAGE_CODE, new Object[] {
         SOURCE_ID, standardCode
-    }, errors.get(0).getArgs(), "Arguments");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    });
   }
 
   @Test
@@ -145,19 +109,9 @@ class ManureStorageValidatorTest {
 
     source.getSubSources().add(subSource);
 
-    final List<AeriusException> errors = new ArrayList<>();
-    final List<AeriusException> warnings = new ArrayList<>();
-    final ManureStorageValidator validator = new ManureStorageValidator(errors, warnings, validationHelper);
-
-    final boolean valid = validator.validate(source);
-
-    assertFalse(valid, "Invalid test case");
-    assertEquals(1, errors.size(), "Number of errors");
-    assertEquals(ImaerExceptionReason.MISSING_METERS_SQUARED, errors.get(0).getReason(), "Error reason");
-    assertArrayEquals(new Object[] {
+    assertInvalidCase(source, ImaerExceptionReason.MISSING_METERS_SQUARED, new Object[] {
         SOURCE_ID
-    }, errors.get(0).getArgs(), "Arguments");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    });
   }
 
   @Test
@@ -171,19 +125,9 @@ class ManureStorageValidatorTest {
 
     source.getSubSources().add(subSource);
 
-    final List<AeriusException> errors = new ArrayList<>();
-    final List<AeriusException> warnings = new ArrayList<>();
-    final ManureStorageValidator validator = new ManureStorageValidator(errors, warnings, validationHelper);
-
-    final boolean valid = validator.validate(source);
-
-    assertFalse(valid, "Invalid test case");
-    assertEquals(1, errors.size(), "Number of errors");
-    assertEquals(ImaerExceptionReason.MISSING_NUMBER_OF_DAYS, errors.get(0).getReason(), "Error reason");
-    assertArrayEquals(new Object[] {
+    assertInvalidCase(source, ImaerExceptionReason.MISSING_NUMBER_OF_DAYS, new Object[] {
         SOURCE_ID
-    }, errors.get(0).getArgs(), "Arguments");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    });
   }
 
   @Test
@@ -196,6 +140,24 @@ class ManureStorageValidatorTest {
 
     source.getSubSources().add(subSource);
 
+    assertInvalidCase(source, ImaerExceptionReason.MISSING_TONNES, new Object[] {
+        SOURCE_ID
+    });
+  }
+
+  private void assertCorrectCase(final ManureStorageEmissionSource source) {
+    final List<AeriusException> errors = new ArrayList<>();
+    final List<AeriusException> warnings = new ArrayList<>();
+    final ManureStorageValidator validator = new ManureStorageValidator(errors, warnings, validationHelper);
+
+    final boolean valid = validator.validate(source);
+
+    assertTrue(valid, "Valid test case");
+    assertTrue(errors.isEmpty(), "No errors");
+    assertTrue(warnings.isEmpty(), "No warnings");
+  }
+
+  private void assertInvalidCase(final ManureStorageEmissionSource source, final ImaerExceptionReason errorReason, final Object[] errorArguments) {
     final List<AeriusException> errors = new ArrayList<>();
     final List<AeriusException> warnings = new ArrayList<>();
     final ManureStorageValidator validator = new ManureStorageValidator(errors, warnings, validationHelper);
@@ -204,10 +166,8 @@ class ManureStorageValidatorTest {
 
     assertFalse(valid, "Invalid test case");
     assertEquals(1, errors.size(), "Number of errors");
-    assertEquals(ImaerExceptionReason.MISSING_TONNES, errors.get(0).getReason(), "Error reason");
-    assertArrayEquals(new Object[] {
-        SOURCE_ID
-    }, errors.get(0).getArgs(), "Arguments");
+    assertEquals(errorReason, errors.get(0).getReason(), "Error reason");
+    assertArrayEquals(errorArguments, errors.get(0).getArgs(), "Arguments");
     assertTrue(warnings.isEmpty(), "No warnings");
   }
 
