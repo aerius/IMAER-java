@@ -36,7 +36,6 @@ import org.locationtech.jts.geom.util.AffineTransformation;
 import org.locationtech.jts.io.ParseException;
 import org.locationtech.jts.io.WKTReader;
 import org.locationtech.jts.linearref.LengthIndexedLine;
-import org.locationtech.jts.operation.IsSimpleOp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -237,12 +236,8 @@ public final class GeometryUtil {
    * @return true if invalid, false if not.
    */
   public static boolean hasIntersections(final Geometry geometry) {
-    final IsSimpleOp isSimpleOp = new IsSimpleOp(geometry);
-    //isSimple implementation for polygons always returns true because if
-    //isValid returns true it's by definition simple. Therefore both test are
-    //done here, as isSimple is needed for checking lines.
     return (geometry instanceof Polygon || geometry instanceof MultiPolygon)
-        && (!isSimpleOp.isSimple() || !geometry.isValid());
+        && !geometry.isValid();
   }
 
   /**
