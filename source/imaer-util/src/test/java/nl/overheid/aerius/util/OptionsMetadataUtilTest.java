@@ -191,7 +191,8 @@ class OptionsMetadataUtilTest {
     ncaOptions.setPermitArea("London");
     ncaOptions.setMeteoSiteLocation("Near London");
     ncaOptions.setMeteoYears(List.of("2022", "2023"));
-    ncaOptions.setRoadLocalFractionNO2Option(RoadLocalFractionNO2Option.ONE_CUSTOM_VALUE);
+    ncaOptions.setRoadLocalFractionNO2ReceptorsOption(RoadLocalFractionNO2Option.ONE_CUSTOM_VALUE);
+    ncaOptions.setRoadLocalFractionNO2PointsOption(RoadLocalFractionNO2Option.ONE_CUSTOM_VALUE);
     ncaOptions.setRoadLocalFractionNO2(0.4);
     final ADMSOptions adms = new ADMSOptions();
     ncaOptions.setAdmsOptions(adms);
@@ -223,7 +224,8 @@ class OptionsMetadataUtilTest {
     assertEquals("1.1", result.get("adms_met_site_min_monin_obukhov_length"));
     assertEquals("1.2", result.get("adms_met_site_surface_albedo"));
     assertEquals("1.3", result.get("adms_met_site_priestley_taylor_parameter"));
-    assertEquals("ONE_CUSTOM_VALUE", result.get("road_local_fraction_no2_option"));
+    assertEquals("ONE_CUSTOM_VALUE", result.get("road_local_fraction_no2_receptors_option"));
+    assertEquals("ONE_CUSTOM_VALUE", result.get("road_local_fraction_no2_points_option"));
     assertEquals("0.4", result.get("road_local_fraction_no2_custom_value"));
   }
 
@@ -232,23 +234,26 @@ class OptionsMetadataUtilTest {
     final CalculationSetOptions options = new CalculationSetOptions();
     final NCACalculationOptions ncaOptions = options.getNcaCalculationOptions();
 
-    ncaOptions.setRoadLocalFractionNO2Option(RoadLocalFractionNO2Option.LOCATION_BASED);
+    ncaOptions.setRoadLocalFractionNO2ReceptorsOption(RoadLocalFractionNO2Option.LOCATION_BASED);
+    ncaOptions.setRoadLocalFractionNO2PointsOption(RoadLocalFractionNO2Option.LOCATION_BASED);
     ncaOptions.setRoadLocalFractionNO2(0.4);
     final Map<String, String> result1 = OptionsMetadataUtil.optionsToMap(Theme.NCA, options, false);
 
-    assertEquals("LOCATION_BASED", result1.get("road_local_fraction_no2_option"));
+    assertEquals("LOCATION_BASED", result1.get("road_local_fraction_no2_receptors_option"));
     assertFalse(result1.containsKey("road_local_fraction_no2_custom_value"));
 
-    ncaOptions.setRoadLocalFractionNO2Option(RoadLocalFractionNO2Option.ONE_CUSTOM_VALUE);
+    ncaOptions.setRoadLocalFractionNO2ReceptorsOption(RoadLocalFractionNO2Option.ONE_CUSTOM_VALUE);
+    ncaOptions.setRoadLocalFractionNO2PointsOption(RoadLocalFractionNO2Option.ONE_CUSTOM_VALUE);
     final Map<String, String> result2 = OptionsMetadataUtil.optionsToMap(Theme.NCA, options, false);
 
-    assertEquals("ONE_CUSTOM_VALUE", result2.get("road_local_fraction_no2_option"));
+    assertEquals("ONE_CUSTOM_VALUE", result2.get("road_local_fraction_no2_receptors_option"));
     assertEquals("0.4", result2.get("road_local_fraction_no2_custom_value"));
 
-    ncaOptions.setRoadLocalFractionNO2Option(RoadLocalFractionNO2Option.INDIVIDUAL_CUSTOM_VALUES);
+    ncaOptions.setRoadLocalFractionNO2ReceptorsOption(RoadLocalFractionNO2Option.INDIVIDUAL_CUSTOM_VALUES);
+    ncaOptions.setRoadLocalFractionNO2PointsOption(RoadLocalFractionNO2Option.INDIVIDUAL_CUSTOM_VALUES);
     final Map<String, String> result3 = OptionsMetadataUtil.optionsToMap(Theme.NCA, options, false);
 
-    assertEquals("INDIVIDUAL_CUSTOM_VALUES", result3.get("road_local_fraction_no2_option"));
+    assertEquals("INDIVIDUAL_CUSTOM_VALUES", result3.get("road_local_fraction_no2_receptors_option"));
     assertFalse(result3.containsKey("road_local_fraction_no2_custom_value"));
   }
 
@@ -261,7 +266,8 @@ class OptionsMetadataUtilTest {
     ncaOptions.setPermitArea("London");
     ncaOptions.setMeteoSiteLocation("Near London");
     ncaOptions.setMeteoYears(List.of("2022", "2023"));
-    ncaOptions.setRoadLocalFractionNO2Option(RoadLocalFractionNO2Option.ONE_CUSTOM_VALUE);
+    ncaOptions.setRoadLocalFractionNO2ReceptorsOption(RoadLocalFractionNO2Option.ONE_CUSTOM_VALUE);
+    ncaOptions.setRoadLocalFractionNO2PointsOption(RoadLocalFractionNO2Option.ONE_CUSTOM_VALUE);
     ncaOptions.setRoadLocalFractionNO2(0.4);
     final ADMSOptions adms = new ADMSOptions();
     ncaOptions.setAdmsOptions(adms);
