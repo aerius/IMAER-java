@@ -52,8 +52,19 @@ public class NCACalculationOptions implements Serializable {
    */
   private ADMSOptions admsOptions = new ADMSOptions();
 
-  private RoadLocalFractionNO2Option roadLocalFractionNO2Option = RoadLocalFractionNO2Option.LOCATION_BASED;
+  // Additional Fraction NO2 (fNO2) options
 
+  /**
+   * Option on what fNO2 to use when calculating receptors.
+   */
+  private RoadLocalFractionNO2Option roadLocalFractionNO2ReceptorsOption = RoadLocalFractionNO2Option.LOCATION_BASED;
+  /**
+   * Option on what fNO2 to use when calculating custom calculation points.
+   */
+  private RoadLocalFractionNO2Option roadLocalFractionNO2PoinsOption = RoadLocalFractionNO2Option.LOCATION_BASED;
+  /**
+   * Value for fNO2 when either receptors or points is configured as {@link RoadLocalFractionNO2Option#ONE_CUSTOM_VALUE}.
+   */
   private Double roadLocalFractionNO2;
 
   public String getPermitArea() {
@@ -96,12 +107,20 @@ public class NCACalculationOptions implements Serializable {
     this.admsVersion = admsVersion;
   }
 
-  public RoadLocalFractionNO2Option getRoadLocalFractionNO2Option() {
-    return roadLocalFractionNO2Option;
+  public RoadLocalFractionNO2Option getRoadLocalFractionNO2ReceptorsOption() {
+    return roadLocalFractionNO2ReceptorsOption;
   }
 
-  public void setRoadLocalFractionNO2Option(final RoadLocalFractionNO2Option roadLocalFractionNO2Option) {
-    this.roadLocalFractionNO2Option = roadLocalFractionNO2Option;
+  public void setRoadLocalFractionNO2ReceptorsOption(final RoadLocalFractionNO2Option roadLocalFractionNO2ReceptorsOption) {
+    this.roadLocalFractionNO2ReceptorsOption = roadLocalFractionNO2ReceptorsOption;
+  }
+
+  public RoadLocalFractionNO2Option getRoadLocalFractionNO2PointsOption() {
+    return roadLocalFractionNO2PoinsOption;
+  }
+
+  public void setRoadLocalFractionNO2PointsOption(final RoadLocalFractionNO2Option roadLocalFractionNO2PointsOption) {
+    this.roadLocalFractionNO2PoinsOption = roadLocalFractionNO2PointsOption;
   }
 
   public Double getRoadLocalFractionNO2() {

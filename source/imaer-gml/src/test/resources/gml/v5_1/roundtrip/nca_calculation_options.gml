@@ -31,7 +31,13 @@
                     </imaer:option>
                     <imaer:option>
                         <imaer:CalculationOption>
-                            <imaer:key>road_local_fraction_no2_option</imaer:key>
+                            <imaer:key>road_local_fraction_no2_receptors_option</imaer:key>
+                            <imaer:value>ONE_CUSTOM_VALUE</imaer:value>
+                        </imaer:CalculationOption>
+                    </imaer:option>
+                    <imaer:option>
+                        <imaer:CalculationOption>
+                            <imaer:key>road_local_fraction_no2_points_option</imaer:key>
                             <imaer:value>ONE_CUSTOM_VALUE</imaer:value>
                         </imaer:CalculationOption>
                     </imaer:option>

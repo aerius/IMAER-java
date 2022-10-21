@@ -87,7 +87,8 @@ public final class OptionsMetadataUtil {
     ADMS_MET_SITE_PRIESTLEY_TAYLOR_PARAMETER,
 
     /* Road NOX - NO2 calculation related */
-    ROAD_LOCAL_FRACTION_NO2_OPTION,
+    ROAD_LOCAL_FRACTION_NO2_RECEPTORS_OPTION,
+    ROAD_LOCAL_FRACTION_NO2_POINTS_OPTION,
     ROAD_LOCAL_FRACTION_NO2_CUSTOM_VALUE,
     ;
     // @formatter:on
@@ -174,8 +175,10 @@ public final class OptionsMetadataUtil {
   private static void ncaOptionsFromMap(final NCACalculationOptions options, final Map<Option, String> map) {
     options.setPermitArea(map.get(Option.ADMS_PERMIT_AREA));
     options.setMeteoSiteLocation(map.get(Option.ADMS_METEO_SITE_LOCATION));
-    options.setRoadLocalFractionNO2Option(RoadLocalFractionNO2Option.safeValueOf(map.get(Option.ROAD_LOCAL_FRACTION_NO2_OPTION)));
-    if (options.getRoadLocalFractionNO2Option() == RoadLocalFractionNO2Option.ONE_CUSTOM_VALUE) {
+    options.setRoadLocalFractionNO2ReceptorsOption(RoadLocalFractionNO2Option.safeValueOf(map.get(Option.ROAD_LOCAL_FRACTION_NO2_RECEPTORS_OPTION)));
+    options.setRoadLocalFractionNO2PointsOption(RoadLocalFractionNO2Option.safeValueOf(map.get(Option.ROAD_LOCAL_FRACTION_NO2_POINTS_OPTION)));
+    if (options.getRoadLocalFractionNO2ReceptorsOption() == RoadLocalFractionNO2Option.ONE_CUSTOM_VALUE
+        || options.getRoadLocalFractionNO2PointsOption() == RoadLocalFractionNO2Option.ONE_CUSTOM_VALUE) {
       options.setRoadLocalFractionNO2(
           Optional.ofNullable(map.get(Option.ROAD_LOCAL_FRACTION_NO2_CUSTOM_VALUE)).map(Double::parseDouble).orElse(null));
     }
@@ -226,8 +229,10 @@ public final class OptionsMetadataUtil {
       addValue(mapToAddTo, Option.ADMS_PERMIT_AREA, options.getPermitArea(), addDefaults);
       addValue(mapToAddTo, Option.ADMS_METEO_SITE_LOCATION, options.getMeteoSiteLocation(), addDefaults);
       addValue(mapToAddTo, Option.ADMS_METEO_YEARS, String.join(METEO_YEARS_SEPARATOR, options.getMeteoYears()), addDefaults);
-      addValue(mapToAddTo, Option.ROAD_LOCAL_FRACTION_NO2_OPTION, options.getRoadLocalFractionNO2Option(), addDefaults);
-      if (options.getRoadLocalFractionNO2Option() == RoadLocalFractionNO2Option.ONE_CUSTOM_VALUE) {
+      addValue(mapToAddTo, Option.ROAD_LOCAL_FRACTION_NO2_RECEPTORS_OPTION, options.getRoadLocalFractionNO2ReceptorsOption(), addDefaults);
+      addValue(mapToAddTo, Option.ROAD_LOCAL_FRACTION_NO2_POINTS_OPTION, options.getRoadLocalFractionNO2PointsOption(), addDefaults);
+      if (options.getRoadLocalFractionNO2ReceptorsOption() == RoadLocalFractionNO2Option.ONE_CUSTOM_VALUE
+          || options.getRoadLocalFractionNO2PointsOption() == RoadLocalFractionNO2Option.ONE_CUSTOM_VALUE) {
         addValue(mapToAddTo, Option.ROAD_LOCAL_FRACTION_NO2_CUSTOM_VALUE, options.getRoadLocalFractionNO2(), addDefaults);
       }
       final ADMSOptions adms = options.getAdmsOptions();
