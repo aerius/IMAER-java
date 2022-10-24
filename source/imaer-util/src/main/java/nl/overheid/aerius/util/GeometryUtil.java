@@ -220,7 +220,7 @@ public final class GeometryUtil {
   }
 
   /**
-   * Check if a wkt has intersections.
+   * Check if wkt is a polygon that has self-intersections.
    * @param wkt The WKT to check for intersections.
    * @return true if invalid, false if not.
    * @throws AeriusException In case the WKT was incorrect.
@@ -231,7 +231,10 @@ public final class GeometryUtil {
   }
 
   /**
-   * Check if a geometry has intersections.
+   * Check if a geometry is a polygon that has self-intersections.
+   * This is done by checking if the supplied geometry is a (multi)polygon.
+   * If so, the isValid method is used to check if it is self-intersecting.
+   * There are some more cases which are considered invalid, but self-intersects are the most common.
    * @param geometry The JTS geometry to check for intersections.
    * @return true if invalid, false if not.
    */
