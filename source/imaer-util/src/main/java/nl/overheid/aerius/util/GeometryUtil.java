@@ -36,12 +36,11 @@ import org.locationtech.jts.geom.util.AffineTransformation;
 import org.locationtech.jts.io.ParseException;
 import org.locationtech.jts.io.WKTReader;
 import org.locationtech.jts.linearref.LengthIndexedLine;
-import org.locationtech.jts.operation.valid.IsSimpleOp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import nl.overheid.aerius.shared.domain.v2.geojson.Point;
 import nl.overheid.aerius.shared.domain.geo.OrientedEnvelope;
+import nl.overheid.aerius.shared.domain.v2.geojson.Point;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 
@@ -221,7 +220,7 @@ public final class GeometryUtil {
   }
 
   /**
-   * Check if a wkt has intersections.
+   * Check if wkt is a polygon that has self-intersections.
    * @param wkt The WKT to check for intersections.
    * @return true if invalid, false if not.
    * @throws AeriusException In case the WKT was incorrect.
@@ -232,17 +231,16 @@ public final class GeometryUtil {
   }
 
   /**
-   * Check if a geometry has intersections.
+   * Check if a geometry is a polygon that has self-intersections.
+   * This is done by checking if the supplied geometry is a (multi)polygon.
+   * If so, the isValid method is used to check if it is self-intersecting.
+   * There are some more cases which are considered invalid, but self-intersects are the most common.
    * @param geometry The JTS geometry to check for intersections.
    * @return true if invalid, false if not.
    */
   public static boolean hasIntersections(final Geometry geometry) {
-    final IsSimpleOp isSimpleOp = new IsSimpleOp(geometry);
-    //isSimple implementation for polygons always returns true because if
-    //isValid returns true it's by definition simple. Therefore both test are
-    //done here, as isSimple is needed for checking lines.
     return (geometry instanceof Polygon || geometry instanceof MultiPolygon)
-        && (!isSimpleOp.isSimple() || !geometry.isValid());
+        && !geometry.isValid();
   }
 
   /**

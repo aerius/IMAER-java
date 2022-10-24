@@ -68,6 +68,11 @@ class GeometryUtilTest {
     final String normalPolygonWKT = "POLYGON((0 0," + side + " 0," + side + " " + side + ",0 " + side + ",0 0))";
     assertFalse(GeometryUtil.hasIntersections(normalPolygonWKT), "Normal polygon geometry shouldn't count as intersected");
 
+    //create normal polygon with a duplicate coordinate (0,0), (0,4000), (4000,4000), (4000,4000), (0,4000), (0,0)
+    final String normalPolygonDuplicatePointsWKT =
+        "POLYGON((0 0," + side + " 0," + side + " " + side + "," + side + " " + side + ",0 " + side + ",0 0))";
+    assertFalse(GeometryUtil.hasIntersections(normalPolygonDuplicatePointsWKT), "Polygon with a duplicate coordinate shouldn't count as intersected");
+
     //create Bow-Tie linestring with points (0,0), (4000,4000), (4000,0), (0,4000)
     final String bowtieLineStringWKT = "LINESTRING(0 0," + side + " " + side + "," + side + " 0,0 " + side + ")";
     assertFalse(GeometryUtil.hasIntersections(bowtieLineStringWKT), "Bowtie linestring geometry should not count as intersected");
@@ -187,14 +192,15 @@ class GeometryUtilTest {
 
     final LineString lineStringWithoutCoords = new LineString();
     lineStringWithoutCoords.setCoordinates(new double[][] {{}});
-    final AeriusException exceptionOnLineStringWithoutCoords = assertThrows(AeriusException.class, () -> GeometryUtil.getGeometry(lineStringWithoutCoords));
+    final AeriusException exceptionOnLineStringWithoutCoords =
+        assertThrows(AeriusException.class, () -> GeometryUtil.getGeometry(lineStringWithoutCoords));
     assertEquals(ImaerExceptionReason.GEOMETRY_INVALID, exceptionOnLineStringWithoutCoords.getReason(), "Reason for linestring with 1 coord");
 
     final LineString lineStringWithIncorrectCoord = new LineString();
     lineStringWithIncorrectCoord.setCoordinates(new double[][] {{939, 32423, 234}});
-    final AeriusException exceptionOnLineStringWithIncorrectCoord = assertThrows(AeriusException.class, () -> GeometryUtil.getGeometry(lineStringWithIncorrectCoord));
+    final AeriusException exceptionOnLineStringWithIncorrectCoord =
+        assertThrows(AeriusException.class, () -> GeometryUtil.getGeometry(lineStringWithIncorrectCoord));
     assertEquals(ImaerExceptionReason.GEOMETRY_INVALID, exceptionOnLineStringWithIncorrectCoord.getReason(), "Reason for linestring with 1 coord");
-
 
     final Polygon polygonWithoutCoords = new Polygon();
     polygonWithoutCoords.setCoordinates(new double[][][] {});
