@@ -45,12 +45,44 @@ class ManureStorageValidatorTest {
   @Mock ManureStorageValidationHelper validationHelper;
 
   @Test
-  void testValidCustom() {
+  void testValidCustomMetersSquaredDay() {
     final ManureStorageEmissionSource source = constructSource();
     final CustomManureStorage subSource = new CustomManureStorage();
     subSource.setFarmEmissionFactorType(FarmEmissionFactorType.PER_METERS_SQUARED_PER_DAY);
     subSource.setMetersSquared(3.2);
     subSource.setNumberOfDays(40);
+    source.getSubSources().add(subSource);
+
+    assertCorrectCase(source);
+  }
+
+  @Test
+  void testValidCustomMetersSquared() {
+    final ManureStorageEmissionSource source = constructSource();
+    final CustomManureStorage subSource = new CustomManureStorage();
+    subSource.setFarmEmissionFactorType(FarmEmissionFactorType.PER_METERS_SQUARED_PER_YEAR);
+    subSource.setMetersSquared(3.2);
+    source.getSubSources().add(subSource);
+
+    assertCorrectCase(source);
+  }
+
+  @Test
+  void testValidCustomTonnes() {
+    final ManureStorageEmissionSource source = constructSource();
+    final CustomManureStorage subSource = new CustomManureStorage();
+    subSource.setFarmEmissionFactorType(FarmEmissionFactorType.PER_TONNES_PER_YEAR);
+    subSource.setTonnes(3.2);
+    source.getSubSources().add(subSource);
+
+    assertCorrectCase(source);
+  }
+
+  @Test
+  void testValidCustom() {
+    final ManureStorageEmissionSource source = constructSource();
+    final CustomManureStorage subSource = new CustomManureStorage();
+    subSource.setFarmEmissionFactorType(FarmEmissionFactorType.PER_YEAR);
     source.getSubSources().add(subSource);
 
     assertCorrectCase(source);

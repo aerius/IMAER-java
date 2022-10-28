@@ -33,7 +33,8 @@ class ManureStorageValidator extends SourceValidator<ManureStorageEmissionSource
   private static final Set<FarmEmissionFactorType> EXPECTED_EMISSION_FACTOR_TYPES = EnumSet.of(
       FarmEmissionFactorType.PER_TONNES_PER_YEAR,
       FarmEmissionFactorType.PER_METERS_SQUARED_PER_YEAR,
-      FarmEmissionFactorType.PER_METERS_SQUARED_PER_DAY);
+      FarmEmissionFactorType.PER_METERS_SQUARED_PER_DAY,
+      FarmEmissionFactorType.PER_YEAR);
 
   private final ManureStorageValidationHelper validationHelper;
 
