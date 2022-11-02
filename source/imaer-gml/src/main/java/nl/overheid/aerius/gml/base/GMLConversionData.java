@@ -76,7 +76,7 @@ public class GMLConversionData {
     this.helper = helper;
     this.legacyCodeConverter = legacyCodeConverter;
     this.characteristicsSupplier = helper;
-    this.srid = helper.getReceptorGridSettings().getEpsg().getSrid();
+    this.srid = helper.getReceptorGridSettings().getEPSG().getSrid();
     this.receptorUtil = new ReceptorUtil(helper.getReceptorGridSettings());
     this.errors = errors;
     this.warnings = warnings;
