@@ -28,6 +28,7 @@ import nl.overheid.aerius.gml.base.FeatureMember;
 import nl.overheid.aerius.gml.base.GMLVersionWriter;
 import nl.overheid.aerius.gml.base.MetaData;
 import nl.overheid.aerius.gml.base.MetaDataInput;
+import nl.overheid.aerius.gml.base.OtherSituationMetaData;
 import nl.overheid.aerius.gml.base.StringUtils;
 import nl.overheid.aerius.gml.base.geo.Geometry2GML;
 import nl.overheid.aerius.gml.v5_1.base.CalculatorSchema;
@@ -39,6 +40,8 @@ import nl.overheid.aerius.gml.v5_1.metadata.CalculationMetadata;
 import nl.overheid.aerius.gml.v5_1.metadata.CalculationOption;
 import nl.overheid.aerius.gml.v5_1.metadata.CalculationOptionProperty;
 import nl.overheid.aerius.gml.v5_1.metadata.MetaDataImpl;
+import nl.overheid.aerius.gml.v5_1.metadata.OtherSituationMetadata;
+import nl.overheid.aerius.gml.v5_1.metadata.OtherSituationMetadataProperty;
 import nl.overheid.aerius.gml.v5_1.metadata.ProjectMetadata;
 import nl.overheid.aerius.gml.v5_1.metadata.SituationMetadata;
 import nl.overheid.aerius.gml.v5_1.metadata.VersionMetadata;
@@ -175,6 +178,7 @@ public class GMLVersionWriterV51 implements GMLVersionWriter {
       calculation.setSubstances(input.getOptions().getSubstances());
       calculation.setResultTypes(determineResultTypes(input.getOptions().getEmissionResultKeys()));
       calculation.setOptions(options2GML(input.getTheme(), input.getOptions()));
+      calculation.setOtherSituations(otherSituations2GML(input.getOtherSituations()));
     } else {
       calculation = null;
     }
@@ -204,6 +208,20 @@ public class GMLVersionWriterV51 implements GMLVersionWriter {
         .map(entry -> new CalculationOption(entry.getKey(), entry.getValue()))
         .map(CalculationOptionProperty::new)
         .collect(Collectors.toList());
+  }
+
+  private List<OtherSituationMetadataProperty> otherSituations2GML(final List<OtherSituationMetaData> otherSituations) {
+    return otherSituations.stream()
+        .map(this::otherSituation2GML)
+        .map(OtherSituationMetadataProperty::new)
+        .collect(Collectors.toList());
+  }
+
+  private OtherSituationMetadata otherSituation2GML(final OtherSituationMetaData otherSituation) {
+    final OtherSituationMetadata gmlOtherSituation = new OtherSituationMetadata();
+    gmlOtherSituation.setSituationType(otherSituation.getSituationType());
+    gmlOtherSituation.setName(otherSituation.getName());
+    return gmlOtherSituation;
   }
 
   @Override

@@ -37,6 +37,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import nl.overheid.aerius.gml.base.MetaDataInput;
+import nl.overheid.aerius.gml.base.OtherSituationMetaData;
 import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.calculation.CalculationSetOptions;
 import nl.overheid.aerius.shared.domain.calculation.CalculationType;
@@ -170,6 +171,9 @@ public class GMLWriterTest {
     metaDataInput.setVersion(VERSION);
     metaDataInput.setDatabaseVersion(DATABASE_VERSION);
     metaDataInput.setOptions(getCalculationOptions());
+    metaDataInput.addOtherSituation(OtherSituationMetaData.Builder
+        .create("Our Other Situation", SituationType.NETTING)
+        .build());
     return metaDataInput;
   }
 

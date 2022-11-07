@@ -598,6 +598,11 @@ NOTE Met behulp van dit metadata object kan er informatie over de berekening vas
           <documentation>Opties die zijn gebruikt voor de rekenresultaten. Maakt gebruik van een generieke key-value structuur, waarbij de key aangeeft om welke optie het gaat, en de value de waarde voor de betreffende optie.</documentation>
         </annotation>
       </element>
+      <element maxOccurs="unbounded" minOccurs="0" name="otherSituation" type="IMAER:OtherSituationMetadataPropertyType">
+        <annotation>
+          <documentation>Andere situaties die meegenomen zijn tijdens de berekening.</documentation>
+        </annotation>
+      </element>
     </sequence>
   </complexType>
   <complexType name="CalculationMetadataPropertyType">
@@ -2359,6 +2364,36 @@ NOTE Voor het bepalen van de emissie van mobiel werktuig kan gekeken worden naar
   <complexType name="OperatingHoursOffRoadVehicleSpecificationPropertyType">
     <sequence>
       <element ref="IMAER:OperatingHoursOffRoadVehicleSpecification"/>
+    </sequence>
+  </complexType>
+  <element name="OtherSituationMetadata" substitutionGroup="gml:AbstractObject" type="IMAER:OtherSituationMetadataType">
+    <annotation>
+      <documentation>Metadata over andere situaties die in de berekening zijn meegenomen.
+NOTE Met behulp van dit metadata object kan er informatie over andere situaties die tegelijkertijd zijn doorgerekend in dezelfde berekening vastgelegd worden.</documentation>
+    </annotation>
+  </element>
+  <complexType name="OtherSituationMetadataType">
+    <sequence>
+      <element name="situationType" type="IMAER:SituationTypeType">
+        <annotation>
+          <documentation>Type van de andere situatie.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="name" type="string">
+        <annotation>
+          <documentation>Naam van de andere situatie.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="reference" type="string">
+        <annotation>
+          <documentation>Referentie van de andere situatie.</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="OtherSituationMetadataPropertyType">
+    <sequence>
+      <element ref="IMAER:OtherSituationMetadata"/>
     </sequence>
   </complexType>
   <simpleType name="OutflowDirectionTypeType">
