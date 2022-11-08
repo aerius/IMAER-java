@@ -49,6 +49,7 @@ public final class GMLScenarioHelper {
     metaData.setDatabaseVersion(databaseVersion);
     metaData.setOptions(scenario.getOptions());
     metaData.setResultsIncluded(resultsIncluded.getAsBoolean());
+    metaData.setReference(situation.getReference());
     scenario.getSituations().stream()
         .filter(x -> situation != x)
         .map(GMLScenarioHelper::otherSituation)
