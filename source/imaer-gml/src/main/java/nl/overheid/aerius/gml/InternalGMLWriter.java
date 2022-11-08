@@ -159,9 +159,9 @@ final class InternalGMLWriter {
     metaDataInput.setSituationType(scenario.getSituationType());
     metaDataInput.setNettingFactor(scenario.getNettingFactor());
     final MetaData metaDataImpl = writer.metaData2GML(metaDataInput);
-    referenceGenerator.updateReferenceIfNeeded(metaDataImpl.getReference()).ifPresent(newReference -> {
+    referenceGenerator.updateReferenceIfNeeded(metaDataInput.getReference()).ifPresent(newReference -> {
       metaDataImpl.setReference(newReference);
-      metaDataInput.getScenarioMetaData().setReference(newReference);
+      metaDataInput.setReference(newReference);
     });
     final Definitions definitions = writer.definitions2GML(scenario.getDefinitions());
     toXMLString(outputStream, featureMembers, metaDataImpl, definitions);

@@ -90,4 +90,9 @@ public class Scenario implements Serializable {
     return customPoints.getFeatures();
   }
 
+  @JsonIgnore
+  public String getReference() {
+    return situations != null && !situations.isEmpty() ? situations.get(0).getReference() : null;
+  }
+
 }

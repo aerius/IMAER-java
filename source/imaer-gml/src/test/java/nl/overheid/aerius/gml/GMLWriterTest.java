@@ -81,6 +81,7 @@ public class GMLWriterTest {
   private static final String VERSION = "V1.1";
   private static final String DATABASE_VERSION = "SomeDBVersion";
   private static final String SITUATION_NAME = "Situatie 1";
+  private static final String SITUATION_REFERENCE = "SomeReference001";
   private static final SituationType SITUATION_TYPE = SituationType.PROPOSED;
 
   private static final ReceptorGridSettings RECEPTOR_GRID_SETTINGS = GMLTestDomain.getExampleGridSettings();
@@ -125,23 +126,24 @@ public class GMLWriterTest {
   void testConvertMetaData() throws IOException, AeriusException {
     final GMLWriter writer = new GMLWriter(RECEPTOR_GRID_SETTINGS, r -> Optional.of("test"));
     final ScenarioMetaData metaData = getScenarioMetaData();
-    final String originalReference = metaData.getReference();
+    final String originalReference = SITUATION_REFERENCE;
     final List<EmissionSourceFeature> sourceList = new ArrayList<>();
     final GMLScenario scenario = GMLScenario.Builder.create(SITUATION_NAME, SituationType.PROPOSED)
         .sources(sourceList)
         .build();
     String result;
+    final MetaDataInput metaDataInput = getMetaDataInput(metaData);
     try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
-      final MetaDataInput metaDataInput = getMetaDataInput(metaData);
 
       writer.write(bos, scenario, metaDataInput);
       result = bos.toString(StandardCharsets.UTF_8.name());
+
     }
     validateDefaultMetaDataFields(result, metaData);
     assertFalse(result.contains("<imaer:temporaryPeriod>"), "Shouldn't contain temporaryPeriod");
     assertFalse(result.contains("<imaer:permitCalculationRadiusType>"), "Shouldn't contain PermitCalculationRadiusType");
-    assertNotEquals(originalReference, metaData.getReference(), "Reference should be overwritten");
-    assertTrue(result.contains(getExpectedElement("reference", metaData.getReference())), "Should contain new generated reference");
+    assertNotEquals(originalReference, metaDataInput.getReference(), "Reference should be overwritten");
+    assertTrue(result.contains(getExpectedElement("reference", metaDataInput.getReference())), "Should contain new generated reference");
   }
 
   private void validateDefaultMetaDataFields(final String result, final ScenarioMetaData metaData) {
@@ -167,6 +169,7 @@ public class GMLWriterTest {
     metaDataInput.setScenarioMetaData(scenarioMetaData);
     metaDataInput.setYear(GML_YEAR);
     metaDataInput.setName(SITUATION_NAME);
+    metaDataInput.setReference(SITUATION_REFERENCE);
     metaDataInput.setSituationType(SITUATION_TYPE);
     metaDataInput.setVersion(VERSION);
     metaDataInput.setDatabaseVersion(DATABASE_VERSION);
@@ -228,6 +231,7 @@ public class GMLWriterTest {
     final ArrayList<CalculationPointFeature> receptors = getExampleAeriusPoints(includeDeposition, includeConcentration, includeOverlapping);
     final MetaDataInput metaDataInput = getMetaDataInput(new ScenarioMetaData());
     metaDataInput.setName(null);
+    metaDataInput.setReference(null);
     metaDataInput.setSituationType(null);
     metaDataInput.setResultsIncluded(true);
     final GMLWriter writer = new GMLWriter(RECEPTOR_GRID_SETTINGS, GMLTestDomain.TEST_REFERENCE_GENERATOR);
@@ -356,7 +360,6 @@ public class GMLWriterTest {
 
   private ScenarioMetaData getScenarioMetaData() {
     final ScenarioMetaData metaData = new ScenarioMetaData();
-    metaData.setReference("SomeReference001");
     metaData.setCorporation("Big Corp");
     metaData.setProjectName("SomeProject");
     metaData.setDescription("SomeFunkyDescription");

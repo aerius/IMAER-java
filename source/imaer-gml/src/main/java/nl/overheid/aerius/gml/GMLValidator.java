@@ -59,7 +59,6 @@ public final class GMLValidator {
     }
     validateMetaDataElement(metaData.getProjectName(), "projectName", exceptions);
     validateMetaDataElement(metaData.getCorporation(), "corporation", exceptions);
-    validateMetaDataElement(metaData.getReference(), "reference", exceptions);
     validateMetaDataElement(metaData.getDescription(), "description", exceptions);
     validateMetaDataElement(metaData.getStreetAddress(), "streetAddress", exceptions);
     validateMetaDataElement(metaData.getPostcode(), "postcode", exceptions);

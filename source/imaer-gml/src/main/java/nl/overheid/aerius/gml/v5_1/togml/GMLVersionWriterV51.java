@@ -122,7 +122,7 @@ public class GMLVersionWriterV51 implements GMLVersionWriter {
       ensureSituationType(input);
       situation = new SituationMetadata();
       situation.setName(input.getName());
-      situation.setReference(input.getScenarioMetaData().getReference());
+      situation.setReference(input.getReference());
       situation.setSituationType(input.getSituationType());
       situation.setNettingFactor(input.getNettingFactor());
     }
@@ -147,7 +147,7 @@ public class GMLVersionWriterV51 implements GMLVersionWriter {
   }
 
   private boolean isEmptySituationData(final MetaDataInput input) {
-    return StringUtils.isEmpty(input.getName()) && StringUtils.isEmpty(input.getScenarioMetaData().getReference())
+    return StringUtils.isEmpty(input.getName()) && StringUtils.isEmpty(input.getReference())
         && input.getSituationType() == null;
   }
 

@@ -47,10 +47,17 @@ public class GMLMetaDataReader {
         smd.setPostcode(metaData.getFacilityLocation().getPostcode());
         smd.setCity(metaData.getFacilityLocation().getCity());
       }
-      smd.setReference(metaData.getReference());
       smd.setDescription(metaData.getDescription());
     }
     return smd;
+  }
+
+  /**
+   * Reference specified in the GML data.
+   * @return reference
+   */
+  public String readReference() {
+    return checkFeatureCollection(featureCollection) ? featureCollection.getMetaData().getReference() : null;
   }
 
   /**

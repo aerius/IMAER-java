@@ -152,7 +152,7 @@ public class GMLReaderTest {
     assertEquals(expectedMetaData.getTemporaryPeriod(), metaDataReader.readTemporaryProjectPeriodYear(), "Metadata temporary period");
     final ScenarioMetaData MetaData = metaDataReader.readMetaData();
     assertEquals(expectedMetaData.getProjectName(), MetaData.getProjectName(), "Metadata name");
-    assertEquals(expectedMetaData.getReference(), MetaData.getReference(), "Metadata reference");
+    assertEquals(expectedMetaData.getReference(), metaDataReader.readReference(), "Metadata reference");
     assertEquals(expectedMetaData.getCorporation(), MetaData.getCorporation(), "Metadata corporation");
     assertEquals(expectedMetaData.getDescription(), MetaData.getDescription(), "Metadata description");
     assertTrue(errors.isEmpty(), "Expected no errors");
@@ -207,7 +207,6 @@ public class GMLReaderTest {
 
   private static MetaData getMetaData() throws AeriusException {
     final ScenarioMetaData metaData = new ScenarioMetaData();
-    metaData.setReference("SomeReference001");
     metaData.setCorporation("Big Corp");
     metaData.setProjectName("SomeProject");
     metaData.setDescription("SomeFunkyDescription");
@@ -215,6 +214,7 @@ public class GMLReaderTest {
     metaDataInput.setScenarioMetaData(metaData);
     metaDataInput.setYear(GML_YEAR);
     metaDataInput.setName(SITUATION_NAME);
+    metaDataInput.setReference("SomeReference001");
     metaDataInput.setSituationType(SITUATION_TYPE);
     metaDataInput.setVersion(VERSION);
     metaDataInput.setDatabaseVersion(DATABASE_VERSION);

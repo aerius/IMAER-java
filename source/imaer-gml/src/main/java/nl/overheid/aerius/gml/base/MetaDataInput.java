@@ -33,6 +33,7 @@ public class MetaDataInput {
   private Theme theme;
   private int year;
   private String name;
+  private String reference;
   private SituationType situationType;
   private Double nettingFactor;
   private String version;
@@ -71,6 +72,14 @@ public class MetaDataInput {
 
   public void setName(final String name) {
     this.name = name;
+  }
+
+  public String getReference() {
+    return reference;
+  }
+
+  public void setReference(final String reference) {
+    this.reference = reference;
   }
 
   public SituationType getSituationType() {
