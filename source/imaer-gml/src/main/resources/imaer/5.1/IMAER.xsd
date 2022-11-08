@@ -2379,12 +2379,12 @@ NOTE Met behulp van dit metadata object kan er informatie over andere situaties 
           <documentation>Type van de andere situatie.</documentation>
         </annotation>
       </element>
-      <element minOccurs="0" name="name" type="string">
+      <element name="name" type="string">
         <annotation>
           <documentation>Naam van de andere situatie.</documentation>
         </annotation>
       </element>
-      <element minOccurs="0" name="reference" type="string">
+      <element name="reference" type="string">
         <annotation>
           <documentation>Referentie van de andere situatie.</documentation>
         </annotation>

@@ -172,7 +172,7 @@ public class GMLWriterTest {
     metaDataInput.setDatabaseVersion(DATABASE_VERSION);
     metaDataInput.setOptions(getCalculationOptions());
     metaDataInput.addOtherSituation(OtherSituationMetaData.Builder
-        .create("Our Other Situation", SituationType.NETTING)
+        .create("Our Other Situation", SituationType.NETTING, "OtherReferenceThingy")
         .build());
     return metaDataInput;
   }

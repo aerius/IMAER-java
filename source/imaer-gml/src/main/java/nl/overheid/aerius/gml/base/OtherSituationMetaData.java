@@ -27,14 +27,16 @@ public class OtherSituationMetaData {
 
     private final String name;
     private final SituationType situationType;
+    private final String reference;
 
-    private Builder(final String name, final SituationType situationType) {
+    private Builder(final String name, final SituationType situationType, final String reference) {
       this.name = name;
       this.situationType = situationType;
+      this.reference = reference;
     }
 
-    public static Builder create(final String name, final SituationType situationType) {
-      return new Builder(name, situationType);
+    public static Builder create(final String name, final SituationType situationType, final String reference) {
+      return new Builder(name, situationType, reference);
     }
 
     public OtherSituationMetaData build() {
@@ -45,10 +47,12 @@ public class OtherSituationMetaData {
 
   private final String name;
   private final SituationType situationType;
+  private final String reference;
 
   private OtherSituationMetaData(final Builder builder) {
     this.name = builder.name;
     this.situationType = builder.situationType;
+    this.reference = builder.reference;
   }
 
   public SituationType getSituationType() {
@@ -57,6 +61,10 @@ public class OtherSituationMetaData {
 
   public String getName() {
     return name;
+  }
+
+  public String getReference() {
+    return reference;
   }
 
 }

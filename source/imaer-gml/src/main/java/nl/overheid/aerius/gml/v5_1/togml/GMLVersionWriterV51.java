@@ -221,6 +221,7 @@ public class GMLVersionWriterV51 implements GMLVersionWriter {
     final OtherSituationMetadata gmlOtherSituation = new OtherSituationMetadata();
     gmlOtherSituation.setSituationType(otherSituation.getSituationType());
     gmlOtherSituation.setName(otherSituation.getName());
+    gmlOtherSituation.setReference(otherSituation.getReference());
     return gmlOtherSituation;
   }
 

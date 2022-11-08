@@ -26,6 +26,7 @@
                         <imaer:OtherSituationMetadata>
                             <imaer:situationType>NETTING</imaer:situationType>
                             <imaer:name>Our Other Situation</imaer:name>
+                            <imaer:reference>OtherReferenceThingy</imaer:reference>
                         </imaer:OtherSituationMetadata>
                     </imaer:otherSituation>
                 </imaer:CalculationMetadata>
