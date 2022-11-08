@@ -22,6 +22,13 @@
                             <imaer:value>2030</imaer:value>
                         </imaer:CalculationOption>
                     </imaer:option>
+                    <imaer:otherSituation>
+                        <imaer:OtherSituationMetadata>
+                            <imaer:situationType>NETTING</imaer:situationType>
+                            <imaer:name>Our Other Situation</imaer:name>
+                            <imaer:reference>OtherReferenceThingy</imaer:reference>
+                        </imaer:OtherSituationMetadata>
+                    </imaer:otherSituation>
                 </imaer:CalculationMetadata>
             </imaer:calculation>
             <imaer:version>

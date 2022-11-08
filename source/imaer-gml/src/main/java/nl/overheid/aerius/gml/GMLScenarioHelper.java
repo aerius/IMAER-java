@@ -17,9 +17,11 @@
 package nl.overheid.aerius.gml;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.function.BooleanSupplier;
 
 import nl.overheid.aerius.gml.base.MetaDataInput;
+import nl.overheid.aerius.gml.base.OtherSituationMetaData;
 import nl.overheid.aerius.shared.domain.scenario.IsScenario;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPointFeature;
 import nl.overheid.aerius.shared.domain.v2.scenario.Scenario;
@@ -47,7 +49,22 @@ public final class GMLScenarioHelper {
     metaData.setDatabaseVersion(databaseVersion);
     metaData.setOptions(scenario.getOptions());
     metaData.setResultsIncluded(resultsIncluded.getAsBoolean());
+    scenario.getSituations().stream()
+        .filter(x -> situation != x)
+        .map(GMLScenarioHelper::otherSituation)
+        .forEach(metaData::addOtherSituation);
     return metaData;
+  }
+
+  private static OtherSituationMetaData otherSituation(final ScenarioSituation situation) {
+    return OtherSituationMetaData.Builder
+        // TODO: get the correct reference from situation.
+        // Reference and name might be null at this point, in that case, use empty string as a fallback as they are required fields in IMAER.
+        .create(
+            Optional.ofNullable(situation.getName()).orElse(""),
+            situation.getType(),
+            "")
+        .build();
   }
 
   /**

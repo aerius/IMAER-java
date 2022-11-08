@@ -16,6 +16,7 @@
  */
 package nl.overheid.aerius.gml.v5_1.metadata;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -31,7 +32,7 @@ import nl.overheid.aerius.shared.domain.result.EmissionResultType;
  *
  */
 @XmlType(name = "CalculationMetadataType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"calculationType", "substances", "resultTypes",
-    "maximumRange", "researchArea", "monitorSrm2Year", "options"})
+    "maximumRange", "researchArea", "monitorSrm2Year", "options", "otherSituations"})
 public class CalculationMetadata implements IsCalculationMetaData {
 
   private String calculationType;
@@ -41,6 +42,7 @@ public class CalculationMetadata implements IsCalculationMetaData {
   private Boolean researchArea;
   private Integer monitorSrm2Year;
   private List<CalculationOptionProperty> options;
+  private List<OtherSituationMetadataProperty> otherSituations = new ArrayList<>();
 
   @Override
   @XmlElement(name = "type", namespace = CalculatorSchema.NAMESPACE)
@@ -110,6 +112,15 @@ public class CalculationMetadata implements IsCalculationMetaData {
 
   public void setOptions(final List<CalculationOptionProperty> options) {
     this.options = options;
+  }
+
+  @XmlElement(name = "otherSituation", namespace = CalculatorSchema.NAMESPACE)
+  public List<OtherSituationMetadataProperty> getOtherSituations() {
+    return otherSituations;
+  }
+
+  public void setOtherSituations(final List<OtherSituationMetadataProperty> otherSituations) {
+    this.otherSituations = otherSituations;
   }
 
 }

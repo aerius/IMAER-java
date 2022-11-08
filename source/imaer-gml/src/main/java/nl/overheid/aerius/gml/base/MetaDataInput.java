@@ -16,6 +16,9 @@
  */
 package nl.overheid.aerius.gml.base;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import nl.overheid.aerius.shared.domain.Theme;
 import nl.overheid.aerius.shared.domain.calculation.CalculationSetOptions;
 import nl.overheid.aerius.shared.domain.scenario.SituationType;
@@ -36,6 +39,7 @@ public class MetaDataInput {
   private String databaseVersion;
   private CalculationSetOptions options = new CalculationSetOptions();
   private boolean resultsIncluded;
+  private final List<OtherSituationMetaData> otherSituations = new ArrayList<>();
 
   public ScenarioMetaData getScenarioMetaData() {
     return scenarioMetaData;
@@ -115,5 +119,13 @@ public class MetaDataInput {
 
   public void setResultsIncluded(final boolean resultsIncluded) {
     this.resultsIncluded = resultsIncluded;
+  }
+
+  public List<OtherSituationMetaData> getOtherSituations() {
+    return otherSituations;
+  }
+
+  public void addOtherSituation(final OtherSituationMetaData otherSituation) {
+    this.otherSituations.add(otherSituation);
   }
 }
