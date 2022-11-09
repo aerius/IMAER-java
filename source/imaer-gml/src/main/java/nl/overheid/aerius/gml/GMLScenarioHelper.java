@@ -49,6 +49,7 @@ public final class GMLScenarioHelper {
     metaData.setDatabaseVersion(databaseVersion);
     metaData.setOptions(scenario.getOptions());
     metaData.setResultsIncluded(resultsIncluded.getAsBoolean());
+    metaData.setReference(situation.getReference());
     scenario.getSituations().stream()
         .filter(x -> situation != x)
         .map(GMLScenarioHelper::otherSituation)
@@ -58,12 +59,11 @@ public final class GMLScenarioHelper {
 
   private static OtherSituationMetaData otherSituation(final ScenarioSituation situation) {
     return OtherSituationMetaData.Builder
-        // TODO: get the correct reference from situation.
         // Reference and name might be null at this point, in that case, use empty string as a fallback as they are required fields in IMAER.
         .create(
             Optional.ofNullable(situation.getName()).orElse(""),
             situation.getType(),
-            "")
+            Optional.ofNullable(situation.getReference()).orElse(""))
         .build();
   }
 

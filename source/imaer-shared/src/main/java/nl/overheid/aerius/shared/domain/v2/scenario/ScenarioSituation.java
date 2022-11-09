@@ -42,6 +42,7 @@ public class ScenarioSituation implements Serializable {
   private String id = String.valueOf(Math.random()).substring(2);
   private int year;
   private String name;
+  private String reference;
   private SituationType type;
   private Double nettingFactor;
   private Definitions definitions = new Definitions();
@@ -73,6 +74,14 @@ public class ScenarioSituation implements Serializable {
 
   public void setName(final String name) {
     this.name = name;
+  }
+
+  public String getReference() {
+    return reference;
+  }
+
+  public void setReference(final String reference) {
+    this.reference = reference;
   }
 
   public SituationType getType() {
