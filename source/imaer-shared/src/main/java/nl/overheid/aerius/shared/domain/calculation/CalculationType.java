@@ -29,6 +29,10 @@ public enum CalculationType {
    */
   CUSTOM_POINTS,
   /**
+   * Calculate with custom receptors (maps user defined points to receptors on the predefined grid).
+   */
+  CUSTOM_RECEPTORS,
+  /**
    * Calculate deposition in nature areas.
    */
   NATURE_AREA,
