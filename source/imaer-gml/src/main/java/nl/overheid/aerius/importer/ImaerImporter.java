@@ -146,6 +146,7 @@ public class ImaerImporter {
     situation.setName(reader.getName());
     final SituationType type = reader.getSituationType();
     situation.setType(type);
+    situation.setReference(reader.metaDataReader().readReference());
     if (type == SituationType.NETTING) {
       final Double nettingFactor = reader.getNettingFactor();
       if (nettingFactor == null) {
