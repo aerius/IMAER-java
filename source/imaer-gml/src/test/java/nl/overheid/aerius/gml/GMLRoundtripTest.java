@@ -46,6 +46,7 @@ import nl.overheid.aerius.importer.ImaerImporter;
 import nl.overheid.aerius.importer.ImportOption;
 import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.Theme;
+import nl.overheid.aerius.shared.domain.calculation.CalculationSetOptions;
 import nl.overheid.aerius.shared.domain.result.EmissionResultKey;
 import nl.overheid.aerius.shared.domain.result.EmissionResultType;
 import nl.overheid.aerius.shared.domain.scenario.SituationType;
@@ -260,7 +261,7 @@ public class GMLRoundtripTest {
     input.setYear(result.getSituation().getYear());
     input.setVersion("DEV");
     input.setDatabaseVersion(result.getDatabaseVersion());
-    input.setOptions(result.getCalculationSetOptions());
+    input.setOptions(result.getCalculationSetOptions() == null ? new CalculationSetOptions() : result.getCalculationSetOptions());
     input.getOptions().getSubstances().addAll(SUBSTANCES);
     input.getOptions().getEmissionResultKeys()
         .addAll(EmissionResultKey.getEmissionResultKeys(SUBSTANCES, EmissionResultType.CONCENTRATION));

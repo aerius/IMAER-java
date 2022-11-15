@@ -49,7 +49,7 @@ public class GMLCalculationSetOptionsReader {
   public CalculationSetOptions readCalculationSetOptions(final Theme theme) {
     final Optional<IsCalculationMetaData> optionalCheck = Optional.ofNullable(featureCollection.getMetaData()).map(MetaData::getCalculation);
     if (optionalCheck.isEmpty()) {
-      return new CalculationSetOptions();
+      return null;
     }
 
     final IsCalculationMetaData calculationMetaData = optionalCheck.get();
