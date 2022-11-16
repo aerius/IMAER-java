@@ -55,7 +55,7 @@ class GMLCalculationSetOptionsReaderTest {
     final GMLCalculationSetOptionsReader reader = new GMLCalculationSetOptionsReader(featureCollection);
 
     final CalculationSetOptions options = reader.readCalculationSetOptions(Theme.NCA);
-    assertNotNull(options, "Null metadata field should be read as empty options object");
+    assertNull(options, "Null metadata field should be read as null options object");
   }
 
   @Test
@@ -68,7 +68,7 @@ class GMLCalculationSetOptionsReaderTest {
     final GMLCalculationSetOptionsReader reader = new GMLCalculationSetOptionsReader(featureCollection);
 
     final CalculationSetOptions options = reader.readCalculationSetOptions(Theme.NCA);
-    assertNotNull(options, "Null calculation metadata field should be read as empty options object");
+    assertNull(options, "Null calculation metadata field should be read as null options object");
   }
 
   @Test
