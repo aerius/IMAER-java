@@ -197,11 +197,19 @@ public class ADMSSourceCharacteristics extends SourceCharacteristics {
     this.buoyancyFlux = buoyancyFlux;
   }
 
+  /**
+   * @Deprecated because not implemented in IMAER right now.
+   * Need to decide if we want to keep this or if we can safely remove it.
+   */
   @Deprecated
   public double getMassFlux() {
     return massFlux;
   }
 
+  /**
+   * @Deprecated because not implemented in IMAER right now.
+   * Need to decide if we want to keep this or if we can safely remove it.
+   */
   @Deprecated
   public void setMassFlux(final double massFlux) {
     this.massFlux = massFlux;
