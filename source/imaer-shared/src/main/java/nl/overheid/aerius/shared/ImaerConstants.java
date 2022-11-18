@@ -16,8 +16,6 @@
  */
 package nl.overheid.aerius.shared;
 
-import java.util.Date;
-
 /**
  * Global constants used in the IM AERIUS.
  */
@@ -93,19 +91,8 @@ public class ImaerConstants {
    */
   public static final int PERCENTAGE_TO_FRACTION = 100;
 
-  private static final int YEAR_OFFSET = 1900;
-
   protected ImaerConstants() {
     // Constants class
   }
 
-  /**
-   * Returns current year.
-   *
-   * Must use Date's deprecated .getYear() method because Calendar is not supported in GWT and GWT's SimpleDateFormat equivalent is not supported
-   * in GWT.
-   */
-  public static int getCurrentYear() {
-    return YEAR_OFFSET + new Date().getYear();
-  }
 }

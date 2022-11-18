@@ -16,9 +16,10 @@
  */
 package nl.overheid.aerius.gml;
 
+import java.time.LocalDate;
+
 import nl.overheid.aerius.gml.base.FeatureCollection;
 import nl.overheid.aerius.gml.base.MetaData;
-import nl.overheid.aerius.shared.ImaerConstants;
 import nl.overheid.aerius.shared.domain.v2.scenario.ScenarioMetaData;
 
 /**
@@ -67,7 +68,7 @@ public class GMLMetaDataReader {
   public int readYear() {
     return checkFeatureCollection(featureCollection) && featureCollection.getMetaData().getYear() != null
         ? featureCollection.getMetaData().getYear()
-        : ImaerConstants.getCurrentYear();
+        : LocalDate.now().getYear();
   }
 
   /**
