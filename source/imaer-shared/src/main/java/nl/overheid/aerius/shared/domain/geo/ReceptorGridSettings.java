@@ -23,7 +23,6 @@ import java.util.List;
 import jsinterop.annotations.JsProperty;
 
 import nl.overheid.aerius.geo.shared.BBox;
-import nl.overheid.aerius.geo.shared.EPSGProxy;
 import nl.overheid.aerius.shared.geo.EPSG;
 
 /**
@@ -42,17 +41,6 @@ public final class ReceptorGridSettings implements Serializable {
    */
   private int hexHor;
   private @JsProperty List<HexagonZoomLevel> hexagonZoomLevels;
-
-  /**
-   * Constructor.
-   *
-   * @deprecated EPSG class will be replaced by the EPSG enum.
-   */
-  @Deprecated
-  public ReceptorGridSettings(final BBox boundingBox, final nl.overheid.aerius.geo.shared.EPSG epsg, final int hexagonHorizontal,
-      final ArrayList<HexagonZoomLevel> hexagonZoomLevels) {
-    this(boundingBox, EPSG.getEnumBySrid(epsg.getSrid()), hexagonHorizontal, hexagonZoomLevels);
-  }
 
   /**
    * Constructor
@@ -79,15 +67,6 @@ public final class ReceptorGridSettings implements Serializable {
    */
   public BBox getBoundingBox() {
     return boundingBox;
-  }
-
-  /**
-   * The geometric settings used for the receptor grid.
-   * @deprecated will be replaced by {@link #getEPSG()}
-   */
-  @Deprecated
-  public nl.overheid.aerius.geo.shared.EPSG getEpsg() {
-    return EPSGProxy.getEPSG(epsg.getSrid());
   }
 
   /**
