@@ -24,22 +24,6 @@ public interface FarmlandValidationHelper {
 
   boolean isValidFarmlandStandardActivityCode(String activityCode);
 
-  /**
-   * @Deprecated Candidate for removal, should no longer be used.
-   */
-  @Deprecated(forRemoval = true)
-  default boolean expectsFarmlandNumberOfAnimals(final String activityCode) {
-    return false;
-  }
-
-  /**
-   * @Deprecated Candidate for removal, should no longer be used.
-   */
-  @Deprecated(forRemoval = true)
-  default boolean expectsFarmlandNumberOfDays(final String activityCode) {
-    return false;
-  }
-
   FarmEmissionFactorType getFarmSourceEmissionFactorType(String farmSourceCategoryCode);
 
 }

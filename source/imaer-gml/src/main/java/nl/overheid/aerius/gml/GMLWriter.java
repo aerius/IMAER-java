@@ -61,16 +61,6 @@ public class GMLWriter {
    * Mimetype to be used for GML.
    */
   public static final String GML_MIMETYPE = "application/gml+xml";
-  /**
-   * @deprecated name of GML file should be determined base on context not a generic name.
-   */
-  @Deprecated
-  public static final String CURRENT_GML = "Huidige_Situatie.gml";
-  /**
-   * @deprecated name of GML file should be determined base on context not a generic name.
-   */
-  @Deprecated
-  public static final String PROPOSED_GML = "Nieuwe_Situatie.gml";
 
   /**
    * Current GML version data is exported to.

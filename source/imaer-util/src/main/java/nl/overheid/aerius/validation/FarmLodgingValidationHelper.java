@@ -30,14 +30,6 @@ public interface FarmLodgingValidationHelper {
 
   boolean canFodderApplyToLodging(String fodderMeasureCode, String lodgingCode);
 
-  /**
-   * @Deprecated Candidate for removal, should no longer be used.
-   */
-  @Deprecated(forRemoval = true)
-  default boolean expectsFarmLodgingNumberOfDays(final String systemCode) {
-    return false;
-  }
-
   FarmEmissionFactorType getLodgingEmissionFactorType(final String lodgingCode);
 
 }

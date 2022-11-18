@@ -37,14 +37,6 @@ public class ScenarioMetaData implements Serializable {
     return corporation;
   }
 
-  /**
-   * @Deprecated use ScenarioSituation.getReference instead
-   */
-  @Deprecated
-  public String getReference() {
-    return reference;
-  }
-
   public String getProjectName() {
     return projectName;
   }
@@ -79,14 +71,6 @@ public class ScenarioMetaData implements Serializable {
 
   public void setCorporation(final String corporation) {
     this.corporation = corporation;
-  }
-
-  /**
-   * @Deprecated use ScenarioSituation.setReference instead
-   */
-  @Deprecated
-  public void setReference(final String reference) {
-    this.reference = reference;
   }
 
   public void setProjectName(final String projectName) {
