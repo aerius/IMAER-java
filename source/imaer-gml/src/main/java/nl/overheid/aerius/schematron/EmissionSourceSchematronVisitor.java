@@ -41,6 +41,10 @@ import nl.overheid.aerius.shared.domain.v2.source.SRM2RoadEmissionSource;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 
+/**
+ * @deprecated schematron usage is up for removal. Normal validation in imaer-util should suffice.
+ */
+@Deprecated(forRemoval = true)
 public class EmissionSourceSchematronVisitor implements EmissionSourceVisitor<Void> {
 
   private final String gml;
