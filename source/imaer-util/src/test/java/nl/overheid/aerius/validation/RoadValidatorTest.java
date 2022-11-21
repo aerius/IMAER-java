@@ -38,6 +38,8 @@ import nl.overheid.aerius.shared.domain.v2.source.road.CustomVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.RoadStandardEmissionFactorsKey;
 import nl.overheid.aerius.shared.domain.v2.source.road.SRM1LinearReference;
 import nl.overheid.aerius.shared.domain.v2.source.road.SRM2LinearReference;
+import nl.overheid.aerius.shared.domain.v2.source.road.SRM2RoadSideBarrier;
+import nl.overheid.aerius.shared.domain.v2.source.road.SRM2RoadSideBarrierType;
 import nl.overheid.aerius.shared.domain.v2.source.road.SpecificVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.StandardVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.ValuesPerVehicleType;
@@ -166,6 +168,37 @@ class RoadValidatorTest {
   }
 
   @Test
+  void testInvalidStandardStrictEnforcement() {
+    final RoadEmissionSource source = constructSrm1Source();
+    final StandardVehicles subSource = new StandardVehicles();
+    final String vehicleType = "LIGHT_TRAFFIC";
+    final Integer maximumSpeed = 80;
+    final Boolean strictEnforcement = true;
+    mockStandardCombinationSrm1(vehicleType, maximumSpeed, strictEnforcement);
+    subSource.setTimeUnit(TimeUnit.DAY);
+    final ValuesPerVehicleType valuesPerVehicleType = new ValuesPerVehicleType();
+    valuesPerVehicleType.setVehiclesPerTimeUnit(200);
+    subSource.getValuesPerVehicleTypes().put(vehicleType, valuesPerVehicleType);
+    subSource.setMaximumSpeed(maximumSpeed);
+    subSource.setStrictEnforcement(strictEnforcement);
+    source.getSubSources().add(subSource);
+
+    final List<AeriusException> errors = new ArrayList<>();
+    final List<AeriusException> warnings = new ArrayList<>();
+    final RoadValidator validator = new RoadValidator(errors, warnings, validationHelper);
+
+    final boolean valid = validator.validate(source);
+
+    assertFalse(valid, "Invalid test case");
+    assertEquals(1, errors.size(), "Number of errors");
+    assertEquals(ImaerExceptionReason.SRM1_SOURCE_WITH_STRICT_ENFORCEMENT, errors.get(0).getReason(), "Error reason");
+    assertArrayEquals(new Object[] {
+        SOURCE_LABEL
+    }, errors.get(0).getArgs(), "Arguments");
+    assertTrue(warnings.isEmpty(), "No warnings");
+  }
+
+  @Test
   void testInvalidVehicleAmount() {
     final RoadEmissionSource source = constructSrm1Source();
     final CustomVehicles subSource = new CustomVehicles();
@@ -209,6 +242,70 @@ class RoadValidatorTest {
     assertArrayEquals(new Object[] {
         SOURCE_LABEL
     }, warnings.get(0).getArgs(), "Arguments");
+  }
+
+  @Test
+  void testInvalidStagnationFactorTooLow() {
+    final RoadEmissionSource source = constructSrm1Source();
+    final StandardVehicles subSource = new StandardVehicles();
+    final String vehicleType = "LIGHT_TRAFFIC";
+    final Integer maximumSpeed = 80;
+    final Boolean strictEnforcement = false;
+    mockStandardCombinationSrm1(vehicleType, maximumSpeed, strictEnforcement);
+    subSource.setTimeUnit(TimeUnit.DAY);
+    final ValuesPerVehicleType valuesPerVehicleType = new ValuesPerVehicleType();
+    valuesPerVehicleType.setVehiclesPerTimeUnit(200);
+    valuesPerVehicleType.setStagnationFraction(-0.2);
+    subSource.getValuesPerVehicleTypes().put(vehicleType, valuesPerVehicleType);
+    subSource.setMaximumSpeed(maximumSpeed);
+    subSource.setStrictEnforcement(strictEnforcement);
+    source.getSubSources().add(subSource);
+
+    final List<AeriusException> errors = new ArrayList<>();
+    final List<AeriusException> warnings = new ArrayList<>();
+    final RoadValidator validator = new RoadValidator(errors, warnings, validationHelper);
+
+    final boolean valid = validator.validate(source);
+
+    assertFalse(valid, "Invalid test case");
+    assertEquals(1, errors.size(), "Number of errors");
+    assertEquals(ImaerExceptionReason.UNEXPECTED_FRACTION_VALUE, errors.get(0).getReason(), "Error reason");
+    assertArrayEquals(new Object[] {
+        SOURCE_LABEL
+    }, errors.get(0).getArgs(), "Arguments");
+    assertTrue(warnings.isEmpty(), "No warnings");
+  }
+
+  @Test
+  void testInvalidStagnationFactorTooHigh() {
+    final RoadEmissionSource source = constructSrm1Source();
+    final StandardVehicles subSource = new StandardVehicles();
+    final String vehicleType = "LIGHT_TRAFFIC";
+    final Integer maximumSpeed = 80;
+    final Boolean strictEnforcement = false;
+    mockStandardCombinationSrm1(vehicleType, maximumSpeed, strictEnforcement);
+    subSource.setTimeUnit(TimeUnit.DAY);
+    final ValuesPerVehicleType valuesPerVehicleType = new ValuesPerVehicleType();
+    valuesPerVehicleType.setVehiclesPerTimeUnit(200);
+    valuesPerVehicleType.setStagnationFraction(1.1);
+    subSource.getValuesPerVehicleTypes().put(vehicleType, valuesPerVehicleType);
+    subSource.setMaximumSpeed(maximumSpeed);
+    subSource.setStrictEnforcement(strictEnforcement);
+    source.getSubSources().add(subSource);
+
+    final List<AeriusException> errors = new ArrayList<>();
+    final List<AeriusException> warnings = new ArrayList<>();
+    final RoadValidator validator = new RoadValidator(errors, warnings, validationHelper);
+
+    final boolean valid = validator.validate(source);
+
+    assertFalse(valid, "Invalid test case");
+    assertEquals(1, errors.size(), "Number of errors");
+    assertEquals(ImaerExceptionReason.UNEXPECTED_FRACTION_VALUE, errors.get(0).getReason(), "Error reason");
+    assertArrayEquals(new Object[] {
+        SOURCE_LABEL
+    }, errors.get(0).getArgs(), "Arguments");
+    assertTrue(warnings.isEmpty(), "No warnings");
   }
 
   @Test
@@ -379,6 +476,202 @@ class RoadValidatorTest {
     assertArrayEquals(new Object[] {
         String.valueOf(1.7)
     }, errors.get(1).getArgs(), "Arguments");
+    assertTrue(warnings.isEmpty(), "No warnings");
+  }
+
+  @Test
+  void testValidSrm2BarrierLeft() {
+    final SRM2RoadEmissionSource source = constructSrm2Source();
+    final CustomVehicles subSource = new CustomVehicles();
+    subSource.setTimeUnit(TimeUnit.DAY);
+    subSource.setVehiclesPerTimeUnit(200);
+    source.getSubSources().add(subSource);
+    final SRM2RoadSideBarrier barrierLeft = new SRM2RoadSideBarrier();
+    barrierLeft.setBarrierType(SRM2RoadSideBarrierType.SCREEN);
+    barrierLeft.setDistance(3.2);
+    barrierLeft.setHeight(1.5);
+    source.setBarrierLeft(barrierLeft);
+
+    final List<AeriusException> errors = new ArrayList<>();
+    final List<AeriusException> warnings = new ArrayList<>();
+    final RoadValidator validator = new RoadValidator(errors, warnings, validationHelper);
+
+    final boolean valid = validator.validate(source);
+
+    assertTrue(valid, "Valid test case");
+    assertTrue(errors.isEmpty(), "No errors");
+    assertTrue(warnings.isEmpty(), "No warnings");
+  }
+
+  @Test
+  void testInvalidSrm2BarrierLeftDistance() {
+    final SRM2RoadEmissionSource source = constructSrm2Source();
+    final CustomVehicles subSource = new CustomVehicles();
+    subSource.setTimeUnit(TimeUnit.DAY);
+    subSource.setVehiclesPerTimeUnit(200);
+    source.getSubSources().add(subSource);
+    final SRM2RoadSideBarrier barrierLeft = new SRM2RoadSideBarrier();
+    barrierLeft.setBarrierType(SRM2RoadSideBarrierType.SCREEN);
+    barrierLeft.setDistance(-0.3);
+    barrierLeft.setHeight(1.5);
+    source.setBarrierLeft(barrierLeft);
+
+    final List<AeriusException> errors = new ArrayList<>();
+    final List<AeriusException> warnings = new ArrayList<>();
+    final RoadValidator validator = new RoadValidator(errors, warnings, validationHelper);
+
+    final boolean valid = validator.validate(source);
+
+    assertFalse(valid, "Invalid test case");
+    assertEquals(1, errors.size(), "Number of errors");
+    assertEquals(ImaerExceptionReason.UNEXPECTED_NEGATIVE_VALUE, errors.get(0).getReason(), "Error reason");
+    assertArrayEquals(new Object[] {
+        SOURCE_LABEL, String.valueOf(-0.3)
+    }, errors.get(0).getArgs(), "Arguments");
+    assertTrue(warnings.isEmpty(), "No warnings");
+  }
+
+  @Test
+  void testInvalidSrm2BarrierLeftHeight() {
+    final SRM2RoadEmissionSource source = constructSrm2Source();
+    final CustomVehicles subSource = new CustomVehicles();
+    subSource.setTimeUnit(TimeUnit.DAY);
+    subSource.setVehiclesPerTimeUnit(200);
+    source.getSubSources().add(subSource);
+    final SRM2RoadSideBarrier barrierLeft = new SRM2RoadSideBarrier();
+    barrierLeft.setBarrierType(SRM2RoadSideBarrierType.SCREEN);
+    barrierLeft.setDistance(3.2);
+    barrierLeft.setHeight(-0.5);
+    source.setBarrierLeft(barrierLeft);
+
+    final List<AeriusException> errors = new ArrayList<>();
+    final List<AeriusException> warnings = new ArrayList<>();
+    final RoadValidator validator = new RoadValidator(errors, warnings, validationHelper);
+
+    final boolean valid = validator.validate(source);
+
+    assertFalse(valid, "Invalid test case");
+    assertEquals(1, errors.size(), "Number of errors");
+    assertEquals(ImaerExceptionReason.UNEXPECTED_NEGATIVE_VALUE, errors.get(0).getReason(), "Error reason");
+    assertArrayEquals(new Object[] {
+        SOURCE_LABEL, String.valueOf(-0.5)
+    }, errors.get(0).getArgs(), "Arguments");
+    assertTrue(warnings.isEmpty(), "No warnings");
+  }
+
+  @Test
+  void testValidSrm2BarrierRight() {
+    final SRM2RoadEmissionSource source = constructSrm2Source();
+    final CustomVehicles subSource = new CustomVehicles();
+    subSource.setTimeUnit(TimeUnit.DAY);
+    subSource.setVehiclesPerTimeUnit(200);
+    source.getSubSources().add(subSource);
+    final SRM2RoadSideBarrier barrierRight = new SRM2RoadSideBarrier();
+    barrierRight.setBarrierType(SRM2RoadSideBarrierType.SCREEN);
+    barrierRight.setDistance(3.2);
+    barrierRight.setHeight(1.5);
+    source.setBarrierRight(barrierRight);
+
+    final List<AeriusException> errors = new ArrayList<>();
+    final List<AeriusException> warnings = new ArrayList<>();
+    final RoadValidator validator = new RoadValidator(errors, warnings, validationHelper);
+
+    final boolean valid = validator.validate(source);
+
+    assertTrue(valid, "Valid test case");
+    assertTrue(errors.isEmpty(), "No errors");
+    assertTrue(warnings.isEmpty(), "No warnings");
+  }
+
+  @Test
+  void testInvalidSrm2BarrierRightDistance() {
+    final SRM2RoadEmissionSource source = constructSrm2Source();
+    final CustomVehicles subSource = new CustomVehicles();
+    subSource.setTimeUnit(TimeUnit.DAY);
+    subSource.setVehiclesPerTimeUnit(200);
+    source.getSubSources().add(subSource);
+    final SRM2RoadSideBarrier barrierRight = new SRM2RoadSideBarrier();
+    barrierRight.setBarrierType(SRM2RoadSideBarrierType.SCREEN);
+    barrierRight.setDistance(-0.3);
+    barrierRight.setHeight(1.5);
+    source.setBarrierRight(barrierRight);
+
+    final List<AeriusException> errors = new ArrayList<>();
+    final List<AeriusException> warnings = new ArrayList<>();
+    final RoadValidator validator = new RoadValidator(errors, warnings, validationHelper);
+
+    final boolean valid = validator.validate(source);
+
+    assertFalse(valid, "Invalid test case");
+    assertEquals(1, errors.size(), "Number of errors");
+    assertEquals(ImaerExceptionReason.UNEXPECTED_NEGATIVE_VALUE, errors.get(0).getReason(), "Error reason");
+    assertArrayEquals(new Object[] {
+        SOURCE_LABEL, String.valueOf(-0.3)
+    }, errors.get(0).getArgs(), "Arguments");
+    assertTrue(warnings.isEmpty(), "No warnings");
+  }
+
+  @Test
+  void testInvalidSrm2BarrierRightHeight() {
+    final SRM2RoadEmissionSource source = constructSrm2Source();
+    final CustomVehicles subSource = new CustomVehicles();
+    subSource.setTimeUnit(TimeUnit.DAY);
+    subSource.setVehiclesPerTimeUnit(200);
+    source.getSubSources().add(subSource);
+    final SRM2RoadSideBarrier barrierRight = new SRM2RoadSideBarrier();
+    barrierRight.setBarrierType(SRM2RoadSideBarrierType.SCREEN);
+    barrierRight.setDistance(3.2);
+    barrierRight.setHeight(-0.5);
+    source.setBarrierRight(barrierRight);
+
+    final List<AeriusException> errors = new ArrayList<>();
+    final List<AeriusException> warnings = new ArrayList<>();
+    final RoadValidator validator = new RoadValidator(errors, warnings, validationHelper);
+
+    final boolean valid = validator.validate(source);
+
+    assertFalse(valid, "Invalid test case");
+    assertEquals(1, errors.size(), "Number of errors");
+    assertEquals(ImaerExceptionReason.UNEXPECTED_NEGATIVE_VALUE, errors.get(0).getReason(), "Error reason");
+    assertArrayEquals(new Object[] {
+        SOURCE_LABEL, String.valueOf(-0.5)
+    }, errors.get(0).getArgs(), "Arguments");
+    assertTrue(warnings.isEmpty(), "No warnings");
+  }
+
+  @Test
+  void testValidTunnelFactor() {
+    final SRM2RoadEmissionSource source = constructSrm2Source();
+    source.setTunnelFactor(0.4);
+
+    final List<AeriusException> errors = new ArrayList<>();
+    final List<AeriusException> warnings = new ArrayList<>();
+    final RoadValidator validator = new RoadValidator(errors, warnings, validationHelper);
+
+    final boolean valid = validator.validate(source);
+
+    assertTrue(valid, "Valid test case");
+    assertTrue(errors.isEmpty(), "No errors");
+    assertTrue(warnings.isEmpty(), "No warnings");
+  }
+
+  @Test
+  void testInvalidTunnelFactor() {
+    final SRM2RoadEmissionSource source = constructSrm2Source();
+    source.setTunnelFactor(-0.22);
+
+    final List<AeriusException> errors = new ArrayList<>();
+    final List<AeriusException> warnings = new ArrayList<>();
+    final RoadValidator validator = new RoadValidator(errors, warnings, validationHelper);
+
+    final boolean valid = validator.validate(source);
+
+    assertFalse(valid, "Invalid test case");
+    assertEquals(1, errors.size(), "Number of errors");
+    assertEquals(ImaerExceptionReason.UNEXPECTED_NEGATIVE_VALUE, errors.get(0).getReason(), "Error reason");
+    assertArrayEquals(new Object[] {
+        SOURCE_LABEL, String.valueOf(-0.22)
+    }, errors.get(0).getArgs(), "Arguments");
     assertTrue(warnings.isEmpty(), "No warnings");
   }
 
