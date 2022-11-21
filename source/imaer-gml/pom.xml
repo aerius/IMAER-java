@@ -31,9 +31,11 @@
 
   <properties>
     <gml-schema.version>1.1.0</gml-schema.version>
-    <hibernate-validator.version>4.3.2.Final</hibernate-validator.version>
+    <hibernate-validator.version>6.2.4.Final</hibernate-validator.version>
+    <embed-el.version>9.0.65</embed-el.version>
     <javax.activation.version>1.2.0</javax.activation.version>
-    <jaxb.version>2.3.2</jaxb.version>
+    <jakarta-jaxb.version>2.3.2</jakarta-jaxb.version>
+    <glassfish-jaxb.version>2.3.6</glassfish-jaxb.version>
     <schematron.version>5.2.0</schematron.version>
     <streamflyer.version>1.2.0</streamflyer.version>
     <xml-resolver.version>1.2</xml-resolver.version>
@@ -56,6 +58,12 @@
       <artifactId>hibernate-validator</artifactId>
       <version>${hibernate-validator.version}</version>
     </dependency>
+    <dependency>
+      <groupId>org.apache.tomcat.embed</groupId>
+      <artifactId>tomcat-embed-el</artifactId>
+      <version>${embed-el.version}</version>
+      <scope>test</scope>
+    </dependency>
 
     <!-- jaxb implementation used for prefix handling in gml. -->
 
@@ -63,14 +71,14 @@
     <dependency>
       <groupId>jakarta.xml.bind</groupId>
       <artifactId>jakarta.xml.bind-api</artifactId>
-      <version>${jaxb.version}</version>
+      <version>${jakarta-jaxb.version}</version>
     </dependency>
 
     <!-- Runtime, com.sun.xml.bind module -->
     <dependency>
       <groupId>org.glassfish.jaxb</groupId>
       <artifactId>jaxb-runtime</artifactId>
-      <version>${jaxb.version}</version>
+      <version>${glassfish-jaxb.version}</version>
     </dependency>
     <dependency>
       <groupId>org.jvnet.ogc</groupId>
