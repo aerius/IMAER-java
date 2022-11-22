@@ -17,7 +17,6 @@
 package nl.overheid.aerius.validation;
 
 import java.util.List;
-import java.util.Optional;
 
 import nl.overheid.aerius.shared.domain.v2.base.EmissionReduction;
 import nl.overheid.aerius.shared.domain.v2.nsl.NSLMeasure;
@@ -42,14 +41,13 @@ public final class NSLMeasureValidator {
   private static void checkNegativeFactors(final List<NSLMeasureFeature> measureFeatures, final List<AeriusException> exceptions) {
     for (final NSLMeasureFeature feature : measureFeatures) {
       final NSLMeasure measure = feature.getProperties();
-      final Optional<Double> negativeValue = measure.getVehicleMeasures().stream()
+      measure.getVehicleMeasures().stream()
           .flatMap(x -> x.getEmissionReductions().stream())
           .map(EmissionReduction::getFactor)
           .filter(x -> x < 0)
-          .findFirst();
-      if (negativeValue.isPresent()) {
-        exceptions.add(new AeriusException(ImaerExceptionReason.UNEXPECTED_NEGATIVE_VALUE, measure.getLabel(), String.valueOf(negativeValue.get())));
-      }
+          .findFirst()
+          .ifPresent(negativeValue -> exceptions
+              .add(new AeriusException(ImaerExceptionReason.UNEXPECTED_NEGATIVE_VALUE, measure.getLabel(), String.valueOf(negativeValue))));
     }
   }
 
