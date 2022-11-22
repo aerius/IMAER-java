@@ -16,8 +16,6 @@
  */
 package nl.overheid.aerius.shared.domain.scenario;
 
-import java.util.Arrays;
-
 /**
  * Enum indicating the type of a situation.
  */
@@ -57,14 +55,6 @@ public enum SituationType {
    * Baseline situation
    */
   BASELINE;
-
-  /**
-   * All the {@link SituationType} values, except for {@link #UNKNOWN}.
-   *
-   * @deprecated kept in so old client will/might continue to compile, to be removed soon.
-   */
-  @Deprecated
-  public static final SituationType[] KNOWN_VALUES = Arrays.copyOfRange(values(), 1, values().length);
 
   /**
    * Returns the {@link SituationType} from the given string or {@link #UNKNOWN} if null or invalid input.

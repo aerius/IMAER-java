@@ -22,7 +22,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import nl.overheid.aerius.shared.domain.Substance;
-import nl.overheid.aerius.shared.domain.meteo.Meteo;
 import nl.overheid.aerius.shared.domain.result.EmissionResultKey;
 
 /**
@@ -68,19 +67,6 @@ public class CalculationSetOptions implements Serializable {
     return substances;
   }
 
-  @Deprecated
-  public void setUseWnbMaxDistance(final boolean uswWNBMaxDistance) {
-    wnbCalculationOptions.setUseWnbMaxDistance(uswWNBMaxDistance);
-  }
-
-  /**
-   * @return Returns true if WNB maximum distance calculation is to be applied.
-   */
-  @Deprecated
-  public boolean isUseWNBMaxDistance() {
-    return wnbCalculationOptions.isUseWNBMaxDistance();
-  }
-
   public boolean isStacking() {
     return stacking;
   }
@@ -116,83 +102,12 @@ public class CalculationSetOptions implements Serializable {
     this.calculateMaximumRange = calculateMaximumRange;
   }
 
-  @Deprecated
-  public boolean isForceAggregation() {
-    return wnbCalculationOptions.isForceAggregation();
-  }
-
-  /**
-   * By default some sectors are exempt from aggregation. This forces aggregation even for those sectors.
-   */
-  @Deprecated
-  public void setForceAggregation(final boolean forceAggregation) {
-    wnbCalculationOptions.setForceAggregation(forceAggregation);
-  }
-
-  @Deprecated
-  public CalculationRoadOPS getRoadOPS() {
-    if (calculationType != CalculationType.CUSTOM_POINTS) {
-      return CalculationRoadOPS.DEFAULT;
-    }
-    return wnbCalculationOptions.getRoadOPS();
-  }
-
-  @Deprecated
-  public void setRoadOPS(final CalculationRoadOPS roadOPS) {
-    wnbCalculationOptions.setRoadOPS(roadOPS);
-  }
-
-  @Deprecated
-  public boolean isIncludeMonitorSrm2Network() {
-    return rblCalculationOptions.isIncludeMonitorSrm2Network();
-  }
-
-  @Deprecated
-  public int getMonitorSrm2Year() {
-    return rblCalculationOptions.getMonitorSrm2Year();
-  }
-
-  @Deprecated
-  public void setMonitorSrm2Year(final int monitorSrm2Year) {
-    rblCalculationOptions.setMonitorSrm2Year(monitorSrm2Year);
-  }
-
-  @Deprecated
-  public Meteo getMeteo() {
-    return wnbCalculationOptions.getMeteo();
-  }
-
-  @Deprecated
-  public void setMeteo(final Meteo meteo) {
-    wnbCalculationOptions.setMeteo(meteo);
-  }
-
-  @Deprecated
-  public boolean isUseReceptorHeights() {
-    return wnbCalculationOptions.isUseReceptorHeights();
-  }
-
-  @Deprecated
-  public void setUseReceptorHeights(final boolean useReceptorHeights) {
-    wnbCalculationOptions.setUseReceptorHeights(useReceptorHeights);
-  }
-
   public ConnectSuppliedOptions getConnectSuppliedOptions() {
     return connectSuppliedOptions;
   }
 
   public void setConnectSuppliedOptions(final ConnectSuppliedOptions connectSuppliedOptions) {
     this.connectSuppliedOptions = connectSuppliedOptions;
-  }
-
-  @Deprecated
-  public OPSOptions getOpsOptions() {
-    return wnbCalculationOptions.getOpsOptions();
-  }
-
-  @Deprecated
-  public void setOpsOptions(final OPSOptions opsOptions) {
-    wnbCalculationOptions.setOpsOptions(opsOptions);
   }
 
   public WNBCalculationOptions getWnbCalculationOptions() {
