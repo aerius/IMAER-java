@@ -61,6 +61,7 @@ import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 import nl.overheid.aerius.shared.geo.EPSG;
 import nl.overheid.aerius.validation.BuildingValidator;
 import nl.overheid.aerius.validation.EmissionSourceValidator;
+import nl.overheid.aerius.validation.NSLMeasureValidator;
 
 /**
  * Importer for IMAER GML files.
@@ -130,10 +131,10 @@ public class ImaerImporter {
     final ScenarioSituation situation = addSituationProperties(reader, result);
     addEmissionSources(reader, importOptions, result, importYear);
     addAeriusPoints(reader, importOptions, result);
-    addNslMeasures(reader, importOptions, situation);
+    addNslMeasures(reader, importOptions, result, situation);
     addNslDispersionLines(reader, importOptions, situation);
     addNslCorrections(reader, importOptions, situation);
-    addBuildings(reader, importOptions, situation);
+    addBuildings(reader, importOptions, result, situation);
     addDefinitions(reader, importOptions, situation);
     setCrs(result);
 
@@ -173,11 +174,9 @@ public class ImaerImporter {
       final Optional<Integer> importYear) throws AeriusException {
     if (ImportOption.INCLUDE_SOURCES.in(importOptions)) {
       final List<EmissionSourceFeature> sources = reader.readEmissionSourceList();
-      final List<BuildingFeature> buildings = reader.getBuildings();
       if (ImportOption.VALIDATE_SOURCES.in(importOptions)) {
         EmissionSourceValidator.validateSources(sources, result.getExceptions(), result.getWarnings(),
             factory.createValidationHelper());
-        BuildingValidator.validateBuildings(buildings, result.getExceptions(), result.getWarnings());
       }
       reader.enforceEmissions(sources, importYear.orElse(result.getSituation().getYear()));
       if (ImportOption.VALIDATE_SOURCES.in(importOptions)) {
@@ -306,9 +305,13 @@ public class ImaerImporter {
     result.setDatabaseVersion(metaDataReader.readDatabaseVersion());
   }
 
-  private static void addNslMeasures(final GMLReader reader, final Set<ImportOption> importOptions, final ScenarioSituation situation) {
+  private static void addNslMeasures(final GMLReader reader, final Set<ImportOption> importOptions, final ImportParcel result,
+      final ScenarioSituation situation) {
     if (ImportOption.INCLUDE_NSL_MEASURES.in(importOptions)) {
       final List<NSLMeasureFeature> measures = reader.getNSLMeasures();
+      if (ImportOption.VALIDATE_SOURCES.in(importOptions)) {
+        NSLMeasureValidator.validateMeasures(measures, result.getExceptions(), result.getWarnings());
+      }
       situation.getNslMeasuresList().addAll(measures);
     }
   }
@@ -327,9 +330,13 @@ public class ImaerImporter {
     }
   }
 
-  private static void addBuildings(final GMLReader reader, final Set<ImportOption> importOptions, final ScenarioSituation situation) {
+  private static void addBuildings(final GMLReader reader, final Set<ImportOption> importOptions, final ImportParcel result,
+      final ScenarioSituation situation) {
     if (ImportOption.INCLUDE_SOURCES.in(importOptions)) {
       final List<BuildingFeature> buildings = reader.getBuildings();
+      if (ImportOption.VALIDATE_SOURCES.in(importOptions)) {
+        BuildingValidator.validateBuildings(buildings, result.getExceptions(), result.getWarnings());
+      }
       situation.getBuildingsList().addAll(buildings);
     }
   }

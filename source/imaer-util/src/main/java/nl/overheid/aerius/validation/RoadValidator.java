@@ -17,6 +17,7 @@
 package nl.overheid.aerius.validation;
 
 import java.util.List;
+import java.util.Map.Entry;
 
 import nl.overheid.aerius.shared.domain.v2.base.LinearReference;
 import nl.overheid.aerius.shared.domain.v2.source.RoadEmissionSource;
@@ -24,6 +25,7 @@ import nl.overheid.aerius.shared.domain.v2.source.SRM1RoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.SRM2RoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.road.CustomVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.RoadStandardEmissionFactorsKey;
+import nl.overheid.aerius.shared.domain.v2.source.road.SRM2RoadSideBarrier;
 import nl.overheid.aerius.shared.domain.v2.source.road.SpecificVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.StandardVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.ValuesPerVehicleType;
@@ -54,6 +56,7 @@ class RoadValidator extends SourceValidator<RoadEmissionSource> {
     for (final Vehicles vehicleEmissions : source.getSubSources()) {
       valid = validateVehicles(source, vehicleEmissions, source.getLabel()) && valid;
     }
+    valid = validateTunnelFactor(source) && valid;
     return valid;
   }
 
@@ -64,6 +67,7 @@ class RoadValidator extends SourceValidator<RoadEmissionSource> {
         valid = validateLinearReference(linearReference) && valid;
       }
     }
+    valid = validateNoStrictEnforcement(source) && valid;
     return valid;
   }
 
@@ -73,6 +77,12 @@ class RoadValidator extends SourceValidator<RoadEmissionSource> {
       for (final LinearReference linearReference : source.getPartialChanges()) {
         valid = validateLinearReference(linearReference) && valid;
       }
+    }
+    if (source.getBarrierLeft() != null) {
+      valid = validateBarrier(source.getBarrierLeft(), source.getLabel()) && valid;
+    }
+    if (source.getBarrierRight() != null) {
+      valid = validateBarrier(source.getBarrierRight(), source.getLabel()) && valid;
     }
     return valid;
   }
@@ -88,6 +98,18 @@ class RoadValidator extends SourceValidator<RoadEmissionSource> {
     boolean valid = true;
     if (position < 0 || position > 1) {
       getErrors().add(new AeriusException(ImaerExceptionReason.GML_ROAD_SEGMENT_POSITION_NOT_FRACTION, String.valueOf(position)));
+      valid = false;
+    }
+    return valid;
+  }
+
+  private boolean validateNoStrictEnforcement(final SRM1RoadEmissionSource source) {
+    boolean valid = true;
+    if (source.getSubSources().stream()
+        .filter(StandardVehicles.class::isInstance)
+        .map(StandardVehicles.class::cast)
+        .anyMatch(x -> x.getStrictEnforcement() != null && x.getStrictEnforcement().booleanValue())) {
+      getErrors().add(new AeriusException(ImaerExceptionReason.SRM1_SOURCE_WITH_STRICT_ENFORCEMENT, source.getLabel()));
       valid = false;
     }
     return valid;
@@ -130,13 +152,18 @@ class RoadValidator extends SourceValidator<RoadEmissionSource> {
     final String roadAreaCode = source.getRoadAreaCode();
     final String roadTypeCode = source.getRoadTypeCode();
     boolean valid = true;
-    for (final String vehicleType : vehicles.getValuesPerVehicleTypes().keySet()) {
+    for (final Entry<String, ValuesPerVehicleType> entry : vehicles.getValuesPerVehicleTypes().entrySet()) {
+      final String vehicleType = entry.getKey();
       final Boolean strictEnforcement = vehicles.getStrictEnforcement();
       final Integer maximumSpeed = vehicles.getMaximumSpeed();
       if (!validationHelper.isValidRoadStandardVehicleCombination(
           new RoadStandardEmissionFactorsKey(roadAreaCode, roadTypeCode, vehicleType, maximumSpeed, strictEnforcement, 0.0))) {
         getErrors().add(new AeriusException(ImaerExceptionReason.GML_UNKNOWN_ROAD_CATEGORY, sourceLabel, roadAreaCode, roadTypeCode,
             String.valueOf(maximumSpeed), String.valueOf(strictEnforcement), vehicleType));
+        valid = false;
+      }
+      if (entry.getValue().getStagnationFraction() < 0 || entry.getValue().getStagnationFraction() > 1) {
+        getErrors().add(new AeriusException(ImaerExceptionReason.UNEXPECTED_FRACTION_VALUE, sourceLabel));
         valid = false;
       }
     }
@@ -148,6 +175,29 @@ class RoadValidator extends SourceValidator<RoadEmissionSource> {
     boolean valid = true;
     if (!validationHelper.isValidRoadSpecificVehicleCode(vehicleCode)) {
       getErrors().add(new AeriusException(ImaerExceptionReason.GML_UNKNOWN_MOBILE_SOURCE_CODE, sourceLabel, vehicleCode));
+      valid = false;
+    }
+    return valid;
+  }
+
+  private boolean validateTunnelFactor(final RoadEmissionSource source) {
+    boolean valid = true;
+    if (source.getTunnelFactor() < 0) {
+      getErrors().add(new AeriusException(ImaerExceptionReason.UNEXPECTED_NEGATIVE_VALUE, source.getLabel(),
+          String.valueOf(source.getTunnelFactor())));
+      valid = false;
+    }
+    return valid;
+  }
+
+  private boolean validateBarrier(final SRM2RoadSideBarrier barrier, final String sourceLabel) {
+    boolean valid = true;
+    if (barrier.getDistance() < 0) {
+      getErrors().add(new AeriusException(ImaerExceptionReason.UNEXPECTED_NEGATIVE_VALUE, sourceLabel, String.valueOf(barrier.getDistance())));
+      valid = false;
+    }
+    if (barrier.getHeight() < 0) {
+      getErrors().add(new AeriusException(ImaerExceptionReason.UNEXPECTED_NEGATIVE_VALUE, sourceLabel, String.valueOf(barrier.getHeight())));
       valid = false;
     }
     return valid;

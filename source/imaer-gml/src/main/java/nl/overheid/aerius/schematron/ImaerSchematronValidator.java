@@ -43,7 +43,10 @@ import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 
 /**
  * Schematron based validator for IMAER GML files.
+ *
+ * @deprecated schematron usage is up for removal. Normal validation in imaer-util should suffice.
  */
+@Deprecated(forRemoval = true)
 public class ImaerSchematronValidator {
   private static final Logger LOG = LoggerFactory.getLogger(ImaerSchematronValidator.class);
 

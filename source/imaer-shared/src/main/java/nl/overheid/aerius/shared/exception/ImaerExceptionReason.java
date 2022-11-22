@@ -429,6 +429,13 @@ public enum ImaerExceptionReason implements Reason {
    */
   GML_UNKNOWN_MANURE_STORAGE_CODE(5237),
 
+  /**
+   * Error that strict enforcement is used on a SRM1 source.
+   *
+   * @param 0 the id of the object containing the error.
+   */
+  SRM1_SOURCE_WITH_STRICT_ENFORCEMENT(5238),
+
   // Cohesion (between files) errors.
 
   /**
@@ -503,6 +510,19 @@ public enum ImaerExceptionReason implements Reason {
    * @param 0 Label of the building that has height <= 0.
    */
   BUILDING_HEIGHT_TOO_LOW(5241),
+
+  /**
+   * Value is <= 0.
+   *
+   * @param 0 Label of the object that has an unexpected negative value.
+   */
+  UNEXPECTED_NEGATIVE_VALUE(5251),
+  /**
+   * Fraction value is unexpected: it is either negative or higher than 1.
+   *
+   * @param 0 Label of the object that has an unexpected fraction value.
+   */
+  UNEXPECTED_FRACTION_VALUE(5252),
 
   // SRM related errors.
 
