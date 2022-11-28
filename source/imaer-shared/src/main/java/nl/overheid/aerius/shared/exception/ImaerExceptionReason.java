@@ -565,16 +565,7 @@ public enum ImaerExceptionReason implements Reason {
    *
    * @param 0 ID of the offending records
    */
-  SRM_MEASURE_RECORDS_DID_NOT_MATCH(6215),
-
-  /**
-   * General XML Schematron validation assert message
-   */
-  SCHEMATRON_ASSERT(99000),
-  /**
-   * General XML Schematron validation report message
-   */
-  SCHEMATRON_REPORT(99001);
+  SRM_MEASURE_RECORDS_DID_NOT_MATCH(6215);
 
   private final int errorCode;
 

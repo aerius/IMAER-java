@@ -88,13 +88,6 @@ public enum ImportOption {
    */
   VALIDATE_SOURCES,
   /**
-   * If set, the input will be validated with Schematron.
-   *
-   * @deprecated as schematron validation is up for removal.
-   */
-  @Deprecated(forRemoval = true)
-  VALIDATE_WITH_SCHEMATRON,
-  /**
    * If set, the GML file(s) warnings will be forced as exceptions. If not set, this check will do nothing and returns warnings and
    * exceptions. Default is false.
    */
