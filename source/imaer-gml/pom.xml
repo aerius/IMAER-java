@@ -36,7 +36,6 @@
     <javax.activation.version>1.2.0</javax.activation.version>
     <jakarta-jaxb.version>2.3.2</jakarta-jaxb.version>
     <glassfish-jaxb.version>2.3.6</glassfish-jaxb.version>
-    <schematron.version>5.2.0</schematron.version>
     <streamflyer.version>1.2.0</streamflyer.version>
     <xml-resolver.version>1.2</xml-resolver.version>
   </properties>
@@ -94,23 +93,6 @@
       <groupId>com.github.rwitzel.streamflyer</groupId>
       <artifactId>streamflyer-core</artifactId>
       <version>${streamflyer.version}</version>
-    </dependency>
-    <!-- Schematron -->
-    <dependency>
-      <groupId>com.helger</groupId>
-      <artifactId>ph-schematron</artifactId>
-      <version>${schematron.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.helger</groupId>
-      <artifactId>ph-schematron-validator</artifactId>
-      <version>${schematron.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.helger</groupId>
-      <artifactId>ph-schematron-testfiles</artifactId>
-      <version>${schematron.version}</version>
-      <scope>test</scope>
     </dependency>
 
     <!-- Unit Test -->
