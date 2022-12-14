@@ -77,17 +77,6 @@ public class GML2Definitions {
     final CustomDiurnalVariationType customType = CustomDiurnalVariationType.safeValueOf(gmlCustomType);
     if (customType == null) {
       throw new AeriusException(ImaerExceptionReason.CUSTOM_DIURNAL_VARIATION_TYPE_UNKNOWN, gmlCustomType);
-    } else if (customType.getExpectedNumberOfValues() != values.size()) {
-      throw new AeriusException(ImaerExceptionReason.CUSTOM_DIURNAL_VARIATION_INVALID_COUNT,
-          String.valueOf(customType.getExpectedNumberOfValues()),
-          String.valueOf(values.size()));
-    }
-    final double valuesSum = customType.sum(values);
-    final double expectedSum = customType.getExpectedTotalNumberOfValues();
-    if (Math.abs(expectedSum - valuesSum) >= CustomDiurnalVariation.ALLOWED_EPSILON) {
-      throw new AeriusException(ImaerExceptionReason.CUSTOM_DIURNAL_VARIATION_INVALID_SUM,
-          String.valueOf(expectedSum),
-          String.valueOf(valuesSum));
     }
     return customType;
   }

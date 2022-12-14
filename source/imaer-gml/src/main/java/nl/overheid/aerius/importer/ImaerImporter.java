@@ -60,6 +60,7 @@ import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 import nl.overheid.aerius.shared.geo.EPSG;
 import nl.overheid.aerius.validation.BuildingValidator;
+import nl.overheid.aerius.validation.DefinitionsValidator;
 import nl.overheid.aerius.validation.EmissionSourceValidator;
 import nl.overheid.aerius.validation.NSLMeasureValidator;
 
@@ -135,7 +136,7 @@ public class ImaerImporter {
     addNslDispersionLines(reader, importOptions, situation);
     addNslCorrections(reader, importOptions, situation);
     addBuildings(reader, importOptions, result, situation);
-    addDefinitions(reader, importOptions, situation);
+    addDefinitions(reader, importOptions, result, situation);
     setCrs(result);
 
     addCalculationSetOptions(theme, reader, result);
@@ -341,9 +342,13 @@ public class ImaerImporter {
     }
   }
 
-  private static void addDefinitions(final GMLReader reader, final Set<ImportOption> importOptions, final ScenarioSituation situation) {
+  private static void addDefinitions(final GMLReader reader, final Set<ImportOption> importOptions, final ImportParcel result,
+      final ScenarioSituation situation) {
     if (ImportOption.INCLUDE_SOURCES.in(importOptions)) {
       final Definitions definitions = reader.getDefinitions();
+      if (ImportOption.VALIDATE_SOURCES.in(importOptions)) {
+        DefinitionsValidator.validateDefinitions(definitions, result.getExceptions(), result.getWarnings());
+      }
       situation.setDefinitions(definitions);
     }
   }
