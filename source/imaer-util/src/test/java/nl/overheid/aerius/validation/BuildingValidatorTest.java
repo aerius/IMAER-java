@@ -27,6 +27,9 @@ import org.junit.jupiter.api.Test;
 
 import nl.overheid.aerius.shared.domain.v2.building.Building;
 import nl.overheid.aerius.shared.domain.v2.building.BuildingFeature;
+import nl.overheid.aerius.shared.domain.v2.geojson.LineString;
+import nl.overheid.aerius.shared.domain.v2.geojson.Point;
+import nl.overheid.aerius.shared.domain.v2.geojson.Polygon;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 
@@ -49,7 +52,23 @@ class BuildingValidatorTest {
   }
 
   @Test
-  void testZeroHeightBuilding() {
+  void testBuildingLineStringGeometry() {
+    final BuildingFeature building = createBuilding(1);
+    building.setGeometry(new LineString());
+
+    final List<AeriusException> errors = new ArrayList<>();
+    final List<AeriusException> warnings = new ArrayList<>();
+
+    BuildingValidator.validateBuildings(List.of(building), errors, warnings);
+
+    assertEquals(1, errors.size(), "Number of errors");
+    assertEquals(ImaerExceptionReason.GML_GEOMETRY_NOT_PERMITTED, errors.get(0).getReason(), "Error reason");
+    assertArrayEquals(new Object[] {BUILDING_LABEL}, errors.get(0).getArgs(), "Arguments");
+    assertTrue(warnings.isEmpty(), "No warnings");
+  }
+
+  @Test
+  void testBuildingZeroHeight() {
     final BuildingFeature building = createBuilding(0);
 
     final List<AeriusException> errors = new ArrayList<>();
@@ -64,7 +83,7 @@ class BuildingValidatorTest {
   }
 
   @Test
-  void testNegativeHeightBuilding() {
+  void testBuildingNegativeHeight() {
     final BuildingFeature building = createBuilding(-1);
 
     final List<AeriusException> errors = new ArrayList<>();
@@ -78,8 +97,41 @@ class BuildingValidatorTest {
     assertTrue(warnings.isEmpty(), "No warnings");
   }
 
+  @Test
+  void testValidCircularBuilding() {
+    final BuildingFeature building = createBuilding(1);
+    building.setGeometry(new Point(0, 0));
+    building.getProperties().setDiameter(1);
+
+    final List<AeriusException> errors = new ArrayList<>();
+    final List<AeriusException> warnings = new ArrayList<>();
+
+    BuildingValidator.validateBuildings(List.of(building), errors, warnings);
+
+    assertTrue(errors.isEmpty(), "No errors");
+    assertTrue(warnings.isEmpty(), "No warnings");
+  }
+
+  @Test
+  void testCircularBuildingIncorrectDiameter() {
+    final BuildingFeature building = createBuilding(1);
+    building.setGeometry(new Point(0, 0));
+    building.getProperties().setDiameter(0);
+
+    final List<AeriusException> errors = new ArrayList<>();
+    final List<AeriusException> warnings = new ArrayList<>();
+
+    BuildingValidator.validateBuildings(List.of(building), errors, warnings);
+
+    assertEquals(1, errors.size(), "Number of errors");
+    assertEquals(ImaerExceptionReason.CIRCULAR_BUILDING_INCORRECT_DIAMETER, errors.get(0).getReason(), "Error reason");
+    assertArrayEquals(new Object[] {BUILDING_LABEL}, errors.get(0).getArgs(), "Arguments");
+    assertTrue(warnings.isEmpty(), "No warnings");
+  }
+
   private static BuildingFeature createBuilding(final double height) {
     final BuildingFeature feature = new BuildingFeature();
+    feature.setGeometry(new Polygon());
     final Building building = new Building();
     building.setGmlId(BUILDING_ID);
     building.setLabel(BUILDING_LABEL);
