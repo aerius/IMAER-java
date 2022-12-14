@@ -505,11 +505,18 @@ public enum ImaerExceptionReason implements Reason {
   COHESION_REFERENCE_MISSING_BUILDING(5521),
 
   /**
-   * Buildingheight is <= 0.
+   * Buildingheight is 0.
    *
-   * @param 0 Label of the building that has height <= 0.
+   * @param 0 Label of the building that has height = 0.
    */
-  BUILDING_HEIGHT_TOO_LOW(5241),
+  BUILDING_HEIGHT_ZERO(5241),
+
+  /**
+   * Buildingheight is < 0.
+   *
+   * @param 0 Label of the building that has height < 0.
+   */
+  BUILDING_HEIGHT_TOO_LOW(5242),
 
   /**
    * Value is <= 0.
