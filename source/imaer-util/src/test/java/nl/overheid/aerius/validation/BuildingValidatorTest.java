@@ -34,54 +34,58 @@ class BuildingValidatorTest {
 
   private static final String SOURCE_ID = "OurSourceId";
   private static final String BUILDING_LABEL = "One More Building";
-  private static final double BUILDING_HEIGHT_VALID = 1D;
-  private static final double BUILDING_HEIGHT_ZERO = 0D;
 
   @Test
   void testValidBuilding() {
-    final BuildingFeature building = new BuildingFeature();
-
-    Building buildingProps = new Building();
-    buildingProps.setGmlId(SOURCE_ID);
-    buildingProps.setLabel(BUILDING_LABEL);
-    buildingProps.setHeight(BUILDING_HEIGHT_VALID);
-    building.setProperties(buildingProps);;
+    final BuildingFeature building = createBuilding(1);
 
     final List<AeriusException> errors = new ArrayList<>();
     final List<AeriusException> warnings = new ArrayList<>();
 
-    final List<BuildingFeature> buildings = new ArrayList<>();
-    buildings.add(building);
-
-    BuildingValidator.validateBuildings(buildings, errors, warnings);;
+    BuildingValidator.validateBuildings(List.of(building), errors, warnings);
 
     assertTrue(errors.isEmpty(), "No errors");
     assertTrue(warnings.isEmpty(), "No warnings");
   }
 
   @Test
-  void testZeroHeighBuilding() {
-    final BuildingFeature building = new BuildingFeature();
-
-    Building buildingProps = new Building();
-    buildingProps.setGmlId(SOURCE_ID);
-    buildingProps.setLabel(BUILDING_LABEL);
-    buildingProps.setHeight(BUILDING_HEIGHT_ZERO);
-    building.setProperties(buildingProps);;
+  void testZeroHeightBuilding() {
+    final BuildingFeature building = createBuilding(0);
 
     final List<AeriusException> errors = new ArrayList<>();
     final List<AeriusException> warnings = new ArrayList<>();
 
-    final List<BuildingFeature> buildings = new ArrayList<>();
-    buildings.add(building);
-
-    BuildingValidator.validateBuildings(buildings, errors, warnings);;
+    BuildingValidator.validateBuildings(List.of(building), errors, warnings);
 
     assertTrue(errors.isEmpty(), "No errors");
     assertEquals(1, warnings.size(), "Number of warnings");
-    assertEquals(ImaerExceptionReason.BUILDING_HEIGHT_TOO_LOW, warnings.get(0).getReason(), "Error reason");
+    assertEquals(ImaerExceptionReason.BUILDING_HEIGHT_ZERO, warnings.get(0).getReason(), "Error reason");
     assertArrayEquals(new Object[] {BUILDING_LABEL}, warnings.get(0).getArgs(), "Arguments");
+  }
 
+  @Test
+  void testNegativeHeightBuilding() {
+    final BuildingFeature building = createBuilding(-1);
+
+    final List<AeriusException> errors = new ArrayList<>();
+    final List<AeriusException> warnings = new ArrayList<>();
+
+    BuildingValidator.validateBuildings(List.of(building), errors, warnings);
+
+    assertEquals(1, errors.size(), "Number of errors");
+    assertEquals(ImaerExceptionReason.BUILDING_HEIGHT_TOO_LOW, errors.get(0).getReason(), "Error reason");
+    assertArrayEquals(new Object[] {BUILDING_LABEL}, errors.get(0).getArgs(), "Arguments");
+    assertTrue(warnings.isEmpty(), "No warnings");
+  }
+
+  private static BuildingFeature createBuilding(final double height) {
+    final BuildingFeature feature = new BuildingFeature();
+    final Building building = new Building();
+    building.setGmlId(SOURCE_ID);
+    building.setLabel(BUILDING_LABEL);
+    building.setHeight(height);
+    feature.setProperties(building);
+    return feature;
   }
 
 }

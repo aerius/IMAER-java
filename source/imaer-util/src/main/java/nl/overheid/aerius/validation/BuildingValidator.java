@@ -28,14 +28,18 @@ public final class BuildingValidator {
     // Util class
   }
 
-  public static void validateBuildings(List<BuildingFeature> buildings, List<AeriusException> exceptions, List<AeriusException> warnings) {
-    checkBuildingHeight(buildings, warnings);
+  public static void validateBuildings(final List<BuildingFeature> buildings, final List<AeriusException> errors,
+      final List<AeriusException> warnings) {
+    checkBuildingHeight(buildings, errors, warnings);
   }
 
-  private static void checkBuildingHeight(List<BuildingFeature> buildings, List<AeriusException> warnings) {
+  private static void checkBuildingHeight(final List<BuildingFeature> buildings, final List<AeriusException> errors,
+      final List<AeriusException> warnings) {
     for (final BuildingFeature building : buildings) {
-      if (building.getProperties().getHeight() <= 0) {
-        warnings.add(new AeriusException(ImaerExceptionReason.BUILDING_HEIGHT_TOO_LOW, building.getProperties().getLabel()));
+      if (building.getProperties().getHeight() < 0) {
+        errors.add(new AeriusException(ImaerExceptionReason.BUILDING_HEIGHT_TOO_LOW, building.getProperties().getLabel()));
+      } else if (building.getProperties().getHeight() == 0) {
+        warnings.add(new AeriusException(ImaerExceptionReason.BUILDING_HEIGHT_ZERO, building.getProperties().getLabel()));
       }
     }
   }
