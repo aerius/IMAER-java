@@ -16,7 +16,10 @@
  */
 package nl.overheid.aerius.validation;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 import nl.overheid.aerius.shared.domain.v2.characteristics.CustomDiurnalVariation;
@@ -30,6 +33,8 @@ import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
  */
 public final class DefinitionsValidator {
 
+  private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#.###", DecimalFormatSymbols.getInstance(Locale.ROOT));
+
   private DefinitionsValidator() {
     //Util class
   }
@@ -38,13 +43,13 @@ public final class DefinitionsValidator {
       final List<AeriusException> warnings) {
     definitions.getCustomDiurnalVariations().stream()
         .flatMap(diurnalVariation -> validateCustomDiurnalVariationType(diurnalVariation).stream())
-        .forEach(e -> errors.add(e));
+        .forEach(errors::add);
   }
 
   private static Optional<AeriusException> validateCustomDiurnalVariationType(final CustomDiurnalVariation diurnalVariation) {
     final CustomDiurnalVariationType customType = diurnalVariation.getType();
     if (customType == null) {
-      return Optional.of(new AeriusException(ImaerExceptionReason.CUSTOM_DIURNAL_VARIATION_TYPE_UNKNOWN, ""));
+      return Optional.of(new AeriusException(ImaerExceptionReason.CUSTOM_DIURNAL_VARIATION_TYPE_UNKNOWN, "null"));
     } else if (customType.getExpectedNumberOfValues() != diurnalVariation.getValues().size()) {
       return Optional.of(new AeriusException(ImaerExceptionReason.CUSTOM_DIURNAL_VARIATION_INVALID_COUNT,
           String.valueOf(customType.getExpectedNumberOfValues()),
@@ -54,8 +59,8 @@ public final class DefinitionsValidator {
     final double expectedSum = customType.getExpectedTotalNumberOfValues();
     if (Math.abs(expectedSum - valuesSum) >= CustomDiurnalVariation.ALLOWED_EPSILON) {
       return Optional.of(new AeriusException(ImaerExceptionReason.CUSTOM_DIURNAL_VARIATION_INVALID_SUM,
-          String.valueOf(expectedSum),
-          String.valueOf(valuesSum)));
+          DECIMAL_FORMAT.format(expectedSum),
+          DECIMAL_FORMAT.format(valuesSum)));
     }
     return Optional.empty();
   }

@@ -32,7 +32,7 @@ import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 
 class BuildingValidatorTest {
 
-  private static final String SOURCE_ID = "OurSourceId";
+  private static final String BUILDING_ID = "OurBuildingId";
   private static final String BUILDING_LABEL = "One More Building";
 
   @Test
@@ -81,7 +81,7 @@ class BuildingValidatorTest {
   private static BuildingFeature createBuilding(final double height) {
     final BuildingFeature feature = new BuildingFeature();
     final Building building = new Building();
-    building.setGmlId(SOURCE_ID);
+    building.setGmlId(BUILDING_ID);
     building.setLabel(BUILDING_LABEL);
     building.setHeight(height);
     feature.setProperties(building);
