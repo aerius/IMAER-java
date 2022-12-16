@@ -519,6 +519,13 @@ public enum ImaerExceptionReason implements Reason {
   BUILDING_HEIGHT_TOO_LOW(5242),
 
   /**
+   * Circular building with a incorrect diameter (negative or 0).
+   *
+   * @param 0 Label of the circular building that has an incorrect diameter.
+   */
+  CIRCULAR_BUILDING_INCORRECT_DIAMETER(5243),
+
+  /**
    * Value is <= 0.
    *
    * @param 0 Label of the object that has an unexpected negative value.
