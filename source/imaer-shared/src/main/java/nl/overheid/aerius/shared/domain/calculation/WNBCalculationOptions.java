@@ -41,7 +41,8 @@ public class WNBCalculationOptions implements Serializable {
   private String opsVersion;
   private String srmVersion;
 
-  private boolean disableSubReceptors;
+  private SubReceptorsMode subReceptorsMode;
+  private Integer subReceptorZoomLevel;
 
   /**
    * @return Returns true if WNB maximum distance calculation is to be applied.
@@ -89,12 +90,20 @@ public class WNBCalculationOptions implements Serializable {
     this.useReceptorHeights = useReceptorHeights;
   }
 
-  public boolean isDisableSubReceptors() {
-    return disableSubReceptors;
+  public SubReceptorsMode getSubReceptorsMode() {
+    return subReceptorsMode;
   }
 
-  public void setDisableSubReceptors(final boolean disableSubReceptors) {
-    this.disableSubReceptors = disableSubReceptors;
+  public void setSubReceptorsMode(final SubReceptorsMode subReceptorsMode) {
+    this.subReceptorsMode = subReceptorsMode;
+  }
+
+  public Integer getSubReceptorZoomLevel() {
+    return subReceptorZoomLevel;
+  }
+
+  public void setSubReceptorZoomLevel(final Integer subReceptorsZoomLevel) {
+    this.subReceptorZoomLevel = subReceptorsZoomLevel;
   }
 
   public OPSOptions getOpsOptions() {
