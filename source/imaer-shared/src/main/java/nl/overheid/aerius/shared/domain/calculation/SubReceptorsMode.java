@@ -20,9 +20,24 @@ package nl.overheid.aerius.shared.domain.calculation;
  * Different modes we support for calculations with subreceptors.
  */
 public enum SubReceptorsMode {
+
+  /**
+   * Never use subreceptors
+   */
   DISABLED(false, false, true),
+  /**
+   * Always use subreceptors
+   */
   ENABLED(true, false, true),
+  /**
+   * Use subreceptors only when calculating receptors
+   * Do not use subreceptors when calculating custom points
+   */
   ENABLED_RECEPTORS_ONLY(true, true, true),
+  /**
+   * Always use subreceptors
+   * Also include subreceptors outside relevant habitat areas
+   */
   ENABLED_OUTSIDE_HABITATS(true, false, false);
 
   private final boolean enabled;
