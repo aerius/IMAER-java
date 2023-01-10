@@ -36,6 +36,7 @@ import nl.overheid.aerius.shared.domain.calculation.ConnectSuppliedOptions;
 import nl.overheid.aerius.shared.domain.calculation.NCACalculationOptions;
 import nl.overheid.aerius.shared.domain.calculation.OPSOptions;
 import nl.overheid.aerius.shared.domain.calculation.RoadLocalFractionNO2Option;
+import nl.overheid.aerius.shared.domain.calculation.SubReceptorsMode;
 import nl.overheid.aerius.shared.domain.calculation.WNBCalculationOptions;
 import nl.overheid.aerius.shared.domain.meteo.Meteo;
 
@@ -44,7 +45,7 @@ import nl.overheid.aerius.shared.domain.meteo.Meteo;
  */
 class OptionsMetadataUtilTest {
 
-  private static final int BASIC_OPTIONS = 8;
+  private static final int BASIC_OPTIONS = 9;
   private static final int CONNECT_OPTIONS = 2;
   private static final int OPS_OPTIONS = 11;
 
@@ -84,7 +85,8 @@ class OptionsMetadataUtilTest {
     options.setForceAggregation(true);
     options.setUseWnbMaxDistance(true);
     options.setUseReceptorHeights(true);
-    options.setDisableSubReceptors(true);
+    options.setSubReceptorsMode(SubReceptorsMode.ENABLED);
+    options.setSubReceptorZoomLevel(1);
     cso.getRblCalculationOptions().setMonitorSrm2Year(2023);
 
     final Map<String, String> result = OptionsMetadataUtil.optionsToMap(Theme.WNB, cso, false);
@@ -95,7 +97,8 @@ class OptionsMetadataUtilTest {
     assertEquals("OPS_ROAD", result.get("ops_road"));
     assertEquals("true", result.get("forced_aggregation"));
     assertEquals("true", result.get("use_receptor_height"));
-    assertEquals("true", result.get("disable_sub_receptors"));
+    assertEquals("ENABLED", result.get("sub_receptors_mode"));
+    assertEquals("1", result.get("sub_receptor_zoom_level"));
     assertEquals("2023", result.get("monitor_srm2_year"));
   }
 
