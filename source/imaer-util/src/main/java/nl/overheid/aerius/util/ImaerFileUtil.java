@@ -32,7 +32,7 @@ public class ImaerFileUtil {
 
   static final int MAX_OPTIONAL_FILENAME_LENGTH = 128;
 
-  private static final String UNSAFE_FILENAME_CHARACTERS_REGEX = "\\W+";
+  private static final String UNSAFE_FILENAME_CHARACTERS_REGEX = "[^a-zA-Z0-9-_]";
   private static final String DATEFORMAT_FILENAME = "yyyyMMddHHmmss";
   private static final String FILENAME_SEPARATOR = "_";
 
