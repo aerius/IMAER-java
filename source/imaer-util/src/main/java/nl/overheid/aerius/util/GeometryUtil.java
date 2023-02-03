@@ -127,7 +127,11 @@ public final class GeometryUtil {
       final Coordinate coordinate = toJtsCoordinate(aeriusLineString.getCoordinates()[i], aeriusLineString);
       coordinates[i] = coordinate;
     }
-    return geometryFactory.createLineString(coordinates);
+    try {
+      return geometryFactory.createLineString(coordinates);
+    } catch (final IllegalArgumentException e) {
+      throw new AeriusException(ImaerExceptionReason.GEOMETRY_INVALID, e.getMessage());
+    }
   }
 
   private static Polygon toJtsPolygon(final nl.overheid.aerius.shared.domain.v2.geojson.Polygon aeriusPolygon) throws AeriusException {
@@ -142,8 +146,11 @@ public final class GeometryUtil {
       final LinearRing hole = toJtsLinearRing(geometryFactory, aeriusPolygon.getCoordinates()[i], aeriusPolygon);
       holes[i - 1] = hole;
     }
-
-    return geometryFactory.createPolygon(shell, holes);
+    try {
+      return geometryFactory.createPolygon(shell, holes);
+    } catch (final IllegalArgumentException e) {
+      throw new AeriusException(ImaerExceptionReason.GEOMETRY_INVALID, e.getMessage());
+    }
   }
 
   private static Coordinate toJtsCoordinate(final double[] coordinate, final nl.overheid.aerius.shared.domain.v2.geojson.Geometry originalGeometry)
@@ -162,7 +169,11 @@ public final class GeometryUtil {
       final Coordinate coordinate = toJtsCoordinate(coordinates[i], originalGeometry);
       coordinatesJts[i] = coordinate;
     }
-    return geometryFactory.createLinearRing(coordinatesJts);
+    try {
+      return geometryFactory.createLinearRing(coordinatesJts);
+    } catch (final IllegalArgumentException e) {
+      throw new AeriusException(ImaerExceptionReason.GEOMETRY_INVALID, e.getMessage());
+    }
   }
 
   /**
