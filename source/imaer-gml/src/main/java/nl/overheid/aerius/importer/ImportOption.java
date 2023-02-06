@@ -95,7 +95,12 @@ public enum ImportOption {
   /**
    * If set, a validation warning is thrown to alert that calculation points are found but will be ignored.
    */
-  WARNING_ON_CALCULATION_POINTS;
+  WARNING_ON_CALCULATION_POINTS,
+  /**
+   * If set, the importer will read diameters when importing if possible, for example when importing .BRN files.
+   * If not found, the diameter of the sources read from the file will be set to 0.
+   */
+  IMPORT_SOURCE_DIAMETER;
 
   private static final EnumSet<ImportOption> DEFAULT_IMPORT_OPTIONS = EnumSet.of(
       INCLUDE_CALCULATION_POINTS, INCLUDE_SOURCES,
