@@ -130,7 +130,7 @@ public final class GeometryUtil {
     try {
       return geometryFactory.createLineString(coordinates);
     } catch (final IllegalArgumentException e) {
-      throw new AeriusException(ImaerExceptionReason.GEOMETRY_INVALID, e.getMessage());
+      throw new AeriusException(ImaerExceptionReason.GEOMETRY_INVALID, String.valueOf(aeriusLineString));
     }
   }
 
@@ -149,7 +149,7 @@ public final class GeometryUtil {
     try {
       return geometryFactory.createPolygon(shell, holes);
     } catch (final IllegalArgumentException e) {
-      throw new AeriusException(ImaerExceptionReason.GEOMETRY_INVALID, e.getMessage());
+      throw new AeriusException(ImaerExceptionReason.GEOMETRY_INVALID, String.valueOf(aeriusPolygon));
     }
   }
 
@@ -172,7 +172,7 @@ public final class GeometryUtil {
     try {
       return geometryFactory.createLinearRing(coordinatesJts);
     } catch (final IllegalArgumentException e) {
-      throw new AeriusException(ImaerExceptionReason.GEOMETRY_INVALID, e.getMessage());
+      throw new AeriusException(ImaerExceptionReason.GEOMETRY_INVALID, String.valueOf(originalGeometry));
     }
   }
 
