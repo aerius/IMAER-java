@@ -33,6 +33,13 @@ public interface IsCalculationMetaData {
   }
 
   /**
+   * @return the method of calculation
+   */
+  default String getCalculationMethod() {
+    return null;
+  }
+
+  /**
    * @return the maximum range for this calculation
    */
   default Double getMaximumRange() {

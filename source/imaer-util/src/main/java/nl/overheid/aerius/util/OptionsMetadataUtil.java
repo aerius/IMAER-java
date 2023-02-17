@@ -26,7 +26,6 @@ import nl.overheid.aerius.shared.domain.Theme;
 import nl.overheid.aerius.shared.domain.calculation.ADMSOptions;
 import nl.overheid.aerius.shared.domain.calculation.CalculationRoadOPS;
 import nl.overheid.aerius.shared.domain.calculation.CalculationSetOptions;
-import nl.overheid.aerius.shared.domain.calculation.CalculationType;
 import nl.overheid.aerius.shared.domain.calculation.ConnectSuppliedOptions;
 import nl.overheid.aerius.shared.domain.calculation.NCACalculationOptions;
 import nl.overheid.aerius.shared.domain.calculation.OPSOptions;
@@ -123,7 +122,7 @@ public final class OptionsMetadataUtil {
     final Map<Option, String> mapToAddTo = new LinkedHashMap<>();
     addBooleanValue(mapToAddTo, Option.WITHOUT_SOURCE_STACKING, !options.isStacking(), addDefaults);
     if (theme == null || theme == Theme.WNB || theme == Theme.RBL) {
-      wnbOptionsToMap(mapToAddTo, options.getWnbCalculationOptions(), addDefaults, options.getCalculationType());
+      wnbOptionsToMap(mapToAddTo, options.getWnbCalculationOptions(), addDefaults);
       addIntValue(mapToAddTo, Option.MONITOR_SRM2_YEAR, options.getRblCalculationOptions().getMonitorSrm2Year(), addDefaults);
     } else if (theme == Theme.NCA) {
       ncaOptionsToMap(mapToAddTo, options.getNcaCalculationOptions(), addDefaults);
@@ -135,8 +134,7 @@ public final class OptionsMetadataUtil {
     return returnMap;
   }
 
-  private static void wnbOptionsToMap(final Map<Option, String> mapToAddTo, final WNBCalculationOptions options, final boolean addDefaults,
-      final CalculationType calculationType) {
+  private static void wnbOptionsToMap(final Map<Option, String> mapToAddTo, final WNBCalculationOptions options, final boolean addDefaults) {
     addValue(mapToAddTo, Option.METEO_YEAR, options.getMeteo(), addDefaults);
     if (addDefaults || options.getRoadOPS() != CalculationRoadOPS.DEFAULT) {
       mapToAddTo.put(Option.OPS_ROAD, options.getRoadOPS().name());

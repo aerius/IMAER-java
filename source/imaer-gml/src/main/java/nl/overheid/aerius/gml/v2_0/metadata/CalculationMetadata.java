@@ -17,7 +17,6 @@
 package nl.overheid.aerius.gml.v2_0.metadata;
 
 import java.util.List;
-import java.util.Locale;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
@@ -25,7 +24,6 @@ import javax.xml.bind.annotation.XmlType;
 import nl.overheid.aerius.gml.base.IsCalculationMetaData;
 import nl.overheid.aerius.gml.v2_0.base.CalculatorSchema;
 import nl.overheid.aerius.shared.domain.Substance;
-import nl.overheid.aerius.shared.domain.calculation.CalculationType;
 import nl.overheid.aerius.shared.domain.result.EmissionResultType;
 
 /**
@@ -35,7 +33,7 @@ import nl.overheid.aerius.shared.domain.result.EmissionResultType;
     "maximumRange", "researchArea"})
 public class CalculationMetadata implements IsCalculationMetaData {
 
-  private CalculationType calculationType;
+  private String calculationType;
   private List<Substance> substances;
   private List<EmissionResultType> resultTypes;
   private Double maximumRange;
@@ -44,14 +42,10 @@ public class CalculationMetadata implements IsCalculationMetaData {
   @Override
   @XmlElement(name = "type", namespace = CalculatorSchema.NAMESPACE)
   public String getCalculationType() {
-    return calculationType.type();
+    return calculationType;
   }
 
   public void setCalculationType(final String calculationType) {
-    this.calculationType = CalculationType.valueOf(calculationType.toUpperCase(Locale.ROOT));
-  }
-
-  public void setCalculationType(final CalculationType calculationType) {
     this.calculationType = calculationType;
   }
 

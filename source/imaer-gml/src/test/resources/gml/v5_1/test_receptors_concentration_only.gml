@@ -9,7 +9,7 @@
             </imaer:project>
             <imaer:calculation>
                 <imaer:CalculationMetadata>
-                    <imaer:type>NATURE_AREA</imaer:type>
+                    <imaer:method>NATURE_AREA</imaer:method>
                     <imaer:substance>NOX</imaer:substance>
                     <imaer:substance>NH3</imaer:substance>
                     <imaer:substance>NO2</imaer:substance>

@@ -20,7 +20,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import nl.overheid.aerius.shared.domain.Substance;
-import nl.overheid.aerius.shared.domain.calculation.CalculationType;
+import nl.overheid.aerius.shared.domain.calculation.CalculationMethod;
 import nl.overheid.aerius.shared.domain.result.EmissionResultType;
 
 /**
@@ -29,7 +29,7 @@ import nl.overheid.aerius.shared.domain.result.EmissionResultType;
 public class CalculationMetaData implements Serializable {
   private static final long serialVersionUID = 1L;
 
-  private CalculationType calculationType;
+  private CalculationMethod calculationMethod;
   private List<Substance> substances;
   private List<EmissionResultType> resultTypes;
 
@@ -38,9 +38,9 @@ public class CalculationMetaData implements Serializable {
    */
   private int monitorSrm2Year;
 
-  private CalculationMetaData(final CalculationType calculationType, final List<Substance> substances, final List<EmissionResultType> resultTypes,
+  private CalculationMetaData(final CalculationMethod calculationMethod, final List<Substance> substances, final List<EmissionResultType> resultTypes,
       final int monitorSrm2Year) {
-    this.calculationType = calculationType;
+    this.calculationMethod = calculationMethod;
     this.substances = substances;
     this.resultTypes = resultTypes;
     this.monitorSrm2Year = monitorSrm2Year;
@@ -50,8 +50,8 @@ public class CalculationMetaData implements Serializable {
     return new Builder();
   }
 
-  public CalculationType calculationType() {
-    return calculationType;
+  public CalculationMethod calculationMethod() {
+    return calculationMethod;
   }
 
   public List<Substance> substances() {
@@ -68,7 +68,7 @@ public class CalculationMetaData implements Serializable {
 
   @Override
   public String toString() {
-    return "CalculationMetaData [calculationType=" + calculationType + ", substances=" + substances + ", resultTypes=" + resultTypes
+    return "CalculationMetaData [calculationMethod=" + calculationMethod + ", substances=" + substances + ", resultTypes=" + resultTypes
         + ", monitorSrm2Year=" + monitorSrm2Year + "]";
   }
 
@@ -81,7 +81,7 @@ public class CalculationMetaData implements Serializable {
       return false;
     }
     final CalculationMetaData that = (CalculationMetaData) o;
-    return (this.calculationType == null ? that.calculationType() == null : this.calculationType.equals(that.calculationType()))
+    return (this.calculationMethod == null ? that.calculationMethod() == null : this.calculationMethod.equals(that.calculationMethod()))
         && (this.substances == null ? that.substances() == null : this.substances.equals(that.substances()))
         && (this.resultTypes == null ? that.resultTypes() == null : this.resultTypes.equals(that.resultTypes()))
         && (this.monitorSrm2Year == that.monitorSrm2Year());
@@ -91,7 +91,7 @@ public class CalculationMetaData implements Serializable {
   public int hashCode() {
     int h$ = 1;
     h$ *= 1000003;
-    h$ ^= (calculationType == null) ? 0 : calculationType.hashCode();
+    h$ ^= (calculationMethod == null) ? 0 : calculationMethod.hashCode();
     h$ *= 1000003;
     h$ ^= (substances == null) ? 0 : substances.hashCode();
     h$ *= 1000003;
@@ -102,13 +102,13 @@ public class CalculationMetaData implements Serializable {
   }
 
   static final class Builder {
-    private CalculationType calculationType;
+    private CalculationMethod calculationMethod;
     private List<Substance> substances;
     private List<EmissionResultType> resultTypes;
     private int monitorSrm2Year;
 
-    public CalculationMetaData.Builder calculationType(final CalculationType calculationType) {
-      this.calculationType = calculationType;
+    public CalculationMetaData.Builder calculationMethod(final CalculationMethod calculationMethod) {
+      this.calculationMethod = calculationMethod;
       return this;
     }
 
@@ -128,7 +128,7 @@ public class CalculationMetaData implements Serializable {
     }
 
     public CalculationMetaData build() {
-      return new CalculationMetaData(calculationType, substances, resultTypes, monitorSrm2Year);
+      return new CalculationMetaData(calculationMethod, substances, resultTypes, monitorSrm2Year);
     }
   }
 }

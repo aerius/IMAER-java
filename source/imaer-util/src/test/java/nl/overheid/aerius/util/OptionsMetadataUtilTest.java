@@ -29,9 +29,9 @@ import org.junit.jupiter.api.Test;
 
 import nl.overheid.aerius.shared.domain.Theme;
 import nl.overheid.aerius.shared.domain.calculation.ADMSOptions;
+import nl.overheid.aerius.shared.domain.calculation.CalculationMethod;
 import nl.overheid.aerius.shared.domain.calculation.CalculationRoadOPS;
 import nl.overheid.aerius.shared.domain.calculation.CalculationSetOptions;
-import nl.overheid.aerius.shared.domain.calculation.CalculationType;
 import nl.overheid.aerius.shared.domain.calculation.ConnectSuppliedOptions;
 import nl.overheid.aerius.shared.domain.calculation.NCACalculationOptions;
 import nl.overheid.aerius.shared.domain.calculation.OPSOptions;
@@ -80,7 +80,7 @@ class OptionsMetadataUtilTest {
     options.setMeteo(new Meteo(2020));
     cso.setStacking(false);
     // RoadOPS only applies with custom_points.
-    cso.setCalculationType(CalculationType.CUSTOM_POINTS);
+    cso.setCalculationMethod(CalculationMethod.CUSTOM_POINTS);
     options.setRoadOPS(CalculationRoadOPS.OPS_ROAD);
     options.setForceAggregation(true);
     options.setUseWnbMaxDistance(true);
@@ -260,7 +260,6 @@ class OptionsMetadataUtilTest {
     assertFalse(result3.containsKey("road_local_fraction_no2_custom_value"));
   }
 
-
   @Test
   public void NcaOptionsRoundtripTest() {
     final CalculationSetOptions options = new CalculationSetOptions();
@@ -289,7 +288,7 @@ class OptionsMetadataUtilTest {
     final Map<String, String> result1 = OptionsMetadataUtil.optionsToMap(Theme.NCA, options, false);
     final CalculationSetOptions roundTripOptions = new CalculationSetOptions();
     OptionsMetadataUtil.addOptionsFromMap(Theme.NCA, result1.entrySet().stream()
-            .collect(Collectors.toMap(entry -> OptionsMetadataUtil.Option.valueOf(entry.getKey().toUpperCase(Locale.ROOT)), Map.Entry::getValue)),
+        .collect(Collectors.toMap(entry -> OptionsMetadataUtil.Option.valueOf(entry.getKey().toUpperCase(Locale.ROOT)), Map.Entry::getValue)),
         roundTripOptions);
     final Map<String, String> result2 = OptionsMetadataUtil.optionsToMap(Theme.NCA, roundTripOptions, false);
 

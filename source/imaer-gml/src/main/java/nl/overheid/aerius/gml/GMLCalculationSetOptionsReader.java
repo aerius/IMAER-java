@@ -26,6 +26,7 @@ import nl.overheid.aerius.gml.base.IsCalculationMetaData;
 import nl.overheid.aerius.gml.base.IsGmlProperty;
 import nl.overheid.aerius.gml.base.MetaData;
 import nl.overheid.aerius.shared.domain.Theme;
+import nl.overheid.aerius.shared.domain.calculation.CalculationMethod;
 import nl.overheid.aerius.shared.domain.calculation.CalculationSetOptions;
 import nl.overheid.aerius.shared.domain.calculation.CalculationType;
 import nl.overheid.aerius.shared.domain.v2.scenario.ScenarioMetaData;
@@ -68,8 +69,21 @@ public class GMLCalculationSetOptionsReader {
       OptionsMetadataUtil.addOptionsFromMap(theme, optionsMap, options);
     }
 
-    options.setCalculationType(CalculationType.safeValueOf(calculationMetaData.getCalculationType()));
+    setCalculationMethod(calculationMetaData, options);
     options.setCalculateMaximumRange(calculationMetaData.getMaximumRange() == null ? 0.0 : calculationMetaData.getMaximumRange());
     return options;
+  }
+
+  /**
+   * Set the calculation method. If calculation method is null try if calculation type was used.
+   *
+   * @param calculationMetaData
+   * @param options
+   */
+  private void setCalculationMethod(final IsCalculationMetaData calculationMetaData, final CalculationSetOptions options) {
+    final String method = calculationMetaData.getCalculationMethod();
+
+    options.setCalculationMethod(
+        method == null ? CalculationType.toCalculationMethod(method) : CalculationMethod.safeValueOf(calculationMetaData.getCalculationMethod()));
   }
 }

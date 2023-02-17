@@ -39,8 +39,8 @@ import org.junit.jupiter.params.provider.ValueSource;
 import nl.overheid.aerius.gml.base.MetaDataInput;
 import nl.overheid.aerius.gml.base.OtherSituationMetaData;
 import nl.overheid.aerius.shared.domain.Substance;
+import nl.overheid.aerius.shared.domain.calculation.CalculationMethod;
 import nl.overheid.aerius.shared.domain.calculation.CalculationSetOptions;
-import nl.overheid.aerius.shared.domain.calculation.CalculationType;
 import nl.overheid.aerius.shared.domain.geo.ReceptorGridSettings;
 import nl.overheid.aerius.shared.domain.result.EmissionResultKey;
 import nl.overheid.aerius.shared.domain.result.EmissionResultType;
@@ -182,7 +182,7 @@ public class GMLWriterTest {
 
   private CalculationSetOptions getCalculationOptions() {
     final CalculationSetOptions options = new CalculationSetOptions();
-    options.setCalculationType(CalculationType.NATURE_AREA);
+    options.setCalculationMethod(CalculationMethod.NATURE_AREA);
     options.setCalculateMaximumRange(3);
     options.getRblCalculationOptions().setMonitorSrm2Year(2030);
     options.getSubstances().add(Substance.NOX);

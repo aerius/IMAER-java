@@ -3,8 +3,8 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:xlink="http://www.w3.org/1999/xlink"
 	xmlns:gml="http://www.opengis.net/gml/3.2"
-	xmlns:imaer="http://imaer.aerius.nl/5.0" gml:id="NL.IMAER.Collection"
-	xsi:schemaLocation="http://imaer.aerius.nl/5.0 https://imaer.aerius.nl/5.0/IMAER.xsd">
+	xmlns:imaer="http://imaer.aerius.nl/5.1" gml:id="NL.IMAER.Collection"
+	xsi:schemaLocation="http://imaer.aerius.nl/5.1 https://imaer.aerius.nl/5.1/IMAER.xsd">
 	<imaer:metadata>
 		<imaer:AeriusCalculatorMetadata>
 			<imaer:project>
@@ -31,7 +31,7 @@
 			</imaer:situation>
 			<imaer:calculation>
 				<imaer:CalculationMetadata>
-					<imaer:type>PERMIT</imaer:type>
+					<imaer:method>PERMIT</imaer:method>
 					<imaer:substance>NOX</imaer:substance>
 					<imaer:substance>NH3</imaer:substance>
 					<imaer:substance>NO2</imaer:substance>

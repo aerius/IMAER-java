@@ -19,49 +19,26 @@ package nl.overheid.aerius.shared.domain.calculation;
 import java.util.Locale;
 
 /**
- * Type of calculation. It be a radius from the source point or to only
- * calculate points within nature areas.
+ * Method of calculation.
  */
-public enum CalculationType {
+public enum CalculationMethod {
 
   /**
    * Calculate with custom points (fixed set of receptors or user defined points).
    */
-  CUSTOM_POINTS(CalculationMethod.CUSTOM_POINTS),
+  CUSTOM_POINTS,
   /**
    * Calculate with custom receptors (maps user defined points to receptors on the predefined grid).
    */
-  CUSTOM_RECEPTORS(CalculationMethod.CUSTOM_RECEPTORS),
+  CUSTOM_RECEPTORS,
+  /**
+   * Calculates using calculation points and settings established by formal assessment.
+   */
+  PERMIT,
   /**
    * Calculate deposition in nature areas.
    */
-  NATURE_AREA(CalculationMethod.NATURE_AREA),
-  /**
-   * Calculates using calculation points and settings established by policy.
-   */
-  PERMIT(CalculationMethod.PERMIT),
-  /**
-   * Calculate deposition in a radius around the sources.
-   */
-  RADIUS(null);
-
-  private CalculationMethod calculationMethod;
-
-  private CalculationType(final CalculationMethod calculationMethod) {
-    this.calculationMethod = calculationMethod;
-  }
-
-  /**
-   * Converts a old style calculation type to a calculation method object.
-   *
-   * @param value value to convert
-   * @return calculation method object or null if could not be matched.
-   */
-  public static CalculationMethod toCalculationMethod(final String value) {
-    final CalculationType ctype = safeValueOf(value);
-
-    return ctype == null ? null : ctype.calculationMethod;
-  }
+  NATURE_AREA;
 
   /**
    * Safely returns a CalculationMethod. It is case independent and returns null in
@@ -70,7 +47,7 @@ public enum CalculationType {
    * @param value value to convert
    * @return CalculationMethod or null if no valid input
    */
-  public static CalculationType safeValueOf(final String value) {
+  public static CalculationMethod safeValueOf(final String value) {
     try {
       return value == null ? null : valueOf(value.toUpperCase(Locale.ROOT));
     } catch (final IllegalArgumentException e) {
@@ -79,7 +56,7 @@ public enum CalculationType {
   }
 
   public String type() {
-    return name();
+    return name().toString();
   }
 
   /**

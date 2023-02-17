@@ -25,17 +25,18 @@ import javax.xml.bind.annotation.XmlType;
 import nl.overheid.aerius.gml.base.IsCalculationMetaData;
 import nl.overheid.aerius.gml.v5_1.base.CalculatorSchema;
 import nl.overheid.aerius.shared.domain.Substance;
-import nl.overheid.aerius.shared.domain.calculation.CalculationType;
+import nl.overheid.aerius.shared.domain.calculation.CalculationMethod;
 import nl.overheid.aerius.shared.domain.result.EmissionResultType;
 
 /**
  *
  */
-@XmlType(name = "CalculationMetadataType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"calculationType", "substances", "resultTypes",
-    "maximumRange", "researchArea", "monitorSrm2Year", "options", "otherSituations"})
+@XmlType(name = "CalculationMetadataType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"calculationType", "calculationMethod", "substances",
+    "resultTypes", "maximumRange", "researchArea", "monitorSrm2Year", "options", "otherSituations"})
 public class CalculationMetadata implements IsCalculationMetaData {
 
   private String calculationType;
+  private String calculationMethod;
   private List<Substance> substances;
   private List<EmissionResultType> resultTypes;
   private Double maximumRange;
@@ -50,12 +51,18 @@ public class CalculationMetadata implements IsCalculationMetaData {
     return calculationType;
   }
 
-  public void setCalculationType(final CalculationType calculationType) {
-    setCalculationType(calculationType.type());
+  @Override
+  @XmlElement(name = "method", namespace = CalculatorSchema.NAMESPACE)
+  public String getCalculationMethod() {
+    return calculationMethod;
   }
 
-  public void setCalculationType(final String calculationType) {
-    this.calculationType = calculationType;
+  public void setCalculationMethod(final CalculationMethod calculationMethod) {
+    this.calculationMethod = calculationMethod.type();
+  }
+
+  public void setCalculationMethod(final String calculationMethod) {
+    this.calculationMethod = calculationMethod;
   }
 
   @XmlElement(name = "substance", namespace = CalculatorSchema.NAMESPACE)

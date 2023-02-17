@@ -26,7 +26,7 @@
             </imaer:situation>
             <imaer:calculation>
                 <imaer:CalculationMetadata>
-                    <imaer:type>CUSTOM_POINTS</imaer:type>
+                    <imaer:method>CUSTOM_POINTS</imaer:method>
                     <imaer:substance>NOX</imaer:substance>
                     <imaer:substance>NO2</imaer:substance>
                     <imaer:substance>NH3</imaer:substance>
