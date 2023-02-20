@@ -78,7 +78,7 @@ class GMLCalculationSetOptionsReaderTest {
     final FeatureCollection featureCollection = mock(FeatureCollection.class);
     final MetaData metaData = mock(MetaData.class);
     final IsCalculationMetaData calculationMetaData = mock(IsCalculationMetaData.class);
-    when(calculationMetaData.getCalculationType()).thenReturn(CALCULATION_METHOD_FORMAL);
+    when(calculationMetaData.getCalculationMethod()).thenReturn(CALCULATION_METHOD_FORMAL);
     when(featureCollection.getMetaData()).thenReturn(metaData);
     when(metaData.getCalculation()).thenReturn(calculationMetaData);
     when(calculationMetaData.getOptions()).thenReturn(null);
@@ -94,7 +94,7 @@ class GMLCalculationSetOptionsReaderTest {
     final FeatureCollection featureCollection = mock(FeatureCollection.class);
     final MetaData metaData = mock(MetaData.class);
     final IsCalculationMetaData calculationMetaData = mock(IsCalculationMetaData.class);
-    when(calculationMetaData.getCalculationType()).thenReturn("UNKNOWN");
+    when(calculationMetaData.getCalculationMethod()).thenReturn("UNKNOWN");
     when(featureCollection.getMetaData()).thenReturn(metaData);
     when(metaData.getCalculation()).thenReturn(calculationMetaData);
     when(calculationMetaData.getOptions()).thenReturn(null);
@@ -111,7 +111,7 @@ class GMLCalculationSetOptionsReaderTest {
     final FeatureCollection featureCollection = mock(FeatureCollection.class);
     final MetaData metaData = mock(MetaData.class);
     final IsCalculationMetaData calculationMetaData = mock(IsCalculationMetaData.class);
-    when(calculationMetaData.getCalculationType()).thenReturn(CALCULATION_METHOD_FORMAL);
+    when(calculationMetaData.getCalculationMethod()).thenReturn(CALCULATION_METHOD_FORMAL);
     when(featureCollection.getMetaData()).thenReturn(metaData);
     when(metaData.getCalculation()).thenReturn(calculationMetaData);
 
@@ -130,7 +130,7 @@ class GMLCalculationSetOptionsReaderTest {
     final FeatureCollection featureCollection = mock(FeatureCollection.class);
     final MetaData metaData = mock(MetaData.class);
     final IsCalculationMetaData calculationMetaData = mock(IsCalculationMetaData.class);
-    when(calculationMetaData.getCalculationType()).thenReturn(CALCULATION_METHOD_FORMAL);
+    when(calculationMetaData.getCalculationMethod()).thenReturn(CALCULATION_METHOD_FORMAL);
     when(featureCollection.getMetaData()).thenReturn(metaData);
     when(metaData.getCalculation()).thenReturn(calculationMetaData);
 
@@ -150,7 +150,7 @@ class GMLCalculationSetOptionsReaderTest {
     final FeatureCollection featureCollection = mock(FeatureCollection.class);
     final MetaData metaData = mock(MetaData.class);
     final IsCalculationMetaData calculationMetaData = mock(IsCalculationMetaData.class);
-    when(calculationMetaData.getCalculationType()).thenReturn(CALCULATION_METHOD_FORMAL);
+    when(calculationMetaData.getCalculationMethod()).thenReturn(CALCULATION_METHOD_FORMAL);
     when(featureCollection.getMetaData()).thenReturn(metaData);
     when(metaData.getCalculation()).thenReturn(calculationMetaData);
 
@@ -172,7 +172,7 @@ class GMLCalculationSetOptionsReaderTest {
     final FeatureCollection featureCollection = mock(FeatureCollection.class);
     final MetaData metaData = mock(MetaData.class);
     final IsCalculationMetaData calculationMetaData = mock(IsCalculationMetaData.class);
-    when(calculationMetaData.getCalculationType()).thenReturn(CALCULATION_METHOD_FORMAL);
+    when(calculationMetaData.getCalculationMethod()).thenReturn(CALCULATION_METHOD_FORMAL);
     when(featureCollection.getMetaData()).thenReturn(metaData);
     when(metaData.getCalculation()).thenReturn(calculationMetaData);
 
@@ -222,7 +222,7 @@ class GMLCalculationSetOptionsReaderTest {
     final FeatureCollection featureCollection = mock(FeatureCollection.class);
     final MetaData metaData = mock(MetaData.class);
     final IsCalculationMetaData calculationMetaData = mock(IsCalculationMetaData.class);
-    when(calculationMetaData.getCalculationType()).thenReturn(CALCULATION_METHOD_FORMAL);
+    when(calculationMetaData.getCalculationMethod()).thenReturn(CALCULATION_METHOD_FORMAL);
     when(featureCollection.getMetaData()).thenReturn(metaData);
     when(metaData.getCalculation()).thenReturn(calculationMetaData);
 
@@ -259,7 +259,7 @@ class GMLCalculationSetOptionsReaderTest {
     final FeatureCollection featureCollection = mock(FeatureCollection.class);
     final MetaData metaData = mock(MetaData.class);
     final IsCalculationMetaData calculationMetaData = mock(IsCalculationMetaData.class);
-    when(calculationMetaData.getCalculationType()).thenReturn(CALCULATION_METHOD_FORMAL);
+    when(calculationMetaData.getCalculationMethod()).thenReturn(CALCULATION_METHOD_FORMAL);
     when(featureCollection.getMetaData()).thenReturn(metaData);
     when(metaData.getCalculation()).thenReturn(calculationMetaData);
 
@@ -309,7 +309,7 @@ class GMLCalculationSetOptionsReaderTest {
     final FeatureCollection featureCollection = mock(FeatureCollection.class);
     final MetaData metaData = mock(MetaData.class);
     final IsCalculationMetaData calculationMetaData = mock(IsCalculationMetaData.class);
-    when(calculationMetaData.getCalculationType()).thenReturn(CALCULATION_METHOD_FORMAL);
+    when(calculationMetaData.getCalculationMethod()).thenReturn(CALCULATION_METHOD_FORMAL);
     when(featureCollection.getMetaData()).thenReturn(metaData);
     when(metaData.getCalculation()).thenReturn(calculationMetaData);
 
@@ -337,7 +337,7 @@ class GMLCalculationSetOptionsReaderTest {
     final FeatureCollection featureCollection = mock(FeatureCollection.class);
     final MetaData metaData = mock(MetaData.class);
     final IsCalculationMetaData calculationMetaData = mock(IsCalculationMetaData.class);
-    when(calculationMetaData.getCalculationType()).thenReturn(CALCULATION_METHOD_FORMAL);
+    when(calculationMetaData.getCalculationMethod()).thenReturn(CALCULATION_METHOD_FORMAL);
     when(featureCollection.getMetaData()).thenReturn(metaData);
     when(metaData.getCalculation()).thenReturn(calculationMetaData);
 

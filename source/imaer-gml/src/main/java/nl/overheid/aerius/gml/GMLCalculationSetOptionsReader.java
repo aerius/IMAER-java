@@ -84,6 +84,6 @@ public class GMLCalculationSetOptionsReader {
     final String method = calculationMetaData.getCalculationMethod();
 
     options.setCalculationMethod(
-        method == null ? CalculationType.toCalculationMethod(method) : CalculationMethod.safeValueOf(calculationMetaData.getCalculationMethod()));
+        method == null ? CalculationType.toCalculationMethod(calculationMetaData.getCalculationType()) : CalculationMethod.safeValueOf(method));
   }
 }

@@ -45,7 +45,6 @@ import nl.overheid.aerius.gml.v5_0.metadata.VersionMetadata;
 import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.Theme;
 import nl.overheid.aerius.shared.domain.calculation.CalculationMethod;
-import nl.overheid.aerius.shared.domain.calculation.CalculationMethod;
 import nl.overheid.aerius.shared.domain.calculation.CalculationSetOptions;
 import nl.overheid.aerius.shared.domain.geo.HexagonZoomLevel;
 import nl.overheid.aerius.shared.domain.result.EmissionResultKey;
@@ -184,14 +183,7 @@ public class GMLVersionWriterV50 implements GMLVersionWriter {
   private String convertToOldCalculationType(final MetaDataInput input) {
     final CalculationMethod calculationMethod = input.getOptions().getCalculationMethod();
 
-    if (calculationMethod == null) {
-      return null;
-    }
-    if (calculationMethod == CalculationMethod.PERMIT) {
-      return CalculationMethod.PERMIT.type();
-    } else {
-      return calculationMethod.type();
-    }
+    return calculationMethod == null ? null : calculationMethod.type();
   }
 
   private VersionMetadata getVersion(final MetaDataInput input) {
