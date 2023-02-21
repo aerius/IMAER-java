@@ -44,8 +44,8 @@ import nl.overheid.aerius.gml.v5_0.metadata.SituationMetadata;
 import nl.overheid.aerius.gml.v5_0.metadata.VersionMetadata;
 import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.Theme;
+import nl.overheid.aerius.shared.domain.calculation.CalculationMethod;
 import nl.overheid.aerius.shared.domain.calculation.CalculationSetOptions;
-import nl.overheid.aerius.shared.domain.calculation.CalculationType;
 import nl.overheid.aerius.shared.domain.geo.HexagonZoomLevel;
 import nl.overheid.aerius.shared.domain.result.EmissionResultKey;
 import nl.overheid.aerius.shared.domain.result.EmissionResultType;
@@ -167,8 +167,7 @@ public class GMLVersionWriterV50 implements GMLVersionWriter {
     final CalculationMetadata calculation;
     if (input.isResultsIncluded()) {
       calculation = new CalculationMetadata();
-      final CalculationType calculationType = input.getOptions().getCalculationType();
-      calculation.setCalculationType(calculationType);
+      calculation.setCalculationType(convertToOldCalculationType(input));
       if (input.getOptions().isMaximumRangeRelevant()) {
         calculation.setMaximumRange(input.getOptions().getCalculateMaximumRange());
       }
@@ -179,6 +178,12 @@ public class GMLVersionWriterV50 implements GMLVersionWriter {
       calculation = null;
     }
     return calculation;
+  }
+
+  private String convertToOldCalculationType(final MetaDataInput input) {
+    final CalculationMethod calculationMethod = input.getOptions().getCalculationMethod();
+
+    return calculationMethod == null ? null : calculationMethod.type();
   }
 
   private VersionMetadata getVersion(final MetaDataInput input) {

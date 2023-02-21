@@ -126,7 +126,7 @@ public class WNBCalculationOptions implements Serializable {
     return srmVersion;
   }
 
-  public void setSrmVersion(String srmVersion) {
+  public void setSrmVersion(final String srmVersion) {
     this.srmVersion = srmVersion;
   }
 }

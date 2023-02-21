@@ -17,7 +17,7 @@
             </imaer:situation>
             <imaer:calculation>
                 <imaer:CalculationMetadata>
-                    <imaer:type>PERMIT</imaer:type>
+                    <imaer:method>PERMIT</imaer:method>
                     <imaer:substance>NOX</imaer:substance>
                     <imaer:substance>NO2</imaer:substance>
                     <imaer:substance>NH3</imaer:substance>

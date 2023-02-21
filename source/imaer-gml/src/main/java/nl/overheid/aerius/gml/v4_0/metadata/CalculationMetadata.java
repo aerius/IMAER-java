@@ -24,7 +24,6 @@ import javax.xml.bind.annotation.XmlType;
 import nl.overheid.aerius.gml.base.IsCalculationMetaData;
 import nl.overheid.aerius.gml.v4_0.base.CalculatorSchema;
 import nl.overheid.aerius.shared.domain.Substance;
-import nl.overheid.aerius.shared.domain.calculation.CalculationType;
 import nl.overheid.aerius.shared.domain.result.EmissionResultType;
 
 /**
@@ -46,10 +45,6 @@ public class CalculationMetadata implements IsCalculationMetaData {
   @XmlElement(name = "type", namespace = CalculatorSchema.NAMESPACE)
   public String getCalculationType() {
     return calculationType;
-  }
-
-  public void setCalculationType(final CalculationType calculationType) {
-    setCalculationType(calculationType.type());
   }
 
   public void setCalculationType(final String calculationType) {
@@ -102,6 +97,7 @@ public class CalculationMetadata implements IsCalculationMetaData {
     this.monitorSrm2Year = monitorSrm2Year;
   }
 
+  @Override
   @XmlElement(name = "option", namespace = CalculatorSchema.NAMESPACE)
   public List<CalculationOptionProperty> getOptions() {
     return options;

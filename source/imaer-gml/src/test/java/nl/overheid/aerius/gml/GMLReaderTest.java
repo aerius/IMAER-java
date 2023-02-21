@@ -48,7 +48,7 @@ import nl.overheid.aerius.gml.base.GMLVersionReaderFactory;
 import nl.overheid.aerius.gml.base.MetaData;
 import nl.overheid.aerius.gml.base.MetaDataInput;
 import nl.overheid.aerius.gml.v0_5.GMLReaderFactoryV05;
-import nl.overheid.aerius.shared.domain.calculation.CalculationType;
+import nl.overheid.aerius.shared.domain.calculation.CalculationMethod;
 import nl.overheid.aerius.shared.domain.geo.ReceptorGridSettings;
 import nl.overheid.aerius.shared.domain.scenario.SituationType;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPointFeature;
@@ -61,7 +61,7 @@ import nl.overheid.aerius.util.ImaerFileUtil;
 /**
  * Tests the basic cases for GML which will (most likely) hardly change.
  */
-public class GMLReaderTest {
+class GMLReaderTest {
   private static final Logger LOG = LoggerFactory.getLogger(GMLReaderTest.class);
 
   private static final String USED_EXTENSION = ".gml";
@@ -85,12 +85,12 @@ public class GMLReaderTest {
   private static ReceptorGridSettings gridSettings;
 
   @BeforeAll
-  public static void setUpBeforeClass() throws IOException {
+  static void setUpBeforeClass() throws IOException {
     gridSettings = GMLTestDomain.getExampleGridSettings();
   }
 
   @Test
-  public void testConvertToEmissionSources() throws IOException, AeriusException {
+  void testConvertToEmissionSources() throws IOException, AeriusException {
     final File file = getFile(AssertGML.PATH_LATEST_VERSION, SOURCES_ONLY_FILE);
     final List<EmissionSourceFeature> sources = getEmissionSourcesFromFile(file);
     assertNotNull(sources, "Emission sources");
@@ -98,7 +98,7 @@ public class GMLReaderTest {
   }
 
   @Test
-  public void testConvertToEmissionSourcesWithoutMetadata() throws IOException, AeriusException {
+  void testConvertToEmissionSourcesWithoutMetadata() throws IOException, AeriusException {
     final File file = getFile(AssertGML.PATH_LATEST_VERSION, EMPTY_METADATA_FILE);
     final List<EmissionSourceFeature> sources = getEmissionSourcesFromFile(file);
     assertNotNull(sources, "Emission sources without meta data");
@@ -106,7 +106,7 @@ public class GMLReaderTest {
   }
 
   @Test
-  public void testConvertToAeriusPoints() throws IOException, AeriusException {
+  void testConvertToAeriusPoints() throws IOException, AeriusException {
     final File file = getFile(AssertGML.PATH_LATEST_VERSION, RECEPTORS_FILE);
     final List<CalculationPointFeature> points = getAeriusPointsFromFile(file, true);
     assertNotNull(points, "Receptor points");
@@ -114,7 +114,7 @@ public class GMLReaderTest {
   }
 
   @Test
-  public void testCalcPointToUnroundedAeriusPoint() throws IOException, AeriusException {
+  void testCalcPointToUnroundedAeriusPoint() throws IOException, AeriusException {
     final List<File> files = getFiles(PATH_ALL, UNROUNDED_CALCPOINT_FILE);
     for (final File file : files) {
       final List<CalculationPointFeature> points = getAeriusPointsFromFile(file, false);
@@ -128,7 +128,7 @@ public class GMLReaderTest {
   }
 
   @Test
-  public void testConvertFromMultipleFeatures() throws IOException, AeriusException {
+  void testConvertFromMultipleFeatures() throws IOException, AeriusException {
     final File file = getFile(AssertGML.PATH_LATEST_VERSION, MIXED_FEATURES_FILE);
     final List<CalculationPointFeature> points = getAeriusPointsFromFile(file, true);
     assertNotNull(points, "Receptor points");
@@ -140,7 +140,7 @@ public class GMLReaderTest {
   }
 
   @Test
-  public void testConvertMetaData() throws AeriusException, IOException {
+  void testConvertMetaData() throws AeriusException, IOException {
     final File file = getFile(AssertGML.PATH_LATEST_VERSION, MIXED_FEATURES_FILE);
     final List<AeriusException> errors = new ArrayList<>();
     final GMLReader reader = getGMLReaderFromFile(file, errors);
@@ -159,7 +159,7 @@ public class GMLReaderTest {
   }
 
   @Test
-  public void testMetaData() throws IOException, AeriusException {
+  void testMetaData() throws IOException, AeriusException {
     final File file = getFile(AssertGML.PATH_LATEST_VERSION, METADATA_FILE);
     final List<AeriusException> errors = new ArrayList<>();
     final GMLReader reader = getGMLReaderFromFile(file, errors);
@@ -169,7 +169,7 @@ public class GMLReaderTest {
   }
 
   @Test
-  public void testConvertFromOldCodes() throws IOException, AeriusException {
+  void testConvertFromOldCodes() throws IOException, AeriusException {
     final File file = getFile("v0_5/", OLD_CODES_FILE);
     final Map<GMLLegacyCodeType, Map<String, Conversion>> codeMaps = new HashMap<>();
 
@@ -218,7 +218,7 @@ public class GMLReaderTest {
     metaDataInput.setSituationType(SITUATION_TYPE);
     metaDataInput.setVersion(VERSION);
     metaDataInput.setDatabaseVersion(DATABASE_VERSION);
-    metaDataInput.getOptions().setCalculationType(CalculationType.PERMIT);
+    metaDataInput.getOptions().setCalculationMethod(CalculationMethod.PERMIT);
     metaDataInput.getOptions().getRblCalculationOptions().setMonitorSrm2Year(MONITOR_SRM2_YEAR);
     metaDataInput.setResultsIncluded(true);
     final InternalGMLWriter writer = new InternalGMLWriter(gridSettings, GMLTestDomain.TEST_REFERENCE_GENERATOR, Boolean.TRUE);
@@ -226,7 +226,7 @@ public class GMLReaderTest {
   }
 
   @Test
-  public void testConvertAllVersions() throws IOException, AeriusException {
+  void testConvertAllVersions() throws IOException, AeriusException {
     //Test mainly checks if a file can be imported, and some small checks on contents of the import.
     //To be flexible with adding new (complex) cases, this is quite minimal.
     List<File> files = getFiles(PATH_ALL, SOURCES_ONLY_FILE);

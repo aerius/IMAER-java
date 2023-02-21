@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:IMAER="http://imaer.aerius.nl/5.1" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:gmlsf="http://www.opengis.net/gmlsf/2.0" elementFormDefault="qualified" targetNamespace="http://imaer.aerius.nl/5.1" version="5.1.0">
+<?xml version="1.0" encoding="UTF-8"?><schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:IMAER="http://imaer.aerius.nl/5.1" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:gmlsf="http://www.opengis.net/gmlsf/2.0" elementFormDefault="qualified" targetNamespace="http://imaer.aerius.nl/5.1" version="5.1.1">
   <annotation>
     <documentation>Dit model beschrijft het InformatieModel AERius (IMAER). IMAER is het standaard gegevens uitwisselingsformaat van AERIUS en wordt gebruikt voor het importeren, exporteren en uitwisselen van gegevens met en tussen de verschillende AERIUS producten (o.a. Calculator, Monitor en Register).  
 
@@ -563,9 +563,15 @@ NOTE Met behulp van dit metadata object kan er informatie over de berekening vas
   </element>
   <complexType name="CalculationMetadataType">
     <sequence>
-      <element name="type" type="IMAER:CalculationTypeType">
+      <element minOccurs="0" name="type" type="IMAER:CalculationTypeType">
         <annotation>
-          <documentation>Gebruikte berekeningtype.</documentation>
+          <documentation>Gebruikte berekeningtype.
+Deprecated, gebruik vanaf versie 5.1.1 'method'.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="method" type="string">
+        <annotation>
+          <documentation>Gebruikte berekeningmethode.</documentation>
         </annotation>
       </element>
       <element maxOccurs="unbounded" name="substance" type="IMAER:SubstanceType">

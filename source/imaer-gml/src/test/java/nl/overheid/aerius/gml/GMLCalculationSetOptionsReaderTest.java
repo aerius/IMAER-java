@@ -38,8 +38,8 @@ import nl.overheid.aerius.gml.base.IsCalculationOption;
 import nl.overheid.aerius.gml.base.IsGmlProperty;
 import nl.overheid.aerius.gml.base.MetaData;
 import nl.overheid.aerius.shared.domain.Theme;
+import nl.overheid.aerius.shared.domain.calculation.CalculationMethod;
 import nl.overheid.aerius.shared.domain.calculation.CalculationSetOptions;
-import nl.overheid.aerius.shared.domain.calculation.CalculationType;
 import nl.overheid.aerius.shared.domain.v2.characteristics.adms.ADMSLimits;
 
 /**
@@ -47,8 +47,10 @@ import nl.overheid.aerius.shared.domain.v2.characteristics.adms.ADMSLimits;
  */
 class GMLCalculationSetOptionsReaderTest {
 
+  private static final String CALCULATION_METHOD_FORMAL = "PERMIT";
+
   @Test
-  void testReadCalculationSetOptionsNullMetadata() {
+  void getCalculationMethod() {
     final FeatureCollection featureCollection = mock(FeatureCollection.class);
     when(featureCollection.getMetaData()).thenReturn(null);
 
@@ -76,7 +78,7 @@ class GMLCalculationSetOptionsReaderTest {
     final FeatureCollection featureCollection = mock(FeatureCollection.class);
     final MetaData metaData = mock(MetaData.class);
     final IsCalculationMetaData calculationMetaData = mock(IsCalculationMetaData.class);
-    when(calculationMetaData.getCalculationType()).thenReturn("PERMIT");
+    when(calculationMetaData.getCalculationMethod()).thenReturn(CALCULATION_METHOD_FORMAL);
     when(featureCollection.getMetaData()).thenReturn(metaData);
     when(metaData.getCalculation()).thenReturn(calculationMetaData);
     when(calculationMetaData.getOptions()).thenReturn(null);
@@ -88,11 +90,11 @@ class GMLCalculationSetOptionsReaderTest {
   }
 
   @Test
-  void testReadCalculationSetOptionsUnknownCalculationType() {
+  void testReadCalculationSetOptionsUnknownCalculationMethod() {
     final FeatureCollection featureCollection = mock(FeatureCollection.class);
     final MetaData metaData = mock(MetaData.class);
     final IsCalculationMetaData calculationMetaData = mock(IsCalculationMetaData.class);
-    when(calculationMetaData.getCalculationType()).thenReturn("NCA");
+    when(calculationMetaData.getCalculationMethod()).thenReturn("UNKNOWN");
     when(featureCollection.getMetaData()).thenReturn(metaData);
     when(metaData.getCalculation()).thenReturn(calculationMetaData);
     when(calculationMetaData.getOptions()).thenReturn(null);
@@ -101,7 +103,7 @@ class GMLCalculationSetOptionsReaderTest {
 
     final CalculationSetOptions options = reader.readCalculationSetOptions(Theme.NCA);
     assertNotNull(options, "Null calculation options field should be read as empty options object");
-    assertNull(options.getCalculationType(), "Calculation type will be null if unknown");
+    assertNull(options.getCalculationMethod(), "Calculation type will be null if unknown");
   }
 
   @Test
@@ -109,7 +111,7 @@ class GMLCalculationSetOptionsReaderTest {
     final FeatureCollection featureCollection = mock(FeatureCollection.class);
     final MetaData metaData = mock(MetaData.class);
     final IsCalculationMetaData calculationMetaData = mock(IsCalculationMetaData.class);
-    when(calculationMetaData.getCalculationType()).thenReturn("PERMIT");
+    when(calculationMetaData.getCalculationMethod()).thenReturn(CALCULATION_METHOD_FORMAL);
     when(featureCollection.getMetaData()).thenReturn(metaData);
     when(metaData.getCalculation()).thenReturn(calculationMetaData);
 
@@ -119,7 +121,7 @@ class GMLCalculationSetOptionsReaderTest {
 
     final CalculationSetOptions options = reader.readCalculationSetOptions(Theme.NCA);
     assertNotNull(options, "returned options shouldn't be null");
-    assertEquals(CalculationType.PERMIT, options.getCalculationType(), "Calculation type should match");
+    assertEquals(CalculationMethod.PERMIT, options.getCalculationMethod(), "Calculation type should match");
     assertEquals(0.0, options.getCalculateMaximumRange(), "Maximum range read");
   }
 
@@ -128,7 +130,7 @@ class GMLCalculationSetOptionsReaderTest {
     final FeatureCollection featureCollection = mock(FeatureCollection.class);
     final MetaData metaData = mock(MetaData.class);
     final IsCalculationMetaData calculationMetaData = mock(IsCalculationMetaData.class);
-    when(calculationMetaData.getCalculationType()).thenReturn("PERMIT");
+    when(calculationMetaData.getCalculationMethod()).thenReturn(CALCULATION_METHOD_FORMAL);
     when(featureCollection.getMetaData()).thenReturn(metaData);
     when(metaData.getCalculation()).thenReturn(calculationMetaData);
 
@@ -140,7 +142,7 @@ class GMLCalculationSetOptionsReaderTest {
 
     final CalculationSetOptions options = reader.readCalculationSetOptions(Theme.NCA);
     assertNotNull(options, "returned options shouldn't be null");
-    assertEquals(CalculationType.PERMIT, options.getCalculationType(), "Calculation type should match");
+    assertEquals(CalculationMethod.PERMIT, options.getCalculationMethod(), "Calculation type should match");
   }
 
   @Test
@@ -148,7 +150,7 @@ class GMLCalculationSetOptionsReaderTest {
     final FeatureCollection featureCollection = mock(FeatureCollection.class);
     final MetaData metaData = mock(MetaData.class);
     final IsCalculationMetaData calculationMetaData = mock(IsCalculationMetaData.class);
-    when(calculationMetaData.getCalculationType()).thenReturn("PERMIT");
+    when(calculationMetaData.getCalculationMethod()).thenReturn(CALCULATION_METHOD_FORMAL);
     when(featureCollection.getMetaData()).thenReturn(metaData);
     when(metaData.getCalculation()).thenReturn(calculationMetaData);
 
@@ -161,7 +163,7 @@ class GMLCalculationSetOptionsReaderTest {
 
     final CalculationSetOptions options = reader.readCalculationSetOptions(Theme.NCA);
     assertNotNull(options, "returned options shouldn't be null");
-    assertEquals(CalculationType.PERMIT, options.getCalculationType(), "Calculation type should match");
+    assertEquals(CalculationMethod.PERMIT, options.getCalculationMethod(), "Calculation type should match");
     assertEquals("somewhere else", options.getNcaCalculationOptions().getPermitArea(), "PermitArea");
   }
 
@@ -170,7 +172,7 @@ class GMLCalculationSetOptionsReaderTest {
     final FeatureCollection featureCollection = mock(FeatureCollection.class);
     final MetaData metaData = mock(MetaData.class);
     final IsCalculationMetaData calculationMetaData = mock(IsCalculationMetaData.class);
-    when(calculationMetaData.getCalculationType()).thenReturn("PERMIT");
+    when(calculationMetaData.getCalculationMethod()).thenReturn(CALCULATION_METHOD_FORMAL);
     when(featureCollection.getMetaData()).thenReturn(metaData);
     when(metaData.getCalculation()).thenReturn(calculationMetaData);
 
@@ -196,7 +198,7 @@ class GMLCalculationSetOptionsReaderTest {
 
     final CalculationSetOptions options = reader.readCalculationSetOptions(Theme.NCA);
     assertNotNull(options, "returned options shouldn't be null");
-    assertEquals(CalculationType.PERMIT, options.getCalculationType(), "Calculation type should match");
+    assertEquals(CalculationMethod.PERMIT, options.getCalculationMethod(), "Calculation type should match");
     assertEquals("somewhere", options.getNcaCalculationOptions().getPermitArea(), "PermitArea");
     assertEquals("some meteo loc", options.getNcaCalculationOptions().getMeteoSiteLocation(), "MeteoSiteLocation");
     assertEquals(List.of("2040", "2042"), options.getNcaCalculationOptions().getMeteoYears(), "MeteoYears");
@@ -220,7 +222,7 @@ class GMLCalculationSetOptionsReaderTest {
     final FeatureCollection featureCollection = mock(FeatureCollection.class);
     final MetaData metaData = mock(MetaData.class);
     final IsCalculationMetaData calculationMetaData = mock(IsCalculationMetaData.class);
-    when(calculationMetaData.getCalculationType()).thenReturn("PERMIT");
+    when(calculationMetaData.getCalculationMethod()).thenReturn(CALCULATION_METHOD_FORMAL);
     when(featureCollection.getMetaData()).thenReturn(metaData);
     when(metaData.getCalculation()).thenReturn(calculationMetaData);
 
@@ -231,7 +233,7 @@ class GMLCalculationSetOptionsReaderTest {
 
     final CalculationSetOptions options = reader.readCalculationSetOptions(Theme.NCA);
     assertNotNull(options, "returned options shouldn't be null");
-    assertEquals(CalculationType.PERMIT, options.getCalculationType(), "Calculation type should match");
+    assertEquals(CalculationMethod.PERMIT, options.getCalculationMethod(), "Calculation type should match");
     assertNull(options.getNcaCalculationOptions().getPermitArea(), "PermitArea");
     assertNull(options.getNcaCalculationOptions().getMeteoSiteLocation(), "MeteoSiteLocation");
     assertEquals(List.of(), options.getNcaCalculationOptions().getMeteoYears(), "MeteoYears");
@@ -257,7 +259,7 @@ class GMLCalculationSetOptionsReaderTest {
     final FeatureCollection featureCollection = mock(FeatureCollection.class);
     final MetaData metaData = mock(MetaData.class);
     final IsCalculationMetaData calculationMetaData = mock(IsCalculationMetaData.class);
-    when(calculationMetaData.getCalculationType()).thenReturn("PERMIT");
+    when(calculationMetaData.getCalculationMethod()).thenReturn(CALCULATION_METHOD_FORMAL);
     when(featureCollection.getMetaData()).thenReturn(metaData);
     when(metaData.getCalculation()).thenReturn(calculationMetaData);
 
@@ -283,7 +285,7 @@ class GMLCalculationSetOptionsReaderTest {
 
     final CalculationSetOptions options = reader.readCalculationSetOptions(Theme.WNB);
     assertNotNull(options, "returned options shouldn't be null");
-    assertEquals(CalculationType.PERMIT, options.getCalculationType(), "Calculation type should match");
+    assertEquals(CalculationMethod.PERMIT, options.getCalculationMethod(), "Calculation type should match");
     assertNull(options.getNcaCalculationOptions().getPermitArea(), "PermitArea");
     assertNull(options.getNcaCalculationOptions().getMeteoSiteLocation(), "MeteoSiteLocation");
     assertEquals(List.of(), options.getNcaCalculationOptions().getMeteoYears(), "MeteoYears");
@@ -307,7 +309,7 @@ class GMLCalculationSetOptionsReaderTest {
     final FeatureCollection featureCollection = mock(FeatureCollection.class);
     final MetaData metaData = mock(MetaData.class);
     final IsCalculationMetaData calculationMetaData = mock(IsCalculationMetaData.class);
-    when(calculationMetaData.getCalculationType()).thenReturn("PERMIT");
+    when(calculationMetaData.getCalculationMethod()).thenReturn(CALCULATION_METHOD_FORMAL);
     when(featureCollection.getMetaData()).thenReturn(metaData);
     when(metaData.getCalculation()).thenReturn(calculationMetaData);
 
@@ -335,7 +337,7 @@ class GMLCalculationSetOptionsReaderTest {
     final FeatureCollection featureCollection = mock(FeatureCollection.class);
     final MetaData metaData = mock(MetaData.class);
     final IsCalculationMetaData calculationMetaData = mock(IsCalculationMetaData.class);
-    when(calculationMetaData.getCalculationType()).thenReturn("PERMIT");
+    when(calculationMetaData.getCalculationMethod()).thenReturn(CALCULATION_METHOD_FORMAL);
     when(featureCollection.getMetaData()).thenReturn(metaData);
     when(metaData.getCalculation()).thenReturn(calculationMetaData);
 

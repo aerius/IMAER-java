@@ -32,7 +32,7 @@ public class CalculationSetOptions implements Serializable {
   private static final long serialVersionUID = 4L;
 
   private int calculationSetOptionsId;
-  private CalculationType calculationType = CalculationType.PERMIT;
+  private CalculationMethod calculationMethod = CalculationMethod.PERMIT;
   private double calculateMaximumRange;
   private final ArrayList<Substance> substances = new ArrayList<>();
   private final Set<EmissionResultKey> emissionResultKeys = new HashSet<>();
@@ -55,12 +55,12 @@ public class CalculationSetOptions implements Serializable {
     this.calculationSetOptionsId = calculationSetOptionsId;
   }
 
-  public CalculationType getCalculationType() {
-    return calculationType;
+  public CalculationMethod getCalculationMethod() {
+    return calculationMethod;
   }
 
-  public void setCalculationType(final CalculationType calculationType) {
-    this.calculationType = calculationType;
+  public void setCalculationMethod(final CalculationMethod calculationMethod) {
+    this.calculationMethod = calculationMethod;
   }
 
   public ArrayList<Substance> getSubstances() {
@@ -80,12 +80,12 @@ public class CalculationSetOptions implements Serializable {
   }
 
   /**
-   * Returns true if the maximum range value is used by the calculation type. Meaning those types use the maximum range value to determine the
+   * Returns true if the maximum range value is used by the calculation method. Meaning those types use the maximum range value to determine the
    * distance to calculate.
    * @return true if relevant
    */
   public boolean isMaximumRangeRelevant() {
-    return calculationType == CalculationType.NATURE_AREA || calculationType == CalculationType.RADIUS;
+    return calculationMethod == CalculationMethod.NATURE_AREA;
   }
 
   /**
@@ -138,7 +138,7 @@ public class CalculationSetOptions implements Serializable {
 
   @Override
   public String toString() {
-    return "CalculationSetOptions [calculationSetOptionsId=" + calculationSetOptionsId + ", calculationType=" + calculationType
+    return "CalculationSetOptions [calculationSetOptionsId=" + calculationSetOptionsId + ", calculationMethod=" + calculationMethod
         + ", calculateMaximumRange=" + calculateMaximumRange + ", substances=" + substances + ", emissionResultKeys=" + emissionResultKeys
         + ", stacking=" + stacking + ", connectSuppliedOptions=" + connectSuppliedOptions + ", wnbCalculationOptions=" + wnbCalculationOptions
         + ", rblCalculationOptions=" + rblCalculationOptions + ", ncaCalculationOptions=" + ncaCalculationOptions + "]";
