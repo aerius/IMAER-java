@@ -75,7 +75,7 @@ public class GMLCalculationSetOptionsReader {
   }
 
   /**
-   * Set the calculation method. If calculation method is null try if calculation type was used.
+   * Set the calculation method. If calculation method is null try if calculation method was used.
    *
    * @param calculationMetaData
    * @param options

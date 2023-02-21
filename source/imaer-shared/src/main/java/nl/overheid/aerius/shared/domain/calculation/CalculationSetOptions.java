@@ -80,7 +80,7 @@ public class CalculationSetOptions implements Serializable {
   }
 
   /**
-   * Returns true if the maximum range value is used by the calculation type. Meaning those types use the maximum range value to determine the
+   * Returns true if the maximum range value is used by the calculation method. Meaning those types use the maximum range value to determine the
    * distance to calculate.
    * @return true if relevant
    */

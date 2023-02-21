@@ -42,7 +42,7 @@ public enum CalculationMethod {
 
   /**
    * Safely returns a CalculationMethod. It is case independent and returns null in
-   * case the input was null or the calculation type could not be found.
+   * case the input was null or the calculation method could not be found.
    *
    * @param value value to convert
    * @return CalculationMethod or null if no valid input
