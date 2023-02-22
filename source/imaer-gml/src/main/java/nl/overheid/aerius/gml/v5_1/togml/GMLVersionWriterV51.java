@@ -170,6 +170,7 @@ public class GMLVersionWriterV51 implements GMLVersionWriter {
     if (input.isResultsIncluded()) {
       calculation = new CalculationMetadata();
       calculation.setCalculationMethod(input.getOptions().getCalculationMethod());
+      calculation.setCalculationJobType(input.getOptions().getCalculationJobType());
       if (input.getOptions().isMaximumRangeRelevant()) {
         calculation.setMaximumRange(input.getOptions().getCalculateMaximumRange());
       }

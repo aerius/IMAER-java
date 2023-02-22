@@ -40,6 +40,13 @@ public interface IsCalculationMetaData {
   }
 
   /**
+   * @return the calculation job type
+   */
+  default String getCalculationJobType() {
+    return null;
+  }
+
+  /**
    * @return the maximum range for this calculation
    */
   default Double getMaximumRange() {

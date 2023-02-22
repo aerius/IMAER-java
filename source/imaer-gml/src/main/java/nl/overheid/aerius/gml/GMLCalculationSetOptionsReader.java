@@ -26,6 +26,7 @@ import nl.overheid.aerius.gml.base.IsCalculationMetaData;
 import nl.overheid.aerius.gml.base.IsGmlProperty;
 import nl.overheid.aerius.gml.base.MetaData;
 import nl.overheid.aerius.shared.domain.Theme;
+import nl.overheid.aerius.shared.domain.calculation.CalculationJobType;
 import nl.overheid.aerius.shared.domain.calculation.CalculationMethod;
 import nl.overheid.aerius.shared.domain.calculation.CalculationSetOptions;
 import nl.overheid.aerius.shared.domain.calculation.CalculationType;
@@ -70,12 +71,13 @@ public class GMLCalculationSetOptionsReader {
     }
 
     setCalculationMethod(calculationMetaData, options);
+    setCalculationJobType(calculationMetaData, options);
     options.setCalculateMaximumRange(calculationMetaData.getMaximumRange() == null ? 0.0 : calculationMetaData.getMaximumRange());
     return options;
   }
 
   /**
-   * Set the calculation method. If calculation method is null try if calculation method was used.
+   * Set the calculation method. If calculation method is null try if calculation type was used.
    *
    * @param calculationMetaData
    * @param options
@@ -85,5 +87,14 @@ public class GMLCalculationSetOptionsReader {
 
     options.setCalculationMethod(
         method == null ? CalculationType.toCalculationMethod(calculationMetaData.getCalculationType()) : CalculationMethod.safeValueOf(method));
+  }
+
+  /**
+   * Set the calculation job type.
+   */
+  private void setCalculationJobType(final IsCalculationMetaData calculationMetaData, final CalculationSetOptions options) {
+    final String jobType = calculationMetaData.getCalculationJobType();
+
+    options.setCalculationJobType(jobType == null ? null : CalculationJobType.safeValueOf(jobType));
   }
 }
