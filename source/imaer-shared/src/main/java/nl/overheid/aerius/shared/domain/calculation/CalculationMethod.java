@@ -56,7 +56,7 @@ public enum CalculationMethod {
   }
 
   public String type() {
-    return name().toString();
+    return name();
   }
 
   /**

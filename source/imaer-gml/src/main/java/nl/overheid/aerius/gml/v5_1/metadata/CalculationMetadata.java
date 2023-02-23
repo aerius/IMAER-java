@@ -25,18 +25,20 @@ import javax.xml.bind.annotation.XmlType;
 import nl.overheid.aerius.gml.base.IsCalculationMetaData;
 import nl.overheid.aerius.gml.v5_1.base.CalculatorSchema;
 import nl.overheid.aerius.shared.domain.Substance;
+import nl.overheid.aerius.shared.domain.calculation.CalculationJobType;
 import nl.overheid.aerius.shared.domain.calculation.CalculationMethod;
 import nl.overheid.aerius.shared.domain.result.EmissionResultType;
 
 /**
  *
  */
-@XmlType(name = "CalculationMetadataType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"calculationType", "calculationMethod", "substances",
-    "resultTypes", "maximumRange", "researchArea", "monitorSrm2Year", "options", "otherSituations"})
+@XmlType(name = "CalculationMetadataType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"calculationType", "calculationMethod",
+    "calculationJobType", "substances", "resultTypes", "maximumRange", "researchArea", "monitorSrm2Year", "options", "otherSituations"})
 public class CalculationMetadata implements IsCalculationMetaData {
 
   private String calculationType;
   private String calculationMethod;
+  private String calculationJobType;
   private List<Substance> substances;
   private List<EmissionResultType> resultTypes;
   private Double maximumRange;
@@ -63,6 +65,20 @@ public class CalculationMetadata implements IsCalculationMetaData {
 
   public void setCalculationMethod(final String calculationMethod) {
     this.calculationMethod = calculationMethod;
+  }
+
+  @Override
+  @XmlElement(name = "jobType", namespace = CalculatorSchema.NAMESPACE)
+  public String getCalculationJobType() {
+    return calculationJobType;
+  }
+
+  public void setCalculationJobType(final String calculationJobType) {
+    this.calculationJobType = calculationJobType;
+  }
+
+  public void setCalculationJobType(final CalculationJobType calculationJobType) {
+    this.calculationJobType = calculationJobType == null ? null : calculationJobType.name();
   }
 
   @XmlElement(name = "substance", namespace = CalculatorSchema.NAMESPACE)

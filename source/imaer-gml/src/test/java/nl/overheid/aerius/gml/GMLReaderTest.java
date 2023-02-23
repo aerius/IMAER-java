@@ -48,7 +48,10 @@ import nl.overheid.aerius.gml.base.GMLVersionReaderFactory;
 import nl.overheid.aerius.gml.base.MetaData;
 import nl.overheid.aerius.gml.base.MetaDataInput;
 import nl.overheid.aerius.gml.v0_5.GMLReaderFactoryV05;
+import nl.overheid.aerius.shared.domain.Theme;
+import nl.overheid.aerius.shared.domain.calculation.CalculationJobType;
 import nl.overheid.aerius.shared.domain.calculation.CalculationMethod;
+import nl.overheid.aerius.shared.domain.calculation.CalculationSetOptions;
 import nl.overheid.aerius.shared.domain.geo.ReceptorGridSettings;
 import nl.overheid.aerius.shared.domain.scenario.SituationType;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPointFeature;
@@ -166,6 +169,9 @@ class GMLReaderTest {
     final GMLMetaDataReader metaDataReader = reader.metaDataReader();
     assertNotNull(metaDataReader, "Should have meta data reader");
     assertTrue(errors.isEmpty(), "Expected no errors");
+    final CalculationSetOptions options = reader.readCalculationSetOptions(Theme.WNB);
+    assertEquals(CalculationMethod.PERMIT, options.getCalculationMethod(), "Calculation method");
+    assertEquals(CalculationJobType.MAX_TEMPORARY_EFFECT, options.getCalculationJobType(), "Calculation job type");
   }
 
   @Test

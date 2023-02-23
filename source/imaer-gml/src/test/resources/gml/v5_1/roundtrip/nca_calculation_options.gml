@@ -18,6 +18,7 @@
             <imaer:calculation>
                 <imaer:CalculationMetadata>
                     <imaer:method>PERMIT</imaer:method>
+                    <imaer:jobType>MAX_TEMPORARY_EFFECT</imaer:jobType>
                     <imaer:substance>NOX</imaer:substance>
                     <imaer:substance>NO2</imaer:substance>
                     <imaer:substance>NH3</imaer:substance>

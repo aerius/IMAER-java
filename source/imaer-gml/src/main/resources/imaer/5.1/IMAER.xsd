@@ -574,6 +574,11 @@ Deprecated, gebruik vanaf versie 5.1.1 'method'.</documentation>
           <documentation>Gebruikte berekeningmethode.</documentation>
         </annotation>
       </element>
+      <element minOccurs="0" name="jobType" type="string">
+        <annotation>
+          <documentation>Gebruikte rekentaak type.</documentation>
+        </annotation>
+      </element>
       <element maxOccurs="unbounded" name="substance" type="IMAER:SubstanceType">
         <annotation>
           <documentation>Berekende stoffen.</documentation>

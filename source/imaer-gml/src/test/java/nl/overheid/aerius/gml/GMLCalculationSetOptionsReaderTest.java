@@ -38,6 +38,7 @@ import nl.overheid.aerius.gml.base.IsCalculationOption;
 import nl.overheid.aerius.gml.base.IsGmlProperty;
 import nl.overheid.aerius.gml.base.MetaData;
 import nl.overheid.aerius.shared.domain.Theme;
+import nl.overheid.aerius.shared.domain.calculation.CalculationJobType;
 import nl.overheid.aerius.shared.domain.calculation.CalculationMethod;
 import nl.overheid.aerius.shared.domain.calculation.CalculationSetOptions;
 import nl.overheid.aerius.shared.domain.v2.characteristics.adms.ADMSLimits;
@@ -48,6 +49,7 @@ import nl.overheid.aerius.shared.domain.v2.characteristics.adms.ADMSLimits;
 class GMLCalculationSetOptionsReaderTest {
 
   private static final String CALCULATION_METHOD_FORMAL = "PERMIT";
+  private static final String CALCULATION_JOB_TYPE = "MAX_TEMPORARY_EFFECT";
 
   @Test
   void getCalculationMethod() {
@@ -173,6 +175,7 @@ class GMLCalculationSetOptionsReaderTest {
     final MetaData metaData = mock(MetaData.class);
     final IsCalculationMetaData calculationMetaData = mock(IsCalculationMetaData.class);
     when(calculationMetaData.getCalculationMethod()).thenReturn(CALCULATION_METHOD_FORMAL);
+    when(calculationMetaData.getCalculationJobType()).thenReturn(CALCULATION_JOB_TYPE);
     when(featureCollection.getMetaData()).thenReturn(metaData);
     when(metaData.getCalculation()).thenReturn(calculationMetaData);
 
@@ -198,7 +201,8 @@ class GMLCalculationSetOptionsReaderTest {
 
     final CalculationSetOptions options = reader.readCalculationSetOptions(Theme.NCA);
     assertNotNull(options, "returned options shouldn't be null");
-    assertEquals(CalculationMethod.PERMIT, options.getCalculationMethod(), "Calculation type should match");
+    assertEquals(CalculationMethod.PERMIT, options.getCalculationMethod(), "Calculation method should match");
+    assertEquals(CalculationJobType.MAX_TEMPORARY_EFFECT, options.getCalculationJobType(), "Calculation job type should match");
     assertEquals("somewhere", options.getNcaCalculationOptions().getPermitArea(), "PermitArea");
     assertEquals("some meteo loc", options.getNcaCalculationOptions().getMeteoSiteLocation(), "MeteoSiteLocation");
     assertEquals(List.of("2040", "2042"), options.getNcaCalculationOptions().getMeteoYears(), "MeteoYears");
@@ -234,6 +238,7 @@ class GMLCalculationSetOptionsReaderTest {
     final CalculationSetOptions options = reader.readCalculationSetOptions(Theme.NCA);
     assertNotNull(options, "returned options shouldn't be null");
     assertEquals(CalculationMethod.PERMIT, options.getCalculationMethod(), "Calculation type should match");
+    assertNull(options.getCalculationJobType(), "CalculationJobType");
     assertNull(options.getNcaCalculationOptions().getPermitArea(), "PermitArea");
     assertNull(options.getNcaCalculationOptions().getMeteoSiteLocation(), "MeteoSiteLocation");
     assertEquals(List.of(), options.getNcaCalculationOptions().getMeteoYears(), "MeteoYears");
