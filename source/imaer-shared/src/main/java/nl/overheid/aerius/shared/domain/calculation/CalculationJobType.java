@@ -59,7 +59,14 @@ public enum CalculationJobType {
   IN_COMBINATION_PROCESS_CONTRIBUTION(new HashSet<>(Arrays.asList(SituationType.PROPOSED)),
       new HashSet<>(
           Arrays.asList(SituationType.REFERENCE, SituationType.NETTING, SituationType.COMBINATION_REFERENCE, SituationType.COMBINATION_PROPOSED)),
-      new HashSet<>(Arrays.asList(SituationType.COMBINATION_PROPOSED, SituationType.COMBINATION_REFERENCE)));
+      new HashSet<>(Arrays.asList(SituationType.COMBINATION_PROPOSED, SituationType.COMBINATION_REFERENCE))),
+
+  /**
+   * Only 1 Reference scenario
+   *
+   * NO other scenario types
+   */
+  DEPOSITION_SUM(new HashSet<>(Arrays.asList(SituationType.REFERENCE)), new HashSet<>(), new HashSet<>());
 
   private final @JsProperty Set<SituationType> requiredSituationTypes;
   private final @JsProperty Set<SituationType> optionalSituationTypes;
