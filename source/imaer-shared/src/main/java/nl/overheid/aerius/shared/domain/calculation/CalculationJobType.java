@@ -38,7 +38,9 @@ public enum CalculationJobType {
    * NO other scenario types
    */
   PROCESS_CONTRIBUTION(new HashSet<>(Arrays.asList(SituationType.PROPOSED)),
-      new HashSet<>(Arrays.asList(SituationType.REFERENCE, SituationType.NETTING)), new HashSet<>()),
+      new HashSet<>(Arrays.asList(SituationType.REFERENCE, SituationType.NETTING)),
+      new HashSet<>(),
+      1, 3),
 
   /**
    * At least one temporary scenario (checkboxes)
@@ -47,7 +49,9 @@ public enum CalculationJobType {
    * NO other scenario types
    */
   MAX_TEMPORARY_EFFECT(new HashSet<>(Arrays.asList(SituationType.TEMPORARY)),
-      new HashSet<>(Arrays.asList(SituationType.REFERENCE, SituationType.NETTING)), new HashSet<>(Arrays.asList(SituationType.TEMPORARY))),
+      new HashSet<>(Arrays.asList(SituationType.REFERENCE, SituationType.NETTING)),
+      new HashSet<>(Arrays.asList(SituationType.TEMPORARY)),
+      1, 6),
 
   /**
    * Exactly 1 Project scenario
@@ -59,24 +63,41 @@ public enum CalculationJobType {
   IN_COMBINATION_PROCESS_CONTRIBUTION(new HashSet<>(Arrays.asList(SituationType.PROPOSED)),
       new HashSet<>(
           Arrays.asList(SituationType.REFERENCE, SituationType.NETTING, SituationType.COMBINATION_REFERENCE, SituationType.COMBINATION_PROPOSED)),
-      new HashSet<>(Arrays.asList(SituationType.COMBINATION_PROPOSED, SituationType.COMBINATION_REFERENCE))),
+      new HashSet<>(Arrays.asList(SituationType.COMBINATION_PROPOSED, SituationType.COMBINATION_REFERENCE)),
+      1, 6),
 
   /**
    * Only 1 Reference scenario
    *
    * NO other scenario types
    */
-  DEPOSITION_SUM(new HashSet<>(Arrays.asList(SituationType.REFERENCE)), new HashSet<>(), new HashSet<>());
+  DEPOSITION_SUM(new HashSet<>(Arrays.asList(SituationType.REFERENCE)),
+      new HashSet<>(),
+      new HashSet<>(),
+      1, 1),
+
+  /**
+   * One scenario (all types allowed)
+   */
+  SINGLE_SCENARIO(new HashSet<>(),
+      new HashSet<>(Arrays.asList(SituationType.values())),
+      new HashSet<>(),
+      1, 1);
 
   private final @JsProperty Set<SituationType> requiredSituationTypes;
   private final @JsProperty Set<SituationType> optionalSituationTypes;
   private final @JsProperty Set<SituationType> pluralSituationTypes;
 
+  private final int minimumNumberOfSituations;
+  private final int maximumNumberOfSituations;
+
   CalculationJobType(final Set<SituationType> requiredSituationTypes, final Set<SituationType> optionalSituationTypes,
-      final Set<SituationType> multipleSituationsAllowed) {
+      final Set<SituationType> multipleSituationsAllowed, final int minimumNumberOfSituations, final int maximumNumberOfSituations) {
     this.requiredSituationTypes = requiredSituationTypes;
     this.optionalSituationTypes = optionalSituationTypes;
     this.pluralSituationTypes = multipleSituationsAllowed;
+    this.minimumNumberOfSituations = minimumNumberOfSituations;
+    this.maximumNumberOfSituations = maximumNumberOfSituations;
   }
 
   public Set<SituationType> getRequiredSituationTypes() {
@@ -105,6 +126,14 @@ public enum CalculationJobType {
 
   public boolean isIllegal(final SituationType type) {
     return getIllegalSituationTypes().contains(type);
+  }
+
+  public int getMinimumNumberOfSituations() {
+    return minimumNumberOfSituations;
+  }
+
+  public int getMaximumNumberOfSituations() {
+    return maximumNumberOfSituations;
   }
 
   public Set<SituationType> getIllegalSituationTypes() {
