@@ -31,6 +31,7 @@
 			</imaer:situation>
 			<imaer:calculation>
 				<imaer:CalculationMetadata>
+					<imaer:type>PERMIT</imaer:type>
 					<imaer:method>PERMIT</imaer:method>
 					<imaer:jobType>MAX_TEMPORARY_EFFECT</imaer:jobType>
 					<imaer:substance>NOX</imaer:substance>

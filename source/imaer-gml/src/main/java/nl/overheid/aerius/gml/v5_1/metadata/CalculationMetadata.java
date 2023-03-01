@@ -53,6 +53,10 @@ public class CalculationMetadata implements IsCalculationMetaData {
     return calculationType;
   }
 
+  public void setCalculationType(final String calculationType) {
+    this.calculationType = calculationType;
+  }
+
   @Override
   @XmlElement(name = "method", namespace = CalculatorSchema.NAMESPACE)
   public String getCalculationMethod() {
