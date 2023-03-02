@@ -65,7 +65,7 @@ public enum CalculationJobType {
 
   /**
    * Only 1 Reference scenario
-   * <p>
+   *
    * NO other scenario types
    */
   DEPOSITION_SUM(new HashSet<>(Arrays.asList(SituationType.REFERENCE)),
