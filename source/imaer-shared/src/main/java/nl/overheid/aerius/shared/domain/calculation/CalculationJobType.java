@@ -37,8 +37,10 @@ public enum CalculationJobType {
    * Optional: 1 Reference
    * NO other scenario types
    */
-  PROCESS_CONTRIBUTION(new HashSet<>(Arrays.asList(SituationType.PROPOSED)),
-      new HashSet<>(Arrays.asList(SituationType.REFERENCE, SituationType.NETTING)), new HashSet<>()),
+  PROCESS_CONTRIBUTION(
+      new HashSet<>(Arrays.asList(SituationType.PROPOSED)),
+      new HashSet<>(Arrays.asList(SituationType.REFERENCE, SituationType.NETTING)),
+      new HashSet<>()),
 
   /**
    * At least one temporary scenario (checkboxes)
@@ -46,8 +48,10 @@ public enum CalculationJobType {
    * Optional: 1 Reference
    * NO other scenario types
    */
-  MAX_TEMPORARY_EFFECT(new HashSet<>(Arrays.asList(SituationType.TEMPORARY)),
-      new HashSet<>(Arrays.asList(SituationType.REFERENCE, SituationType.NETTING)), new HashSet<>(Arrays.asList(SituationType.TEMPORARY))),
+  MAX_TEMPORARY_EFFECT(
+      new HashSet<>(Arrays.asList(SituationType.TEMPORARY)),
+      new HashSet<>(Arrays.asList(SituationType.REFERENCE, SituationType.NETTING)),
+      new HashSet<>(Arrays.asList(SituationType.TEMPORARY))),
 
   /**
    * Exactly 1 Project scenario
@@ -56,9 +60,10 @@ public enum CalculationJobType {
    * Optional: one or more ‘In combination_project’ scenarios
    * Optional: one or more ‘in combination reference’ scenarios
    */
-  IN_COMBINATION_PROCESS_CONTRIBUTION(new HashSet<>(Arrays.asList(SituationType.PROPOSED)),
-      new HashSet<>(
-          Arrays.asList(SituationType.REFERENCE, SituationType.NETTING, SituationType.COMBINATION_REFERENCE, SituationType.COMBINATION_PROPOSED)),
+  IN_COMBINATION_PROCESS_CONTRIBUTION(
+      new HashSet<>(Arrays.asList(SituationType.PROPOSED)),
+      new HashSet<>(Arrays.asList(SituationType.REFERENCE, SituationType.NETTING, SituationType.COMBINATION_REFERENCE,
+          SituationType.COMBINATION_PROPOSED)),
       new HashSet<>(Arrays.asList(SituationType.COMBINATION_PROPOSED, SituationType.COMBINATION_REFERENCE))),
 
   /**
