@@ -32,6 +32,7 @@ public class OPSOptions implements Serializable {
   private String diffCoeff;
   private String washout;
   private String convRate;
+  private String roads;
   private Double roughness;
   private Chemistry chemistry;
 
@@ -141,6 +142,24 @@ public class OPSOptions implements Serializable {
   }
 
   /**
+   * OPS .ctr variable: ROADS
+   *
+   * Space separated list of OPS cat. codes. That when match with a cat. code in the source cat column mean the source is interpreted by OPS as a road
+   * source.
+   * Use `null` for AERIUS default value (just like other `OPSOptions` variables)
+   * Handled by OPS itself:
+   * Use `` (empty string): none of the sources is a road source
+   * Use `0`: all sources are road sources
+   */
+  public String getRoads() {
+    return roads;
+  }
+
+  public void setRoads(final String roads) {
+    this.roads = roads;
+  }
+
+  /**
    * OPS .ctr variable: ROUGHNESS
    */
   public Double getRoughness() {
@@ -163,6 +182,7 @@ public class OPSOptions implements Serializable {
         ", diffCoeff='" + diffCoeff + '\'' +
         ", washout='" + washout + '\'' +
         ", convRate='" + convRate + '\'' +
+        ", roads='" + roads + '\'' +
         ", roughness=" + roughness + '\'' +
         ", chemistry=" + chemistry +
         '}';
