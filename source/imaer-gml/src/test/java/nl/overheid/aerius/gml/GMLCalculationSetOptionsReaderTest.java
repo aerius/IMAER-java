@@ -48,7 +48,7 @@ import nl.overheid.aerius.shared.domain.v2.characteristics.adms.ADMSLimits;
  */
 class GMLCalculationSetOptionsReaderTest {
 
-  private static final String CALCULATION_METHOD_FORMAL = "PERMIT";
+  private static final String CALCULATION_METHOD_FORMAL = "FORMAL_ASSESSMENT";
   private static final String CALCULATION_JOB_TYPE = "MAX_TEMPORARY_EFFECT";
 
   @Test
@@ -123,7 +123,7 @@ class GMLCalculationSetOptionsReaderTest {
 
     final CalculationSetOptions options = reader.readCalculationSetOptions(Theme.NCA);
     assertNotNull(options, "returned options shouldn't be null");
-    assertEquals(CalculationMethod.PERMIT, options.getCalculationMethod(), "Calculation type should match");
+    assertEquals(CalculationMethod.FORMAL_ASSESSMENT, options.getCalculationMethod(), "Calculation type should match");
     assertEquals(0.0, options.getCalculateMaximumRange(), "Maximum range read");
   }
 
@@ -144,7 +144,7 @@ class GMLCalculationSetOptionsReaderTest {
 
     final CalculationSetOptions options = reader.readCalculationSetOptions(Theme.NCA);
     assertNotNull(options, "returned options shouldn't be null");
-    assertEquals(CalculationMethod.PERMIT, options.getCalculationMethod(), "Calculation type should match");
+    assertEquals(CalculationMethod.FORMAL_ASSESSMENT, options.getCalculationMethod(), "Calculation type should match");
   }
 
   @Test
@@ -165,7 +165,7 @@ class GMLCalculationSetOptionsReaderTest {
 
     final CalculationSetOptions options = reader.readCalculationSetOptions(Theme.NCA);
     assertNotNull(options, "returned options shouldn't be null");
-    assertEquals(CalculationMethod.PERMIT, options.getCalculationMethod(), "Calculation type should match");
+    assertEquals(CalculationMethod.FORMAL_ASSESSMENT, options.getCalculationMethod(), "Calculation type should match");
     assertEquals("somewhere else", options.getNcaCalculationOptions().getPermitArea(), "PermitArea");
   }
 
@@ -201,7 +201,7 @@ class GMLCalculationSetOptionsReaderTest {
 
     final CalculationSetOptions options = reader.readCalculationSetOptions(Theme.NCA);
     assertNotNull(options, "returned options shouldn't be null");
-    assertEquals(CalculationMethod.PERMIT, options.getCalculationMethod(), "Calculation method should match");
+    assertEquals(CalculationMethod.FORMAL_ASSESSMENT, options.getCalculationMethod(), "Calculation method should match");
     assertEquals(CalculationJobType.MAX_TEMPORARY_EFFECT, options.getCalculationJobType(), "Calculation job type should match");
     assertEquals("somewhere", options.getNcaCalculationOptions().getPermitArea(), "PermitArea");
     assertEquals("some meteo loc", options.getNcaCalculationOptions().getMeteoSiteLocation(), "MeteoSiteLocation");
@@ -237,7 +237,7 @@ class GMLCalculationSetOptionsReaderTest {
 
     final CalculationSetOptions options = reader.readCalculationSetOptions(Theme.NCA);
     assertNotNull(options, "returned options shouldn't be null");
-    assertEquals(CalculationMethod.PERMIT, options.getCalculationMethod(), "Calculation type should match");
+    assertEquals(CalculationMethod.FORMAL_ASSESSMENT, options.getCalculationMethod(), "Calculation type should match");
     assertNull(options.getCalculationJobType(), "CalculationJobType");
     assertNull(options.getNcaCalculationOptions().getPermitArea(), "PermitArea");
     assertNull(options.getNcaCalculationOptions().getMeteoSiteLocation(), "MeteoSiteLocation");
@@ -290,7 +290,7 @@ class GMLCalculationSetOptionsReaderTest {
 
     final CalculationSetOptions options = reader.readCalculationSetOptions(Theme.WNB);
     assertNotNull(options, "returned options shouldn't be null");
-    assertEquals(CalculationMethod.PERMIT, options.getCalculationMethod(), "Calculation type should match");
+    assertEquals(CalculationMethod.FORMAL_ASSESSMENT, options.getCalculationMethod(), "Calculation type should match");
     assertNull(options.getNcaCalculationOptions().getPermitArea(), "PermitArea");
     assertNull(options.getNcaCalculationOptions().getMeteoSiteLocation(), "MeteoSiteLocation");
     assertEquals(List.of(), options.getNcaCalculationOptions().getMeteoYears(), "MeteoYears");

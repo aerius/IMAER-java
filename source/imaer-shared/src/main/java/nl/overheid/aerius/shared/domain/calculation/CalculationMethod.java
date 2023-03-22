@@ -34,7 +34,7 @@ public enum CalculationMethod {
   /**
    * Calculates using calculation points and settings established by formal assessment.
    */
-  PERMIT,
+  FORMAL_ASSESSMENT,
   /**
    * Calculate deposition in nature areas.
    */

@@ -32,7 +32,7 @@ public class CalculationSetOptions implements Serializable {
   private static final long serialVersionUID = 4L;
 
   private int calculationSetOptionsId;
-  private CalculationMethod calculationMethod = CalculationMethod.PERMIT;
+  private CalculationMethod calculationMethod = CalculationMethod.FORMAL_ASSESSMENT;
   private CalculationJobType calculationJobType;
   private double calculateMaximumRange;
   private final ArrayList<Substance> substances = new ArrayList<>();

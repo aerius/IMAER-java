@@ -39,7 +39,7 @@ public enum CalculationType {
   /**
    * Calculates using calculation points and settings established by policy.
    */
-  PERMIT(CalculationMethod.PERMIT),
+  PERMIT(CalculationMethod.FORMAL_ASSESSMENT),
   /**
    * Calculate deposition in a radius around the sources.
    */

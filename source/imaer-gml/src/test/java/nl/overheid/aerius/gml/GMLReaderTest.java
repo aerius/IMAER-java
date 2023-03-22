@@ -170,7 +170,7 @@ class GMLReaderTest {
     assertNotNull(metaDataReader, "Should have meta data reader");
     assertTrue(errors.isEmpty(), "Expected no errors");
     final CalculationSetOptions options = reader.readCalculationSetOptions(Theme.WNB);
-    assertEquals(CalculationMethod.PERMIT, options.getCalculationMethod(), "Calculation method");
+    assertEquals(CalculationMethod.FORMAL_ASSESSMENT, options.getCalculationMethod(), "Calculation method");
     assertEquals(CalculationJobType.MAX_TEMPORARY_EFFECT, options.getCalculationJobType(), "Calculation job type");
   }
 
@@ -224,7 +224,7 @@ class GMLReaderTest {
     metaDataInput.setSituationType(SITUATION_TYPE);
     metaDataInput.setVersion(VERSION);
     metaDataInput.setDatabaseVersion(DATABASE_VERSION);
-    metaDataInput.getOptions().setCalculationMethod(CalculationMethod.PERMIT);
+    metaDataInput.getOptions().setCalculationMethod(CalculationMethod.FORMAL_ASSESSMENT);
     metaDataInput.getOptions().getRblCalculationOptions().setMonitorSrm2Year(MONITOR_SRM2_YEAR);
     metaDataInput.setResultsIncluded(true);
     final InternalGMLWriter writer = new InternalGMLWriter(gridSettings, GMLTestDomain.TEST_REFERENCE_GENERATOR, Boolean.TRUE);
