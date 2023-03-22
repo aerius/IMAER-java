@@ -42,9 +42,9 @@ public enum CalculationMethod {
   /**
    * Calculates using calculation points and settings established by formal assessment.
    *
-   * @Deprecated Replaced by FORMAL_ASSESSMENT,
+   * @Deprecated Replaced by FORMAL_ASSESSMENT, up for removal.
    */
-  @Deprecated(forRemoval = true)
+  @Deprecated
   PERMIT;
 
   /**
