@@ -38,7 +38,14 @@ public enum CalculationMethod {
   /**
    * Calculate deposition in nature areas.
    */
-  NATURE_AREA;
+  NATURE_AREA,
+  /**
+   * Calculates using calculation points and settings established by formal assessment.
+   *
+   * @Deprecated Replaced by FORMAL_ASSESSMENT,
+   */
+  @Deprecated(forRemoval = true)
+  PERMIT;
 
   /**
    * Safely returns a CalculationMethod. It is case independent and returns null in
