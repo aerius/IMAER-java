@@ -32,7 +32,7 @@
 			<imaer:calculation>
 				<imaer:CalculationMetadata>
 					<imaer:type>PERMIT</imaer:type>
-					<imaer:method>PERMIT</imaer:method>
+					<imaer:method>FORMAL_ASSESSMENT</imaer:method>
 					<imaer:jobType>MAX_TEMPORARY_EFFECT</imaer:jobType>
 					<imaer:substance>NOX</imaer:substance>
 					<imaer:substance>NH3</imaer:substance>
