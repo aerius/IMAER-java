@@ -19,37 +19,37 @@ package nl.overheid.aerius.gml.v4_0.result;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-import nl.overheid.aerius.gml.base.result.IsGmlNSLCalculationPoint;
+import nl.overheid.aerius.gml.base.result.IsGmlCIMLKCalculationPoint;
 import nl.overheid.aerius.gml.v4_0.base.CalculatorSchema;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLMonitorSubstance;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLRejectionGrounds;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKMonitorSubstance;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKRejectionGrounds;
 
 /**
  *
  */
 @XmlType(name = "NSLCalculationPointType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"rejectionGrounds", "monitorSubstance"})
-public class NSLCalculationPoint extends AbstractCalculationPoint implements IsGmlNSLCalculationPoint {
+public class NSLCalculationPoint extends AbstractCalculationPoint implements IsGmlCIMLKCalculationPoint {
 
-  private NSLRejectionGrounds rejectionGrounds;
-  private NSLMonitorSubstance monitorSubstance;
+  private CIMLKRejectionGrounds rejectionGrounds;
+  private CIMLKMonitorSubstance monitorSubstance;
 
   @Override
   @XmlElement(namespace = CalculatorSchema.NAMESPACE)
-  public NSLRejectionGrounds getRejectionGrounds() {
+  public CIMLKRejectionGrounds getRejectionGrounds() {
     return rejectionGrounds;
   }
 
-  public void setRejectionGrounds(final NSLRejectionGrounds rejectionGrounds) {
+  public void setRejectionGrounds(final CIMLKRejectionGrounds rejectionGrounds) {
     this.rejectionGrounds = rejectionGrounds;
   }
 
   @Override
   @XmlElement(namespace = CalculatorSchema.NAMESPACE)
-  public NSLMonitorSubstance getMonitorSubstance() {
+  public CIMLKMonitorSubstance getMonitorSubstance() {
     return monitorSubstance;
   }
 
-  public void setMonitorSubstance(final NSLMonitorSubstance monitorSubstance) {
+  public void setMonitorSubstance(final CIMLKMonitorSubstance monitorSubstance) {
     this.monitorSubstance = monitorSubstance;
   }
 

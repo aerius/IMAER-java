@@ -32,7 +32,7 @@ import nl.overheid.aerius.shared.domain.v2.geojson.Point;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPoint;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPointFeature;
 import nl.overheid.aerius.shared.domain.v2.point.CustomCalculationPoint;
-import nl.overheid.aerius.shared.domain.v2.point.NSLCalculationPoint;
+import nl.overheid.aerius.shared.domain.v2.point.CIMLKCalculationPoint;
 import nl.overheid.aerius.shared.domain.v2.point.NcaCustomCalculationPoint;
 import nl.overheid.aerius.shared.domain.v2.point.ReceptorPoint;
 import nl.overheid.aerius.shared.domain.v2.point.SubPoint;
@@ -98,8 +98,8 @@ public class GML2Result {
       returnPoint = createReceptorPoint((IsGmlReceptorPoint) calculationPoint);
     } else if (calculationPoint instanceof IsGmlSubPoint) {
       returnPoint = createSubPoint((IsGmlSubPoint) calculationPoint);
-    } else if (calculationPoint instanceof IsGmlNSLCalculationPoint) {
-      returnPoint = createNSLCalculationPoint((IsGmlNSLCalculationPoint) calculationPoint);
+    } else if (calculationPoint instanceof IsGmlCIMLKCalculationPoint) {
+      returnPoint = createCIMLKCalculationPoint((IsGmlCIMLKCalculationPoint) calculationPoint);
     } else if (calculationPoint instanceof IsGmlNcaCustomCalculationPoint) {
       returnPoint = createNcaCustomCalculationPoint((IsGmlNcaCustomCalculationPoint) calculationPoint);
     } else if (calculationPoint instanceof IsGmlCustomCalculationPoint) {
@@ -167,8 +167,8 @@ public class GML2Result {
     return new CustomCalculationPoint();
   }
 
-  private NSLCalculationPoint createNSLCalculationPoint(final IsGmlNSLCalculationPoint origin) {
-    final NSLCalculationPoint target = new NSLCalculationPoint();
+  private CIMLKCalculationPoint createCIMLKCalculationPoint(final IsGmlCIMLKCalculationPoint origin) {
+    final CIMLKCalculationPoint target = new CIMLKCalculationPoint();
     target.setRejectionGrounds(origin.getRejectionGrounds());
     target.setMonitorSubstance(origin.getMonitorSubstance());
     return target;

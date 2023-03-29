@@ -25,8 +25,8 @@ import nl.overheid.aerius.gml.v3_0.base.FeatureMemberImpl;
 import nl.overheid.aerius.gml.v3_0.base.ReferenceType;
 import nl.overheid.aerius.gml.v3_0.geo.LineString;
 import nl.overheid.aerius.shared.domain.v2.geojson.GeometryType;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLRoadProfile;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLTreeProfile;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKRoadProfile;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKTreeProfile;
 
 /**
  *
@@ -38,8 +38,8 @@ public class SRM1RoadDispersionLine extends FeatureMemberImpl implements IsGmlSR
   private String label;
   private String description;
   private Integer jurisdictionId;
-  private NSLRoadProfile roadProfile;
-  private NSLTreeProfile treeProfile;
+  private CIMLKRoadProfile roadProfile;
+  private CIMLKTreeProfile treeProfile;
   private ReferenceType road;
   private ReferenceType calculationPoint;
 
@@ -89,21 +89,21 @@ public class SRM1RoadDispersionLine extends FeatureMemberImpl implements IsGmlSR
 
   @Override
   @XmlElement(namespace = CalculatorSchema.NAMESPACE)
-  public NSLRoadProfile getRoadProfile() {
+  public CIMLKRoadProfile getRoadProfile() {
     return roadProfile;
   }
 
-  public void setRoadProfile(final NSLRoadProfile roadProfile) {
+  public void setRoadProfile(final CIMLKRoadProfile roadProfile) {
     this.roadProfile = roadProfile;
   }
 
   @Override
   @XmlElement(namespace = CalculatorSchema.NAMESPACE)
-  public NSLTreeProfile getTreeProfile() {
+  public CIMLKTreeProfile getTreeProfile() {
     return treeProfile;
   }
 
-  public void setTreeProfile(final NSLTreeProfile treeProfile) {
+  public void setTreeProfile(final CIMLKTreeProfile treeProfile) {
     this.treeProfile = treeProfile;
   }
 

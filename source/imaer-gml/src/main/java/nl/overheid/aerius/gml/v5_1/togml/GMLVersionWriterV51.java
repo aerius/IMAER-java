@@ -52,9 +52,9 @@ import nl.overheid.aerius.shared.domain.geo.HexagonZoomLevel;
 import nl.overheid.aerius.shared.domain.result.EmissionResultKey;
 import nl.overheid.aerius.shared.domain.result.EmissionResultType;
 import nl.overheid.aerius.shared.domain.v2.building.BuildingFeature;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLCorrection;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLDispersionLineFeature;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLMeasureFeature;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKCorrection;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKDispersionLineFeature;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKMeasureFeature;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPointFeature;
 import nl.overheid.aerius.shared.domain.v2.scenario.ScenarioMetaData;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceFeature;
@@ -250,7 +250,7 @@ public class GMLVersionWriterV51 implements GMLVersionWriter {
   }
 
   @Override
-  public FeatureMember result2GML(final CalculationPointFeature point, final Substance[] substances, final List<NSLCorrection> corrections)
+  public FeatureMember result2GML(final CalculationPointFeature point, final Substance[] substances, final List<CIMLKCorrection> corrections)
       throws AeriusException {
     return result2gml.toGML(point, substances, corrections);
   }
@@ -261,17 +261,17 @@ public class GMLVersionWriterV51 implements GMLVersionWriter {
   }
 
   @Override
-  public FeatureMember nslMeasure2GML(final NSLMeasureFeature measure) throws AeriusException {
+  public FeatureMember cimlkMeasure2GML(final CIMLKMeasureFeature measure) throws AeriusException {
     return measure2gml.toGML(measure);
   }
 
   @Override
-  public FeatureMember nslDispersionLine2GML(final NSLDispersionLineFeature dispersionLine) throws AeriusException {
+  public FeatureMember cimlkDispersionLine2GML(final CIMLKDispersionLineFeature dispersionLine) throws AeriusException {
     return dispersionLine2gml.toGML(dispersionLine);
   }
 
   @Override
-  public Object nslCorrection2GML(final NSLCorrection correction) throws AeriusException {
+  public Object cimlkCorrection2GML(final CIMLKCorrection correction) throws AeriusException {
     return result2gml.toGMLCorrection(correction);
   }
 

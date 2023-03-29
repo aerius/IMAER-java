@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.shared.domain.v2.nsl;
+package nl.overheid.aerius.shared.domain.v2.cimlk;
 
 import java.io.Serializable;
 
-public class NSLDispersionLine implements Serializable {
+public class CIMLKDispersionLine implements Serializable {
 
   private static final long serialVersionUID = 3L;
 
@@ -26,8 +26,8 @@ public class NSLDispersionLine implements Serializable {
   private String calculationPointGmlId;
   private Integer jurisdictionId;
   private String label;
-  private NSLRoadProfile roadProfile;
-  private NSLTreeProfile treeProfile;
+  private CIMLKRoadProfile roadProfile;
+  private CIMLKTreeProfile treeProfile;
   private String description;
 
   public String getRoadGmlId() {
@@ -62,19 +62,19 @@ public class NSLDispersionLine implements Serializable {
     this.label = label;
   }
 
-  public NSLRoadProfile getRoadProfile() {
+  public CIMLKRoadProfile getRoadProfile() {
     return roadProfile;
   }
 
-  public void setRoadProfile(final NSLRoadProfile roadProfile) {
+  public void setRoadProfile(final CIMLKRoadProfile roadProfile) {
     this.roadProfile = roadProfile;
   }
 
-  public NSLTreeProfile getTreeProfile() {
+  public CIMLKTreeProfile getTreeProfile() {
     return treeProfile;
   }
 
-  public void setTreeProfile(final NSLTreeProfile treeProfile) {
+  public void setTreeProfile(final CIMLKTreeProfile treeProfile) {
     this.treeProfile = treeProfile;
   }
 
@@ -88,7 +88,7 @@ public class NSLDispersionLine implements Serializable {
 
   @Override
   public String toString() {
-    return "NSLDispersionLine [roadGmlId=" + roadGmlId + ", calculationPointGmlId=" + calculationPointGmlId + ", jurisdictionId=" + jurisdictionId
+    return "CIMLKDispersionLine [roadGmlId=" + roadGmlId + ", calculationPointGmlId=" + calculationPointGmlId + ", jurisdictionId=" + jurisdictionId
         + ", label=" + label + ", roadProfile=" + roadProfile + ", treeProfile=" + treeProfile + ", description=" + description + "]";
   }
 }

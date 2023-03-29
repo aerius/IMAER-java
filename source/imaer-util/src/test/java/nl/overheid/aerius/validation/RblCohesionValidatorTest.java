@@ -30,11 +30,11 @@ import org.junit.jupiter.api.Test;
 import nl.overheid.aerius.shared.domain.Theme;
 import nl.overheid.aerius.shared.domain.v2.geojson.LineString;
 import nl.overheid.aerius.shared.domain.v2.geojson.Point;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLCorrection;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLDispersionLine;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLDispersionLineFeature;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLMeasure;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLMeasureFeature;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKCorrection;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKDispersionLine;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKDispersionLineFeature;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKMeasure;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKMeasureFeature;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPoint;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPointFeature;
 import nl.overheid.aerius.shared.domain.v2.point.CustomCalculationPoint;
@@ -138,15 +138,15 @@ class RblCohesionValidatorTest {
   @Test
   void testNonDuplicateMeasureIds() {
     final ScenarioSituation resultMeasureSituation = new ScenarioSituation();
-    final NSLMeasureFeature feature1 = new NSLMeasureFeature();
-    final NSLMeasure measure1 = new NSLMeasure();
+    final CIMLKMeasureFeature feature1 = new CIMLKMeasureFeature();
+    final CIMLKMeasure measure1 = new CIMLKMeasure();
     measure1.setGmlId(DEFAULT_MEASURE_ID);
     feature1.setProperties(measure1);
-    final NSLMeasureFeature feature2 = new NSLMeasureFeature();
-    final NSLMeasure measure2 = new NSLMeasure();
+    final CIMLKMeasureFeature feature2 = new CIMLKMeasureFeature();
+    final CIMLKMeasure measure2 = new CIMLKMeasure();
     measure2.setGmlId(DEFAULT_MEASURE_ID + "_other");
     feature2.setProperties(measure2);
-    resultMeasureSituation.getNslMeasuresList().addAll(Arrays.asList(feature1, feature2));
+    resultMeasureSituation.getCimlkMeasuresList().addAll(Arrays.asList(feature1, feature2));
 
     check(resultMeasureSituation);
 
@@ -157,15 +157,15 @@ class RblCohesionValidatorTest {
   @Test
   void testDuplicateMeasureIdsInSameImport() {
     final ScenarioSituation resultMeasureSituation = new ScenarioSituation();
-    final NSLMeasureFeature feature1 = new NSLMeasureFeature();
-    final NSLMeasure measure1 = new NSLMeasure();
+    final CIMLKMeasureFeature feature1 = new CIMLKMeasureFeature();
+    final CIMLKMeasure measure1 = new CIMLKMeasure();
     measure1.setGmlId(DEFAULT_MEASURE_ID);
     feature1.setProperties(measure1);
-    final NSLMeasureFeature feature2 = new NSLMeasureFeature();
-    final NSLMeasure measure2 = new NSLMeasure();
+    final CIMLKMeasureFeature feature2 = new CIMLKMeasureFeature();
+    final CIMLKMeasure measure2 = new CIMLKMeasure();
     measure2.setGmlId(DEFAULT_MEASURE_ID);
     feature2.setProperties(measure2);
-    resultMeasureSituation.getNslMeasuresList().addAll(Arrays.asList(feature1, feature2));
+    resultMeasureSituation.getCimlkMeasuresList().addAll(Arrays.asList(feature1, feature2));
 
     check(resultMeasureSituation);
 
@@ -176,18 +176,18 @@ class RblCohesionValidatorTest {
   @Test
   void testDuplicateMeasureIdsInDifferentImport() {
     final ScenarioSituation resultMeasure1Situation = new ScenarioSituation();
-    final NSLMeasureFeature feature1 = new NSLMeasureFeature();
-    final NSLMeasure measure1 = new NSLMeasure();
+    final CIMLKMeasureFeature feature1 = new CIMLKMeasureFeature();
+    final CIMLKMeasure measure1 = new CIMLKMeasure();
     measure1.setGmlId(DEFAULT_MEASURE_ID);
     feature1.setProperties(measure1);
-    resultMeasure1Situation.getNslMeasuresList().addAll(Arrays.asList(feature1));
+    resultMeasure1Situation.getCimlkMeasuresList().addAll(Arrays.asList(feature1));
 
     final ScenarioSituation resultMeasure2Situation = new ScenarioSituation();
-    final NSLMeasureFeature feature2 = new NSLMeasureFeature();
-    final NSLMeasure measure2 = new NSLMeasure();
+    final CIMLKMeasureFeature feature2 = new CIMLKMeasureFeature();
+    final CIMLKMeasure measure2 = new CIMLKMeasure();
     measure2.setGmlId(DEFAULT_MEASURE_ID);
     feature2.setProperties(measure2);
-    resultMeasure2Situation.getNslMeasuresList().addAll(Arrays.asList(feature2));
+    resultMeasure2Situation.getCimlkMeasuresList().addAll(Arrays.asList(feature2));
 
     check(resultMeasure1Situation, resultMeasure2Situation);
 
@@ -199,12 +199,12 @@ class RblCohesionValidatorTest {
   void testDispersionLineCorrect() {
     final Scenario scenario = new Scenario(Theme.RBL);
     final ScenarioSituation situation = new ScenarioSituation();
-    final NSLDispersionLine dispersionLine = new NSLDispersionLine();
+    final CIMLKDispersionLine dispersionLine = new CIMLKDispersionLine();
     dispersionLine.setCalculationPointGmlId(DEFAULT_POINT_ID);
     dispersionLine.setRoadGmlId(DEFAULT_ROAD_ID);
-    final NSLDispersionLineFeature dispersionLineFeature = new NSLDispersionLineFeature();
+    final CIMLKDispersionLineFeature dispersionLineFeature = new CIMLKDispersionLineFeature();
     dispersionLineFeature.setProperties(dispersionLine);
-    situation.getNslDispersionLinesList().add(dispersionLineFeature);
+    situation.getCimlkDispersionLinesList().add(dispersionLineFeature);
 
     final EmissionSourceFeature road = exampleSrm1Source(DEFAULT_ROAD_ID);
     final List<EmissionSourceFeature> sourceList = List.of(road);
@@ -224,12 +224,12 @@ class RblCohesionValidatorTest {
   void testDispersionLineWithSrm2Road() {
     final Scenario scenario = new Scenario(Theme.RBL);
     final ScenarioSituation situation = new ScenarioSituation();
-    final NSLDispersionLine dispersionLine = new NSLDispersionLine();
+    final CIMLKDispersionLine dispersionLine = new CIMLKDispersionLine();
     dispersionLine.setCalculationPointGmlId(DEFAULT_POINT_ID);
     dispersionLine.setRoadGmlId(DEFAULT_ROAD_ID);
-    final NSLDispersionLineFeature dispersionLineFeature = new NSLDispersionLineFeature();
+    final CIMLKDispersionLineFeature dispersionLineFeature = new CIMLKDispersionLineFeature();
     dispersionLineFeature.setProperties(dispersionLine);
-    situation.getNslDispersionLinesList().add(dispersionLineFeature);
+    situation.getCimlkDispersionLinesList().add(dispersionLineFeature);
 
     final EmissionSourceFeature road = exampleSrm2Source(DEFAULT_ROAD_ID);
     final List<EmissionSourceFeature> sourceList = List.of(road);
@@ -249,12 +249,12 @@ class RblCohesionValidatorTest {
   void testDispersionLineWithWrongRoad() {
     final Scenario scenario = new Scenario(Theme.RBL);
     final ScenarioSituation situation = new ScenarioSituation();
-    final NSLDispersionLine dispersionLine = new NSLDispersionLine();
+    final CIMLKDispersionLine dispersionLine = new CIMLKDispersionLine();
     dispersionLine.setCalculationPointGmlId(DEFAULT_POINT_ID);
     dispersionLine.setRoadGmlId(DEFAULT_ROAD_ID);
-    final NSLDispersionLineFeature dispersionLineFeature = new NSLDispersionLineFeature();
+    final CIMLKDispersionLineFeature dispersionLineFeature = new CIMLKDispersionLineFeature();
     dispersionLineFeature.setProperties(dispersionLine);
-    situation.getNslDispersionLinesList().add(dispersionLineFeature);
+    situation.getCimlkDispersionLinesList().add(dispersionLineFeature);
 
     final EmissionSourceFeature road = exampleSrm1Source("9");
     final List<EmissionSourceFeature> sourceList = List.of(road);
@@ -274,12 +274,12 @@ class RblCohesionValidatorTest {
   void testDispersionLineWithWrongPoint() {
     final Scenario scenario = new Scenario(Theme.RBL);
     final ScenarioSituation situation = new ScenarioSituation();
-    final NSLDispersionLine dispersionLine = new NSLDispersionLine();
+    final CIMLKDispersionLine dispersionLine = new CIMLKDispersionLine();
     dispersionLine.setCalculationPointGmlId(DEFAULT_POINT_ID);
     dispersionLine.setRoadGmlId(DEFAULT_ROAD_ID);
-    final NSLDispersionLineFeature dispersionLineFeature = new NSLDispersionLineFeature();
+    final CIMLKDispersionLineFeature dispersionLineFeature = new CIMLKDispersionLineFeature();
     dispersionLineFeature.setProperties(dispersionLine);
-    situation.getNslDispersionLinesList().add(dispersionLineFeature);
+    situation.getCimlkDispersionLinesList().add(dispersionLineFeature);
 
     final EmissionSourceFeature road = exampleSrm1Source(DEFAULT_ROAD_ID);
     final List<EmissionSourceFeature> sourceList = List.of(road);
@@ -299,12 +299,12 @@ class RblCohesionValidatorTest {
   void testDispersionLineNotPerpendicular() {
     final Scenario scenario = new Scenario(Theme.RBL);
     final ScenarioSituation situation = new ScenarioSituation();
-    final NSLDispersionLine dispersionLine = new NSLDispersionLine();
+    final CIMLKDispersionLine dispersionLine = new CIMLKDispersionLine();
     dispersionLine.setCalculationPointGmlId(DEFAULT_POINT_ID);
     dispersionLine.setRoadGmlId(DEFAULT_ROAD_ID);
-    final NSLDispersionLineFeature dispersionLineFeature = new NSLDispersionLineFeature();
+    final CIMLKDispersionLineFeature dispersionLineFeature = new CIMLKDispersionLineFeature();
     dispersionLineFeature.setProperties(dispersionLine);
-    situation.getNslDispersionLinesList().add(dispersionLineFeature);
+    situation.getCimlkDispersionLinesList().add(dispersionLineFeature);
 
     final EmissionSourceFeature road = exampleSrm1Source(DEFAULT_ROAD_ID);
     final List<EmissionSourceFeature> sourceList = List.of(road);
@@ -344,18 +344,18 @@ class RblCohesionValidatorTest {
   void testDuplicateDispersionLinesInSameImport() {
     final Scenario scenario = new Scenario(Theme.RBL);
     final ScenarioSituation situation = new ScenarioSituation();
-    final NSLDispersionLine dispersionLine1 = new NSLDispersionLine();
+    final CIMLKDispersionLine dispersionLine1 = new CIMLKDispersionLine();
     dispersionLine1.setCalculationPointGmlId(DEFAULT_POINT_ID);
     dispersionLine1.setRoadGmlId(DEFAULT_ROAD_ID);
-    final NSLDispersionLineFeature dispersionLineFeature1 = new NSLDispersionLineFeature();
+    final CIMLKDispersionLineFeature dispersionLineFeature1 = new CIMLKDispersionLineFeature();
     dispersionLineFeature1.setProperties(dispersionLine1);
-    situation.getNslDispersionLinesList().add(dispersionLineFeature1);
-    final NSLDispersionLine dispersionLine2 = new NSLDispersionLine();
+    situation.getCimlkDispersionLinesList().add(dispersionLineFeature1);
+    final CIMLKDispersionLine dispersionLine2 = new CIMLKDispersionLine();
     dispersionLine2.setCalculationPointGmlId(DEFAULT_POINT_ID);
     dispersionLine2.setRoadGmlId(DEFAULT_ROAD_ID);
-    final NSLDispersionLineFeature dispersionLineFeature2 = new NSLDispersionLineFeature();
+    final CIMLKDispersionLineFeature dispersionLineFeature2 = new CIMLKDispersionLineFeature();
     dispersionLineFeature2.setProperties(dispersionLine2);
-    situation.getNslDispersionLinesList().add(dispersionLineFeature2);
+    situation.getCimlkDispersionLinesList().add(dispersionLineFeature2);
 
     final EmissionSourceFeature road = exampleSrm1Source(DEFAULT_ROAD_ID);
     final List<EmissionSourceFeature> sourceList = List.of(road);
@@ -375,21 +375,21 @@ class RblCohesionValidatorTest {
   void testDuplicateDispersionLinesDifferentImport() {
     final Scenario scenario = new Scenario(Theme.RBL);
     final ScenarioSituation situation1 = new ScenarioSituation();
-    final NSLDispersionLine dispersionLine1 = new NSLDispersionLine();
+    final CIMLKDispersionLine dispersionLine1 = new CIMLKDispersionLine();
     dispersionLine1.setCalculationPointGmlId(DEFAULT_POINT_ID);
     dispersionLine1.setRoadGmlId(DEFAULT_ROAD_ID);
-    final NSLDispersionLineFeature dispersionLineFeature1 = new NSLDispersionLineFeature();
+    final CIMLKDispersionLineFeature dispersionLineFeature1 = new CIMLKDispersionLineFeature();
     dispersionLineFeature1.setProperties(dispersionLine1);
-    situation1.getNslDispersionLinesList().add(dispersionLineFeature1);
+    situation1.getCimlkDispersionLinesList().add(dispersionLineFeature1);
     scenario.getSituations().add(situation1);
 
     final ScenarioSituation situation2 = new ScenarioSituation();
-    final NSLDispersionLine dispersionLine2 = new NSLDispersionLine();
+    final CIMLKDispersionLine dispersionLine2 = new CIMLKDispersionLine();
     dispersionLine2.setCalculationPointGmlId(DEFAULT_POINT_ID);
     dispersionLine2.setRoadGmlId(DEFAULT_ROAD_ID);
-    final NSLDispersionLineFeature dispersionLineFeature2 = new NSLDispersionLineFeature();
+    final CIMLKDispersionLineFeature dispersionLineFeature2 = new CIMLKDispersionLineFeature();
     dispersionLineFeature2.setProperties(dispersionLine2);
-    situation2.getNslDispersionLinesList().add(dispersionLineFeature2);
+    situation2.getCimlkDispersionLinesList().add(dispersionLineFeature2);
 
     final EmissionSourceFeature road = exampleSrm1Source(DEFAULT_ROAD_ID);
     final List<EmissionSourceFeature> sourceList = List.of(road);
@@ -409,9 +409,9 @@ class RblCohesionValidatorTest {
   void testCorrectionCorrect() {
     final Scenario scenario = new Scenario(Theme.RBL);
     final ScenarioSituation situation = new ScenarioSituation();
-    final NSLCorrection correction = new NSLCorrection();
+    final CIMLKCorrection correction = new CIMLKCorrection();
     correction.setCalculationPointGmlId(DEFAULT_POINT_ID);
-    situation.getNslCorrections().add(correction);
+    situation.getCimlkCorrections().add(correction);
     scenario.getSituations().add(situation);
 
     final CalculationPointFeature point = examplePoint(DEFAULT_POINT_ID);
@@ -427,9 +427,9 @@ class RblCohesionValidatorTest {
   void testCorrectionWithWrongPoint() {
     final Scenario scenario = new Scenario(Theme.RBL);
     final ScenarioSituation situation = new ScenarioSituation();
-    final NSLCorrection correction = new NSLCorrection();
+    final CIMLKCorrection correction = new CIMLKCorrection();
     correction.setCalculationPointGmlId(DEFAULT_POINT_ID);
-    situation.getNslCorrections().add(correction);
+    situation.getCimlkCorrections().add(correction);
     scenario.getSituations().add(situation);
 
     final CalculationPointFeature point = examplePoint("8");

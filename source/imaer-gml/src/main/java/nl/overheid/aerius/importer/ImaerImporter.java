@@ -47,9 +47,9 @@ import nl.overheid.aerius.shared.domain.v2.geojson.Crs;
 import nl.overheid.aerius.shared.domain.v2.geojson.Crs.CrsContent;
 import nl.overheid.aerius.shared.domain.v2.geojson.FeatureCollection;
 import nl.overheid.aerius.shared.domain.v2.importer.ImportParcel;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLCorrection;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLDispersionLineFeature;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLMeasureFeature;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKCorrection;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKDispersionLineFeature;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKMeasureFeature;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPointFeature;
 import nl.overheid.aerius.shared.domain.v2.point.CustomCalculationPoint;
 import nl.overheid.aerius.shared.domain.v2.scenario.Definitions;
@@ -62,7 +62,7 @@ import nl.overheid.aerius.shared.geo.EPSG;
 import nl.overheid.aerius.validation.BuildingValidator;
 import nl.overheid.aerius.validation.DefinitionsValidator;
 import nl.overheid.aerius.validation.EmissionSourceValidator;
-import nl.overheid.aerius.validation.NSLMeasureValidator;
+import nl.overheid.aerius.validation.CIMLKMeasureValidator;
 
 /**
  * Importer for IMAER GML files.
@@ -132,9 +132,9 @@ public class ImaerImporter {
     final ScenarioSituation situation = addSituationProperties(reader, result);
     addEmissionSources(reader, importOptions, result, importYear);
     addAeriusPoints(reader, importOptions, result);
-    addNslMeasures(reader, importOptions, result, situation);
-    addNslDispersionLines(reader, importOptions, situation);
-    addNslCorrections(reader, importOptions, situation);
+    addCimlkMeasures(reader, importOptions, result, situation);
+    addCimlkDispersionLines(reader, importOptions, situation);
+    addCimlkCorrections(reader, importOptions, situation);
     addBuildings(reader, importOptions, result, situation);
     addDefinitions(reader, importOptions, result, situation);
     setCrs(result);
@@ -201,8 +201,8 @@ public class ImaerImporter {
 
     final ScenarioSituation situation = result.getSituation();
     setCrsIf(situation.getSources(), crs);
-    setCrsIf(situation.getNslDispersionLines(), crs);
-    setCrsIf(situation.getNslMeasures(), crs);
+    setCrsIf(situation.getCimlkDispersionLines(), crs);
+    setCrsIf(situation.getCimlkMeasures(), crs);
     setCrsIf(result.getCalculationPoints(), crs);
   }
 
@@ -306,28 +306,28 @@ public class ImaerImporter {
     result.setDatabaseVersion(metaDataReader.readDatabaseVersion());
   }
 
-  private static void addNslMeasures(final GMLReader reader, final Set<ImportOption> importOptions, final ImportParcel result,
+  private static void addCimlkMeasures(final GMLReader reader, final Set<ImportOption> importOptions, final ImportParcel result,
       final ScenarioSituation situation) {
-    if (ImportOption.INCLUDE_NSL_MEASURES.in(importOptions)) {
-      final List<NSLMeasureFeature> measures = reader.getNSLMeasures();
+    if (ImportOption.INCLUDE_CIMLK_MEASURES.in(importOptions)) {
+      final List<CIMLKMeasureFeature> measures = reader.getCIMLKMeasures();
       if (ImportOption.VALIDATE_SOURCES.in(importOptions)) {
-        NSLMeasureValidator.validateMeasures(measures, result.getExceptions(), result.getWarnings());
+        CIMLKMeasureValidator.validateMeasures(measures, result.getExceptions(), result.getWarnings());
       }
-      situation.getNslMeasuresList().addAll(measures);
+      situation.getCimlkMeasuresList().addAll(measures);
     }
   }
 
-  private static void addNslDispersionLines(final GMLReader reader, final Set<ImportOption> importOptions, final ScenarioSituation situation) {
-    if (ImportOption.INCLUDE_NSL_DISPERSION_LINES.in(importOptions)) {
-      final List<NSLDispersionLineFeature> dispersionLines = reader.getNSLDispersionLines();
-      situation.getNslDispersionLinesList().addAll(dispersionLines);
+  private static void addCimlkDispersionLines(final GMLReader reader, final Set<ImportOption> importOptions, final ScenarioSituation situation) {
+    if (ImportOption.INCLUDE_CIMLK_DISPERSION_LINES.in(importOptions)) {
+      final List<CIMLKDispersionLineFeature> dispersionLines = reader.getCIMLKDispersionLines();
+      situation.getCimlkDispersionLinesList().addAll(dispersionLines);
     }
   }
 
-  private static void addNslCorrections(final GMLReader reader, final Set<ImportOption> importOptions, final ScenarioSituation situation) {
-    if (ImportOption.INCLUDE_NSL_CORRECTIONS.in(importOptions)) {
-      final List<NSLCorrection> corrections = reader.getNSLCorrections();
-      situation.getNslCorrections().addAll(corrections);
+  private static void addCimlkCorrections(final GMLReader reader, final Set<ImportOption> importOptions, final ScenarioSituation situation) {
+    if (ImportOption.INCLUDE_CIMLK_CORRECTIONS.in(importOptions)) {
+      final List<CIMLKCorrection> corrections = reader.getCIMLKCorrections();
+      situation.getCimlkCorrections().addAll(corrections);
     }
   }
 

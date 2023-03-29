@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.shared.domain.v2.nsl;
+package nl.overheid.aerius.shared.domain.v2.cimlk;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ import java.util.List;
 
 import nl.overheid.aerius.shared.domain.v2.source.road.StandardVehicleMeasure;
 
-public class NSLMeasure implements Serializable {
+public class CIMLKMeasure implements Serializable {
 
   private static final long serialVersionUID = 3L;
 

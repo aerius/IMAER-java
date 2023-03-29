@@ -25,8 +25,8 @@ import nl.overheid.aerius.gml.v5_0.measure.EmissionReductionProperty;
 import nl.overheid.aerius.gml.v5_0.measure.SRM1RoadMeasure;
 import nl.overheid.aerius.gml.v5_0.measure.SRM1RoadMeasureArea;
 import nl.overheid.aerius.gml.v5_0.measure.SRM1RoadMeasureProperty;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLMeasure;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLMeasureFeature;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKMeasure;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKMeasureFeature;
 import nl.overheid.aerius.shared.domain.v2.source.road.StandardVehicleMeasure;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.util.gml.GMLIdUtil;
@@ -48,9 +48,9 @@ final class NSLMeasure2GML {
    * @return the GML object representing the NSLMeasure.
    * @throws AeriusException when the objects could not be converted to GML correctly.
    */
-  public SRM1RoadMeasureArea toGML(final NSLMeasureFeature feature) throws AeriusException {
+  public SRM1RoadMeasureArea toGML(final CIMLKMeasureFeature feature) throws AeriusException {
     final SRM1RoadMeasureArea gmlMeasure = new SRM1RoadMeasureArea();
-    final NSLMeasure measure = feature.getProperties();
+    final CIMLKMeasure measure = feature.getProperties();
     final String id = GMLIdUtil.toValidGmlId(measure.getGmlId(), GMLIdUtil.MEASURE_PREFIX);
 
     gmlMeasure.setGeometry(geometry2gml, feature.getGeometry());

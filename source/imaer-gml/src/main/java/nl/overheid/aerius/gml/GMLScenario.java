@@ -25,9 +25,9 @@ import nl.overheid.aerius.shared.domain.scenario.SituationMetaData;
 import nl.overheid.aerius.shared.domain.scenario.SituationType;
 import nl.overheid.aerius.shared.domain.v2.building.BuildingFeature;
 import nl.overheid.aerius.shared.domain.v2.importer.ImportParcel;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLCorrection;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLDispersionLineFeature;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLMeasureFeature;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKCorrection;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKDispersionLineFeature;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKMeasureFeature;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPointFeature;
 import nl.overheid.aerius.shared.domain.v2.scenario.Definitions;
 import nl.overheid.aerius.shared.domain.v2.scenario.ScenarioMetaData;
@@ -48,9 +48,9 @@ public class GMLScenario implements IsScenario {
     private List<EmissionSourceFeature> sources;
     private List<BuildingFeature> buildings;
     private List<CalculationPointFeature> calculationPoints;
-    private List<NSLDispersionLineFeature> nslDispersionLines;
-    private List<NSLMeasureFeature> nslMeasures;
-    private List<NSLCorrection> nslCorrections;
+    private List<CIMLKDispersionLineFeature> cimlkDispersionLines;
+    private List<CIMLKMeasureFeature> cimlkMeasures;
+    private List<CIMLKCorrection> cimlkCorrections;
     private ScenarioMetaData projectMetaData;
     private SituationMetaData situationMetaData;
 
@@ -70,9 +70,9 @@ public class GMLScenario implements IsScenario {
           .sources(situation.getEmissionSourcesList())
           .buildings(situation.getBuildingsList())
           .calculationPoints(importParcel.getCalculationPointsList())
-          .nslDispersionLines(situation.getNslDispersionLinesList())
-          .nslMeasures(situation.getNslMeasuresList())
-          .nslCorrections(situation.getNslCorrections());
+          .cimlkDispersionLines(situation.getCimlkDispersionLinesList())
+          .cimlkMeasures(situation.getCimlkMeasuresList())
+          .cimlkCorrections(situation.getCimlkCorrections());
     }
 
     public GMLScenario build() {
@@ -104,18 +104,18 @@ public class GMLScenario implements IsScenario {
       return this;
     }
 
-    public Builder nslDispersionLines(final List<NSLDispersionLineFeature> nslDispersionLines) {
-      this.nslDispersionLines = nslDispersionLines;
+    public Builder cimlkDispersionLines(final List<CIMLKDispersionLineFeature> cimlkDispersionLines) {
+      this.cimlkDispersionLines = cimlkDispersionLines;
       return this;
     }
 
-    public Builder nslMeasures(final List<NSLMeasureFeature> nslMeasures) {
-      this.nslMeasures = nslMeasures;
+    public Builder cimlkMeasures(final List<CIMLKMeasureFeature> cimlkMeasures) {
+      this.cimlkMeasures = cimlkMeasures;
       return this;
     }
 
-    public Builder nslCorrections(final List<NSLCorrection> nslCorrections) {
-      this.nslCorrections = nslCorrections;
+    public Builder cimlkCorrections(final List<CIMLKCorrection> cimlkCorrections) {
+      this.cimlkCorrections = cimlkCorrections;
       return this;
     }
 
@@ -138,9 +138,9 @@ public class GMLScenario implements IsScenario {
   private final List<EmissionSourceFeature> sources;
   private final List<BuildingFeature> buildings;
   private final List<CalculationPointFeature> calculationPoints;
-  private final List<NSLDispersionLineFeature> nslDispersionLines;
-  private final List<NSLMeasureFeature> nslMeasures;
-  private final List<NSLCorrection> nslCorrections;
+  private final List<CIMLKDispersionLineFeature> cimlkDispersionLines;
+  private final List<CIMLKMeasureFeature> cimlkMeasures;
+  private final List<CIMLKCorrection> cimlkCorrections;
   private final Optional<ScenarioMetaData> projectMetaData;
   private final Optional<SituationMetaData> situationMetaData;
 
@@ -152,9 +152,9 @@ public class GMLScenario implements IsScenario {
     this.sources = builder.sources == null ? Collections.emptyList() : builder.sources;
     this.buildings = builder.buildings == null ? Collections.emptyList() : builder.buildings;
     this.calculationPoints = builder.calculationPoints == null ? Collections.emptyList() : builder.calculationPoints;
-    this.nslDispersionLines = builder.nslDispersionLines == null ? Collections.emptyList() : builder.nslDispersionLines;
-    this.nslMeasures = builder.nslMeasures == null ? Collections.emptyList() : builder.nslMeasures;
-    this.nslCorrections = builder.nslCorrections == null ? Collections.emptyList() : builder.nslCorrections;
+    this.cimlkDispersionLines = builder.cimlkDispersionLines == null ? Collections.emptyList() : builder.cimlkDispersionLines;
+    this.cimlkMeasures = builder.cimlkMeasures == null ? Collections.emptyList() : builder.cimlkMeasures;
+    this.cimlkCorrections = builder.cimlkCorrections == null ? Collections.emptyList() : builder.cimlkCorrections;
     this.projectMetaData = Optional.ofNullable(builder.projectMetaData);
     this.situationMetaData = Optional.ofNullable(builder.situationMetaData);
   }
@@ -195,18 +195,18 @@ public class GMLScenario implements IsScenario {
   }
 
   @Override
-  public List<NSLDispersionLineFeature> getNslDispersionLines() {
-    return nslDispersionLines;
+  public List<CIMLKDispersionLineFeature> getCimlkDispersionLines() {
+    return cimlkDispersionLines;
   }
 
   @Override
-  public List<NSLMeasureFeature> getNslMeasures() {
-    return nslMeasures;
+  public List<CIMLKMeasureFeature> getCimlkMeasures() {
+    return cimlkMeasures;
   }
 
   @Override
-  public List<NSLCorrection> getNslCorrections() {
-    return nslCorrections;
+  public List<CIMLKCorrection> getCimlkCorrections() {
+    return cimlkCorrections;
   }
 
   @Override

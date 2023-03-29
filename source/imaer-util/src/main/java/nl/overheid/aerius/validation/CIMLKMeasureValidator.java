@@ -19,28 +19,28 @@ package nl.overheid.aerius.validation;
 import java.util.List;
 
 import nl.overheid.aerius.shared.domain.v2.base.EmissionReduction;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLMeasure;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLMeasureFeature;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKMeasure;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKMeasureFeature;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 
 /**
  *
  */
-public final class NSLMeasureValidator {
+public final class CIMLKMeasureValidator {
 
-  NSLMeasureValidator() {
+  CIMLKMeasureValidator() {
     // Util class
   }
 
-  public static void validateMeasures(final List<NSLMeasureFeature> measures, final List<AeriusException> exceptions,
+  public static void validateMeasures(final List<CIMLKMeasureFeature> measures, final List<AeriusException> exceptions,
       final List<AeriusException> warnings) {
     checkNegativeFactors(measures, exceptions);
   }
 
-  private static void checkNegativeFactors(final List<NSLMeasureFeature> measureFeatures, final List<AeriusException> exceptions) {
-    for (final NSLMeasureFeature feature : measureFeatures) {
-      final NSLMeasure measure = feature.getProperties();
+  private static void checkNegativeFactors(final List<CIMLKMeasureFeature> measureFeatures, final List<AeriusException> exceptions) {
+    for (final CIMLKMeasureFeature feature : measureFeatures) {
+      final CIMLKMeasure measure = feature.getProperties();
       measure.getVehicleMeasures().stream()
           .flatMap(x -> x.getEmissionReductions().stream())
           .map(EmissionReduction::getFactor)

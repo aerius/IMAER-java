@@ -14,15 +14,27 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.gml.base.result;
+package nl.overheid.aerius.shared.domain.v2.cimlk;
 
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLMonitorSubstance;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLRejectionGrounds;
+public enum CIMLKRoadProfile {
 
-public interface IsGmlNSLCalculationPoint extends IsGmlCalculationPoint {
+  WIDE_STREET_CANYON(1), NARROW_STREET_CANYON(2), ONE_SIDE_BUILDINGS(3), OTHER(4);
 
-  NSLRejectionGrounds getRejectionGrounds();
+  private final int legacyId;
 
-  NSLMonitorSubstance getMonitorSubstance();
+  private CIMLKRoadProfile(final int legacyId) {
+    this.legacyId = legacyId;
+  }
+
+  public static CIMLKRoadProfile legacySafeValueOf(final int value) {
+    CIMLKRoadProfile result = null;
+    for (final CIMLKRoadProfile roadProfile : values()) {
+      if (value == roadProfile.legacyId) {
+        result = roadProfile;
+        break;
+      }
+    }
+    return result;
+  }
 
 }

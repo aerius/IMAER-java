@@ -17,8 +17,8 @@
 package nl.overheid.aerius.gml.base.source.road;
 
 import nl.overheid.aerius.gml.base.IsGmlReferenceType;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLRoadProfile;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLTreeProfile;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKRoadProfile;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKTreeProfile;
 
 public interface IsGmlSRM1RoadDispersionLine {
 
@@ -28,9 +28,9 @@ public interface IsGmlSRM1RoadDispersionLine {
 
   Integer getJurisdictionId();
 
-  NSLRoadProfile getRoadProfile();
+  CIMLKRoadProfile getRoadProfile();
 
-  NSLTreeProfile getTreeProfile();
+  CIMLKTreeProfile getTreeProfile();
 
   IsGmlReferenceType getRoad();
 

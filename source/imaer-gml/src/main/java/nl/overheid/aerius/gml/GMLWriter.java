@@ -42,10 +42,10 @@ import nl.overheid.aerius.gml.base.MetaDataInput;
 import nl.overheid.aerius.gml.base.StringUtils;
 import nl.overheid.aerius.shared.domain.geo.ReceptorGridSettings;
 import nl.overheid.aerius.shared.domain.scenario.IsScenario;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLCorrection;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLDispersionLineFeature;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLMeasure;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLMeasureFeature;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKCorrection;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKDispersionLineFeature;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKMeasure;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKMeasureFeature;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPointFeature;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceFeature;
 import nl.overheid.aerius.shared.exception.AeriusException;
@@ -129,17 +129,17 @@ public class GMLWriter {
   }
 
   /**
-   * Sets the GML representation (String) on each {@link NSLDispersionLineFeature} object.
+   * Sets the GML representation (String) on each {@link CIMLKDispersionLineFeature} object.
    *
-   * @param dispersionLines List of NSL dispersion lines
+   * @param dispersionLines List of CIMLK dispersion lines
    * @throws AeriusException When exception occurred generating the GML.
    */
-  public Map<NSLDispersionLineFeature, String> getGmlByNslDispersionLines(final List<NSLDispersionLineFeature> dispersionLines)
+  public Map<CIMLKDispersionLineFeature, String> getGmlByCimlkDispersionLines(final List<CIMLKDispersionLineFeature> dispersionLines)
       throws AeriusException {
-    final Map<NSLDispersionLineFeature, String> gmlPerDispersionLine = new HashMap<>();
+    final Map<CIMLKDispersionLineFeature, String> gmlPerDispersionLine = new HashMap<>();
     final InternalGMLWriter writer = createInternalWriter();
-    for (final NSLDispersionLineFeature dispersionLine : dispersionLines) {
-      final FeatureMember feature = writer.nslDispersionLinesToFeatures(Collections.singletonList(dispersionLine)).get(0);
+    for (final CIMLKDispersionLineFeature dispersionLine : dispersionLines) {
+      final FeatureMember feature = writer.cimlkDispersionLinesToFeatures(Collections.singletonList(dispersionLine)).get(0);
 
       setGMLFeatureOnObject(writer, feature, gml -> gmlPerDispersionLine.put(dispersionLine, gml));
     }
@@ -147,16 +147,16 @@ public class GMLWriter {
   }
 
   /**
-   * Sets the GML representation (String) on each {@link NSLMeasure} object.
+   * Sets the GML representation (String) on each {@link CIMLKMeasure} object.
    *
-   * @param measures List of NSL measures
+   * @param measures List of CIMLK measure features
    * @throws AeriusException When exception occurred generating the GML.
    */
-  public Map<NSLMeasureFeature, String> getGmlByNslMeasures(final List<NSLMeasureFeature> measures) throws AeriusException {
-    final Map<NSLMeasureFeature, String> gmlPerMeasure = new HashMap<>();
+  public Map<CIMLKMeasureFeature, String> getGmlByCimlkMeasures(final List<CIMLKMeasureFeature> measures) throws AeriusException {
+    final Map<CIMLKMeasureFeature, String> gmlPerMeasure = new HashMap<>();
     final InternalGMLWriter writer = createInternalWriter();
-    for (final NSLMeasureFeature measure : measures) {
-      final FeatureMember feature = writer.nslMeasuresToFeatures(Collections.singletonList(measure)).get(0);
+    for (final CIMLKMeasureFeature measure : measures) {
+      final FeatureMember feature = writer.cimlkMeasuresToFeatures(Collections.singletonList(measure)).get(0);
 
       setGMLFeatureOnObject(writer, feature, gml -> gmlPerMeasure.put(measure, gml));
     }
@@ -164,16 +164,16 @@ public class GMLWriter {
   }
 
   /**
-   * Sets the GML representation (String) on each {@link NSLCorrection} object.
+   * Sets the GML representation (String) on each {@link CIMLKCorrection} object.
    *
-   * @param corrections List of NSL corrections
+   * @param corrections List of CIMLK corrections
    * @throws AeriusException When exception occurred generating the GML.
    */
-  public Map<NSLCorrection, String> getGmlByNslCorrections(final List<NSLCorrection> corrections) throws AeriusException {
-    final Map<NSLCorrection, String> gmlPerCorrection = new HashMap<>();
+  public Map<CIMLKCorrection, String> getGmlByCimlkCorrections(final List<CIMLKCorrection> corrections) throws AeriusException {
+    final Map<CIMLKCorrection, String> gmlPerCorrection = new HashMap<>();
     final InternalGMLWriter writer = createInternalWriter();
-    for (final NSLCorrection correction : corrections) {
-      final Object jaxbObject = writer.nslCorrectionsToGmlObjects(Collections.singletonList(correction)).get(0);
+    for (final CIMLKCorrection correction : corrections) {
+      final Object jaxbObject = writer.cimlkCorrectionsToGmlObjects(Collections.singletonList(correction)).get(0);
 
       setGMLFeatureOnObject(writer, jaxbObject, gml -> gmlPerCorrection.put(correction, gml));
     }

@@ -20,9 +20,9 @@ import java.util.List;
 import java.util.Optional;
 
 import nl.overheid.aerius.shared.domain.v2.building.BuildingFeature;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLCorrection;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLDispersionLineFeature;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLMeasureFeature;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKCorrection;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKDispersionLineFeature;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKMeasureFeature;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPointFeature;
 import nl.overheid.aerius.shared.domain.v2.scenario.Definitions;
 import nl.overheid.aerius.shared.domain.v2.scenario.ScenarioMetaData;
@@ -44,11 +44,11 @@ public interface IsScenario {
 
   List<CalculationPointFeature> getCalculationPoints();
 
-  List<NSLDispersionLineFeature> getNslDispersionLines();
+  List<CIMLKDispersionLineFeature> getCimlkDispersionLines();
 
-  List<NSLMeasureFeature> getNslMeasures();
+  List<CIMLKMeasureFeature> getCimlkMeasures();
 
-  List<NSLCorrection> getNslCorrections();
+  List<CIMLKCorrection> getCimlkCorrections();
 
   Optional<ScenarioMetaData> getProjectMetaData();
 

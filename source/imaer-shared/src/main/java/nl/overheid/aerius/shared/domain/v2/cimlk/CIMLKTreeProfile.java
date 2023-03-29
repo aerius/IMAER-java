@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.shared.domain.v2.nsl;
+package nl.overheid.aerius.shared.domain.v2.cimlk;
 
-public enum NSLTreeProfile {
+public enum CIMLKTreeProfile {
 
   /**
    * Hier en daar bomen of in het geheel niet.
@@ -36,7 +36,7 @@ public enum NSLTreeProfile {
   private final double factor;
   private final int fakeId;
 
-  NSLTreeProfile(final double factor, final int fakeId) {
+  CIMLKTreeProfile(final double factor, final int fakeId) {
     this.factor = factor;
     this.fakeId = fakeId;
   }
@@ -45,10 +45,10 @@ public enum NSLTreeProfile {
     return factor;
   }
 
-  public static NSLTreeProfile legacySafeValueOf(final double value) {
-    NSLTreeProfile result = null;
+  public static CIMLKTreeProfile legacySafeValueOf(final double value) {
+    CIMLKTreeProfile result = null;
     final int treeFactorInt = (int) (value * 100);
-    for (final NSLTreeProfile treeProfile : values()) {
+    for (final CIMLKTreeProfile treeProfile : values()) {
       if (treeFactorInt == treeProfile.fakeId) {
         result = treeProfile;
         break;

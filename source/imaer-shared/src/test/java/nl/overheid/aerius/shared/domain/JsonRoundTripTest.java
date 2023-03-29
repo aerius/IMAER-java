@@ -33,7 +33,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import nl.overheid.aerius.shared.domain.v2.geojson.FeatureCollection;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLDispersionLineFeature;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKDispersionLineFeature;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPointFeature;
 import nl.overheid.aerius.shared.domain.v2.scenario.ScenarioSituation;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceFeature;
@@ -109,7 +109,7 @@ class JsonRoundTripTest {
   @ParameterizedTest
   @ValueSource(strings = {
       "ScenarioSituationSourcesOnly.json",
-      "ScenarioSituationNSL.json",
+      "ScenarioSituationCIMLK.json",
       "ScenarioSituationMooringShipping.json"
   })
   void testConvertSituation(final String fileName) throws IOException {
@@ -135,11 +135,11 @@ class JsonRoundTripTest {
 
   @ParameterizedTest(name = "{0}")
   @ValueSource(strings = {
-      "NSLDispersionLine.json",
+      "CIMLKDispersionLine.json",
   })
-  void testConvertNSLDispersionLine(final String fileName) throws IOException {
+  void testConvertCIMLKDispersionLine(final String fileName) throws IOException {
     final String originalJson = getFileContent(fileName);
-    final NSLDispersionLineFeature source = mapper.readValue(originalJson, NSLDispersionLineFeature.class);
+    final CIMLKDispersionLineFeature source = mapper.readValue(originalJson, CIMLKDispersionLineFeature.class);
     final String convertedBack = mapper.writeValueAsString(source);
     assertEquals(originalJson, convertedBack + System.lineSeparator(), "Original should be same as converted");
   }

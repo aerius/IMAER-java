@@ -23,14 +23,14 @@ import nl.overheid.aerius.gml.base.FeatureMember;
 import nl.overheid.aerius.gml.base.GMLConversionData;
 import nl.overheid.aerius.gml.base.GMLVersionReader;
 import nl.overheid.aerius.gml.base.characteristics.GML2OPSSourceCharacteristics;
-import nl.overheid.aerius.gml.base.measure.v40.GML2NSLMeasure;
-import nl.overheid.aerius.gml.base.result.GML2NSLCorrection;
+import nl.overheid.aerius.gml.base.measure.v40.GML2CIMLKMeasure;
+import nl.overheid.aerius.gml.base.result.GML2CIMLKCorrection;
 import nl.overheid.aerius.gml.base.result.GML2Result;
-import nl.overheid.aerius.gml.base.source.road.GML2NSLDispersionLine;
+import nl.overheid.aerius.gml.base.source.road.GML2CIMLKDispersionLine;
 import nl.overheid.aerius.gml.v3_0.result.AbstractCalculationPoint;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLCorrection;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLDispersionLineFeature;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLMeasureFeature;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKCorrection;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKDispersionLineFeature;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKMeasureFeature;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPointFeature;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceFeature;
 
@@ -41,16 +41,16 @@ public class GMLReader implements GMLVersionReader {
 
   private final GML2Source gml2Source;
   private final GML2Result gml2Result;
-  private final GML2NSLMeasure gml2NSLMeasure;
-  private final GML2NSLDispersionLine gml2NSLDispersionLine;
-  private final GML2NSLCorrection gml2NSLCorrection;
+  private final GML2CIMLKMeasure gml2CIMLKMeasure;
+  private final GML2CIMLKDispersionLine gml2CIMLKDispersionLine;
+  private final GML2CIMLKCorrection gml2CIMLKCorrection;
 
   public GMLReader(final GMLConversionData conversionData, final GML2OPSSourceCharacteristics gml2SourceCharacteristics) {
     gml2Source = new GML2Source(conversionData, gml2SourceCharacteristics);
     gml2Result = new GML2Result(conversionData);
-    gml2NSLMeasure = new GML2NSLMeasure(conversionData);
-    gml2NSLDispersionLine = new GML2NSLDispersionLine();
-    gml2NSLCorrection = new GML2NSLCorrection();
+    gml2CIMLKMeasure = new GML2CIMLKMeasure(conversionData);
+    gml2CIMLKDispersionLine = new GML2CIMLKDispersionLine();
+    gml2CIMLKCorrection = new GML2CIMLKCorrection();
   }
 
   @Override
@@ -64,21 +64,21 @@ public class GMLReader implements GMLVersionReader {
   }
 
   @Override
-  public List<NSLMeasureFeature> nslMeasuresFromGML(final List<FeatureMember> members) {
-    return gml2NSLMeasure.fromGML(members);
+  public List<CIMLKMeasureFeature> cimlkMeasuresFromGML(final List<FeatureMember> members) {
+    return gml2CIMLKMeasure.fromGML(members);
   }
 
   @Override
-  public List<NSLDispersionLineFeature> nslDispersionLinesFromGML(final List<FeatureMember> members) {
-    return gml2NSLDispersionLine.fromGML(members);
+  public List<CIMLKDispersionLineFeature> cimlkDispersionLinesFromGML(final List<FeatureMember> members) {
+    return gml2CIMLKDispersionLine.fromGML(members);
   }
 
   @Override
-  public List<NSLCorrection> nslCorrectionsFromGML(final List<FeatureMember> members) {
+  public List<CIMLKCorrection> cimlkCorrectionsFromGML(final List<FeatureMember> members) {
     return members.stream()
         .filter(AbstractCalculationPoint.class::isInstance)
         .map(AbstractCalculationPoint.class::cast)
-        .map(gml2NSLCorrection::fromGML)
+        .map(gml2CIMLKCorrection::fromGML)
         .flatMap(List::stream)
         .collect(Collectors.toList());
   }

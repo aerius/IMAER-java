@@ -36,17 +36,17 @@ public enum ImportOption {
    */
   INCLUDE_SOURCES,
   /**
-   * If set, nsl measures will be imported from GML files. If not set, nsl measures will be ignored.
+   * If set, cimlk measures will be imported from GML files. If not set, cimlk measures will be ignored.
    */
-  INCLUDE_NSL_MEASURES,
+  INCLUDE_CIMLK_MEASURES,
   /**
-   * If set, nsl dispersion lines will be imported from GML files. If not set, nsl dispersion lines will be ignored.
+   * If set, cimlk dispersion lines will be imported from GML files. If not set, cimlk dispersion lines will be ignored.
    */
-  INCLUDE_NSL_DISPERSION_LINES,
+  INCLUDE_CIMLK_DISPERSION_LINES,
   /**
-   * If set, nsl corrections will be imported from GML files. If not set, nsl corrections will be ignored.
+   * If set, cimlk corrections will be imported from GML files. If not set, cimlk corrections will be ignored.
    */
-  INCLUDE_NSL_CORRECTIONS,
+  INCLUDE_CIMLK_CORRECTIONS,
   /**
   * If set, input will be persisted in the database.
   */
@@ -104,7 +104,7 @@ public enum ImportOption {
 
   private static final EnumSet<ImportOption> DEFAULT_IMPORT_OPTIONS = EnumSet.of(
       INCLUDE_CALCULATION_POINTS, INCLUDE_SOURCES,
-      INCLUDE_NSL_MEASURES, INCLUDE_NSL_DISPERSION_LINES, INCLUDE_NSL_CORRECTIONS,
+      INCLUDE_CIMLK_MEASURES, INCLUDE_CIMLK_DISPERSION_LINES, INCLUDE_CIMLK_CORRECTIONS,
       USE_VALID_SECTORS, VALIDATE_AGAINST_SCHEMA, VALIDATE_SOURCES);
 
   /**

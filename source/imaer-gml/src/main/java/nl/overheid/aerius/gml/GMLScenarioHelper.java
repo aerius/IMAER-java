@@ -77,9 +77,9 @@ public final class GMLScenarioHelper {
         .sources(situation.getSources().getFeatures())
         .buildings(situation.getBuildingsList())
         .calculationPoints(receptorPoints)
-        .nslDispersionLines(situation.getNslDispersionLinesList())
-        .nslCorrections(situation.getNslCorrections())
-        .nslMeasures(situation.getNslMeasuresList())
+        .cimlkDispersionLines(situation.getCimlkDispersionLinesList())
+        .cimlkCorrections(situation.getCimlkCorrections())
+        .cimlkMeasures(situation.getCimlkMeasuresList())
         .definitions(situation.getDefinitions())
         .build();
   }

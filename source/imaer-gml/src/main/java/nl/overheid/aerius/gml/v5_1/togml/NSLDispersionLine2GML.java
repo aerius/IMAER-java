@@ -19,8 +19,8 @@ package nl.overheid.aerius.gml.v5_1.togml;
 import nl.overheid.aerius.gml.base.geo.Geometry2GML;
 import nl.overheid.aerius.gml.v5_1.geo.LineString;
 import nl.overheid.aerius.gml.v5_1.source.road.SRM1RoadDispersionLine;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLDispersionLine;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLDispersionLineFeature;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKDispersionLine;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKDispersionLineFeature;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.util.gml.GMLIdUtil;
 
@@ -41,9 +41,9 @@ final class NSLDispersionLine2GML {
    * @return the GML object representing the NSLDispersionLine.
    * @throws AeriusException when the objects could not be converted to GML correctly.
    */
-  public SRM1RoadDispersionLine toGML(final NSLDispersionLineFeature dispersionLineFeature) throws AeriusException {
+  public SRM1RoadDispersionLine toGML(final CIMLKDispersionLineFeature dispersionLineFeature) throws AeriusException {
     final SRM1RoadDispersionLine gmlDispersionLine = new SRM1RoadDispersionLine();
-    final NSLDispersionLine dispersionLine = dispersionLineFeature.getProperties();
+    final CIMLKDispersionLine dispersionLine = dispersionLineFeature.getProperties();
     final String calculationPointId = GMLIdUtil.toValidGmlId(dispersionLine.getCalculationPointGmlId(), GMLIdUtil.POINT_PREFIX);
     final String roadId = GMLIdUtil.toValidGmlId(dispersionLine.getRoadGmlId(), GMLIdUtil.SOURCE_PREFIX);
     final String id = "DL." + calculationPointId + "." + roadId;

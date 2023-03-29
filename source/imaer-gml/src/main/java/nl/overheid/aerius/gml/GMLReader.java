@@ -29,9 +29,9 @@ import nl.overheid.aerius.shared.domain.Theme;
 import nl.overheid.aerius.shared.domain.calculation.CalculationSetOptions;
 import nl.overheid.aerius.shared.domain.scenario.SituationType;
 import nl.overheid.aerius.shared.domain.v2.building.BuildingFeature;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLCorrection;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLDispersionLineFeature;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLMeasureFeature;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKCorrection;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKDispersionLineFeature;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKMeasureFeature;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPointFeature;
 import nl.overheid.aerius.shared.domain.v2.scenario.Definitions;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceFeature;
@@ -156,37 +156,37 @@ public final class GMLReader {
   }
 
   /**
-   * Retrieve all NSL Measure (domain objects) from the feature collection.
-   * @return List of all NSL measures defined in the GML
+   * Retrieve all CIMLK Measure (domain objects) from the feature collection.
+   * @return List of all CIMLK measures defined in the GML
    */
-  public List<NSLMeasureFeature> getNSLMeasures() {
-    List<NSLMeasureFeature> measures = new ArrayList<>();
+  public List<CIMLKMeasureFeature> getCIMLKMeasures() {
+    List<CIMLKMeasureFeature> measures = new ArrayList<>();
     if ((featureCollection != null) && (featureCollection.getFeatureMembers() != null)) {
-      measures = versionReader.nslMeasuresFromGML(featureCollection.getFeatureMembers());
+      measures = versionReader.cimlkMeasuresFromGML(featureCollection.getFeatureMembers());
     }
     return measures;
   }
 
   /**
-   * Retrieve all NSL Dispersion Lines (domain objects) from the feature collection.
-   * @return List of all NSL dispersion lines defined in the GML
+   * Retrieve all CIMLK Dispersion Lines (domain objects) from the feature collection.
+   * @return List of all CIMLK dispersion lines defined in the GML
    */
-  public List<NSLDispersionLineFeature> getNSLDispersionLines() {
-    List<NSLDispersionLineFeature> dispersionLines = new ArrayList<>();
+  public List<CIMLKDispersionLineFeature> getCIMLKDispersionLines() {
+    List<CIMLKDispersionLineFeature> dispersionLines = new ArrayList<>();
     if ((featureCollection != null) && (featureCollection.getFeatureMembers() != null)) {
-      dispersionLines = versionReader.nslDispersionLinesFromGML(featureCollection.getFeatureMembers());
+      dispersionLines = versionReader.cimlkDispersionLinesFromGML(featureCollection.getFeatureMembers());
     }
     return dispersionLines;
   }
 
   /**
-   * Retrieve all NSL Corrections (domain objects) from the feature collection.
-   * @return List of all NSL corrections defined in the GML
+   * Retrieve all CIMLK Corrections (domain objects) from the feature collection.
+   * @return List of all CIMLK corrections defined in the GML
    */
-  public List<NSLCorrection> getNSLCorrections() {
-    List<NSLCorrection> corrections = new ArrayList<>();
+  public List<CIMLKCorrection> getCIMLKCorrections() {
+    List<CIMLKCorrection> corrections = new ArrayList<>();
     if ((featureCollection != null) && (featureCollection.getFeatureMembers() != null)) {
-      corrections = versionReader.nslCorrectionsFromGML(featureCollection.getFeatureMembers());
+      corrections = versionReader.cimlkCorrectionsFromGML(featureCollection.getFeatureMembers());
     }
     return corrections;
   }
@@ -206,7 +206,7 @@ public final class GMLReader {
 
   /**
    * Retrieve all Definitions (domain object) from the feature collection.
-   * @return List of all NSL corrections defined in the GML
+   * @return List of all definitions defined in the GML
    */
   public Definitions getDefinitions() {
     Definitions definitions = new Definitions();
