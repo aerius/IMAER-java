@@ -96,6 +96,30 @@
                             <imaer:value>1.0</imaer:value>
                         </imaer:CalculationOption>
                     </imaer:option>
+                    <imaer:option>
+                        <imaer:CalculationOption>
+                            <imaer:key>adms_plume_depletion_nh3</imaer:key>
+                            <imaer:value>true</imaer:value>
+                        </imaer:CalculationOption>
+                    </imaer:option>
+                    <imaer:option>
+                        <imaer:CalculationOption>
+                            <imaer:key>adms_plume_depletion_nox</imaer:key>
+                            <imaer:value>true</imaer:value>
+                        </imaer:CalculationOption>
+                    </imaer:option>
+                    <imaer:option>
+                        <imaer:CalculationOption>
+                            <imaer:key>adms_spatially_varying_roughness</imaer:key>
+                            <imaer:value>true</imaer:value>
+                        </imaer:CalculationOption>
+                    </imaer:option>
+                    <imaer:option>
+                        <imaer:CalculationOption>
+                            <imaer:key>adms_complex_terrain</imaer:key>
+                            <imaer:value>true</imaer:value>
+                        </imaer:CalculationOption>
+                    </imaer:option>
                 </imaer:CalculationMetadata>
             </imaer:calculation>
             <imaer:version>

@@ -30,6 +30,7 @@ import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import nl.overheid.aerius.gml.base.FeatureCollection;
@@ -38,9 +39,11 @@ import nl.overheid.aerius.gml.base.IsCalculationOption;
 import nl.overheid.aerius.gml.base.IsGmlProperty;
 import nl.overheid.aerius.gml.base.MetaData;
 import nl.overheid.aerius.shared.domain.Theme;
+import nl.overheid.aerius.shared.domain.calculation.ADMSOptions;
 import nl.overheid.aerius.shared.domain.calculation.CalculationJobType;
 import nl.overheid.aerius.shared.domain.calculation.CalculationMethod;
 import nl.overheid.aerius.shared.domain.calculation.CalculationSetOptions;
+import nl.overheid.aerius.shared.domain.calculation.NCACalculationOptions;
 import nl.overheid.aerius.shared.domain.v2.characteristics.adms.ADMSLimits;
 
 /**
@@ -169,8 +172,12 @@ class GMLCalculationSetOptionsReaderTest {
     assertEquals("somewhere else", options.getNcaCalculationOptions().getPermitArea(), "PermitArea");
   }
 
-  @Test
-  void testReadCalculationSetOptions() {
+  /**
+   * @param spatiallyVaryingRoughness Test spatiallyVaryingRoughness. if null it should be true, else follow boolean value
+   */
+  @ParameterizedTest
+  @CsvSource("null,TRUE,FALSE")
+  void testNCAReadCalculationSetOptions(final Boolean spatiallyVaryingRoughness) {
     final FeatureCollection featureCollection = mock(FeatureCollection.class);
     final MetaData metaData = mock(MetaData.class);
     final IsCalculationMetaData calculationMetaData = mock(IsCalculationMetaData.class);
@@ -193,6 +200,9 @@ class GMLCalculationSetOptionsReaderTest {
     suppliedOptions.add(mockCalculationOption("adms_met_site_priestley_taylor_parameter", "6.4"));
     suppliedOptions.add(mockCalculationOption("adms_plume_depletion_nh3", "true"));
     suppliedOptions.add(mockCalculationOption("adms_plume_depletion_nox", "true"));
+    if (spatiallyVaryingRoughness != null) {
+      suppliedOptions.add(mockCalculationOption("adms_spatially_varying_roughness", spatiallyVaryingRoughness.toString()));
+    }
     suppliedOptions.add(mockCalculationOption("adms_complex_terrain", "true"));
     when(calculationMetaData.getOptions()).thenAnswer(a -> suppliedOptions);
     when(calculationMetaData.getMaximumRange()).thenReturn(40.0);
@@ -203,20 +213,24 @@ class GMLCalculationSetOptionsReaderTest {
     assertNotNull(options, "returned options shouldn't be null");
     assertEquals(CalculationMethod.FORMAL_ASSESSMENT, options.getCalculationMethod(), "Calculation method should match");
     assertEquals(CalculationJobType.MAX_TEMPORARY_EFFECT, options.getCalculationJobType(), "Calculation job type should match");
-    assertEquals("somewhere", options.getNcaCalculationOptions().getPermitArea(), "PermitArea");
-    assertEquals("some meteo loc", options.getNcaCalculationOptions().getMeteoSiteLocation(), "MeteoSiteLocation");
-    assertEquals(List.of("2040", "2042"), options.getNcaCalculationOptions().getMeteoYears(), "MeteoYears");
-    assertEquals(3.4, options.getNcaCalculationOptions().getAdmsOptions().getMinMoninObukhovLength(), "MinMoninObukhovLength");
-    assertEquals(4.5, options.getNcaCalculationOptions().getAdmsOptions().getSurfaceAlbedo(), "SurfaceAlbedo");
-    assertEquals(5.6, options.getNcaCalculationOptions().getAdmsOptions().getPriestleyTaylorParameter(), "PriestleyTaylorParameter");
-    assertEquals(939, options.getNcaCalculationOptions().getAdmsOptions().getMetSiteId(), "MetSiteId");
-    assertEquals(3.1, options.getNcaCalculationOptions().getAdmsOptions().getMsRoughness(), "MsRoughness");
-    assertEquals(4.2, options.getNcaCalculationOptions().getAdmsOptions().getMsMinMoninObukhovLength(), "MsMinMoninObukhovLength");
-    assertEquals(5.3, options.getNcaCalculationOptions().getAdmsOptions().getMsSurfaceAlbedo(), "MsSurfaceAlbedo");
-    assertEquals(6.4, options.getNcaCalculationOptions().getAdmsOptions().getMsPriestleyTaylorParameter(), "MsPriestleyTaylorParameter");
-    assertEquals(true, options.getNcaCalculationOptions().getAdmsOptions().isPlumeDepletionNH3(), "PlumeDepletionNH3");
-    assertEquals(true, options.getNcaCalculationOptions().getAdmsOptions().isPlumeDepletionNOX(), "PlumeDepletionNOX");
-    assertEquals(true, options.getNcaCalculationOptions().getAdmsOptions().isComplexTerrain(), "ComplexTerrain");
+    final NCACalculationOptions ncaOptions = options.getNcaCalculationOptions();
+    assertEquals("somewhere", ncaOptions.getPermitArea(), "PermitArea");
+    assertEquals("some meteo loc", ncaOptions.getMeteoSiteLocation(), "MeteoSiteLocation");
+    assertEquals(List.of("2040", "2042"), ncaOptions.getMeteoYears(), "MeteoYears");
+    final ADMSOptions admsOptions = ncaOptions.getAdmsOptions();
+    assertEquals(3.4, admsOptions.getMinMoninObukhovLength(), "MinMoninObukhovLength");
+    assertEquals(4.5, admsOptions.getSurfaceAlbedo(), "SurfaceAlbedo");
+    assertEquals(5.6, admsOptions.getPriestleyTaylorParameter(), "PriestleyTaylorParameter");
+    assertEquals(939, admsOptions.getMetSiteId(), "MetSiteId");
+    assertEquals(3.1, admsOptions.getMsRoughness(), "MsRoughness");
+    assertEquals(4.2, admsOptions.getMsMinMoninObukhovLength(), "MsMinMoninObukhovLength");
+    assertEquals(5.3, admsOptions.getMsSurfaceAlbedo(), "MsSurfaceAlbedo");
+    assertEquals(6.4, admsOptions.getMsPriestleyTaylorParameter(), "MsPriestleyTaylorParameter");
+    assertEquals(true, admsOptions.isPlumeDepletionNH3(), "PlumeDepletionNH3");
+    assertEquals(true, admsOptions.isPlumeDepletionNOX(), "PlumeDepletionNOX");
+    assertEquals(spatiallyVaryingRoughness == null || spatiallyVaryingRoughness, admsOptions.isSpatiallyVaryingRoughness(),
+        "SpatiallyVaryingRoughness");
+    assertEquals(true, admsOptions.isComplexTerrain(), "ComplexTerrain");
 
     assertEquals(40.0, options.getCalculateMaximumRange(), "Maximum range read");
   }
@@ -239,22 +253,25 @@ class GMLCalculationSetOptionsReaderTest {
     assertNotNull(options, "returned options shouldn't be null");
     assertEquals(CalculationMethod.FORMAL_ASSESSMENT, options.getCalculationMethod(), "Calculation type should match");
     assertNull(options.getCalculationJobType(), "CalculationJobType");
-    assertNull(options.getNcaCalculationOptions().getPermitArea(), "PermitArea");
-    assertNull(options.getNcaCalculationOptions().getMeteoSiteLocation(), "MeteoSiteLocation");
-    assertEquals(List.of(), options.getNcaCalculationOptions().getMeteoYears(), "MeteoYears");
-    assertEquals(ADMSLimits.MIN_MONIN_OBUKHOV_LENGTH_DEFAULT, options.getNcaCalculationOptions().getAdmsOptions().getMinMoninObukhovLength(),
+    final NCACalculationOptions ncaOptions = options.getNcaCalculationOptions();
+    assertNull(ncaOptions.getPermitArea(), "PermitArea");
+    assertNull(ncaOptions.getMeteoSiteLocation(), "MeteoSiteLocation");
+    assertEquals(List.of(), ncaOptions.getMeteoYears(), "MeteoYears");
+    final ADMSOptions admsOptions = ncaOptions.getAdmsOptions();
+    assertEquals(ADMSLimits.MIN_MONIN_OBUKHOV_LENGTH_DEFAULT, admsOptions.getMinMoninObukhovLength(),
         "MinMoninObukhovLength");
-    assertEquals(ADMSLimits.SURFACE_ALBEDO_DEFAULT, options.getNcaCalculationOptions().getAdmsOptions().getSurfaceAlbedo(), "SurfaceAlbedo");
-    assertEquals(ADMSLimits.PRIESTLEY_TAYLOR_PARAMETER_DEFAULT, options.getNcaCalculationOptions().getAdmsOptions().getPriestleyTaylorParameter(),
+    assertEquals(ADMSLimits.SURFACE_ALBEDO_DEFAULT, admsOptions.getSurfaceAlbedo(), "SurfaceAlbedo");
+    assertEquals(ADMSLimits.PRIESTLEY_TAYLOR_PARAMETER_DEFAULT, admsOptions.getPriestleyTaylorParameter(),
         "PriestleyTaylorParameter");
-    assertEquals(0, options.getNcaCalculationOptions().getAdmsOptions().getMetSiteId(), "MetSiteId");
-    assertEquals(0.0, options.getNcaCalculationOptions().getAdmsOptions().getMsRoughness(), "MsRoughness");
-    assertEquals(0.0, options.getNcaCalculationOptions().getAdmsOptions().getMsMinMoninObukhovLength(), "MsMinMoninObukhovLength");
-    assertEquals(0.0, options.getNcaCalculationOptions().getAdmsOptions().getMsSurfaceAlbedo(), "MsSurfaceAlbedo");
-    assertEquals(0.0, options.getNcaCalculationOptions().getAdmsOptions().getMsPriestleyTaylorParameter(), "MsPriestleyTaylorParameter");
-    assertEquals(false, options.getNcaCalculationOptions().getAdmsOptions().isPlumeDepletionNH3(), "PlumeDepletionNH3");
-    assertEquals(false, options.getNcaCalculationOptions().getAdmsOptions().isPlumeDepletionNOX(), "PlumeDepletionNOX");
-    assertEquals(false, options.getNcaCalculationOptions().getAdmsOptions().isComplexTerrain(), "ComplexTerrain");
+    assertEquals(0, admsOptions.getMetSiteId(), "MetSiteId");
+    assertEquals(0.0, admsOptions.getMsRoughness(), "MsRoughness");
+    assertEquals(0.0, admsOptions.getMsMinMoninObukhovLength(), "MsMinMoninObukhovLength");
+    assertEquals(0.0, admsOptions.getMsSurfaceAlbedo(), "MsSurfaceAlbedo");
+    assertEquals(0.0, admsOptions.getMsPriestleyTaylorParameter(), "MsPriestleyTaylorParameter");
+    assertEquals(false, admsOptions.isPlumeDepletionNH3(), "PlumeDepletionNH3");
+    assertEquals(false, admsOptions.isPlumeDepletionNOX(), "PlumeDepletionNOX");
+    assertEquals(true, admsOptions.isSpatiallyVaryingRoughness(), "SpatiallyVaryingRoughness");
+    assertEquals(false, admsOptions.isComplexTerrain(), "ComplexTerrain");
 
     assertEquals(0.0, options.getCalculateMaximumRange(), "Maximum range read");
   }
@@ -282,6 +299,7 @@ class GMLCalculationSetOptionsReaderTest {
     suppliedOptions.add(mockCalculationOption("adms_met_site_priestley_taylor_parameter", "6.4"));
     suppliedOptions.add(mockCalculationOption("adms_plume_depletion_nh3", "true"));
     suppliedOptions.add(mockCalculationOption("adms_plume_depletion_nox", "true"));
+    suppliedOptions.add(mockCalculationOption("adms_spatially_varying_roughness", "true"));
     suppliedOptions.add(mockCalculationOption("adms_complex_terrain", "true"));
     when(calculationMetaData.getOptions()).thenAnswer(a -> suppliedOptions);
     when(calculationMetaData.getMaximumRange()).thenReturn(40.0);
@@ -291,20 +309,23 @@ class GMLCalculationSetOptionsReaderTest {
     final CalculationSetOptions options = reader.readCalculationSetOptions(Theme.WNB);
     assertNotNull(options, "returned options shouldn't be null");
     assertEquals(CalculationMethod.FORMAL_ASSESSMENT, options.getCalculationMethod(), "Calculation type should match");
-    assertNull(options.getNcaCalculationOptions().getPermitArea(), "PermitArea");
-    assertNull(options.getNcaCalculationOptions().getMeteoSiteLocation(), "MeteoSiteLocation");
-    assertEquals(List.of(), options.getNcaCalculationOptions().getMeteoYears(), "MeteoYears");
-    assertEquals(0.0, options.getNcaCalculationOptions().getAdmsOptions().getMinMoninObukhovLength(), "MinMoninObukhovLength");
-    assertEquals(0.0, options.getNcaCalculationOptions().getAdmsOptions().getSurfaceAlbedo(), "SurfaceAlbedo");
-    assertEquals(0.0, options.getNcaCalculationOptions().getAdmsOptions().getPriestleyTaylorParameter(), "PriestleyTaylorParameter");
-    assertEquals(0, options.getNcaCalculationOptions().getAdmsOptions().getMetSiteId(), "MetSiteId");
-    assertEquals(0.0, options.getNcaCalculationOptions().getAdmsOptions().getMsRoughness(), "MsRoughness");
-    assertEquals(0.0, options.getNcaCalculationOptions().getAdmsOptions().getMsMinMoninObukhovLength(), "MsMinMoninObukhovLength");
-    assertEquals(0.0, options.getNcaCalculationOptions().getAdmsOptions().getMsSurfaceAlbedo(), "MsSurfaceAlbedo");
-    assertEquals(0.0, options.getNcaCalculationOptions().getAdmsOptions().getMsPriestleyTaylorParameter(), "MsPriestleyTaylorParameter");
-    assertEquals(false, options.getNcaCalculationOptions().getAdmsOptions().isPlumeDepletionNH3(), "PlumeDepletionNH3");
-    assertEquals(false, options.getNcaCalculationOptions().getAdmsOptions().isPlumeDepletionNOX(), "PlumeDepletionNOX");
-    assertEquals(false, options.getNcaCalculationOptions().getAdmsOptions().isComplexTerrain(), "ComplexTerrain");
+    final NCACalculationOptions ncaOptions = options.getNcaCalculationOptions();
+    assertNull(ncaOptions.getPermitArea(), "PermitArea");
+    assertNull(ncaOptions.getMeteoSiteLocation(), "MeteoSiteLocation");
+    assertEquals(List.of(), ncaOptions.getMeteoYears(), "MeteoYears");
+    final ADMSOptions admsOptions = ncaOptions.getAdmsOptions();
+    assertEquals(0.0, admsOptions.getMinMoninObukhovLength(), "MinMoninObukhovLength");
+    assertEquals(0.0, admsOptions.getSurfaceAlbedo(), "SurfaceAlbedo");
+    assertEquals(0.0, admsOptions.getPriestleyTaylorParameter(), "PriestleyTaylorParameter");
+    assertEquals(0, admsOptions.getMetSiteId(), "MetSiteId");
+    assertEquals(0.0, admsOptions.getMsRoughness(), "MsRoughness");
+    assertEquals(0.0, admsOptions.getMsMinMoninObukhovLength(), "MsMinMoninObukhovLength");
+    assertEquals(0.0, admsOptions.getMsSurfaceAlbedo(), "MsSurfaceAlbedo");
+    assertEquals(0.0, admsOptions.getMsPriestleyTaylorParameter(), "MsPriestleyTaylorParameter");
+    assertEquals(false, admsOptions.isPlumeDepletionNH3(), "PlumeDepletionNH3");
+    assertEquals(false, admsOptions.isPlumeDepletionNOX(), "PlumeDepletionNOX");
+    assertEquals(false, admsOptions.isSpatiallyVaryingRoughness(), "SpatiallyVaryingRoughness");
+    assertEquals(false, admsOptions.isComplexTerrain(), "ComplexTerrain");
 
     assertEquals(40.0, options.getCalculateMaximumRange(), "Maximum range read");
   }
@@ -322,6 +343,7 @@ class GMLCalculationSetOptionsReaderTest {
     suppliedOptions.add(mockCalculationOption("adms_meteo_years", "MySpecialYear"));
     suppliedOptions.add(mockCalculationOption("adms_plume_depletion_nh3", "maybe"));
     suppliedOptions.add(mockCalculationOption("adms_plume_depletion_nox", "maybe"));
+    suppliedOptions.add(mockCalculationOption("adms_spatially_varying_roughness", "maybe"));
     suppliedOptions.add(mockCalculationOption("adms_complex_terrain", "maybe"));
     when(calculationMetaData.getOptions()).thenAnswer(a -> suppliedOptions);
     when(calculationMetaData.getMaximumRange()).thenReturn(40.0);
@@ -330,10 +352,13 @@ class GMLCalculationSetOptionsReaderTest {
 
     final CalculationSetOptions options = reader.readCalculationSetOptions(Theme.NCA);
     assertNotNull(options, "returned options shouldn't be null");
-    assertEquals(List.of("MySpecialYear"), options.getNcaCalculationOptions().getMeteoYears(), "MeteoYears");
-    assertEquals(false, options.getNcaCalculationOptions().getAdmsOptions().isPlumeDepletionNH3(), "PlumeDepletionNH3");
-    assertEquals(false, options.getNcaCalculationOptions().getAdmsOptions().isPlumeDepletionNOX(), "PlumeDepletionNOX");
-    assertEquals(false, options.getNcaCalculationOptions().getAdmsOptions().isComplexTerrain(), "ComplexTerrain");
+    final NCACalculationOptions ncaOptions = options.getNcaCalculationOptions();
+    assertEquals(List.of("MySpecialYear"), ncaOptions.getMeteoYears(), "MeteoYears");
+    final ADMSOptions admsOptions = ncaOptions.getAdmsOptions();
+    assertEquals(false, admsOptions.isPlumeDepletionNH3(), "PlumeDepletionNH3");
+    assertEquals(false, admsOptions.isPlumeDepletionNOX(), "PlumeDepletionNOX");
+    assertEquals(false, admsOptions.isSpatiallyVaryingRoughness(), "SpatiallyVaryingRoughness");
+    assertEquals(false, admsOptions.isComplexTerrain(), "ComplexTerrain");
   }
 
   @ParameterizedTest

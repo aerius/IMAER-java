@@ -35,6 +35,7 @@ public class ADMSOptions implements Serializable {
   private double msPriestleyTaylorParameter;
   private boolean plumeDepletionNH3;
   private boolean plumeDepletionNOX;
+  private boolean spatiallyVaryingRoughness;
   private boolean complexTerrain;
 
   public double getMinMoninObukhovLength() {
@@ -73,7 +74,7 @@ public class ADMSOptions implements Serializable {
     return msRoughness;
   }
 
-  public void setMsRoughness(double msRoughness) {
+  public void setMsRoughness(final double msRoughness) {
     this.msRoughness = msRoughness;
   }
 
@@ -81,7 +82,7 @@ public class ADMSOptions implements Serializable {
     return msMinMoninObukhovLength;
   }
 
-  public void setMsMinMoninObukhovLength(double msMinMoninObukhovLength) {
+  public void setMsMinMoninObukhovLength(final double msMinMoninObukhovLength) {
     this.msMinMoninObukhovLength = msMinMoninObukhovLength;
   }
 
@@ -89,7 +90,7 @@ public class ADMSOptions implements Serializable {
     return msSurfaceAlbedo;
   }
 
-  public void setMsSurfaceAlbedo(double msSurfaceAlbedo) {
+  public void setMsSurfaceAlbedo(final double msSurfaceAlbedo) {
     this.msSurfaceAlbedo = msSurfaceAlbedo;
   }
 
@@ -97,8 +98,16 @@ public class ADMSOptions implements Serializable {
     return msPriestleyTaylorParameter;
   }
 
-  public void setMsPriestleyTaylorParameter(double msPriestleyTaylorParameter) {
+  public void setMsPriestleyTaylorParameter(final double msPriestleyTaylorParameter) {
     this.msPriestleyTaylorParameter = msPriestleyTaylorParameter;
+  }
+
+  public boolean isSpatiallyVaryingRoughness() {
+    return spatiallyVaryingRoughness;
+  }
+
+  public void setSpatiallyVaryingRoughness(final boolean spatiallyVaryingRoughness) {
+    this.spatiallyVaryingRoughness = spatiallyVaryingRoughness;
   }
 
   public boolean isComplexTerrain() {
@@ -128,8 +137,9 @@ public class ADMSOptions implements Serializable {
   @Override
   public String toString() {
     return "ADMSOptions [minMoninObukhovLength=" + minMoninObukhovLength + ", surfaceAlbedo=" + surfaceAlbedo + ", priestleyTaylorParameter="
-        + priestleyTaylorParameter + ", metSiteId=" + metSiteId + ", msRoughness=" + msRoughness + ", msMinMoninObukhovLength=" + msMinMoninObukhovLength
-        + ", msSurfaceAlbedo=" + msSurfaceAlbedo + ", msPriestleyTaylorParameter=" + msPriestleyTaylorParameter + ", plumeDepletionNH3="
-        + plumeDepletionNH3 + ", plumeDepletionNOX=" + plumeDepletionNOX + ", complexTerrain=" + complexTerrain + "]";
+        + priestleyTaylorParameter + ", metSiteId=" + metSiteId + ", msRoughness=" + msRoughness + ", msMinMoninObukhovLength="
+        + msMinMoninObukhovLength + ", msSurfaceAlbedo=" + msSurfaceAlbedo + ", msPriestleyTaylorParameter=" + msPriestleyTaylorParameter
+        + ", plumeDepletionNH3=" + plumeDepletionNH3 + ", plumeDepletionNOX=" + plumeDepletionNOX + ", spatiallyVaryingRoughness="
+        + spatiallyVaryingRoughness + ", complexTerrain=" + complexTerrain + "]";
   }
 }
