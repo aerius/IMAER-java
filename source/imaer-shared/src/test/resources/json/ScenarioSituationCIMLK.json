@@ -4,7 +4,7 @@
   "name" : "Voorbeeld situatie",
   "type" : "PROPOSED",
   "definitions" : { },
-  "nslMeasures" : {
+  "cimlkMeasures" : {
     "type" : "FeatureCollection",
     "features" : [ {
       "type" : "Feature",
@@ -40,7 +40,7 @@
       }
     } ]
   },
-  "nslCorrections" : [ {
+  "cimlkCorrections" : [ {
     "label" : "Leiden_WT",
     "jurisdictionId" : 546,
     "calculationPointGmlId" : "CP.15851291",
@@ -137,7 +137,7 @@
       }
     } ]
   },
-  "nslDispersionLines" : {
+  "cimlkDispersionLines" : {
     "type" : "FeatureCollection",
     "crs" : {
       "type" : "name",

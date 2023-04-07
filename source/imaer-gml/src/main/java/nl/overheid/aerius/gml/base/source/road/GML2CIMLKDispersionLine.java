@@ -20,16 +20,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import nl.overheid.aerius.gml.base.FeatureMember;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLDispersionLine;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLDispersionLineFeature;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKDispersionLine;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKDispersionLineFeature;
 
 /**
- * Utility class to convert from GML objects (specific for NSL dispersion lines).
+ * Utility class to convert from GML objects (specific for CIMLK dispersion lines).
  */
-public class GML2NSLDispersionLine {
+public class GML2CIMLKDispersionLine {
 
-  public List<NSLDispersionLineFeature> fromGML(final List<FeatureMember> members) {
-    final List<NSLDispersionLineFeature> dispersionLines = new ArrayList<>();
+  public List<CIMLKDispersionLineFeature> fromGML(final List<FeatureMember> members) {
+    final List<CIMLKDispersionLineFeature> dispersionLines = new ArrayList<>();
     for (final FeatureMember member : members) {
       if (member instanceof IsGmlSRM1RoadDispersionLine) {
         dispersionLines.add(fromGML((IsGmlSRM1RoadDispersionLine) member));
@@ -39,12 +39,12 @@ public class GML2NSLDispersionLine {
   }
 
   /**
-   * Convert GML road dispersion lines to NSLDispersionLine.
+   * Convert GML road dispersion lines to CIMLKDispersionLine.
    * @param gmlDispersionLine The GML-representation of a dispersion line.
-   * @return The NSL dispersion line.
+   * @return The CIMLK dispersion line.
    */
-  public NSLDispersionLineFeature fromGML(final IsGmlSRM1RoadDispersionLine gmlDispersionLine) {
-    final NSLDispersionLine dispersionLine = new NSLDispersionLine();
+  public CIMLKDispersionLineFeature fromGML(final IsGmlSRM1RoadDispersionLine gmlDispersionLine) {
+    final CIMLKDispersionLine dispersionLine = new CIMLKDispersionLine();
     dispersionLine.setDescription(gmlDispersionLine.getDescription());
     dispersionLine.setLabel(gmlDispersionLine.getLabel());
     dispersionLine.setJurisdictionId(gmlDispersionLine.getJurisdictionId());
@@ -57,7 +57,7 @@ public class GML2NSLDispersionLine {
     dispersionLine.setRoadGmlId(roadId);
     dispersionLine.setCalculationPointGmlId(calculationPointId);
 
-    final NSLDispersionLineFeature feature = new NSLDispersionLineFeature();
+    final CIMLKDispersionLineFeature feature = new CIMLKDispersionLineFeature();
     feature.setProperties(dispersionLine);
     return feature;
   }

@@ -20,19 +20,19 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import nl.overheid.aerius.gml.base.IsGmlProperty;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLCorrection;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKCorrection;
 
 /**
- * Utility class to convert from GML objects (specific for NSL corrections).
+ * Utility class to convert from GML objects (specific for CIMLK corrections).
  */
-public class GML2NSLCorrection {
+public class GML2CIMLKCorrection {
 
   /**
-   * Convert GML corrections linked to points to NSLCorrection.
+   * Convert GML corrections linked to points to CIMLKCorrection.
    * @param calculationPoint The GML-representation of a calculation point, which could have corrections.
-   * @return The NSL corrections linked to this point.
+   * @return The CIMLK corrections linked to this point.
    */
-  public List<NSLCorrection> fromGML(final IsGmlCalculationPoint calculationPoint) {
+  public List<CIMLKCorrection> fromGML(final IsGmlCalculationPoint calculationPoint) {
     final String calculationPointId = calculationPoint.getId();
     return calculationPoint.getCorrections().stream()
         .map(IsGmlProperty::getProperty)
@@ -40,8 +40,8 @@ public class GML2NSLCorrection {
         .collect(Collectors.toList());
   }
 
-  private NSLCorrection fromGML(final IsGmlCalculationPointCorrection gmlCorrection, final String calculationPointId) {
-    final NSLCorrection correction = new NSLCorrection();
+  private CIMLKCorrection fromGML(final IsGmlCalculationPointCorrection gmlCorrection, final String calculationPointId) {
+    final CIMLKCorrection correction = new CIMLKCorrection();
     correction.setDescription(gmlCorrection.getDescription());
     correction.setLabel(gmlCorrection.getLabel());
     correction.setJurisdictionId(gmlCorrection.getJurisdictionId());

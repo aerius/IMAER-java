@@ -21,9 +21,9 @@ import java.util.Collections;
 import java.util.List;
 
 import nl.overheid.aerius.shared.domain.v2.building.BuildingFeature;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLCorrection;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLDispersionLineFeature;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLMeasureFeature;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKCorrection;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKDispersionLineFeature;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKMeasureFeature;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPointFeature;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceFeature;
 
@@ -48,29 +48,29 @@ public interface GMLVersionReader {
   List<CalculationPointFeature> calculationPointsFromGML(List<FeatureMember> members, boolean includeResults);
 
   /**
-   * Get the {@link NSLMeasureFeature} objects from the GML data objects.
+   * Get the {@link CIMLKMeasureFeature} objects from the GML data objects.
    * @param members The GML data objects to convert.
-   * @return The list of NSLMeasure objects
+   * @return The list of CIMLKMeasure objects
    */
-  default List<NSLMeasureFeature> nslMeasuresFromGML(final List<FeatureMember> members) {
+  default List<CIMLKMeasureFeature> cimlkMeasuresFromGML(final List<FeatureMember> members) {
     return Collections.emptyList();
   }
 
   /**
-   * Get the {@link NSLDispersionLineFeature} objects from the GML data objects.
+   * Get the {@link CIMLKDispersionLineFeature} objects from the GML data objects.
    * @param members The GML data objects to convert.
-   * @return The list of NSLDispersionLine objects
+   * @return The list of CIMLKDispersionLine objects
    */
-  default List<NSLDispersionLineFeature> nslDispersionLinesFromGML(final List<FeatureMember> members) {
+  default List<CIMLKDispersionLineFeature> cimlkDispersionLinesFromGML(final List<FeatureMember> members) {
     return Collections.emptyList();
   }
 
   /**
-   * Get the {@link NSLCorrection} objects from the GML data objects.
+   * Get the {@link CIMLKCorrection} objects from the GML data objects.
    * @param members The GML data objects to convert.
-   * @return The list of NSLCorrection objects
+   * @return The list of CIMLKCorrection objects
    */
-  default List<NSLCorrection> nslCorrectionsFromGML(final List<FeatureMember> members) {
+  default List<CIMLKCorrection> cimlkCorrectionsFromGML(final List<FeatureMember> members) {
     return Collections.emptyList();
   }
 

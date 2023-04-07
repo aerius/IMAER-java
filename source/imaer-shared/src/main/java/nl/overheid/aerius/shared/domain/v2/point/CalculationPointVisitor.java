@@ -31,7 +31,7 @@ public interface CalculationPointVisitor<T> {
 
   T visit(NcaCustomCalculationPoint calculationPoint, IsFeature feature) throws AeriusException;
 
-  T visit(NSLCalculationPoint calculationPoint, IsFeature feature) throws AeriusException;
+  T visit(CIMLKCalculationPoint calculationPoint, IsFeature feature) throws AeriusException;
 
   T visit(SubPoint calculationPoint, IsFeature feature) throws AeriusException;
 

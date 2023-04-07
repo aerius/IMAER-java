@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.shared.domain.v2.nsl;
+package nl.overheid.aerius.shared.domain.v2.cimlk;
 
 import nl.overheid.aerius.shared.domain.v2.geojson.Feature;
-import nl.overheid.aerius.shared.domain.v2.geojson.Polygon;
+import nl.overheid.aerius.shared.domain.v2.geojson.LineString;
 
-public class NSLMeasureFeature extends Feature<NSLMeasure, Polygon> {
+public class CIMLKDispersionLineFeature extends Feature<CIMLKDispersionLine, LineString> {
 
   private static final long serialVersionUID = 1L;
 

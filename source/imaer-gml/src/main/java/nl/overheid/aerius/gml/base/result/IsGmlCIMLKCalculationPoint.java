@@ -14,10 +14,15 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.shared.domain.v2.nsl;
+package nl.overheid.aerius.gml.base.result;
 
-public enum NSLRejectionGrounds {
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKMonitorSubstance;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKRejectionGrounds;
 
-  NONE, COMPLIANCE_CRITERION, EXPOSURE_CRITERION, OTHER;
+public interface IsGmlCIMLKCalculationPoint extends IsGmlCalculationPoint {
+
+  CIMLKRejectionGrounds getRejectionGrounds();
+
+  CIMLKMonitorSubstance getMonitorSubstance();
 
 }

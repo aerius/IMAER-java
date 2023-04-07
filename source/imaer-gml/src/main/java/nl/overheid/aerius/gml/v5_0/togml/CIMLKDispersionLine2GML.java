@@ -14,36 +14,36 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.gml.v5_1.togml;
+package nl.overheid.aerius.gml.v5_0.togml;
 
 import nl.overheid.aerius.gml.base.geo.Geometry2GML;
-import nl.overheid.aerius.gml.v5_1.geo.LineString;
-import nl.overheid.aerius.gml.v5_1.source.road.SRM1RoadDispersionLine;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLDispersionLine;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLDispersionLineFeature;
+import nl.overheid.aerius.gml.v5_0.geo.LineString;
+import nl.overheid.aerius.gml.v5_0.source.road.SRM1RoadDispersionLine;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKDispersionLine;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKDispersionLineFeature;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.util.gml.GMLIdUtil;
 
 /**
  *
  */
-final class NSLDispersionLine2GML {
+final class CIMLKDispersionLine2GML {
 
   private final Geometry2GML geometry2gml;
 
-  public NSLDispersionLine2GML(final Geometry2GML geometry2gml) {
+  public CIMLKDispersionLine2GML(final Geometry2GML geometry2gml) {
     this.geometry2gml = geometry2gml;
   }
 
   /**
-   * Convert a NSLDispersionLine to a GML object.
+   * Convert a CIMLKDispersionLine to a GML object.
    * @param dispersionLine The dispersionLine to convert to a GML object.
-   * @return the GML object representing the NSLDispersionLine.
+   * @return the GML object representing the CIMLKDispersionLine.
    * @throws AeriusException when the objects could not be converted to GML correctly.
    */
-  public SRM1RoadDispersionLine toGML(final NSLDispersionLineFeature dispersionLineFeature) throws AeriusException {
+  public SRM1RoadDispersionLine toGML(final CIMLKDispersionLineFeature dispersionLineFeature) throws AeriusException {
     final SRM1RoadDispersionLine gmlDispersionLine = new SRM1RoadDispersionLine();
-    final NSLDispersionLine dispersionLine = dispersionLineFeature.getProperties();
+    final CIMLKDispersionLine dispersionLine = dispersionLineFeature.getProperties();
     final String calculationPointId = GMLIdUtil.toValidGmlId(dispersionLine.getCalculationPointGmlId(), GMLIdUtil.POINT_PREFIX);
     final String roadId = GMLIdUtil.toValidGmlId(dispersionLine.getRoadGmlId(), GMLIdUtil.SOURCE_PREFIX);
     final String id = "DL." + calculationPointId + "." + roadId;

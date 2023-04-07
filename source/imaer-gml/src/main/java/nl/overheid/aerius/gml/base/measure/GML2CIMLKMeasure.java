@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.gml.base.measure.v40;
+package nl.overheid.aerius.gml.base.measure;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,21 +27,20 @@ import nl.overheid.aerius.gml.base.FeatureMember;
 import nl.overheid.aerius.gml.base.GMLConversionData;
 import nl.overheid.aerius.gml.base.IsGmlProperty;
 import nl.overheid.aerius.gml.base.geo.GML2Geometry;
-import nl.overheid.aerius.gml.base.measure.IsGMLEmissionReduction;
 import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
 import nl.overheid.aerius.shared.domain.v2.geojson.Polygon;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLMeasure;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLMeasureFeature;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKMeasure;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKMeasureFeature;
 import nl.overheid.aerius.shared.domain.v2.source.road.StandardVehicleMeasure;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 
 /**
- * Utility class to convert from GML objects (specific for NSL measures).
+ * Utility class to convert from GML objects (specific for CIMLK measures).
  */
-public class GML2NSLMeasure {
+public class GML2CIMLKMeasure {
 
-  private static final Logger LOG = LoggerFactory.getLogger(GML2NSLMeasure.class);
+  private static final Logger LOG = LoggerFactory.getLogger(GML2CIMLKMeasure.class);
 
   private final GMLConversionData conversionData;
   private final GML2Geometry gml2geometry;
@@ -49,13 +48,13 @@ public class GML2NSLMeasure {
   /**
    * @param conversionData The data to use when converting. Should be filled.
    */
-  public GML2NSLMeasure(final GMLConversionData conversionData) {
+  public GML2CIMLKMeasure(final GMLConversionData conversionData) {
     this.conversionData = conversionData;
     this.gml2geometry = new GML2Geometry(conversionData.getSrid());
   }
 
-  public List<NSLMeasureFeature> fromGML(final List<FeatureMember> members) {
-    final List<NSLMeasureFeature> measures = new ArrayList<>();
+  public List<CIMLKMeasureFeature> fromGML(final List<FeatureMember> members) {
+    final List<CIMLKMeasureFeature> measures = new ArrayList<>();
     for (final FeatureMember member : members) {
       if (member instanceof IsGmlSRM1RoadMeasureArea) {
         try {
@@ -69,15 +68,15 @@ public class GML2NSLMeasure {
   }
 
   /**
-   * Convert GML road measure areas to NSLMeasure.
+   * Convert GML road measure areas to CIMLKMeasure.
    * @param gmlMeasure The GML-representation of a measure area.
-   * @return The NSL measure.
+   * @return The CIMLK measure.
    * @throws AeriusException When an exception occurs during parsing.
    */
-  public NSLMeasureFeature fromGML(final IsGmlSRM1RoadMeasureArea gmlMeasure) throws AeriusException {
-    final NSLMeasureFeature feature = new NSLMeasureFeature();
+  public CIMLKMeasureFeature fromGML(final IsGmlSRM1RoadMeasureArea gmlMeasure) throws AeriusException {
+    final CIMLKMeasureFeature feature = new CIMLKMeasureFeature();
     feature.setGeometry(toGeometry(gmlMeasure));
-    final NSLMeasure measure = new NSLMeasure();
+    final CIMLKMeasure measure = new CIMLKMeasure();
     measure.setGmlId(gmlMeasure.getId());
     measure.setDescription(gmlMeasure.getDescription());
     measure.setLabel(gmlMeasure.getLabel());
@@ -113,8 +112,8 @@ public class GML2NSLMeasure {
 
   private StandardVehicleMeasure fromGML(final IsGmlSRM1RoadMeasure measure) {
     final StandardVehicleMeasure vehicleMeasure = new StandardVehicleMeasure();
-    vehicleMeasure.setVehicleTypeCode(measure.getVehicleType().getStandardVehicleCode());
-    vehicleMeasure.setRoadTypeCode(measure.getSpeedProfile().getRoadTypeCode());
+    vehicleMeasure.setVehicleTypeCode(measure.getVehicleType());
+    vehicleMeasure.setRoadTypeCode(measure.getRoadType());
     measure.getReductions().stream()
         .map(IsGmlProperty::getProperty)
         .map(this::fromGML)

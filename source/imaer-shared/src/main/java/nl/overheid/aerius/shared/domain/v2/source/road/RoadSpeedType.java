@@ -17,7 +17,7 @@
 package nl.overheid.aerius.shared.domain.v2.source.road;
 
 /**
- * NSL road speed types.
+ * CIMLK road speed types.
  */
 public enum RoadSpeedType {
   /**

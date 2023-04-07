@@ -27,8 +27,8 @@ import org.junit.jupiter.api.Test;
 
 import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.v2.base.EmissionReduction;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLMeasure;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLMeasureFeature;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKMeasure;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKMeasureFeature;
 import nl.overheid.aerius.shared.domain.v2.source.road.StandardVehicleMeasure;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
@@ -36,16 +36,16 @@ import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 /**
  *
  */
-class NSLMeasureValidatorTest {
+class CIMLKMeasureValidatorTest {
 
   private static final String SOURCE_ID = "OurSourceId";
   private static final String MEASURE_LABEL = "Some kind of measure";
 
   @Test
   void testValidMeasure() {
-    final NSLMeasureFeature measureFeature = new NSLMeasureFeature();
+    final CIMLKMeasureFeature measureFeature = new CIMLKMeasureFeature();
 
-    final NSLMeasure measure = new NSLMeasure();
+    final CIMLKMeasure measure = new CIMLKMeasure();
     measure.setGmlId(SOURCE_ID);
     measure.setLabel(MEASURE_LABEL);
     final StandardVehicleMeasure standardMeasure = new StandardVehicleMeasure();
@@ -63,7 +63,7 @@ class NSLMeasureValidatorTest {
     final List<AeriusException> errors = new ArrayList<>();
     final List<AeriusException> warnings = new ArrayList<>();
 
-    NSLMeasureValidator.validateMeasures(List.of(measureFeature), errors, warnings);
+    CIMLKMeasureValidator.validateMeasures(List.of(measureFeature), errors, warnings);
 
     assertTrue(errors.isEmpty(), "No errors");
     assertTrue(warnings.isEmpty(), "No warnings");
@@ -71,9 +71,9 @@ class NSLMeasureValidatorTest {
 
   @Test
   void testNegativeFactor() {
-    final NSLMeasureFeature measureFeature = new NSLMeasureFeature();
+    final CIMLKMeasureFeature measureFeature = new CIMLKMeasureFeature();
 
-    final NSLMeasure measure = new NSLMeasure();
+    final CIMLKMeasure measure = new CIMLKMeasure();
     measure.setGmlId(SOURCE_ID);
     measure.setLabel(MEASURE_LABEL);
     final StandardVehicleMeasure standardMeasure = new StandardVehicleMeasure();
@@ -91,7 +91,7 @@ class NSLMeasureValidatorTest {
     final List<AeriusException> errors = new ArrayList<>();
     final List<AeriusException> warnings = new ArrayList<>();
 
-    NSLMeasureValidator.validateMeasures(List.of(measureFeature), errors, warnings);
+    CIMLKMeasureValidator.validateMeasures(List.of(measureFeature), errors, warnings);
 
     assertEquals(1, errors.size(), "Number of errors");
     assertTrue(warnings.isEmpty(), "No warnings");

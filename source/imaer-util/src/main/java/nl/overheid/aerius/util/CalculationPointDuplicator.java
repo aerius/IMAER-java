@@ -22,7 +22,7 @@ import nl.overheid.aerius.shared.domain.v2.point.CalculationPoint;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPointFeature;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPointVisitor;
 import nl.overheid.aerius.shared.domain.v2.point.CustomCalculationPoint;
-import nl.overheid.aerius.shared.domain.v2.point.NSLCalculationPoint;
+import nl.overheid.aerius.shared.domain.v2.point.CIMLKCalculationPoint;
 import nl.overheid.aerius.shared.domain.v2.point.NcaCustomCalculationPoint;
 import nl.overheid.aerius.shared.domain.v2.point.ReceptorPoint;
 import nl.overheid.aerius.shared.domain.v2.point.SubPoint;
@@ -51,8 +51,8 @@ public class CalculationPointDuplicator implements CalculationPointVisitor<Calcu
   }
 
   @Override
-  public CalculationPointFeature visit(final NSLCalculationPoint calculationPoint, final IsFeature feature) throws AeriusException {
-    return duplicate(feature, constructDuplicateNslPoint(calculationPoint));
+  public CalculationPointFeature visit(final CIMLKCalculationPoint calculationPoint, final IsFeature feature) throws AeriusException {
+    return duplicate(feature, constructDuplicateCimlkPoint(calculationPoint));
   }
 
   @Override
@@ -81,12 +81,12 @@ public class CalculationPointDuplicator implements CalculationPointVisitor<Calcu
     return duplicateNcaPoint;
   }
 
-  protected CustomCalculationPoint constructDuplicateNslPoint(final NSLCalculationPoint originalPoint) {
-    final NSLCalculationPoint duplicateNslPoint = new NSLCalculationPoint();
-    duplicateNslPoint.setMonitorSubstance(originalPoint.getMonitorSubstance());
-    duplicateNslPoint.setRejectionGrounds(originalPoint.getRejectionGrounds());
-    copyCustomProperties(originalPoint, duplicateNslPoint);
-    return duplicateNslPoint;
+  protected CustomCalculationPoint constructDuplicateCimlkPoint(final CIMLKCalculationPoint originalPoint) {
+    final CIMLKCalculationPoint duplicateCimlkPoint = new CIMLKCalculationPoint();
+    duplicateCimlkPoint.setMonitorSubstance(originalPoint.getMonitorSubstance());
+    duplicateCimlkPoint.setRejectionGrounds(originalPoint.getRejectionGrounds());
+    copyCustomProperties(originalPoint, duplicateCimlkPoint);
+    return duplicateCimlkPoint;
   }
 
   protected SubPoint constructDuplicateSubPoint(final SubPoint originalPoint) {

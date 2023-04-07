@@ -49,9 +49,9 @@ import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.geo.ReceptorGridSettings;
 import nl.overheid.aerius.shared.domain.scenario.IsScenario;
 import nl.overheid.aerius.shared.domain.v2.building.BuildingFeature;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLCorrection;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLDispersionLineFeature;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLMeasureFeature;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKCorrection;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKDispersionLineFeature;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKMeasureFeature;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPointFeature;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceFeature;
 import nl.overheid.aerius.shared.exception.AeriusException;
@@ -151,9 +151,9 @@ final class InternalGMLWriter {
   void write(final OutputStream outputStream, final IsScenario scenario, final MetaDataInput metaDataInput) throws AeriusException {
     final List<FeatureMember> featureMembers = emissionSourcesToFeatures(scenario.getSources());
     featureMembers.addAll(buildingsToFeatures(scenario.getBuildings()));
-    featureMembers.addAll(aeriusPointsToFeatures(scenario.getCalculationPoints(), scenario.getNslCorrections()));
-    featureMembers.addAll(nslDispersionLinesToFeatures(scenario.getNslDispersionLines()));
-    featureMembers.addAll(nslMeasuresToFeatures(scenario.getNslMeasures()));
+    featureMembers.addAll(aeriusPointsToFeatures(scenario.getCalculationPoints(), scenario.getCimlkCorrections()));
+    featureMembers.addAll(cimlkDispersionLinesToFeatures(scenario.getCimlkDispersionLines()));
+    featureMembers.addAll(cimlkMeasuresToFeatures(scenario.getCimlkMeasures()));
     ensureUniqueIds(featureMembers);
     metaDataInput.setName(scenario.getName());
     metaDataInput.setSituationType(scenario.getSituationType());
@@ -203,7 +203,7 @@ final class InternalGMLWriter {
     }
   }
 
-  List<FeatureMember> aeriusPointsToFeatures(final List<CalculationPointFeature> points, final List<NSLCorrection> corrections)
+  List<FeatureMember> aeriusPointsToFeatures(final List<CalculationPointFeature> points, final List<CIMLKCorrection> corrections)
       throws AeriusException {
     final List<FeatureMember> featureMembers = new ArrayList<>(points.size());
     for (final CalculationPointFeature point : points) {
@@ -230,29 +230,29 @@ final class InternalGMLWriter {
     return featureMembers;
   }
 
-  List<FeatureMember> nslMeasuresToFeatures(final List<NSLMeasureFeature> measures)
+  List<FeatureMember> cimlkMeasuresToFeatures(final List<CIMLKMeasureFeature> measures)
       throws AeriusException {
     final List<FeatureMember> featureMembers = new ArrayList<>(measures.size());
-    for (final NSLMeasureFeature measure : measures) {
-      featureMembers.add(writer.nslMeasure2GML(measure));
+    for (final CIMLKMeasureFeature measure : measures) {
+      featureMembers.add(writer.cimlkMeasure2GML(measure));
     }
     return featureMembers;
   }
 
-  List<FeatureMember> nslDispersionLinesToFeatures(final List<NSLDispersionLineFeature> dispersionLines)
+  List<FeatureMember> cimlkDispersionLinesToFeatures(final List<CIMLKDispersionLineFeature> dispersionLines)
       throws AeriusException {
     final List<FeatureMember> featureMembers = new ArrayList<>(dispersionLines.size());
-    for (final NSLDispersionLineFeature dispersionLine : dispersionLines) {
-      featureMembers.add(writer.nslDispersionLine2GML(dispersionLine));
+    for (final CIMLKDispersionLineFeature dispersionLine : dispersionLines) {
+      featureMembers.add(writer.cimlkDispersionLine2GML(dispersionLine));
     }
     return featureMembers;
   }
 
-  List<Object> nslCorrectionsToGmlObjects(final List<NSLCorrection> corrections)
+  List<Object> cimlkCorrectionsToGmlObjects(final List<CIMLKCorrection> corrections)
       throws AeriusException {
     final List<Object> featureMembers = new ArrayList<>(corrections.size());
-    for (final NSLCorrection correction : corrections) {
-      featureMembers.add(writer.nslCorrection2GML(correction));
+    for (final CIMLKCorrection correction : corrections) {
+      featureMembers.add(writer.cimlkCorrection2GML(correction));
     }
     return featureMembers;
   }

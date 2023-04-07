@@ -26,12 +26,12 @@ import org.junit.jupiter.api.Test;
 
 import nl.overheid.aerius.shared.domain.result.EmissionResultKey;
 import nl.overheid.aerius.shared.domain.v2.geojson.Point;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLMonitorSubstance;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLRejectionGrounds;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKMonitorSubstance;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKRejectionGrounds;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPoint;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPointFeature;
 import nl.overheid.aerius.shared.domain.v2.point.CustomCalculationPoint;
-import nl.overheid.aerius.shared.domain.v2.point.NSLCalculationPoint;
+import nl.overheid.aerius.shared.domain.v2.point.CIMLKCalculationPoint;
 import nl.overheid.aerius.shared.domain.v2.point.NcaCustomCalculationPoint;
 import nl.overheid.aerius.shared.domain.v2.point.ReceptorPoint;
 import nl.overheid.aerius.shared.domain.v2.point.SubPoint;
@@ -108,27 +108,27 @@ class CalculationPointDuplicatorTest {
   }
 
   @Test
-  void testVisitNSLCalculationPoint() throws AeriusException {
-    final NSLCalculationPoint nslPoint = new NSLCalculationPoint();
-    setBaseProperties(nslPoint);
-    nslPoint.setCustomPointId(6675);
-    nslPoint.setHeight(19.84);
-    nslPoint.setMonitorSubstance(NSLMonitorSubstance.PM10_ONLY);
-    nslPoint.setRejectionGrounds(NSLRejectionGrounds.COMPLIANCE_CRITERION);
+  void testVisitCimlkCalculationPoint() throws AeriusException {
+    final CIMLKCalculationPoint cimlkPoint = new CIMLKCalculationPoint();
+    setBaseProperties(cimlkPoint);
+    cimlkPoint.setCustomPointId(6675);
+    cimlkPoint.setHeight(19.84);
+    cimlkPoint.setMonitorSubstance(CIMLKMonitorSubstance.PM10_ONLY);
+    cimlkPoint.setRejectionGrounds(CIMLKRejectionGrounds.COMPLIANCE_CRITERION);
 
-    final CalculationPointFeature original = construct(nslPoint);
+    final CalculationPointFeature original = construct(cimlkPoint);
     final CalculationPointDuplicator duplicator = new CalculationPointDuplicator();
 
     final CalculationPointFeature duplicated = original.accept(duplicator);
 
     basicAssertions(original, duplicated);
-    assertTrue(duplicated.getProperties() instanceof NSLCalculationPoint);
-    final NSLCalculationPoint duplicatedNslPoint = (NSLCalculationPoint) duplicated.getProperties();
-    basePropertiesAssertions(nslPoint, duplicatedNslPoint);
-    assertEquals(nslPoint.getCustomPointId(), duplicatedNslPoint.getCustomPointId(), "custom point ID");
-    assertEquals(nslPoint.getHeight(), duplicatedNslPoint.getHeight(), "height");
-    assertEquals(nslPoint.getMonitorSubstance(), duplicatedNslPoint.getMonitorSubstance(), "Monitor substance");
-    assertEquals(nslPoint.getRejectionGrounds(), duplicatedNslPoint.getRejectionGrounds(), "Rejection grounds");
+    assertTrue(duplicated.getProperties() instanceof CIMLKCalculationPoint);
+    final CIMLKCalculationPoint duplicatedCimlkPoint = (CIMLKCalculationPoint) duplicated.getProperties();
+    basePropertiesAssertions(cimlkPoint, duplicatedCimlkPoint);
+    assertEquals(cimlkPoint.getCustomPointId(), duplicatedCimlkPoint.getCustomPointId(), "custom point ID");
+    assertEquals(cimlkPoint.getHeight(), duplicatedCimlkPoint.getHeight(), "height");
+    assertEquals(cimlkPoint.getMonitorSubstance(), duplicatedCimlkPoint.getMonitorSubstance(), "Monitor substance");
+    assertEquals(cimlkPoint.getRejectionGrounds(), duplicatedCimlkPoint.getRejectionGrounds(), "Rejection grounds");
   }
 
   @Test

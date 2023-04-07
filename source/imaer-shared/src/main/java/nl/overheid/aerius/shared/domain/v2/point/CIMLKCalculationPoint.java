@@ -17,30 +17,30 @@
 package nl.overheid.aerius.shared.domain.v2.point;
 
 import nl.overheid.aerius.shared.domain.v2.geojson.IsFeature;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLMonitorSubstance;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLRejectionGrounds;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKMonitorSubstance;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKRejectionGrounds;
 import nl.overheid.aerius.shared.exception.AeriusException;
 
-public class NSLCalculationPoint extends CustomCalculationPoint {
+public class CIMLKCalculationPoint extends CustomCalculationPoint {
 
   private static final long serialVersionUID = 1L;
 
-  private NSLMonitorSubstance monitorSubstance;
-  private NSLRejectionGrounds rejectionGrounds;
+  private CIMLKMonitorSubstance monitorSubstance;
+  private CIMLKRejectionGrounds rejectionGrounds;
 
-  public NSLMonitorSubstance getMonitorSubstance() {
+  public CIMLKMonitorSubstance getMonitorSubstance() {
     return monitorSubstance;
   }
 
-  public void setMonitorSubstance(final NSLMonitorSubstance monitorSubstance) {
+  public void setMonitorSubstance(final CIMLKMonitorSubstance monitorSubstance) {
     this.monitorSubstance = monitorSubstance;
   }
 
-  public NSLRejectionGrounds getRejectionGrounds() {
+  public CIMLKRejectionGrounds getRejectionGrounds() {
     return rejectionGrounds;
   }
 
-  public void setRejectionGrounds(final NSLRejectionGrounds rejectionGrounds) {
+  public void setRejectionGrounds(final CIMLKRejectionGrounds rejectionGrounds) {
     this.rejectionGrounds = rejectionGrounds;
   }
 

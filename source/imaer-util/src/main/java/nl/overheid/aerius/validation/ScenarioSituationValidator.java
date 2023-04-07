@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import nl.overheid.aerius.shared.domain.v2.building.BuildingFeature;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLMeasureFeature;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKMeasureFeature;
 import nl.overheid.aerius.shared.domain.v2.scenario.Definitions;
 import nl.overheid.aerius.shared.domain.v2.scenario.ScenarioSituation;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceFeature;
@@ -45,7 +45,7 @@ public final class ScenarioSituationValidator {
   public static void validateSituation(final ScenarioSituation situation, final ValidationHelper validationHelper) throws AeriusException {
     validateSources(situation.getEmissionSourcesList(), validationHelper);
     validateBuildings(situation.getBuildingsList());
-    validateNslMeasures(situation.getNslMeasuresList());
+    validateCimlkMeasures(situation.getCimlkMeasuresList());
     validateDefinitions(situation.getDefinitions());
   }
 
@@ -65,9 +65,9 @@ public final class ScenarioSituationValidator {
     }
   }
 
-  public static void validateNslMeasures(final List<NSLMeasureFeature> measures) throws AeriusException {
+  public static void validateCimlkMeasures(final List<CIMLKMeasureFeature> measures) throws AeriusException {
     final List<AeriusException> errors = new ArrayList<>();
-    NSLMeasureValidator.validateMeasures(measures, errors, new ArrayList<>());
+    CIMLKMeasureValidator.validateMeasures(measures, errors, new ArrayList<>());
     if (!errors.isEmpty()) {
       throw errors.get(0);
     }

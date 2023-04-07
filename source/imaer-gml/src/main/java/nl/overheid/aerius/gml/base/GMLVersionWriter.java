@@ -20,9 +20,9 @@ import java.util.List;
 
 import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.v2.building.BuildingFeature;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLCorrection;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLDispersionLineFeature;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLMeasureFeature;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKCorrection;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKDispersionLineFeature;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKMeasureFeature;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPointFeature;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceFeature;
 import nl.overheid.aerius.shared.exception.AeriusException;
@@ -88,31 +88,31 @@ public interface GMLVersionWriter {
    * @return GML receptor point
    * @throws AeriusException internal or data error
    */
-  FeatureMember result2GML(CalculationPointFeature point, Substance[] substances, List<NSLCorrection> corrections) throws AeriusException;
+  FeatureMember result2GML(CalculationPointFeature point, Substance[] substances, List<CIMLKCorrection> corrections) throws AeriusException;
 
   /**
-   * Converts a NSL measure to a GML data object of that measure.
+   * Converts a CIMLK measure to a GML data object of that measure.
    * @param measure measure to convert
    * @return GML measure
    * @throws AeriusException internal or data error
    */
-  FeatureMember nslMeasure2GML(NSLMeasureFeature measure) throws AeriusException;
+  FeatureMember cimlkMeasure2GML(CIMLKMeasureFeature measure) throws AeriusException;
 
   /**
-   * Converts a NSL dispersion line to a GML data object of that dispersion line.
+   * Converts a CIMLK dispersion line to a GML data object of that dispersion line.
    * @param dispersionLine dispersion line to convert
    * @return GML dispersion line
    * @throws AeriusException internal or data error
    */
-  FeatureMember nslDispersionLine2GML(NSLDispersionLineFeature dispersionLine) throws AeriusException;
+  FeatureMember cimlkDispersionLine2GML(CIMLKDispersionLineFeature dispersionLine) throws AeriusException;
 
   /**
-   * Converts a NSL correction to a GML data object of that measure.
+   * Converts a CIMLK correction to a GML data object of that measure.
    * @param correction correction to convert
    * @return GML correction
    * @throws AeriusException internal or data error
    */
-  Object nslCorrection2GML(NSLCorrection correction) throws AeriusException;
+  Object cimlkCorrection2GML(CIMLKCorrection correction) throws AeriusException;
 
   /**
    * Converts a building to a GML data object of that building.

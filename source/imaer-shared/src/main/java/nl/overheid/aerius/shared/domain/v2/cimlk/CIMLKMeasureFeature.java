@@ -14,27 +14,13 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.shared.domain.v2.nsl;
+package nl.overheid.aerius.shared.domain.v2.cimlk;
 
-public enum NSLRoadProfile {
+import nl.overheid.aerius.shared.domain.v2.geojson.Feature;
+import nl.overheid.aerius.shared.domain.v2.geojson.Polygon;
 
-  WIDE_STREET_CANYON(1), NARROW_STREET_CANYON(2), ONE_SIDE_BUILDINGS(3), OTHER(4);
+public class CIMLKMeasureFeature extends Feature<CIMLKMeasure, Polygon> {
 
-  private final int legacyId;
-
-  private NSLRoadProfile(final int legacyId) {
-    this.legacyId = legacyId;
-  }
-
-  public static NSLRoadProfile legacySafeValueOf(final int value) {
-    NSLRoadProfile result = null;
-    for (final NSLRoadProfile roadProfile : values()) {
-      if (value == roadProfile.legacyId) {
-        result = roadProfile;
-        break;
-      }
-    }
-    return result;
-  }
+  private static final long serialVersionUID = 1L;
 
 }

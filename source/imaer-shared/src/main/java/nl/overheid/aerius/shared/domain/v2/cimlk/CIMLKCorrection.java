@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.shared.domain.v2.nsl;
+package nl.overheid.aerius.shared.domain.v2.cimlk;
 
 import java.io.Serializable;
 
@@ -22,7 +22,7 @@ import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.result.EmissionResultKey;
 import nl.overheid.aerius.shared.domain.result.EmissionResultType;
 
-public class NSLCorrection implements Serializable {
+public class CIMLKCorrection implements Serializable {
 
   private static final long serialVersionUID = 3L;
 

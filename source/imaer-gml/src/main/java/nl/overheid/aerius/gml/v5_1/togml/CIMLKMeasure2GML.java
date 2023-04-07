@@ -14,19 +14,19 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.gml.v5_0.togml;
+package nl.overheid.aerius.gml.v5_1.togml;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 import nl.overheid.aerius.gml.base.geo.Geometry2GML;
-import nl.overheid.aerius.gml.v5_0.measure.EmissionReduction;
-import nl.overheid.aerius.gml.v5_0.measure.EmissionReductionProperty;
-import nl.overheid.aerius.gml.v5_0.measure.SRM1RoadMeasure;
-import nl.overheid.aerius.gml.v5_0.measure.SRM1RoadMeasureArea;
-import nl.overheid.aerius.gml.v5_0.measure.SRM1RoadMeasureProperty;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLMeasure;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLMeasureFeature;
+import nl.overheid.aerius.gml.v5_1.measure.EmissionReduction;
+import nl.overheid.aerius.gml.v5_1.measure.EmissionReductionProperty;
+import nl.overheid.aerius.gml.v5_1.measure.SRM1RoadMeasure;
+import nl.overheid.aerius.gml.v5_1.measure.SRM1RoadMeasureArea;
+import nl.overheid.aerius.gml.v5_1.measure.SRM1RoadMeasureProperty;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKMeasure;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKMeasureFeature;
 import nl.overheid.aerius.shared.domain.v2.source.road.StandardVehicleMeasure;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.util.gml.GMLIdUtil;
@@ -34,23 +34,23 @@ import nl.overheid.aerius.util.gml.GMLIdUtil;
 /**
  *
  */
-final class NSLMeasure2GML {
+final class CIMLKMeasure2GML {
 
   private final Geometry2GML geometry2gml;
 
-  public NSLMeasure2GML(final Geometry2GML geometry2gml) {
+  public CIMLKMeasure2GML(final Geometry2GML geometry2gml) {
     this.geometry2gml = geometry2gml;
   }
 
   /**
-   * Convert a NSLMeasure to a GML object.
+   * Convert a CIMLKMeasure to a GML object.
    * @param measure The measure to convert to a GML object.
-   * @return the GML object representing the NSLMeasure.
+   * @return the GML object representing the CIMLKMeasure.
    * @throws AeriusException when the objects could not be converted to GML correctly.
    */
-  public SRM1RoadMeasureArea toGML(final NSLMeasureFeature feature) throws AeriusException {
+  public SRM1RoadMeasureArea toGML(final CIMLKMeasureFeature feature) throws AeriusException {
     final SRM1RoadMeasureArea gmlMeasure = new SRM1RoadMeasureArea();
-    final NSLMeasure measure = feature.getProperties();
+    final CIMLKMeasure measure = feature.getProperties();
     final String id = GMLIdUtil.toValidGmlId(measure.getGmlId(), GMLIdUtil.MEASURE_PREFIX);
 
     gmlMeasure.setGeometry(geometry2gml, feature.getGeometry());

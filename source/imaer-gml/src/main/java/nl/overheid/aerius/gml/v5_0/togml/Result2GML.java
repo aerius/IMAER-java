@@ -31,7 +31,7 @@ import nl.overheid.aerius.gml.v5_0.result.AbstractCalculationPoint;
 import nl.overheid.aerius.gml.v5_0.result.CalculationPointCorrection;
 import nl.overheid.aerius.gml.v5_0.result.CalculationPointCorrectionProperty;
 import nl.overheid.aerius.gml.v5_0.result.CustomCalculationPoint;
-import nl.overheid.aerius.gml.v5_0.result.NSLCalculationPoint;
+import nl.overheid.aerius.gml.v5_0.result.CIMLKCalculationPoint;
 import nl.overheid.aerius.gml.v5_0.result.ReceptorPoint;
 import nl.overheid.aerius.gml.v5_0.result.Result;
 import nl.overheid.aerius.gml.v5_0.result.ResultProperty;
@@ -43,7 +43,7 @@ import nl.overheid.aerius.shared.domain.result.EmissionResultKey;
 import nl.overheid.aerius.shared.domain.result.EmissionResultType;
 import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
 import nl.overheid.aerius.shared.domain.v2.geojson.Point;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLCorrection;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKCorrection;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPoint;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPointFeature;
 import nl.overheid.aerius.shared.exception.AeriusException;
@@ -70,7 +70,7 @@ final class Result2GML {
    * @return the GML object representing the AeriusPoint.
    * @throws AeriusException when the objects could not be converted to GML correctly.
    */
-  public AbstractCalculationPoint toGML(final CalculationPointFeature feature, final Substance[] substances, final List<NSLCorrection> corrections)
+  public AbstractCalculationPoint toGML(final CalculationPointFeature feature, final Substance[] substances, final List<CIMLKCorrection> corrections)
       throws AeriusException {
     final CalculationPoint point = feature.getProperties();
     final AbstractCalculationPoint returnPoint = determineSpecificType(point, feature.getGeometry());
@@ -93,9 +93,9 @@ final class Result2GML {
 
   private AbstractCalculationPoint determineSpecificType(final CalculationPoint aeriusPoint, final Point point) throws AeriusException {
     final AbstractCalculationPoint returnPoint;
-    if (aeriusPoint instanceof nl.overheid.aerius.shared.domain.v2.point.NSLCalculationPoint) {
+    if (aeriusPoint instanceof nl.overheid.aerius.shared.domain.v2.point.CIMLKCalculationPoint) {
       //treat as a custom calculation point with added properties
-      returnPoint = fromNslCalculationPoint((nl.overheid.aerius.shared.domain.v2.point.NSLCalculationPoint) aeriusPoint);
+      returnPoint = fromAeriusCalculationPoint((nl.overheid.aerius.shared.domain.v2.point.CIMLKCalculationPoint) aeriusPoint);
     } else if (aeriusPoint instanceof nl.overheid.aerius.shared.domain.v2.point.CustomCalculationPoint) {
       //treat as a custom calculation point
       //The proper representation of a custompoint would be a circle with a surface of 1ha.
@@ -110,11 +110,11 @@ final class Result2GML {
     return returnPoint;
   }
 
-  private AbstractCalculationPoint fromNslCalculationPoint(final nl.overheid.aerius.shared.domain.v2.point.NSLCalculationPoint aeriusNSLPoint) {
-    final NSLCalculationPoint nslPoint = new NSLCalculationPoint();
-    nslPoint.setRejectionGrounds(aeriusNSLPoint.getRejectionGrounds());
-    nslPoint.setMonitorSubstance(aeriusNSLPoint.getMonitorSubstance());
-    return nslPoint;
+  private AbstractCalculationPoint fromAeriusCalculationPoint(final nl.overheid.aerius.shared.domain.v2.point.CIMLKCalculationPoint aeriusPoint) {
+    final CIMLKCalculationPoint point = new CIMLKCalculationPoint();
+    point.setRejectionGrounds(aeriusPoint.getRejectionGrounds());
+    point.setMonitorSubstance(aeriusPoint.getMonitorSubstance());
+    return point;
   }
 
   private AbstractCalculationPoint fromSubPoint(final nl.overheid.aerius.shared.domain.v2.point.SubPoint aeriusPoint) {
@@ -186,7 +186,7 @@ final class Result2GML {
     }
   }
 
-  private List<CalculationPointCorrectionProperty> getCorrections(final CalculationPoint aeriusPoint, final List<NSLCorrection> corrections) {
+  private List<CalculationPointCorrectionProperty> getCorrections(final CalculationPoint aeriusPoint, final List<CIMLKCorrection> corrections) {
     return corrections.stream()
         .filter(correction -> correction.getCalculationPointGmlId().equals(aeriusPoint.getGmlId()))
         .map(this::toGMLCorrection)
@@ -194,7 +194,7 @@ final class Result2GML {
         .collect(Collectors.toList());
   }
 
-  public CalculationPointCorrection toGMLCorrection(final NSLCorrection correction) {
+  public CalculationPointCorrection toGMLCorrection(final CIMLKCorrection correction) {
     final CalculationPointCorrection gmlCorrection = new CalculationPointCorrection();
     gmlCorrection.setLabel(correction.getLabel());
     gmlCorrection.setDescription(correction.getDescription());

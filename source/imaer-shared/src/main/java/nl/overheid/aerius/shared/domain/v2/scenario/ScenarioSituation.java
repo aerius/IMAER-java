@@ -26,9 +26,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import nl.overheid.aerius.shared.domain.scenario.SituationType;
 import nl.overheid.aerius.shared.domain.v2.building.BuildingFeature;
 import nl.overheid.aerius.shared.domain.v2.geojson.FeatureCollection;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLCorrection;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLDispersionLineFeature;
-import nl.overheid.aerius.shared.domain.v2.nsl.NSLMeasureFeature;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKCorrection;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKDispersionLineFeature;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKMeasureFeature;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceFeature;
 
 /**
@@ -47,9 +47,9 @@ public class ScenarioSituation implements Serializable {
   private Double nettingFactor;
   private Definitions definitions = new Definitions();
   private final FeatureCollection<EmissionSourceFeature> sources = new FeatureCollection<>();
-  private final FeatureCollection<NSLDispersionLineFeature> nslDispersionLines = new FeatureCollection<>();
-  private final FeatureCollection<NSLMeasureFeature> nslMeasures = new FeatureCollection<>();
-  private final List<NSLCorrection> nslCorrections = new ArrayList<>();
+  private final FeatureCollection<CIMLKDispersionLineFeature> cimlkDispersionLines = new FeatureCollection<>();
+  private final FeatureCollection<CIMLKMeasureFeature> cimlkMeasures = new FeatureCollection<>();
+  private final List<CIMLKCorrection> cimlkCorrections = new ArrayList<>();
   private final FeatureCollection<BuildingFeature> buildings = new FeatureCollection<>();
 
   public String getId() {
@@ -118,27 +118,27 @@ public class ScenarioSituation implements Serializable {
     return sources.getFeatures();
   }
 
-  @JsonProperty("nslDispersionLines")
-  public FeatureCollection<NSLDispersionLineFeature> getNslDispersionLines() {
-    return nslDispersionLines;
+  @JsonProperty("cimlkDispersionLines")
+  public FeatureCollection<CIMLKDispersionLineFeature> getCimlkDispersionLines() {
+    return cimlkDispersionLines;
   }
 
   @JsonIgnore
-  public List<NSLDispersionLineFeature> getNslDispersionLinesList() {
-    return nslDispersionLines.getFeatures();
+  public List<CIMLKDispersionLineFeature> getCimlkDispersionLinesList() {
+    return cimlkDispersionLines.getFeatures();
   }
 
-  public FeatureCollection<NSLMeasureFeature> getNslMeasures() {
-    return nslMeasures;
+  public FeatureCollection<CIMLKMeasureFeature> getCimlkMeasures() {
+    return cimlkMeasures;
   }
 
   @JsonIgnore
-  public List<NSLMeasureFeature> getNslMeasuresList() {
-    return nslMeasures.getFeatures();
+  public List<CIMLKMeasureFeature> getCimlkMeasuresList() {
+    return cimlkMeasures.getFeatures();
   }
 
-  public List<NSLCorrection> getNslCorrections() {
-    return nslCorrections;
+  public List<CIMLKCorrection> getCimlkCorrections() {
+    return cimlkCorrections;
   }
 
   public FeatureCollection<BuildingFeature> getBuildings() {
