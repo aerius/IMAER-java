@@ -14,13 +14,13 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.gml.v5_0.result;
+package nl.overheid.aerius.gml.v3_1.result;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 import nl.overheid.aerius.gml.base.result.IsGmlCIMLKCalculationPoint;
-import nl.overheid.aerius.gml.v5_0.base.CalculatorSchema;
+import nl.overheid.aerius.gml.v3_1.base.CalculatorSchema;
 import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKMonitorSubstance;
 import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKRejectionGrounds;
 
@@ -28,7 +28,7 @@ import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKRejectionGrounds;
  *
  */
 @XmlType(name = "NSLCalculationPointType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"rejectionGrounds", "monitorSubstance"})
-public class NSLCalculationPoint extends AbstractCalculationPoint implements IsGmlCIMLKCalculationPoint {
+public class CIMLKCalculationPoint extends AbstractCalculationPoint implements IsGmlCIMLKCalculationPoint {
 
   private CIMLKRejectionGrounds rejectionGrounds;
   private CIMLKMonitorSubstance monitorSubstance;

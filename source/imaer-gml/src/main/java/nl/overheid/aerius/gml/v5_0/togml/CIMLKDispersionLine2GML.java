@@ -27,18 +27,18 @@ import nl.overheid.aerius.util.gml.GMLIdUtil;
 /**
  *
  */
-final class NSLDispersionLine2GML {
+final class CIMLKDispersionLine2GML {
 
   private final Geometry2GML geometry2gml;
 
-  public NSLDispersionLine2GML(final Geometry2GML geometry2gml) {
+  public CIMLKDispersionLine2GML(final Geometry2GML geometry2gml) {
     this.geometry2gml = geometry2gml;
   }
 
   /**
-   * Convert a NSLDispersionLine to a GML object.
+   * Convert a CIMLKDispersionLine to a GML object.
    * @param dispersionLine The dispersionLine to convert to a GML object.
-   * @return the GML object representing the NSLDispersionLine.
+   * @return the GML object representing the CIMLKDispersionLine.
    * @throws AeriusException when the objects could not be converted to GML correctly.
    */
   public SRM1RoadDispersionLine toGML(final CIMLKDispersionLineFeature dispersionLineFeature) throws AeriusException {

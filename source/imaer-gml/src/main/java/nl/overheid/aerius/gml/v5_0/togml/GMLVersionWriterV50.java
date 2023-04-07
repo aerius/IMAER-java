@@ -69,16 +69,16 @@ public class GMLVersionWriterV50 implements GMLVersionWriter {
   private final Source2GML source2gml;
   private final Building2GML building2gml;
   private final Result2GML result2gml;
-  private final NSLMeasure2GML measure2gml;
-  private final NSLDispersionLine2GML dispersionLine2gml;
+  private final CIMLKMeasure2GML measure2gml;
+  private final CIMLKDispersionLine2GML dispersionLine2gml;
 
   public GMLVersionWriterV50(final HexagonZoomLevel zoomLevel1, final String srsName) {
     final Geometry2GML geometry2gml = new Geometry2GML(srsName);
     source2gml = new Source2GML(geometry2gml);
     building2gml = new Building2GML(geometry2gml);
     result2gml = new Result2GML(geometry2gml, zoomLevel1);
-    measure2gml = new NSLMeasure2GML(geometry2gml);
-    dispersionLine2gml = new NSLDispersionLine2GML(geometry2gml);
+    measure2gml = new CIMLKMeasure2GML(geometry2gml);
+    dispersionLine2gml = new CIMLKDispersionLine2GML(geometry2gml);
   }
 
   @Override

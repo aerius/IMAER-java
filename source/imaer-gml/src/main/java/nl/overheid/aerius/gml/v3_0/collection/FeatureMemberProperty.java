@@ -25,7 +25,7 @@ import nl.overheid.aerius.gml.v3_0.base.CalculatorSchema;
 import nl.overheid.aerius.gml.v3_0.base.FeatureMemberImpl;
 import nl.overheid.aerius.gml.v3_0.measure.SRM1RoadMeasureArea;
 import nl.overheid.aerius.gml.v3_0.result.CustomCalculationPoint;
-import nl.overheid.aerius.gml.v3_0.result.NSLCalculationPoint;
+import nl.overheid.aerius.gml.v3_0.result.CIMLKCalculationPoint;
 import nl.overheid.aerius.gml.v3_0.result.ReceptorPoint;
 import nl.overheid.aerius.gml.v3_0.source.EmissionSource;
 import nl.overheid.aerius.gml.v3_0.source.lodging.FarmLodgingEmissionSource;
@@ -76,7 +76,7 @@ public class FeatureMemberProperty extends AbstractProperty<FeatureMemberImpl> {
       @XmlElement(namespace = CalculatorSchema.NAMESPACE, name = "MooringInlandShippingEmissionSource", type = MooringInlandShippingEmissionSource.class),
       @XmlElement(namespace = CalculatorSchema.NAMESPACE, name = "CalculationPoint", type = CustomCalculationPoint.class),
       @XmlElement(namespace = CalculatorSchema.NAMESPACE, name = "ReceptorPoint", type = ReceptorPoint.class),
-      @XmlElement(namespace = CalculatorSchema.NAMESPACE, name = "NSLCalculationPoint", type = NSLCalculationPoint.class),
+      @XmlElement(namespace = CalculatorSchema.NAMESPACE, name = "NSLCalculationPoint", type = CIMLKCalculationPoint.class),
       @XmlElement(namespace = CalculatorSchema.NAMESPACE, name = "SRM1RoadDispersionLine", type = SRM1RoadDispersionLine.class),
       @XmlElement(namespace = CalculatorSchema.NAMESPACE, name = "SRM1RoadMeasureArea", type = SRM1RoadMeasureArea.class)
   })

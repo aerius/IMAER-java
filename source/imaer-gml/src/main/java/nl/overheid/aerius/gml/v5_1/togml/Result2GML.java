@@ -31,7 +31,7 @@ import nl.overheid.aerius.gml.v5_1.result.AbstractCalculationPoint;
 import nl.overheid.aerius.gml.v5_1.result.CalculationPointCorrection;
 import nl.overheid.aerius.gml.v5_1.result.CalculationPointCorrectionProperty;
 import nl.overheid.aerius.gml.v5_1.result.CustomCalculationPoint;
-import nl.overheid.aerius.gml.v5_1.result.NSLCalculationPoint;
+import nl.overheid.aerius.gml.v5_1.result.CIMLKCalculationPoint;
 import nl.overheid.aerius.gml.v5_1.result.NcaCustomCalculationPoint;
 import nl.overheid.aerius.gml.v5_1.result.ReceptorPoint;
 import nl.overheid.aerius.gml.v5_1.result.Result;
@@ -45,7 +45,6 @@ import nl.overheid.aerius.shared.domain.result.EmissionResultType;
 import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
 import nl.overheid.aerius.shared.domain.v2.geojson.Point;
 import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKCorrection;
-import nl.overheid.aerius.shared.domain.v2.point.CIMLKCalculationPoint;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPoint;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPointFeature;
 import nl.overheid.aerius.shared.exception.AeriusException;
@@ -95,8 +94,8 @@ final class Result2GML {
 
   private AbstractCalculationPoint determineSpecificType(final CalculationPoint aeriusPoint, final Point point) throws AeriusException {
     final AbstractCalculationPoint returnPoint;
-    if (aeriusPoint instanceof CIMLKCalculationPoint) {
-      returnPoint = fromNslCalculationPoint((CIMLKCalculationPoint) aeriusPoint);
+    if (aeriusPoint instanceof nl.overheid.aerius.shared.domain.v2.point.CIMLKCalculationPoint) {
+      returnPoint = fromAeriusCalculationPoint((nl.overheid.aerius.shared.domain.v2.point.CIMLKCalculationPoint) aeriusPoint);
     } else if (aeriusPoint instanceof nl.overheid.aerius.shared.domain.v2.point.NcaCustomCalculationPoint) {
       returnPoint = fromNcaCustomPoint((nl.overheid.aerius.shared.domain.v2.point.NcaCustomCalculationPoint) aeriusPoint);
     } else if (aeriusPoint instanceof nl.overheid.aerius.shared.domain.v2.point.CustomCalculationPoint) {
@@ -109,12 +108,12 @@ final class Result2GML {
     return returnPoint;
   }
 
-  private AbstractCalculationPoint fromNslCalculationPoint(final CIMLKCalculationPoint aeriusNSLPoint) {
+  private AbstractCalculationPoint fromAeriusCalculationPoint(final nl.overheid.aerius.shared.domain.v2.point.CIMLKCalculationPoint aeriusPoint) {
     //treat as a custom calculation point with added properties
-    final NSLCalculationPoint nslPoint = new NSLCalculationPoint();
-    nslPoint.setRejectionGrounds(aeriusNSLPoint.getRejectionGrounds());
-    nslPoint.setMonitorSubstance(aeriusNSLPoint.getMonitorSubstance());
-    return nslPoint;
+    final CIMLKCalculationPoint point = new CIMLKCalculationPoint();
+    point.setRejectionGrounds(aeriusPoint.getRejectionGrounds());
+    point.setMonitorSubstance(aeriusPoint.getMonitorSubstance());
+    return point;
   }
 
   private AbstractCalculationPoint fromNcaCustomPoint(final nl.overheid.aerius.shared.domain.v2.point.NcaCustomCalculationPoint aeriusPoint) {

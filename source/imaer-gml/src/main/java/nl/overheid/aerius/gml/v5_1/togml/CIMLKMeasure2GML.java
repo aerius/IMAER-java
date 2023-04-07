@@ -34,18 +34,18 @@ import nl.overheid.aerius.util.gml.GMLIdUtil;
 /**
  *
  */
-final class NSLMeasure2GML {
+final class CIMLKMeasure2GML {
 
   private final Geometry2GML geometry2gml;
 
-  public NSLMeasure2GML(final Geometry2GML geometry2gml) {
+  public CIMLKMeasure2GML(final Geometry2GML geometry2gml) {
     this.geometry2gml = geometry2gml;
   }
 
   /**
-   * Convert a NSLMeasure to a GML object.
+   * Convert a CIMLKMeasure to a GML object.
    * @param measure The measure to convert to a GML object.
-   * @return the GML object representing the NSLMeasure.
+   * @return the GML object representing the CIMLKMeasure.
    * @throws AeriusException when the objects could not be converted to GML correctly.
    */
   public SRM1RoadMeasureArea toGML(final CIMLKMeasureFeature feature) throws AeriusException {
