@@ -117,6 +117,7 @@ public final class ADMSLimits implements BuildingLimits {
 
   public static final boolean ADMS_PLUME_DEPLETION_NH3_DEFAULT = false;
   public static final boolean ADMS_PLUME_DEPLETION_NOX_DEFAULT = false;
+  public static final boolean SPATIALLY_VARYING_ROUGHNESS_DEFAULT = true;
   public static final boolean ADMS_COMPLEX_TERRAIN_DEFAULT = false;
 
   public static final ADMSLimits INSTANCE = new ADMSLimits();

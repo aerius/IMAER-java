@@ -204,6 +204,7 @@ class OptionsMetadataUtilTest {
     adms.setPriestleyTaylorParameter(34.5);
     adms.setPlumeDepletionNH3(true);
     adms.setPlumeDepletionNOX(true);
+    adms.setSpatiallyVaryingRoughness(true);
     adms.setComplexTerrain(true);
     adms.setMetSiteId(100);
     adms.setMsRoughness(0.8);
@@ -221,6 +222,7 @@ class OptionsMetadataUtilTest {
     assertEquals("34.5", result.get("adms_priestley_taylor_parameter"));
     assertEquals("true", result.get("adms_plume_depletion_nh3"));
     assertEquals("true", result.get("adms_plume_depletion_nox"));
+    assertEquals("true", result.get("adms_spatially_varying_roughness"));
     assertEquals("true", result.get("adms_complex_terrain"));
     assertEquals("100", result.get("adms_met_site_id"));
     assertEquals("0.8", result.get("adms_met_site_roughness"));
@@ -278,6 +280,7 @@ class OptionsMetadataUtilTest {
     adms.setPriestleyTaylorParameter(34.5);
     adms.setPlumeDepletionNH3(true);
     adms.setPlumeDepletionNOX(true);
+    adms.setSpatiallyVaryingRoughness(true);
     adms.setComplexTerrain(true);
     adms.setMetSiteId(100);
     adms.setMsRoughness(0.8);

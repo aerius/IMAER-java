@@ -79,6 +79,7 @@ public final class OptionsMetadataUtil {
     ADMS_PRIESTLEY_TAYLOR_PARAMETER,
     ADMS_PLUME_DEPLETION_NH3,
     ADMS_PLUME_DEPLETION_NOX,
+    ADMS_SPATIALLY_VARYING_ROUGHNESS,
     ADMS_COMPLEX_TERRAIN,
     ADMS_MET_SITE_ID,
     ADMS_MET_SITE_ROUGHNESS,
@@ -202,6 +203,8 @@ public final class OptionsMetadataUtil {
 
     options.getAdmsOptions().setPlumeDepletionNH3(getOrDefault(map, Option.ADMS_PLUME_DEPLETION_NH3, ADMSLimits.ADMS_PLUME_DEPLETION_NH3_DEFAULT));
     options.getAdmsOptions().setPlumeDepletionNOX(getOrDefault(map, Option.ADMS_PLUME_DEPLETION_NOX, ADMSLimits.ADMS_PLUME_DEPLETION_NOX_DEFAULT));
+    options.getAdmsOptions()
+        .setSpatiallyVaryingRoughness(getOrDefault(map, Option.ADMS_SPATIALLY_VARYING_ROUGHNESS, ADMSLimits.SPATIALLY_VARYING_ROUGHNESS_DEFAULT));
     options.getAdmsOptions().setComplexTerrain(getOrDefault(map, Option.ADMS_COMPLEX_TERRAIN, ADMSLimits.ADMS_COMPLEX_TERRAIN_DEFAULT));
   }
 
@@ -246,9 +249,11 @@ public final class OptionsMetadataUtil {
         addValue(mapToAddTo, Option.ADMS_MET_SITE_MIN_MONIN_OBUKHOV_LENGTH, adms.getMsMinMoninObukhovLength(), addDefaults);
         addValue(mapToAddTo, Option.ADMS_MET_SITE_SURFACE_ALBEDO, adms.getMsSurfaceAlbedo(), addDefaults);
         addValue(mapToAddTo, Option.ADMS_MET_SITE_PRIESTLEY_TAYLOR_PARAMETER, adms.getMsPriestleyTaylorParameter(), addDefaults);
-        addBooleanValue(mapToAddTo, Option.ADMS_PLUME_DEPLETION_NH3, adms.isPlumeDepletionNH3(), addDefaults);
-        addBooleanValue(mapToAddTo, Option.ADMS_PLUME_DEPLETION_NOX, adms.isPlumeDepletionNOX(), addDefaults);
-        addBooleanValue(mapToAddTo, Option.ADMS_COMPLEX_TERRAIN, adms.isComplexTerrain(), addDefaults);
+        // Always add the following fields to the GML as it also gives an indication if run in demo mode.
+        addBooleanValue(mapToAddTo, Option.ADMS_PLUME_DEPLETION_NH3, adms.isPlumeDepletionNH3(), true);
+        addBooleanValue(mapToAddTo, Option.ADMS_PLUME_DEPLETION_NOX, adms.isPlumeDepletionNOX(), true);
+        addBooleanValue(mapToAddTo, Option.ADMS_SPATIALLY_VARYING_ROUGHNESS, adms.isSpatiallyVaryingRoughness(), true);
+        addBooleanValue(mapToAddTo, Option.ADMS_COMPLEX_TERRAIN, adms.isComplexTerrain(), true);
       }
     }
   }
