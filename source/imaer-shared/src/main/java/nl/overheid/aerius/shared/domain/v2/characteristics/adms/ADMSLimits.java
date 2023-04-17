@@ -25,8 +25,9 @@ public final class ADMSLimits implements BuildingLimits {
 
   private static final long serialVersionUID = 1L;
 
-  public static final int SOURCE_HEIGHT_MINIMUM = 0;
+  public static final double SOURCE_HEIGHT_MINIMUM = 0.0005;
   public static final int SOURCE_HEIGHT_MAXIMUM = 15_000;
+  public static final double SOURCE_HEIGHT_DEFAULT = 0.5;
   public static final double SOURCE_WIDTH_MINIMUM = 0.001;
   public static final int SOURCE_WIDTH_INITIAL = 0;
   public static final int SOURCE_WIDTH_MAXIMUM = 1_000;
