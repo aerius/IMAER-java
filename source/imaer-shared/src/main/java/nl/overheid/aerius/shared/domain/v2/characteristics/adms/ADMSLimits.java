@@ -60,6 +60,8 @@ public final class ADMSLimits implements BuildingLimits {
   public static final int SOURCE_SPECIFIC_HEAT_CAPACITY_MAXIMUM = 100_000;
   public static final double SOURCE_SPECIFIC_HEAT_CAPACITY_DEFAULT = 1012;
 
+  public static final double SOURCE_PERCENT_NOX_AS_NO2_DEFAULT = 0d;
+
   public static final int SOURCE_MOMENTUM_FLUX_MINIMUM = 0;
   public static final int SOURCE_MOMENTUM_FLUX_MAXIMUM = 1_000_000;
   public static final double SOURCE_MOMENTUM_FLUX_DEFAULT = 1.0;
