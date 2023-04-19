@@ -25,8 +25,9 @@ public final class ADMSLimits implements BuildingLimits {
 
   private static final long serialVersionUID = 1L;
 
-  public static final int SOURCE_HEIGHT_MINIMUM = 0;
+  public static final double SOURCE_HEIGHT_MINIMUM = 0.0005;
   public static final int SOURCE_HEIGHT_MAXIMUM = 15_000;
+  public static final double SOURCE_HEIGHT_DEFAULT = 0.5;
   public static final double SOURCE_WIDTH_MINIMUM = 0.001;
   public static final int SOURCE_WIDTH_INITIAL = 0;
   public static final int SOURCE_WIDTH_MAXIMUM = 1_000;
@@ -58,6 +59,8 @@ public final class ADMSLimits implements BuildingLimits {
   public static final int SOURCE_SPECIFIC_HEAT_CAPACITY_MINIMUM = 1;
   public static final int SOURCE_SPECIFIC_HEAT_CAPACITY_MAXIMUM = 100_000;
   public static final double SOURCE_SPECIFIC_HEAT_CAPACITY_DEFAULT = 1012;
+
+  public static final double SOURCE_PERCENT_NOX_AS_NO2_DEFAULT = 0d;
 
   public static final int SOURCE_MOMENTUM_FLUX_MINIMUM = 0;
   public static final int SOURCE_MOMENTUM_FLUX_MAXIMUM = 1_000_000;
