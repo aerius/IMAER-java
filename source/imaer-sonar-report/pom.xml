@@ -22,7 +22,7 @@
     <parent>
         <groupId>nl.aerius</groupId>
         <artifactId>imaer-parent</artifactId>
-        <version>5.1.1-2-SNAPSHOT</version>
+        <version>5.1.1-2</version>
       </parent>
 
     <artifactId>imaer-sonar-report</artifactId>
