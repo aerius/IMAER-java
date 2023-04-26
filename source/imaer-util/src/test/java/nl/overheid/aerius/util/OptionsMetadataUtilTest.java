@@ -47,7 +47,7 @@ class OptionsMetadataUtilTest {
 
   private static final int BASIC_OPTIONS = 9;
   private static final int CONNECT_OPTIONS = 2;
-  private static final int OPS_OPTIONS = 11;
+  private static final int OPS_OPTIONS = 12;
 
   @Test
   void testDefaultOptionsWithoutAddingDefaults() {
@@ -167,6 +167,7 @@ class OptionsMetadataUtilTest {
     opsOptions.setConvRate("8 out of 10");
     opsOptions.setRoughness(8.19);
     opsOptions.setChemistry(OPSOptions.Chemistry.PROGNOSIS);
+    opsOptions.setRoads("3030");
     options.getWnbCalculationOptions().setOpsOptions(opsOptions);
 
     final Map<String, String> result = OptionsMetadataUtil.optionsToMap(Theme.WNB, options, false);
@@ -183,6 +184,7 @@ class OptionsMetadataUtilTest {
     assertEquals("8 out of 10", result.get("ops_conv_rate"));
     assertEquals("8.19", result.get("ops_roughness"));
     assertEquals("PROGNOSIS", result.get("ops_chemistry"));
+    assertEquals("3030", result.get("ops_roads"));
   }
 
   @Test
