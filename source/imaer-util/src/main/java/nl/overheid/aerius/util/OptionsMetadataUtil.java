@@ -68,6 +68,7 @@ public final class OptionsMetadataUtil {
     OPS_CONV_RATE,
     OPS_ROUGHNESS,
     OPS_CHEMISTRY,
+    OPS_ROADS,
 
     /* ADMS options related */
     ADMS_VERSION,
@@ -170,6 +171,7 @@ public final class OptionsMetadataUtil {
       addValue(mapToAddTo, Option.OPS_WASHOUT, options.getWashout(), addDefaults);
       addValue(mapToAddTo, Option.OPS_CONV_RATE, options.getConvRate(), addDefaults);
       addValue(mapToAddTo, Option.OPS_ROUGHNESS, options.getRoughness(), addDefaults);
+      addValue(mapToAddTo, Option.OPS_ROADS, options.getRoads(), addDefaults);
     }
   }
 
