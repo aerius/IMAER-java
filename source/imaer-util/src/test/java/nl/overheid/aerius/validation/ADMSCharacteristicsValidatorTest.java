@@ -31,8 +31,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import nl.overheid.aerius.shared.domain.v2.characteristics.ADMSSourceCharacteristics;
-import nl.overheid.aerius.shared.domain.v2.characteristics.HeatContentType;
-import nl.overheid.aerius.shared.domain.v2.characteristics.OPSSourceCharacteristics;
 import nl.overheid.aerius.shared.domain.v2.characteristics.adms.ADMSLimits;
 import nl.overheid.aerius.shared.domain.v2.characteristics.adms.SourceType;
 import nl.overheid.aerius.shared.exception.AeriusException;
@@ -44,24 +42,6 @@ import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 class ADMSCharacteristicsValidatorTest {
 
   private static final String SOURCE_ID = "SomeSourceId";
-
-  @Test
-  void testOPSHeatContentNotForced() {
-    final OPSSourceCharacteristics characteristics = new OPSSourceCharacteristics();
-    characteristics.setHeatContentType(HeatContentType.NOT_FORCED);
-    characteristics.setHeatContent(-0.001);
-
-    final List<AeriusException> errors = new ArrayList<>();
-    final List<AeriusException> warnings = new ArrayList<>();
-    final OPSCharacteristicsValidator validator = new OPSCharacteristicsValidator(errors, warnings, SOURCE_ID);
-
-    final boolean valid = validator.validate(characteristics);
-
-    // Shouldn't be validating heat content when it's not used.
-    assertTrue(valid, "Valid test case");
-    assertTrue(errors.isEmpty(), "No errors");
-    assertTrue(warnings.isEmpty(), "No warnings");
-  }
 
   @Test
   void testValidADMSCharacteristics() {
