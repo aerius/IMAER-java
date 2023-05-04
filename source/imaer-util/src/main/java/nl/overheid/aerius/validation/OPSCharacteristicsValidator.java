@@ -36,10 +36,10 @@ class OPSCharacteristicsValidator extends CharacteristicsValidator<OPSSourceChar
   @Override
   boolean validate(final OPSSourceCharacteristics characteristics) {
     boolean valid = true;
-    if (characteristics.getHeatContentType() == HeatContentType.FORCED) {
+    if (characteristics.getHeatContentType() == HeatContentType.NOT_FORCED) {
       valid = validateOPSForcedHeatContent(characteristics);
-    } else if (characteristics.getHeatContentType() == HeatContentType.NOT_FORCED) {
-
+    } else if (characteristics.getHeatContentType() == HeatContentType.FORCED) {
+      // No validations on forced properties (yet), consider it valid.
     } else {
       errors.add(new AeriusException(ImaerExceptionReason.MISSING_HEAT_CONTENT, sourceId));
       valid = false;

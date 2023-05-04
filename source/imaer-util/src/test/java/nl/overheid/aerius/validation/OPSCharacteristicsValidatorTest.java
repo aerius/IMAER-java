@@ -46,7 +46,7 @@ class OPSCharacteristicsValidatorTest {
   @Test
   void testValidOPSCharacteristics() {
     final OPSSourceCharacteristics characteristics = new OPSSourceCharacteristics();
-    characteristics.setHeatContentType(HeatContentType.FORCED);
+    characteristics.setHeatContentType(HeatContentType.NOT_FORCED);
     characteristics.setHeatContent(30.0);
 
     final List<AeriusException> errors = new ArrayList<>();
@@ -82,7 +82,7 @@ class OPSCharacteristicsValidatorTest {
   @Test
   void testOPSMissingHeatContent() {
     final OPSSourceCharacteristics characteristics = new OPSSourceCharacteristics();
-    characteristics.setHeatContentType(HeatContentType.FORCED);
+    characteristics.setHeatContentType(HeatContentType.NOT_FORCED);
     characteristics.setHeatContent(null);
 
     final List<AeriusException> errors = new ArrayList<>();
@@ -103,7 +103,7 @@ class OPSCharacteristicsValidatorTest {
   @MethodSource("casesForOPSHeatContent")
   void testOPSHeatContentLimits(final double heatContent, final boolean expectedValid) {
     final OPSSourceCharacteristics characteristics = new OPSSourceCharacteristics();
-    characteristics.setHeatContentType(HeatContentType.FORCED);
+    characteristics.setHeatContentType(HeatContentType.NOT_FORCED);
     characteristics.setHeatContent(heatContent);
 
     final List<AeriusException> errors = new ArrayList<>();
@@ -132,14 +132,14 @@ class OPSCharacteristicsValidatorTest {
         Arguments.of(OPSLimits.SOURCE_HEAT_CONTENT_SENSIBLE_MINIMUM, true),
         Arguments.of(OPSLimits.SOURCE_HEAT_CONTENT_MAXIMUM, true),
         Arguments.of(OPSLimits.SOURCE_HEAT_CONTENT_MAXIMUM + 0.001, false),
-        // Even though in OPS -999 is a valid value, that should only be used when another means of heat content is used (i.e. NOT_FORCED properties)
+        // Even though in OPS -999 is a valid value, that should only be used when another means of heat content is used (i.e. FORCED properties)
         Arguments.of(OPSLimits.SOURCE_HEAT_CONTENT_MINIMUM, false));
   }
 
   @Test
-  void testOPSHeatContentNotForced() {
+  void testOPSHeatContentForced() {
     final OPSSourceCharacteristics characteristics = new OPSSourceCharacteristics();
-    characteristics.setHeatContentType(HeatContentType.NOT_FORCED);
+    characteristics.setHeatContentType(HeatContentType.FORCED);
     characteristics.setHeatContent(-0.001);
 
     final List<AeriusException> errors = new ArrayList<>();
