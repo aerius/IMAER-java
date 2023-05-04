@@ -30,6 +30,7 @@ import nl.overheid.aerius.gml.base.conversion.MobileSourceOffRoadConversion;
 import nl.overheid.aerius.gml.base.conversion.PlanConversion;
 import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.ops.DiurnalVariation;
+import nl.overheid.aerius.shared.domain.v2.characteristics.HeatContentType;
 import nl.overheid.aerius.shared.domain.v2.characteristics.OPSSourceCharacteristics;
 import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
 import nl.overheid.aerius.shared.domain.v2.source.road.RoadStandardEmissionFactorsKey;
@@ -470,6 +471,7 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
     characteristics.setEmissionHeight(index * 2.0);
     characteristics.setSpread(index * 1.0);
     characteristics.setHeatContent(index * 10.0);
+    characteristics.setHeatContentType(HeatContentType.NOT_FORCED);
     characteristics.setParticleSizeDistribution(index);
     characteristics.setDiurnalVariation(DiurnalVariation.INDUSTRIAL_ACTIVITY);
     return characteristics;
