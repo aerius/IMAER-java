@@ -88,8 +88,7 @@ public class ValidationVisitor implements EmissionSourceVisitor<Boolean> {
 
   @Override
   public Boolean visit(final GenericEmissionSource emissionSource, final IsFeature feature) throws AeriusException {
-    //NO-OP
-    return true;
+    return new GenericSourceValidator(errors, warnings).validate(emissionSource, feature);
   }
 
   @Override
