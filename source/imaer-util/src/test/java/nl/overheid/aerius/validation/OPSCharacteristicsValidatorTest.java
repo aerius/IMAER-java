@@ -31,18 +31,15 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import nl.overheid.aerius.shared.domain.ops.OPSLimits;
-import nl.overheid.aerius.shared.domain.v2.characteristics.ADMSSourceCharacteristics;
 import nl.overheid.aerius.shared.domain.v2.characteristics.HeatContentType;
 import nl.overheid.aerius.shared.domain.v2.characteristics.OPSSourceCharacteristics;
-import nl.overheid.aerius.shared.domain.v2.characteristics.adms.ADMSLimits;
-import nl.overheid.aerius.shared.domain.v2.characteristics.adms.SourceType;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 
 /**
  *
  */
-class CharacteristicsValidatorTest {
+class OPSCharacteristicsValidatorTest {
 
   private static final String SOURCE_ID = "SomeSourceId";
 
@@ -54,7 +51,7 @@ class CharacteristicsValidatorTest {
 
     final List<AeriusException> errors = new ArrayList<>();
     final List<AeriusException> warnings = new ArrayList<>();
-    final CharacteristicsValidator validator = new CharacteristicsValidator(errors, warnings, SOURCE_ID);
+    final OPSCharacteristicsValidator validator = new OPSCharacteristicsValidator(errors, warnings, SOURCE_ID);
 
     final boolean valid = validator.validate(characteristics);
 
@@ -70,7 +67,7 @@ class CharacteristicsValidatorTest {
 
     final List<AeriusException> errors = new ArrayList<>();
     final List<AeriusException> warnings = new ArrayList<>();
-    final CharacteristicsValidator validator = new CharacteristicsValidator(errors, warnings, SOURCE_ID);
+    final OPSCharacteristicsValidator validator = new OPSCharacteristicsValidator(errors, warnings, SOURCE_ID);
 
     final boolean valid = validator.validate(characteristics);
 
@@ -90,7 +87,7 @@ class CharacteristicsValidatorTest {
 
     final List<AeriusException> errors = new ArrayList<>();
     final List<AeriusException> warnings = new ArrayList<>();
-    final CharacteristicsValidator validator = new CharacteristicsValidator(errors, warnings, SOURCE_ID);
+    final OPSCharacteristicsValidator validator = new OPSCharacteristicsValidator(errors, warnings, SOURCE_ID);
 
     final boolean valid = validator.validate(characteristics);
 
@@ -111,7 +108,7 @@ class CharacteristicsValidatorTest {
 
     final List<AeriusException> errors = new ArrayList<>();
     final List<AeriusException> warnings = new ArrayList<>();
-    final CharacteristicsValidator validator = new CharacteristicsValidator(errors, warnings, SOURCE_ID);
+    final OPSCharacteristicsValidator validator = new OPSCharacteristicsValidator(errors, warnings, SOURCE_ID);
 
     final boolean valid = validator.validate(characteristics);
 
@@ -147,7 +144,7 @@ class CharacteristicsValidatorTest {
 
     final List<AeriusException> errors = new ArrayList<>();
     final List<AeriusException> warnings = new ArrayList<>();
-    final CharacteristicsValidator validator = new CharacteristicsValidator(errors, warnings, SOURCE_ID);
+    final OPSCharacteristicsValidator validator = new OPSCharacteristicsValidator(errors, warnings, SOURCE_ID);
 
     final boolean valid = validator.validate(characteristics);
 
@@ -155,65 +152,6 @@ class CharacteristicsValidatorTest {
     assertTrue(valid, "Valid test case");
     assertTrue(errors.isEmpty(), "No errors");
     assertTrue(warnings.isEmpty(), "No warnings");
-  }
-
-  @Test
-  void testValidADMSCharacteristics() {
-    final ADMSSourceCharacteristics characteristics = new ADMSSourceCharacteristics();
-    characteristics.setSourceType(SourceType.POINT);
-    characteristics.setSpecificHeatCapacity(30.0);
-
-    final List<AeriusException> errors = new ArrayList<>();
-    final List<AeriusException> warnings = new ArrayList<>();
-    final CharacteristicsValidator validator = new CharacteristicsValidator(errors, warnings, SOURCE_ID);
-
-    final boolean valid = validator.validate(characteristics);
-
-    assertTrue(valid, "Valid test case");
-    assertTrue(errors.isEmpty(), "No errors");
-    assertTrue(warnings.isEmpty(), "No warnings");
-  }
-
-  @ParameterizedTest
-  @MethodSource("casesForADMSHeatCapacity")
-  void testADMSHeatCapacityLimits(final SourceType sourceType, final double heatCapacity, final boolean expectedValid) {
-    final ADMSSourceCharacteristics characteristics = new ADMSSourceCharacteristics();
-    characteristics.setSourceType(sourceType);
-    characteristics.setSpecificHeatCapacity(heatCapacity);
-
-    final List<AeriusException> errors = new ArrayList<>();
-    final List<AeriusException> warnings = new ArrayList<>();
-    final CharacteristicsValidator validator = new CharacteristicsValidator(errors, warnings, SOURCE_ID);
-
-    final boolean valid = validator.validate(characteristics);
-
-    if (expectedValid) {
-      assertTrue(valid, "Valid test case");
-      assertTrue(errors.isEmpty(), "No errors");
-      assertTrue(warnings.isEmpty(), "No warnings");
-    } else {
-      assertFalse(valid, "Invalid test case");
-      assertEquals(1, errors.size(), "Number of errors");
-      assertEquals(ImaerExceptionReason.HEAT_CAPACITY_OUT_OF_RANGE, errors.get(0).getReason(), "Error reason");
-      assertArrayEquals(new Object[] {
-          SOURCE_ID, String.valueOf(heatCapacity), "1", "100000"
-      }, errors.get(0).getArgs(), "Arguments");
-    }
-  }
-
-  private static Stream<Arguments> casesForADMSHeatCapacity() {
-    return Stream.of(
-        Arguments.of(SourceType.POINT, ADMSLimits.SOURCE_SPECIFIC_HEAT_CAPACITY_MINIMUM - 0.001, false),
-        Arguments.of(SourceType.POINT, ADMSLimits.SOURCE_SPECIFIC_HEAT_CAPACITY_MINIMUM, true),
-        Arguments.of(SourceType.POINT, ADMSLimits.SOURCE_SPECIFIC_HEAT_CAPACITY_DEFAULT, true),
-        Arguments.of(SourceType.POINT, ADMSLimits.SOURCE_SPECIFIC_HEAT_CAPACITY_MAXIMUM, true),
-        Arguments.of(SourceType.POINT, ADMSLimits.SOURCE_SPECIFIC_HEAT_CAPACITY_MAXIMUM + 0.001, false),
-        // volume and road don't use heat capacity, rest dos
-        Arguments.of(SourceType.LINE, ADMSLimits.SOURCE_SPECIFIC_HEAT_CAPACITY_MINIMUM - 0.001, false),
-        Arguments.of(SourceType.AREA, ADMSLimits.SOURCE_SPECIFIC_HEAT_CAPACITY_MINIMUM - 0.001, false),
-        Arguments.of(SourceType.JET, ADMSLimits.SOURCE_SPECIFIC_HEAT_CAPACITY_MINIMUM - 0.001, false),
-        Arguments.of(SourceType.VOLUME, ADMSLimits.SOURCE_SPECIFIC_HEAT_CAPACITY_MINIMUM - 0.001, true),
-        Arguments.of(SourceType.ROAD, ADMSLimits.SOURCE_SPECIFIC_HEAT_CAPACITY_MINIMUM - 0.001, true));
   }
 
 }

@@ -18,6 +18,8 @@ package nl.overheid.aerius.validation;
 
 import java.util.List;
 
+import nl.overheid.aerius.shared.domain.v2.characteristics.ADMSSourceCharacteristics;
+import nl.overheid.aerius.shared.domain.v2.characteristics.OPSSourceCharacteristics;
 import nl.overheid.aerius.shared.domain.v2.characteristics.SourceCharacteristics;
 import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
 import nl.overheid.aerius.shared.domain.v2.geojson.IsFeature;
@@ -60,7 +62,13 @@ abstract class SourceValidator<T extends EmissionSource> {
   }
 
   protected boolean validateCharacteristics(final SourceCharacteristics characteristics, final String sourceId) {
-    return new CharacteristicsValidator(errors, warnings, sourceId).validate(characteristics);
+    if (characteristics instanceof OPSSourceCharacteristics) {
+      return new OPSCharacteristicsValidator(errors, warnings, sourceId).validate((OPSSourceCharacteristics) characteristics);
+    } else if (characteristics instanceof ADMSSourceCharacteristics) {
+      return new ADMSCharacteristicsValidator(errors, warnings, sourceId).validate((ADMSSourceCharacteristics) characteristics);
+    } else {
+      return true;
+    }
   }
 
 }
