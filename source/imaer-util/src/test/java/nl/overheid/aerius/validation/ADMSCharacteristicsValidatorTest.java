@@ -56,8 +56,8 @@ class ADMSCharacteristicsValidatorTest {
     final boolean valid = validator.validate(characteristics);
 
     assertTrue(valid, "Valid test case");
-    assertTrue(errors.isEmpty(), "No errors");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), errors, "No errors");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   @ParameterizedTest
@@ -75,8 +75,8 @@ class ADMSCharacteristicsValidatorTest {
 
     if (expectedValid) {
       assertTrue(valid, "Valid test case");
-      assertTrue(errors.isEmpty(), "No errors");
-      assertTrue(warnings.isEmpty(), "No warnings");
+      assertEquals(List.of(), errors, "No errors");
+      assertEquals(List.of(), warnings, "No warnings");
     } else {
       assertFalse(valid, "Invalid test case");
       assertEquals(1, errors.size(), "Number of errors");

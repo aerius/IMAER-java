@@ -18,7 +18,6 @@ package nl.overheid.aerius.validation;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,8 +46,8 @@ class BuildingValidatorTest {
 
     BuildingValidator.validateBuildings(List.of(building), errors, warnings);
 
-    assertTrue(errors.isEmpty(), "No errors");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), errors, "No errors");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   @Test
@@ -64,7 +63,7 @@ class BuildingValidatorTest {
     assertEquals(1, errors.size(), "Number of errors");
     assertEquals(ImaerExceptionReason.GML_GEOMETRY_NOT_PERMITTED, errors.get(0).getReason(), "Error reason");
     assertArrayEquals(new Object[] {BUILDING_LABEL}, errors.get(0).getArgs(), "Arguments");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   @Test
@@ -76,7 +75,7 @@ class BuildingValidatorTest {
 
     BuildingValidator.validateBuildings(List.of(building), errors, warnings);
 
-    assertTrue(errors.isEmpty(), "No errors");
+    assertEquals(List.of(), errors, "No errors");
     assertEquals(1, warnings.size(), "Number of warnings");
     assertEquals(ImaerExceptionReason.BUILDING_HEIGHT_ZERO, warnings.get(0).getReason(), "Error reason");
     assertArrayEquals(new Object[] {BUILDING_LABEL}, warnings.get(0).getArgs(), "Arguments");
@@ -94,7 +93,7 @@ class BuildingValidatorTest {
     assertEquals(1, errors.size(), "Number of errors");
     assertEquals(ImaerExceptionReason.BUILDING_HEIGHT_TOO_LOW, errors.get(0).getReason(), "Error reason");
     assertArrayEquals(new Object[] {BUILDING_LABEL}, errors.get(0).getArgs(), "Arguments");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   @Test
@@ -108,8 +107,8 @@ class BuildingValidatorTest {
 
     BuildingValidator.validateBuildings(List.of(building), errors, warnings);
 
-    assertTrue(errors.isEmpty(), "No errors");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), errors, "No errors");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   @Test
@@ -126,7 +125,7 @@ class BuildingValidatorTest {
     assertEquals(1, errors.size(), "Number of errors");
     assertEquals(ImaerExceptionReason.CIRCULAR_BUILDING_INCORRECT_DIAMETER, errors.get(0).getReason(), "Error reason");
     assertArrayEquals(new Object[] {BUILDING_LABEL}, errors.get(0).getArgs(), "Arguments");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   private static BuildingFeature createBuilding(final double height) {

@@ -18,7 +18,6 @@ package nl.overheid.aerius.validation;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,8 +49,8 @@ class DefinitionsValidatorTest {
 
     DefinitionsValidator.validateDefinitions(definitions, errors, warnings);
 
-    assertTrue(errors.isEmpty(), "No errors");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), errors, "No errors");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   @Test
@@ -69,8 +68,8 @@ class DefinitionsValidatorTest {
 
     DefinitionsValidator.validateDefinitions(definitions, errors, warnings);
 
-    assertTrue(errors.isEmpty(), "No errors");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), errors, "No errors");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   @Test
@@ -91,7 +90,7 @@ class DefinitionsValidatorTest {
     assertEquals(1, errors.size(), "Number of errors");
     assertEquals(ImaerExceptionReason.CUSTOM_DIURNAL_VARIATION_TYPE_UNKNOWN, errors.get(0).getReason(), "Error reason");
     assertArrayEquals(new Object[] {"null"}, errors.get(0).getArgs(), "Arguments");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   @Test
@@ -112,7 +111,7 @@ class DefinitionsValidatorTest {
     assertEquals(1, errors.size(), "Number of errors");
     assertEquals(ImaerExceptionReason.CUSTOM_DIURNAL_VARIATION_INVALID_COUNT, errors.get(0).getReason(), "Error reason");
     assertArrayEquals(new Object[] {"24", "23"}, errors.get(0).getArgs(), "Arguments");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   @Test
@@ -133,7 +132,7 @@ class DefinitionsValidatorTest {
     assertEquals(1, errors.size(), "Number of errors");
     assertEquals(ImaerExceptionReason.CUSTOM_DIURNAL_VARIATION_INVALID_SUM, errors.get(0).getReason(), "Error reason");
     assertArrayEquals(new Object[] {"24", "26.4"}, errors.get(0).getArgs(), "Arguments");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   private static CustomDiurnalVariation createDiurnalVariation(final CustomDiurnalVariationType type, final List<Double> values) {
