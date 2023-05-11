@@ -14,13 +14,12 @@ jobs:
         with:
           repository: aerius/github-actions
           path: aerius-github-actions
-          ref: v1
+          ref: v1.0.2
 
-      - uses: aerius/github-actions/events/release-event-action@v1
+      - uses: aerius/github-actions/events/release-event-action@v1.0.2
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
           NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
           ROOT_POM_DIRECTORY: repo/source
-

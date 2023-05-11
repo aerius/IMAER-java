@@ -14,10 +14,9 @@ jobs:
         with:
           repository: aerius/github-actions
           path: aerius-github-actions
-          ref: v1
+          ref: v1.0.2
 
-      - uses: aerius/github-actions/events/pull_request-event-action@v1
+      - uses: aerius/github-actions/events/pull_request-event-action@v1.0.2
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ROOT_POM_DIRECTORY: repo/source
-
