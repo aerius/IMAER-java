@@ -185,8 +185,8 @@ class ManureStorageValidatorTest {
     final boolean valid = validator.validate(source);
 
     assertTrue(valid, "Valid test case");
-    assertTrue(errors.isEmpty(), "No errors");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), errors, "No errors");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   private void assertInvalidCase(final ManureStorageEmissionSource source, final ImaerExceptionReason errorReason, final Object[] errorArguments) {
@@ -200,7 +200,7 @@ class ManureStorageValidatorTest {
     assertEquals(1, errors.size(), "Number of errors");
     assertEquals(errorReason, errors.get(0).getReason(), "Error reason");
     assertArrayEquals(errorArguments, errors.get(0).getArgs(), "Arguments");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   private ManureStorageEmissionSource constructSource() {

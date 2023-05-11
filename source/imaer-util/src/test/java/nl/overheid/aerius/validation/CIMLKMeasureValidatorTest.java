@@ -18,7 +18,6 @@ package nl.overheid.aerius.validation;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,8 +64,8 @@ class CIMLKMeasureValidatorTest {
 
     CIMLKMeasureValidator.validateMeasures(List.of(measureFeature), errors, warnings);
 
-    assertTrue(errors.isEmpty(), "No errors");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), errors, "No errors");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   @Test
@@ -94,7 +93,7 @@ class CIMLKMeasureValidatorTest {
     CIMLKMeasureValidator.validateMeasures(List.of(measureFeature), errors, warnings);
 
     assertEquals(1, errors.size(), "Number of errors");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), warnings, "No warnings");
     assertEquals(ImaerExceptionReason.UNEXPECTED_NEGATIVE_VALUE, errors.get(0).getReason(), "Error reason");
     assertArrayEquals(new Object[] {MEASURE_LABEL, String.valueOf(-0.4)}, errors.get(0).getArgs(), "Arguments");
   }

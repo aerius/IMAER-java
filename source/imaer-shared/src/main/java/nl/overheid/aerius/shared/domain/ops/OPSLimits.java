@@ -92,8 +92,14 @@ public final class OPSLimits implements BuildingLimits {
   /**
    *  source heat content (hc): fortran notation: F7.3 -> -99.999 min.
    *  RIVM: negative heat content would make no sense
+   *  However, -999 is used when heat content is derived from other properties like emission temperature.
    */
   public static final int SOURCE_HEAT_CONTENT_MINIMUM = -999;
+
+  /**
+   *  RIVM: negative heat content would make no sense
+   */
+  public static final int SOURCE_HEAT_CONTENT_SENSIBLE_MINIMUM = 0;
 
   /**
    *  source heat content (hc): fortran notation: F7.3 -> 999.999 max.

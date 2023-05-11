@@ -65,8 +65,8 @@ class RouteInlandShippingValidatorTest {
     final boolean valid = validator.validate(source);
 
     assertTrue(valid, "Valid test case");
-    assertTrue(errors.isEmpty(), "No errors");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), errors, "No errors");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   @Test
@@ -93,7 +93,7 @@ class RouteInlandShippingValidatorTest {
     assertArrayEquals(new Object[] {
         SOURCE_ID, shipCode
     }, errors.get(0).getArgs(), "Arguments");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   @Test
@@ -121,7 +121,7 @@ class RouteInlandShippingValidatorTest {
     assertArrayEquals(new Object[] {
         SOURCE_ID, waterwayCode
     }, errors.get(0).getArgs(), "Arguments");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   @Test
@@ -150,7 +150,7 @@ class RouteInlandShippingValidatorTest {
     assertArrayEquals(new Object[] {
         SOURCE_ID, shipCode, waterwayCode
     }, errors.get(0).getArgs(), "Arguments");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   @Test
@@ -169,7 +169,7 @@ class RouteInlandShippingValidatorTest {
     final boolean valid = validator.validate(source);
 
     assertTrue(valid, "Valid test case");
-    assertTrue(errors.isEmpty(), "No errors");
+    assertEquals(List.of(), errors, "No errors");
     assertEquals(1, warnings.size(), "Number of warnings");
     assertEquals(ImaerExceptionReason.GML_INLAND_WATERWAY_NOT_SET, warnings.get(0).getReason(), "Warning reason");
     assertArrayEquals(new Object[] {

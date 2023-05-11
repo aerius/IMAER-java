@@ -76,8 +76,8 @@ class RoadValidatorTest {
     final boolean valid = validator.validate(source);
 
     assertTrue(valid, "Valid test case");
-    assertTrue(errors.isEmpty(), "No errors");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), errors, "No errors");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   @Test
@@ -128,8 +128,8 @@ class RoadValidatorTest {
     final boolean valid = validator.validate(source);
 
     assertTrue(valid, "Valid test case");
-    assertTrue(errors.isEmpty(), "No errors");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), errors, "No errors");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   @Test
@@ -164,7 +164,7 @@ class RoadValidatorTest {
         String.valueOf(strictEnforcement),
         String.valueOf(vehicleType)
     }, errors.get(0).getArgs(), "Arguments");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   @Test
@@ -195,7 +195,7 @@ class RoadValidatorTest {
     assertArrayEquals(new Object[] {
         SOURCE_LABEL
     }, errors.get(0).getArgs(), "Arguments");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   @Test
@@ -218,7 +218,7 @@ class RoadValidatorTest {
     assertArrayEquals(new Object[] {
         SOURCE_LABEL
     }, errors.get(0).getArgs(), "Arguments");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   @Test
@@ -236,7 +236,7 @@ class RoadValidatorTest {
     final boolean valid = validator.validate(source);
 
     assertTrue(valid, "Valid test case");
-    assertTrue(errors.isEmpty(), "No errors");
+    assertEquals(List.of(), errors, "No errors");
     assertEquals(1, warnings.size(), "No warnings");
     assertEquals(ImaerExceptionReason.SRM2_SOURCE_NO_VEHICLES, warnings.get(0).getReason(), "Error reason");
     assertArrayEquals(new Object[] {
@@ -273,7 +273,7 @@ class RoadValidatorTest {
     assertArrayEquals(new Object[] {
         SOURCE_LABEL
     }, errors.get(0).getArgs(), "Arguments");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   @Test
@@ -305,7 +305,7 @@ class RoadValidatorTest {
     assertArrayEquals(new Object[] {
         SOURCE_LABEL
     }, errors.get(0).getArgs(), "Arguments");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   @Test
@@ -335,8 +335,8 @@ class RoadValidatorTest {
     final boolean valid = validator.validate(source);
 
     assertTrue(valid, "Valid test case");
-    assertTrue(errors.isEmpty(), "No errors");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), errors, "No errors");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   @Test
@@ -371,7 +371,7 @@ class RoadValidatorTest {
     assertArrayEquals(new Object[] {
         String.valueOf(-0.5)
     }, errors.get(0).getArgs(), "Arguments");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   @Test
@@ -406,7 +406,7 @@ class RoadValidatorTest {
     assertArrayEquals(new Object[] {
         String.valueOf(1.1)
     }, errors.get(0).getArgs(), "Arguments");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   @Test
@@ -436,8 +436,8 @@ class RoadValidatorTest {
     final boolean valid = validator.validate(source);
 
     assertTrue(valid, "Valid test case");
-    assertTrue(errors.isEmpty(), "No errors");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), errors, "No errors");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   @Test
@@ -476,7 +476,7 @@ class RoadValidatorTest {
     assertArrayEquals(new Object[] {
         String.valueOf(1.7)
     }, errors.get(1).getArgs(), "Arguments");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   @Test
@@ -499,8 +499,8 @@ class RoadValidatorTest {
     final boolean valid = validator.validate(source);
 
     assertTrue(valid, "Valid test case");
-    assertTrue(errors.isEmpty(), "No errors");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), errors, "No errors");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   @Test
@@ -528,7 +528,7 @@ class RoadValidatorTest {
     assertArrayEquals(new Object[] {
         SOURCE_LABEL, String.valueOf(-0.3)
     }, errors.get(0).getArgs(), "Arguments");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   @Test
@@ -556,7 +556,7 @@ class RoadValidatorTest {
     assertArrayEquals(new Object[] {
         SOURCE_LABEL, String.valueOf(-0.5)
     }, errors.get(0).getArgs(), "Arguments");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   @Test
@@ -579,8 +579,8 @@ class RoadValidatorTest {
     final boolean valid = validator.validate(source);
 
     assertTrue(valid, "Valid test case");
-    assertTrue(errors.isEmpty(), "No errors");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), errors, "No errors");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   @Test
@@ -608,7 +608,7 @@ class RoadValidatorTest {
     assertArrayEquals(new Object[] {
         SOURCE_LABEL, String.valueOf(-0.3)
     }, errors.get(0).getArgs(), "Arguments");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   @Test
@@ -636,7 +636,7 @@ class RoadValidatorTest {
     assertArrayEquals(new Object[] {
         SOURCE_LABEL, String.valueOf(-0.5)
     }, errors.get(0).getArgs(), "Arguments");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   @Test
@@ -651,8 +651,8 @@ class RoadValidatorTest {
     final boolean valid = validator.validate(source);
 
     assertTrue(valid, "Valid test case");
-    assertTrue(errors.isEmpty(), "No errors");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), errors, "No errors");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   @Test
@@ -672,7 +672,7 @@ class RoadValidatorTest {
     assertArrayEquals(new Object[] {
         SOURCE_LABEL, String.valueOf(-0.22)
     }, errors.get(0).getArgs(), "Arguments");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   private SRM1RoadEmissionSource constructSrm1Source() {

@@ -180,6 +180,33 @@ public enum ImaerExceptionReason implements Reason {
    */
   MISSING_METERS_SQUARED(1036),
 
+  /**
+   * Heat content was missing on an object.
+   *
+   * @param 0 the id of the object containing the error.
+   */
+  MISSING_HEAT_CONTENT(1037),
+
+  /**
+   * Heat content was out of range on an object.
+   *
+   * @param 0 the id of the object containing the error.
+   * @param 1 the value causing the problem
+   * @param 2 the minimum value allowed
+   * @param 3 the maximum value allowed
+   */
+  HEAT_CONTENT_OUT_OF_RANGE(1038),
+
+  /**
+   * Heat capacity was out of range on an object.
+   *
+   * @param 0 the id of the object containing the error.
+   * @param 1 the value causing the problem
+   * @param 2 the minimum value allowed
+   * @param 3 the maximum value allowed
+   */
+  HEAT_CAPACITY_OUT_OF_RANGE(1039),
+
   // Import GML file errors/warnings.
   /**
    * Uploaded file should contain no calculation points.

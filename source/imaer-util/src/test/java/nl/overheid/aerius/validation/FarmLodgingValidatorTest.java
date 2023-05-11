@@ -62,8 +62,8 @@ class FarmLodgingValidatorTest {
     final boolean valid = validator.validate(source);
 
     assertTrue(valid, "Valid test case");
-    assertTrue(errors.isEmpty(), "No errors");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), errors, "No errors");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   @Test
@@ -84,7 +84,7 @@ class FarmLodgingValidatorTest {
     assertArrayEquals(new Object[] {
         SOURCE_ID, "null"
     }, errors.get(0).getArgs(), "Arguments");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   @Test
@@ -106,7 +106,7 @@ class FarmLodgingValidatorTest {
     assertArrayEquals(new Object[] {
         SOURCE_ID
     }, errors.get(0).getArgs(), "Arguments");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   @Test
@@ -125,8 +125,8 @@ class FarmLodgingValidatorTest {
     final boolean valid = validator.validate(source);
 
     assertTrue(valid, "Valid test case");
-    assertTrue(errors.isEmpty(), "No errors");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), errors, "No errors");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   @Test
@@ -149,7 +149,7 @@ class FarmLodgingValidatorTest {
     assertArrayEquals(new Object[] {
         SOURCE_ID, lodgingCode
     }, errors.get(0).getArgs(), "Arguments");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   @Test
@@ -173,8 +173,8 @@ class FarmLodgingValidatorTest {
     final boolean valid = validator.validate(source);
 
     assertTrue(valid, "Valid test case");
-    assertTrue(errors.isEmpty(), "No errors");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), errors, "No errors");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   @Test
@@ -202,7 +202,7 @@ class FarmLodgingValidatorTest {
     assertArrayEquals(new Object[] {
         SOURCE_ID, additionalSystemCode
     }, errors.get(0).getArgs(), "Arguments");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   @Test
@@ -226,8 +226,8 @@ class FarmLodgingValidatorTest {
     final boolean valid = validator.validate(source);
 
     assertTrue(valid, "Valid test case");
-    assertTrue(errors.isEmpty(), "No errors");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), errors, "No errors");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   @Test
@@ -255,7 +255,7 @@ class FarmLodgingValidatorTest {
     assertArrayEquals(new Object[] {
         SOURCE_ID, reductiveSystemCode
     }, errors.get(0).getArgs(), "Arguments");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   @Test
@@ -280,8 +280,8 @@ class FarmLodgingValidatorTest {
     final boolean valid = validator.validate(source);
 
     assertTrue(valid, "Valid test case");
-    assertTrue(errors.isEmpty(), "No errors");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), errors, "No errors");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   @Test
@@ -309,7 +309,7 @@ class FarmLodgingValidatorTest {
     assertArrayEquals(new Object[] {
         SOURCE_ID, fodderMeasureCode
     }, errors.get(0).getArgs(), "Arguments");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   @Test
@@ -338,7 +338,7 @@ class FarmLodgingValidatorTest {
     assertArrayEquals(new Object[] {
         SOURCE_ID, fodderMeasureCode, lodgingCode
     }, errors.get(0).getArgs(), "Arguments");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   @Test
@@ -360,8 +360,8 @@ class FarmLodgingValidatorTest {
     final boolean valid = validator.validate(source);
 
     assertTrue(valid, "Valid test case");
-    assertTrue(errors.isEmpty(), "No errors");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), errors, "No errors");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   @Test
@@ -387,7 +387,7 @@ class FarmLodgingValidatorTest {
     assertArrayEquals(new Object[] {
         SOURCE_ID
     }, errors.get(0).getArgs(), "Arguments");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   private FarmLodgingEmissionSource constructSource() {

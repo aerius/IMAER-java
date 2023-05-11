@@ -58,8 +58,8 @@ class PlanValidatorTest {
     final boolean valid = validator.validate(source);
 
     assertTrue(valid, "Valid test case");
-    assertTrue(errors.isEmpty(), "No errors");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), errors, "No errors");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   @Test
@@ -82,7 +82,7 @@ class PlanValidatorTest {
     assertArrayEquals(new Object[] {
         SOURCE_ID, planCode
     }, errors.get(0).getArgs(), "Arguments");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   private PlanEmissionSource constructSource() {

@@ -62,8 +62,8 @@ class OffRoadValidatorTest {
     final boolean valid = validator.validate(source);
 
     assertTrue(valid, "Valid test case");
-    assertTrue(errors.isEmpty(), "No errors");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), errors, "No errors");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   @Test
@@ -84,8 +84,8 @@ class OffRoadValidatorTest {
     final boolean valid = validator.validate(source);
 
     assertTrue(valid, "Valid test case");
-    assertTrue(errors.isEmpty(), "No errors");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), errors, "No errors");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   @Test
@@ -106,8 +106,8 @@ class OffRoadValidatorTest {
     final boolean valid = validator.validate(source);
 
     assertTrue(valid, "Valid test case");
-    assertTrue(errors.isEmpty(), "No errors");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), errors, "No errors");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   @Test
@@ -128,8 +128,8 @@ class OffRoadValidatorTest {
     final boolean valid = validator.validate(source);
 
     assertTrue(valid, "Valid test case");
-    assertTrue(errors.isEmpty(), "No errors");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), errors, "No errors");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   @Test
@@ -152,8 +152,8 @@ class OffRoadValidatorTest {
     final boolean valid = validator.validate(source);
 
     assertTrue(valid, "Valid test case");
-    assertTrue(errors.isEmpty(), "No errors");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), errors, "No errors");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   @Test
@@ -180,7 +180,7 @@ class OffRoadValidatorTest {
     assertArrayEquals(new Object[] {
         SUB_SOURCE_DESCRIPTION
     }, errors.get(0).getArgs(), "Arguments");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   @Test
@@ -207,7 +207,7 @@ class OffRoadValidatorTest {
     assertArrayEquals(new Object[] {
         SUB_SOURCE_DESCRIPTION
     }, errors.get(0).getArgs(), "Arguments");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   @Test
@@ -234,7 +234,7 @@ class OffRoadValidatorTest {
     assertArrayEquals(new Object[] {
         SUB_SOURCE_DESCRIPTION
     }, errors.get(0).getArgs(), "Arguments");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   @Test
@@ -255,7 +255,7 @@ class OffRoadValidatorTest {
 
     assertFalse(valid, "Invalid test case");
     assertEquals(3, errors.size(), "Nr of errors");
-    assertTrue(warnings.isEmpty(), "No warnings");
+    assertEquals(List.of(), warnings, "No warnings");
   }
 
   @Test
@@ -284,7 +284,7 @@ class OffRoadValidatorTest {
     assertArrayEquals(new Object[] {
         SUB_SOURCE_DESCRIPTION, "700.00", "1000"
     }, warnings.get(0).getArgs(), "Arguments");
-    assertTrue(errors.isEmpty(), "No errors");
+    assertEquals(List.of(), errors, "No errors");
   }
 
   private OffRoadMobileEmissionSource constructSource() {

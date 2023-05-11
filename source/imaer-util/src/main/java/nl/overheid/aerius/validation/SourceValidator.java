@@ -18,6 +18,9 @@ package nl.overheid.aerius.validation;
 
 import java.util.List;
 
+import nl.overheid.aerius.shared.domain.v2.characteristics.ADMSSourceCharacteristics;
+import nl.overheid.aerius.shared.domain.v2.characteristics.OPSSourceCharacteristics;
+import nl.overheid.aerius.shared.domain.v2.characteristics.SourceCharacteristics;
 import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
 import nl.overheid.aerius.shared.domain.v2.geojson.IsFeature;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSource;
@@ -36,8 +39,9 @@ abstract class SourceValidator<T extends EmissionSource> {
     this.warnings = warnings;
   }
 
-  boolean validate(final T source, final IsFeature feature) {
+  final boolean validate(final T source, final IsFeature feature) {
     boolean valid = validateGeometry(feature.getGeometry());
+    valid = validateCharacteristics(source.getCharacteristics(), source.getGmlId()) && valid;
     valid = validate(source) && valid;
     return valid;
   }
@@ -55,6 +59,16 @@ abstract class SourceValidator<T extends EmissionSource> {
   protected boolean validateGeometry(final Geometry geometry) {
     // By default any geometry type is valid.
     return true;
+  }
+
+  protected boolean validateCharacteristics(final SourceCharacteristics characteristics, final String sourceId) {
+    if (characteristics instanceof OPSSourceCharacteristics) {
+      return new OPSCharacteristicsValidator(errors, warnings, sourceId).validate((OPSSourceCharacteristics) characteristics);
+    } else if (characteristics instanceof ADMSSourceCharacteristics) {
+      return new ADMSCharacteristicsValidator(errors, warnings, sourceId).validate((ADMSSourceCharacteristics) characteristics);
+    } else {
+      return true;
+    }
   }
 
 }
