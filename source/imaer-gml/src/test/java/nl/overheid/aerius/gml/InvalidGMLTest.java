@@ -34,28 +34,28 @@ import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 /**
  * Test class to check how the GML importer handles invalid input.
  */
-public class InvalidGMLTest {
+class InvalidGMLTest {
 
   private static final String LATEST_VALIDATE = "latest/validate/";
 
   @Test
-  public void testInvalidOpsValue() throws IOException, AeriusException {
+  void testInvalidOpsValue() throws IOException, AeriusException {
     assertResult("invalid_ops_values", "Invalid ops input values", ImaerExceptionReason.SOURCE_VALIDATION_FAILED);
   }
 
   @Test
-  public void testInvalidSector() throws IOException, AeriusException {
+  void testInvalidSector() throws IOException, AeriusException {
     assertResult("invalid_sector", "Unknown sector code", ImaerExceptionReason.GML_GENERIC_PARSE_ERROR);
   }
 
   @Test
-  public void testInvalidSubstance() throws IOException, AeriusException {
+  void testInvalidSubstance() throws IOException, AeriusException {
     assertResult("invalid_substance", "Expected invalid substance", ImaerExceptionReason.GML_VALIDATION_FAILED,
         e -> assertFalse(e.getArgs()[0].isEmpty(), "Should show list of possible options"));
   }
 
   @Test
-  public void testInvalidXML1() throws IOException, AeriusException {
+  void testInvalidXML1() throws IOException, AeriusException {
     assertResult("invalid_xml_1", "Expected GML parse error, invalid tag", ImaerExceptionReason.GML_PARSE_ERROR,
         e -> {
           assertEquals("15", e.getArgs()[0], "Row");
@@ -66,7 +66,7 @@ public class InvalidGMLTest {
   }
 
   @Test
-  public void testInvalidXML2() throws IOException, AeriusException {
+  void testInvalidXML2() throws IOException, AeriusException {
     assertResult("invalid_xml_2", "Expected GML parse error", ImaerExceptionReason.GML_PARSE_ERROR,
         e -> {
           assertEquals("13", e.getArgs()[0], "Row");
@@ -77,22 +77,22 @@ public class InvalidGMLTest {
   }
 
   @Test
-  public void testInvalidXML3() throws IOException, AeriusException {
+  void testInvalidXML3() throws IOException, AeriusException {
     assertResult("invalid_xml_3", "Expected GML parse error", ImaerExceptionReason.GML_VALIDATION_FAILED);
   }
 
   @Test
-  public void testInvalidYear() throws IOException, AeriusException {
+  void testInvalidYear() throws IOException, AeriusException {
     assertResult("invalid_year", "Expected incorrect year message", ImaerExceptionReason.GML_VALIDATION_FAILED);
   }
 
   @Test
-  public void testUnsupportedAeriusGMLVersion() throws IOException, AeriusException {
+  void testUnsupportedAeriusGMLVersion() throws IOException, AeriusException {
     assertResult("unsupported_aerius_gml_version", "", ImaerExceptionReason.GML_VERSION_NOT_SUPPORTED);
   }
 
   @Test
-  public void testUnsupportedSrsName() throws IOException, AeriusException {
+  void testUnsupportedSrsName() throws IOException, AeriusException {
     assertResult("unsupported_srs_name", "Invalid SRS name for geometry", ImaerExceptionReason.GML_SRS_NAME_UNSUPPORTED);
   }
 

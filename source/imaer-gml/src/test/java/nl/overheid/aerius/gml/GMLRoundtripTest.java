@@ -69,7 +69,7 @@ import nl.overheid.aerius.test.GMLTestDomain;
  * <p>b) Add the test to {@link #SKIPPED_TESTS}. This should preferably only be done
  * for tests that contain features not available in older versions.
  */
-public class GMLRoundtripTest {
+class GMLRoundtripTest {
 
   private static final Logger LOG = LoggerFactory.getLogger(GMLRoundtripTest.class);
 
@@ -149,7 +149,7 @@ public class GMLRoundtripTest {
 
   private static final List<Substance> SUBSTANCES = List.of(Substance.NOX, Substance.NO2, Substance.NH3);
 
-  public static List<Object[]> data() throws FileNotFoundException {
+  static List<Object[]> data() throws FileNotFoundException {
     final List<Object[]> files = new ArrayList<>();
     for (final AeriusGMLVersion version : AeriusGMLVersion.values()) {
       for (final Object[] object : FILES) {
@@ -247,7 +247,7 @@ public class GMLRoundtripTest {
   /**
    * Test unexpected warnings.
    */
-  public void assertUnExpectedWarnings(final List<AeriusException> warnings, final Set<Reason> expectedWarnings) {
+  void assertUnExpectedWarnings(final List<AeriusException> warnings, final Set<Reason> expectedWarnings) {
     for (final AeriusException warning : warnings) {
       if (!expectedWarnings.contains(warning.getReason())) {
         fail("Not expected warning, got " + warning.getReason() + " " + warning.getMessage());

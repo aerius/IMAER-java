@@ -38,12 +38,12 @@ import org.junit.jupiter.api.Test;
 /**
  * Verfies that an XMLInputFactory has external entity references disabled.
  */
-public class ExternalEntitiesDisabledTest {
+class ExternalEntitiesDisabledTest {
   private String xmlContent;
   private String referencedText;
 
   @BeforeEach
-  public void setUp() throws IOException, URISyntaxException {
+  void setUp() throws IOException, URISyntaxException {
     final String xmlFile = AssertGML.getFullPath("", "referencing", ".xml");
     try (final BufferedReader reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(xmlFile)))) {
       final StringBuilder builder = new StringBuilder();
@@ -80,7 +80,7 @@ public class ExternalEntitiesDisabledTest {
    *           Thrown if something went wrong while reading the file.
    */
   @Test
-  public void testExternalEntitiesDefault() throws XMLStreamException {
+  void testExternalEntitiesDefault() throws XMLStreamException {
     final XMLInputFactory factory = XMLInputFactory.newFactory();
 
     final String content = readXml(factory, xmlContent);
@@ -97,7 +97,7 @@ public class ExternalEntitiesDisabledTest {
    *           Should be thrown, as the reference to the external entity can not be resolved.
    */
   @Test
-  public void testExternalEntitiesDisabled() throws XMLStreamException {
+  void testExternalEntitiesDisabled() throws XMLStreamException {
     final XMLInputFactory factory = SafeXMLInputFactory.newFactory();
 
     assertThrows(

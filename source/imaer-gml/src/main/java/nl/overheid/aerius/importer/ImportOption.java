@@ -48,8 +48,8 @@ public enum ImportOption {
    */
   INCLUDE_CIMLK_CORRECTIONS,
   /**
-  * If set, input will be persisted in the database.
-  */
+   * If set, input will be persisted in the database.
+   */
   PERSIST_INPUT,
   /**
    * If set, the importer will use the landuse columns supplied in the .RCP file when constructing AeriusPoints. If not set, the importer
@@ -96,6 +96,10 @@ public enum ImportOption {
    * If set, a validation warning is thrown to alert that calculation points are found but will be ignored.
    */
   WARNING_ON_CALCULATION_POINTS,
+  /**
+   * If set, a geometry limit exceedances will be reported as warnings.
+   */
+  WARNING_ON_GEOMETRY_LIMITS,
   /**
    * If set, the importer will read diameters when importing if possible, for example when importing .BRN files.
    * If not found, the diameter of the sources read from the file will be set to 0.
