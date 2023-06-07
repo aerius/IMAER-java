@@ -40,6 +40,10 @@ public enum CalculationMethod {
    */
   NATURE_AREA,
   /**
+   * Calculates both hexagons and custom assessment points, using the quick-run option build into ADMS.
+   */
+  QUICK_RUN,
+  /**
    * Calculates using calculation points and settings established by formal assessment.
    *
    * @Deprecated Replaced by FORMAL_ASSESSMENT, up for removal.
