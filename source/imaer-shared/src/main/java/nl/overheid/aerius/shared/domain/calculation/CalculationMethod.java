@@ -40,6 +40,10 @@ public enum CalculationMethod {
    */
   NATURE_AREA,
   /**
+   * Calculates using less detailed (background) data to get indicative results.
+   */
+  QUICK_RUN,
+  /**
    * Calculates using calculation points and settings established by formal assessment.
    *
    * @Deprecated Replaced by FORMAL_ASSESSMENT, up for removal.
