@@ -35,14 +35,14 @@ import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 /**
  * Test class to check how the GML importer handles invalid input.
  */
-public class GMLValidateErrorsTest {
+class GMLValidateErrorsTest {
 
   private static final String LATEST_VALIDATE = "latest/validate/errors/";
 
   private static final double EPSILON = 0.0001;
 
   @Test
-  public void testGMLValidationFailed() throws IOException {
+  void testGMLValidationFailed() throws IOException {
     assertResult("fout_5201_projectiesysteem", "GML Invalid projectiesystem", ImaerExceptionReason.GML_VALIDATION_FAILED,
         e -> {
           assertFalse(e.getArgs()[0].isEmpty(), "Should show list of possible options");
@@ -54,7 +54,7 @@ public class GMLValidateErrorsTest {
   }
 
   @Test
-  public void testGMLGeometryInvalid() throws IOException {
+  void testGMLGeometryInvalid() throws IOException {
     assertResult("fout_5202_projectiesysteem", "GML Invalid geometry", ImaerExceptionReason.GML_VALIDATION_FAILED,
         e -> {
           assertFalse(e.getArgs()[0].isEmpty(), "Should show list of possible options");
@@ -66,7 +66,7 @@ public class GMLValidateErrorsTest {
   }
 
   @Test
-  public void testGMLEncodingIncorrect() throws IOException {
+  void testGMLEncodingIncorrect() throws IOException {
     assertResult("fout_5203_unsupported_character", "GML Incorrect encoding", ImaerExceptionReason.GML_VALIDATION_FAILED,
         e -> {
           assertFalse(e.getArgs()[0].isEmpty(), "Should show list of possible options");
@@ -78,17 +78,17 @@ public class GMLValidateErrorsTest {
   }
 
   @Test
-  public void testGMLGeometryIntersects() throws IOException {
+  void testGMLGeometryIntersects() throws IOException {
     assertResult("fout_5204_intersecting_geometry", "GML Geometry intersects", ImaerExceptionReason.GML_GEOMETRY_INTERSECTS);
   }
 
   @Test
-  public void testGMLGeometryNotPermitted() throws IOException {
+  void testGMLGeometryNotPermitted() throws IOException {
     assertResult("fout_5205_unallowed_source_geometry", "GML Geometry not permitted", ImaerExceptionReason.SHIPPING_ROUTE_GEOMETRY_NOT_ALLOWED);
   }
 
   @Test
-  public void testGMLGeometryUnknown() throws IOException {
+  void testGMLGeometryUnknown() throws IOException {
     assertResult("fout_5206_unsupported_geometry", "GML Geometry unkown", ImaerExceptionReason.GML_VALIDATION_FAILED,
         e -> {
           assertFalse(e.getArgs()[0].isEmpty(), "Should show list of possible options");
@@ -98,32 +98,32 @@ public class GMLValidateErrorsTest {
   }
 
   @Test
-  public void testGMLUnknownRav() throws IOException {
+  void testGMLUnknownRav() throws IOException {
     assertResult("fout_5207_unknown_rav", "GML Unknown rav", ImaerExceptionReason.GML_UNKNOWN_RAV_CODE);
   }
 
   @Test
-  public void testGMLUnknownMobileSource() throws IOException {
+  void testGMLUnknownMobileSource() throws IOException {
     assertResult("fout_5208_unknown_mobile_source", "GML Unknown mobile source", ImaerExceptionReason.GML_UNKNOWN_MOBILE_SOURCE_CODE);
   }
 
   @Test
-  public void testGMLUnknownShipCode() throws IOException {
+  void testGMLUnknownShipCode() throws IOException {
     assertResult("fout_5209_unknown_ship", "GML Unknown ship code", ImaerExceptionReason.GML_UNKNOWN_SHIP_CODE);
   }
 
   @Test
-  public void testGMLUnknownPlancode() throws IOException {
+  void testGMLUnknownPlancode() throws IOException {
     assertResult("fout_5210_unknown_plan", "GML Unknown plan code", ImaerExceptionReason.GML_UNKNOWN_PLAN_CODE);
   }
 
   @Test
-  public void testGMLGenericParseError() throws IOException {
+  void testGMLGenericParseError() throws IOException {
     assertResult("fout_5211_gml_content", "GML Generic parse error", ImaerExceptionReason.GML_GENERIC_PARSE_ERROR);
   }
 
   @Test
-  public void testGMLParseError() throws IOException {
+  void testGMLParseError() throws IOException {
     assertResult("fout_5212_gml_content", "GML parse error", ImaerExceptionReason.GML_PARSE_ERROR,
         e -> {
           assertEquals("30", e.getArgs()[0], "Row");
@@ -134,17 +134,17 @@ public class GMLValidateErrorsTest {
   }
 
   @Test
-  public void testGMLVersionNotSupported() throws IOException {
+  void testGMLVersionNotSupported() throws IOException {
     assertResult("fout_5213_unsupported_version", "GML Version not supported", ImaerExceptionReason.GML_VERSION_NOT_SUPPORTED);
   }
 
   @Test
-  public void testGMLGeometryInvalid_5215() throws IOException {
+  void testGMLGeometryInvalid_5215() throws IOException {
     assertResult("fout_5215_invalid_geometry", "GML Geometry invalid", ImaerExceptionReason.GML_GEOMETRY_INVALID);
   }
 
   @Test
-  public void testGMLUnknownPasMeasure() throws IOException {
+  void testGMLUnknownPasMeasure() throws IOException {
     assertResult("fout_5216_unknown_pas_measure", "GML Unknown PAS measure", ImaerExceptionReason.GML_UNKNOWN_PAS_MEASURE_CODE,
         e -> {
           assertEquals("ES.1", e.getArgs()[0], "Id");
@@ -153,7 +153,7 @@ public class GMLValidateErrorsTest {
   }
 
   @Test
-  public void testGMLUnsupportedLodingMeasure() throws IOException {
+  void testGMLUnsupportedLodingMeasure() throws IOException {
     assertResult("fout_5217_unsupported_lodging_measure", "GML Unsupported loding measure", ImaerExceptionReason.GML_INVALID_PAS_MEASURE_CATEGORY,
         e -> {
           assertEquals("ES.1", e.getArgs()[0], "Label");
@@ -163,24 +163,24 @@ public class GMLValidateErrorsTest {
   }
 
   @Test
-  public void testGMLInvalidRoadCategoryMatch() throws IOException {
+  void testGMLInvalidRoadCategoryMatch() throws IOException {
     assertResult("fout_5219_obsolete_roadsource", "GML Invalid road category match",
         ImaerExceptionReason.GML_INVALID_ROAD_CATEGORY_MATCH);
   }
 
   @Test
-  public void testGMLIdNotUnique() throws IOException {
+  void testGMLIdNotUnique() throws IOException {
     assertResult("fout_5220_conflicting_id", "GML Id not unique", ImaerExceptionReason.GML_VALIDATION_FAILED,
         e -> assertTrue(e.getArgs()[0].contains("There are multiple occurrences of ID value 'ES.1'"), "Contains error"));
   }
 
   @Test
-  public void testGMLUnknownRoadCategory() throws IOException {
+  void testGMLUnknownRoadCategory() throws IOException {
     assertResult("fout_5221_unknown_road", "GML Unknown road category", ImaerExceptionReason.GML_UNKNOWN_ROAD_CATEGORY);
   }
 
   @Test
-  public void testGMLMetaDataEmpty() throws IOException {
+  void testGMLMetaDataEmpty() throws IOException {
     assertResult("fout_5222_missing_metadata", "GML Metadata empty", ImaerExceptionReason.GML_VALIDATION_FAILED,
         e -> {
           assertTrue(e.getArgs()[0].contains("Invalid content was found starting with element '"), "Contains error");
@@ -189,42 +189,42 @@ public class GMLValidateErrorsTest {
   }
 
   @Test
-  public void testGMLSourceNegativeVehicles() throws IOException {
+  void testGMLSourceNegativeVehicles() throws IOException {
     assertResult("fout_5230_gml_source_negative_vehicles", "GML vehicles less than zero", ImaerExceptionReason.SRM2_SOURCE_NEGATIVE_VEHICLES,
         e -> assertEquals("Bron 1", e.getArgs()[0], "Expected label to be filled"));
   }
 
   @Test
-  public void testGMLRoadSegmentNotAFraction() throws IOException {
+  void testGMLRoadSegmentNotAFraction() throws IOException {
     assertResult("fout_5231_gml_road_segment_position_not_fraction", "GML road segment not a fraction",
         ImaerExceptionReason.GML_ROAD_SEGMENT_POSITION_NOT_FRACTION,
         e -> assertEquals(50D, Double.parseDouble(e.getArgs()[0]), EPSILON, "Expected road segment position to be 50"));
   }
 
   @Test
-  public void testGMLMissingNettingFactor() throws IOException {
+  void testGMLMissingNettingFactor() throws IOException {
     assertResult("fout_5235_netting_without_factor", "GML missing netting factor", ImaerExceptionReason.GML_MISSING_NETTING_FACTOR);
   }
 
   @Test
-  public void testGMLUnknownError() throws IOException {
+  void testGMLUnknownError() throws IOException {
     assertResult("fout_666_unknown_error", "GML Unknown error", ImaerExceptionReason.INTERNAL_ERROR, IllegalArgumentException.class);
   }
 
   @Test
-  public void testGMLYear2100() throws IOException {
+  void testGMLYear2100() throws IOException {
     assertResult("fout_year_over_2100", "GML year greater than", ImaerExceptionReason.GML_VALIDATION_FAILED,
         e -> assertEquals("year must be less than 2100", e.getArgs()[0], "Year invalid"));
   }
 
   @Test
-  public void testGMLYear1900() throws IOException {
+  void testGMLYear1900() throws IOException {
     assertResult("fout_year_under_1900", "GML year under than", ImaerExceptionReason.GML_VALIDATION_FAILED,
         e -> assertEquals("year must be greater than 1900", e.getArgs()[0], "Year invalid"));
   }
 
   @Test
-  public void testGMLCustomDiurnalVariationUnknownType() throws IOException {
+  void testGMLCustomDiurnalVariationUnknownType() throws IOException {
     assertResult("fout_1023_custom_diurnal_variation", "GML custom diurnal variation type",
         ImaerExceptionReason.CUSTOM_DIURNAL_VARIATION_TYPE_UNKNOWN,
         e -> {
@@ -234,7 +234,7 @@ public class GMLValidateErrorsTest {
   }
 
   @Test
-  public void testGMLCustomDiurnalVariationCount() throws IOException {
+  void testGMLCustomDiurnalVariationCount() throws IOException {
     assertResult("fout_1024_custom_diurnal_variation", "GML custom diurnal variation count",
         ImaerExceptionReason.CUSTOM_DIURNAL_VARIATION_INVALID_COUNT,
         e -> {
@@ -245,7 +245,7 @@ public class GMLValidateErrorsTest {
   }
 
   @Test
-  public void testGMLCustomDiurnalVariationSum() throws IOException {
+  void testGMLCustomDiurnalVariationSum() throws IOException {
     assertResult("fout_1025_custom_diurnal_variation", "GML custom diurnal variation sum",
         ImaerExceptionReason.CUSTOM_DIURNAL_VARIATION_INVALID_SUM,
         e -> {
@@ -256,7 +256,7 @@ public class GMLValidateErrorsTest {
   }
 
   @Test
-  public void testGMLBuildingHeightZero() throws IOException {
+  void testGMLBuildingHeightZero() throws IOException {
     assertResult("fout_5522_building_height_zero", "GML with building height zero",
         ImaerExceptionReason.BUILDING_HEIGHT_TOO_LOW,
         e -> {
@@ -264,16 +264,16 @@ public class GMLValidateErrorsTest {
         });
   }
 
-  private void assertResult(final String fileName, final String expectedReasonTxt, final Reason expectedReason,
+  private static void assertResult(final String fileName, final String expectedReasonTxt, final Reason expectedReason,
       final Consumer<AeriusException> check) throws IOException {
     check.accept(assertResult(fileName, expectedReasonTxt, expectedReason));
   }
 
-  private AeriusException assertResult(final String fileName, final String expectedReasonTxt, final Reason expectedReason) throws IOException {
+  private static AeriusException assertResult(final String fileName, final String expectedReasonTxt, final Reason expectedReason) throws IOException {
     return assertResult(fileName, expectedReasonTxt, expectedReason, AeriusException.class);
   }
 
-  private <T extends Throwable> T assertResult(final String fileName, final String expectedReasonTxt, final Reason expectedReason,
+  private static <T extends Throwable> T assertResult(final String fileName, final String expectedReasonTxt, final Reason expectedReason,
       final Class<T> clazz) throws IOException {
     return assertThrows(clazz,
         () -> {
@@ -298,7 +298,7 @@ public class GMLValidateErrorsTest {
         "Expected an exception " + clazz.getSimpleName());
   }
 
-  private ImportParcel getImportResult(final String relativePath, final String fileName)
+  private static ImportParcel getImportResult(final String relativePath, final String fileName)
       throws IOException, AeriusException {
     return AssertGML.getImportResult(relativePath, fileName);
   }

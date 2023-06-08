@@ -38,6 +38,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Locale;
 
@@ -67,6 +68,7 @@ import nl.overheid.aerius.shared.domain.v2.source.shipping.inland.InlandWaterway
 import nl.overheid.aerius.shared.emissions.EmissionsUpdater;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
+import nl.overheid.aerius.shared.geometry.EmissionSourceLimits;
 import nl.overheid.aerius.shared.geometry.GeometryCalculator;
 import nl.overheid.aerius.test.GMLTestDomain;
 import nl.overheid.aerius.test.TestValidationAndEmissionHelper;
@@ -150,12 +152,16 @@ public final class AssertGML {
 
   static ImportParcel getImportResult(final String relativePath, final String fileName)
       throws IOException, AeriusException {
+    return getImportResult(relativePath, fileName, ImportOption.getDefaultOptions(), AssertGML.mockGMLHelper());
+  }
+
+  static ImportParcel getImportResult(final String relativePath, final String fileName, final EnumSet<ImportOption> importOptions,
+      final GMLHelper mockGMLHelper) throws IOException, AeriusException {
     final File file = getFile(relativePath, fileName);
-    final GMLHelper mockGMLHelper = AssertGML.mockGMLHelper();
     final ImaerImporter importer = new ImaerImporter(mockGMLHelper);
     final ImportParcel result = new ImportParcel();
     try (final InputStream inputStream = new BufferedInputStream(new FileInputStream(file))) {
-      importer.importStream(inputStream, ImportOption.getDefaultOptions(), result);
+      importer.importStream(inputStream, importOptions, result);
     }
     if (result.getSituation().getType() == null) {
       result.getSituation().setType(SituationType.PROPOSED);
@@ -195,6 +201,7 @@ public final class AssertGML {
     final GMLHelper gmlHelper = mock(GMLHelper.class);
     currentCharacteristicsType = ct;
     when(gmlHelper.getReceptorGridSettings()).thenReturn(RECEPTOR_GRID_SETTINGS);
+    mockEmissionSourceGeometryLimits(gmlHelper);
     when(gmlHelper.getCharacteristicsType()).thenAnswer((i) -> currentCharacteristicsType);
     final TestValidationAndEmissionHelper valiationAndEmissionHelper = new TestValidationAndEmissionHelper();
     doAnswer(invocation -> {
@@ -215,6 +222,15 @@ public final class AssertGML {
     when(gmlHelper.getDefaultSector()).thenReturn(new Sector(GMLTestDomain.DEFAULT_SECTOR_ID, SectorGroup.INDUSTRY, ""));
     when(gmlHelper.isValidSectorId(anyInt())).thenReturn(true);
     return gmlHelper;
+  }
+
+  private static void mockEmissionSourceGeometryLimits(final GMLHelper gmlHelper) {
+    final EmissionSourceLimits emissionSourceGeometryLimits = new EmissionSourceLimits();
+
+    emissionSourceGeometryLimits.setMaxSources(Integer.MAX_VALUE);
+    emissionSourceGeometryLimits.setMaxLineLength(Integer.MAX_VALUE);
+    emissionSourceGeometryLimits.setMaxPolygonSurface(Integer.MAX_VALUE);
+    when(gmlHelper.getEmissionSourceGeometryLimits()).thenReturn(emissionSourceGeometryLimits);
   }
 
   private static SourceCharacteristics determineDefaultCharacteristics() {

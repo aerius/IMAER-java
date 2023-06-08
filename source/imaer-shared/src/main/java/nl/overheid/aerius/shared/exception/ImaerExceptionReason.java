@@ -41,6 +41,29 @@ public enum ImaerExceptionReason implements Reason {
    */
   SOURCE_VALIDATION_FAILED(1002),
   /**
+   * Number of sources exceeds maximum.
+   *
+   * @param 0 maximum number of allowed sources
+   * @param 1 name of the source
+   */
+  LIMIT_SOURCES_EXCEEDED(1003),
+  /**
+   * Length of a line exceeds maximum length.
+   *
+   * @param 0 name of the source
+   * @param 1 allowed maximum line length
+   * @param 2 length of source
+   */
+  LIMIT_LINE_LENGTH_EXCEEDED(1004),
+  /**
+   * Surface of a polygon exceeds maximum surface.
+   *
+   * @param 0 name of the source
+   * @param 1 allowed maximum surface
+   * @param 2 surface of source
+   */
+  LIMIT_POLYGON_SURFACE_EXCEEDED(1005),
+  /**
    * @param 0 ship type that is not allowed.
    * @param 1 name of the waterway type. For some waterways there is a restriction on which ship types are allowed.
    */

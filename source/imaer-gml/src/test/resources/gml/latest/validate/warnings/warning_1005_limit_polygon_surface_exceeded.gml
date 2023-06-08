@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<imaer:FeatureCollectionCalculator xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:imaer="http://imaer.aerius.nl/5.1" gml:id="NL.IMAER.Collection" xsi:schemaLocation="http://imaer.aerius.nl/5.1 https://imaer.aerius.nl/5.1/IMAER.xsd">
+    <imaer:metadata>
+        <imaer:AeriusCalculatorMetadata>
+            <imaer:project>
+                <imaer:ProjectMetadata>
+                    <imaer:year>2013</imaer:year>
+                    <imaer:name>SomeProject</imaer:name>
+                    <imaer:corporation>Big Corp</imaer:corporation>
+                    <imaer:facilityLocation>
+                        <imaer:Address>
+                            <imaer:streetAddress>SomeStreet</imaer:streetAddress>
+                            <imaer:postcode>somePostalCode</imaer:postcode>
+                            <imaer:city>SomeCity</imaer:city>
+                        </imaer:Address>
+                    </imaer:facilityLocation>
+                    <imaer:description>SomeFunkyDescription</imaer:description>
+                </imaer:ProjectMetadata>
+            </imaer:project>
+            <imaer:situation>
+                <imaer:SituationMetadata>
+                    <imaer:name>Situatie 1</imaer:name>
+                    <imaer:reference>SomeReference001</imaer:reference>
+                    <imaer:situationType>PROPOSED</imaer:situationType>
+                </imaer:SituationMetadata>
+            </imaer:situation>
+            <imaer:calculation>
+                <imaer:CalculationMetadata>
+                    <imaer:method>NATURE_AREA</imaer:method>
+                    <imaer:substance>NOX</imaer:substance>
+                    <imaer:substance>NH3</imaer:substance>
+                    <imaer:substance>NO2</imaer:substance>
+                    <imaer:resultType>CONCENTRATION</imaer:resultType>
+                    <imaer:resultType>DEPOSITION</imaer:resultType>
+                    <imaer:maximumRange>3.0</imaer:maximumRange>
+                    <imaer:option>
+                        <imaer:CalculationOption>
+                            <imaer:key>monitor_srm2_year</imaer:key>
+                            <imaer:value>2030</imaer:value>
+                        </imaer:CalculationOption>
+                    </imaer:option>
+                    <imaer:otherSituation>
+                        <imaer:OtherSituationMetadata>
+                            <imaer:situationType>NETTING</imaer:situationType>
+                            <imaer:name>Our Other Situation</imaer:name>
+                            <imaer:reference>OtherReferenceThingy</imaer:reference>
+                        </imaer:OtherSituationMetadata>
+                    </imaer:otherSituation>
+                </imaer:CalculationMetadata>
+            </imaer:calculation>
+            <imaer:version>
+                <imaer:VersionMetadata>
+                    <imaer:aeriusVersion>V1.1</imaer:aeriusVersion>
+                    <imaer:databaseVersion>SomeDBVersion</imaer:databaseVersion>
+                </imaer:VersionMetadata>
+            </imaer:version>
+        </imaer:AeriusCalculatorMetadata>
+    </imaer:metadata>
+    <imaer:featureMember>
+        <imaer:EmissionSource sectorId="1800" gml:id="ES.1">
+            <imaer:identifier>
+                <imaer:NEN3610ID>
+                    <imaer:namespace>NL.IMAER</imaer:namespace>
+                    <imaer:localId>ES.1</imaer:localId>
+                </imaer:NEN3610ID>
+            </imaer:identifier>
+            <imaer:label>SomeSource</imaer:label>
+            <imaer:emissionSourceCharacteristics>
+                <imaer:EmissionSourceCharacteristics>
+                    <imaer:heatContent>
+                        <imaer:SpecifiedHeatContent>
+                            <imaer:value>1</imaer:value>
+                        </imaer:SpecifiedHeatContent>
+                    </imaer:heatContent>
+                    <imaer:emissionHeight>1</imaer:emissionHeight>
+                    <imaer:diurnalVariation>
+                        <imaer:StandardDiurnalVariation>
+                            <imaer:standardType>INDUSTRIAL_ACTIVITY</imaer:standardType>
+                        </imaer:StandardDiurnalVariation>
+                    </imaer:diurnalVariation>
+                </imaer:EmissionSourceCharacteristics>
+            </imaer:emissionSourceCharacteristics>
+            <imaer:geometry>
+                <imaer:EmissionSourceGeometry>
+                    <imaer:GM_Surface>
+                        <gml:Polygon srsName="urn:ogc:def:crs:EPSG::28992" gml:id="ES.4.SURFACE">
+                            <gml:exterior>
+                              <gml:LinearRing>
+                                  <gml:posList>1.0 1.0 10000.0 1.0 10000.0 10000.0 1.0 10000.0 1.0 1.0</gml:posList>
+                              </gml:LinearRing>
+                            </gml:exterior>
+                        </gml:Polygon>
+                    </imaer:GM_Surface>
+                </imaer:EmissionSourceGeometry>
+            </imaer:geometry>
+            <imaer:emission>
+                <imaer:Emission substance="NH3">
+                    <imaer:value>0.0</imaer:value>
+                </imaer:Emission>
+            </imaer:emission>            
+        </imaer:EmissionSource>
+    </imaer:featureMember>
+</imaer:FeatureCollectionCalculator>

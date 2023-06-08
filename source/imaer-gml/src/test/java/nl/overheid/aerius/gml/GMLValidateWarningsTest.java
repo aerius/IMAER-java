@@ -16,27 +16,37 @@
  */
 package nl.overheid.aerius.gml;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.EnumSet;
 import java.util.List;
 
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import nl.overheid.aerius.gml.base.AeriusGMLVersion;
+import nl.overheid.aerius.gml.base.GMLHelper;
+import nl.overheid.aerius.importer.ImportOption;
 import nl.overheid.aerius.shared.domain.v2.importer.ImportParcel;
 import nl.overheid.aerius.shared.exception.AeriusException;
+import nl.overheid.aerius.shared.exception.AeriusException.Reason;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 
 /**
  * Test class to check how the GML importer handles invalid input report these as warnings.
  */
-public class GMLValidateWarningsTest {
+class GMLValidateWarningsTest {
+
+  private static final String LATEST_WARNINGS_VALIDATE = "latest/validate/warnings/";
 
   private enum TestFile {
     WARNING_OLD_GML_VERSION;
@@ -57,7 +67,7 @@ public class GMLValidateWarningsTest {
 
   }
 
-  public static List<Object[]> data() throws FileNotFoundException {
+  static List<Object[]> data() throws FileNotFoundException {
     final List<Object[]> files = new ArrayList<>();
     for (final AeriusGMLVersion version : AeriusGMLVersion.values()) {
       for (final TestFile file : TestFile.values()) {
@@ -72,22 +82,50 @@ public class GMLValidateWarningsTest {
 
   @ParameterizedTest(name = "{0}-{1}")
   @MethodSource("data")
-  public void testVersionGML(final AeriusGMLVersion version, final TestFile testFile) throws IOException, AeriusException {
-    final ImportParcel oldResult = getImportResult(version.name().toLowerCase(), testFile);
+  void testVersionGML(final AeriusGMLVersion version, final TestFile testFile) throws IOException, AeriusException {
+    final ImportParcel oldResult = getImportResult(version.name().toLowerCase(), testFile.getFileName());
+
     if (testFile.expectWarning(version)) {
       assertFalse(oldResult.getWarnings().isEmpty(), "Expected warnings, but got none");
     } else {
       // warnings test on allowed
       for (final AeriusException warning : oldResult.getWarnings()) {
-        assertSame(warning.getReason(),
-            ImaerExceptionReason.GML_VERSION_NOT_LATEST, "Not expected warning, got " + warning.getReason() + " " + warning.getMessage());
+        assertSame(ImaerExceptionReason.GML_VERSION_NOT_LATEST,
+            warning.getReason(), "Not expected warning, got " + warning.getReason() + " " + warning.getMessage());
       }
     }
   }
 
-  private ImportParcel getImportResult(final String relativePath, final TestFile testFile)
-      throws IOException, AeriusException {
-    return AssertGML.getImportResult(relativePath, testFile.getFileName());
+  @Test
+  void testLineLengthExceedsLimit() throws IOException, AeriusException {
+    assertResult("warning_1004_limit_line_length_exceeded", "GML line length exceeds limit", ImaerExceptionReason.LIMIT_LINE_LENGTH_EXCEEDED);
   }
 
+  @Test
+  void testPolygonSurfaceExceedsLimit() throws IOException, AeriusException {
+    assertResult("warning_1005_limit_polygon_surface_exceeded", "GML polygon surface exceeds limit",
+        ImaerExceptionReason.LIMIT_POLYGON_SURFACE_EXCEEDED);
+  }
+
+  private static void assertResult(final String fileName, final String expectedReasonTxt, final Reason expectedReason)
+      throws IOException, AeriusException {
+    AeriusException foundWarning = null;
+    final ImportParcel result = getImportResult(LATEST_WARNINGS_VALIDATE, fileName);
+
+    Assertions.assertIterableEquals(List.of(), result.getExceptions(), "Should have no errors");
+    for(final AeriusException warning: result.getWarnings()) {
+      if (expectedReason.equals(warning.getReason())) {
+        foundWarning = warning;
+      }
+    }
+    assertNotNull(foundWarning, "Should have warning");
+    assertEquals(expectedReason, foundWarning.getReason(), "Expected an AeriusException with reason " + expectedReasonTxt);
+  }
+
+  private static ImportParcel getImportResult(final String relativePath, final String filename) throws IOException, AeriusException {
+    final GMLHelper mockGMLHelper = AssertGML.mockGMLHelper();
+    mockGMLHelper.getEmissionSourceGeometryLimits().setMaxLineLength(1);
+    mockGMLHelper.getEmissionSourceGeometryLimits().setMaxPolygonSurface(1);
+    return AssertGML.getImportResult(relativePath, filename, EnumSet.of(ImportOption.WARNING_ON_GEOMETRY_LIMITS, ImportOption.INCLUDE_SOURCES),mockGMLHelper);
+  }
 }

@@ -43,13 +43,13 @@ import nl.overheid.aerius.gml.base.GMLHelper;
 import nl.overheid.aerius.shared.domain.Theme;
 import nl.overheid.aerius.shared.domain.scenario.SituationType;
 import nl.overheid.aerius.shared.domain.v2.building.BuildingFeature;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKCorrection;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKDispersionLineFeature;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKMeasureFeature;
 import nl.overheid.aerius.shared.domain.v2.geojson.Crs;
 import nl.overheid.aerius.shared.domain.v2.geojson.Crs.CrsContent;
 import nl.overheid.aerius.shared.domain.v2.geojson.FeatureCollection;
 import nl.overheid.aerius.shared.domain.v2.importer.ImportParcel;
-import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKCorrection;
-import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKDispersionLineFeature;
-import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKMeasureFeature;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPointFeature;
 import nl.overheid.aerius.shared.domain.v2.point.CustomCalculationPoint;
 import nl.overheid.aerius.shared.domain.v2.scenario.Definitions;
@@ -59,10 +59,12 @@ import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceFeature;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 import nl.overheid.aerius.shared.geo.EPSG;
+import nl.overheid.aerius.shared.geometry.EmissionSourceLimits;
 import nl.overheid.aerius.validation.BuildingValidator;
-import nl.overheid.aerius.validation.DefinitionsValidator;
-import nl.overheid.aerius.validation.EmissionSourceValidator;
 import nl.overheid.aerius.validation.CIMLKMeasureValidator;
+import nl.overheid.aerius.validation.DefinitionsValidator;
+import nl.overheid.aerius.validation.EmissionSourceLimitValidator;
+import nl.overheid.aerius.validation.EmissionSourceValidator;
 
 /**
  * Importer for IMAER GML files.
@@ -73,10 +75,12 @@ public class ImaerImporter {
 
   private final GMLReaderFactory factory;
   private final EPSG epsg;
+  private final EmissionSourceLimits limits;
 
   public ImaerImporter(final GMLHelper gmlHelper) throws AeriusException {
     factory = GMLReaderFactory.getFactory(gmlHelper);
     epsg = gmlHelper.getReceptorGridSettings().getEPSG();
+    limits = gmlHelper.getEmissionSourceGeometryLimits();
   }
 
   /**
@@ -182,6 +186,9 @@ public class ImaerImporter {
       reader.enforceEmissions(sources, importYear.orElse(result.getSituation().getYear()));
       if (ImportOption.VALIDATE_SOURCES.in(importOptions)) {
         EmissionSourceValidator.validateSourcesWithEmissions(sources, result.getExceptions(), result.getWarnings());
+      }
+      if (ImportOption.WARNING_ON_GEOMETRY_LIMITS.in(importOptions)) {
+        result.getWarnings().addAll(EmissionSourceLimitValidator.checkGeometries(sources, limits));
       }
       result.getSituation().getEmissionSourcesList().addAll(sources);
     }

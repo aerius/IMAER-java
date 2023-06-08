@@ -60,7 +60,7 @@ import nl.overheid.aerius.test.GMLTestDomain;
 /**
  * Test class for {@link GMLWriter}.
  */
-public class GMLWriterTest {
+class GMLWriterTest {
 
   private static final String SOURCES_ONLY_FILE = "test_sources_only";
   // This is a copy of test_sources_only but unformatted.

@@ -57,7 +57,7 @@ import nl.overheid.aerius.test.GMLTestDomain;
  * Test class that reads an old version GML and compares it to the current version of that same GML.
  * Tests if old versions can be imported and if emissions are different based on different versions.
  */
-public class GMLOldVersionTest {
+class GMLOldVersionTest {
 
   private static final Logger LOG = LoggerFactory.getLogger(GMLOldVersionTest.class);
 
@@ -108,23 +108,23 @@ public class GMLOldVersionTest {
       this.warningsIn = Arrays.asList(warningsIn);
     }
 
-    public String getFileName() {
+    String getFileName() {
       return name().toLowerCase();
     }
 
-    public boolean expectWarning(final AeriusGMLVersion version) {
+    boolean expectWarning(final AeriusGMLVersion version) {
       return warningsIn.contains(version);
     }
 
-    public boolean expectError(final AeriusGMLVersion version) {
+    boolean expectError(final AeriusGMLVersion version) {
       return errorsIn.contains(version);
     }
 
-    public boolean shouldCheckEmissions(final AeriusGMLVersion version) {
+    boolean shouldCheckEmissions(final AeriusGMLVersion version) {
       return !skipEmissionCheckIn.contains(version);
     }
 
-    public boolean shouldCheckNumberOfSources() {
+    boolean shouldCheckNumberOfSources() {
       return !skipNumberOfSourcesCheck;
     }
 
@@ -137,7 +137,7 @@ public class GMLOldVersionTest {
       GML_SOURCE_NO_EMISSION, GML_OFF_ROAD_CATEGORY_CONVERTED);
   private static final EnumSet<ImaerExceptionReason> VALID_ERRORS = EnumSet.noneOf(ImaerExceptionReason.class);
 
-  public static List<Object[]> data() throws FileNotFoundException {
+  static List<Object[]> data() throws FileNotFoundException {
     final List<Object[]> files = new ArrayList<>();
     for (final AeriusGMLVersion version : AeriusGMLVersion.values()) {
       for (final TestFile file : TestFile.values()) {
@@ -156,7 +156,7 @@ public class GMLOldVersionTest {
 
   @ParameterizedTest(name = "{0}-{1}")
   @MethodSource("data")
-  public void testVersionGML(final AeriusGMLVersion version, final TestFile testFile) throws IOException, AeriusException {
+  void testVersionGML(final AeriusGMLVersion version, final TestFile testFile) throws IOException, AeriusException {
     final ImportParcel oldResult = getImportResult(version.name().toLowerCase() + TEST_FOLDER, testFile);
     final ImportParcel currentResult = getImportResult(CURRENT_VERSION + TEST_FOLDER, testFile);
     //if there is, there should be a current counter part.

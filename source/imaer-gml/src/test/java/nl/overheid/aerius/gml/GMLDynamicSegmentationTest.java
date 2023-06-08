@@ -24,7 +24,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,21 +32,13 @@ import nl.overheid.aerius.shared.domain.v2.source.EmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceFeature;
 import nl.overheid.aerius.shared.domain.v2.source.SRM2RoadEmissionSource;
 import nl.overheid.aerius.shared.exception.AeriusException;
-import nl.overheid.aerius.test.GMLTestDomain;
 
-public class GMLDynamicSegmentationTest {
+class GMLDynamicSegmentationTest {
   private static final Logger LOG = LoggerFactory.getLogger(GMLDynamicSegmentationTest.class);
   private static final String DYNAMIC_SEGMENTATION_FILE = "test_dynamic_segmentation_road";
 
-  private static GMLTestDomain testDomain;
-
-  @BeforeAll
-  public static void setUpBeforeClass() throws IOException {
-    testDomain = new GMLTestDomain();
-  }
-
   @Test
-  public void testConvertToEmissionSources() throws IOException, AeriusException {
+  void testConvertToEmissionSources() throws IOException, AeriusException {
     final GMLReaderFactory factory = GMLReaderFactory.getFactory(AssertGML.mockGMLHelper());
     List<EmissionSourceFeature> sources = null;
     final List<AeriusException> errors = new ArrayList<>();

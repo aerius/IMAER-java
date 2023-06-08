@@ -45,7 +45,7 @@ import nl.overheid.aerius.util.ImaerFileUtil;
  * Verifies that validation exceptions are thrown when unsupported features are supplied in an gml file. All gml files
  * in src/test/resources/nl/overheid/aerius/gml/latest/validate/unsupportedFeatures are tested.
  */
-public class UnsupportedFeaturesTest {
+class UnsupportedFeaturesTest {
   private static final String RESOURCE_PATH = "latest/validate/unsupportedFeatures/";
 
   private static final FilenameFilter GML_FILENAME_FILTER = new FilenameFilter() {
@@ -83,7 +83,7 @@ public class UnsupportedFeaturesTest {
    */
   @ParameterizedTest(name = "{0}")
   @MethodSource("data")
-  public void testValidationFailure(final String fileName, final File file) throws FileNotFoundException, IOException, AeriusException {
+  void testValidationFailure(final String fileName, final File file) throws FileNotFoundException, IOException, AeriusException {
     final ImaerImporter importer = new ImaerImporter(AssertGML.mockGMLHelper());
 
     try (final InputStream inputStream = new BufferedInputStream(new FileInputStream(file))) {
