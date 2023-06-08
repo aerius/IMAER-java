@@ -59,11 +59,11 @@ import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceFeature;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 import nl.overheid.aerius.shared.geo.EPSG;
-import nl.overheid.aerius.shared.geometry.EmissionSourceGeometryLimits;
+import nl.overheid.aerius.shared.geometry.EmissionSourceLimits;
 import nl.overheid.aerius.validation.BuildingValidator;
 import nl.overheid.aerius.validation.CIMLKMeasureValidator;
 import nl.overheid.aerius.validation.DefinitionsValidator;
-import nl.overheid.aerius.validation.EmissionSourceCheckLimits;
+import nl.overheid.aerius.validation.EmissionSourceLimitValidator;
 import nl.overheid.aerius.validation.EmissionSourceValidator;
 
 /**
@@ -75,7 +75,7 @@ public class ImaerImporter {
 
   private final GMLReaderFactory factory;
   private final EPSG epsg;
-  private final EmissionSourceGeometryLimits limits;
+  private final EmissionSourceLimits limits;
 
   public ImaerImporter(final GMLHelper gmlHelper) throws AeriusException {
     factory = GMLReaderFactory.getFactory(gmlHelper);
@@ -188,7 +188,7 @@ public class ImaerImporter {
         EmissionSourceValidator.validateSourcesWithEmissions(sources, result.getExceptions(), result.getWarnings());
       }
       if (ImportOption.WARNING_ON_GEOMETRY_LIMITS.in(importOptions)) {
-        result.getWarnings().addAll(EmissionSourceCheckLimits.checkGeometries(sources, limits));
+        result.getWarnings().addAll(EmissionSourceLimitValidator.checkGeometries(sources, limits));
       }
       result.getSituation().getEmissionSourcesList().addAll(sources);
     }

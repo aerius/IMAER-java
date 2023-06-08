@@ -21,7 +21,7 @@ import java.io.Serializable;
 /**
  * Limits imposed on the emission sources.
  */
-public class EmissionSourceGeometryLimits implements Serializable {
+public class EmissionSourceLimits implements Serializable {
 
   private static final long serialVersionUID = 1L;
 

@@ -25,18 +25,18 @@ import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceFeature;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
-import nl.overheid.aerius.shared.geometry.EmissionSourceGeometryLimits;
+import nl.overheid.aerius.shared.geometry.EmissionSourceLimits;
 import nl.overheid.aerius.shared.geometry.GeometryCalculator;
 import nl.overheid.aerius.util.GeometryCalculatorImpl;
 
 /**
  * Util class to check limits.
  */
-public final class EmissionSourceCheckLimits {
+public final class EmissionSourceLimitValidator {
 
   private static final GeometryCalculator GEOMETRY_CALCULATOR = new GeometryCalculatorImpl();
 
-  private EmissionSourceCheckLimits() {
+  private EmissionSourceLimitValidator() {
     // Util class.
   }
 
@@ -47,7 +47,7 @@ public final class EmissionSourceCheckLimits {
    * @param limits the limits to check against.
    * @throws AeriusException throws exception if a limit is exceeded
    */
-  public static void check(final int numberOfSources, final EmissionSourceGeometryLimits limits) throws AeriusException {
+  public static void check(final int numberOfSources, final EmissionSourceLimits limits) throws AeriusException {
     if (!limits.isWithinMaxSourcesLimit(numberOfSources)) {
       throw new AeriusException(ImaerExceptionReason.LIMIT_SOURCES_EXCEEDED, String.valueOf(limits.getMaxSources()),
           String.valueOf(numberOfSources));
@@ -62,7 +62,7 @@ public final class EmissionSourceCheckLimits {
    * @param limits the limits to check against.
    * @return list of geometry exceptions.
    */
-  public static List<AeriusException> checkGeometries(final List<EmissionSourceFeature> emissionSourceList, final EmissionSourceGeometryLimits limits) {
+  public static List<AeriusException> checkGeometries(final List<EmissionSourceFeature> emissionSourceList, final EmissionSourceLimits limits) {
     final List<AeriusException> exceptions = new ArrayList<>();
     for (final EmissionSourceFeature emissionSourceFeature : emissionSourceList) {
       final Geometry geo = emissionSourceFeature.getGeometry();

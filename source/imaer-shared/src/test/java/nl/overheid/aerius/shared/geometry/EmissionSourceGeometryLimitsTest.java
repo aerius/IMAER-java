@@ -22,13 +22,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 /**
- * Test class for {@link EmissionSourceGeometryLimits}.
+ * Test class for {@link EmissionSourceLimits}.
  */
 class EmissionSourceGeometryLimitsTest {
 
   @Test
   void testMaxLineLength() {
-    final EmissionSourceGeometryLimits cl = new EmissionSourceGeometryLimits();
+    final EmissionSourceLimits cl = new EmissionSourceLimits();
     cl.setMaxLineLength(10);
     assertTrue(cl.isWithinLineLengthLimit(5), "MaxLineLength");
     assertTrue(cl.isWithinLineLengthLimit(10), "MaxLineLength");
@@ -38,7 +38,7 @@ class EmissionSourceGeometryLimitsTest {
 
   @Test
   void testMaxPolygonSurface() {
-    final EmissionSourceGeometryLimits cl = new EmissionSourceGeometryLimits();
+    final EmissionSourceLimits cl = new EmissionSourceLimits();
     cl.setMaxPolygonSurface(10);
     assertTrue(cl.isWithinPolygonSurfaceLimit(5), "MaxPolygonSurface");
     assertTrue(cl.isWithinPolygonSurfaceLimit(10), "MaxPolygonSurface");
@@ -48,7 +48,7 @@ class EmissionSourceGeometryLimitsTest {
 
   @Test
   void testMaxSources() {
-    final EmissionSourceGeometryLimits cl = new EmissionSourceGeometryLimits();
+    final EmissionSourceLimits cl = new EmissionSourceLimits();
     cl.setMaxSources(10);
     assertTrue(cl.isWithinMaxSourcesLimit(5), "MaxSources");
     assertTrue(cl.isWithinMaxSourcesLimit(10), "MaxSources");

@@ -68,7 +68,7 @@ import nl.overheid.aerius.shared.domain.v2.source.shipping.inland.InlandWaterway
 import nl.overheid.aerius.shared.emissions.EmissionsUpdater;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
-import nl.overheid.aerius.shared.geometry.EmissionSourceGeometryLimits;
+import nl.overheid.aerius.shared.geometry.EmissionSourceLimits;
 import nl.overheid.aerius.shared.geometry.GeometryCalculator;
 import nl.overheid.aerius.test.GMLTestDomain;
 import nl.overheid.aerius.test.TestValidationAndEmissionHelper;
@@ -225,7 +225,7 @@ public final class AssertGML {
   }
 
   private static void mockEmissionSourceGeometryLimits(final GMLHelper gmlHelper) {
-    final EmissionSourceGeometryLimits emissionSourceGeometryLimits = new EmissionSourceGeometryLimits();
+    final EmissionSourceLimits emissionSourceGeometryLimits = new EmissionSourceLimits();
 
     emissionSourceGeometryLimits.setMaxSources(Integer.MAX_VALUE);
     emissionSourceGeometryLimits.setMaxLineLength(Integer.MAX_VALUE);

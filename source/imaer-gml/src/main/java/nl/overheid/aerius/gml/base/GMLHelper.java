@@ -22,7 +22,7 @@ import nl.overheid.aerius.gml.base.source.ship.v31.GMLInlandShippingSupplier;
 import nl.overheid.aerius.shared.domain.geo.ReceptorGridSettings;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceFeature;
 import nl.overheid.aerius.shared.exception.AeriusException;
-import nl.overheid.aerius.shared.geometry.EmissionSourceGeometryLimits;
+import nl.overheid.aerius.shared.geometry.EmissionSourceLimits;
 import nl.overheid.aerius.validation.ValidationHelper;
 
 /**
@@ -53,7 +53,7 @@ public interface GMLHelper extends GMLInlandShippingSupplier, GMLLegacyCodesSupp
   /**
    * @return Returns the geometry limits on emission sources.
    */
-  default EmissionSourceGeometryLimits getEmissionSourceGeometryLimits() {
+  default EmissionSourceLimits getEmissionSourceGeometryLimits() {
     // Added default for backward compatibility. Will be removed when used in Calculator.
     return null;
   }
