@@ -139,7 +139,8 @@ public class GMLRoundtripTest {
       {"scenario_traffic_network_reference", CharacteristicsType.OPS},
       {"scenario_traffic_network_proposed", CharacteristicsType.OPS},
       {"nca_calculation_point", CharacteristicsType.ADMS},
-      {"nca_calculation_options", CharacteristicsType.ADMS}
+      {"nca_calculation_options", CharacteristicsType.ADMS},
+      {"nca_calculation_options_quick_run", CharacteristicsType.ADMS}
   };
 
   private static final String LATEST_VERSION = "latest";
