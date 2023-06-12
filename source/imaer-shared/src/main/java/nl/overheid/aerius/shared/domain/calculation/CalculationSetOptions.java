@@ -68,7 +68,7 @@ public class CalculationSetOptions implements Serializable {
     return calculationJobType;
   }
 
-  public void setCalculationJobType(CalculationJobType calculationJobType) {
+  public void setCalculationJobType(final CalculationJobType calculationJobType) {
     this.calculationJobType = calculationJobType;
   }
 
@@ -94,7 +94,7 @@ public class CalculationSetOptions implements Serializable {
    * @return true if relevant
    */
   public boolean isMaximumRangeRelevant() {
-    return calculationMethod == CalculationMethod.NATURE_AREA;
+    return calculationMethod == CalculationMethod.NATURE_AREA || calculationMethod == CalculationMethod.QUICK_RUN;
   }
 
   /**
