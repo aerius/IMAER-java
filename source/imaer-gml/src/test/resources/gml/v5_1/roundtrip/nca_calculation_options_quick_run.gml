@@ -24,6 +24,7 @@
                     <imaer:substance>NH3</imaer:substance>
                     <imaer:resultType>CONCENTRATION</imaer:resultType>
                     <imaer:resultType>DEPOSITION</imaer:resultType>
+                    <imaer:maximumRange>10.0</imaer:maximumRange>
                     <imaer:option>
                         <imaer:CalculationOption>
                             <imaer:key>adms_meteo_years</imaer:key>
