@@ -39,6 +39,13 @@ public interface MetaData {
   String getDatabaseVersion();
 
   /**
+   * @return The creator of the GML.
+   */
+  default String getGmlCreator() {
+    return null;
+  }
+
+  /**
    * @return The name of the emission sources list in the featurecollection.
    */
   String getSituationName();

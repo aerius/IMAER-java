@@ -46,6 +46,7 @@
 					<imaer:databaseVersion>1.0-SNAPSHOT_20170215_04814ebbbe</imaer:databaseVersion>
 				</imaer:VersionMetadata>
 			</imaer:version>
+			<imaer:gmlCreator>Brahma</imaer:gmlCreator>
 		</imaer:AeriusCalculatorMetadata>
 	</imaer:metadata>
 </imaer:FeatureCollectionCalculator>

@@ -29,13 +29,14 @@ import nl.overheid.aerius.shared.domain.scenario.SituationType;
  *
  */
 @XmlType(name = "AeriusCalculatorMetadataType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"projectMetadataProperty",
-    "situationMetadataProperty", "calculationMetadataProperty", "versionMetadataProperty"})
+    "situationMetadataProperty", "calculationMetadataProperty", "versionMetadataProperty", "gmlCreator"})
 public class MetaDataImpl implements MetaData {
 
   private SituationMetadata situation;
   private CalculationMetadata calculation;
   private ProjectMetadata project;
   private VersionMetadata version;
+  private String gmlCreator;
 
   @XmlElement(namespace = CalculatorSchema.NAMESPACE, name = "situation")
   public SituationMetadataProperty getSituationMetadataProperty() {
@@ -99,6 +100,16 @@ public class MetaDataImpl implements MetaData {
 
   public void setVersionMetadataProperty(final VersionMetadataProperty versionProperty) {
     this.version = versionProperty.getProperty();
+  }
+
+  @XmlElement(namespace = CalculatorSchema.NAMESPACE)
+  @Override
+  public String getGmlCreator() {
+    return gmlCreator;
+  }
+
+  public void setGmlCreator(final String gmlCreator) {
+    this.gmlCreator = gmlCreator;
   }
 
   @XmlTransient

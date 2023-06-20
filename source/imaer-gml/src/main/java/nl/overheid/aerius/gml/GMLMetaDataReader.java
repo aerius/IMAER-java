@@ -103,6 +103,14 @@ public class GMLMetaDataReader {
     return checkFeatureCollection(featureCollection) ? featureCollection.getMetaData().getDatabaseVersion() : null;
   }
 
+  /**
+   * GML creator specified in the GML data.
+   * @return GML creator
+   */
+  public String readGmlCreator() {
+    return checkFeatureCollection(featureCollection) ? featureCollection.getMetaData().getGmlCreator() : null;
+  }
+
   private boolean checkFeatureCollection(final FeatureCollection featureCollection) {
     return featureCollection != null && featureCollection.getMetaData() != null;
   }
