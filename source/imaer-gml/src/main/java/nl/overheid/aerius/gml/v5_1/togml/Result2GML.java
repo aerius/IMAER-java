@@ -28,10 +28,10 @@ import nl.overheid.aerius.gml.base.geo.Geometry2GML;
 import nl.overheid.aerius.gml.v5_1.base.CalculatorSchema;
 import nl.overheid.aerius.gml.v5_1.geo.Polygon;
 import nl.overheid.aerius.gml.v5_1.result.AbstractCalculationPoint;
+import nl.overheid.aerius.gml.v5_1.result.CIMLKCalculationPoint;
 import nl.overheid.aerius.gml.v5_1.result.CalculationPointCorrection;
 import nl.overheid.aerius.gml.v5_1.result.CalculationPointCorrectionProperty;
 import nl.overheid.aerius.gml.v5_1.result.CustomCalculationPoint;
-import nl.overheid.aerius.gml.v5_1.result.CIMLKCalculationPoint;
 import nl.overheid.aerius.gml.v5_1.result.NcaCustomCalculationPoint;
 import nl.overheid.aerius.gml.v5_1.result.ReceptorPoint;
 import nl.overheid.aerius.gml.v5_1.result.Result;
@@ -42,9 +42,9 @@ import nl.overheid.aerius.shared.domain.geo.HexagonUtil;
 import nl.overheid.aerius.shared.domain.geo.HexagonZoomLevel;
 import nl.overheid.aerius.shared.domain.result.EmissionResultKey;
 import nl.overheid.aerius.shared.domain.result.EmissionResultType;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKCorrection;
 import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
 import nl.overheid.aerius.shared.domain.v2.geojson.Point;
-import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKCorrection;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPoint;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPointFeature;
 import nl.overheid.aerius.shared.exception.AeriusException;
@@ -113,12 +113,14 @@ final class Result2GML {
     final CIMLKCalculationPoint point = new CIMLKCalculationPoint();
     point.setRejectionGrounds(aeriusPoint.getRejectionGrounds());
     point.setMonitorSubstance(aeriusPoint.getMonitorSubstance());
+    setCustomProperties(aeriusPoint, point);
     return point;
   }
 
   private AbstractCalculationPoint fromNcaCustomPoint(final nl.overheid.aerius.shared.domain.v2.point.NcaCustomCalculationPoint aeriusPoint) {
     final NcaCustomCalculationPoint returnPoint = new NcaCustomCalculationPoint();
     returnPoint.setRoadLocalFractionNO2(aeriusPoint.getRoadLocalFractionNO2());
+    setCustomProperties(aeriusPoint, returnPoint);
     return returnPoint;
   }
 
@@ -127,7 +129,15 @@ final class Result2GML {
     //The proper representation of a custompoint would be a circle with a surface of 1ha.
     //Unclear at this point if this is required for GML and if it should be implemented by a GML polygon, arc or circle.
     //for now, just let the representation be as it isn't as specific as the hexagon.
-    return new CustomCalculationPoint();
+    final CustomCalculationPoint returnPoint = new CustomCalculationPoint();
+    setCustomProperties(aeriusPoint, returnPoint);
+    return returnPoint;
+  }
+
+  private void setCustomProperties(final nl.overheid.aerius.shared.domain.v2.point.CustomCalculationPoint aeriusPoint,
+      final AbstractCalculationPoint returnPoint) {
+    returnPoint.setAssessmentCategory(aeriusPoint.getAssessmentCategory() == null ? null : aeriusPoint.getAssessmentCategory().name());
+    returnPoint.setHeight(aeriusPoint.getHeight());
   }
 
   private AbstractCalculationPoint fromSubPoint(final nl.overheid.aerius.shared.domain.v2.point.SubPoint aeriusPoint) {

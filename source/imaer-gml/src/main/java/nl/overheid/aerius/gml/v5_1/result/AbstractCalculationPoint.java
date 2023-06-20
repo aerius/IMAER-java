@@ -32,7 +32,8 @@ import nl.overheid.aerius.shared.domain.v2.geojson.GeometryType;
 /**
  *
  */
-@XmlType(propOrder = {"point", "representation", "results", "label", "description", "jurisdictionId", "corrections"})
+@XmlType(propOrder = {"point", "representation", "results", "label", "description", "jurisdictionId", "corrections",
+    "height", "assessmentCategory"})
 public abstract class AbstractCalculationPoint extends FeatureMemberImpl implements IsGmlCalculationPoint {
 
   private List<ResultProperty> results = new ArrayList<>();
@@ -40,6 +41,8 @@ public abstract class AbstractCalculationPoint extends FeatureMemberImpl impleme
   private String label;
   private String description;
   private Integer jurisdictionId;
+  private Double height;
+  private String assessmentCategory;
   private List<CalculationPointCorrectionProperty> corrections = new ArrayList<>();
 
   @Override
@@ -106,6 +109,26 @@ public abstract class AbstractCalculationPoint extends FeatureMemberImpl impleme
 
   public void setJurisdictionId(final Integer jurisdictionId) {
     this.jurisdictionId = jurisdictionId;
+  }
+
+  @Override
+  @XmlElement(namespace = CalculatorSchema.NAMESPACE)
+  public Double getHeight() {
+    return height;
+  }
+
+  public void setHeight(final Double height) {
+    this.height = height;
+  }
+
+  @Override
+  @XmlElement(namespace = CalculatorSchema.NAMESPACE)
+  public String getAssessmentCategory() {
+    return assessmentCategory;
+  }
+
+  public void setAssessmentCategory(final String assessmentCategory) {
+    this.assessmentCategory = assessmentCategory;
   }
 
   @Override

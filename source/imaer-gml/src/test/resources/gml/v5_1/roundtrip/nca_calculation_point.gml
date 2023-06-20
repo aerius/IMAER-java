@@ -34,6 +34,8 @@
                 </gml:Point>
             </imaer:GM_Point>
             <imaer:label>DB-team 1e depositie</imaer:label>
+            <imaer:height>3.1</imaer:height>
+            <imaer:assessmentCategory>ECOLOGY</imaer:assessmentCategory>
             <imaer:roadLocalFractionNO2>0.432</imaer:roadLocalFractionNO2>
         </imaer:NcaCustomCalculationPoint>
     </imaer:featureMember>

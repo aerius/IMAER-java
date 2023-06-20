@@ -34,6 +34,14 @@ public interface IsGmlCalculationPoint extends FeatureMember {
 
   Integer getJurisdictionId();
 
+  default Double getHeight() {
+    return null;
+  }
+
+  default String getAssessmentCategory() {
+    return null;
+  }
+
   List<? extends IsGmlProperty<IsGmlCalculationPointCorrection>> getCorrections();
 
 }
