@@ -29,10 +29,11 @@ import nl.overheid.aerius.gml.base.geo.GML2Geometry;
 import nl.overheid.aerius.shared.domain.result.EmissionResultKey;
 import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
 import nl.overheid.aerius.shared.domain.v2.geojson.Point;
+import nl.overheid.aerius.shared.domain.v2.point.AssessmentCategory;
+import nl.overheid.aerius.shared.domain.v2.point.CIMLKCalculationPoint;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPoint;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPointFeature;
 import nl.overheid.aerius.shared.domain.v2.point.CustomCalculationPoint;
-import nl.overheid.aerius.shared.domain.v2.point.CIMLKCalculationPoint;
 import nl.overheid.aerius.shared.domain.v2.point.NcaCustomCalculationPoint;
 import nl.overheid.aerius.shared.domain.v2.point.ReceptorPoint;
 import nl.overheid.aerius.shared.domain.v2.point.SubPoint;
@@ -164,20 +165,36 @@ public class GML2Result {
   }
 
   private CustomCalculationPoint createCustomPoint(final IsGmlCustomCalculationPoint origin) {
-    return new CustomCalculationPoint();
+    final CustomCalculationPoint target = new CustomCalculationPoint();
+    setCustomProperties(origin, target);
+    return target;
   }
 
   private CIMLKCalculationPoint createCIMLKCalculationPoint(final IsGmlCIMLKCalculationPoint origin) {
     final CIMLKCalculationPoint target = new CIMLKCalculationPoint();
     target.setRejectionGrounds(origin.getRejectionGrounds());
     target.setMonitorSubstance(origin.getMonitorSubstance());
+    setCustomProperties(origin, target);
     return target;
   }
 
   private NcaCustomCalculationPoint createNcaCustomCalculationPoint(final IsGmlNcaCustomCalculationPoint origin) {
     final NcaCustomCalculationPoint target = new NcaCustomCalculationPoint();
     target.setRoadLocalFractionNO2(origin.getRoadLocalFractionNO2());
+    setCustomProperties(origin, target);
     return target;
+  }
+
+  private void setCustomProperties(final IsGmlCalculationPoint origin, final CustomCalculationPoint target) {
+    final AssessmentCategory assessmentCategory = AssessmentCategory.safeValueOf(origin.getAssessmentCategory());
+    if (assessmentCategory != null) {
+      target.setAssessmentCategory(assessmentCategory);
+      if (origin.getHeight() == null) {
+        target.setHeight(assessmentCategory.getDefaultHeight());
+      } else {
+        target.setHeight(origin.getHeight());
+      }
+    }
   }
 
   /**

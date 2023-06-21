@@ -27,6 +27,7 @@ public class CustomCalculationPoint extends CalculationPoint {
 
   private int customPointId;
   private Double height;
+  private AssessmentCategory assessmentCategory;
 
   public Double getHeight() {
     return height;
@@ -34,6 +35,14 @@ public class CustomCalculationPoint extends CalculationPoint {
 
   public void setHeight(final Double height) {
     this.height = height;
+  }
+
+  public AssessmentCategory getAssessmentCategory() {
+    return assessmentCategory;
+  }
+
+  public void setAssessmentCategory(final AssessmentCategory assessmentCategory) {
+    this.assessmentCategory = assessmentCategory;
   }
 
   public int getCustomPointId() {

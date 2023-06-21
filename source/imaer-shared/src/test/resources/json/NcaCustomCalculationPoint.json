@@ -9,6 +9,8 @@
     "calculationPointType" : "NCA_CUSTOM_CALCULATION_POINT",
     "label" : "DB-team 1e depositie",
     "customPointId" : 234,
+    "height" : 2.4,
+    "assessmentCategory" : "HUMAN_HEALTH",
     "roadLocalFractionNO2" : 0.423
   }
 }

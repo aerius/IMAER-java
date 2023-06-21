@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:IMAER="http://imaer.aerius.nl/5.1" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:gmlsf="http://www.opengis.net/gmlsf/2.0" elementFormDefault="qualified" targetNamespace="http://imaer.aerius.nl/5.1" version="5.1.1">
+<?xml version="1.0" encoding="UTF-8"?><schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:IMAER="http://imaer.aerius.nl/5.1" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:gmlsf="http://www.opengis.net/gmlsf/2.0" elementFormDefault="qualified" targetNamespace="http://imaer.aerius.nl/5.1" version="5.1.2">
   <annotation>
     <documentation>Dit model beschrijft het InformatieModel AERius (IMAER). IMAER is het standaard gegevens uitwisselingsformaat van AERIUS en wordt gebruikt voor het importeren, exporteren en uitwisselen van gegevens met en tussen de verschillende AERIUS producten (o.a. Calculator, Monitor en Register).  
 
@@ -433,6 +433,11 @@ NOTE Met behulp van deze metadata wordt vastgelegd met welke versies van softwar
           <documentation>Metadata over de gebruikte versies.</documentation>
         </annotation>
       </element>
+      <element minOccurs="0" name="gmlCreator" type="string">
+        <annotation>
+          <documentation>Metadata over welk programma de GML heeft geproduceerd.</documentation>
+        </annotation>
+      </element>
     </sequence>
   </complexType>
   <complexType name="AeriusCalculatorMetadataPropertyType">
@@ -758,6 +763,16 @@ NOTE Er zijn verschillende soorten rekenpunten in het model aanwezig. Deze abstr
           <element maxOccurs="unbounded" minOccurs="0" name="correction" type="IMAER:CalculationPointCorrectionPropertyType">
             <annotation>
               <documentation>Correcties op een rekenpunt (NSL).</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="height" type="double">
+            <annotation>
+              <documentation>Een optionele hoogte voor het rekenpunt.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="assessmentCategory" type="string">
+            <annotation>
+              <documentation>Een optionele categorie voor beoordeling.</documentation>
             </annotation>
           </element>
         </sequence>
