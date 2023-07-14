@@ -25,13 +25,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 import nl.overheid.aerius.shared.domain.result.EmissionResultKey;
-import nl.overheid.aerius.shared.domain.v2.geojson.Point;
 import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKMonitorSubstance;
 import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKRejectionGrounds;
+import nl.overheid.aerius.shared.domain.v2.geojson.Point;
+import nl.overheid.aerius.shared.domain.v2.point.AssessmentCategory;
+import nl.overheid.aerius.shared.domain.v2.point.CIMLKCalculationPoint;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPoint;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPointFeature;
 import nl.overheid.aerius.shared.domain.v2.point.CustomCalculationPoint;
-import nl.overheid.aerius.shared.domain.v2.point.CIMLKCalculationPoint;
 import nl.overheid.aerius.shared.domain.v2.point.NcaCustomCalculationPoint;
 import nl.overheid.aerius.shared.domain.v2.point.ReceptorPoint;
 import nl.overheid.aerius.shared.domain.v2.point.SubPoint;
@@ -70,6 +71,7 @@ class CalculationPointDuplicatorTest {
     final CustomCalculationPoint customPoint = new CustomCalculationPoint();
     setBaseProperties(customPoint);
     customPoint.setCustomPointId(939);
+    customPoint.setAssessmentCategory(AssessmentCategory.ECOLOGY);
     customPoint.setHeight(32.2);
 
     final CalculationPointFeature original = construct(customPoint);
@@ -82,6 +84,7 @@ class CalculationPointDuplicatorTest {
     final CustomCalculationPoint duplicatedCustomPoint = (CustomCalculationPoint) duplicated.getProperties();
     basePropertiesAssertions(customPoint, duplicatedCustomPoint);
     assertEquals(customPoint.getCustomPointId(), duplicatedCustomPoint.getCustomPointId(), "custom point ID");
+    assertEquals(customPoint.getAssessmentCategory(), duplicatedCustomPoint.getAssessmentCategory(), "assessment category");
     assertEquals(customPoint.getHeight(), duplicatedCustomPoint.getHeight(), "height");
   }
 
