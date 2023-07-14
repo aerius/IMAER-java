@@ -18,11 +18,11 @@ package nl.overheid.aerius.util;
 
 import nl.overheid.aerius.shared.domain.v2.geojson.IsFeature;
 import nl.overheid.aerius.shared.domain.v2.geojson.Point;
+import nl.overheid.aerius.shared.domain.v2.point.CIMLKCalculationPoint;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPoint;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPointFeature;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPointVisitor;
 import nl.overheid.aerius.shared.domain.v2.point.CustomCalculationPoint;
-import nl.overheid.aerius.shared.domain.v2.point.CIMLKCalculationPoint;
 import nl.overheid.aerius.shared.domain.v2.point.NcaCustomCalculationPoint;
 import nl.overheid.aerius.shared.domain.v2.point.ReceptorPoint;
 import nl.overheid.aerius.shared.domain.v2.point.SubPoint;
@@ -101,6 +101,7 @@ public class CalculationPointDuplicator implements CalculationPointVisitor<Calcu
   protected void copyCustomProperties(final CustomCalculationPoint originalPoint, final CustomCalculationPoint duplicatePoint) {
     duplicatePoint.setCustomPointId(originalPoint.getCustomPointId());
     duplicatePoint.setHeight(originalPoint.getHeight());
+    duplicatePoint.setAssessmentCategory(originalPoint.getAssessmentCategory());
     copyBaseProperties(originalPoint, duplicatePoint);
   }
 
