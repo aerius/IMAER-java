@@ -71,6 +71,7 @@
                 </gml:Point>
             </imaer:GM_Point>
             <imaer:label>No height, with assessment category</imaer:label>
+            <imaer:height>1.0</imaer:height>
             <imaer:assessmentCategory>ECOLOGY</imaer:assessmentCategory>
             <imaer:roadLocalFractionNO2>0.432</imaer:roadLocalFractionNO2>
         </imaer:NcaCustomCalculationPoint>
@@ -89,6 +90,7 @@
                 </gml:Point>
             </imaer:GM_Point>
             <imaer:label>No height, no assessment category</imaer:label>
+            <imaer:height>1.5</imaer:height>
             <imaer:roadLocalFractionNO2>0.432</imaer:roadLocalFractionNO2>
         </imaer:NcaCustomCalculationPoint>
     </imaer:featureMember>

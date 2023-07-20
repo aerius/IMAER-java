@@ -27,6 +27,7 @@ import nl.overheid.aerius.gml.base.GMLConversionData;
 import nl.overheid.aerius.gml.base.IsGmlProperty;
 import nl.overheid.aerius.gml.base.geo.GML2Geometry;
 import nl.overheid.aerius.shared.domain.result.EmissionResultKey;
+import nl.overheid.aerius.shared.domain.v2.characteristics.adms.NcaPointHeightSupplier;
 import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
 import nl.overheid.aerius.shared.domain.v2.geojson.Point;
 import nl.overheid.aerius.shared.domain.v2.point.AssessmentCategory;
@@ -182,19 +183,13 @@ public class GML2Result {
     final NcaCustomCalculationPoint target = new NcaCustomCalculationPoint();
     target.setRoadLocalFractionNO2(origin.getRoadLocalFractionNO2());
     setCustomProperties(origin, target);
+    target.setHeight(NcaPointHeightSupplier.getHeight(target.getAssessmentCategory(), origin.getHeight()));
     return target;
   }
 
   private void setCustomProperties(final IsGmlCalculationPoint origin, final CustomCalculationPoint target) {
-    final AssessmentCategory assessmentCategory = AssessmentCategory.safeValueOf(origin.getAssessmentCategory());
-    if (assessmentCategory != null) {
-      target.setAssessmentCategory(assessmentCategory);
-      if (origin.getHeight() == null) {
-        target.setHeight(assessmentCategory.getDefaultHeight());
-      } else {
-        target.setHeight(origin.getHeight());
-      }
-    }
+    target.setAssessmentCategory(AssessmentCategory.safeValueOf(origin.getAssessmentCategory()));
+    target.setHeight(origin.getHeight());
   }
 
   /**
