@@ -68,6 +68,12 @@ import nl.overheid.aerius.test.GMLTestDomain;
  * filename: [test]_v[version].gml
  * <p>b) Add the test to {@link #SKIPPED_TESTS}. This should preferably only be done
  * for tests that contain features not available in older versions.
+ *
+ * <p>In some cases the GML might be enriched with additional data.
+ * In that case the input file would be different from the output data.
+ * In such case a version of the file with `-reference` appended to the name can be added next the the input file.
+ * This file should contain the enriched data and will then be used as reference output.
+ * The enriched reference file itself will also be tested and should result in the same content.
  */
 class GMLRoundtripTest {
 
@@ -144,6 +150,7 @@ class GMLRoundtripTest {
   };
 
   private static final String LATEST_VERSION = "latest";
+  private static final String REFERENCE = "-reference";
   private static final String TEST_FOLDER = "/roundtrip/";
   private static final AeriusGMLVersion CURRENT_GML_VERSION = GMLWriter.LATEST_WRITER_VERSION;
   private static final String CURRENT_VERSION = CURRENT_GML_VERSION.name().toLowerCase();
@@ -276,25 +283,30 @@ class GMLRoundtripTest {
   private void assertGMLs(final String generatedGML, final String version, final String file) throws IOException {
     final String actual = replaceIncomparables(generatedGML);
     assertFalse(actual.isEmpty(), "Result shouldn't be empty for " + file);
-    final String expected = replaceIncomparables(getFileContent(version, file));
+    final String expected = replaceIncomparables(getReferenceFileContent(version, file));
     AssertGML.assertEqualsGML(expected, actual, file);
   }
 
-  private String getFileContent(final String version, final String file) throws IOException {
+  private String getReferenceFileContent(final String version, final String file) throws IOException {
     final String relativePathCompatibleOld = LATEST_VERSION + TEST_FOLDER;
     final String fileNameCompatibleOld = file + '_' + version;
+    final String fileNameAlternativeReference = file + REFERENCE;
     final String relativePathCurrent = CURRENT_VERSION + TEST_FOLDER;
-    final String fileNameCurrent = file;
 
-    final String compatibleOld = AssertGML.getFileContent(relativePathCompatibleOld, fileNameCompatibleOld);
-    if (compatibleOld.isEmpty()) {
-      LOG.debug("Getting current file content with path '{}' and filename '{}'. Not an old compatible version found.",
-          relativePathCurrent, fileNameCurrent);
-    } else {
-      LOG.debug("Getting current file content with path '{}' and filename '{}'. Old compatible version found.",
-          relativePathCompatibleOld, fileNameCompatibleOld);
+    String reference = getReferenceFileContent(relativePathCompatibleOld, fileNameCompatibleOld, "Old compatible version found.");
+    if (reference.isEmpty()) {
+      reference = getReferenceFileContent(relativePathCurrent, fileNameAlternativeReference, "Alternative reference file found.");
     }
-    return compatibleOld.isEmpty() ? AssertGML.getFileContent(relativePathCurrent, fileNameCurrent) : compatibleOld;
+    return reference.isEmpty() ? getReferenceFileContent(relativePathCurrent, file, "Use input as reference file.") : reference;
+  }
+
+  private static String getReferenceFileContent(final String directory, final String filename, final String message) throws IOException {
+    final String fileContent = AssertGML.getFileContent(directory, filename);
+
+    if (fileContent.isEmpty()) {
+      LOG.debug("Getting current file content with path '{}' and filename '{}'.{}", directory, filename, message);
+    }
+    return fileContent;
   }
 
   private ImportParcel getImportResult(final String versionString, final String testFolder, final String file, final CharacteristicsType ct)

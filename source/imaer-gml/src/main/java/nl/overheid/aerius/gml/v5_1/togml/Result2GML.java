@@ -42,6 +42,7 @@ import nl.overheid.aerius.shared.domain.geo.HexagonUtil;
 import nl.overheid.aerius.shared.domain.geo.HexagonZoomLevel;
 import nl.overheid.aerius.shared.domain.result.EmissionResultKey;
 import nl.overheid.aerius.shared.domain.result.EmissionResultType;
+import nl.overheid.aerius.shared.domain.v2.characteristics.adms.NcaPointHeightSupplier;
 import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKCorrection;
 import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
 import nl.overheid.aerius.shared.domain.v2.geojson.Point;
@@ -121,6 +122,7 @@ final class Result2GML {
     final NcaCustomCalculationPoint returnPoint = new NcaCustomCalculationPoint();
     returnPoint.setRoadLocalFractionNO2(aeriusPoint.getRoadLocalFractionNO2());
     setCustomProperties(aeriusPoint, returnPoint);
+    returnPoint.setHeight(NcaPointHeightSupplier.getHeight(aeriusPoint));
     return returnPoint;
   }
 
