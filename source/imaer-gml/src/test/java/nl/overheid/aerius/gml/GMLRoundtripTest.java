@@ -157,23 +157,33 @@ class GMLRoundtripTest {
 
   private static final List<Substance> SUBSTANCES = List.of(Substance.NOX, Substance.NO2, Substance.NH3);
 
+  private static final Set<AeriusGMLVersion> SUPPORTED_GML_WRITER_VERSIONS = EnumSet.of(AeriusGMLVersion.V5_1, AeriusGMLVersion.V5_0);
+
   static List<Object[]> data() throws FileNotFoundException {
     final List<Object[]> files = new ArrayList<>();
     for (final AeriusGMLVersion version : AeriusGMLVersion.values()) {
-      for (final Object[] object : FILES) {
-        if (!skipThisTest(version, (String) object[0])) {
-          final Object[] f = new Object[4];
-          f[0] = version;
-          f[1] = object[0];
-          f[2] = object[1];
-          f[3] = getWarningReasons(object, version);
-          files.add(f);
-        } else {
-          LOG.debug("Skipping test '{}' for '{}'", object[0], version);
-        }
+      if (SUPPORTED_GML_WRITER_VERSIONS.contains(version) && version != CURRENT_GML_VERSION) {
+        addArguments(files, version, version);
       }
+      addArguments(files, version, CURRENT_GML_VERSION);
     }
     return files;
+  }
+
+  private static void addArguments(List<Object[]> files, AeriusGMLVersion version, AeriusGMLVersion targetVersion) {
+    for (final Object[] object : FILES) {
+      if (!skipThisTest(version, (String) object[0])) {
+        final Object[] f = new Object[5];
+        f[0] = version;
+        f[1] = object[0];
+        f[2] = object[1];
+        f[3] = getWarningReasons(object, version);
+        f[4] = targetVersion;
+        files.add(f);
+      } else {
+        LOG.debug("Skipping test '{}' for '{}'", object[0], version);
+      }
+    }
   }
 
   private static boolean skipThisTest(final AeriusGMLVersion version, final String file) {
@@ -199,22 +209,24 @@ class GMLRoundtripTest {
     return warnings;
   }
 
-  @ParameterizedTest(name = "{0}-{1}")
+  @ParameterizedTest(name = "{0}-{4}-{1}")
   @MethodSource("data")
-  void testRoundTripGML(final AeriusGMLVersion version, final String file, final CharacteristicsType ct, final Set<Reason> expectedWarnings) {
-    final String versionString = version.name().toLowerCase();
+  void testRoundTripGML(final AeriusGMLVersion originalGMLVersion, final String file, final CharacteristicsType ct,
+      final Set<Reason> expectedWarnings, final AeriusGMLVersion targetGMLVersion) {
+    final String versionString = originalGMLVersion.name().toLowerCase();
     final String fileVersion = ": " + file + ':' + versionString;
-    final ImportParcel result = importAndCompare(versionString, fileVersion, file, ct);
+    final ImportParcel result = importAndCompare(versionString, fileVersion, file, ct, targetGMLVersion);
 
     assertNoExceptions(result.getExceptions(), fileVersion);
     assertExpectedWarnings(result.getWarnings(), expectedWarnings);
     assertUnExpectedWarnings(result.getWarnings(), expectedWarnings);
   }
 
-  private ImportParcel importAndCompare(final String versionString, final String fileVersion, final String file, final CharacteristicsType ct) {
+  private ImportParcel importAndCompare(final String versionString, final String fileVersion, final String file, final CharacteristicsType ct,
+      final AeriusGMLVersion targetGMLVersion) {
     try {
       final ImportParcel result = getImportResult(versionString, TEST_FOLDER, file, ct);
-      final GMLWriter gmlc = new GMLWriter(GMLTestDomain.getExampleGridSettings(), GMLTestDomain.TEST_REFERENCE_GENERATOR);
+      final GMLWriter gmlc = new GMLWriter(GMLTestDomain.getExampleGridSettings(), GMLTestDomain.TEST_REFERENCE_GENERATOR, targetGMLVersion);
       if (result.getSituation().getType() == null) {
         result.getSituation().setType(SituationType.PROPOSED);
       }
@@ -229,7 +241,7 @@ class GMLRoundtripTest {
         gml = bos.toString(StandardCharsets.UTF_8.name());
         assertFalse(gml.isEmpty(), "Generated GML is empty");
       }
-      assertGMLs(gml, versionString, file);
+      assertGMLs(gml, versionString, file, targetGMLVersion);
       return result;
     } catch (final IOException | AeriusException e) {
       throw new AssertionError(fileVersion, e);
@@ -280,18 +292,19 @@ class GMLRoundtripTest {
     return input;
   }
 
-  private void assertGMLs(final String generatedGML, final String version, final String file) throws IOException {
+  private void assertGMLs(final String generatedGML, final String version, final String file, final AeriusGMLVersion targetGMLVersion)
+      throws IOException {
     final String actual = replaceIncomparables(generatedGML);
     assertFalse(actual.isEmpty(), "Result shouldn't be empty for " + file);
-    final String expected = replaceIncomparables(getReferenceFileContent(version, file));
+    final String expected = replaceIncomparables(getReferenceFileContent(version, file, targetGMLVersion));
     AssertGML.assertEqualsGML(expected, actual, file);
   }
 
-  private String getReferenceFileContent(final String version, final String file) throws IOException {
+  private String getReferenceFileContent(final String version, final String file, final AeriusGMLVersion targetGMLVersion) throws IOException {
     final String relativePathCompatibleOld = LATEST_VERSION + TEST_FOLDER;
     final String fileNameCompatibleOld = file + '_' + version;
     final String fileNameAlternativeReference = file + REFERENCE;
-    final String relativePathCurrent = CURRENT_VERSION + TEST_FOLDER;
+    final String relativePathCurrent = targetGMLVersion.name().toLowerCase() + TEST_FOLDER;
 
     String reference = getReferenceFileContent(relativePathCompatibleOld, fileNameCompatibleOld, "Old compatible version found.");
     if (reference.isEmpty()) {
