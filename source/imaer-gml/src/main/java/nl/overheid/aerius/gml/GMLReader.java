@@ -119,7 +119,8 @@ public final class GMLReader {
    * Gets the situation type from the feature collection.
    */
   public SituationType getSituationType() {
-    return featureCollection == null ? null : featureCollection.getSituationType();
+    final SituationType situationType = featureCollection == null ? null : featureCollection.getSituationType();
+    return situationType == SituationType.NETTING ? SituationType.OFF_SITE_REDUCTION : situationType;
   }
 
   /**
