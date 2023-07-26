@@ -120,6 +120,7 @@ public final class GMLReader {
    */
   public SituationType getSituationType() {
     final SituationType situationType = featureCollection == null ? null : featureCollection.getSituationType();
+    // Allow deprecated type in GML, but force it to the right type for further usage.
     return situationType == SituationType.NETTING ? SituationType.OFF_SITE_REDUCTION : situationType;
   }
 
