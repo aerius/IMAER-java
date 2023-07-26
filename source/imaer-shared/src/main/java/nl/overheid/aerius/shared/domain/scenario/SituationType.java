@@ -41,8 +41,14 @@ public enum SituationType {
   /**
    * Represents a situation that can be used for netting purposes (salderingssituatie).
    * Acts like an addition to the reference situation when it comes to permit calculations.
+   * @deprecated use {@link SituationType.OFF_SITE_REDUCTION} instead.
    */
+  @Deprecated
   NETTING,
+  /**
+   * Replaces `NETTING` situation.
+   */
+  OFF_SITE_REDUCTION,
   /**
    * Represents a situation that is to be calculated in cumulation with the reference situation.
    */
