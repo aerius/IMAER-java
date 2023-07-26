@@ -39,7 +39,7 @@ public enum CalculationJobType {
    */
   PROCESS_CONTRIBUTION(
       new HashSet<>(Arrays.asList(SituationType.PROPOSED)),
-      new HashSet<>(Arrays.asList(SituationType.REFERENCE, SituationType.NETTING)),
+      new HashSet<>(Arrays.asList(SituationType.REFERENCE, SituationType.OFF_SITE_REDUCTION)),
       new HashSet<>()),
 
   /**
@@ -50,7 +50,7 @@ public enum CalculationJobType {
    */
   MAX_TEMPORARY_EFFECT(
       new HashSet<>(Arrays.asList(SituationType.TEMPORARY)),
-      new HashSet<>(Arrays.asList(SituationType.REFERENCE, SituationType.NETTING)),
+      new HashSet<>(Arrays.asList(SituationType.REFERENCE, SituationType.OFF_SITE_REDUCTION)),
       new HashSet<>(Arrays.asList(SituationType.TEMPORARY))),
 
   /**
@@ -62,7 +62,7 @@ public enum CalculationJobType {
    */
   IN_COMBINATION_PROCESS_CONTRIBUTION(
       new HashSet<>(Arrays.asList(SituationType.PROPOSED)),
-      new HashSet<>(Arrays.asList(SituationType.REFERENCE, SituationType.NETTING, SituationType.COMBINATION_REFERENCE,
+      new HashSet<>(Arrays.asList(SituationType.REFERENCE, SituationType.OFF_SITE_REDUCTION, SituationType.COMBINATION_REFERENCE,
           SituationType.COMBINATION_PROPOSED)),
       new HashSet<>(Arrays.asList(SituationType.COMBINATION_PROPOSED, SituationType.COMBINATION_REFERENCE))),
 
