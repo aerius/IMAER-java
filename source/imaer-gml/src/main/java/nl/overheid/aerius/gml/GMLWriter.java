@@ -78,11 +78,18 @@ public class GMLWriter {
 
   private final ReceptorGridSettings receptorGridSettings;
   private final ReferenceGenerator referenceGenerator;
+
+  private final AeriusGMLVersion version;
   private Boolean formattedOutput = Boolean.TRUE;
 
   public GMLWriter(final ReceptorGridSettings rgs, final ReferenceGenerator referenceGenerator) {
+    this(rgs, referenceGenerator, LATEST_WRITER_VERSION);
+  }
+
+  public GMLWriter(final ReceptorGridSettings rgs, final ReferenceGenerator referenceGenerator, final AeriusGMLVersion version) {
     this.receptorGridSettings = rgs;
     this.referenceGenerator = referenceGenerator;
+    this.version = version;
   }
 
   /**
@@ -286,7 +293,7 @@ public class GMLWriter {
   }
 
   private InternalGMLWriter createInternalWriter() {
-    return new InternalGMLWriter(receptorGridSettings, referenceGenerator, formattedOutput);
+    return new InternalGMLWriter(receptorGridSettings, referenceGenerator, formattedOutput, version);
   }
 
 }

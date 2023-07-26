@@ -20,6 +20,7 @@ import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -41,6 +42,7 @@ import nl.overheid.aerius.gml.base.FeatureCollection;
 import nl.overheid.aerius.gml.base.FeatureMember;
 import nl.overheid.aerius.gml.base.GMLSchema;
 import nl.overheid.aerius.gml.base.GMLVersionWriter;
+import nl.overheid.aerius.gml.base.GMLVersionWriterFactory;
 import nl.overheid.aerius.gml.base.MetaData;
 import nl.overheid.aerius.gml.base.MetaDataInput;
 import nl.overheid.aerius.gml.v5_1.base.CalculatorSchema;
@@ -84,8 +86,8 @@ final class InternalGMLWriter {
   private final ReferenceGenerator referenceGenerator;
   private final Boolean formattedOutput;
 
-  InternalGMLWriter(final ReceptorGridSettings rgs, final ReferenceGenerator referenceGenerator, final Boolean formattedOutput) {
-    writer = new GMLVersionWriterV51(rgs.getZoomLevel1(), GMLSchema.getSRSName(rgs.getEPSG().getSrid()));
+  InternalGMLWriter(final ReceptorGridSettings rgs, final ReferenceGenerator referenceGenerator, final Boolean formattedOutput, final AeriusGMLVersion version) {
+    writer = GMLVersionWriterFactory.createGMLVersionWriter(rgs.getZoomLevel1(), GMLSchema.getSRSName(rgs.getEPSG().getSrid()), version);
     this.referenceGenerator = referenceGenerator;
     this.formattedOutput = formattedOutput;
   }
