@@ -486,6 +486,11 @@ public enum ImaerExceptionReason implements Reason {
    */
   SRM1_SOURCE_WITH_STRICT_ENFORCEMENT(5238),
 
+  /**
+   * GML contains a deprecated situation type.
+   */
+  GML_DEPRECATED_NETTING_UPDATED_TO_OFF_SITE_REDUCTION(5239),
+
   // Cohesion (between files) errors.
 
   /**

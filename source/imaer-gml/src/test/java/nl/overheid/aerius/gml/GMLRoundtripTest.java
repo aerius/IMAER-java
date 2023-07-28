@@ -123,7 +123,7 @@ class GMLRoundtripTest {
       {"situation_type_reference", CharacteristicsType.OPS},
       {"situation_type_proposed", CharacteristicsType.OPS},
       {"situation_type_temporary", CharacteristicsType.OPS},
-      {"situation_type_netting", CharacteristicsType.OPS},
+      {"situation_type_netting", CharacteristicsType.OPS, EnumSet.of(ImaerExceptionReason.GML_DEPRECATED_NETTING_UPDATED_TO_OFF_SITE_REDUCTION)},
       {"situation_type_combination_reference", CharacteristicsType.OPS},
       {"situation_type_combination_proposed", CharacteristicsType.OPS},
       {"adms_industry", CharacteristicsType.ADMS},
@@ -137,7 +137,7 @@ class GMLRoundtripTest {
       {"scenario_greenhouse_proposed", CharacteristicsType.OPS},
       {"scenario_livestock_farming_proposed", CharacteristicsType.OPS},
       {"scenario_livestock_farming_reference", CharacteristicsType.OPS},
-      {"scenario_livestock_farming_netting", CharacteristicsType.OPS},
+      {"scenario_livestock_farming_netting", CharacteristicsType.OPS, EnumSet.of(ImaerExceptionReason.GML_DEPRECATED_NETTING_UPDATED_TO_OFF_SITE_REDUCTION)},
       {"scenario_powerplant", CharacteristicsType.OPS, EnumSet.of(ImaerExceptionReason.GML_SOURCE_NO_EMISSION)},
       {"scenario_smokehouse_proposed", CharacteristicsType.OPS},
       {"scenario_smokehouse_reference", CharacteristicsType.OPS},
@@ -227,9 +227,7 @@ class GMLRoundtripTest {
     try {
       final ImportParcel result = getImportResult(versionString, TEST_FOLDER, file, ct);
       final GMLWriter gmlc = new GMLWriter(GMLTestDomain.getExampleGridSettings(), GMLTestDomain.TEST_REFERENCE_GENERATOR, targetGMLVersion);
-      if (result.getSituation().getType() == null) {
-        result.getSituation().setType(SituationType.PROPOSED);
-      }
+      revertAutoCorrectedWarnings(result);
       final GMLScenario scenario = GMLScenario.Builder
           .create(result, result.getSituation())
           .build();
@@ -245,6 +243,16 @@ class GMLRoundtripTest {
       return result;
     } catch (final IOException | AeriusException e) {
       throw new AssertionError(fileVersion, e);
+    }
+  }
+
+  private static void revertAutoCorrectedWarnings(ImportParcel result) {
+    if (result.getSituation().getType() == null) {
+      result.getSituation().setType(SituationType.PROPOSED);
+    }
+
+    if (result.getWarnings().stream().anyMatch(e -> e.getReason() == ImaerExceptionReason.GML_DEPRECATED_NETTING_UPDATED_TO_OFF_SITE_REDUCTION)) {
+      result.getSituation().setType(SituationType.NETTING);
     }
   }
 

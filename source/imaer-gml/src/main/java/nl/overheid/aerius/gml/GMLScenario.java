@@ -24,10 +24,10 @@ import nl.overheid.aerius.shared.domain.scenario.IsScenario;
 import nl.overheid.aerius.shared.domain.scenario.SituationMetaData;
 import nl.overheid.aerius.shared.domain.scenario.SituationType;
 import nl.overheid.aerius.shared.domain.v2.building.BuildingFeature;
-import nl.overheid.aerius.shared.domain.v2.importer.ImportParcel;
 import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKCorrection;
 import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKDispersionLineFeature;
 import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKMeasureFeature;
+import nl.overheid.aerius.shared.domain.v2.importer.ImportParcel;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPointFeature;
 import nl.overheid.aerius.shared.domain.v2.scenario.Definitions;
 import nl.overheid.aerius.shared.domain.v2.scenario.ScenarioMetaData;
@@ -147,7 +147,8 @@ public class GMLScenario implements IsScenario {
   GMLScenario(final Builder builder) {
     this.name = builder.name;
     this.situationType = builder.situationType;
-    this.nettingFactor = builder.situationType == SituationType.OFF_SITE_REDUCTION ? builder.nettingFactor : null;
+    this.nettingFactor = builder.situationType == SituationType.NETTING || builder.situationType == SituationType.OFF_SITE_REDUCTION ?
+        builder.nettingFactor : null;
     this.definitions = builder.definitions;
     this.sources = builder.sources == null ? Collections.emptyList() : builder.sources;
     this.buildings = builder.buildings == null ? Collections.emptyList() : builder.buildings;
