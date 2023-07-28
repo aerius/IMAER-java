@@ -12,7 +12,7 @@
                 <imaer:SituationMetadata>
                     <imaer:name>Bestaande onderneming</imaer:name>
                     <imaer:reference>S4R2JDFikdcM</imaer:reference>
-                    <imaer:situationType>OFF_SITE_REDUCTION</imaer:situationType>
+                    <imaer:situationType>NETTING</imaer:situationType>
                     <imaer:nettingFactor>0.3</imaer:nettingFactor>
                 </imaer:SituationMetadata>
             </imaer:situation>

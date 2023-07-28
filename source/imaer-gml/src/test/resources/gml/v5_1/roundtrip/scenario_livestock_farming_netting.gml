@@ -11,7 +11,7 @@
                 <imaer:SituationMetadata>
                     <imaer:name>Saldering</imaer:name>
                     <imaer:reference>RhygFYLUaGZi</imaer:reference>
-                    <imaer:situationType>OFF_SITE_REDUCTION</imaer:situationType>
+                    <imaer:situationType>NETTING</imaer:situationType>
                     <imaer:nettingFactor>0.0</imaer:nettingFactor>
                 </imaer:SituationMetadata>
             </imaer:situation>
