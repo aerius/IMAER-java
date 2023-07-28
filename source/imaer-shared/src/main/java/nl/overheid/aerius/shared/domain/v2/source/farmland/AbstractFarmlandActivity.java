@@ -29,18 +29,9 @@ import nl.overheid.aerius.shared.exception.AeriusException;
 })
 public abstract class AbstractFarmlandActivity extends AbstractSubSource {
 
-  private static final long serialVersionUID = 2L;
+  private static final long serialVersionUID = 3L;
 
-  private String activityType;
   private String activityCode;
-
-  public String getActivityType() {
-    return activityType;
-  }
-
-  public void setActivityType(final String activityType) {
-    this.activityType = activityType;
-  }
 
   public String getActivityCode() {
     return activityCode;
