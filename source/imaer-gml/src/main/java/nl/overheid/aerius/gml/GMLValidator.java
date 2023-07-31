@@ -50,7 +50,7 @@ public final class GMLValidator {
   }
 
   public static void validateSituationType(final SituationType type, final ImportParcel parcel) {
-    if(type == SituationType.NETTING) {
+    if (type == SituationType.NETTING) {
       parcel.getWarnings().add(new AeriusException(ImaerExceptionReason.GML_DEPRECATED_NETTING_UPDATED_TO_OFF_SITE_REDUCTION,
           "Deprecated situation type NETTING will be updated to OFF_SITE_REDUCTION."));
     }

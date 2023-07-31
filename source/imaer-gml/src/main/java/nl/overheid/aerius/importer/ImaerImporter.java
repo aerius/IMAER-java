@@ -152,9 +152,9 @@ public class ImaerImporter {
     final ScenarioSituation situation = result.getSituation();
     situation.setName(reader.getName());
     final SituationType type = reader.getSituationType();
-    situation.setType(type);
+    situation.setType(type == SituationType.NETTING ? SituationType.OFF_SITE_REDUCTION : type);
     situation.setReference(reader.metaDataReader().readReference());
-    if (type == SituationType.NETTING || type == SituationType.OFF_SITE_REDUCTION) {
+    if (situation.getType() == SituationType.OFF_SITE_REDUCTION) {
       final Double nettingFactor = reader.getNettingFactor();
       if (nettingFactor == null) {
         result.getWarnings().add(new AeriusException(ImaerExceptionReason.GML_MISSING_NETTING_FACTOR));
