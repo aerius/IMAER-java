@@ -207,6 +207,11 @@ class GMLValidateErrorsTest {
   }
 
   @Test
+  void testGMLNettingDeprecated() throws IOException {
+    assertResult("fout_5239_netting_deprecated", "GML missing netting factor", ImaerExceptionReason.GML_DEPRECATED_NETTING_UPDATED_TO_OFF_SITE_REDUCTION);
+  }
+
+  @Test
   void testGMLUnknownError() throws IOException {
     assertResult("fout_666_unknown_error", "GML Unknown error", ImaerExceptionReason.INTERNAL_ERROR, IllegalArgumentException.class);
   }
