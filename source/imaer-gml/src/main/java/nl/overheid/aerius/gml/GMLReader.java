@@ -25,6 +25,7 @@ import nl.overheid.aerius.gml.base.GMLConversionData;
 import nl.overheid.aerius.gml.base.GMLHelper;
 import nl.overheid.aerius.gml.base.GMLVersionReader;
 import nl.overheid.aerius.gml.base.GMLVersionReaderFactory;
+import nl.overheid.aerius.gml.base.metadata.LegacySituationType;
 import nl.overheid.aerius.shared.domain.Theme;
 import nl.overheid.aerius.shared.domain.calculation.CalculationSetOptions;
 import nl.overheid.aerius.shared.domain.scenario.SituationType;
@@ -119,7 +120,12 @@ public final class GMLReader {
    * Gets the situation type from the feature collection.
    */
   public SituationType getSituationType() {
-    return featureCollection == null ? null : featureCollection.getSituationType();
+    if (featureCollection == null || featureCollection.getSituationType() == null) {
+      return null;
+    } else {
+      final LegacySituationType situationType = featureCollection.getSituationType();
+      return situationType == LegacySituationType.NETTING ? SituationType.OFF_SITE_REDUCTION : SituationType.safeValueOf(situationType.name());
+    }
   }
 
   /**

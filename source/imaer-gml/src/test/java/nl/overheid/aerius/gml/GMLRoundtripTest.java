@@ -42,6 +42,7 @@ import org.slf4j.LoggerFactory;
 
 import nl.overheid.aerius.gml.base.AeriusGMLVersion;
 import nl.overheid.aerius.gml.base.MetaDataInput;
+import nl.overheid.aerius.gml.base.metadata.LegacySituationType;
 import nl.overheid.aerius.importer.ImaerImporter;
 import nl.overheid.aerius.importer.ImportOption;
 import nl.overheid.aerius.shared.domain.Substance;
@@ -123,7 +124,7 @@ class GMLRoundtripTest {
       {"situation_type_reference", CharacteristicsType.OPS},
       {"situation_type_proposed", CharacteristicsType.OPS},
       {"situation_type_temporary", CharacteristicsType.OPS},
-      {"situation_type_netting", CharacteristicsType.OPS, EnumSet.of(ImaerExceptionReason.GML_DEPRECATED_NETTING_UPDATED_TO_OFF_SITE_REDUCTION)},
+      {"situation_type_netting", CharacteristicsType.OPS},
       {"situation_type_combination_reference", CharacteristicsType.OPS},
       {"situation_type_combination_proposed", CharacteristicsType.OPS},
       {"adms_industry", CharacteristicsType.ADMS},
@@ -137,7 +138,7 @@ class GMLRoundtripTest {
       {"scenario_greenhouse_proposed", CharacteristicsType.OPS},
       {"scenario_livestock_farming_proposed", CharacteristicsType.OPS},
       {"scenario_livestock_farming_reference", CharacteristicsType.OPS},
-      {"scenario_livestock_farming_netting", CharacteristicsType.OPS, EnumSet.of(ImaerExceptionReason.GML_DEPRECATED_NETTING_UPDATED_TO_OFF_SITE_REDUCTION)},
+      {"scenario_livestock_farming_netting", CharacteristicsType.OPS},
       {"scenario_powerplant", CharacteristicsType.OPS, EnumSet.of(ImaerExceptionReason.GML_SOURCE_NO_EMISSION)},
       {"scenario_smokehouse_proposed", CharacteristicsType.OPS},
       {"scenario_smokehouse_reference", CharacteristicsType.OPS},
@@ -227,7 +228,7 @@ class GMLRoundtripTest {
     try {
       final ImportParcel result = getImportResult(versionString, TEST_FOLDER, file, ct);
       final GMLWriter gmlc = new GMLWriter(GMLTestDomain.getExampleGridSettings(), GMLTestDomain.TEST_REFERENCE_GENERATOR, targetGMLVersion);
-      revertAutoCorrectedWarnings(result);
+      revertAutoCorrections(result);
       final GMLScenario scenario = GMLScenario.Builder
           .create(result, result.getSituation())
           .build();
@@ -236,7 +237,7 @@ class GMLRoundtripTest {
         final MetaDataInput metaDataInput = getMetaData(result, file.startsWith("nca") ? Theme.NCA : Theme.WNB,
             file.contains("calculation_options"));
         gmlc.write(bos, scenario, metaDataInput);
-        gml = bos.toString(StandardCharsets.UTF_8.name());
+        gml = revertAutoCorrections(bos.toString(StandardCharsets.UTF_8.name()), targetGMLVersion);
         assertFalse(gml.isEmpty(), "Generated GML is empty");
       }
       assertGMLs(gml, versionString, file, targetGMLVersion);
@@ -246,14 +247,17 @@ class GMLRoundtripTest {
     }
   }
 
-  private static void revertAutoCorrectedWarnings(ImportParcel result) {
+  private static void revertAutoCorrections(final ImportParcel result) {
     if (result.getSituation().getType() == null) {
       result.getSituation().setType(SituationType.PROPOSED);
     }
+  }
 
-    if (result.getWarnings().stream().anyMatch(e -> e.getReason() == ImaerExceptionReason.GML_DEPRECATED_NETTING_UPDATED_TO_OFF_SITE_REDUCTION)) {
-      result.getSituation().setType(SituationType.NETTING);
+  private static String revertAutoCorrections(final String gml, final AeriusGMLVersion targetVersion) {
+    if (targetVersion.ordinal() >= AeriusGMLVersion.V5_1.ordinal()) {
+      return gml.replaceAll(SituationType.OFF_SITE_REDUCTION.name(), LegacySituationType.NETTING.name());
     }
+    return gml;
   }
 
   /**

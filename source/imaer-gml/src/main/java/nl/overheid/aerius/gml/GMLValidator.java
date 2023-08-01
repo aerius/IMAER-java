@@ -20,8 +20,6 @@ import java.util.List;
 
 import nl.overheid.aerius.gml.base.AeriusGMLVersion;
 import nl.overheid.aerius.gml.base.StringUtils;
-import nl.overheid.aerius.shared.domain.scenario.SituationType;
-import nl.overheid.aerius.shared.domain.v2.importer.ImportParcel;
 import nl.overheid.aerius.shared.domain.v2.scenario.ScenarioMetaData;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
@@ -46,13 +44,6 @@ public final class GMLValidator {
       exceptions.add(new AeriusException(ImaerExceptionReason.GML_VALIDATION_FAILED, "year must be greater than " + YEAR_LOWER_BOUNDARY));
     } else if (year > YEAR_UPPER_BOUNDARY) {
       exceptions.add(new AeriusException(ImaerExceptionReason.GML_VALIDATION_FAILED, "year must be less than " + YEAR_UPPER_BOUNDARY));
-    }
-  }
-
-  public static void validateSituationType(final SituationType type, final ImportParcel parcel) {
-    if (type == SituationType.NETTING) {
-      parcel.getWarnings().add(new AeriusException(ImaerExceptionReason.GML_DEPRECATED_NETTING_UPDATED_TO_OFF_SITE_REDUCTION,
-          "Deprecated situation type NETTING will be updated to OFF_SITE_REDUCTION."));
     }
   }
 

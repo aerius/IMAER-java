@@ -22,8 +22,8 @@ import javax.xml.bind.annotation.XmlType;
 
 import nl.overheid.aerius.gml.base.Address;
 import nl.overheid.aerius.gml.base.MetaData;
+import nl.overheid.aerius.gml.base.metadata.LegacySituationType;
 import nl.overheid.aerius.gml.v5_0.base.CalculatorSchema;
-import nl.overheid.aerius.shared.domain.scenario.SituationType;
 
 /**
  *
@@ -127,7 +127,7 @@ public class MetaDataImpl implements MetaData {
   }
 
   @Override
-  public SituationType getSituationType() {
+  public LegacySituationType getSituationType() {
     return situation == null ? null : situation.getSituationType();
   }
 

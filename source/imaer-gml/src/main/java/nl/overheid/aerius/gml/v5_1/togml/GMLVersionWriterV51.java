@@ -31,6 +31,7 @@ import nl.overheid.aerius.gml.base.MetaDataInput;
 import nl.overheid.aerius.gml.base.OtherSituationMetaData;
 import nl.overheid.aerius.gml.base.StringUtils;
 import nl.overheid.aerius.gml.base.geo.Geometry2GML;
+import nl.overheid.aerius.gml.base.metadata.LegacySituationType;
 import nl.overheid.aerius.gml.v5_1.base.CalculatorSchema;
 import nl.overheid.aerius.gml.v5_1.collection.FeatureCollectionImpl;
 import nl.overheid.aerius.gml.v5_1.definitions.CustomDiurnalVariation;
@@ -122,7 +123,7 @@ public class GMLVersionWriterV51 implements GMLVersionWriter {
       situation = new SituationMetadata();
       situation.setName(input.getName());
       situation.setReference(input.getReference());
-      situation.setSituationType(input.getSituationType());
+      situation.setSituationType(input.getSituationType() != null ? LegacySituationType.safeValueOf(input.getSituationType().name()) : null);
       situation.setNettingFactor(input.getNettingFactor());
     }
     return situation;

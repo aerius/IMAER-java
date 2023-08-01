@@ -129,7 +129,6 @@ public class ImaerImporter {
     }
     final AeriusGMLVersion version = reader.getVersion();
     setImportResultMetaData(result, reader);
-    GMLValidator.validateSituationType(reader.getSituationType(), result);
     GMLValidator.validateMetaData(result.getImportedMetaData(), result.getExceptions(), ImportOption.VALIDATE_METADATA.in(importOptions));
     GMLValidator.validateYear(result.getSituation().getYear(), result.getExceptions());
     GMLValidator.validateGMLVersion(version, result.getWarnings());
@@ -151,8 +150,7 @@ public class ImaerImporter {
   private static ScenarioSituation addSituationProperties(final GMLReader reader, final ImportParcel result) {
     final ScenarioSituation situation = result.getSituation();
     situation.setName(reader.getName());
-    final SituationType type = reader.getSituationType();
-    situation.setType(type == SituationType.NETTING ? SituationType.OFF_SITE_REDUCTION : type);
+    situation.setType(reader.getSituationType());
     situation.setReference(reader.metaDataReader().readReference());
     if (situation.getType() == SituationType.OFF_SITE_REDUCTION) {
       final Double nettingFactor = reader.getNettingFactor();

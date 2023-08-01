@@ -14,12 +14,10 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.shared.domain.scenario;
+package nl.overheid.aerius.gml.base.metadata;
 
-/**
- * Enum indicating the type of a situation.
- */
-public enum SituationType {
+public enum LegacySituationType {
+
   /**
    * Represents the (initial) unknown situation type
    */
@@ -39,8 +37,14 @@ public enum SituationType {
    */
   PROPOSED,
   /**
-   * Represents a situation that can be used for off site reduction purposes (salderingssituatie).
+   * Represents a situation that can be used for netting purposes (salderingssituatie).
    * Acts like an addition to the reference situation when it comes to permit calculations.
+   * @deprecated use {@link LegacySituationType.OFF_SITE_REDUCTION} instead.
+   */
+  @Deprecated
+  NETTING,
+  /**
+   * Replaces `NETTING` situation.
    */
   OFF_SITE_REDUCTION,
   /**
@@ -57,11 +61,11 @@ public enum SituationType {
   BASELINE;
 
   /**
-   * Returns the {@link SituationType} from the given string or {@link #UNKNOWN} if null or invalid input.
+   * Returns the {@link LegacySituationType} from the given string or {@link #UNKNOWN} if null or invalid input.
    * @param type type to parse
    * @return situation type object
    */
-  public static SituationType safeValueOf(final String type) {
+  public static LegacySituationType safeValueOf(final String type) {
     try {
       return type == null ? UNKNOWN : valueOf(type);
     } catch (final IllegalArgumentException e) {

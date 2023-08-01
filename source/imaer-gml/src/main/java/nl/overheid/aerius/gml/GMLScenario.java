@@ -147,8 +147,7 @@ public class GMLScenario implements IsScenario {
   GMLScenario(final Builder builder) {
     this.name = builder.name;
     this.situationType = builder.situationType;
-    this.nettingFactor = builder.situationType == SituationType.NETTING || builder.situationType == SituationType.OFF_SITE_REDUCTION ?
-        builder.nettingFactor : null;
+    this.nettingFactor = builder.situationType == SituationType.OFF_SITE_REDUCTION ? builder.nettingFactor : null;
     this.definitions = builder.definitions;
     this.sources = builder.sources == null ? Collections.emptyList() : builder.sources;
     this.buildings = builder.buildings == null ? Collections.emptyList() : builder.buildings;
