@@ -128,7 +128,7 @@ public class MetaDataImpl implements MetaData {
 
   @Override
   public SituationType getSituationType() {
-    return situation.getSituationType() != null ? situation.getSituationType().toSituationType() : null;
+    return situation == null || situation.getSituationType() == null ? null : situation.getSituationType().toSituationType();
   }
 
   @Override
