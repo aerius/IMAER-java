@@ -18,7 +18,6 @@ package nl.overheid.aerius.gml.base;
 
 import java.util.List;
 
-import nl.overheid.aerius.gml.base.metadata.LegacySituationType;
 import nl.overheid.aerius.shared.domain.scenario.SituationType;
 
 /**
