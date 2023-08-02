@@ -50,6 +50,7 @@ import nl.overheid.aerius.shared.domain.calculation.CalculationSetOptions;
 import nl.overheid.aerius.shared.domain.geo.HexagonZoomLevel;
 import nl.overheid.aerius.shared.domain.result.EmissionResultKey;
 import nl.overheid.aerius.shared.domain.result.EmissionResultType;
+import nl.overheid.aerius.shared.domain.scenario.SituationType;
 import nl.overheid.aerius.shared.domain.v2.building.BuildingFeature;
 import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKCorrection;
 import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKDispersionLineFeature;
@@ -121,10 +122,22 @@ public class GMLVersionWriterV50 implements GMLVersionWriter {
       situation = new SituationMetadata();
       situation.setName(input.getName());
       situation.setReference(input.getReference());
-      situation.setSituationType(input.getSituationType() != null ? LegacySituationType.safeValueOf(input.getSituationType().name()) : null);
+      setSituationType(input, situation);
       situation.setNettingFactor(input.getNettingFactor());
     }
     return situation;
+  }
+
+  private static void setSituationType(MetaDataInput input, SituationMetadata situation) {
+    final SituationType inputSituationType = input.getSituationType();
+    if (inputSituationType == null) {
+      situation.setSituationType(null);
+    } else if (inputSituationType == SituationType.OFF_SITE_REDUCTION){
+      // OFF_SITE_REDUCTION is not in the 5.0 XSD, so we map it back to NETTING.
+      situation.setSituationType(LegacySituationType.NETTING);
+    } else {
+      situation.setSituationType(LegacySituationType.safeValueOf(inputSituationType.name()));
+    }
   }
 
   private ProjectMetadata getProject(final MetaDataInput input) {

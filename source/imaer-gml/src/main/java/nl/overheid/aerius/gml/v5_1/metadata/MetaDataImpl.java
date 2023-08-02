@@ -139,7 +139,7 @@ public class MetaDataImpl implements MetaData {
 
   @Override
   public SituationType getSituationType() {
-    return situation.getSituationType().toSituationType();
+    return situation.getSituationType();
   }
 
   @Override

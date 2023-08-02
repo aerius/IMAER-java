@@ -237,7 +237,7 @@ class GMLRoundtripTest {
         final MetaDataInput metaDataInput = getMetaData(result, file.startsWith("nca") ? Theme.NCA : Theme.WNB,
             file.contains("calculation_options"));
         gmlc.write(bos, scenario, metaDataInput);
-        gml = revertAutoCorrections(bos.toString(StandardCharsets.UTF_8.name()), targetGMLVersion);
+        gml = bos.toString(StandardCharsets.UTF_8.name());
         assertFalse(gml.isEmpty(), "Generated GML is empty");
       }
       assertGMLs(gml, versionString, file, targetGMLVersion);
@@ -251,13 +251,6 @@ class GMLRoundtripTest {
     if (result.getSituation().getType() == null) {
       result.getSituation().setType(SituationType.PROPOSED);
     }
-  }
-
-  private static String revertAutoCorrections(final String gml, final AeriusGMLVersion targetVersion) {
-    if (targetVersion.ordinal() >= AeriusGMLVersion.V5_1.ordinal()) {
-      return gml.replaceAll(SituationType.OFF_SITE_REDUCTION.name(), LegacySituationType.NETTING.name());
-    }
-    return gml;
   }
 
   /**
