@@ -50,11 +50,7 @@ public enum SituationType {
   /**
    * Represents a situation that is to be calculated in cumulation with the proposed situation.
    */
-  COMBINATION_PROPOSED,
-  /**
-   * Baseline situation
-   */
-  BASELINE;
+  COMBINATION_PROPOSED;
 
   /**
    * Returns the {@link SituationType} from the given string or {@link #UNKNOWN} if null or invalid input.

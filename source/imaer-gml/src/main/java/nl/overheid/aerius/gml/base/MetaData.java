@@ -17,6 +17,7 @@
 package nl.overheid.aerius.gml.base;
 
 import nl.overheid.aerius.gml.base.metadata.LegacySituationType;
+import nl.overheid.aerius.shared.domain.scenario.SituationType;
 
 /**
  * Interface for an AERIUS GML metadata object, intended for use with JAXB-objects.
@@ -90,7 +91,7 @@ public interface MetaData {
   /**
    * @return The type of the situation. Null indicates it hasn't been specified (older GMLs).
    */
-  default LegacySituationType getSituationType() {
+  default SituationType getSituationType() {
     return null;
   }
 

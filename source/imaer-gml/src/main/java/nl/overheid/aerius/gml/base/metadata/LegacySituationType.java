@@ -16,6 +16,8 @@
  */
 package nl.overheid.aerius.gml.base.metadata;
 
+import nl.overheid.aerius.shared.domain.scenario.SituationType;
+
 public enum LegacySituationType {
 
   /**
@@ -59,6 +61,17 @@ public enum LegacySituationType {
    * Baseline situation
    */
   BASELINE;
+
+  public SituationType toSituationType() {
+    switch (this) {
+    case NETTING:
+      return SituationType.OFF_SITE_REDUCTION;
+    case BASELINE:
+      return SituationType.UNKNOWN;
+    default:
+      return SituationType.safeValueOf(this.name());
+    }
+  }
 
   /**
    * Returns the {@link LegacySituationType} from the given string or {@link #UNKNOWN} if null or invalid input.

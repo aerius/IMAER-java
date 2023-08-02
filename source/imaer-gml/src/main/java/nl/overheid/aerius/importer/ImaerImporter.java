@@ -150,9 +150,10 @@ public class ImaerImporter {
   private static ScenarioSituation addSituationProperties(final GMLReader reader, final ImportParcel result) {
     final ScenarioSituation situation = result.getSituation();
     situation.setName(reader.getName());
-    situation.setType(reader.getSituationType());
+    final SituationType type = reader.getSituationType();
+    situation.setType(type);
     situation.setReference(reader.metaDataReader().readReference());
-    if (situation.getType() == SituationType.OFF_SITE_REDUCTION) {
+    if (type == SituationType.OFF_SITE_REDUCTION) {
       final Double nettingFactor = reader.getNettingFactor();
       if (nettingFactor == null) {
         result.getWarnings().add(new AeriusException(ImaerExceptionReason.GML_MISSING_NETTING_FACTOR));
