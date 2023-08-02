@@ -41,7 +41,7 @@
                     </imaer:option>
                     <imaer:otherSituation>
                         <imaer:OtherSituationMetadata>
-                            <imaer:situationType>NETTING</imaer:situationType>
+                            <imaer:situationType>OFF_SITE_REDUCTION</imaer:situationType>
                             <imaer:name>Our Other Situation</imaer:name>
                             <imaer:reference>OtherReferenceThingy</imaer:reference>
                         </imaer:OtherSituationMetadata>

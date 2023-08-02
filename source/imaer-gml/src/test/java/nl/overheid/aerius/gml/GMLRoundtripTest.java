@@ -42,6 +42,7 @@ import org.slf4j.LoggerFactory;
 
 import nl.overheid.aerius.gml.base.AeriusGMLVersion;
 import nl.overheid.aerius.gml.base.MetaDataInput;
+import nl.overheid.aerius.gml.base.metadata.LegacySituationType;
 import nl.overheid.aerius.importer.ImaerImporter;
 import nl.overheid.aerius.importer.ImportOption;
 import nl.overheid.aerius.shared.domain.Substance;
@@ -227,9 +228,7 @@ class GMLRoundtripTest {
     try {
       final ImportParcel result = getImportResult(versionString, TEST_FOLDER, file, ct);
       final GMLWriter gmlc = new GMLWriter(GMLTestDomain.getExampleGridSettings(), GMLTestDomain.TEST_REFERENCE_GENERATOR, targetGMLVersion);
-      if (result.getSituation().getType() == null) {
-        result.getSituation().setType(SituationType.PROPOSED);
-      }
+      revertAutoCorrections(result);
       final GMLScenario scenario = GMLScenario.Builder
           .create(result, result.getSituation())
           .build();
@@ -245,6 +244,12 @@ class GMLRoundtripTest {
       return result;
     } catch (final IOException | AeriusException e) {
       throw new AssertionError(fileVersion, e);
+    }
+  }
+
+  private static void revertAutoCorrections(final ImportParcel result) {
+    if (result.getSituation().getType() == null) {
+      result.getSituation().setType(SituationType.PROPOSED);
     }
   }
 

@@ -19,8 +19,8 @@ package nl.overheid.aerius.gml.v4_0.metadata;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
+import nl.overheid.aerius.gml.base.metadata.LegacySituationType;
 import nl.overheid.aerius.gml.v4_0.base.CalculatorSchema;
-import nl.overheid.aerius.shared.domain.scenario.SituationType;
 
 /**
  *
@@ -30,7 +30,7 @@ public class SituationMetadata {
 
   private String name;
   private String reference;
-  private SituationType situationType;
+  private LegacySituationType situationType;
   private Double nettingFactor;
 
   @XmlElement(namespace = CalculatorSchema.NAMESPACE)
@@ -52,11 +52,11 @@ public class SituationMetadata {
   }
 
   @XmlElement(namespace = CalculatorSchema.NAMESPACE)
-  public SituationType getSituationType() {
+  public LegacySituationType getSituationType() {
     return situationType;
   }
 
-  public void setSituationType(final SituationType situationType) {
+  public void setSituationType(final LegacySituationType situationType) {
     this.situationType = situationType;
   }
 
