@@ -311,6 +311,7 @@ public class ImaerImporter {
     result.getSituation().setYear(metaDataReader.readYear());
     result.setVersion(metaDataReader.readAeriusVersion());
     result.setDatabaseVersion(metaDataReader.readDatabaseVersion());
+    result.setGmlCreator(metaDataReader.readGmlCreator());
   }
 
   private static void addCimlkMeasures(final GMLReader reader, final Set<ImportOption> importOptions, final ImportParcel result,
