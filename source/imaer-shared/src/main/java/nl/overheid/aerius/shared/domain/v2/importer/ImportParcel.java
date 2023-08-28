@@ -39,6 +39,7 @@ public class ImportParcel implements Serializable {
 
   private String version;
   private String databaseVersion;
+  private String gmlCreator;
   private ScenarioMetaData importedMetaData;
   private final ScenarioSituation situation = new ScenarioSituation();
   private ScenarioSituationResults situationResults;
@@ -106,5 +107,13 @@ public class ImportParcel implements Serializable {
 
   public void setCalculationSetOptions(final CalculationSetOptions calculationSetOptions) {
     this.calculationSetOptions = calculationSetOptions;
+  }
+
+  public String getGmlCreator() {
+    return gmlCreator;
+  }
+
+  public void setGmlCreator(final String gmlCreator) {
+    this.gmlCreator = gmlCreator;
   }
 }
