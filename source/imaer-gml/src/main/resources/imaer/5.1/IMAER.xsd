@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:IMAER="http://imaer.aerius.nl/5.1" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:gmlsf="http://www.opengis.net/gmlsf/2.0" elementFormDefault="qualified" targetNamespace="http://imaer.aerius.nl/5.1" version="5.1.2">
+<?xml version="1.0" encoding="UTF-8"?><schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:IMAER="http://imaer.aerius.nl/5.1" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:gmlsf="http://www.opengis.net/gmlsf/2.0" elementFormDefault="qualified" targetNamespace="http://imaer.aerius.nl/5.1" version="5.1.3">
   <annotation>
     <documentation>Dit model beschrijft het InformatieModel AERius (IMAER). IMAER is het standaard gegevens uitwisselingsformaat van AERIUS en wordt gebruikt voor het importeren, exporteren en uitwisselen van gegevens met en tussen de verschillende AERIUS producten (o.a. Calculator, Monitor en Register).  
 
