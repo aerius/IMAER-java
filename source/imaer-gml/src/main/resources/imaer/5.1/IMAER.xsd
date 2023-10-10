@@ -438,11 +438,71 @@ NOTE Met behulp van deze metadata wordt vastgelegd met welke versies van softwar
           <documentation>Metadata over welk programma de GML heeft geproduceerd.</documentation>
         </annotation>
       </element>
+      <element minOccurs="0" name="archive" type="IMAER:ArchiveMetadataPropertyType">
+        <annotation>
+          <documentation>Metadata with Archive information, indicating the results in this file were retrieved from AERIUS Archive.</documentation>
+        </annotation>
+      </element>
     </sequence>
   </complexType>
   <complexType name="AeriusCalculatorMetadataPropertyType">
     <sequence>
       <element ref="IMAER:AeriusCalculatorMetadata"/>
+    </sequence>
+  </complexType>
+  <element name="ArchiveMetadata" substitutionGroup="gml:AbstractObject" type="IMAER:ArchiveMetadataType">
+    <annotation>
+      <documentation>Metadata with Archive information.
+NOTE This metadata object can be used to store archive related data.</documentation>
+    </annotation>
+  </element>
+  <complexType name="ArchiveMetadataType">
+    <sequence>
+      <element name="retrievalDateTime" type="dateTime">
+        <annotation>
+          <documentation>Date and time of retrieval of the archive information.</documentation>
+        </annotation>
+      </element>
+      <element maxOccurs="unbounded" minOccurs="0" name="project" type="IMAER:ArchiveProjectPropertyType">
+        <annotation>
+          <documentation>The projects that are part of this archive retrieval.</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="ArchiveMetadataPropertyType">
+    <sequence>
+      <element ref="IMAER:ArchiveMetadata"/>
+    </sequence>
+  </complexType>
+  <element name="ArchiveProject" substitutionGroup="gml:AbstractObject" type="IMAER:ArchiveProjectType">
+    <annotation>
+      <documentation>Class for archive project information.
+NOTE This object can be used to store information about an archive project.</documentation>
+    </annotation>
+  </element>
+  <complexType name="ArchiveProjectType">
+    <sequence>
+      <element name="id" type="string">
+        <annotation>
+          <documentation>The ID of the project.</documentation>
+        </annotation>
+      </element>
+      <element name="name" type="string">
+        <annotation>
+          <documentation>The name of the project.</documentation>
+        </annotation>
+      </element>
+      <element name="aeriusVersion" type="string">
+        <annotation>
+          <documentation>The version of AERIUS that was used to calculate the results.</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="ArchiveProjectPropertyType">
+    <sequence>
+      <element ref="IMAER:ArchiveProject"/>
     </sequence>
   </complexType>
   <element name="Building" substitutionGroup="IMAER:GeoObject" type="IMAER:BuildingType">
