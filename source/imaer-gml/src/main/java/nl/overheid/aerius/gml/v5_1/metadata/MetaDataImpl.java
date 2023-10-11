@@ -29,7 +29,7 @@ import nl.overheid.aerius.shared.domain.scenario.SituationType;
  *
  */
 @XmlType(name = "AeriusCalculatorMetadataType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"projectMetadataProperty",
-    "situationMetadataProperty", "calculationMetadataProperty", "versionMetadataProperty", "gmlCreator"})
+    "situationMetadataProperty", "calculationMetadataProperty", "versionMetadataProperty", "gmlCreator", "archiveMetadataProperty"})
 public class MetaDataImpl implements MetaData {
 
   private SituationMetadata situation;
@@ -37,6 +37,7 @@ public class MetaDataImpl implements MetaData {
   private ProjectMetadata project;
   private VersionMetadata version;
   private String gmlCreator;
+  private ArchiveMetadata archive;
 
   @XmlElement(namespace = CalculatorSchema.NAMESPACE, name = "situation")
   public SituationMetadataProperty getSituationMetadataProperty() {
@@ -102,6 +103,11 @@ public class MetaDataImpl implements MetaData {
     this.version = versionProperty.getProperty();
   }
 
+  @XmlTransient
+  public void setVersion(final VersionMetadata version) {
+    this.version = version;
+  }
+
   @XmlElement(namespace = CalculatorSchema.NAMESPACE)
   @Override
   public String getGmlCreator() {
@@ -112,9 +118,23 @@ public class MetaDataImpl implements MetaData {
     this.gmlCreator = gmlCreator;
   }
 
+  @XmlElement(namespace = CalculatorSchema.NAMESPACE, name = "archive")
+  public ArchiveMetadataProperty getArchiveMetadataProperty() {
+    return archive == null ? null : new ArchiveMetadataProperty(archive);
+  }
+
+  public void setArchiveMetadataProperty(final ArchiveMetadataProperty archiveProperty) {
+    this.archive = archiveProperty.getProperty();
+  }
+
   @XmlTransient
-  public void setVersion(final VersionMetadata version) {
-    this.version = version;
+  @Override
+  public ArchiveMetadata getArchive() {
+    return archive;
+  }
+
+  public void setArchive(final ArchiveMetadata archive) {
+    this.archive = archive;
   }
 
   @Override

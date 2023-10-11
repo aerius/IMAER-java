@@ -37,6 +37,7 @@ import nl.overheid.aerius.gml.v5_1.collection.FeatureCollectionImpl;
 import nl.overheid.aerius.gml.v5_1.definitions.CustomDiurnalVariation;
 import nl.overheid.aerius.gml.v5_1.definitions.DefinitionsImpl;
 import nl.overheid.aerius.gml.v5_1.metadata.AddressImpl;
+import nl.overheid.aerius.gml.v5_1.metadata.ArchiveMetadata;
 import nl.overheid.aerius.gml.v5_1.metadata.CalculationMetadata;
 import nl.overheid.aerius.gml.v5_1.metadata.CalculationOption;
 import nl.overheid.aerius.gml.v5_1.metadata.CalculationOptionProperty;
@@ -52,6 +53,7 @@ import nl.overheid.aerius.shared.domain.calculation.CalculationSetOptions;
 import nl.overheid.aerius.shared.domain.geo.HexagonZoomLevel;
 import nl.overheid.aerius.shared.domain.result.EmissionResultKey;
 import nl.overheid.aerius.shared.domain.result.EmissionResultType;
+import nl.overheid.aerius.shared.domain.v2.archive.ArchiveProject;
 import nl.overheid.aerius.shared.domain.v2.building.BuildingFeature;
 import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKCorrection;
 import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKDispersionLineFeature;
@@ -111,6 +113,7 @@ public class GMLVersionWriterV51 implements GMLVersionWriter {
     metaDataImpl.setCalculation(getCalculation(metaDataInput));
     metaDataImpl.setProject(getProject(metaDataInput));
     metaDataImpl.setVersion(getVersion(metaDataInput));
+    metaDataImpl.setArchive(getArchive(metaDataInput));
     return metaDataImpl;
   }
 
@@ -190,6 +193,32 @@ public class GMLVersionWriterV51 implements GMLVersionWriter {
     version.setAeriusVersion(input.getVersion());
     version.setDatabaseVersion(input.getDatabaseVersion());
     return version;
+  }
+
+  private ArchiveMetadata getArchive(final MetaDataInput input) {
+    final ArchiveMetadata archive;
+    if (input.getArchiveMetaData() == null) {
+      archive = null;
+    } else {
+      archive = new ArchiveMetadata();
+      archive.setRetrievalDateTime(input.getArchiveMetaData().getRetrievalDateTime());
+      archive.setArchiveProjects(archiveProjects2GML(input.getArchiveMetaData().getArchiveProjects()));
+    }
+    return archive;
+  }
+
+  private List<nl.overheid.aerius.gml.v5_1.metadata.ArchiveProject> archiveProjects2GML(final List<ArchiveProject> archveProjects) {
+    return archveProjects.stream()
+        .map(this::archiveProject2GML)
+        .collect(Collectors.toList());
+  }
+
+  private nl.overheid.aerius.gml.v5_1.metadata.ArchiveProject archiveProject2GML(final ArchiveProject archiveProject) {
+    final nl.overheid.aerius.gml.v5_1.metadata.ArchiveProject gmlArchiveProject = new nl.overheid.aerius.gml.v5_1.metadata.ArchiveProject();
+    gmlArchiveProject.setId(archiveProject.getId());
+    gmlArchiveProject.setName(archiveProject.getName());
+    gmlArchiveProject.setAeriusVersion(archiveProject.getAeriusVersion());
+    return gmlArchiveProject;
   }
 
   private List<EmissionResultType> determineResultTypes(final Set<EmissionResultKey> keys) {

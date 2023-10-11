@@ -17,9 +17,14 @@
 package nl.overheid.aerius.gml;
 
 import java.time.LocalDate;
+import java.util.stream.Collectors;
 
 import nl.overheid.aerius.gml.base.FeatureCollection;
+import nl.overheid.aerius.gml.base.IsArchiveMetadata;
+import nl.overheid.aerius.gml.base.IsArchiveProject;
 import nl.overheid.aerius.gml.base.MetaData;
+import nl.overheid.aerius.shared.domain.v2.archive.ArchiveMetaData;
+import nl.overheid.aerius.shared.domain.v2.archive.ArchiveProject;
 import nl.overheid.aerius.shared.domain.v2.scenario.ScenarioMetaData;
 
 /**
@@ -51,6 +56,31 @@ public class GMLMetaDataReader {
       smd.setDescription(metaData.getDescription());
     }
     return smd;
+  }
+
+  /**
+   * Returns the {@link ArchiveMetaData} from the GML data.
+   * @return ArchiveMetaData object
+   */
+  public ArchiveMetaData readArchiveMetaData() {
+    if (!hasArchiveMetadata(featureCollection)) {
+      return null;
+    }
+    final ArchiveMetaData archiveMetaData = new ArchiveMetaData();
+    final IsArchiveMetadata gmlMetaData = featureCollection.getMetaData().getArchive();
+    archiveMetaData.setRetrievalDateTime(gmlMetaData.getRetrievalDateTime());
+    archiveMetaData.setArchiveProjects(gmlMetaData.getArchiveProjects().stream()
+        .map(GMLMetaDataReader::mapProject)
+        .collect(Collectors.toList()));
+    return archiveMetaData;
+  }
+
+  private static ArchiveProject mapProject(final IsArchiveProject gmlProject) {
+    final ArchiveProject project = new ArchiveProject();
+    project.setId(gmlProject.getId());
+    project.setName(gmlProject.getName());
+    project.setAeriusVersion(gmlProject.getAeriusVersion());
+    return project;
   }
 
   /**
@@ -113,5 +143,9 @@ public class GMLMetaDataReader {
 
   private boolean checkFeatureCollection(final FeatureCollection featureCollection) {
     return featureCollection != null && featureCollection.getMetaData() != null;
+  }
+
+  private boolean hasArchiveMetadata(final FeatureCollection featureCollection) {
+    return featureCollection != null && featureCollection.getMetaData() != null && featureCollection.getMetaData().getArchive() != null;
   }
 }

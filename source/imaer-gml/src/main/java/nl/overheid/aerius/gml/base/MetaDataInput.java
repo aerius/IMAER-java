@@ -22,6 +22,7 @@ import java.util.List;
 import nl.overheid.aerius.shared.domain.Theme;
 import nl.overheid.aerius.shared.domain.calculation.CalculationSetOptions;
 import nl.overheid.aerius.shared.domain.scenario.SituationType;
+import nl.overheid.aerius.shared.domain.v2.archive.ArchiveMetaData;
 import nl.overheid.aerius.shared.domain.v2.scenario.ScenarioMetaData;
 
 /**
@@ -30,6 +31,7 @@ import nl.overheid.aerius.shared.domain.v2.scenario.ScenarioMetaData;
 public class MetaDataInput {
 
   private ScenarioMetaData scenarioMetaData;
+  private ArchiveMetaData archiveMetaData;
   private Theme theme;
   private int year;
   private String name;
@@ -48,6 +50,14 @@ public class MetaDataInput {
 
   public void setScenarioMetaData(final ScenarioMetaData scenarioMetaData) {
     this.scenarioMetaData = scenarioMetaData;
+  }
+
+  public ArchiveMetaData getArchiveMetaData() {
+    return archiveMetaData;
+  }
+
+  public void setArchiveMetaData(final ArchiveMetaData archiveMetaData) {
+    this.archiveMetaData = archiveMetaData;
   }
 
   public Theme getTheme() {
