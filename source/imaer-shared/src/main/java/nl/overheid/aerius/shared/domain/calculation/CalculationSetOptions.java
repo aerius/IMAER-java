@@ -35,6 +35,7 @@ public class CalculationSetOptions implements Serializable {
   private CalculationMethod calculationMethod = CalculationMethod.FORMAL_ASSESSMENT;
   private CalculationJobType calculationJobType;
   private double calculateMaximumRange;
+  private boolean useInCombinationArchive;
   private final ArrayList<Substance> substances = new ArrayList<>();
   private final Set<EmissionResultKey> emissionResultKeys = new HashSet<>();
   private WNBCalculationOptions wnbCalculationOptions = new WNBCalculationOptions();
@@ -109,6 +110,20 @@ public class CalculationSetOptions implements Serializable {
    */
   public void setCalculateMaximumRange(final double calculateMaximumRange) {
     this.calculateMaximumRange = calculateMaximumRange;
+  }
+
+  /**
+   * @return Boolean indicating if the in combination archive should be used for an in combination calculation job.
+   */
+  public boolean isUseInCombinationArchive() {
+    return useInCombinationArchive;
+  }
+
+  /**
+   * @param useInCombinationArchive Boolean indicating if the in combination archive should be set for an in combination calculation job.
+   */
+  public void setUseInCombinationArchive(final boolean useInCombinationArchive) {
+    this.useInCombinationArchive = useInCombinationArchive;
   }
 
   public ConnectSuppliedOptions getConnectSuppliedOptions() {

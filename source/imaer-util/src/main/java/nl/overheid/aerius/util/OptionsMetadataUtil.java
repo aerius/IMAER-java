@@ -24,6 +24,7 @@ import java.util.Optional;
 
 import nl.overheid.aerius.shared.domain.Theme;
 import nl.overheid.aerius.shared.domain.calculation.ADMSOptions;
+import nl.overheid.aerius.shared.domain.calculation.CalculationJobType;
 import nl.overheid.aerius.shared.domain.calculation.CalculationRoadOPS;
 import nl.overheid.aerius.shared.domain.calculation.CalculationSetOptions;
 import nl.overheid.aerius.shared.domain.calculation.ConnectSuppliedOptions;
@@ -51,6 +52,7 @@ public final class OptionsMetadataUtil {
     WITH_WNB_MAX_DISTANCE,
     SUB_RECEPTORS_MODE,
     SUB_RECEPTOR_ZOOM_LEVEL,
+    USE_IN_COMBINATION_ARCHIVE,
 
     /* ConnectSuppliedOptions related */
     CALCULATION_YEAR,
@@ -123,6 +125,9 @@ public final class OptionsMetadataUtil {
   public static Map<String, String> optionsToMap(final Theme theme, final CalculationSetOptions options, final boolean addDefaults) {
     final Map<Option, String> mapToAddTo = new LinkedHashMap<>();
     addBooleanValue(mapToAddTo, Option.WITHOUT_SOURCE_STACKING, !options.isStacking(), addDefaults);
+    if (options.getCalculationJobType() == CalculationJobType.IN_COMBINATION_PROCESS_CONTRIBUTION) {
+      addBooleanValue(mapToAddTo, Option.USE_IN_COMBINATION_ARCHIVE, options.isUseInCombinationArchive(), addDefaults);
+    }
     if (theme == null || theme == Theme.WNB || theme == Theme.RBL) {
       wnbOptionsToMap(mapToAddTo, options.getWnbCalculationOptions(), addDefaults);
       addIntValue(mapToAddTo, Option.MONITOR_SRM2_YEAR, options.getRblCalculationOptions().getMonitorSrm2Year(), addDefaults);
