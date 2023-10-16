@@ -129,7 +129,8 @@ public class ImaerImporter {
     }
     final AeriusGMLVersion version = reader.getVersion();
     setImportResultMetaData(result, reader);
-    GMLValidator.validateMetaData(result.getImportedMetaData(), result.getExceptions(), ImportOption.VALIDATE_METADATA.in(importOptions));
+    GMLValidator.validateMetaData(result.getImportedMetaData(), result.getExceptions(), ImportOption.VALIDATE_METADATA.in(importOptions)
+        && result.getArchiveMetaData() == null);
     GMLValidator.validateYear(result.getSituation().getYear(), result.getExceptions());
     GMLValidator.validateGMLVersion(version, result.getWarnings());
 
@@ -307,11 +308,12 @@ public class ImaerImporter {
 
   private void setImportResultMetaData(final ImportParcel result, final GMLReader reader) {
     final GMLMetaDataReader metaDataReader = reader.metaDataReader();
-    result.setImportedMetaData(metaDataReader.readMetaData());
     result.getSituation().setYear(metaDataReader.readYear());
     result.setVersion(metaDataReader.readAeriusVersion());
     result.setDatabaseVersion(metaDataReader.readDatabaseVersion());
     result.setGmlCreator(metaDataReader.readGmlCreator());
+    result.setImportedMetaData(metaDataReader.readMetaData());
+    result.setArchiveMetaData(metaDataReader.readArchiveMetaData());
   }
 
   private static void addCimlkMeasures(final GMLReader reader, final Set<ImportOption> importOptions, final ImportParcel result,

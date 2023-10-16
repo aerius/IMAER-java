@@ -42,7 +42,6 @@ import org.slf4j.LoggerFactory;
 
 import nl.overheid.aerius.gml.base.AeriusGMLVersion;
 import nl.overheid.aerius.gml.base.MetaDataInput;
-import nl.overheid.aerius.gml.base.metadata.LegacySituationType;
 import nl.overheid.aerius.importer.ImaerImporter;
 import nl.overheid.aerius.importer.ImportOption;
 import nl.overheid.aerius.shared.domain.Substance;
@@ -147,7 +146,8 @@ class GMLRoundtripTest {
       {"scenario_traffic_network_proposed", CharacteristicsType.OPS},
       {"nca_calculation_point", CharacteristicsType.ADMS},
       {"nca_calculation_options", CharacteristicsType.ADMS},
-      {"nca_calculation_options_quick_run", CharacteristicsType.ADMS}
+      {"nca_calculation_options_quick_run", CharacteristicsType.ADMS},
+      {"archive_metadata", CharacteristicsType.ADMS}
   };
 
   private static final String LATEST_VERSION = "latest";
@@ -171,7 +171,7 @@ class GMLRoundtripTest {
     return files;
   }
 
-  private static void addArguments(List<Object[]> files, AeriusGMLVersion version, AeriusGMLVersion targetVersion) {
+  private static void addArguments(final List<Object[]> files, final AeriusGMLVersion version, final AeriusGMLVersion targetVersion) {
     for (final Object[] object : FILES) {
       if (!skipThisTest(version, (String) object[0])) {
         final Object[] f = new Object[5];
@@ -226,7 +226,7 @@ class GMLRoundtripTest {
   private ImportParcel importAndCompare(final String versionString, final String fileVersion, final String file, final CharacteristicsType ct,
       final AeriusGMLVersion targetGMLVersion) {
     try {
-      final ImportParcel result = getImportResult(versionString, TEST_FOLDER, file, ct);
+      final ImportParcel result = getImportResult(versionString, TEST_FOLDER, file, ct, file.contains("archive"));
       final GMLWriter gmlc = new GMLWriter(GMLTestDomain.getExampleGridSettings(), GMLTestDomain.TEST_REFERENCE_GENERATOR, targetGMLVersion);
       revertAutoCorrections(result);
       final GMLScenario scenario = GMLScenario.Builder
@@ -248,7 +248,7 @@ class GMLRoundtripTest {
   }
 
   private static void revertAutoCorrections(final ImportParcel result) {
-    if (result.getSituation().getType() == null) {
+    if (result.getSituation().getType() == null && result.getArchiveMetaData() == null) {
       result.getSituation().setType(SituationType.PROPOSED);
     }
   }
@@ -283,6 +283,7 @@ class GMLRoundtripTest {
   private MetaDataInput getMetaData(final ImportParcel result, final Theme theme, final boolean resultsIncluded) {
     final MetaDataInput input = new MetaDataInput();
     input.setScenarioMetaData(result.getImportedMetaData());
+    input.setArchiveMetaData(result.getArchiveMetaData());
     input.setYear(result.getSituation().getYear());
     input.setVersion("DEV");
     input.setDatabaseVersion(result.getDatabaseVersion());
@@ -327,8 +328,8 @@ class GMLRoundtripTest {
     return fileContent;
   }
 
-  private ImportParcel getImportResult(final String versionString, final String testFolder, final String file, final CharacteristicsType ct)
-      throws IOException, AeriusException {
+  private ImportParcel getImportResult(final String versionString, final String testFolder, final String file, final CharacteristicsType ct,
+      final boolean includeResults) throws IOException, AeriusException {
     final String relativePath = getRelativePath(versionString, testFolder);
     final AtomicReference<String> readVersion = new AtomicReference<>();
     final ImaerImporter importer = new ImaerImporter(AssertGML.mockGMLHelper(ct)) {
@@ -342,10 +343,17 @@ class GMLRoundtripTest {
     };
     final ImportParcel result = new ImportParcel();
     try (final InputStream inputStream = AssertGML.getFileInputStream(relativePath, file)) {
-      importer.importStream(inputStream, ImportOption.getDefaultOptions(), result, Optional.empty(), file.startsWith("nca") ? Theme.NCA : Theme.WNB);
+      final Set<ImportOption> importOptions = ImportOption.getDefaultOptions();
+      if (includeResults) {
+        importOptions.add(ImportOption.INCLUDE_RESULTS);
+      }
+      importer.importStream(inputStream, importOptions, result, Optional.empty(), file.startsWith("nca") ? Theme.NCA : Theme.WNB);
     }
     assertNoExceptions(result.getExceptions(), " for version " + versionString + " with file " + file);
     assertEquals(versionString, readVersion.get(), "GML imported is not of expected version");
+    if (includeResults) {
+      result.getCalculationPoints().getFeatures().addAll(result.getSituationResults().getResults());
+    }
     return result;
   }
 

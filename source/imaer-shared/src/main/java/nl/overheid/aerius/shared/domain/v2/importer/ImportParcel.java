@@ -23,6 +23,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import nl.overheid.aerius.shared.domain.calculation.CalculationSetOptions;
+import nl.overheid.aerius.shared.domain.v2.archive.ArchiveMetaData;
 import nl.overheid.aerius.shared.domain.v2.geojson.FeatureCollection;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPointFeature;
 import nl.overheid.aerius.shared.domain.v2.scenario.ScenarioMetaData;
@@ -35,12 +36,13 @@ import nl.overheid.aerius.shared.exception.AeriusException;
  */
 public class ImportParcel implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 2L;
 
   private String version;
   private String databaseVersion;
   private String gmlCreator;
   private ScenarioMetaData importedMetaData;
+  private ArchiveMetaData archiveMetaData;
   private final ScenarioSituation situation = new ScenarioSituation();
   private ScenarioSituationResults situationResults;
   private CalculationSetOptions calculationSetOptions;
@@ -70,6 +72,14 @@ public class ImportParcel implements Serializable {
 
   public void setImportedMetaData(final ScenarioMetaData importedMetaData) {
     this.importedMetaData = importedMetaData;
+  }
+
+  public ArchiveMetaData getArchiveMetaData() {
+    return archiveMetaData;
+  }
+
+  public void setArchiveMetaData(final ArchiveMetaData archiveMetaData) {
+    this.archiveMetaData = archiveMetaData;
   }
 
   public ScenarioSituationResults getSituationResults() {

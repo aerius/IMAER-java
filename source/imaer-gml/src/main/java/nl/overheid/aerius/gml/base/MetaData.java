@@ -108,4 +108,11 @@ public interface MetaData {
   default IsCalculationMetaData getCalculation() {
     return null;
   }
+
+  /**
+   * @return the Archive MetaData
+   */
+  default IsArchiveMetadata getArchive() {
+    return null;
+  }
 }
