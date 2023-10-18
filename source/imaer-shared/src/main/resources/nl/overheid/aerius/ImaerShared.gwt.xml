@@ -18,6 +18,9 @@
 -->
 <module>
   <super-source path="super" />
-  <source path="geo"/>
-  <source path="shared"/>
+  <source path="geo" />
+  <source path="shared">
+    <exclude name="**/v2/importer/**" />
+    <exclude name="**/v2/archive/**" />
+  </source>
 </module>
