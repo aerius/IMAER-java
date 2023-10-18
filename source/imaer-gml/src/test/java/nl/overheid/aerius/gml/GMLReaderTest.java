@@ -113,7 +113,7 @@ class GMLReaderTest {
     final File file = getFile(AssertGML.PATH_LATEST_VERSION, RECEPTORS_FILE);
     final List<CalculationPointFeature> points = getAeriusPointsFromFile(file, true);
     assertNotNull(points, "Receptor points");
-    assertEquals(4, points.size(), "Number of receptor points");
+    assertEquals(5, points.size(), "Number of receptor points");
   }
 
   @Test
@@ -135,7 +135,7 @@ class GMLReaderTest {
     final File file = getFile(AssertGML.PATH_LATEST_VERSION, MIXED_FEATURES_FILE);
     final List<CalculationPointFeature> points = getAeriusPointsFromFile(file, true);
     assertNotNull(points, "Receptor points");
-    assertEquals(4, points.size(), "Number of receptor points");
+    assertEquals(5, points.size(), "Number of receptor points");
 
     final List<EmissionSourceFeature> sources = getEmissionSourcesFromFile(file);
     assertNotNull(sources, "Emission sources");
@@ -254,14 +254,14 @@ class GMLReaderTest {
       final List<CalculationPointFeature> points = getAeriusPointsFromFile(file, true);
       assertNotNull(points, "Receptor points");
       // In older versions there are only a receptor and 2 calculation points
-      // In newer versions (> 5.0) a sub point is added
-      assertTrue(3 == points.size() || 4 == points.size(), "Number of receptor points");
+      // In newer versions (> 5.0) sub points are added
+      assertTrue(3 == points.size() || 5 == points.size(), "Number of receptor points");
     }
     files = getFiles(PATH_ALL, MIXED_FEATURES_FILE);
     for (final File file : files) {
       final List<CalculationPointFeature> points = getAeriusPointsFromFile(file, true);
       assertNotNull(points, "Receptor points");
-      assertTrue(3 == points.size() || 4 == points.size(), "Number of receptor points");
+      assertTrue(3 == points.size() || 5 == points.size(), "Number of receptor points");
       assertFalse(points.get(0).getProperties().getResults().isEmpty(), "Results included");
       final List<EmissionSourceFeature> sources = getEmissionSourcesFromFile(file);
       assertNotNull(sources, "Emission sources for " + file);

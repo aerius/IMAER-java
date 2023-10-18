@@ -335,6 +335,26 @@ class GMLWriterTest {
     feature4.setProperties(calculationPoint4);
     receptors.add(feature4);
 
+    final int xCoord5 = xCoord1 - 20;
+    final int yCoord5 = yCoord1 - 20;
+    final CalculationPointFeature feature5 = new CalculationPointFeature();
+    final Point point5 = new Point(xCoord5, yCoord5);
+    feature5.setGeometry(point5);
+    final SubPoint calculationPoint5 = new SubPoint();
+    calculationPoint5.setSubPointId(19);
+    calculationPoint5.setReceptorId(calculationPoint1.getId() + 1);
+    calculationPoint5.setLevel(2);
+    if (includeDeposition) {
+      calculationPoint5.getResults().put(EmissionResultKey.NH3_DEPOSITION, 182.31);
+      calculationPoint5.getResults().put(EmissionResultKey.NOX_DEPOSITION, 22.3);
+    }
+    if (includeConcentration) {
+      calculationPoint5.getResults().put(EmissionResultKey.NH3_CONCENTRATION, 42.42);
+      calculationPoint5.getResults().put(EmissionResultKey.NOX_CONCENTRATION, 5.0);
+    }
+    feature5.setProperties(calculationPoint5);
+    receptors.add(feature5);
+
     return receptors;
   }
 

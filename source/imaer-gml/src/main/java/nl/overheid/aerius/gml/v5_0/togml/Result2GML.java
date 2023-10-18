@@ -28,10 +28,10 @@ import nl.overheid.aerius.gml.base.geo.Geometry2GML;
 import nl.overheid.aerius.gml.v5_0.base.CalculatorSchema;
 import nl.overheid.aerius.gml.v5_0.geo.Polygon;
 import nl.overheid.aerius.gml.v5_0.result.AbstractCalculationPoint;
+import nl.overheid.aerius.gml.v5_0.result.CIMLKCalculationPoint;
 import nl.overheid.aerius.gml.v5_0.result.CalculationPointCorrection;
 import nl.overheid.aerius.gml.v5_0.result.CalculationPointCorrectionProperty;
 import nl.overheid.aerius.gml.v5_0.result.CustomCalculationPoint;
-import nl.overheid.aerius.gml.v5_0.result.CIMLKCalculationPoint;
 import nl.overheid.aerius.gml.v5_0.result.ReceptorPoint;
 import nl.overheid.aerius.gml.v5_0.result.Result;
 import nl.overheid.aerius.gml.v5_0.result.ResultProperty;
@@ -41,9 +41,9 @@ import nl.overheid.aerius.shared.domain.geo.HexagonUtil;
 import nl.overheid.aerius.shared.domain.geo.HexagonZoomLevel;
 import nl.overheid.aerius.shared.domain.result.EmissionResultKey;
 import nl.overheid.aerius.shared.domain.result.EmissionResultType;
+import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKCorrection;
 import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
 import nl.overheid.aerius.shared.domain.v2.geojson.Point;
-import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKCorrection;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPoint;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPointFeature;
 import nl.overheid.aerius.shared.exception.AeriusException;
@@ -76,8 +76,7 @@ final class Result2GML {
     final AbstractCalculationPoint returnPoint = determineSpecificType(point, feature.getGeometry());
     //set the generic properties.
     returnPoint.setGeometry(geometry2gml, feature.getGeometry());
-    //avoid conflicting IDs by using a prefix.
-    returnPoint.setId(GMLIdUtil.toValidGmlId(point.getGmlId(), GMLIdUtil.POINT_PREFIX, String.valueOf(point.getId())));
+    returnPoint.setId(determineId(point));
     returnPoint.setLabel(point.getLabel());
     returnPoint.setDescription(point.getDescription());
     returnPoint.setJurisdictionId(point.getJurisdictionId());
@@ -89,6 +88,16 @@ final class Result2GML {
     returnPoint.setResults(getResults(point, substances));
     returnPoint.setCorrections(getCorrections(point, corrections));
     return returnPoint;
+  }
+
+  private String determineId(final CalculationPoint point) {
+    //avoid conflicting IDs by using a prefix.
+    if (point instanceof nl.overheid.aerius.shared.domain.v2.point.SubPoint) {
+      final nl.overheid.aerius.shared.domain.v2.point.SubPoint subPoint = (nl.overheid.aerius.shared.domain.v2.point.SubPoint) point;
+      return GMLIdUtil.toValidGmlId(point.getGmlId(), GMLIdUtil.SUB_POINT_PREFIX, subPoint.getReceptorId() + "_" + subPoint.getSubPointId());
+    } else {
+      return GMLIdUtil.toValidGmlId(point.getGmlId(), GMLIdUtil.POINT_PREFIX, String.valueOf(point.getId()));
+    }
   }
 
   private AbstractCalculationPoint determineSpecificType(final CalculationPoint aeriusPoint, final Point point) throws AeriusException {
