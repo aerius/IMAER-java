@@ -23,6 +23,7 @@ import java.util.function.BooleanSupplier;
 import nl.overheid.aerius.gml.base.MetaDataInput;
 import nl.overheid.aerius.gml.base.OtherSituationMetaData;
 import nl.overheid.aerius.shared.domain.scenario.IsScenario;
+import nl.overheid.aerius.shared.domain.v2.archive.ArchiveMetaData;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPointFeature;
 import nl.overheid.aerius.shared.domain.v2.scenario.Scenario;
 import nl.overheid.aerius.shared.domain.v2.scenario.ScenarioSituation;
@@ -52,6 +53,24 @@ public final class GMLScenarioHelper {
     metaData.setReference(situation.getReference());
     scenario.getSituations().stream()
         .filter(x -> situation != x)
+        .map(GMLScenarioHelper::otherSituation)
+        .forEach(metaData::addOtherSituation);
+    return metaData;
+  }
+
+  /**
+   * Construct the metadata object needed for an in combination archive GML based on input.
+   */
+  public static MetaDataInput constructArchiveMetaData(final Scenario scenario, final int year, final ArchiveMetaData archiveMetaData,
+      final String aeriusVersion, final String databaseVersion) {
+    final MetaDataInput metaData = new MetaDataInput();
+    metaData.setTheme(scenario.getTheme());
+    metaData.setArchiveMetaData(archiveMetaData);
+    metaData.setYear(year);
+    metaData.setVersion(aeriusVersion);
+    metaData.setDatabaseVersion(databaseVersion);
+    metaData.setOptions(scenario.getOptions());
+    scenario.getSituations().stream()
         .map(GMLScenarioHelper::otherSituation)
         .forEach(metaData::addOtherSituation);
     return metaData;

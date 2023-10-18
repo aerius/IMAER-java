@@ -75,6 +75,7 @@ public class GMLWriter {
   protected static final Logger LOG = LoggerFactory.getLogger(GMLWriter.class);
   private static final String GML_EXTENSION = ".gml";
   private static final String GML_FILE_PREFIX = "AERIUS";
+  private static final String ARCHIVE_FILE_PART = "Archive";
 
   private final ReceptorGridSettings receptorGridSettings;
   private final ReferenceGenerator referenceGenerator;
@@ -222,17 +223,48 @@ public class GMLWriter {
       throw new AeriusException(ImaerExceptionReason.INTERNAL_ERROR);
     }
 
-    LOG.info("File generated for {} in {} to {}.", scenario.getName(), metaData, file.toString());
+    LOG.info("File generated for {} to {}.", scenario.getName(), file);
+    return file.toFile();
+  }
+
+  /**
+   * Build archive GML and write it directly to file.
+   * The file will be generated in the supplied directory.
+   *
+   * @param dir The directory to write the file to.
+   * @param points Points including the archive contributions.
+   * @param metaData The metadata to write for this file.
+   * @param fileId The ID that should be reflected in the filename.
+   * @return The file generated.
+   * @throws AeriusException When exception occurred generating the GML.
+   */
+  public File writeArchiveContributionsToFile(final File dir, final List<CalculationPointFeature> points, final MetaDataInput metaData,
+      final int fileId) throws AeriusException {
+    final Path file = new File(dir, getFileName(Optional.empty(), fileId, Optional.of(ARCHIVE_FILE_PART), Optional.empty())).toPath();
+    try (final OutputStream outputStream = Files.newOutputStream(file)) {
+      writeAeriusPoints(outputStream, points, metaData);
+    } catch (final IOException e) {
+      // catch any exception and put them in a GML exception.
+      LOG.error("Internal error occurred.", e);
+      throw new AeriusException(ImaerExceptionReason.INTERNAL_ERROR);
+    }
+
+    LOG.info("File generated for archive contributions to {}.", file);
     return file.toFile();
   }
 
   protected String getFileName(final IsScenario scenario, final int fileId, final Optional<String> fileNamePart,
       final Optional<Date> fileNameDatePart) {
+    return getFileName(Optional.of(scenario), fileId, fileNamePart, fileNameDatePart);
+  }
+
+  protected String getFileName(final Optional<IsScenario> scenario, final int fileId, final Optional<String> fileNamePart,
+      final Optional<Date> fileNameDatePart) {
     // filename has to be unique in ZIP, so assure the filename is unique for comparison modes by using the sourcelist id.
     final List<String> fileParts = new ArrayList<>();
     fileParts.add(Integer.toString(fileId));
-    if (!StringUtils.isEmpty(scenario.getName())) {
-      fileParts.add(scenario.getName());
+    if (scenario.isPresent() && !StringUtils.isEmpty(scenario.get().getName())) {
+      fileParts.add(scenario.get().getName());
     }
     if (fileNamePart.isPresent()) {
       fileParts.add(fileNamePart.get());
