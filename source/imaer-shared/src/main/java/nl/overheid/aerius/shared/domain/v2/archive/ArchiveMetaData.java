@@ -16,6 +16,7 @@
  */
 package nl.overheid.aerius.shared.domain.v2.archive;
 
+import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +24,9 @@ import java.util.List;
 /**
  * Metadata information related to Archive.
  */
-public class ArchiveMetaData {
+public class ArchiveMetaData implements Serializable {
+
+  private static final long serialVersionUID = 1L;
 
   private ZonedDateTime retrievalDateTime;
   private List<ArchiveProject> archiveProjects = new ArrayList<>();
