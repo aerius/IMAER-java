@@ -16,10 +16,14 @@
  */
 package nl.overheid.aerius.shared.domain.v2.archive;
 
+import java.io.Serializable;
+
 /**
  * A project in archive.
  */
-public class ArchiveProject {
+public class ArchiveProject implements Serializable {
+
+  private static final long serialVersionUID = 1L;
 
   private String id;
   private String name;
