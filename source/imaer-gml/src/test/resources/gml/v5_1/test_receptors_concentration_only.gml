@@ -116,15 +116,15 @@
         </imaer:CalculationPoint>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SubPoint receptorPointId="1" subPointId="19" gml:id="CP.19">
+        <imaer:SubPoint receptorPointId="1" subPointId="19" gml:id="SP.1_19">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
-                    <imaer:localId>CP.19</imaer:localId>
+                    <imaer:localId>SP.1_19</imaer:localId>
                 </imaer:NEN3610ID>
             </imaer:identifier>
             <imaer:GM_Point>
-                <gml:Point srsName="urn:ogc:def:crs:EPSG::28992" gml:id="CP.19.POINT">
+                <gml:Point srsName="urn:ogc:def:crs:EPSG::28992" gml:id="SP.1_19.POINT">
                     <gml:pos>137548.0 137548.0</gml:pos>
                 </gml:Point>
             </imaer:GM_Point>
@@ -136,6 +136,32 @@
             <imaer:result>
                 <imaer:CalculationResult resultType="CONCENTRATION" substance="NOX">
                     <imaer:value>9.006</imaer:value>
+                </imaer:CalculationResult>
+            </imaer:result>
+            <imaer:level>2</imaer:level>
+        </imaer:SubPoint>
+    </imaer:featureMember>
+    <imaer:featureMember>
+        <imaer:SubPoint receptorPointId="2" subPointId="19" gml:id="SP.2_19">
+            <imaer:identifier>
+                <imaer:NEN3610ID>
+                    <imaer:namespace>NL.IMAER</imaer:namespace>
+                    <imaer:localId>SP.2_19</imaer:localId>
+                </imaer:NEN3610ID>
+            </imaer:identifier>
+            <imaer:GM_Point>
+                <gml:Point srsName="urn:ogc:def:crs:EPSG::28992" gml:id="SP.2_19.POINT">
+                    <gml:pos>137538.0 456231.0</gml:pos>
+                </gml:Point>
+            </imaer:GM_Point>
+            <imaer:result>
+                <imaer:CalculationResult resultType="CONCENTRATION" substance="NH3">
+                    <imaer:value>42.42</imaer:value>
+                </imaer:CalculationResult>
+            </imaer:result>
+            <imaer:result>
+                <imaer:CalculationResult resultType="CONCENTRATION" substance="NOX">
+                    <imaer:value>5.0</imaer:value>
                 </imaer:CalculationResult>
             </imaer:result>
             <imaer:level>2</imaer:level>

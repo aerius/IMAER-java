@@ -78,8 +78,7 @@ final class Result2GML {
     final AbstractCalculationPoint returnPoint = determineSpecificType(point, feature.getGeometry());
     //set the generic properties.
     returnPoint.setGeometry(geometry2gml, feature.getGeometry());
-    //avoid conflicting IDs by using a prefix.
-    returnPoint.setId(GMLIdUtil.toValidGmlId(point.getGmlId(), GMLIdUtil.POINT_PREFIX, String.valueOf(point.getId())));
+    returnPoint.setId(determineId(point));
     returnPoint.setLabel(point.getLabel());
     returnPoint.setDescription(point.getDescription());
     returnPoint.setJurisdictionId(point.getJurisdictionId());
@@ -91,6 +90,16 @@ final class Result2GML {
     returnPoint.setResults(getResults(point, substances));
     returnPoint.setCorrections(getCorrections(point, corrections));
     return returnPoint;
+  }
+
+  private String determineId(final CalculationPoint point) {
+    //avoid conflicting IDs by using a prefix.
+    if (point instanceof nl.overheid.aerius.shared.domain.v2.point.SubPoint) {
+      final nl.overheid.aerius.shared.domain.v2.point.SubPoint subPoint = (nl.overheid.aerius.shared.domain.v2.point.SubPoint) point;
+      return GMLIdUtil.toValidGmlId(point.getGmlId(), GMLIdUtil.SUB_POINT_PREFIX, subPoint.getReceptorId() + "_" + subPoint.getSubPointId());
+    } else {
+      return GMLIdUtil.toValidGmlId(point.getGmlId(), GMLIdUtil.POINT_PREFIX, String.valueOf(point.getId()));
+    }
   }
 
   private AbstractCalculationPoint determineSpecificType(final CalculationPoint aeriusPoint, final Point point) throws AeriusException {

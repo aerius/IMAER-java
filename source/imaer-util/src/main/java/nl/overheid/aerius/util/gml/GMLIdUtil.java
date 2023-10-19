@@ -26,6 +26,7 @@ public final class GMLIdUtil {
 
   public static final String SOURCE_PREFIX = "ES";
   public static final String POINT_PREFIX = "CP";
+  public static final String SUB_POINT_PREFIX = "SP";
   public static final String MEASURE_PREFIX = "RMA";
   public static final String BUILDING_PREFIX = "Building";
   public static final String DIURNAL_VARIATION_PREFIX = "DV";
