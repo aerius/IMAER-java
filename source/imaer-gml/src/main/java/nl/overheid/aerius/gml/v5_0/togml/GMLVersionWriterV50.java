@@ -113,7 +113,7 @@ public class GMLVersionWriterV50 implements GMLVersionWriter {
     return metaDataImpl;
   }
 
-  private SituationMetadata getSituation(final MetaDataInput input) throws AeriusException {
+  private static SituationMetadata getSituation(final MetaDataInput input) throws AeriusException {
     final SituationMetadata situation;
     if (isEmptySituationData(input)) {
       situation = null;
@@ -128,7 +128,7 @@ public class GMLVersionWriterV50 implements GMLVersionWriter {
     return situation;
   }
 
-  private static void setSituationType(MetaDataInput input, SituationMetadata situation) {
+  private static void setSituationType(final MetaDataInput input, final SituationMetadata situation) {
     final SituationType inputSituationType = input.getSituationType();
     if (inputSituationType == null) {
       situation.setSituationType(null);
@@ -140,29 +140,35 @@ public class GMLVersionWriterV50 implements GMLVersionWriter {
     }
   }
 
-  private ProjectMetadata getProject(final MetaDataInput input) {
-    final ScenarioMetaData scenarioData = input.getScenarioMetaData();
+  private static ProjectMetadata getProject(final MetaDataInput input) {
     final ProjectMetadata project = new ProjectMetadata();
+
     project.setYear(input.getYear());
-    project.setName(scenarioData.getProjectName());
-    project.setCorporation(scenarioData.getCorporation());
-    project.setDescription(scenarioData.getDescription());
-    if (hasValidAddress(scenarioData)) {
-      final AddressImpl address = new AddressImpl();
-      project.setFacilityLocation(address);
-      address.setStreetAddress(scenarioData.getStreetAddress());
-      address.setPostcode(scenarioData.getPostcode());
-      address.setCity(scenarioData.getCity());
-    }
+    setScenarioMetaData(project, input.getScenarioMetaData());
     return project;
   }
 
-  private boolean isEmptySituationData(final MetaDataInput input) {
+  private static void setScenarioMetaData(final ProjectMetadata project, final ScenarioMetaData scenarioData) {
+    if (scenarioData != null) {
+      project.setName(scenarioData.getProjectName());
+      project.setCorporation(scenarioData.getCorporation());
+      project.setDescription(scenarioData.getDescription());
+      if (hasValidAddress(scenarioData)) {
+        final AddressImpl address = new AddressImpl();
+        project.setFacilityLocation(address);
+        address.setStreetAddress(scenarioData.getStreetAddress());
+        address.setPostcode(scenarioData.getPostcode());
+        address.setCity(scenarioData.getCity());
+      }
+    }
+  }
+
+  private static boolean isEmptySituationData(final MetaDataInput input) {
     return StringUtils.isEmpty(input.getName()) && StringUtils.isEmpty(input.getReference())
         && input.getSituationType() == null;
   }
 
-  private void ensureSituationType(final MetaDataInput input) throws AeriusException {
+  private static void ensureSituationType(final MetaDataInput input) throws AeriusException {
     // Sanity check on situation type. It should be set when writing,
     // but older files are read without a default,
     // since there is no obvious default without knowledge about the file containing the GML.
@@ -172,7 +178,7 @@ public class GMLVersionWriterV50 implements GMLVersionWriter {
     }
   }
 
-  private boolean hasValidAddress(final ScenarioMetaData scenarioData) {
+  private static boolean hasValidAddress(final ScenarioMetaData scenarioData) {
     return !StringUtils.isEmpty(scenarioData.getStreetAddress()) && !StringUtils.isEmpty(scenarioData.getPostcode())
         && !StringUtils.isEmpty(scenarioData.getCity());
   }
@@ -194,20 +200,20 @@ public class GMLVersionWriterV50 implements GMLVersionWriter {
     return calculation;
   }
 
-  private String convertToOldCalculationType(final MetaDataInput input) {
+  private static String convertToOldCalculationType(final MetaDataInput input) {
     final CalculationMethod calculationMethod = input.getOptions().getCalculationMethod();
 
     return calculationMethod == null ? null : calculationMethod.type();
   }
 
-  private VersionMetadata getVersion(final MetaDataInput input) {
+  private static VersionMetadata getVersion(final MetaDataInput input) {
     final VersionMetadata version = new VersionMetadata();
     version.setAeriusVersion(input.getVersion());
     version.setDatabaseVersion(input.getDatabaseVersion());
     return version;
   }
 
-  private List<EmissionResultType> determineResultTypes(final Set<EmissionResultKey> keys) {
+  private static List<EmissionResultType> determineResultTypes(final Set<EmissionResultKey> keys) {
     final List<EmissionResultType> types = new ArrayList<>();
     for (final EmissionResultKey key : keys) {
       if (!types.contains(key.getEmissionResultType())) {
