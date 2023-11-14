@@ -17,6 +17,7 @@
 package nl.overheid.aerius.gml;
 
 import java.util.List;
+import java.util.Optional;
 
 import nl.overheid.aerius.gml.base.AeriusGMLVersion;
 import nl.overheid.aerius.gml.base.StringUtils;
@@ -57,16 +58,18 @@ public final class GMLValidator {
     if (!useValidMetaData) {
       return;
     }
-    validateMetaDataElement(metaData.getProjectName(), "projectName", exceptions);
-    validateMetaDataElement(metaData.getCorporation(), "corporation", exceptions);
-    validateMetaDataElement(metaData.getDescription(), "description", exceptions);
-    validateMetaDataElement(metaData.getStreetAddress(), "streetAddress", exceptions);
-    validateMetaDataElement(metaData.getPostcode(), "postcode", exceptions);
-    validateMetaDataElement(metaData.getCity(), "city", exceptions);
+    final Optional<ScenarioMetaData> smd = Optional.ofNullable(metaData);
+    validateMetaDataElement(smd.map(m -> m.getProjectName()), "projectName", exceptions);
+    validateMetaDataElement(smd.map(m -> m.getCorporation()), "corporation", exceptions);
+    validateMetaDataElement(smd.map(m -> m.getDescription()), "description", exceptions);
+    validateMetaDataElement(smd.map(m -> m.getStreetAddress()), "streetAddress", exceptions);
+    validateMetaDataElement(smd.map(m -> m.getPostcode()), "postcode", exceptions);
+    validateMetaDataElement(smd.map(m -> m.getCity()), "city", exceptions);
   }
 
-  private static void validateMetaDataElement(final String metaDataElement, final String elementName, final List<AeriusException> exceptions) {
-    if (StringUtils.isEmpty(metaDataElement)) {
+  private static void validateMetaDataElement(final Optional<String> metaDataElement, final String elementName,
+      final List<AeriusException> exceptions) {
+    if (metaDataElement.isEmpty() || StringUtils.isEmpty(metaDataElement.get())) {
       exceptions.add(new AeriusException(ImaerExceptionReason.GML_METADATA_EMPTY, elementName));
     }
   }

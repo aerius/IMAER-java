@@ -23,11 +23,14 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Consumer;
 
 import org.junit.jupiter.api.Test;
 
 import nl.overheid.aerius.shared.domain.v2.importer.ImportParcel;
+import nl.overheid.aerius.shared.domain.v2.scenario.ScenarioMetaData;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.AeriusException.Reason;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
@@ -263,6 +266,33 @@ class GMLValidateErrorsTest {
           assertEquals(1, e.getArgs().length, "Number of arguments");
         });
   }
+
+  @Test
+  void testValidateNullMetaData() {
+    final List<AeriusException> exeptions = new ArrayList<>();
+
+    GMLValidator.validateMetaData(null, exeptions, true);
+    assertEquals(6, exeptions.size(), "If ScenarioMetaData is null and required it should return 6 errors.");
+  }
+
+  @Test
+  void testValidateEmptyMetaData() {
+    final List<AeriusException> exeptions = new ArrayList<>();
+
+    GMLValidator.validateMetaData(new ScenarioMetaData(), exeptions, true);
+    assertEquals(6, exeptions.size(), "If ScenarioMetaData is empty and required it should return 6 errors.");
+  }
+
+  @Test
+  void testValidateMetaData() {
+    final List<AeriusException> exeptions = new ArrayList<>();
+    final ScenarioMetaData metaData = new ScenarioMetaData();
+    metaData.setProjectName("ProjectName");
+
+    GMLValidator.validateMetaData(metaData, exeptions, true);
+    assertEquals(5, exeptions.size(), "ScenarioMetaData only has project name, but all required, therefor it should return 5 errors.");
+  }
+
 
   private static void assertResult(final String fileName, final String expectedReasonTxt, final Reason expectedReason,
       final Consumer<AeriusException> check) throws IOException {
