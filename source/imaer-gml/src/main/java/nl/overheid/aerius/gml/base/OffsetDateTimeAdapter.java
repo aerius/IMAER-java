@@ -16,7 +16,7 @@
  */
 package nl.overheid.aerius.gml.base;
 
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
@@ -24,18 +24,18 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
 /**
  *
  */
-public class ZonedDateTimeAdapter extends XmlAdapter<String, ZonedDateTime> {
+public class OffsetDateTimeAdapter extends XmlAdapter<String, OffsetDateTime> {
 
-  private final DateTimeFormatter formatter = DateTimeFormatter.ISO_ZONED_DATE_TIME;
+  private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ISO_OFFSET_DATE_TIME;
 
   @Override
-  public ZonedDateTime unmarshal(final String v) throws Exception {
-    return ZonedDateTime.parse(v, formatter);
+  public OffsetDateTime unmarshal(final String v) throws Exception {
+    return OffsetDateTime.parse(v, FORMATTER);
   }
 
   @Override
-  public String marshal(final ZonedDateTime v) throws Exception {
-    return formatter.format(v);
+  public String marshal(final OffsetDateTime v) throws Exception {
+    return FORMATTER.format(v);
   }
 
 }

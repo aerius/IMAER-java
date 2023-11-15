@@ -16,7 +16,7 @@
  */
 package nl.overheid.aerius.gml.v5_1.metadata;
 
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import nl.overheid.aerius.gml.base.IsArchiveMetadata;
 import nl.overheid.aerius.gml.base.IsArchiveProject;
-import nl.overheid.aerius.gml.base.ZonedDateTimeAdapter;
+import nl.overheid.aerius.gml.base.OffsetDateTimeAdapter;
 import nl.overheid.aerius.gml.v5_1.base.CalculatorSchema;
 
 /**
@@ -37,17 +37,17 @@ import nl.overheid.aerius.gml.v5_1.base.CalculatorSchema;
 @XmlType(name = "ArchiveMetadataType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"retrievalDateTime", "archiveProjectProperties"})
 public class ArchiveMetadata implements IsArchiveMetadata {
 
-  private ZonedDateTime retrievalDateTime;
+  private OffsetDateTime retrievalDateTime;
   private List<ArchiveProjectProperty> archiveProjects = new ArrayList<>();
 
   @Override
-  @XmlJavaTypeAdapter(ZonedDateTimeAdapter.class)
+  @XmlJavaTypeAdapter(OffsetDateTimeAdapter.class)
   @XmlElement(namespace = CalculatorSchema.NAMESPACE)
-  public ZonedDateTime getRetrievalDateTime() {
+  public OffsetDateTime getRetrievalDateTime() {
     return retrievalDateTime;
   }
 
-  public void setRetrievalDateTime(final ZonedDateTime retrievalDateTime) {
+  public void setRetrievalDateTime(final OffsetDateTime retrievalDateTime) {
     this.retrievalDateTime = retrievalDateTime;
   }
 

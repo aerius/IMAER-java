@@ -16,7 +16,7 @@
  */
 package nl.overheid.aerius.gml.base;
 
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 /**
@@ -24,7 +24,7 @@ import java.util.List;
  */
 public interface IsArchiveMetadata {
 
-  ZonedDateTime getRetrievalDateTime();
+  OffsetDateTime getRetrievalDateTime();
 
   List<IsArchiveProject> getArchiveProjects();
 
