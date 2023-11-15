@@ -26,6 +26,7 @@ import nl.overheid.aerius.shared.domain.scenario.IsScenario;
 import nl.overheid.aerius.shared.domain.v2.archive.ArchiveMetaData;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPointFeature;
 import nl.overheid.aerius.shared.domain.v2.scenario.Scenario;
+import nl.overheid.aerius.shared.domain.v2.scenario.ScenarioMetaData;
 import nl.overheid.aerius.shared.domain.v2.scenario.ScenarioSituation;
 
 /**
@@ -65,11 +66,13 @@ public final class GMLScenarioHelper {
       final String aeriusVersion, final String databaseVersion) {
     final MetaDataInput metaData = new MetaDataInput();
     metaData.setTheme(scenario.getTheme());
+    metaData.setScenarioMetaData(new ScenarioMetaData());
     metaData.setArchiveMetaData(archiveMetaData);
     metaData.setYear(year);
     metaData.setVersion(aeriusVersion);
     metaData.setDatabaseVersion(databaseVersion);
     metaData.setOptions(scenario.getOptions());
+    metaData.setResultsIncluded(true);
     scenario.getSituations().stream()
         .map(GMLScenarioHelper::otherSituation)
         .forEach(metaData::addOtherSituation);

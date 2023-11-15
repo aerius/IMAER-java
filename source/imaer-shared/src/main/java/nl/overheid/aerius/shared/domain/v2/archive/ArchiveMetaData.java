@@ -17,7 +17,7 @@
 package nl.overheid.aerius.shared.domain.v2.archive;
 
 import java.io.Serializable;
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,14 +28,14 @@ public class ArchiveMetaData implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
-  private ZonedDateTime retrievalDateTime;
+  private OffsetDateTime retrievalDateTime;
   private List<ArchiveProject> archiveProjects = new ArrayList<>();
 
-  public ZonedDateTime getRetrievalDateTime() {
+  public OffsetDateTime getRetrievalDateTime() {
     return retrievalDateTime;
   }
 
-  public void setRetrievalDateTime(final ZonedDateTime retrievalDateTime) {
+  public void setRetrievalDateTime(final OffsetDateTime retrievalDateTime) {
     this.retrievalDateTime = retrievalDateTime;
   }
 
