@@ -45,7 +45,7 @@ import nl.overheid.aerius.shared.domain.meteo.Meteo;
  */
 class OptionsMetadataUtilTest {
 
-  private static final int BASIC_OPTIONS = 9;
+  private static final int BASIC_OPTIONS = 10;
   private static final int CONNECT_OPTIONS = 2;
   private static final int OPS_OPTIONS = 12;
 
@@ -65,12 +65,12 @@ class OptionsMetadataUtilTest {
     final Map<String, String> result = OptionsMetadataUtil.optionsToMap(Theme.WNB, options, true);
 
     assertEquals(BASIC_OPTIONS, result.size(), "Number of options with default options and when adding defaults to map");
-    assertEquals("", result.get("meteo_year"));
-    assertEquals("false", result.get("without_source_stacking"));
-    assertEquals("DEFAULT", result.get("ops_road"));
-    assertEquals("false", result.get("forced_aggregation"));
-    assertEquals("false", result.get("use_receptor_height"));
-    assertEquals("0", result.get("monitor_srm2_year"));
+    assertEquals("", result.get("meteo_year"), "meteo_year should be empty");
+    assertEquals("false", result.get("without_source_stacking"), "without_source_stacking should be set");
+    assertEquals("DEFAULT", result.get("ops_road"), "\"ops_road\" should be set");
+    assertEquals("false", result.get("forced_aggregation"), "forced_aggregation should be set");
+    assertEquals("false", result.get("use_receptor_height"), "use_receptor_height should be set");
+    assertEquals("0", result.get("monitor_srm2_year"), "monitor_srm2 should be set");
   }
 
   @Test
@@ -87,19 +87,23 @@ class OptionsMetadataUtilTest {
     options.setUseReceptorHeights(true);
     options.setSubReceptorsMode(SubReceptorsMode.ENABLED);
     options.setSubReceptorZoomLevel(1);
+    options.setSplitSubReceptorWork(true);
+    options.setSplitSubReceptorWorkDistance(1000);
     cso.getRblCalculationOptions().setMonitorSrm2Year(2023);
 
     final Map<String, String> result = OptionsMetadataUtil.optionsToMap(Theme.WNB, cso, false);
-
-    assertEquals(BASIC_OPTIONS, result.size(), "Number of options when options are not default");
-    assertEquals("2020", result.get("meteo_year"));
-    assertEquals("true", result.get("without_source_stacking"));
-    assertEquals("OPS_ROAD", result.get("ops_road"));
-    assertEquals("true", result.get("forced_aggregation"));
-    assertEquals("true", result.get("use_receptor_height"));
-    assertEquals("ENABLED", result.get("sub_receptors_mode"));
-    assertEquals("1", result.get("sub_receptor_zoom_level"));
-    assertEquals("2023", result.get("monitor_srm2_year"));
+    // is BASIC_OPTIONS + 1 because SplitSubReceptorWorkDistance is by default not set when SplitSubReceptorWork is false
+    assertEquals(BASIC_OPTIONS + 1, result.size(), "Number of options when options are not default");
+    assertEquals("2020", result.get("meteo_year"), "Invalid meteo year option");
+    assertEquals("true", result.get("without_source_stacking"), "Invalid without_source_stacking option");
+    assertEquals("OPS_ROAD", result.get("ops_road"), "Invalid ops_road option");
+    assertEquals("true", result.get("forced_aggregation"), "Invalid forced_aggregation option");
+    assertEquals("true", result.get("use_receptor_height"), "Invalid use_receptor_height option");
+    assertEquals("ENABLED", result.get("sub_receptors_mode"), "Invalid sub_receptors_mode option");
+    assertEquals("1", result.get("sub_receptor_zoom_level"), "Invalid sub_receptor_zoom_level option");
+    assertEquals("2023", result.get("monitor_srm2_year"), "Invalid monitor_srm2 option");
+    assertEquals("true", result.get("split_sub_receptor_work"), "Invalid split_sub_receptor_work option");
+    assertEquals("1000", result.get("split_sub_receptor_work_distance"), "Invalid split_sub_receptor_work_distance option");
   }
 
   @Test
@@ -111,8 +115,8 @@ class OptionsMetadataUtilTest {
     final Map<String, String> result = OptionsMetadataUtil.optionsToMap(Theme.WNB, options, true);
 
     assertEquals(BASIC_OPTIONS + CONNECT_OPTIONS, result.size(), "Number of options when connectOptions is supplied and when adding defaults to map");
-    assertEquals("", result.get("calculation_year"));
-    assertEquals("", result.get("receptor_set"));
+    assertEquals("", result.get("calculation_year"), "calculation_year should be empty");
+    assertEquals("", result.get("receptor_set"), "receptor_set should be empty");
   }
 
   @Test
@@ -126,8 +130,8 @@ class OptionsMetadataUtilTest {
     final Map<String, String> result = OptionsMetadataUtil.optionsToMap(Theme.WNB, options, false);
 
     assertEquals(CONNECT_OPTIONS, result.size(), "Number of options when connectOptions is supplied with non default values");
-    assertEquals("1999", result.get("calculation_year"));
-    assertEquals("SomeRecept or name", result.get("receptor_set"));
+    assertEquals("1999", result.get("calculation_year"), "Invalide calculation_year option");
+    assertEquals("SomeRecept or name", result.get("receptor_set"), "Invalide receptor_set option");
   }
 
   @Test
@@ -139,17 +143,17 @@ class OptionsMetadataUtilTest {
     final Map<String, String> result = OptionsMetadataUtil.optionsToMap(Theme.WNB, options, true);
 
     assertEquals(BASIC_OPTIONS + OPS_OPTIONS, result.size(), "Number of options when opsOptions is supplied and when adding defaults to map");
-    assertEquals("false", result.get("ops_raw_input"));
-    assertEquals("", result.get("ops_year"));
-    assertEquals("", result.get("ops_comp_code"));
-    assertEquals("", result.get("ops_mol_weight"));
-    assertEquals("", result.get("ops_phase"));
-    assertEquals("", result.get("ops_loss"));
-    assertEquals("", result.get("ops_diff_coeff"));
-    assertEquals("", result.get("ops_washout"));
-    assertEquals("", result.get("ops_conv_rate"));
-    assertEquals("", result.get("ops_roughness"));
-    assertEquals("", result.get("ops_chemistry"));
+    assertEquals("false", result.get("ops_raw_input"), "ops_raw_input should be false");
+    assertEquals("", result.get("ops_year"), "ops_year should be empty");
+    assertEquals("", result.get("ops_comp_code"), "ops_comp_code should be empty");
+    assertEquals("", result.get("ops_mol_weight"), "ops_mol_weight should be empty");
+    assertEquals("", result.get("ops_phase"), "ops_phase should be empty");
+    assertEquals("", result.get("ops_loss"), "ops_loss should be empty");
+    assertEquals("", result.get("ops_diff_coeff"), "ops_diff_coeff should be empty");
+    assertEquals("", result.get("ops_washout"), "ops_washout should be empty");
+    assertEquals("", result.get("ops_conv_rate"), "ops_conv_rate should be empty");
+    assertEquals("", result.get("ops_roughness"), "ops_roughness should be empty");
+    assertEquals("", result.get("ops_chemistry"), "ops_chemistry should be empty");
   }
 
   @Test
@@ -173,18 +177,18 @@ class OptionsMetadataUtilTest {
     final Map<String, String> result = OptionsMetadataUtil.optionsToMap(Theme.WNB, options, false);
 
     assertEquals(OPS_OPTIONS, result.size(), "Number of options when opsOptions is supplied with non default values");
-    assertEquals("true", result.get("ops_raw_input"));
-    assertEquals("1881", result.get("ops_year"));
-    assertEquals("20", result.get("ops_comp_code"));
-    assertEquals("23.12", result.get("ops_mol_weight"));
-    assertEquals("4", result.get("ops_phase"));
-    assertEquals("9", result.get("ops_loss"));
-    assertEquals("noc lue", result.get("ops_diff_coeff"));
-    assertEquals("reject", result.get("ops_washout"));
-    assertEquals("8 out of 10", result.get("ops_conv_rate"));
-    assertEquals("8.19", result.get("ops_roughness"));
-    assertEquals("PROGNOSIS", result.get("ops_chemistry"));
-    assertEquals("3030", result.get("ops_roads"));
+    assertEquals("true", result.get("ops_raw_input"), "ops_raw_input should be true");
+    assertEquals("1881", result.get("ops_year"), "ops_year should be set");
+    assertEquals("20", result.get("ops_comp_code"), "ops_comp_code should be set");
+    assertEquals("23.12", result.get("ops_mol_weight"), "ops_mol_weight should be set");
+    assertEquals("4", result.get("ops_phase"), "ops_phase should be set");
+    assertEquals("9", result.get("ops_loss"), "ops_loss should be set");
+    assertEquals("noc lue", result.get("ops_diff_coeff"), "ops_diff_coeff should be set");
+    assertEquals("reject", result.get("ops_washout"), "ops_washout should be set");
+    assertEquals("8 out of 10", result.get("ops_conv_rate"), "ops_conv_rate should be set");
+    assertEquals("8.19", result.get("ops_roughness"), "ops_roughness should be set");
+    assertEquals("PROGNOSIS", result.get("ops_chemistry"), "ops_chemistry should be set");
+    assertEquals("3030", result.get("ops_roads"), "ops_roads should be set");
   }
 
   @Test
@@ -215,25 +219,25 @@ class OptionsMetadataUtilTest {
     adms.setMsPriestleyTaylorParameter(1.3);
     final Map<String, String> result = OptionsMetadataUtil.optionsToMap(Theme.NCA, options, false);
 
-    assertEquals("5.0.0.1", result.get("adms_version"));
-    assertEquals("London", result.get("adms_permit_area"));
-    assertEquals("Near London", result.get("adms_meteo_site_location"));
-    assertEquals("2022,2023", result.get("adms_meteo_years"));
-    assertEquals("12.3", result.get("adms_min_monin_obukhov_length"));
-    assertEquals("23.4", result.get("adms_surface_albedo"));
-    assertEquals("34.5", result.get("adms_priestley_taylor_parameter"));
-    assertEquals("true", result.get("adms_plume_depletion_nh3"));
-    assertEquals("true", result.get("adms_plume_depletion_nox"));
-    assertEquals("true", result.get("adms_spatially_varying_roughness"));
-    assertEquals("true", result.get("adms_complex_terrain"));
-    assertEquals("100", result.get("adms_met_site_id"));
-    assertEquals("0.8", result.get("adms_met_site_roughness"));
-    assertEquals("1.1", result.get("adms_met_site_min_monin_obukhov_length"));
-    assertEquals("1.2", result.get("adms_met_site_surface_albedo"));
-    assertEquals("1.3", result.get("adms_met_site_priestley_taylor_parameter"));
-    assertEquals("ONE_CUSTOM_VALUE", result.get("road_local_fraction_no2_receptors_option"));
-    assertEquals("ONE_CUSTOM_VALUE", result.get("road_local_fraction_no2_points_option"));
-    assertEquals("0.4", result.get("road_local_fraction_no2_custom_value"));
+    assertEquals("5.0.0.1", result.get("adms_version"), "adms_version should be set");
+    assertEquals("London", result.get("adms_permit_area"), "adms_permit_area should be set");
+    assertEquals("Near London", result.get("adms_meteo_site_location"), "adms_meteo_site_location should be set");
+    assertEquals("2022,2023", result.get("adms_meteo_years"), "adms_meteo_years should be set");
+    assertEquals("12.3", result.get("adms_min_monin_obukhov_length"), "adms_min_monin_obukhov_length should be set");
+    assertEquals("23.4", result.get("adms_surface_albedo"), "adms_surface_albedo should be set");
+    assertEquals("34.5", result.get("adms_priestley_taylor_parameter"), "adms_priestley_taylor_parameter should be set");
+    assertEquals("true", result.get("adms_plume_depletion_nh3"), "adms_plume_depletion_nh3 should be set");
+    assertEquals("true", result.get("adms_plume_depletion_nox"), "adms_plume_depletion_nox should be set");
+    assertEquals("true", result.get("adms_spatially_varying_roughness"), "adms_spatially_varying_roughness should be set");
+    assertEquals("true", result.get("adms_complex_terrain"), "adms_complex_terrain should be set");
+    assertEquals("100", result.get("adms_met_site_id"), "adms_met_site_id should be set");
+    assertEquals("0.8", result.get("adms_met_site_roughness"), "adms_met_site_roughness should be set");
+    assertEquals("1.1", result.get("adms_met_site_min_monin_obukhov_length"), "adms_met_site_min_monin_obukhov_length should be set");
+    assertEquals("1.2", result.get("adms_met_site_surface_albedo"), "adms_met_site_surface_albedo should be set");
+    assertEquals("1.3", result.get("adms_met_site_priestley_taylor_parameter"), "adms_met_site_priestley_taylor_parameter should be set");
+    assertEquals("ONE_CUSTOM_VALUE", result.get("road_local_fraction_no2_receptors_option"), "road_local_fraction_no2_receptors_option should be set");
+    assertEquals("ONE_CUSTOM_VALUE", result.get("road_local_fraction_no2_points_option"), "road_local_fraction_no2_points_option should be set");
+    assertEquals("0.4", result.get("road_local_fraction_no2_custom_value"), "road_local_fraction_no2 should be set");
   }
 
   @Test
@@ -246,26 +250,26 @@ class OptionsMetadataUtilTest {
     ncaOptions.setRoadLocalFractionNO2(0.4);
     final Map<String, String> result1 = OptionsMetadataUtil.optionsToMap(Theme.NCA, options, false);
 
-    assertEquals("LOCATION_BASED", result1.get("road_local_fraction_no2_receptors_option"));
-    assertFalse(result1.containsKey("road_local_fraction_no2_custom_value"));
+    assertEquals("LOCATION_BASED", result1.get("road_local_fraction_no2_receptors_option"), "road_local_fraction_no2_receptors_option should be set");
+    assertFalse(result1.containsKey("road_local_fraction_no2_custom_value"), "road_local_fraction_no2_custom_value should be set");
 
     ncaOptions.setRoadLocalFractionNO2ReceptorsOption(RoadLocalFractionNO2Option.ONE_CUSTOM_VALUE);
     ncaOptions.setRoadLocalFractionNO2PointsOption(RoadLocalFractionNO2Option.ONE_CUSTOM_VALUE);
     final Map<String, String> result2 = OptionsMetadataUtil.optionsToMap(Theme.NCA, options, false);
 
-    assertEquals("ONE_CUSTOM_VALUE", result2.get("road_local_fraction_no2_receptors_option"));
-    assertEquals("0.4", result2.get("road_local_fraction_no2_custom_value"));
+    assertEquals("ONE_CUSTOM_VALUE", result2.get("road_local_fraction_no2_receptors_option"), "road_local_fraction_no2_receptors_option should be set");
+    assertEquals("0.4", result2.get("road_local_fraction_no2_custom_value"), "road_local_fraction_no2_custom_value should be set");
 
     ncaOptions.setRoadLocalFractionNO2ReceptorsOption(RoadLocalFractionNO2Option.INDIVIDUAL_CUSTOM_VALUES);
     ncaOptions.setRoadLocalFractionNO2PointsOption(RoadLocalFractionNO2Option.INDIVIDUAL_CUSTOM_VALUES);
     final Map<String, String> result3 = OptionsMetadataUtil.optionsToMap(Theme.NCA, options, false);
 
-    assertEquals("INDIVIDUAL_CUSTOM_VALUES", result3.get("road_local_fraction_no2_receptors_option"));
-    assertFalse(result3.containsKey("road_local_fraction_no2_custom_value"));
+    assertEquals("INDIVIDUAL_CUSTOM_VALUES", result3.get("road_local_fraction_no2_receptors_option"), "road_local_fraction_no2 should be set");
+    assertFalse(result3.containsKey("road_local_fraction_no2_custom_value"), "road_local_fraction_no2_custom_value not be present");
   }
 
   @Test
-  public void NcaOptionsRoundtripTest() {
+  void testNcaOptionsRoundtrip() {
     final CalculationSetOptions options = new CalculationSetOptions();
     final NCACalculationOptions ncaOptions = options.getNcaCalculationOptions();
 
