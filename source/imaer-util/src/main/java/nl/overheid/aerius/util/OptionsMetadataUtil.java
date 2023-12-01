@@ -52,6 +52,8 @@ public final class OptionsMetadataUtil {
     WITH_WNB_MAX_DISTANCE,
     SUB_RECEPTORS_MODE,
     SUB_RECEPTOR_ZOOM_LEVEL,
+    SPLIT_SUB_RECEPTOR_WORK,
+    SPLIT_SUB_RECEPTOR_WORK_DISTANCE,
     USE_IN_COMBINATION_ARCHIVE,
 
     /* ConnectSuppliedOptions related */
@@ -151,6 +153,10 @@ public final class OptionsMetadataUtil {
     addBooleanValue(mapToAddTo, Option.WITH_WNB_MAX_DISTANCE, options.isUseWNBMaxDistance(), addDefaults);
     addValue(mapToAddTo, Option.SUB_RECEPTORS_MODE, options.getSubReceptorsMode(), addDefaults);
     addValue(mapToAddTo, Option.SUB_RECEPTOR_ZOOM_LEVEL, options.getSubReceptorZoomLevel(), addDefaults);
+    addBooleanValue(mapToAddTo, Option.SPLIT_SUB_RECEPTOR_WORK, options.isSplitSubReceptorWork(), addDefaults);
+    if (options.isSplitSubReceptorWork()) {
+      addValue(mapToAddTo, Option.SPLIT_SUB_RECEPTOR_WORK_DISTANCE, options.getSplitSubReceptorWorkDistance(), addDefaults);
+    }
     opsOptionsToMap(options.getOpsOptions(), mapToAddTo, addDefaults);
   }
 

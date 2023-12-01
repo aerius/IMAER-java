@@ -27,15 +27,16 @@ public enum CalculationRoadOPS {
   DEFAULT,
 
   /**
-   * Use OPS to calculate from 5km distance
-   * This gives results outside the scope
+   * Use OPS to calculate from 5km distance.
+   *
+   * @deprecated By {@link DEFAULT} OPS is used to calculate from the 5km distance.
    */
+  @Deprecated
   OPS_ROAD,
 
   /**
-   * Use OPS to calculate for the entire calculation
-   * This gives results outside the scope
+   * Use OPS to calculate for the entire calculation.
+   * This gives results outside the scope of WNB.
    */
   OPS_ALL
-
 }
