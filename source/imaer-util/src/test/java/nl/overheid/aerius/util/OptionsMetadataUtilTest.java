@@ -67,7 +67,7 @@ class OptionsMetadataUtilTest {
     assertEquals(BASIC_OPTIONS, result.size(), "Number of options with default options and when adding defaults to map");
     assertEquals("", result.get("meteo_year"), "meteo_year should be empty");
     assertEquals("false", result.get("without_source_stacking"), "without_source_stacking should be set");
-    assertEquals("DEFAULT", result.get("ops_road"), "\"ops_road\" should be set");
+    assertEquals("DEFAULT", result.get("ops_road"), "ops_road should be set");
     assertEquals("false", result.get("forced_aggregation"), "forced_aggregation should be set");
     assertEquals("false", result.get("use_receptor_height"), "use_receptor_height should be set");
     assertEquals("0", result.get("monitor_srm2_year"), "monitor_srm2 should be set");

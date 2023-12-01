@@ -141,7 +141,7 @@ public class WNBCalculationOptions implements Serializable {
   }
 
   /**
-   * Set the sub receptor zoom level to use  to calculate subreceptors on.
+   * Set the sub receptor zoom level to use to calculate subreceptors on.
    *
    * @param subReceptorsZoomLevel
    */
@@ -158,7 +158,7 @@ public class WNBCalculationOptions implements Serializable {
 
   /**
    * Set if OPS calculations should be split in two calculations for subreceptors.
-   * This options in only valid to in certain true under certain conditions, like subreceptors are calculated.
+   * This options is only valid to be true under certain conditions, like subreceptors are calculated.
    *
    * @param splitSubReceptorWork
    */

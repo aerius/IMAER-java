@@ -29,7 +29,7 @@ public enum CalculationRoadOPS {
   /**
    * Use OPS to calculate from 5km distance.
    *
-   * @deprecated By {@link DEAULT} OPS is used to calculate from the 5km distance.
+   * @deprecated By {@link DEFAULT} OPS is used to calculate from the 5km distance.
    */
   @Deprecated
   OPS_ROAD,
