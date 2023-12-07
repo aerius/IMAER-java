@@ -39,7 +39,7 @@
 			<targetParameter name="changeInfo" value="false"/>
 			<targetParameter name="outputFormat" value="HTML"/>
 			<targetParameter name="name" value=" 'IMAER'"/>
-			<targetParameter name="scope" value="IMAER, het informatiemodel voor AERIUS, is een toepassing van Basismodel Geo-Informatie (NEN 3610) voor het beleidsveld van stikstofdepositieberekeningen. Het is hiermee één van de bestaande toepassingen van deze norm. In IMAER wordt, zoals ook bij NEN3610, voor het uitwisselingsformaat van bestanden (het technische formaat voor uitwisseling) gerefereerd aan GML 3.2.1 Simple Features Profile 2 (GML-SF2)."/>
+			<targetParameter name="scope" value="IMAER, the information model for AERIUS, is an application of Basic Model Geo-Information (NEN 3610) for the policy field of nitrogen deposition calculations. This makes it one of the existing applications of this standard. In IMAER, as in NEN 3610, the file exchange format (the technical format for exchange) refers to GML 3.2.1 Simple Features Profile 2 (GML-SF2)."/>
 			<targetParameter name="versionNumber" value="5.1"/>
 			<targetParameter name="versionDate" value="2021"/>
 			<targetParameter name="producer" value="AERIUS"/>
@@ -48,4 +48,3 @@
 		</Target>
 	</targets>
 </ShapeChangeConfiguration>
-
