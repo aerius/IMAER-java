@@ -139,7 +139,7 @@ NOTE This class describes a road emissionsource including geometry. This definit
   <element name="ADMSRoadSideBarrier" substitutionGroup="gml:AbstractObject" type="IMAER:ADMSRoadSideBarrierType">
     <annotation>
       <documentation>Characteristics of a barrier on the side of a road for ADMS.
-NOTE A barrier on the side of the road is described by a few characteristics. Th</documentation>
+NOTE A barrier on the side of the road is described by a few characteristics. This data type contains the characteristics expected by ADMS.</documentation>
     </annotation>
   </element>
   <complexType name="ADMSRoadSideBarrierType">
