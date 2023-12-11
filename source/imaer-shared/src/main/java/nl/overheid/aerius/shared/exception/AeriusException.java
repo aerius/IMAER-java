@@ -22,7 +22,7 @@ import java.util.Date;
 import nl.overheid.aerius.shared.domain.HasReference;
 
 /**
- *
+ * Exception related to the AERIUS Application, either internal errors or user errors.
  */
 public class AeriusException extends Exception implements HasReference, Serializable {
 
@@ -53,10 +53,14 @@ public class AeriusException extends Exception implements HasReference, Serializ
   public AeriusException(final Reason errorCode, final long reference, final String... args) {
     super();
     this.reason = errorCode;
-    this.reference = new Date().getTime();
+    this.reference = reference;
     this.args = args;
   }
 
+  /**
+   * @return Returns true if error code below 1000. Error codes below 1000 are considered internal errors, likely bugs.
+   *         errors above 1000 are considered user errors.
+   */
   public boolean isInternalError() {
     return reason.getErrorCode() < 1000;
   }
