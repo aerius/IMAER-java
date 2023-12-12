@@ -28,13 +28,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import nl.overheid.aerius.shared.domain.Theme;
-import nl.overheid.aerius.shared.domain.v2.geojson.LineString;
-import nl.overheid.aerius.shared.domain.v2.geojson.Point;
 import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKCorrection;
 import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKDispersionLine;
 import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKDispersionLineFeature;
 import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKMeasure;
 import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKMeasureFeature;
+import nl.overheid.aerius.shared.domain.v2.geojson.LineString;
+import nl.overheid.aerius.shared.domain.v2.geojson.Point;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPoint;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPointFeature;
 import nl.overheid.aerius.shared.domain.v2.point.CustomCalculationPoint;

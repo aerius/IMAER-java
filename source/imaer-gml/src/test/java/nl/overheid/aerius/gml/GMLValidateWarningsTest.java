@@ -113,7 +113,7 @@ class GMLValidateWarningsTest {
     final ImportParcel result = getImportResult(LATEST_WARNINGS_VALIDATE, fileName);
 
     Assertions.assertIterableEquals(List.of(), result.getExceptions(), "Should have no errors");
-    for(final AeriusException warning: result.getWarnings()) {
+    for (final AeriusException warning : result.getWarnings()) {
       if (expectedReason.equals(warning.getReason())) {
         foundWarning = warning;
       }
@@ -126,6 +126,7 @@ class GMLValidateWarningsTest {
     final GMLHelper mockGMLHelper = AssertGML.mockGMLHelper();
     mockGMLHelper.getEmissionSourceGeometryLimits().setMaxLineLength(1);
     mockGMLHelper.getEmissionSourceGeometryLimits().setMaxPolygonSurface(1);
-    return AssertGML.getImportResult(relativePath, filename, EnumSet.of(ImportOption.WARNING_ON_GEOMETRY_LIMITS, ImportOption.INCLUDE_SOURCES),mockGMLHelper);
+    return AssertGML.getImportResult(relativePath, filename, EnumSet.of(ImportOption.WARNING_ON_GEOMETRY_LIMITS, ImportOption.INCLUDE_SOURCES),
+        mockGMLHelper);
   }
 }

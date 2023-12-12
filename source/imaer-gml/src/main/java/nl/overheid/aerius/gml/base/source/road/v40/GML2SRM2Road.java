@@ -24,8 +24,8 @@ import nl.overheid.aerius.gml.base.IsGmlProperty;
 import nl.overheid.aerius.gml.base.source.road.IsGmlRoadSideBarrier;
 import nl.overheid.aerius.gml.base.source.road.IsGmlSRM2RoadLinearReference;
 import nl.overheid.aerius.shared.domain.v2.source.SRM2RoadEmissionSource;
-import nl.overheid.aerius.shared.domain.v2.source.road.SRM2RoadSideBarrier;
 import nl.overheid.aerius.shared.domain.v2.source.road.SRM2LinearReference;
+import nl.overheid.aerius.shared.domain.v2.source.road.SRM2RoadSideBarrier;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 

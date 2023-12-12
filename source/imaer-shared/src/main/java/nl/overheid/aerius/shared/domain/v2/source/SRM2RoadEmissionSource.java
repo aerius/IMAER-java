@@ -20,8 +20,8 @@ import java.util.List;
 
 import nl.overheid.aerius.shared.domain.v2.geojson.IsFeature;
 import nl.overheid.aerius.shared.domain.v2.source.road.RoadElevation;
-import nl.overheid.aerius.shared.domain.v2.source.road.SRM2RoadSideBarrier;
 import nl.overheid.aerius.shared.domain.v2.source.road.SRM2LinearReference;
+import nl.overheid.aerius.shared.domain.v2.source.road.SRM2RoadSideBarrier;
 import nl.overheid.aerius.shared.exception.AeriusException;
 
 public class SRM2RoadEmissionSource extends RoadEmissionSource {

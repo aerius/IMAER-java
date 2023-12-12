@@ -26,10 +26,10 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import nl.overheid.aerius.shared.domain.v2.geojson.Feature;
 import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKCorrection;
 import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKDispersionLine;
 import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKMeasure;
+import nl.overheid.aerius.shared.domain.v2.geojson.Feature;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPoint;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPointFeature;
 import nl.overheid.aerius.shared.domain.v2.scenario.Scenario;

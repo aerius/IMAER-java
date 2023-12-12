@@ -16,9 +16,9 @@
  */
 package nl.overheid.aerius.shared.domain.v2.point;
 
-import nl.overheid.aerius.shared.domain.v2.geojson.IsFeature;
 import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKMonitorSubstance;
 import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKRejectionGrounds;
+import nl.overheid.aerius.shared.domain.v2.geojson.IsFeature;
 import nl.overheid.aerius.shared.exception.AeriusException;
 
 public class CIMLKCalculationPoint extends CustomCalculationPoint {

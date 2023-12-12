@@ -50,7 +50,7 @@ public enum EPSG {
   }
 
   public static EPSG getEnumBySrid(final int srid) {
-    for (final EPSG epsg: EPSG.values()) {
+    for (final EPSG epsg : EPSG.values()) {
       if (epsg.srid == srid) {
         return epsg;
       }

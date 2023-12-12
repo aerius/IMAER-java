@@ -86,7 +86,8 @@ final class InternalGMLWriter {
   private final ReferenceGenerator referenceGenerator;
   private final Boolean formattedOutput;
 
-  InternalGMLWriter(final ReceptorGridSettings rgs, final ReferenceGenerator referenceGenerator, final Boolean formattedOutput, final AeriusGMLVersion version) {
+  InternalGMLWriter(final ReceptorGridSettings rgs, final ReferenceGenerator referenceGenerator, final Boolean formattedOutput,
+      final AeriusGMLVersion version) {
     writer = GMLVersionWriterFactory.createGMLVersionWriter(rgs.getZoomLevel1(), GMLSchema.getSRSName(rgs.getEPSG().getSrid()), version);
     this.referenceGenerator = referenceGenerator;
     this.formattedOutput = formattedOutput;

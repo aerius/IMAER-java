@@ -30,7 +30,7 @@ public enum BuoyancyType {
   }
 
   public static BuoyancyType valueOf(final int type) {
-    return AMBIENT.type == type? AMBIENT : (DENSITY.type == type ? DENSITY : TEMPERATURE);
+    return AMBIENT.type == type ? AMBIENT : (DENSITY.type == type ? DENSITY : TEMPERATURE);
   }
 
   public static BuoyancyType safeValueOf(final String value) {

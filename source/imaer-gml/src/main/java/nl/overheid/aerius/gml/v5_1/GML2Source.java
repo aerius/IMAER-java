@@ -32,7 +32,7 @@ class GML2Source<S extends SourceCharacteristics> extends AbstractGML2Source<Emi
    * @param gml2SourceCharacteristics Converter for GML to type specific source characteristics.
    */
   public GML2Source(final GMLConversionData conversionData, final GML2SourceCharacteristics<S> gml2SourceCharacteristics) {
-    super(conversionData, new GML2SourceVisitor<S>(conversionData, gml2SourceCharacteristics), gml2SourceCharacteristics);
+    super(conversionData, new GML2SourceVisitor<>(conversionData, gml2SourceCharacteristics), gml2SourceCharacteristics);
   }
 
 }

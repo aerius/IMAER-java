@@ -25,10 +25,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import nl.overheid.aerius.shared.domain.scenario.SituationType;
 import nl.overheid.aerius.shared.domain.v2.building.BuildingFeature;
-import nl.overheid.aerius.shared.domain.v2.geojson.FeatureCollection;
 import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKCorrection;
 import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKDispersionLineFeature;
 import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKMeasureFeature;
+import nl.overheid.aerius.shared.domain.v2.geojson.FeatureCollection;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceFeature;
 
 /**

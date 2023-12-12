@@ -53,19 +53,19 @@ public class FarmLodgingEmissionsCalculator {
     final Map<Substance, BigDecimal> summed = new EnumMap<>(Substance.class);
     for (final FarmLodging lodging : lodgingSource.getSubSources()) {
       final Map<Substance, BigDecimal> emissionsForLodging = calculateEmissions(lodging);
-      emissionsForLodging.forEach(
-          (key, value) -> lodging.getEmissions().put(key, value.doubleValue()));
-      emissionsForLodging.forEach(
-          (key, value) -> summed.merge(key, value, (v1, v2) -> v1.add(v2)));
+
+      emissionsForLodging.forEach((key, value) -> lodging.getEmissions().put(key, value.doubleValue()));
+      emissionsForLodging.forEach((key, value) -> summed.merge(key, value, (v1, v2) -> v1.add(v2)));
     }
     final Map<Substance, Double> result = new EnumMap<>(Substance.class);
-    summed.forEach(
-        (key, value) -> result.put(key, value.doubleValue()));
+
+    summed.forEach((key, value) -> result.put(key, value.doubleValue()));
     return result;
   }
 
   private Map<Substance, BigDecimal> calculateEmissions(final FarmLodging lodging) throws AeriusException {
     final Map<Substance, BigDecimal> emissions;
+
     if (lodging instanceof CustomFarmLodging) {
       emissions = calculateEmissions((CustomFarmLodging) lodging);
     } else if (lodging instanceof StandardFarmLodging) {
@@ -83,6 +83,7 @@ public class FarmLodgingEmissionsCalculator {
     final BigDecimal periodFactor = customLodging.getFarmEmissionFactorType() == FarmEmissionFactorType.PER_ANIMAL_PER_DAY
         ? BigDecimal.valueOf(customLodging.getNumberOfDays())
         : BigDecimal.ONE;
+
     customLodging.getEmissionFactors().forEach(
         (key, value) -> results.put(key, BigDecimal.valueOf(value).multiply(numberOfAnimals).multiply(periodFactor)));
     return results;
@@ -104,9 +105,7 @@ public class FarmLodgingEmissionsCalculator {
             ? BigDecimal.valueOf(standardLodging.getNumberOfDays())
             : BigDecimal.ONE;
 
-    emissions.forEach(
-        (key, value) -> emissions.put(key, value.multiply(periodFactor)));
-
+    emissions.forEach((key, value) -> emissions.put(key, value.multiply(periodFactor)));
     return emissions;
   }
 
@@ -114,13 +113,14 @@ public class FarmLodgingEmissionsCalculator {
     final Map<Substance, BigDecimal> emissions = new EnumMap<>(Substance.class);
     final BigDecimal numberOfAnimals = BigDecimal.valueOf(standardLodging.getNumberOfAnimals());
     final Map<Substance, Double> emissionFactors = determineEmissionFactorsLodging(standardLodging);
-    emissionFactors.forEach(
-        (key, value) -> emissions.put(key, BigDecimal.valueOf(value).multiply(numberOfAnimals)));
+
+    emissionFactors.forEach((key, value) -> emissions.put(key, BigDecimal.valueOf(value).multiply(numberOfAnimals)));
     return emissions;
   }
 
   private Map<Substance, Double> determineEmissionFactorsLodging(final StandardFarmLodging standardLodging) {
     final String lodgingCode = standardLodging.getFarmLodgingCode();
+
     if (emissionFactorSupplier.canLodgingEmissionFactorsBeConstrained(lodgingCode)
         && isAnyLodgingSystemScrubber(standardLodging)) {
       return emissionFactorSupplier.getLodgingConstrainedEmissionFactors(lodgingCode);
@@ -133,6 +133,7 @@ public class FarmLodgingEmissionsCalculator {
     final boolean hasAdditionalScrubber = standardLodging.getAdditionalLodgingSystems().stream()
         .map(LodgingSystem::getLodgingSystemCode)
         .anyMatch(emissionFactorSupplier::isAdditionalSystemScrubber);
+
     return hasAdditionalScrubber || standardLodging.getReductiveLodgingSystems().stream()
         .map(LodgingSystem::getLodgingSystemCode)
         .anyMatch(emissionFactorSupplier::isReductiveSystemScrubber);
@@ -143,6 +144,7 @@ public class FarmLodgingEmissionsCalculator {
       final Map<Substance, Double> emissionFactors = emissionFactorSupplier
           .getAdditionalSystemEmissionFactors(additionalSystem.getLodgingSystemCode());
       final BigDecimal numberOfAnimals = BigDecimal.valueOf(additionalSystem.getNumberOfAnimals());
+
       emissionFactors.forEach(
           (key, value) -> emissions.merge(key, BigDecimal.valueOf(value).multiply(numberOfAnimals), (v1, v2) -> v1.add(v2)));
     }
@@ -150,10 +152,12 @@ public class FarmLodgingEmissionsCalculator {
 
   private void processReductiveSystems(final Map<Substance, BigDecimal> emissions, final List<ReductiveLodgingSystem> reductiveSystems) {
     for (final ReductiveLodgingSystem reductiveSystem : reductiveSystems) {
-      final Map<Substance, Double> remainingFractions = emissionFactorSupplier
-          .getReductiveSystemRemainingFractions(reductiveSystem.getLodgingSystemCode());
+      final Map<Substance, Double> remainingFractions =
+          emissionFactorSupplier.getReductiveSystemRemainingFractions(reductiveSystem.getLodgingSystemCode());
+
       for (final Entry<Substance, BigDecimal> entry : emissions.entrySet()) {
         final Substance substance = entry.getKey();
+
         if (remainingFractions.containsKey(substance)) {
           // Remaining emission = original emission * remaining fraction
           final BigDecimal reducedValue = entry.getValue().multiply(BigDecimal.valueOf(remainingFractions.get(substance)));
@@ -166,11 +170,14 @@ public class FarmLodgingEmissionsCalculator {
   private void processFodderMeasures(final Map<Substance, BigDecimal> emissions, final List<LodgingFodderMeasure> fodderMeasures,
       final String farmLodgingCode) {
     final Map<Substance, BigDecimal> reductionFactorsFodder = getReductionFactorCombinedFodderMeasures(fodderMeasures, farmLodgingCode);
+
     for (final Entry<Substance, BigDecimal> entry : emissions.entrySet()) {
       final Substance substance = entry.getKey();
+
       if (reductionFactorsFodder.containsKey(substance)) {
         // Remaining emission = original emission * (1 - reduction factor)
         final BigDecimal reducedValue = entry.getValue().multiply(BigDecimal.ONE.subtract(reductionFactorsFodder.get(substance)));
+
         entry.setValue(reducedValue);
       }
     }
@@ -179,20 +186,22 @@ public class FarmLodgingEmissionsCalculator {
   Map<Substance, BigDecimal> getReductionFactorCombinedFodderMeasures(final List<LodgingFodderMeasure> fodderMeasures,
       final String farmLodgingCode) {
     final Map<Substance, BigDecimal> reductionFactors = new EnumMap<>(Substance.class);
+
     if (fodderMeasures.size() == 1) {
-      final Map<Substance, Double> remainderFractions = emissionFactorSupplier
-          .getFodderRemainingFractionTotal(fodderMeasures.get(0).getFodderMeasureCode());
-      remainderFractions.forEach(
-          (key, value) -> reductionFactors.put(key, BigDecimal.ONE.subtract(BigDecimal.valueOf(value))));
+      final Map<Substance, Double> remainderFractions =
+          emissionFactorSupplier.getFodderRemainingFractionTotal(fodderMeasures.get(0).getFodderMeasureCode());
+
+      remainderFractions.forEach((key, value) -> reductionFactors.put(key, BigDecimal.ONE.subtract(BigDecimal.valueOf(value))));
     } else if (!fodderMeasures.isEmpty()) {
       // Only measures with the same animal category as the main category may be inputted by the user. Thus we can assume
       // the ammonia proportions are the same for each measure; we'll simply take 'm from the first.
       final String firstFodderMeasureCode = fodderMeasures.get(0).getFodderMeasureCode();
+
       if (emissionFactorSupplier.canFodderApplyToLodging(firstFodderMeasureCode, farmLodgingCode)) {
-        final Map<Substance, BigDecimal> emissionReductionFractionFloor = toBigDecimalMap(
-            emissionFactorSupplier.getFodderProportionFloor(firstFodderMeasureCode, farmLodgingCode));
-        final Map<Substance, BigDecimal> emissionReductionFractionCellar = toBigDecimalMap(
-            emissionFactorSupplier.getFodderProportionCellar(firstFodderMeasureCode, farmLodgingCode));
+        final Map<Substance, BigDecimal> emissionReductionFractionFloor =
+            toBigDecimalMap(emissionFactorSupplier.getFodderProportionFloor(firstFodderMeasureCode, farmLodgingCode));
+        final Map<Substance, BigDecimal> emissionReductionFractionCellar =
+            toBigDecimalMap(emissionFactorSupplier.getFodderProportionCellar(firstFodderMeasureCode, farmLodgingCode));
         fodderMeasures.forEach(fodderMeasure -> {
           multiply(emissionReductionFractionFloor, emissionFactorSupplier.getFodderRemainingFractionFloor(fodderMeasure.getFodderMeasureCode()));
           multiply(emissionReductionFractionCellar, emissionFactorSupplier.getFodderRemainingFractionCellar(fodderMeasure.getFodderMeasureCode()));
@@ -200,9 +209,10 @@ public class FarmLodgingEmissionsCalculator {
         for (final Entry<Substance, BigDecimal> entry : emissionReductionFractionFloor.entrySet()) {
           // Reduction factor = 1 - remainder fraction floor - remainder fraction cellar
           final BigDecimal reductionFactor = BigDecimal.ONE.subtract(entry.getValue()).subtract(emissionReductionFractionCellar.get(entry.getKey()));
-          final BigDecimal roundedReductionFactor = BigDecimal.valueOf(
-              Math.round(reductionFactor.doubleValue() * PERCENTAGE_TO_FRACTION / ROUND_FODDER))
+          final BigDecimal roundedReductionFactor =
+              BigDecimal.valueOf(Math.round(reductionFactor.doubleValue() * PERCENTAGE_TO_FRACTION / ROUND_FODDER))
               .divide(BigDecimal.valueOf(PERCENTAGE_TO_FRACTION)).multiply(BigDecimal.valueOf(ROUND_FODDER)).setScale(2);
+
           reductionFactors.put(entry.getKey(), roundedReductionFactor);
         }
       }
@@ -211,17 +221,15 @@ public class FarmLodgingEmissionsCalculator {
     return reductionFactors;
   }
 
-  private Map<Substance, BigDecimal> toBigDecimalMap(final Map<Substance, Double> original) {
+  private static Map<Substance, BigDecimal> toBigDecimalMap(final Map<Substance, Double> original) {
     final Map<Substance, BigDecimal> result = new EnumMap<>(Substance.class);
-    original.forEach(
-        (key, value) -> result.put(key, BigDecimal.valueOf(value)));
+
+    original.forEach((key, value) -> result.put(key, BigDecimal.valueOf(value)));
     return result;
   }
 
-  private void multiply(final Map<Substance, BigDecimal> targetMap, final Map<Substance, Double> multiplyWith) {
-    multiplyWith.forEach(
-        (keyMultiplyWith, valueMultiplyWith) -> targetMap.computeIfPresent(keyMultiplyWith,
-            (key, original) -> original.multiply(BigDecimal.valueOf(valueMultiplyWith))));
+  private static void multiply(final Map<Substance, BigDecimal> targetMap, final Map<Substance, Double> multiplyWith) {
+    multiplyWith.forEach((keyMultiplyWith, valueMultiplyWith) ->
+        targetMap.computeIfPresent(keyMultiplyWith, (key, original) -> original.multiply(BigDecimal.valueOf(valueMultiplyWith))));
   }
-
 }

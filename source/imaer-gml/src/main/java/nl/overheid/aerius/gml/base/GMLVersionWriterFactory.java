@@ -22,7 +22,8 @@ import nl.overheid.aerius.shared.domain.geo.HexagonZoomLevel;
 
 public class GMLVersionWriterFactory {
 
-  public static GMLVersionWriter createGMLVersionWriter(final HexagonZoomLevel zoomLevel1, final String srsName, final AeriusGMLVersion aeriusGMLVersion) {
+  public static GMLVersionWriter createGMLVersionWriter(final HexagonZoomLevel zoomLevel1, final String srsName,
+      final AeriusGMLVersion aeriusGMLVersion) {
     switch (aeriusGMLVersion) {
     case V5_0:
       return new GMLVersionWriterV50(zoomLevel1, srsName);

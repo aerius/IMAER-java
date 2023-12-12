@@ -24,9 +24,9 @@ import nl.overheid.aerius.gml.v3_1.base.CalculatorSchema;
 import nl.overheid.aerius.gml.v3_1.base.FeatureMemberImpl;
 import nl.overheid.aerius.gml.v3_1.base.ReferenceType;
 import nl.overheid.aerius.gml.v3_1.geo.LineString;
-import nl.overheid.aerius.shared.domain.v2.geojson.GeometryType;
 import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKRoadProfile;
 import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKTreeProfile;
+import nl.overheid.aerius.shared.domain.v2.geojson.GeometryType;
 
 /**
  *

@@ -29,11 +29,7 @@ public interface EmissionSourceVisitor<T> {
 
   T visit(FarmlandEmissionSource emissionSource, IsFeature feature) throws AeriusException;
 
-  default T visit(final ManureStorageEmissionSource emissionSource, final IsFeature feature) throws AeriusException {
-    // Temporary default while projects implement this method.
-    // TODO: remove after a week or so.
-    return null;
-  }
+  T visit(final ManureStorageEmissionSource emissionSource, final IsFeature feature) throws AeriusException;
 
   T visit(PlanEmissionSource emissionSource, IsFeature feature) throws AeriusException;
 

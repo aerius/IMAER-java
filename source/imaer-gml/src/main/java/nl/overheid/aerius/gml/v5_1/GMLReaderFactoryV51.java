@@ -51,7 +51,7 @@ public class GMLReaderFactoryV51 extends GMLVersionReaderFactory {
 
   private static <T extends SourceCharacteristics> GMLReader<T> createReader(final GMLConversionData conversionData,
       final GML2SourceCharacteristics<T> gml2SourceCharacteristics) {
-    return new GMLReader<T>(conversionData, gml2SourceCharacteristics);
+    return new GMLReader<>(conversionData, gml2SourceCharacteristics);
   }
 
   private static GML2SourceCharacteristics<? extends SourceCharacteristics> gml2SourceCharacteristics(final GMLConversionData conversionData) {
