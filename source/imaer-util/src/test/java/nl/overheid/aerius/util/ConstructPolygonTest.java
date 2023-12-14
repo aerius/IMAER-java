@@ -71,8 +71,10 @@ class ConstructPolygonTest {
   void testConstructPolygonCompareOrientations(final Point point,
       final double width, final double length, final double orientation, final double[][] coordinates) throws AeriusException {
     final double testDelta = 0.001;
-    final OrientedEnvelope polygonXaxis = GeometryUtil.determineOrientedEnvelope(GeometryUtil.constructPolygonFromXAxisDimensions(point, length, width, orientation));
-    final OrientedEnvelope polygonNorth = GeometryUtil.determineOrientedEnvelope(GeometryUtil.constructPolygonFromDimensions(point, length, width, orientation));
+    final OrientedEnvelope polygonXaxis =
+        GeometryUtil.determineOrientedEnvelope(GeometryUtil.constructPolygonFromXAxisDimensions(point, length, width, orientation));
+    final OrientedEnvelope polygonNorth =
+        GeometryUtil.determineOrientedEnvelope(GeometryUtil.constructPolygonFromDimensions(point, length, width, orientation));
 
     assertEquals(polygonNorth.getLength(), polygonXaxis.getLength(), testDelta, "Length of oriented envelope");
     assertEquals(polygonNorth.getWidth(), polygonXaxis.getWidth(), testDelta, "Width of oriented envelope");

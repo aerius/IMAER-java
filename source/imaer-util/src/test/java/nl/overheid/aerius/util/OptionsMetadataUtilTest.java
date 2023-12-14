@@ -235,7 +235,8 @@ class OptionsMetadataUtilTest {
     assertEquals("1.1", result.get("adms_met_site_min_monin_obukhov_length"), "adms_met_site_min_monin_obukhov_length should be set");
     assertEquals("1.2", result.get("adms_met_site_surface_albedo"), "adms_met_site_surface_albedo should be set");
     assertEquals("1.3", result.get("adms_met_site_priestley_taylor_parameter"), "adms_met_site_priestley_taylor_parameter should be set");
-    assertEquals("ONE_CUSTOM_VALUE", result.get("road_local_fraction_no2_receptors_option"), "road_local_fraction_no2_receptors_option should be set");
+    assertEquals("ONE_CUSTOM_VALUE", result.get("road_local_fraction_no2_receptors_option"),
+        "road_local_fraction_no2_receptors_option should be set");
     assertEquals("ONE_CUSTOM_VALUE", result.get("road_local_fraction_no2_points_option"), "road_local_fraction_no2_points_option should be set");
     assertEquals("0.4", result.get("road_local_fraction_no2_custom_value"), "road_local_fraction_no2 should be set");
   }
@@ -257,7 +258,8 @@ class OptionsMetadataUtilTest {
     ncaOptions.setRoadLocalFractionNO2PointsOption(RoadLocalFractionNO2Option.ONE_CUSTOM_VALUE);
     final Map<String, String> result2 = OptionsMetadataUtil.optionsToMap(Theme.NCA, options, false);
 
-    assertEquals("ONE_CUSTOM_VALUE", result2.get("road_local_fraction_no2_receptors_option"), "road_local_fraction_no2_receptors_option should be set");
+    assertEquals("ONE_CUSTOM_VALUE", result2.get("road_local_fraction_no2_receptors_option"),
+        "road_local_fraction_no2_receptors_option should be set");
     assertEquals("0.4", result2.get("road_local_fraction_no2_custom_value"), "road_local_fraction_no2_custom_value should be set");
 
     ncaOptions.setRoadLocalFractionNO2ReceptorsOption(RoadLocalFractionNO2Option.INDIVIDUAL_CUSTOM_VALUES);

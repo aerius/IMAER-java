@@ -132,7 +132,7 @@ public class GMLVersionWriterV50 implements GMLVersionWriter {
     final SituationType inputSituationType = input.getSituationType();
     if (inputSituationType == null) {
       situation.setSituationType(null);
-    } else if (inputSituationType == SituationType.OFF_SITE_REDUCTION){
+    } else if (inputSituationType == SituationType.OFF_SITE_REDUCTION) {
       // OFF_SITE_REDUCTION is not in the 5.0 XSD, so we map it back to NETTING.
       situation.setSituationType(LegacySituationType.NETTING);
     } else {

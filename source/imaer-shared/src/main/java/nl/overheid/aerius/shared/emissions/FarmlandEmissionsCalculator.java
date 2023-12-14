@@ -38,16 +38,16 @@ public class FarmlandEmissionsCalculator implements FarmlandActivityVisitor<Map<
 
   public Map<Substance, Double> updateEmissions(final FarmlandEmissionSource farmlandSource) throws AeriusException {
     final Map<Substance, BigDecimal> summed = new EnumMap<>(Substance.class);
+
     for (final AbstractFarmlandActivity activity : farmlandSource.getSubSources()) {
       final Map<Substance, BigDecimal> activityEmissions = activity.accept(this);
-      activityEmissions.forEach(
-          (key, value) -> {
+      activityEmissions.forEach((key, value) -> {
             activity.getEmissions().put(key, value.doubleValue());
             summed.merge(key, value, BigDecimal::add);
           });
     }
-
     final Map<Substance, Double> result = new EnumMap<>(Substance.class);
+
     summed.forEach((key, value) -> result.put(key, value.doubleValue()));
     return result;
   }
@@ -55,18 +55,17 @@ public class FarmlandEmissionsCalculator implements FarmlandActivityVisitor<Map<
   @Override
   public Map<Substance, BigDecimal> visit(final CustomFarmlandActivity activity) {
     final Map<Substance, BigDecimal> activityEmissions = new EnumMap<>(Substance.class);
-    activity.getEmissions().forEach(
-        (key, value) -> activityEmissions.put(key, BigDecimal.valueOf(value)));
+
+    activity.getEmissions().forEach((key, value) -> activityEmissions.put(key, BigDecimal.valueOf(value)));
     return activityEmissions;
   }
 
   @Override
   public Map<Substance, BigDecimal> visit(final StandardFarmlandActivity activity) throws AeriusException {
-    final Map<Substance, Double> emissionFactors = farmlandEmissionFactorSupplier
-        .getFarmSourceEmissionFactors(activity.getFarmSourceCategoryCode());
-
+    final Map<Substance, Double> emissionFactors = farmlandEmissionFactorSupplier.getFarmSourceEmissionFactors(activity.getFarmSourceCategoryCode());
     final FarmEmissionFactorType emissionFactorType =
         farmlandEmissionFactorSupplier.getFarmSourceEmissionFactorType(activity.getFarmSourceCategoryCode());
+
     return FarmSourceEmissionsUtil.calculate(activity, emissionFactors, emissionFactorType);
   }
 }

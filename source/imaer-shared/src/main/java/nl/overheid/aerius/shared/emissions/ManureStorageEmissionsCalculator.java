@@ -48,12 +48,14 @@ public class ManureStorageEmissionsCalculator {
     }
 
     final Map<Substance, Double> result = new EnumMap<>(Substance.class);
+
     summed.forEach((key, value) -> result.put(key, value.doubleValue()));
     return result;
   }
 
   private Map<Substance, BigDecimal> calculateEmissions(final AbstractManureStorage manureStorage) throws AeriusException {
     final Map<Substance, BigDecimal> emissions;
+
     if (manureStorage instanceof CustomManureStorage) {
       emissions = calculateEmissions((CustomManureStorage) manureStorage);
     } else if (manureStorage instanceof StandardManureStorage) {
@@ -61,22 +63,22 @@ public class ManureStorageEmissionsCalculator {
     } else {
       throw new AeriusException(ImaerExceptionReason.INTERNAL_ERROR, "Unknown manurestorage type");
     }
-
     return emissions;
   }
 
-  private Map<Substance, BigDecimal> calculateEmissions(final CustomManureStorage manureStorage) throws AeriusException {
+  private static Map<Substance, BigDecimal> calculateEmissions(final CustomManureStorage manureStorage) throws AeriusException {
     final Map<Substance, Double> emissionFactors = manureStorage.getEmissionFactors();
     final FarmEmissionFactorType emissionFactorType = manureStorage.getFarmEmissionFactorType();
+
     return FarmSourceEmissionsUtil.calculate(manureStorage, emissionFactors, emissionFactorType);
   }
 
   private Map<Substance, BigDecimal> calculateEmissions(final StandardManureStorage manureStorage) throws AeriusException {
-    final Map<Substance, Double> emissionFactors = manureStorageEmissionFactorSupplier
-        .getManureStorageEmissionFactors(manureStorage.getManureStorageCode());
-
+    final Map<Substance, Double> emissionFactors =
+        manureStorageEmissionFactorSupplier.getManureStorageEmissionFactors(manureStorage.getManureStorageCode());
     final FarmEmissionFactorType emissionFactorType =
         manureStorageEmissionFactorSupplier.getManureStorageEmissionFactorType(manureStorage.getManureStorageCode());
+
     return FarmSourceEmissionsUtil.calculate(manureStorage, emissionFactors, emissionFactorType);
   }
 }

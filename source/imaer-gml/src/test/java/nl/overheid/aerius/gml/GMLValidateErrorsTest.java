@@ -293,7 +293,6 @@ class GMLValidateErrorsTest {
     assertEquals(5, exeptions.size(), "ScenarioMetaData only has project name, but all required, therefor it should return 5 errors.");
   }
 
-
   private static void assertResult(final String fileName, final String expectedReasonTxt, final Reason expectedReason,
       final Consumer<AeriusException> check) throws IOException {
     check.accept(assertResult(fileName, expectedReasonTxt, expectedReason));

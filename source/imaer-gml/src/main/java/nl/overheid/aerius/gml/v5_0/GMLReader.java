@@ -53,7 +53,7 @@ public class GMLReader<S extends SourceCharacteristics> implements GMLVersionRea
   private final GML2Definitions gml2Definitions;
 
   public GMLReader(final GMLConversionData conversionData, final GML2SourceCharacteristics<S> gml2SourceCharacteristics) {
-    gml2Source = new GML2Source<S>(conversionData, gml2SourceCharacteristics);
+    gml2Source = new GML2Source<>(conversionData, gml2SourceCharacteristics);
     gml2Building = new GML2Building(conversionData);
     gml2Result = new GML2Result(conversionData);
     gml2CIMLKMeasure = new GML2CIMLKMeasure(conversionData);

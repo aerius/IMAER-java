@@ -24,7 +24,7 @@ public class Point extends Geometry {
 
   private static final long serialVersionUID = 3L;
 
-  private double[] coordinates = { 0, 0 };
+  private double[] coordinates = {0, 0};
 
   public Point() {
     // Default constructor for serialization.

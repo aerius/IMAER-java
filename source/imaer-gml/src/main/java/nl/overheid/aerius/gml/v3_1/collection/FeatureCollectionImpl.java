@@ -87,7 +87,7 @@ public class FeatureCollectionImpl implements FeatureCollection {
   @Override
   @XmlTransient
   public List<FeatureMember> getFeatureMembers() {
-    final ArrayList<FeatureMember> members = new ArrayList<FeatureMember>();
+    final ArrayList<FeatureMember> members = new ArrayList<>();
     for (final FeatureMemberProperty property : featureMembers) {
       members.add(property.getProperty());
     }

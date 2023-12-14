@@ -21,8 +21,8 @@ import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 import nl.overheid.aerius.gml.base.building.IsGmlBuildingV31;
-import nl.overheid.aerius.gml.base.characteristics.IsGmlOPSSourceCharacteristicsV31;
 import nl.overheid.aerius.gml.base.characteristics.IsGmlHeatContent;
+import nl.overheid.aerius.gml.base.characteristics.IsGmlOPSSourceCharacteristicsV31;
 import nl.overheid.aerius.gml.base.characteristics.IsGmlSpecifiedHeatContent;
 import nl.overheid.aerius.gml.v2_0.base.CalculatorSchema;
 

@@ -57,7 +57,8 @@ import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
  */
 class GML2SourceVisitor<S extends SourceCharacteristics> implements IsGML2SourceVisitor<EmissionSource> {
 
-  @SuppressWarnings("rawtypes") private final HashMap<Class<? extends EmissionSource>, AbstractGML2Specific> handlers = new HashMap<>();
+  @SuppressWarnings("rawtypes")
+  private final HashMap<Class<? extends EmissionSource>, AbstractGML2Specific> handlers = new HashMap<>();
 
   GML2SourceVisitor(final GMLConversionData conversionData, final GML2SourceCharacteristics<S> gml2SourceCharacteristics) {
     handlers.put(EmissionSource.class, new GML2Generic<EmissionSource>(conversionData));

@@ -31,12 +31,16 @@ public interface BuildingLimits extends Serializable {
   int buildingDigitsPrecision();
 
   double buildingHeightMinimum();
+
   double buildingHeightMaximum();
+
   double buildingHeightDefault();
 
   double buildingWidthMinimum();
+
   double buildingWidthMaximum();
 
   double buildingLengthMinimum();
+
   double buildingLengthMaximum();
 }

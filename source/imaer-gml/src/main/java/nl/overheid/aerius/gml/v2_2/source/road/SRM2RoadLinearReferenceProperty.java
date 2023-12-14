@@ -35,7 +35,6 @@ public class SRM2RoadLinearReferenceProperty extends AbstractProperty<SRM2RoadLi
     super(null);
   }
 
-
   @XmlElementRef
   @Override
   public SRM2RoadLinearReference getProperty() {

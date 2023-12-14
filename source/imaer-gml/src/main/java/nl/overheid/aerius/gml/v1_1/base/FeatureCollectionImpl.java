@@ -103,7 +103,7 @@ public class FeatureCollectionImpl implements FeatureCollection {
   @Override
   @XmlTransient
   public List<FeatureMember> getFeatureMembers() {
-    return new ArrayList<FeatureMember>(featureMembers);
+    return new ArrayList<>(featureMembers);
   }
 
   @Override

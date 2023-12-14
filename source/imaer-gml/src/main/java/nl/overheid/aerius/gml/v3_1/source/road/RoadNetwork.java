@@ -34,7 +34,7 @@ import nl.overheid.aerius.shared.domain.v2.geojson.GeometryType;
 public class RoadNetwork extends FeatureMemberImpl implements IsGmlRoadNetwork {
 
   private String label;
-  private ArrayList<ReferenceType> references = new ArrayList<ReferenceType>();
+  private ArrayList<ReferenceType> references = new ArrayList<>();
 
   @Override
   public boolean isValidGeometry(final GeometryType type) {

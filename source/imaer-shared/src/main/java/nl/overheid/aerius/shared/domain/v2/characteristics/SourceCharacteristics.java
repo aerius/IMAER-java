@@ -26,8 +26,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 
 @JsonTypeInfo(property = "type", use = Id.NAME)
 @JsonSubTypes({
-  @Type(value = ADMSSourceCharacteristics.class, name = CharacteristicsType.Names.ADMS),
-  @Type(value = OPSSourceCharacteristics.class, name = CharacteristicsType.Names.OPS),
+    @Type(value = ADMSSourceCharacteristics.class, name = CharacteristicsType.Names.ADMS),
+    @Type(value = OPSSourceCharacteristics.class, name = CharacteristicsType.Names.OPS),
 })
 public abstract class SourceCharacteristics implements Serializable {
 
