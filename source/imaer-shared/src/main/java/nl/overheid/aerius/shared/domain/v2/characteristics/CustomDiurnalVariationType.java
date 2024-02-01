@@ -21,12 +21,12 @@ import java.util.List;
 public enum CustomDiurnalVariationType {
 
   /**
-   * Diurnal variation over a day, with 1 value for each hour.
+   * Time-varying emission profile over a day, with 1 value for each hour.
    */
   DAY(24),
 
   /**
-   * Diurnal variation for 3-day profile, with 1 value for each hour of the day.
+   * Time-varying emission 3-day profile, with 1 value for each hour of the day.
    * First day represents weekdays, second day represents saturday and third day represents sunday.
    * For validation, the weekday values will be multiplied by 5, and the total should be (roughly) equal to 7x24.
    */
@@ -43,7 +43,12 @@ public enum CustomDiurnalVariationType {
       return sumWeekdays + sumOtherDays;
     }
 
-  };
+  },
+
+  /**
+   * Monthly Time-varying emission profile over a year, with 1 value for each month.
+   */
+  MONTHLY(12);
 
   private final int expectedNumberOfValues;
   private final int expectedTotalNumberOfValues;
