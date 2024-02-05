@@ -16,9 +16,12 @@
  */
 package nl.overheid.aerius.gml.base;
 
+import javax.xml.validation.Schema;
+
 import nl.overheid.aerius.gml.v5_0.togml.GMLVersionWriterV50;
 import nl.overheid.aerius.gml.v5_1.togml.GMLVersionWriterV51;
 import nl.overheid.aerius.shared.domain.geo.HexagonZoomLevel;
+import nl.overheid.aerius.shared.exception.AeriusException;
 
 public class GMLVersionWriterFactory {
 
@@ -32,5 +35,9 @@ public class GMLVersionWriterFactory {
     default:
       throw new IllegalArgumentException("Aerius GML version is not supported");
     }
+  }
+
+  public static Schema getSchema(final AeriusGMLVersion aeriusGMLVersion) throws AeriusException {
+    return GMLSchemaFactory.createSchema(aeriusGMLVersion);
   }
 }

@@ -20,7 +20,6 @@ import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -30,6 +29,7 @@ import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.namespace.QName;
+import javax.xml.validation.Schema;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,7 +46,6 @@ import nl.overheid.aerius.gml.base.GMLVersionWriterFactory;
 import nl.overheid.aerius.gml.base.MetaData;
 import nl.overheid.aerius.gml.base.MetaDataInput;
 import nl.overheid.aerius.gml.v5_1.base.CalculatorSchema;
-import nl.overheid.aerius.gml.v5_1.togml.GMLVersionWriterV51;
 import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.geo.ReceptorGridSettings;
 import nl.overheid.aerius.shared.domain.scenario.IsScenario;
@@ -83,13 +82,15 @@ final class InternalGMLWriter {
   private static final Substance[] RESULT_SUBSTANCES = {Substance.NH3, Substance.NOX, Substance.PM10, Substance.NO2, Substance.PM25};
 
   private final GMLVersionWriter writer;
+  private final Schema schema;
   private final ReferenceGenerator referenceGenerator;
   private final Boolean formattedOutput;
 
   InternalGMLWriter(final ReceptorGridSettings rgs, final ReferenceGenerator referenceGenerator, final Boolean formattedOutput,
-      final AeriusGMLVersion version) {
+      final AeriusGMLVersion version) throws AeriusException {
     writer = GMLVersionWriterFactory.createGMLVersionWriter(rgs.getZoomLevel1(), GMLSchema.getSRSName(rgs.getEPSG().getSrid()), version);
     this.referenceGenerator = referenceGenerator;
+    this.schema = GMLVersionWriterFactory.getSchema(version);
     this.formattedOutput = formattedOutput;
   }
 
@@ -190,6 +191,8 @@ final class InternalGMLWriter {
       // set the targetNameSpaceLocation (namespace and actual location separated by a space, can be multiple combinations)
       marshaller.setProperty(Marshaller.JAXB_SCHEMA_LOCATION, writer.getNameSpace() + " " + writer.getPublicSchemaLocation());
       marshaller.setProperty(Marshaller.JAXB_ENCODING, GML_ENCODING);
+      // set the schema to ensure exported GML adheres to the XSD
+      marshaller.setSchema(schema);
 
       if (fragment) {
         marshaller.marshal(

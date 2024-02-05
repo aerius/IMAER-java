@@ -16,26 +16,14 @@
  */
 package nl.overheid.aerius.gml.base;
 
-import java.net.URL;
-
-import javax.xml.XMLConstants;
 import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.xml.sax.SAXException;
 
 import nl.overheid.aerius.shared.exception.AeriusException;
-import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 
 /**
  * Base class for readers of a Specific version of AERIUS GML.
  */
 public abstract class GMLVersionReaderFactory {
-
-  private static final Logger LOG = LoggerFactory.getLogger(GMLVersionReaderFactory.class);
-  private static final String CATALOG_LOCATION = "/gml-catalog.xml";
 
   private final AeriusGMLVersion version;
   private final String schemaLocation;
@@ -59,25 +47,9 @@ public abstract class GMLVersionReaderFactory {
     this.schemaLocation = schemaLocation;
     this.namespace = namespace;
     this.featureCollectionClass = featureCollectionClass;
-    schema = createSchema(schemaLocation);
+    schema = GMLSchemaFactory.createSchema(schemaLocation);
     legacyCodeConverter = new GMLLegacyCodeConverter(legacyCodeSupplier.getLegacyCodes(version),
         legacyCodeSupplier.getLegacyMobileSourceOffRoadConversions(), legacyCodeSupplier.getLegacyPlanConversions());
-  }
-
-  private static Schema createSchema(final String schemaLocation) throws AeriusException {
-    final CatalogResolver catalogResolver = new CatalogResolver(GMLVersionReaderFactory.class.getResource(CATALOG_LOCATION).toString());
-    final URL xsdURL = GMLVersionReaderFactory.class.getResource(schemaLocation);
-    try {
-      final SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-      // disable DOCTYPE declarations, fixes XXE vulnerability
-      sf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
-      // use a catalogresolver to avoid calling non-local xsd's
-      sf.setResourceResolver(catalogResolver);
-      return sf.newSchema(xsdURL);
-    } catch (final SAXException e) {
-      LOG.error("Parsing the AERIUS GML schema {} failed.", schemaLocation, e);
-      throw new AeriusException(ImaerExceptionReason.INTERNAL_ERROR, e.getMessage());
-    }
   }
 
   /**
