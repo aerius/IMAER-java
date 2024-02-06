@@ -17,8 +17,6 @@
 package nl.overheid.aerius.gml.base;
 
 import java.net.URL;
-import java.util.EnumMap;
-import java.util.Map;
 
 import javax.xml.XMLConstants;
 import javax.xml.validation.Schema;
@@ -39,28 +37,13 @@ public final class GMLSchemaFactory {
   private static final Logger LOG = LoggerFactory.getLogger(GMLSchemaFactory.class);
 
   private static final String CATALOG_LOCATION = "/gml-catalog.xml";
-  private static final Map<AeriusGMLVersion, String> SCHEMA_LOCATIONS = new EnumMap<>(AeriusGMLVersion.class);
-
-  static {
-    SCHEMA_LOCATIONS.put(AeriusGMLVersion.V0_5, nl.overheid.aerius.gml.v0_5.base.CalculatorSchema.SCHEMA_LOCATION);
-    SCHEMA_LOCATIONS.put(AeriusGMLVersion.V1_0, nl.overheid.aerius.gml.v1_0.base.CalculatorSchema.SCHEMA_LOCATION);
-    SCHEMA_LOCATIONS.put(AeriusGMLVersion.V1_1, nl.overheid.aerius.gml.v1_1.base.CalculatorSchema.SCHEMA_LOCATION);
-    SCHEMA_LOCATIONS.put(AeriusGMLVersion.V2_0, nl.overheid.aerius.gml.v2_0.base.CalculatorSchema.SCHEMA_LOCATION);
-    SCHEMA_LOCATIONS.put(AeriusGMLVersion.V2_1, nl.overheid.aerius.gml.v2_1.base.CalculatorSchema.SCHEMA_LOCATION);
-    SCHEMA_LOCATIONS.put(AeriusGMLVersion.V2_2, nl.overheid.aerius.gml.v2_2.base.CalculatorSchema.SCHEMA_LOCATION);
-    SCHEMA_LOCATIONS.put(AeriusGMLVersion.V3_0, nl.overheid.aerius.gml.v3_0.base.CalculatorSchema.SCHEMA_LOCATION);
-    SCHEMA_LOCATIONS.put(AeriusGMLVersion.V3_1, nl.overheid.aerius.gml.v3_1.base.CalculatorSchema.SCHEMA_LOCATION);
-    SCHEMA_LOCATIONS.put(AeriusGMLVersion.V4_0, nl.overheid.aerius.gml.v4_0.base.CalculatorSchema.SCHEMA_LOCATION);
-    SCHEMA_LOCATIONS.put(AeriusGMLVersion.V5_0, nl.overheid.aerius.gml.v5_0.base.CalculatorSchema.SCHEMA_LOCATION);
-    SCHEMA_LOCATIONS.put(AeriusGMLVersion.V5_1, nl.overheid.aerius.gml.v5_1.base.CalculatorSchema.SCHEMA_LOCATION);
-  }
 
   private GMLSchemaFactory() {
     // Util-like
   }
 
   public static Schema createSchema(final AeriusGMLVersion version) throws AeriusException {
-    return createSchema(SCHEMA_LOCATIONS.get(version));
+    return createSchema(version.getSchemaLocation());
   }
 
   public static Schema createSchema(final String schemaLocation) throws AeriusException {

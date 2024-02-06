@@ -26,51 +26,57 @@ public enum AeriusGMLVersion {
   /**
    * AERIUS GML version 5.1 (IMAER).
    */
-  V5_1,
+  V5_1(nl.overheid.aerius.gml.v5_1.base.CalculatorSchema.SCHEMA_LOCATION),
   /**
    * AERIUS GML version 5.0 (IMAER).
    */
-  V5_0,
+  V5_0(nl.overheid.aerius.gml.v5_0.base.CalculatorSchema.SCHEMA_LOCATION),
   /**
    * AERIUS GML version 4.0 (IMAER).
    */
-  V4_0,
+  V4_0(nl.overheid.aerius.gml.v4_0.base.CalculatorSchema.SCHEMA_LOCATION),
   /**
    * AERIUS GML version 3.1 (IMAER).
    */
-  V3_1,
+  V3_1(nl.overheid.aerius.gml.v3_1.base.CalculatorSchema.SCHEMA_LOCATION),
   /**
    * AERIUS GML version 3.0 (IMAER).
    */
-  V3_0,
+  V3_0(nl.overheid.aerius.gml.v3_0.base.CalculatorSchema.SCHEMA_LOCATION),
   /**
    * AERIUS GML version 2.2 (IMAER).
    */
-  V2_2,
+  V2_2(nl.overheid.aerius.gml.v2_2.base.CalculatorSchema.SCHEMA_LOCATION),
   /**
    * AERIUS GML version 2.1 (IMAER).
    */
-  V2_1,
+  V2_1(nl.overheid.aerius.gml.v2_1.base.CalculatorSchema.SCHEMA_LOCATION),
   /**
    * AERIUS GML version 2.0 (IMAER).
    */
-  V2_0,
+  V2_0(nl.overheid.aerius.gml.v2_0.base.CalculatorSchema.SCHEMA_LOCATION),
   /**
    * AERIUS GML version 1.1 (IMAER).
    */
-  V1_1,
+  V1_1(nl.overheid.aerius.gml.v1_1.base.CalculatorSchema.SCHEMA_LOCATION),
   /**
    * AERIUS GML version 1.0 (IMAER).
    * @deprecated Old version.
    */
   @Deprecated
-  V1_0,
+  V1_0(nl.overheid.aerius.gml.v1_0.base.CalculatorSchema.SCHEMA_LOCATION),
   /**
    * AERIUS GML version 0.5 (IMAER).
    * @deprecated Old version.
    */
   @Deprecated
-  V0_5;
+  V0_5(nl.overheid.aerius.gml.v0_5.base.CalculatorSchema.SCHEMA_LOCATION);
+
+  private final String schemaLocation;
+
+  private AeriusGMLVersion(final String schemaLocation) {
+    this.schemaLocation = schemaLocation;
+  }
 
   /**
    * Safely returns an AeriusGMLVersion. It is case independent and returns null in
@@ -85,6 +91,10 @@ public enum AeriusGMLVersion {
     } catch (final IllegalArgumentException e) {
       return null;
     }
+  }
+
+  String getSchemaLocation() {
+    return schemaLocation;
   }
 
 }
