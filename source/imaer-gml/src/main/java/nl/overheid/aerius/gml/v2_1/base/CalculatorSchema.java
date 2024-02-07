@@ -47,11 +47,6 @@ public final class CalculatorSchema {
   public static final String PUBLIC_SCHEMA_LOCATION = NAMESPACE + "/" + XSD_FILENAME;
 
   /**
-   * Schema location.
-   */
-  public static final String SCHEMA_LOCATION = "/imaer/" + IMAER_VERSION + "/" + XSD_FILENAME;
-
-  /**
    * prefix used for id's in GML.
    */
   public static final String GML_ID_NAMESPACE = "NL.IMAER";

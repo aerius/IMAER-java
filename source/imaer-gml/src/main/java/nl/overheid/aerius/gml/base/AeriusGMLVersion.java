@@ -26,51 +26,59 @@ public enum AeriusGMLVersion {
   /**
    * AERIUS GML version 5.1 (IMAER).
    */
-  V5_1,
+  V5_1("5.1"),
   /**
    * AERIUS GML version 5.0 (IMAER).
    */
-  V5_0,
+  V5_0("5.0"),
   /**
    * AERIUS GML version 4.0 (IMAER).
    */
-  V4_0,
+  V4_0("4.0"),
   /**
    * AERIUS GML version 3.1 (IMAER).
    */
-  V3_1,
+  V3_1("3.1"),
   /**
    * AERIUS GML version 3.0 (IMAER).
    */
-  V3_0,
+  V3_0("3.0"),
   /**
    * AERIUS GML version 2.2 (IMAER).
    */
-  V2_2,
+  V2_2("2.2"),
   /**
    * AERIUS GML version 2.1 (IMAER).
    */
-  V2_1,
+  V2_1("2.1"),
   /**
    * AERIUS GML version 2.0 (IMAER).
    */
-  V2_0,
+  V2_0("2.0"),
   /**
    * AERIUS GML version 1.1 (IMAER).
    */
-  V1_1,
+  V1_1("1.1"),
   /**
    * AERIUS GML version 1.0 (IMAER).
    * @deprecated Old version.
    */
   @Deprecated
-  V1_0,
+  V1_0("1.0"),
   /**
    * AERIUS GML version 0.5 (IMAER).
    * @deprecated Old version.
    */
   @Deprecated
-  V0_5;
+  V0_5("0.5");
+
+  private static final String SCHEMA_LOCATION_PATTERN = "/imaer/%s/IMAER.xsd";
+
+  private final String schemaLocation;
+
+  private AeriusGMLVersion(final String versionString) {
+    this.schemaLocation = String.format(SCHEMA_LOCATION_PATTERN, versionString);
+  }
 
   /**
    * Safely returns an AeriusGMLVersion. It is case independent and returns null in
@@ -85,6 +93,10 @@ public enum AeriusGMLVersion {
     } catch (final IllegalArgumentException e) {
       return null;
     }
+  }
+
+  String getSchemaLocation() {
+    return schemaLocation;
   }
 
 }

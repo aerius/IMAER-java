@@ -37,16 +37,6 @@ public final class CalculatorSchema {
   public static final String PREFIX = "imaer";
 
   /**
-   * Name of the XSD file.
-   */
-  public static final String XSD_FILENAME = "IMAER.xsd";
-
-  /**
-   * Schema location.
-   */
-  public static final String SCHEMA_LOCATION = "/imaer/" + IMAER_VERSION + "/" + XSD_FILENAME;
-
-  /**
    * prefix used for id's in GML.
    */
   public static final String GML_ID_NAMESPACE = "NL.IMAER";

@@ -41,7 +41,7 @@ public class GMLReaderFactoryV51 extends GMLVersionReaderFactory {
    * @throws AeriusException error
    */
   public GMLReaderFactoryV51(final GMLLegacyCodesSupplier legacyCodesSupplier) throws AeriusException {
-    super(legacyCodesSupplier, AeriusGMLVersion.V5_1, CalculatorSchema.SCHEMA_LOCATION, CalculatorSchema.NAMESPACE, FeatureCollectionImpl.class);
+    super(legacyCodesSupplier, AeriusGMLVersion.V5_1, CalculatorSchema.NAMESPACE, FeatureCollectionImpl.class);
   }
 
   @Override

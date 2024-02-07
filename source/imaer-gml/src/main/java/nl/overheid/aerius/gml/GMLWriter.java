@@ -324,7 +324,7 @@ public class GMLWriter {
     createInternalWriter().write(outputStream, scenario, metaDataInput);
   }
 
-  private InternalGMLWriter createInternalWriter() {
+  private InternalGMLWriter createInternalWriter() throws AeriusException {
     return new InternalGMLWriter(receptorGridSettings, referenceGenerator, formattedOutput, version);
   }
 
