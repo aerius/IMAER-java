@@ -115,6 +115,9 @@ public class GML2ADMSSourceCharacteristics
     DiurnalVariationUtil.setDiurnalVariation(characteristics.getDiurnalVariation(),
         returnCharacteristics::setStandardDiurnalVariationCode,
         returnCharacteristics::setCustomDiurnalVariationId);
+    DiurnalVariationUtil.setDiurnalVariation(characteristics.getMonthlyVariation(),
+        returnCharacteristics::setStandardMonthlyVariationCode,
+        returnCharacteristics::setCustomMonthlyVariationId);
   }
 
   private static ADMSSourceCharacteristics getDefaultCharacteristics() {

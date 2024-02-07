@@ -128,6 +128,7 @@ class GMLRoundtripTest {
       {"situation_type_combination_proposed", CharacteristicsType.OPS},
       {"adms_industry", CharacteristicsType.ADMS},
       {"adms_industry_with_custom_diurnal_variation", CharacteristicsType.ADMS},
+      {"adms_industry_with_custom_time_varying_profiles", CharacteristicsType.ADMS},
       {"adms_road", CharacteristicsType.ADMS},
       {"adms_road_with_custom_diurnal_variation", CharacteristicsType.ADMS},
       {"adms_manure_storage", CharacteristicsType.ADMS},

@@ -95,6 +95,7 @@ final class SourceCharacteristics2GML {
     determineBuoyancyType(characteristics, returnCharacteristics);
     determineEffluxType(characteristics, returnCharacteristics);
     returnCharacteristics.setDiurnalVariation(determineDiurnalVariation(characteristics));
+    returnCharacteristics.setMonthlyVariation(determineMonthlyVariation(characteristics));
 
     return returnCharacteristics;
   }
@@ -159,6 +160,12 @@ final class SourceCharacteristics2GML {
     return ToGMLUtil.determineDiurnalVariation(
         characteristics::getCustomDiurnalVariationId,
         characteristics::getStandardDiurnalVariationCode);
+  }
+
+  private static AbstractDiurnalVariation determineMonthlyVariation(final ADMSSourceCharacteristics characteristics) {
+    return ToGMLUtil.determineDiurnalVariation(
+        characteristics::getCustomMonthlyVariationId,
+        characteristics::getStandardMonthlyVariationCode);
   }
 
   private static ReferenceType determineBuilding(final SourceCharacteristics characteristics) {
