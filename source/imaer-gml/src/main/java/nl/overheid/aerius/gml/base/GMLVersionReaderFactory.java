@@ -36,15 +36,14 @@ public abstract class GMLVersionReaderFactory {
    * Constructor.
    * @param legacyCodeSupplier The legacy code supplier
    * @param version AERIUS version
-   * @param schemaLocation schema location of the specific AERIUS GML version
    * @param nameSpace name space of the specific AERIUS GML version
    * @param featureCollectionClass class of the GML specific feature collection
    * @throws AeriusException in case of an error.
    */
-  protected GMLVersionReaderFactory(final GMLLegacyCodesSupplier legacyCodeSupplier, final AeriusGMLVersion version, final String schemaLocation,
-      final String namespace, final Class<?> featureCollectionClass) throws AeriusException {
+  protected GMLVersionReaderFactory(final GMLLegacyCodesSupplier legacyCodeSupplier, final AeriusGMLVersion version, final String namespace,
+      final Class<?> featureCollectionClass) throws AeriusException {
     this.version = version;
-    this.schemaLocation = schemaLocation;
+    this.schemaLocation = version.getSchemaLocation();
     this.namespace = namespace;
     this.featureCollectionClass = featureCollectionClass;
     schema = GMLSchemaFactory.createSchema(schemaLocation);
