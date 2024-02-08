@@ -77,6 +77,10 @@ public class ADMSSourceCharacteristics extends SourceCharacteristics {
 
   private String standardDiurnalVariationCode;
 
+  private String standardMonthlyVariationCode;
+
+  private String customMonthlyVariationId;
+
   public SourceType getSourceType() {
     return sourceType;
   }
@@ -245,6 +249,22 @@ public class ADMSSourceCharacteristics extends SourceCharacteristics {
 
   public void setStandardDiurnalVariationCode(final String standardDiurnalVariationCode) {
     this.standardDiurnalVariationCode = standardDiurnalVariationCode;
+  }
+
+  public String getStandardMonthlyVariationCode() {
+    return standardMonthlyVariationCode;
+  }
+
+  public void setStandardMonthlyVariationCode(final String standardMonthlyVariationCode) {
+    this.standardMonthlyVariationCode = standardMonthlyVariationCode;
+  }
+
+  public String getCustomMonthlyVariationId() {
+    return customMonthlyVariationId;
+  }
+
+  public void setCustomMonthlyVariationId(final String customMonthlyVariationId) {
+    this.customMonthlyVariationId = customMonthlyVariationId;
   }
 
 }

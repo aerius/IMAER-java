@@ -278,7 +278,13 @@ NOTE Each emission source is described on the basis of a number of characteristi
           </element>
           <element minOccurs="0" name="diurnalVariation" type="IMAER:DiurnalVariationPropertyType">
             <annotation>
-              <documentation>Diurnal variation of the emission of the source.</documentation>
+              <documentation>Diurnal variation of the emission of the source.
+Note: this might be renamed in a future version to hourlyVariation or hourlyVariationProfile.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="monthlyVariation" type="IMAER:DiurnalVariationPropertyType">
+            <annotation>
+              <documentation>Monthly time-varying profile of the emission of the source.</documentation>
             </annotation>
           </element>
         </sequence>
@@ -946,7 +952,8 @@ NOTE To determine the emissions of mobile equipment, the use of that vehicle can
   <element name="CustomDiurnalVariation" substitutionGroup="gml:AbstractGML" type="IMAER:CustomDiurnalVariationType">
     <annotation>
       <documentation>Custom temporal variation. Consists of X values, where all values must add up to X * 100.
-As an example, a definition for hours per day: In this case there are 24 values, all of which must add up to 2400. For an equal distribution over the day, each value is 100.</documentation>
+As an example, a definition for hours per day: In this case there are 24 values, all of which must add up to 2400. For an equal distribution over the day, each value is 100.
+Note: this will be renamed in a future version to CustomTimeVaryingProfile.</documentation>
     </annotation>
   </element>
   <complexType name="CustomDiurnalVariationType">
@@ -1333,7 +1340,8 @@ NOTE Some definitions can be used within multiple sources. To prevent each sourc
   </complexType>
   <element abstract="true" name="DiurnalVariation" substitutionGroup="gml:AbstractObject" type="IMAER:DiurnalVariationType">
     <annotation>
-      <documentation>Temporal variation.</documentation>
+      <documentation>Temporal variation.
+Note: this will be renamed in a future version to TimeVaryingProfile.</documentation>
     </annotation>
   </element>
   <complexType abstract="true" name="DiurnalVariationType">
@@ -2688,7 +2696,8 @@ NOTE This class describes an additional stable technology that can be used in an
   </complexType>
   <element name="ReferenceDiurnalVariation" substitutionGroup="IMAER:DiurnalVariation" type="IMAER:ReferenceDiurnalVariationType">
     <annotation>
-      <documentation>Reference to a (reusable) custom-specified temporal variation definition.</documentation>
+      <documentation>Reference to a (reusable) custom-specified temporal variation definition.
+Note: this will be renamed in a future version to ReferenceTimeVaryingProfile.</documentation>
     </annotation>
   </element>
   <complexType name="ReferenceDiurnalVariationType">
@@ -3439,7 +3448,8 @@ NOTE This class can be used if the heat content of an emission source is known.<
   </complexType>
   <element name="StandardDiurnalVariation" substitutionGroup="IMAER:DiurnalVariation" type="IMAER:StandardDiurnalVariationType">
     <annotation>
-      <documentation>Temporal variation according to one of the standard values known within AERIUS (based on OPS).</documentation>
+      <documentation>Temporal variation according to one of the standard values known within AERIUS (based on OPS).
+Note: this will be renamed in a future version to StandardTimeVaryingProfile.</documentation>
     </annotation>
   </element>
   <complexType name="StandardDiurnalVariationType">

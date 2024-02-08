@@ -33,7 +33,7 @@ import nl.overheid.aerius.shared.domain.v2.characteristics.adms.SourceType;
 @XmlRootElement(name = "ADMSSourceCharacteristics", namespace = CalculatorSchema.NAMESPACE)
 @XmlType(name = "ADMSSourceCharacteristicsType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"height", "specificHeatCapacity",
     "sourceType", "diameter", "elevationAngle", "horizontalAngle", "width", "verticalDimension", "buoyancyType", "density",
-    "temperature", "effluxType", "verticalVelocity", "volumetricFlowRate", "diurnalVariationProperty"})
+    "temperature", "effluxType", "verticalVelocity", "volumetricFlowRate", "diurnalVariationProperty", "monthlyVariationProperty"})
 public class ADMSSourceCharacteristics extends AbstractSourceCharacteristics implements IsGmlADMSSourceCharacteristics {
 
   private double height;
@@ -51,6 +51,7 @@ public class ADMSSourceCharacteristics extends AbstractSourceCharacteristics imp
   private Double verticalVelocity;
   private Double volumetricFlowRate;
   private AbstractDiurnalVariation diurnalVariation;
+  private AbstractDiurnalVariation monthlyVariation;
 
   @Override
   @XmlElement(namespace = CalculatorSchema.NAMESPACE)
@@ -210,5 +211,25 @@ public class ADMSSourceCharacteristics extends AbstractSourceCharacteristics imp
   public void setDiurnalVariation(final AbstractDiurnalVariation diurnalVariation) {
     this.diurnalVariation = diurnalVariation;
   }
+
+  @XmlElement(name = "monthlyVariation", namespace = CalculatorSchema.NAMESPACE)
+  public DiurnalVariationProperty getMonthlyVariationProperty() {
+    return monthlyVariation == null ? null : new DiurnalVariationProperty(monthlyVariation);
+  }
+
+  public void setMonthlyVariationProperty(final DiurnalVariationProperty monthlyVariation) {
+    this.monthlyVariation = monthlyVariation == null ? null : monthlyVariation.getProperty();
+  }
+
+  @Override
+  @XmlTransient
+  public AbstractDiurnalVariation getMonthlyVariation() {
+    return monthlyVariation;
+  }
+
+  public void setMonthlyVariation(final AbstractDiurnalVariation monthlyVariation) {
+    this.monthlyVariation = monthlyVariation;
+  }
+
 
 }

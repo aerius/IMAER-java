@@ -22,6 +22,7 @@ import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 import nl.overheid.aerius.gml.base.characteristics.IsGmlADMSSourceCharacteristics;
+import nl.overheid.aerius.gml.base.characteristics.IsGmlDiurnalVariation;
 import nl.overheid.aerius.gml.v5_0.base.CalculatorSchema;
 import nl.overheid.aerius.shared.domain.v2.characteristics.adms.BuoyancyType;
 import nl.overheid.aerius.shared.domain.v2.characteristics.adms.EffluxType;
@@ -209,6 +210,13 @@ public class ADMSSourceCharacteristics extends AbstractSourceCharacteristics imp
 
   public void setDiurnalVariation(final AbstractDiurnalVariation diurnalVariation) {
     this.diurnalVariation = diurnalVariation;
+  }
+
+  @Override
+  @XmlTransient
+  public IsGmlDiurnalVariation getMonthlyVariation() {
+    // No-op in this version
+    return null;
   }
 
 }
