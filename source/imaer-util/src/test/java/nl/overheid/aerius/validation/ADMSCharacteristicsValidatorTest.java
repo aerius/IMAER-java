@@ -102,4 +102,35 @@ class ADMSCharacteristicsValidatorTest {
         Arguments.of(SourceType.ROAD, ADMSLimits.SOURCE_SPECIFIC_HEAT_CAPACITY_MINIMUM - 0.001, true));
   }
 
+  @ParameterizedTest
+  @MethodSource("casesForADMSVerticalDimensionHeight")
+  void testValidateADMSVerticalDimensionHeight(final SourceType sourceType, final double height, final double verticalDimension,
+      final boolean warning) {
+    final ADMSSourceCharacteristics characteristics = new ADMSSourceCharacteristics();
+    characteristics.setSourceType(sourceType);
+    characteristics.setHeight(height);
+    characteristics.setVerticalDimension(verticalDimension);
+    characteristics.setSpecificHeatCapacity(10.0); // Set valid heat capacity to not trigger heat capacity validation
+
+    final List<AeriusException> errors = new ArrayList<>();
+    final List<AeriusException> warnings = new ArrayList<>();
+    final ADMSCharacteristicsValidator validator = new ADMSCharacteristicsValidator(errors, warnings, SOURCE_ID);
+
+    assertTrue(validator.validate(characteristics), "Should not give validation error on height check");
+    if (warning) {
+      assertEquals(1, warnings.size(), "Number of warning");
+      assertEquals(ImaerExceptionReason.SOURCE_VOLUME_FLOATING, warnings.get(0).getReason(), "Expected source volume floating warning.");
+    } else {
+      assertTrue(warnings.isEmpty(), "Didn't expect any warnings");
+    }
+  }
+
+  private static Stream<Arguments> casesForADMSVerticalDimensionHeight() {
+    return Stream.of(
+        //           source type, height, vertical dimension, warning
+        Arguments.of(SourceType.POINT, 10.0, 10.0, false),
+        Arguments.of(SourceType.VOLUME, 1.0, 20.0, false),
+        Arguments.of(SourceType.VOLUME, 2.0, 4.0, false),
+        Arguments.of(SourceType.VOLUME, 10.0, 2.0, true));
+  }
 }

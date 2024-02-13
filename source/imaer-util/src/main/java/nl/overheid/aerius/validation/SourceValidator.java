@@ -39,6 +39,14 @@ abstract class SourceValidator<T extends EmissionSource> {
     this.warnings = warnings;
   }
 
+  /**
+   * Validates the source. Any validation errors or warnings should be added to the errors/warnings list in the class.
+   * Should return true if there are no validation errors.
+   *
+   * @param source The source data class
+   * @param feature The source feature class
+   * @return true if no validation errors
+   */
   final boolean validate(final T source, final IsFeature feature) {
     boolean valid = validateGeometry(feature.getGeometry());
     valid = validateCharacteristics(source.getCharacteristics(), source.getGmlId()) && valid;

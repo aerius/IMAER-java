@@ -39,8 +39,10 @@ class ADMSCharacteristicsValidator extends CharacteristicsValidator<ADMSSourceCh
     if (characteristics.getSourceType() != SourceType.VOLUME && characteristics.getSourceType() != SourceType.ROAD) {
       valid = validateADMSHeatContent(characteristics);
     }
+    validateADMSVolumeHeight(characteristics);
     return valid;
   }
+
 
   private boolean validateADMSHeatContent(final ADMSSourceCharacteristics characteristics) {
     boolean valid = true;
@@ -54,4 +56,14 @@ class ADMSCharacteristicsValidator extends CharacteristicsValidator<ADMSSourceCh
     return valid;
   }
 
+  /**
+   * Warn if the height is larger than half the vertical height (or 2 * height is larger than the vertical dimension).
+   *
+   * @param characteristics
+   */
+  private void validateADMSVolumeHeight(final ADMSSourceCharacteristics characteristics) {
+    if (characteristics.getSourceType() == SourceType.VOLUME && ((characteristics.getHeight() * 2) - characteristics.getVerticalDimension()) > 0) {
+      warnings.add(new AeriusException(ImaerExceptionReason.SOURCE_VOLUME_FLOATING, sourceId));
+    }
+  }
 }

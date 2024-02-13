@@ -230,6 +230,14 @@ public enum ImaerExceptionReason implements Reason {
    */
   HEAT_CAPACITY_OUT_OF_RANGE(1039),
 
+  /**
+   * When volume height is above half the vertical dimension it means the source is floating.
+   * This might not be intended as most objects don't float.
+   *
+   * @param 0 id of the object containing the error.
+   */
+  SOURCE_VOLUME_FLOATING(1040),
+
   // Import GML file errors/warnings.
   /**
    * Uploaded file should contain no calculation points.
