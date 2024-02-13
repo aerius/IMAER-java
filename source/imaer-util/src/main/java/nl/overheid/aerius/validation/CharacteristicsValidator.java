@@ -36,6 +36,13 @@ abstract class CharacteristicsValidator<T extends SourceCharacteristics> {
     this.sourceId = sourceId;
   }
 
+  /**
+   * Validates the source characteristics. Any validation errors or warnings should be added to the errors/warnings list in the class.
+   * If no validation errors should return true.
+   *
+   * @param characteristics characteristics to validate
+   * @return true if no validation errors
+   */
   abstract boolean validate(final T characteristics);
 
 }
