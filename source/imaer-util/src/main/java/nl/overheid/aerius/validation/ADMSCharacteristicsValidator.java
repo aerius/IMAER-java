@@ -43,7 +43,6 @@ class ADMSCharacteristicsValidator extends CharacteristicsValidator<ADMSSourceCh
     return valid;
   }
 
-
   private boolean validateADMSHeatContent(final ADMSSourceCharacteristics characteristics) {
     boolean valid = true;
     if (characteristics.getSpecificHeatCapacity() < ADMSLimits.SOURCE_SPECIFIC_HEAT_CAPACITY_MINIMUM
