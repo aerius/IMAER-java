@@ -23,6 +23,9 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FilenameFilter;
 import java.util.Calendar;
 
 import org.junit.jupiter.api.Test;
@@ -37,6 +40,24 @@ public class ImaerFileUtilTest {
   private static final String TEST_FILE_PREFIX = "naam";
   private static final String TEST_FILE_NAME_EXTENSION = "test";
   private static final String TEST_LONG_FILE_NAME = "abcdefghijklmnopqrstuvwxyz_are_the_letters_in_the_alphabet";
+
+  @Test
+  void testGetFilesWithExtension() throws FileNotFoundException {
+    final String file = ImaerFileUtilTest.class.getResource("").getFile();
+    assertFalse(ImaerFileUtil.getFilesWithExtension(new File(file), null).isEmpty(), "Check if find files in directory with no filter");
+    assertFalse(ImaerFileUtil.getFilesWithExtension(new File(file), new FilenameFilter() {
+      @Override
+      public boolean accept(final File dir, final String name) {
+        return name.endsWith("class");
+      }
+    }).isEmpty(), "Check if find files in directory with");
+    assertFalse(ImaerFileUtil.getFilesWithExtension(new File(file, ImaerFileUtilTest.class.getSimpleName() + ".class"), new FilenameFilter() {
+      @Override
+      public boolean accept(final File dir, final String name) {
+        return name.endsWith("class");
+      }
+    }).isEmpty(), "Check if find this file");
+  }
 
   @Test
   public void testGetSafeFilename() {

@@ -25,9 +25,7 @@ import java.util.List;
 /**
  * EmissionSource objects keep track of multiple emission values,
  * because for certain information the emission values are different.
- * @deprecated year and substance will be split because year applies to all substances in one set and isn't different.
  */
-@Deprecated
 public class EmissionValueKey implements Comparable<EmissionValueKey>, Serializable {
 
   private static final long serialVersionUID = -7656975594074285482L;

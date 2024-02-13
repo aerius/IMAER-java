@@ -25,11 +25,7 @@ public interface ValidationHelper {
 
   FarmlandValidationHelper farmlandValidation();
 
-  default ManureStorageValidationHelper manureStorageValidation() {
-    // Temporary default while projects implement this method.
-    // TODO: remove after a week or so.
-    return null;
-  }
+  ManureStorageValidationHelper manureStorageValidation();
 
   OffRoadValidationHelper offRoadMobileValidation();
 
