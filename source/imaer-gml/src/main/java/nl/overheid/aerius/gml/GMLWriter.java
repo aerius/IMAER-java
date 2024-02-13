@@ -201,33 +201,6 @@ public class GMLWriter {
   }
 
   /**
-   * Build GML and write it directly to file.
-   * The file will be generated in the supplied directory.
-   *
-   * @param dir The directory to write the file to.
-   * @param scenario Scenario containing all scenario related data
-   * @param metaData The metadata to write for this file.
-   * @param fileId The ID that should be reflected in the filename.
-   * @param fileNamePart The optional filename that will be incorporated in the resulting file's name.
-   * @return The file generated.
-   * @throws AeriusException When exception occurred generating the GML.
-   */
-  public File writeToFile(final File dir, final IsScenario scenario, final MetaDataInput metaData, final int fileId,
-      final Optional<String> fileNamePart, final Optional<Date> fileNameDatePart) throws AeriusException {
-    final Path file = new File(dir, getFileName(scenario, fileId, fileNamePart, fileNameDatePart)).toPath();
-    try (final OutputStream outputStream = Files.newOutputStream(file)) {
-      write(outputStream, scenario, metaData);
-    } catch (final IOException e) {
-      // catch any exception and put them in a GML exception.
-      LOG.error("Internal error occurred.", e);
-      throw new AeriusException(ImaerExceptionReason.INTERNAL_ERROR);
-    }
-
-    LOG.info("File generated for {} to {}.", scenario.getName(), file);
-    return file.toFile();
-  }
-
-  /**
    * Build archive GML and write it directly to file.
    * The file will be generated in the supplied directory.
    *
@@ -253,6 +226,51 @@ public class GMLWriter {
     return file.toFile();
   }
 
+
+  /**
+   * Build GML and write it directly to file.
+   * The GML file will be generated in the supplied file.
+   *
+   * @param file The file path to write the file to.
+   * @param scenario Scenario containing all scenario related data
+   * @param metaData The metadata to write for this file.
+   * @return The file generated.
+   * @throws AeriusException When exception occurred generating the GML.
+   */
+  public File writeToFile(final Path file, final IsScenario scenario, final MetaDataInput metaData) throws AeriusException {
+    try (final OutputStream outputStream = Files.newOutputStream(file)) {
+      write(outputStream, scenario, metaData);
+    } catch (final IOException e) {
+      // catch any exception and put them in a GML exception.
+      LOG.error("Internal error occurred.", e);
+      throw new AeriusException(ImaerExceptionReason.INTERNAL_ERROR);
+    }
+
+    LOG.info("File generated for {} to {}.", scenario.getName(), file);
+    return file.toFile();
+  }
+
+  /**
+   * Build GML and write it directly to file.
+   * The GML file will be generated in the supplied directory.
+   *
+   * @param dir The directory to write the file to.
+   * @param scenario Scenario containing all scenario related data
+   * @param metaData The metadata to write for this file.
+   * @param fileId The ID that should be reflected in the filename.
+   * @param fileNamePart The optional filename that will be incorporated in the resulting file's name.
+   * @return The file generated.
+   * @throws AeriusException When exception occurred generating the GML.
+   * @deprecated Use {@link #writeToFile(Path, IsScenario, MetaDataInput)}
+   */
+  @Deprecated
+  public File writeToFile(final File dir, final IsScenario scenario, final MetaDataInput metaData, final int fileId,
+      final Optional<String> fileNamePart, final Optional<Date> fileNameDatePart) throws AeriusException {
+    final Path file = new File(dir, getFileName(scenario, fileId, fileNamePart, fileNameDatePart)).toPath();
+    return writeToFile(file, scenario, metaData);
+  }
+
+  @Deprecated
   protected String getFileName(final IsScenario scenario, final int fileId, final Optional<String> fileNamePart,
       final Optional<Date> fileNameDatePart) {
     return getFileName(Optional.of(scenario), fileId, fileNamePart, fileNameDatePart);

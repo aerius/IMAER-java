@@ -48,12 +48,7 @@ import nl.overheid.aerius.util.ImaerFileUtil;
 class UnsupportedFeaturesTest {
   private static final String RESOURCE_PATH = "latest/validate/unsupportedFeatures/";
 
-  private static final FilenameFilter GML_FILENAME_FILTER = new FilenameFilter() {
-    @Override
-    public boolean accept(final File dir, final String name) {
-      return name != null && name.endsWith(".gml");
-    }
-  };
+  private static final FilenameFilter GML_FILENAME_FILTER = (dir, name) -> name != null && name.endsWith(".gml");
 
   private static List<File> getGMLFiles() throws FileNotFoundException {
     final File basePath = new File(UnsupportedFeaturesTest.class.getResource("/gml/").getPath(), RESOURCE_PATH);

@@ -27,7 +27,17 @@ import jsinterop.annotations.JsProperty;
 import nl.overheid.aerius.shared.domain.scenario.SituationType;
 
 /**
- * type of Calculation Job
+ * Type of Calculation Job.
+ *
+ * This enum specifies constraints on allowed situation types.
+ * <dl>
+ * <dt>Required Situations</dt>
+ * <dd>Specifies which situations are required. If left empty no situation is required.</dd>
+ * <dt>Optional Situations</dt>
+ * <dd>Specifies which situations are optional. If left empty no situation is optional.</dd>
+ * <dt>Plural Situations</dt>
+ * <dd>Specifies which situations can occur multiple times. If left empty no situation can occur multiple times.</dd>
+ * </dl>
  */
 public enum CalculationJobType {
 
