@@ -44,19 +44,20 @@ public class ImaerFileUtilTest {
   @Test
   void testGetFilesWithExtension() throws FileNotFoundException {
     final String file = ImaerFileUtilTest.class.getResource("").getFile();
-    assertFalse(ImaerFileUtil.getFilesWithExtension(new File(file), null).isEmpty(), "Check if find files in directory with no filter");
+    assertFalse(ImaerFileUtil.getFilesWithExtension(new File(file), null).isEmpty(),
+        "Check whether you can find files in directory with no extension filter");
     assertFalse(ImaerFileUtil.getFilesWithExtension(new File(file), new FilenameFilter() {
       @Override
       public boolean accept(final File dir, final String name) {
         return name.endsWith("class");
       }
-    }).isEmpty(), "Check if find files in directory with");
+    }).isEmpty(), "Check whether files with a specific extension can be found in the directory");
     assertFalse(ImaerFileUtil.getFilesWithExtension(new File(file, ImaerFileUtilTest.class.getSimpleName() + ".class"), new FilenameFilter() {
       @Override
       public boolean accept(final File dir, final String name) {
         return name.endsWith("class");
       }
-    }).isEmpty(), "Check if find this file");
+    }).isEmpty(), "Check whether a specific file can be found");
   }
 
   @Test
