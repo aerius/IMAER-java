@@ -116,24 +116,24 @@ public enum ImaerExceptionReason implements Reason {
   HOURS_EXCEEDING_HOURS_IN_YEAR(1020),
 
   /**
-   * The supplied custom diurnal variation type is unknown.
+   * The supplied custom time-varying profile type is unknown.
    * @param 0 the unrecognized type
    */
-  CUSTOM_DIURNAL_VARIATION_TYPE_UNKNOWN(1023),
+  CUSTOM_TIME_VARYING_PROFILE_TYPE_UNKNOWN(1023),
 
   /**
-   * The supplied custom diurnal variation is invalid due to number of values.
+   * The supplied custom time-varying profile is invalid due to number of values.
    * @param 0 the expected number of values
    * @param 1 the supplied number of values
    */
-  CUSTOM_DIURNAL_VARIATION_INVALID_COUNT(1024),
+  CUSTOM_TIME_VARYING_PROFILE_INVALID_COUNT(1024),
 
   /**
-   * The supplied custom diurnal variation is invalid due to number of values.
+   * The supplied custom time-varying profile is invalid due to sum of the values.
    * @param 0 the expected sum
    * @param 1 the supplied sum
    */
-  CUSTOM_DIURNAL_VARIATION_INVALID_SUM(1025),
+  CUSTOM_TIME_VARYING_PROFILE_INVALID_SUM(1025),
 
   /**
    * Missing liter fuel property where they are expected.

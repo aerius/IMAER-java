@@ -43,7 +43,7 @@ public class DefinitionsImpl implements Definitions {
 
   @Override
   @XmlTransient
-  public List<CustomDiurnalVariation> getCustomDiurnalVariations() {
+  public List<CustomDiurnalVariation> getCustomTimeVaryingProfiles() {
     return customDiurnalVariationProperties.stream()
         .map(CustomDiurnalVariationProperty::getProperty)
         .collect(Collectors.toList());

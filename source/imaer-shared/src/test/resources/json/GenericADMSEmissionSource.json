@@ -12,7 +12,6 @@
     "characteristics" : {
       "type" : "ADMS",
       "buildingId" : "SomeBuildingId",
-      "customDiurnalVariationId" : "SomeDiurnalVariation",
       "sourceType" : "POINT",
       "buoyancyType" : "DENSITY",
       "effluxType" : "MOMENTUM",
@@ -30,7 +29,8 @@
       "horizontalAngle" : 4.7,
       "momentumFlux" : 94.03,
       "buoyancyFlux" : 303.11,
-      "massFlux" : 92.1
+      "massFlux" : 92.1,
+      "customHourlyTimeVaryingProfileId" : "SomeTimeVaryingProfile"
     },
     "emissions" : {
       "NH3" : 10.0,

@@ -79,7 +79,7 @@ final class SourceCharacteristics2GML {
 
   private static AbstractDiurnalVariation determineDiurnalVariation(final OPSSourceCharacteristics characteristics) {
     return ToGMLUtil.determineDiurnalVariation(
-        characteristics::getCustomDiurnalVariationId,
+        () -> null,
         () -> characteristics.getDiurnalVariation() == null ? null : characteristics.getDiurnalVariation().getCode());
   }
 
@@ -157,8 +157,8 @@ final class SourceCharacteristics2GML {
 
   private static AbstractDiurnalVariation determineDiurnalVariation(final ADMSSourceCharacteristics characteristics) {
     return ToGMLUtil.determineDiurnalVariation(
-        characteristics::getCustomDiurnalVariationId,
-        characteristics::getStandardDiurnalVariationCode);
+        characteristics::getCustomHourlyTimeVaryingProfileId,
+        characteristics::getStandardHourlyTimeVaryingProfileCode);
   }
 
   private static ReferenceType determineBuilding(final SourceCharacteristics characteristics) {

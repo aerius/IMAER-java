@@ -19,11 +19,11 @@ package nl.overheid.aerius.gml.v4_0.source.characteristics;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
-import nl.overheid.aerius.gml.base.characteristics.IsGmlDiurnalVariation;
+import nl.overheid.aerius.gml.base.characteristics.IsGmlTimeVaryingProfile;
 import nl.overheid.aerius.gml.v4_0.base.CalculatorSchema;
 
 @XmlSeeAlso({StandardDiurnalVariation.class, ReferenceDiurnalVariation.class})
 @XmlType(name = "DiurnalVariationType", namespace = CalculatorSchema.NAMESPACE)
-public class AbstractDiurnalVariation implements IsGmlDiurnalVariation {
+public class AbstractDiurnalVariation implements IsGmlTimeVaryingProfile {
 
 }

@@ -18,10 +18,10 @@ package nl.overheid.aerius.gml.base;
 
 import java.util.List;
 
-import nl.overheid.aerius.gml.base.characteristics.IsGmlCustomDiurnalVariation;
+import nl.overheid.aerius.gml.base.characteristics.IsGmlCustomTimeVaryingProfile;
 
 public interface Definitions {
 
-  List<? extends IsGmlCustomDiurnalVariation> getCustomDiurnalVariations();
+  List<? extends IsGmlCustomTimeVaryingProfile> getCustomTimeVaryingProfiles();
 
 }

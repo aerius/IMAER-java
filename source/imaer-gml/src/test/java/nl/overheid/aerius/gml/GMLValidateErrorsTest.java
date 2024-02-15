@@ -227,9 +227,9 @@ class GMLValidateErrorsTest {
   }
 
   @Test
-  void testGMLCustomDiurnalVariationUnknownType() throws IOException {
-    assertResult("fout_1023_custom_diurnal_variation", "GML custom diurnal variation type",
-        ImaerExceptionReason.CUSTOM_DIURNAL_VARIATION_TYPE_UNKNOWN,
+  void testGMLCustomTimeVaryingProfileUnknownType() throws IOException {
+    assertResult("fout_1023_custom_time_varying_profile", "GML custom time-varying profile type",
+        ImaerExceptionReason.CUSTOM_TIME_VARYING_PROFILE_TYPE_UNKNOWN,
         e -> {
           assertEquals(1, e.getArgs().length, "Number of arguments");
           assertEquals("DOUBLE_HOURS", e.getArgs()[0], "The type that wasn't recognized");
@@ -237,9 +237,9 @@ class GMLValidateErrorsTest {
   }
 
   @Test
-  void testGMLCustomDiurnalVariationCount() throws IOException {
-    assertResult("fout_1024_custom_diurnal_variation", "GML custom diurnal variation count",
-        ImaerExceptionReason.CUSTOM_DIURNAL_VARIATION_INVALID_COUNT,
+  void testGMLCustomTimeVaryingProfileCount() throws IOException {
+    assertResult("fout_1024_custom_time_varying_profile", "GML custom time-varying profile count",
+        ImaerExceptionReason.CUSTOM_TIME_VARYING_PROFILE_INVALID_COUNT,
         e -> {
           assertEquals(2, e.getArgs().length, "Number of arguments");
           assertEquals("24", e.getArgs()[0], "Expected count");
@@ -248,9 +248,9 @@ class GMLValidateErrorsTest {
   }
 
   @Test
-  void testGMLCustomDiurnalVariationSum() throws IOException {
-    assertResult("fout_1025_custom_diurnal_variation", "GML custom diurnal variation sum",
-        ImaerExceptionReason.CUSTOM_DIURNAL_VARIATION_INVALID_SUM,
+  void testGMLCustomTimeVaryingProfileSum() throws IOException {
+    assertResult("fout_1025_custom_time_varying_profile", "GML custom time-varying profile sum",
+        ImaerExceptionReason.CUSTOM_TIME_VARYING_PROFILE_INVALID_SUM,
         e -> {
           assertEquals(2, e.getArgs().length, "Number of arguments");
           assertEquals("24", e.getArgs()[0], "Expected sum");

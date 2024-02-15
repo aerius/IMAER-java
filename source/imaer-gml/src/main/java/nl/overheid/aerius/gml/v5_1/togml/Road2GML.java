@@ -202,8 +202,8 @@ class Road2GML extends SpecificSource2GML<nl.overheid.aerius.shared.domain.v2.so
     if (emissionSource.getCharacteristics() instanceof ADMSSourceCharacteristics) {
       final ADMSSourceCharacteristics characteristics = (ADMSSourceCharacteristics) emissionSource.getCharacteristics();
       final AbstractDiurnalVariation diurnalVariation = ToGMLUtil.determineDiurnalVariation(
-          characteristics::getCustomDiurnalVariationId,
-          characteristics::getStandardDiurnalVariationCode);
+          characteristics::getCustomHourlyTimeVaryingProfileId,
+          characteristics::getStandardHourlyTimeVaryingProfileCode);
       returnSource.setDiurnalVariation(diurnalVariation);
     }
   }

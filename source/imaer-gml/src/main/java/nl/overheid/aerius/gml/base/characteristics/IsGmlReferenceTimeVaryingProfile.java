@@ -16,6 +16,10 @@
  */
 package nl.overheid.aerius.gml.base.characteristics;
 
-public interface IsGmlDiurnalVariation {
+import nl.overheid.aerius.gml.base.IsGmlReferenceType;
+
+public interface IsGmlReferenceTimeVaryingProfile extends IsGmlTimeVaryingProfile {
+
+  IsGmlReferenceType getCustomTimeVaryingProfile();
 
 }

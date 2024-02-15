@@ -17,7 +17,7 @@
 package nl.overheid.aerius.gml.base.characteristics;
 
 import nl.overheid.aerius.gml.base.GMLConversionData;
-import nl.overheid.aerius.gml.base.util.DiurnalVariationUtil;
+import nl.overheid.aerius.gml.base.util.TimeVaryingProfileUtil;
 import nl.overheid.aerius.shared.domain.ops.DiurnalVariation;
 import nl.overheid.aerius.shared.domain.v2.characteristics.HeatContentType;
 import nl.overheid.aerius.shared.domain.v2.characteristics.OPSSourceCharacteristics;
@@ -42,13 +42,13 @@ public class GML2OPSSourceCharacteristics extends GML2SourceCharacteristics<OPSS
     returnCharacteristics.setSpread(getOrDefault(gmlOPSCharacteristics.getSpread(), defaultCharacteristics.getSpread()));
     returnCharacteristics.setParticleSizeDistribution(defaultCharacteristics.getParticleSizeDistribution());
 
-    fromGMLToDiurnalVariation(gmlOPSCharacteristics, returnCharacteristics, defaultCharacteristics);
+    fromGMLToTimeVaryingProfile(gmlOPSCharacteristics, returnCharacteristics, defaultCharacteristics);
     fromGMLToHeatContent(gmlOPSCharacteristics, returnCharacteristics);
 
     return returnCharacteristics;
   }
 
-  private void fromGMLToDiurnalVariation(final IsGmlBaseOPSSourceCharacteristics characteristics,
+  private void fromGMLToTimeVaryingProfile(final IsGmlBaseOPSSourceCharacteristics characteristics,
       final OPSSourceCharacteristics returnCharacteristics, final OPSSourceCharacteristics defaultCharacteristics) {
     if (characteristics instanceof IsGmlOPSSourceCharacteristicsV31) {
       fromGMLToDiurnalVariation((IsGmlOPSSourceCharacteristicsV31) characteristics, returnCharacteristics, defaultCharacteristics);
@@ -69,9 +69,10 @@ public class GML2OPSSourceCharacteristics extends GML2SourceCharacteristics<OPSS
 
   private void fromGMLToDiurnalVariation(final IsGmlOPSSourceCharacteristics characteristics,
       final OPSSourceCharacteristics returnCharacteristics, final OPSSourceCharacteristics defaultCharacteristics) {
-    DiurnalVariationUtil.setDiurnalVariation(characteristics.getDiurnalVariation(),
+    TimeVaryingProfileUtil.setTimeVaryingProfile(characteristics.getTimeVaryingProfile(),
         code -> setStandardDiurnalVariation(returnCharacteristics, defaultCharacteristics, code),
-        returnCharacteristics::setCustomDiurnalVariationId);
+        code -> {
+        });
   }
 
   private void setStandardDiurnalVariation(final OPSSourceCharacteristics returnCharacteristics,

@@ -111,7 +111,7 @@ public class ADMSRoad extends RoadEmissionSource implements IsGmlADMSRoad {
 
   @Override
   @XmlTransient
-  public AbstractDiurnalVariation getDiurnalVariation() {
+  public AbstractDiurnalVariation getTimeVaryingProfile() {
     return diurnalVariation;
   }
 

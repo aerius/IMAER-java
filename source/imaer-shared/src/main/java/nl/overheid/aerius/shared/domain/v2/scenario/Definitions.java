@@ -20,24 +20,24 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import nl.overheid.aerius.shared.domain.v2.characteristics.CustomDiurnalVariation;
+import nl.overheid.aerius.shared.domain.v2.characteristics.CustomTimeVaryingProfile;
 
 public class Definitions implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
-  private List<CustomDiurnalVariation> customDiurnalVariations = new ArrayList<>();
+  private List<CustomTimeVaryingProfile> customTimeVaryingProfiles = new ArrayList<>();
 
-  public List<CustomDiurnalVariation> getCustomDiurnalVariations() {
-    return customDiurnalVariations;
+  public List<CustomTimeVaryingProfile> getCustomTimeVaryingProfiles() {
+    return customTimeVaryingProfiles;
   }
 
-  public void setCustomDiurnalVariations(final List<CustomDiurnalVariation> customDiurnalVariations) {
-    this.customDiurnalVariations = customDiurnalVariations;
+  public void setCustomTimeVaryingProfiles(final List<CustomTimeVaryingProfile> customTimeVaryingProfiles) {
+    this.customTimeVaryingProfiles = customTimeVaryingProfiles;
   }
 
   public boolean hasContent() {
-    return !customDiurnalVariations.isEmpty();
+    return !customTimeVaryingProfiles.isEmpty();
   }
 
 }

@@ -18,19 +18,25 @@ package nl.overheid.aerius.gml.v5_1.source.characteristics;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
-import nl.overheid.aerius.gml.base.characteristics.IsGmlReferenceDiurnalVariation;
+import nl.overheid.aerius.gml.base.characteristics.IsGmlReferenceTimeVaryingProfile;
 import nl.overheid.aerius.gml.v5_1.base.CalculatorSchema;
 import nl.overheid.aerius.gml.v5_1.base.ReferenceType;
 
 @XmlRootElement(name = "ReferenceDiurnalVariation", namespace = CalculatorSchema.NAMESPACE)
 @XmlType(name = "ReferenceDiurnalVariationType", namespace = CalculatorSchema.NAMESPACE)
-public class ReferenceDiurnalVariation extends AbstractDiurnalVariation implements IsGmlReferenceDiurnalVariation {
+public class ReferenceDiurnalVariation extends AbstractDiurnalVariation implements IsGmlReferenceTimeVaryingProfile {
 
   private ReferenceType customDiurnalVariation;
 
   @Override
+  @XmlTransient
+  public ReferenceType getCustomTimeVaryingProfile() {
+    return customDiurnalVariation;
+  }
+
   @XmlElement(namespace = CalculatorSchema.NAMESPACE)
   public ReferenceType getCustomDiurnalVariation() {
     return customDiurnalVariation;

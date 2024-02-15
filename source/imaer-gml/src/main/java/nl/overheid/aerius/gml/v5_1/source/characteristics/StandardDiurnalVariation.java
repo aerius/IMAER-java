@@ -20,12 +20,12 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-import nl.overheid.aerius.gml.base.characteristics.IsGmlStandardDiurnalVariation;
+import nl.overheid.aerius.gml.base.characteristics.IsGmlStandardTimeVaryingProfile;
 import nl.overheid.aerius.gml.v5_1.base.CalculatorSchema;
 
 @XmlRootElement(name = "StandardDiurnalVariation", namespace = CalculatorSchema.NAMESPACE)
 @XmlType(name = "StandardDiurnalVariationType", namespace = CalculatorSchema.NAMESPACE)
-public class StandardDiurnalVariation extends AbstractDiurnalVariation implements IsGmlStandardDiurnalVariation {
+public class StandardDiurnalVariation extends AbstractDiurnalVariation implements IsGmlStandardTimeVaryingProfile {
 
   private String code;
 

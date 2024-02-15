@@ -26,8 +26,8 @@ import java.util.stream.DoubleStream;
 
 import org.junit.jupiter.api.Test;
 
-import nl.overheid.aerius.shared.domain.v2.characteristics.CustomDiurnalVariation;
-import nl.overheid.aerius.shared.domain.v2.characteristics.CustomDiurnalVariationType;
+import nl.overheid.aerius.shared.domain.v2.characteristics.CustomTimeVaryingProfile;
+import nl.overheid.aerius.shared.domain.v2.characteristics.CustomTimeVaryingProfileType;
 import nl.overheid.aerius.shared.domain.v2.scenario.Definitions;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
@@ -37,8 +37,8 @@ import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
  */
 class DefinitionsValidatorTest {
 
-  private static final String DIURNAL_VARIATION_ID = "OurDVId";
-  private static final String DIURNAL_VARIATION_LABEL = "Some sort of time thing";
+  private static final String TIME_VARYING_PROFILE_ID = "OurTVPId";
+  private static final String TIME_VARYING_PROFILE_LABEL = "Some sort of time thing";
 
   @Test
   void testEmptyDefinitions() {
@@ -54,14 +54,14 @@ class DefinitionsValidatorTest {
   }
 
   @Test
-  void testValidDiurnalVariation() {
+  void testValidTimeVaryingProfile() {
     final Definitions definitions = new Definitions();
     final List<Double> values = DoubleStream.generate(() -> 1.0)
         .limit(24)
         .mapToObj(Double::valueOf)
         .collect(Collectors.toList());
-    final CustomDiurnalVariation diurnalVariation = createDiurnalVariation(CustomDiurnalVariationType.DAY, values);
-    definitions.getCustomDiurnalVariations().add(diurnalVariation);
+    final CustomTimeVaryingProfile timeVaryingProfile = createTimeVaryingProfile(CustomTimeVaryingProfileType.DAY, values);
+    definitions.getCustomTimeVaryingProfiles().add(timeVaryingProfile);
 
     final List<AeriusException> errors = new ArrayList<>();
     final List<AeriusException> warnings = new ArrayList<>();
@@ -73,14 +73,14 @@ class DefinitionsValidatorTest {
   }
 
   @Test
-  void testDiurnalVariationMissingType() {
+  void testTimeVaryingProfileMissingType() {
     final Definitions definitions = new Definitions();
     final List<Double> values = DoubleStream.generate(() -> 1.0)
         .limit(24)
         .mapToObj(Double::valueOf)
         .collect(Collectors.toList());
-    final CustomDiurnalVariation diurnalVariation = createDiurnalVariation(null, values);
-    definitions.getCustomDiurnalVariations().add(diurnalVariation);
+    final CustomTimeVaryingProfile timeVaryingProfile = createTimeVaryingProfile(null, values);
+    definitions.getCustomTimeVaryingProfiles().add(timeVaryingProfile);
 
     final List<AeriusException> errors = new ArrayList<>();
     final List<AeriusException> warnings = new ArrayList<>();
@@ -88,20 +88,20 @@ class DefinitionsValidatorTest {
     DefinitionsValidator.validateDefinitions(definitions, errors, warnings);
 
     assertEquals(1, errors.size(), "Number of errors");
-    assertEquals(ImaerExceptionReason.CUSTOM_DIURNAL_VARIATION_TYPE_UNKNOWN, errors.get(0).getReason(), "Error reason");
+    assertEquals(ImaerExceptionReason.CUSTOM_TIME_VARYING_PROFILE_TYPE_UNKNOWN, errors.get(0).getReason(), "Error reason");
     assertArrayEquals(new Object[] {"null"}, errors.get(0).getArgs(), "Arguments");
     assertEquals(List.of(), warnings, "No warnings");
   }
 
   @Test
-  void testDiurnalVariationInvalidNumberOfValues() {
+  void testTimeVaryingProfileInvalidNumberOfValues() {
     final Definitions definitions = new Definitions();
     final List<Double> values = DoubleStream.generate(() -> 1.0)
         .limit(23)
         .mapToObj(Double::valueOf)
         .collect(Collectors.toList());
-    final CustomDiurnalVariation diurnalVariation = createDiurnalVariation(CustomDiurnalVariationType.DAY, values);
-    definitions.getCustomDiurnalVariations().add(diurnalVariation);
+    final CustomTimeVaryingProfile timeVaryingProfile = createTimeVaryingProfile(CustomTimeVaryingProfileType.DAY, values);
+    definitions.getCustomTimeVaryingProfiles().add(timeVaryingProfile);
 
     final List<AeriusException> errors = new ArrayList<>();
     final List<AeriusException> warnings = new ArrayList<>();
@@ -109,20 +109,20 @@ class DefinitionsValidatorTest {
     DefinitionsValidator.validateDefinitions(definitions, errors, warnings);
 
     assertEquals(1, errors.size(), "Number of errors");
-    assertEquals(ImaerExceptionReason.CUSTOM_DIURNAL_VARIATION_INVALID_COUNT, errors.get(0).getReason(), "Error reason");
+    assertEquals(ImaerExceptionReason.CUSTOM_TIME_VARYING_PROFILE_INVALID_COUNT, errors.get(0).getReason(), "Error reason");
     assertArrayEquals(new Object[] {"24", "23"}, errors.get(0).getArgs(), "Arguments");
     assertEquals(List.of(), warnings, "No warnings");
   }
 
   @Test
-  void testDiurnalVariationInvalidSumValues() {
+  void testTimeVaryingProfileInvalidSumValues() {
     final Definitions definitions = new Definitions();
     final List<Double> values = DoubleStream.generate(() -> 1.1)
         .limit(24)
         .mapToObj(Double::valueOf)
         .collect(Collectors.toList());
-    final CustomDiurnalVariation diurnalVariation = createDiurnalVariation(CustomDiurnalVariationType.DAY, values);
-    definitions.getCustomDiurnalVariations().add(diurnalVariation);
+    final CustomTimeVaryingProfile timeVaryingProfile = createTimeVaryingProfile(CustomTimeVaryingProfileType.DAY, values);
+    definitions.getCustomTimeVaryingProfiles().add(timeVaryingProfile);
 
     final List<AeriusException> errors = new ArrayList<>();
     final List<AeriusException> warnings = new ArrayList<>();
@@ -130,17 +130,17 @@ class DefinitionsValidatorTest {
     DefinitionsValidator.validateDefinitions(definitions, errors, warnings);
 
     assertEquals(1, errors.size(), "Number of errors");
-    assertEquals(ImaerExceptionReason.CUSTOM_DIURNAL_VARIATION_INVALID_SUM, errors.get(0).getReason(), "Error reason");
+    assertEquals(ImaerExceptionReason.CUSTOM_TIME_VARYING_PROFILE_INVALID_SUM, errors.get(0).getReason(), "Error reason");
     assertArrayEquals(new Object[] {"24", "26.4"}, errors.get(0).getArgs(), "Arguments");
     assertEquals(List.of(), warnings, "No warnings");
   }
 
-  private static CustomDiurnalVariation createDiurnalVariation(final CustomDiurnalVariationType type, final List<Double> values) {
-    final CustomDiurnalVariation diurnalVariation = new CustomDiurnalVariation();
-    diurnalVariation.setGmlId(DIURNAL_VARIATION_ID);
-    diurnalVariation.setLabel(DIURNAL_VARIATION_LABEL);
-    diurnalVariation.setType(type);
-    diurnalVariation.setValues(values);
-    return diurnalVariation;
+  private static CustomTimeVaryingProfile createTimeVaryingProfile(final CustomTimeVaryingProfileType type, final List<Double> values) {
+    final CustomTimeVaryingProfile timeVaryingProfile = new CustomTimeVaryingProfile();
+    timeVaryingProfile.setGmlId(TIME_VARYING_PROFILE_ID);
+    timeVaryingProfile.setLabel(TIME_VARYING_PROFILE_LABEL);
+    timeVaryingProfile.setType(type);
+    timeVaryingProfile.setValues(values);
+    return timeVaryingProfile;
   }
 }
