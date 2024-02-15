@@ -43,6 +43,8 @@ import nl.overheid.aerius.util.GeometryUtil;
  * Utility class to convert geometry objects to GML objects.
  */
 public final class Geometry2GML {
+  private static final int MAX_DECIMAL_PLACES = 3;
+  private static final double DECIMAL_FACTOR = Math.pow(10, MAX_DECIMAL_PLACES);
 
   private final String srsName;
 
@@ -63,8 +65,8 @@ public final class Geometry2GML {
     final DirectPositionType pos = new DirectPositionType();
     final Geometry point2 = GeometryUtil.getGeometry(point);
     final Coordinate coordinate = point2.getCoordinate();
-    pos.getValue().add(coordinate.x);
-    pos.getValue().add(coordinate.y);
+    pos.getValue().add(roundCoordinate(coordinate.x));
+    pos.getValue().add(roundCoordinate(coordinate.y));
     pointType.setPos(pos);
     returnPoint.setGmlPoint(pointType);
     return returnPoint;
@@ -131,9 +133,18 @@ public final class Geometry2GML {
   private static DirectPositionListType getCoordinates(final Coordinate... coordinates) {
     final DirectPositionListType dplt = new DirectPositionListType();
     for (final Coordinate coordinate : coordinates) {
-      dplt.getValue().add(coordinate.x);
-      dplt.getValue().add(coordinate.y);
+      dplt.getValue().add(roundCoordinate(coordinate.x));
+      dplt.getValue().add(roundCoordinate(coordinate.y));
     }
     return dplt;
+  }
+
+  /**
+   * Round the given value to the given number of decimal places.
+   * @param value
+   * @return
+   */
+  private static double roundCoordinate(final double value) {
+    return Math.round(value * DECIMAL_FACTOR) / DECIMAL_FACTOR;
   }
 }
