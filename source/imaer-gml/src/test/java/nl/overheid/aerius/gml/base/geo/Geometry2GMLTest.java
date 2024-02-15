@@ -55,8 +55,10 @@ class Geometry2GMLTest {
 
   static Stream<Arguments> pointProvider() {
     return Stream.of(
-        Arguments.of("Rounding up", new Point(5.00015, -5.00015), "5.0", "-5.0"),
-        Arguments.of("Rounding down", new Point(5.00014, -5.00014), "5.0", "-5.0"),
+        Arguments.of("Rounding up positive", new Point(1.0001, -0.9999), "1.0", "-1.0"),
+        Arguments.of("Rounding down negative", new Point(-0.9999, 1.0001), "-1.0", "1.0"),
+        Arguments.of("Edge case rounding up", new Point(0.9995, -0.9995), "1.0", "-0.999"),
+        Arguments.of("Edge case rounding down", new Point(0.9994, -0.9994), "0.999", "-0.999"),
         Arguments.of("Precision floats with rounding", new Point(5.9999999, -5.9999999), "6.0", "-6.0"),
         Arguments.of("Floating-point errors", new Point(0.1 + 0.2 - 0.3, 1.0 - 0.9), "0.0", "0.1"),
         Arguments.of("Zero value input", new Point(0.0, 0.0), "0.0", "0.0"),

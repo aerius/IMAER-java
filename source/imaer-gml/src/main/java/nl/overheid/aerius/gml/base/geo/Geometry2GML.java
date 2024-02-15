@@ -130,6 +130,9 @@ public final class Geometry2GML {
 
   /**
    * Set coordinates from wkt line string to gml LineStringType
+   * @param lineString
+   * @param lineStringType
+   * @return
    */
   private static DirectPositionListType getCoordinates(final Coordinate... coordinates) {
     final DirectPositionListType dplt = new DirectPositionListType();
@@ -142,8 +145,6 @@ public final class Geometry2GML {
 
   /**
    * Round the given value to the given number of decimal places.
-   * @param value
-   * @return
    */
   private static double roundCoordinate(final double value) {
     return Math.round(value * DECIMAL_FACTOR) / DECIMAL_FACTOR;
