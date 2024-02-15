@@ -43,6 +43,10 @@ import nl.overheid.aerius.util.GeometryUtil;
  * Utility class to convert geometry objects to GML objects.
  */
 public final class Geometry2GML {
+  /**
+   * Refer to the AERIUS Calculator Handbook 2023, page 207, for details on coordinate accuracy.
+   * See: https://nexus.aerius.nl/repository/website-resources/calculator/handboek_aerius_calculator_2023.pdf
+   */
   private static final int MAX_DECIMAL_PLACES = 3;
   private static final double DECIMAL_FACTOR = Math.pow(10, MAX_DECIMAL_PLACES);
 
