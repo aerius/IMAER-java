@@ -20,8 +20,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.List;
+import java.util.stream.Stream;
 
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import net.opengis.gml.v_3_2_1.DirectPositionType;
 import net.opengis.gml.v_3_2_1.PointType;
@@ -50,56 +53,20 @@ class Geometry2GMLTest {
     };
   }
 
-  @Test
-  public void testRoundingUp() throws AeriusException {
-    final GmlPoint resultPoint = geo2gml.toXMLPoint(new Point(5.00015, -5.00015), createMockPoint());
-    final String expectedX = "5.0";
-    final String expectedY = "-5.0";
-    assertCoordinates(expectedX, expectedY, resultPoint.getGmlPoint().getPos());
+  static Stream<Arguments> pointProvider() {
+    return Stream.of(
+        Arguments.of("Rounding up", new Point(5.00015, -5.00015), "5.0", "-5.0"),
+        Arguments.of("Rounding down", new Point(5.00014, -5.00014), "5.0", "-5.0"),
+        Arguments.of("Precision floats with rounding", new Point(5.9999999, -5.9999999), "6.0", "-6.0"),
+        Arguments.of("Floating-point errors", new Point(0.1 + 0.2 - 0.3, 1.0 - 0.9), "0.0", "0.1"),
+        Arguments.of("Zero value input", new Point(0.0, 0.0), "0.0", "0.0"),
+        Arguments.of("Integer inputs converted to float", new Point(2, 3), "2.0", "3.0"));
   }
 
-  @Test
-  public void testRoundingDown() throws AeriusException {
-    final GmlPoint resultPoint = geo2gml.toXMLPoint(new Point(5.00014, -5.00014), createMockPoint());
-    final String expectedX = "5.0";
-    final String expectedY = "-5.0";
-    assertCoordinates(expectedX, expectedY, resultPoint.getGmlPoint().getPos());
-  }
-
-  @Test
-  public void testPrecisionHandling() throws AeriusException {
-    final GmlPoint resultPoint = geo2gml.toXMLPoint(new Point(5.9999999, -5.9999999), createMockPoint());
-    final String expectedX = "6.0";
-    final String expectedY = "-6.0";
-    assertCoordinates(expectedX, expectedY, resultPoint.getGmlPoint().getPos());
-  }
-
-  @Test
-  public void testDivision() throws AeriusException {
-    final double errorX = 0.1 + 0.2 - 0.3; // 5.551115123125783E-17
-    final double errorY = 1.0 - 0.9; // 0.09999999999999998
-
-    final GmlPoint resultPoint = geo2gml.toXMLPoint(new Point(errorX, errorY), createMockPoint());
-    final String expectedX = "0.0";
-    final String expectedY = "0.1";
-    assertCoordinates(expectedX, expectedY, resultPoint.getGmlPoint().getPos());
-  }
-
-  @Test
-  public void testZeroValue() throws AeriusException {
-    final GmlPoint resultPoint = geo2gml.toXMLPoint(new Point(0.0, 0.0), createMockPoint());
-    final String expectedX = "0.0";
-    final String expectedY = "0.0";
-    assertCoordinates(expectedX, expectedY, resultPoint.getGmlPoint().getPos());
-  }
-
-  @Test
-  public void testInteger() throws AeriusException {
-    final GmlPoint mockPoint = createMockPoint();
-    final GmlPoint resultPoint = geo2gml.toXMLPoint(new Point(2, 3), mockPoint);
-    // Questionable result (why not 2 and 3?), but OK
-    final String expectedX = "2.0";
-    final String expectedY = "3.0";
+  @ParameterizedTest(name = "{0}: Expected X={2} and Y={3}")
+  @MethodSource("pointProvider")
+  void testPointConversion(final String message, final Point inputPoint, final String expectedX, final String expectedY) throws AeriusException {
+    final GmlPoint resultPoint = geo2gml.toXMLPoint(inputPoint, createMockPoint());
     assertCoordinates(expectedX, expectedY, resultPoint.getGmlPoint().getPos());
   }
 
