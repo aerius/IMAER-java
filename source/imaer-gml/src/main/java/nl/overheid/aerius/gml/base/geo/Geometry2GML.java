@@ -130,9 +130,6 @@ public final class Geometry2GML {
 
   /**
    * Set coordinates from wkt line string to gml LineStringType
-   * @param lineString
-   * @param lineStringType
-   * @return
    */
   private static DirectPositionListType getCoordinates(final Coordinate... coordinates) {
     final DirectPositionListType dplt = new DirectPositionListType();
