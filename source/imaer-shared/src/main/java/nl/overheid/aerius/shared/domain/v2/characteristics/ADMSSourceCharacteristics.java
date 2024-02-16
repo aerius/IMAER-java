@@ -75,11 +75,13 @@ public class ADMSSourceCharacteristics extends SourceCharacteristics {
    */
   private double massFlux;
 
-  private String standardDiurnalVariationCode;
+  private String standardHourlyTimeVaryingProfileCode;
 
-  private String standardMonthlyVariationCode;
+  private String customHourlyTimeVaryingProfileId;
 
-  private String customMonthlyVariationId;
+  private String standardMonthlyTimeVaryingProfileCode;
+
+  private String customMonthlyTimeVaryingProfileId;
 
   public SourceType getSourceType() {
     return sourceType;
@@ -243,28 +245,36 @@ public class ADMSSourceCharacteristics extends SourceCharacteristics {
     this.horizontalAngle = horizontalAngle;
   }
 
-  public String getStandardDiurnalVariationCode() {
-    return standardDiurnalVariationCode;
+  public String getStandardHourlyTimeVaryingProfileCode() {
+    return standardHourlyTimeVaryingProfileCode;
   }
 
-  public void setStandardDiurnalVariationCode(final String standardDiurnalVariationCode) {
-    this.standardDiurnalVariationCode = standardDiurnalVariationCode;
+  public void setStandardHourlyTimeVaryingProfileCode(final String standardHourlyTimeVaryingProfileCode) {
+    this.standardHourlyTimeVaryingProfileCode = standardHourlyTimeVaryingProfileCode;
   }
 
-  public String getStandardMonthlyVariationCode() {
-    return standardMonthlyVariationCode;
+  public String getCustomHourlyTimeVaryingProfileId() {
+    return customHourlyTimeVaryingProfileId;
   }
 
-  public void setStandardMonthlyVariationCode(final String standardMonthlyVariationCode) {
-    this.standardMonthlyVariationCode = standardMonthlyVariationCode;
+  public void setCustomHourlyTimeVaryingProfileId(final String customHourlyTimeVaryingProfileId) {
+    this.customHourlyTimeVaryingProfileId = customHourlyTimeVaryingProfileId;
   }
 
-  public String getCustomMonthlyVariationId() {
-    return customMonthlyVariationId;
+  public String getStandardMonthlyTimeVaryingProfileCode() {
+    return standardMonthlyTimeVaryingProfileCode;
   }
 
-  public void setCustomMonthlyVariationId(final String customMonthlyVariationId) {
-    this.customMonthlyVariationId = customMonthlyVariationId;
+  public void setStandardMonthlyTimeVaryingProfileCode(final String standardMonthlyTimeVaryingProfileCode) {
+    this.standardMonthlyTimeVaryingProfileCode = standardMonthlyTimeVaryingProfileCode;
+  }
+
+  public String getCustomMonthlyTimeVaryingProfileId() {
+    return customMonthlyTimeVaryingProfileId;
+  }
+
+  public void setCustomMonthlyTimeVaryingProfileId(final String customMonthlyTimeVaryingProfileId) {
+    this.customMonthlyTimeVaryingProfileId = customMonthlyTimeVaryingProfileId;
   }
 
 }

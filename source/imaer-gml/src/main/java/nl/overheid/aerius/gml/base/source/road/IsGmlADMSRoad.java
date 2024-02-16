@@ -17,7 +17,7 @@
 package nl.overheid.aerius.gml.base.source.road;
 
 import nl.overheid.aerius.gml.base.IsGmlProperty;
-import nl.overheid.aerius.gml.base.characteristics.IsGmlDiurnalVariation;
+import nl.overheid.aerius.gml.base.characteristics.IsGmlTimeVaryingProfile;
 
 public interface IsGmlADMSRoad extends IsGmlRoadEmissionSource {
 
@@ -33,6 +33,6 @@ public interface IsGmlADMSRoad extends IsGmlRoadEmissionSource {
 
   IsGmlProperty<IsGmlADMSRoadSideBarrier> getBarrierRight();
 
-  IsGmlDiurnalVariation getDiurnalVariation();
+  IsGmlTimeVaryingProfile getTimeVaryingProfile();
 
 }

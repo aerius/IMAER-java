@@ -265,7 +265,7 @@ public class GMLVersionWriterV51 implements GMLVersionWriter {
     final DefinitionsImpl gmlDefinitions;
     if (definitions != null && definitions.hasContent()) {
       gmlDefinitions = new DefinitionsImpl();
-      final List<CustomDiurnalVariation> customDiurnalVariations = definitions.getCustomDiurnalVariations().stream()
+      final List<CustomDiurnalVariation> customDiurnalVariations = definitions.getCustomTimeVaryingProfiles().stream()
           .map(this::convert)
           .collect(Collectors.toList());
       gmlDefinitions.setCustomDiurnalVariations(customDiurnalVariations);
@@ -275,7 +275,7 @@ public class GMLVersionWriterV51 implements GMLVersionWriter {
     return gmlDefinitions;
   }
 
-  private CustomDiurnalVariation convert(final nl.overheid.aerius.shared.domain.v2.characteristics.CustomDiurnalVariation customVariation) {
+  private CustomDiurnalVariation convert(final nl.overheid.aerius.shared.domain.v2.characteristics.CustomTimeVaryingProfile customVariation) {
     final CustomDiurnalVariation gmlCustomVariation = new CustomDiurnalVariation();
     final String validGmlId = GMLIdUtil.toValidGmlId(customVariation.getGmlId(), getNameSpace(), GMLIdUtil.DIURNAL_VARIATION_PREFIX);
     gmlCustomVariation.setId(validGmlId);

@@ -25,11 +25,11 @@ import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 import nl.overheid.aerius.gml.base.GMLSchema;
-import nl.overheid.aerius.gml.base.characteristics.IsGmlCustomDiurnalVariation;
+import nl.overheid.aerius.gml.base.characteristics.IsGmlCustomTimeVaryingProfile;
 import nl.overheid.aerius.gml.v4_0.base.CalculatorSchema;
 
 @XmlType(name = "CustomDiurnalVariation", namespace = CalculatorSchema.NAMESPACE, propOrder = {"label", "customType", "intValues"})
-public class CustomDiurnalVariation implements IsGmlCustomDiurnalVariation {
+public class CustomDiurnalVariation implements IsGmlCustomTimeVaryingProfile {
 
   private String id;
   private String label;

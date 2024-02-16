@@ -23,6 +23,6 @@ public interface IsGmlOPSSourceCharacteristics extends IsGmlBaseOPSSourceCharact
   @Override
   IsGmlReferenceType getBuilding();
 
-  IsGmlDiurnalVariation getDiurnalVariation();
+  IsGmlTimeVaryingProfile getTimeVaryingProfile();
 
 }

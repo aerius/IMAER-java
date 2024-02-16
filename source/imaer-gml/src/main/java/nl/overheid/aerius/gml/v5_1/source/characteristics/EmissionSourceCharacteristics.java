@@ -87,7 +87,7 @@ public class EmissionSourceCharacteristics extends AbstractSourceCharacteristics
 
   @Override
   @XmlTransient
-  public AbstractDiurnalVariation getDiurnalVariation() {
+  public AbstractDiurnalVariation getTimeVaryingProfile() {
     return diurnalVariation;
   }
 

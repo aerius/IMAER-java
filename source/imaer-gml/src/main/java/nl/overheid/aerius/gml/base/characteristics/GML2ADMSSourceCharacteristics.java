@@ -17,7 +17,7 @@
 package nl.overheid.aerius.gml.base.characteristics;
 
 import nl.overheid.aerius.gml.base.GMLConversionData;
-import nl.overheid.aerius.gml.base.util.DiurnalVariationUtil;
+import nl.overheid.aerius.gml.base.util.TimeVaryingProfileUtil;
 import nl.overheid.aerius.shared.domain.v2.characteristics.ADMSSourceCharacteristics;
 import nl.overheid.aerius.shared.domain.v2.characteristics.adms.ADMSLimits;
 import nl.overheid.aerius.shared.domain.v2.characteristics.adms.BuoyancyType;
@@ -49,7 +49,7 @@ public class GML2ADMSSourceCharacteristics
     setSourceTypeProperties(gmlADMSCharacteristics, returnCharacteristics);
     setBuoyancyTypeProperties(gmlADMSCharacteristics, returnCharacteristics);
     setEffluxTypeProperties(gmlADMSCharacteristics, returnCharacteristics);
-    setDiurnalVariation(gmlADMSCharacteristics, returnCharacteristics);
+    setTimeVaryingProfile(gmlADMSCharacteristics, returnCharacteristics);
 
     return returnCharacteristics;
   }
@@ -110,14 +110,14 @@ public class GML2ADMSSourceCharacteristics
     }
   }
 
-  private void setDiurnalVariation(final IsGmlADMSSourceCharacteristics characteristics,
+  private void setTimeVaryingProfile(final IsGmlADMSSourceCharacteristics characteristics,
       final ADMSSourceCharacteristics returnCharacteristics) {
-    DiurnalVariationUtil.setDiurnalVariation(characteristics.getDiurnalVariation(),
-        returnCharacteristics::setStandardDiurnalVariationCode,
-        returnCharacteristics::setCustomDiurnalVariationId);
-    DiurnalVariationUtil.setDiurnalVariation(characteristics.getMonthlyVariation(),
-        returnCharacteristics::setStandardMonthlyVariationCode,
-        returnCharacteristics::setCustomMonthlyVariationId);
+    TimeVaryingProfileUtil.setTimeVaryingProfile(characteristics.getHourlyTimeVaryingProfile(),
+        returnCharacteristics::setStandardHourlyTimeVaryingProfileCode,
+        returnCharacteristics::setCustomHourlyTimeVaryingProfileId);
+    TimeVaryingProfileUtil.setTimeVaryingProfile(characteristics.getMonthlyTimeVaryingProfile(),
+        returnCharacteristics::setStandardMonthlyTimeVaryingProfileCode,
+        returnCharacteristics::setCustomMonthlyTimeVaryingProfileId);
   }
 
   private static ADMSSourceCharacteristics getDefaultCharacteristics() {

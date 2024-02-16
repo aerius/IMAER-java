@@ -20,9 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import nl.overheid.aerius.gml.base.characteristics.IsGmlCustomDiurnalVariation;
-import nl.overheid.aerius.shared.domain.v2.characteristics.CustomDiurnalVariation;
-import nl.overheid.aerius.shared.domain.v2.characteristics.CustomDiurnalVariationType;
+import nl.overheid.aerius.gml.base.characteristics.IsGmlCustomTimeVaryingProfile;
+import nl.overheid.aerius.shared.domain.v2.characteristics.CustomTimeVaryingProfile;
+import nl.overheid.aerius.shared.domain.v2.characteristics.CustomTimeVaryingProfileType;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 
@@ -49,11 +49,11 @@ public class GML2Definitions {
     final nl.overheid.aerius.shared.domain.v2.scenario.Definitions definitions = new nl.overheid.aerius.shared.domain.v2.scenario.Definitions();
     try {
       if (gmlDefinitions != null) {
-        final List<CustomDiurnalVariation> customDiurnalVariations = new ArrayList<>();
-        for (final IsGmlCustomDiurnalVariation gmlCustomDiurnalVariation : gmlDefinitions.getCustomDiurnalVariations()) {
-          customDiurnalVariations.add(convert(gmlCustomDiurnalVariation));
+        final List<CustomTimeVaryingProfile> customTimeVaryingProfiles = new ArrayList<>();
+        for (final IsGmlCustomTimeVaryingProfile gmlCustomTimeVaryingProfile : gmlDefinitions.getCustomTimeVaryingProfiles()) {
+          customTimeVaryingProfiles.add(convert(gmlCustomTimeVaryingProfile));
         }
-        definitions.setCustomDiurnalVariations(customDiurnalVariations);
+        definitions.setCustomTimeVaryingProfiles(customTimeVaryingProfiles);
       }
     } catch (final AeriusException e) {
       conversionData.getErrors().add(e);
@@ -61,22 +61,21 @@ public class GML2Definitions {
     return definitions;
   }
 
-  private CustomDiurnalVariation convert(final IsGmlCustomDiurnalVariation gmlCustomDiurnalVariation) throws AeriusException {
-    final CustomDiurnalVariation diurnalVariation = new CustomDiurnalVariation();
-    final CustomDiurnalVariationType customType = convertCustomDiurnalVariationType(gmlCustomDiurnalVariation.getCustomType(),
-        gmlCustomDiurnalVariation.getValues());
-    diurnalVariation.setGmlId(gmlCustomDiurnalVariation.getId());
-    diurnalVariation.setLabel(gmlCustomDiurnalVariation.getLabel());
-    diurnalVariation.setType(customType);
-    diurnalVariation.setValues(gmlCustomDiurnalVariation.getValues().stream().map(x -> (double) x).collect(Collectors.toList()));
-    return diurnalVariation;
+  private CustomTimeVaryingProfile convert(final IsGmlCustomTimeVaryingProfile gmlCustomTimeVaryingProfile) throws AeriusException {
+    final CustomTimeVaryingProfile timeVaryingProfile = new CustomTimeVaryingProfile();
+    final CustomTimeVaryingProfileType customType = convertCustomTimeVaryingProfileType(gmlCustomTimeVaryingProfile.getCustomType());
+    timeVaryingProfile.setGmlId(gmlCustomTimeVaryingProfile.getId());
+    timeVaryingProfile.setLabel(gmlCustomTimeVaryingProfile.getLabel());
+    timeVaryingProfile.setType(customType);
+    timeVaryingProfile.setValues(gmlCustomTimeVaryingProfile.getValues().stream().map(x -> (double) x).collect(Collectors.toList()));
+    return timeVaryingProfile;
   }
 
-  private CustomDiurnalVariationType convertCustomDiurnalVariationType(final String gmlCustomType, final List<Double> values)
+  private CustomTimeVaryingProfileType convertCustomTimeVaryingProfileType(final String gmlCustomType)
       throws AeriusException {
-    final CustomDiurnalVariationType customType = CustomDiurnalVariationType.safeValueOf(gmlCustomType);
+    final CustomTimeVaryingProfileType customType = CustomTimeVaryingProfileType.safeValueOf(gmlCustomType);
     if (customType == null) {
-      throw new AeriusException(ImaerExceptionReason.CUSTOM_DIURNAL_VARIATION_TYPE_UNKNOWN, gmlCustomType);
+      throw new AeriusException(ImaerExceptionReason.CUSTOM_TIME_VARYING_PROFILE_TYPE_UNKNOWN, gmlCustomType);
     }
     return customType;
   }

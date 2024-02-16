@@ -16,8 +16,16 @@
  */
 package nl.overheid.aerius.gml.base.characteristics;
 
-public interface IsGmlStandardDiurnalVariation extends IsGmlDiurnalVariation {
+import java.util.List;
 
-  String getCode();
+public interface IsGmlCustomTimeVaryingProfile {
+
+  String getId();
+
+  String getLabel();
+
+  String getCustomType();
+
+  List<Double> getValues();
 
 }

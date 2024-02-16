@@ -26,8 +26,8 @@ public interface IsGmlADMSSourceCharacteristics extends IsGmlSourceCharacteristi
   @Override
   IsGmlReferenceType getBuilding();
 
-  IsGmlDiurnalVariation getDiurnalVariation();
-  IsGmlDiurnalVariation getMonthlyVariation();
+  IsGmlTimeVaryingProfile getHourlyTimeVaryingProfile();
+  IsGmlTimeVaryingProfile getMonthlyTimeVaryingProfile();
 
   double getHeight();
 

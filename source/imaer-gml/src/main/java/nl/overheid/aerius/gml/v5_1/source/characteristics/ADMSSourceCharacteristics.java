@@ -204,7 +204,7 @@ public class ADMSSourceCharacteristics extends AbstractSourceCharacteristics imp
 
   @Override
   @XmlTransient
-  public AbstractDiurnalVariation getDiurnalVariation() {
+  public AbstractDiurnalVariation getHourlyTimeVaryingProfile() {
     return diurnalVariation;
   }
 
@@ -223,7 +223,7 @@ public class ADMSSourceCharacteristics extends AbstractSourceCharacteristics imp
 
   @Override
   @XmlTransient
-  public AbstractDiurnalVariation getMonthlyVariation() {
+  public AbstractDiurnalVariation getMonthlyTimeVaryingProfile() {
     return monthlyVariation;
   }
 

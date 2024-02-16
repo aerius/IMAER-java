@@ -18,7 +18,7 @@ package nl.overheid.aerius.shared.domain.v2.characteristics;
 
 import java.util.List;
 
-public enum CustomDiurnalVariationType {
+public enum CustomTimeVaryingProfileType {
 
   /**
    * Time-varying emission profile over a day, with 1 value for each hour.
@@ -53,11 +53,11 @@ public enum CustomDiurnalVariationType {
   private final int expectedNumberOfValues;
   private final int expectedTotalNumberOfValues;
 
-  private CustomDiurnalVariationType(final int expectedNumberOfValues) {
+  private CustomTimeVaryingProfileType(final int expectedNumberOfValues) {
     this(expectedNumberOfValues, expectedNumberOfValues);
   }
 
-  private CustomDiurnalVariationType(final int expectedNumberOfValues, final int expectedTotalNumberOfValues) {
+  private CustomTimeVaryingProfileType(final int expectedNumberOfValues, final int expectedTotalNumberOfValues) {
     this.expectedNumberOfValues = expectedNumberOfValues;
     this.expectedTotalNumberOfValues = expectedTotalNumberOfValues;
   }
@@ -74,7 +74,7 @@ public enum CustomDiurnalVariationType {
     return values.stream().mapToDouble(x -> x).sum();
   }
 
-  public static CustomDiurnalVariationType safeValueOf(final String code) {
+  public static CustomTimeVaryingProfileType safeValueOf(final String code) {
     try {
       return code == null ? null : valueOf(code.toUpperCase());
     } catch (final IllegalArgumentException e) {

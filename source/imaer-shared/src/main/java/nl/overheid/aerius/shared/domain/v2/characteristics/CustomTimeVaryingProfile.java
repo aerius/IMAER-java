@@ -19,7 +19,7 @@ package nl.overheid.aerius.shared.domain.v2.characteristics;
 import java.io.Serializable;
 import java.util.List;
 
-public class CustomDiurnalVariation implements Serializable {
+public class CustomTimeVaryingProfile implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
@@ -32,7 +32,7 @@ public class CustomDiurnalVariation implements Serializable {
 
   private String gmlId;
   private String label;
-  private CustomDiurnalVariationType type;
+  private CustomTimeVaryingProfileType type;
   private List<Double> values;
 
   public String getGmlId() {
@@ -51,11 +51,11 @@ public class CustomDiurnalVariation implements Serializable {
     this.label = label;
   }
 
-  public CustomDiurnalVariationType getType() {
+  public CustomTimeVaryingProfileType getType() {
     return type;
   }
 
-  public void setType(final CustomDiurnalVariationType type) {
+  public void setType(final CustomTimeVaryingProfileType type) {
     this.type = type;
   }
 

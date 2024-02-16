@@ -21,7 +21,7 @@ import java.util.function.Supplier;
 
 import nl.overheid.aerius.gml.base.GMLConversionData;
 import nl.overheid.aerius.gml.base.IsGmlProperty;
-import nl.overheid.aerius.gml.base.util.DiurnalVariationUtil;
+import nl.overheid.aerius.gml.base.util.TimeVaryingProfileUtil;
 import nl.overheid.aerius.shared.domain.v2.characteristics.ADMSSourceCharacteristics;
 import nl.overheid.aerius.shared.domain.v2.characteristics.adms.SourceType;
 import nl.overheid.aerius.shared.domain.v2.source.ADMSRoadEmissionSource;
@@ -58,7 +58,7 @@ public class GML2ADMSRoad<T extends IsGmlADMSRoad> extends GML2Road<T, ADMSRoadE
   protected void setOptionalVariables(final T source, final ADMSRoadEmissionSource emissionSource) throws AeriusException {
     setRoadSideBarrier(source::getBarrierLeft, emissionSource::setBarrierLeft);
     setRoadSideBarrier(source::getBarrierRight, emissionSource::setBarrierRight);
-    setDiurnalVariation(source, emissionSource);
+    setTimeVaryingProfile(source, emissionSource);
   }
 
   private void setRoadSideBarrier(final Supplier<IsGmlProperty<IsGmlADMSRoadSideBarrier>> getter, final Consumer<ADMSRoadSideBarrier> setter) {
@@ -78,12 +78,12 @@ public class GML2ADMSRoad<T extends IsGmlADMSRoad> extends GML2Road<T, ADMSRoadE
     return barrier;
   }
 
-  private void setDiurnalVariation(final T source, final ADMSRoadEmissionSource emissionSource) {
+  private void setTimeVaryingProfile(final T source, final ADMSRoadEmissionSource emissionSource) {
     final ADMSSourceCharacteristics characteristics = new ADMSSourceCharacteristics();
     characteristics.setSourceType(SourceType.ROAD);
-    DiurnalVariationUtil.setDiurnalVariation(source.getDiurnalVariation(),
-        characteristics::setStandardDiurnalVariationCode,
-        characteristics::setCustomDiurnalVariationId);
+    TimeVaryingProfileUtil.setTimeVaryingProfile(source.getTimeVaryingProfile(),
+        characteristics::setStandardHourlyTimeVaryingProfileCode,
+        characteristics::setCustomHourlyTimeVaryingProfileId);
     emissionSource.setCharacteristics(characteristics);
   }
 
