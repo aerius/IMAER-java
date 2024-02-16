@@ -234,7 +234,7 @@ class GMLRoundtripTest {
           .build();
       final String gml;
       try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
-        final MetaDataInput metaDataInput = getMetaData(result, file.startsWith("nca") ? Theme.NCA : Theme.WNB,
+        final MetaDataInput metaDataInput = getMetaData(result, file.startsWith("nca") ? Theme.NCA : Theme.OWN2000,
             file.contains("calculation_options"));
         gmlc.write(bos, scenario, metaDataInput);
         gml = bos.toString(StandardCharsets.UTF_8.name());
@@ -347,7 +347,7 @@ class GMLRoundtripTest {
       if (includeResults) {
         importOptions.add(ImportOption.INCLUDE_RESULTS);
       }
-      importer.importStream(inputStream, importOptions, result, Optional.empty(), file.startsWith("nca") ? Theme.NCA : Theme.WNB);
+      importer.importStream(inputStream, importOptions, result, Optional.empty(), file.startsWith("nca") ? Theme.NCA : Theme.OWN2000);
     }
     assertNoExceptions(result.getExceptions(), " for version " + versionString + " with file " + file);
     assertEquals(versionString, readVersion.get(), "GML imported is not of expected version");

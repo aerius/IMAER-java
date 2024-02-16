@@ -306,7 +306,7 @@ class GMLCalculationSetOptionsReaderTest {
 
     final GMLCalculationSetOptionsReader reader = new GMLCalculationSetOptionsReader(featureCollection);
 
-    final CalculationSetOptions options = reader.readCalculationSetOptions(Theme.WNB);
+    final CalculationSetOptions options = reader.readCalculationSetOptions(Theme.OWN2000);
     assertNotNull(options, "returned options shouldn't be null");
     assertEquals(CalculationMethod.FORMAL_ASSESSMENT, options.getCalculationMethod(), "Calculation type should match");
     final NCACalculationOptions ncaOptions = options.getNcaCalculationOptions();

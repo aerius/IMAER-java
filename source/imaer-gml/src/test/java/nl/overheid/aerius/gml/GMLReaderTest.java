@@ -169,7 +169,7 @@ class GMLReaderTest {
     final GMLMetaDataReader metaDataReader = reader.metaDataReader();
     assertNotNull(metaDataReader, "Should have meta data reader");
     assertTrue(errors.isEmpty(), "Expected no errors");
-    final CalculationSetOptions options = reader.readCalculationSetOptions(Theme.WNB);
+    final CalculationSetOptions options = reader.readCalculationSetOptions(Theme.OWN2000);
     assertEquals(CalculationMethod.FORMAL_ASSESSMENT, options.getCalculationMethod(), "Calculation method");
     assertEquals(CalculationJobType.MAX_TEMPORARY_EFFECT, options.getCalculationJobType(), "Calculation job type");
     assertEquals(CalculationJobType.MAX_TEMPORARY_EFFECT, options.getCalculationJobType(), "Calculation job type");
