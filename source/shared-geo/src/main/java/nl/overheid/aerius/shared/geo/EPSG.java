@@ -59,7 +59,7 @@ public enum EPSG {
   }
 
   public static EPSG getEnumByEpsg(final String epsgCode) {
-    if (epsgCode == null || epsgCode.length() < EPSG_PREFIX.length()) {
+    if (epsgCode == null || !epsgCode.startsWith(EPSG_PREFIX)) {
       return null;
     }
 
