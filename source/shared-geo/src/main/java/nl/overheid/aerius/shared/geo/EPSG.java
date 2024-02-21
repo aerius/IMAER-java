@@ -58,6 +58,20 @@ public enum EPSG {
     return null;
   }
 
+  public static EPSG getEnumByEpsg(final String epsgCode) {
+    if (epsgCode == null || !epsgCode.startsWith(EPSG_PREFIX)) {
+      return null;
+    }
+
+    try {
+      final int srid = Integer.parseInt(epsgCode.substring(EPSG_PREFIX.length()));
+      return getEnumBySrid(srid);
+    } catch (final NumberFormatException e) {
+      // Eat and return null
+      return null;
+    }
+  }
+
   public static EPSG safeValueOf(final String epsg) {
     try {
       return "".equals(epsg) ? null : valueOf(epsg);
