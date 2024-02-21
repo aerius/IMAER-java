@@ -59,6 +59,10 @@ public enum EPSG {
   }
 
   public static EPSG getEnumByEpsg(final String epsgCode) {
+    if (epsgCode == null || epsgCode.length() < EPSG_PREFIX.length()) {
+      return null;
+    }
+
     try {
       final int srid = Integer.parseInt(epsgCode.substring(EPSG_PREFIX.length()));
       return getEnumBySrid(srid);
