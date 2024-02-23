@@ -93,7 +93,7 @@ public class ImaerImporter {
    * @throws AeriusException error in case of fatal exception
    */
   public void importStream(final InputStream inputStream, final Set<ImportOption> importOptions, final ImportParcel result) throws AeriusException {
-    importStream(inputStream, importOptions, result, Optional.empty(), Theme.WNB);
+    importStream(inputStream, importOptions, result, Optional.empty(), Theme.OWN2000);
   }
 
   /**
@@ -107,7 +107,7 @@ public class ImaerImporter {
    */
   public void importStream(final InputStream inputStream, final Set<ImportOption> importOptions, final ImportParcel result,
       final int importYear) throws AeriusException {
-    importStream(inputStream, importOptions, result, Optional.of(importYear), Theme.WNB);
+    importStream(inputStream, importOptions, result, Optional.of(importYear), Theme.OWN2000);
   }
 
   /**

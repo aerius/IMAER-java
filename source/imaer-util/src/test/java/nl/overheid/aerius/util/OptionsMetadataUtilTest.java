@@ -37,7 +37,7 @@ import nl.overheid.aerius.shared.domain.calculation.NCACalculationOptions;
 import nl.overheid.aerius.shared.domain.calculation.OPSOptions;
 import nl.overheid.aerius.shared.domain.calculation.RoadLocalFractionNO2Option;
 import nl.overheid.aerius.shared.domain.calculation.SubReceptorsMode;
-import nl.overheid.aerius.shared.domain.calculation.WNBCalculationOptions;
+import nl.overheid.aerius.shared.domain.calculation.OwN2000CalculationOptions;
 import nl.overheid.aerius.shared.domain.meteo.Meteo;
 
 /**
@@ -53,7 +53,7 @@ class OptionsMetadataUtilTest {
   void testDefaultOptionsWithoutAddingDefaults() {
     final CalculationSetOptions options = new CalculationSetOptions();
 
-    final Map<String, String> result = OptionsMetadataUtil.optionsToMap(Theme.WNB, options, false);
+    final Map<String, String> result = OptionsMetadataUtil.optionsToMap(Theme.OWN2000, options, false);
 
     assertTrue(result.isEmpty(), "With default options and not adding defaults to map, the map should be empty");
   }
@@ -62,7 +62,7 @@ class OptionsMetadataUtilTest {
   void testDefaultOptionsWithAddingDefaults() {
     final CalculationSetOptions options = new CalculationSetOptions();
 
-    final Map<String, String> result = OptionsMetadataUtil.optionsToMap(Theme.WNB, options, true);
+    final Map<String, String> result = OptionsMetadataUtil.optionsToMap(Theme.OWN2000, options, true);
 
     assertEquals(BASIC_OPTIONS, result.size(), "Number of options with default options and when adding defaults to map");
     assertEquals("", result.get("meteo_year"), "meteo_year should be empty");
@@ -76,14 +76,14 @@ class OptionsMetadataUtilTest {
   @Test
   void testNonDefaultOptions() {
     final CalculationSetOptions cso = new CalculationSetOptions();
-    final WNBCalculationOptions options = cso.getWnbCalculationOptions();
+    final OwN2000CalculationOptions options = cso.getOwN2000CalculationOptions();
     options.setMeteo(new Meteo(2020));
     cso.setStacking(false);
     // RoadOPS only applies with custom_points.
     cso.setCalculationMethod(CalculationMethod.CUSTOM_POINTS);
     options.setRoadOPS(CalculationRoadOPS.OPS_ROAD);
     options.setForceAggregation(true);
-    options.setUseWnbMaxDistance(true);
+    options.setUseMaxDistance(true);
     options.setUseReceptorHeights(true);
     options.setSubReceptorsMode(SubReceptorsMode.ENABLED);
     options.setSubReceptorZoomLevel(1);
@@ -91,7 +91,7 @@ class OptionsMetadataUtilTest {
     options.setSplitSubReceptorWorkDistance(1000);
     cso.getRblCalculationOptions().setMonitorSrm2Year(2023);
 
-    final Map<String, String> result = OptionsMetadataUtil.optionsToMap(Theme.WNB, cso, false);
+    final Map<String, String> result = OptionsMetadataUtil.optionsToMap(Theme.OWN2000, cso, false);
     // is BASIC_OPTIONS + 1 because SplitSubReceptorWorkDistance is by default not set when SplitSubReceptorWork is false
     assertEquals(BASIC_OPTIONS + 1, result.size(), "Number of options when options are not default");
     assertEquals("2020", result.get("meteo_year"), "Invalid meteo year option");
@@ -112,7 +112,7 @@ class OptionsMetadataUtilTest {
     final ConnectSuppliedOptions connectOptions = new ConnectSuppliedOptions();
     options.setConnectSuppliedOptions(connectOptions);
 
-    final Map<String, String> result = OptionsMetadataUtil.optionsToMap(Theme.WNB, options, true);
+    final Map<String, String> result = OptionsMetadataUtil.optionsToMap(Theme.OWN2000, options, true);
 
     assertEquals(BASIC_OPTIONS + CONNECT_OPTIONS, result.size(), "Number of options when connectOptions is supplied and when adding defaults to map");
     assertEquals("", result.get("calculation_year"), "calculation_year should be empty");
@@ -127,7 +127,7 @@ class OptionsMetadataUtilTest {
     connectOptions.setReceptorSetName("SomeRecept or name");
     options.setConnectSuppliedOptions(connectOptions);
 
-    final Map<String, String> result = OptionsMetadataUtil.optionsToMap(Theme.WNB, options, false);
+    final Map<String, String> result = OptionsMetadataUtil.optionsToMap(Theme.OWN2000, options, false);
 
     assertEquals(CONNECT_OPTIONS, result.size(), "Number of options when connectOptions is supplied with non default values");
     assertEquals("1999", result.get("calculation_year"), "Invalide calculation_year option");
@@ -138,9 +138,9 @@ class OptionsMetadataUtilTest {
   void testDefaultOptionsOps() {
     final CalculationSetOptions options = new CalculationSetOptions();
     final OPSOptions opsOptions = new OPSOptions();
-    options.getWnbCalculationOptions().setOpsOptions(opsOptions);
+    options.getOwN2000CalculationOptions().setOpsOptions(opsOptions);
 
-    final Map<String, String> result = OptionsMetadataUtil.optionsToMap(Theme.WNB, options, true);
+    final Map<String, String> result = OptionsMetadataUtil.optionsToMap(Theme.OWN2000, options, true);
 
     assertEquals(BASIC_OPTIONS + OPS_OPTIONS, result.size(), "Number of options when opsOptions is supplied and when adding defaults to map");
     assertEquals("false", result.get("ops_raw_input"), "ops_raw_input should be false");
@@ -172,9 +172,9 @@ class OptionsMetadataUtilTest {
     opsOptions.setRoughness(8.19);
     opsOptions.setChemistry(OPSOptions.Chemistry.PROGNOSIS);
     opsOptions.setRoads("3030");
-    options.getWnbCalculationOptions().setOpsOptions(opsOptions);
+    options.getOwN2000CalculationOptions().setOpsOptions(opsOptions);
 
-    final Map<String, String> result = OptionsMetadataUtil.optionsToMap(Theme.WNB, options, false);
+    final Map<String, String> result = OptionsMetadataUtil.optionsToMap(Theme.OWN2000, options, false);
 
     assertEquals(OPS_OPTIONS, result.size(), "Number of options when opsOptions is supplied with non default values");
     assertEquals("true", result.get("ops_raw_input"), "ops_raw_input should be true");

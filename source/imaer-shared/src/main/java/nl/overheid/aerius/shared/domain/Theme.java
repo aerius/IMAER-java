@@ -29,12 +29,18 @@ public enum Theme {
    */
   NCA,
   /**
+   * Dutch Omgevingswet Natura 2000 stikstof.
+   */
+  OWN2000,
+  /**
    * Dutch Regeling Beoordeling Luchtkwaliteit (RBL).
    */
   RBL,
   /**
    * Dutch Wet NatuurBescherming (WNB)
+   * @deprecated Replaced with OWN2000
    */
+  @Deprecated
   WNB;
 
   public String getKey() {

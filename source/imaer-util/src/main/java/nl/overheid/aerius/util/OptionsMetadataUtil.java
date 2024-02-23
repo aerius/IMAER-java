@@ -30,8 +30,8 @@ import nl.overheid.aerius.shared.domain.calculation.CalculationSetOptions;
 import nl.overheid.aerius.shared.domain.calculation.ConnectSuppliedOptions;
 import nl.overheid.aerius.shared.domain.calculation.NCACalculationOptions;
 import nl.overheid.aerius.shared.domain.calculation.OPSOptions;
+import nl.overheid.aerius.shared.domain.calculation.OwN2000CalculationOptions;
 import nl.overheid.aerius.shared.domain.calculation.RoadLocalFractionNO2Option;
-import nl.overheid.aerius.shared.domain.calculation.WNBCalculationOptions;
 import nl.overheid.aerius.shared.domain.v2.characteristics.adms.ADMSLimits;
 
 /**
@@ -49,7 +49,7 @@ public final class OptionsMetadataUtil {
     FORCED_AGGREGATION,
     USE_RECEPTOR_HEIGHT,
     MONITOR_SRM2_YEAR,
-    WITH_WNB_MAX_DISTANCE,
+    WITH_MAX_DISTANCE,
     SUB_RECEPTORS_MODE,
     SUB_RECEPTOR_ZOOM_LEVEL,
     SPLIT_SUB_RECEPTOR_WORK,
@@ -130,8 +130,8 @@ public final class OptionsMetadataUtil {
     if (options.getCalculationJobType() == CalculationJobType.IN_COMBINATION_PROCESS_CONTRIBUTION) {
       addBooleanValue(mapToAddTo, Option.USE_IN_COMBINATION_ARCHIVE, options.isUseInCombinationArchive(), addDefaults);
     }
-    if (theme == null || theme == Theme.WNB || theme == Theme.RBL) {
-      wnbOptionsToMap(mapToAddTo, options.getWnbCalculationOptions(), addDefaults);
+    if (theme == null || theme == Theme.OWN2000 || theme == Theme.WNB || theme == Theme.RBL) {
+      own2000OptionsToMap(mapToAddTo, options.getOwN2000CalculationOptions(), addDefaults);
       addIntValue(mapToAddTo, Option.MONITOR_SRM2_YEAR, options.getRblCalculationOptions().getMonitorSrm2Year(), addDefaults);
     } else if (theme == Theme.NCA) {
       ncaOptionsToMap(mapToAddTo, options.getNcaCalculationOptions(), addDefaults);
@@ -143,14 +143,14 @@ public final class OptionsMetadataUtil {
     return returnMap;
   }
 
-  private static void wnbOptionsToMap(final Map<Option, String> mapToAddTo, final WNBCalculationOptions options, final boolean addDefaults) {
+  private static void own2000OptionsToMap(final Map<Option, String> mapToAddTo, final OwN2000CalculationOptions options, final boolean addDefaults) {
     addValue(mapToAddTo, Option.METEO_YEAR, options.getMeteo(), addDefaults);
     if (addDefaults || options.getRoadOPS() != CalculationRoadOPS.DEFAULT) {
       mapToAddTo.put(Option.OPS_ROAD, options.getRoadOPS().name());
     }
     addBooleanValue(mapToAddTo, Option.FORCED_AGGREGATION, options.isForceAggregation(), addDefaults);
     addBooleanValue(mapToAddTo, Option.USE_RECEPTOR_HEIGHT, options.isUseReceptorHeights(), addDefaults);
-    addBooleanValue(mapToAddTo, Option.WITH_WNB_MAX_DISTANCE, options.isUseWNBMaxDistance(), addDefaults);
+    addBooleanValue(mapToAddTo, Option.WITH_MAX_DISTANCE, options.isUseMaxDistance(), addDefaults);
     addValue(mapToAddTo, Option.SUB_RECEPTORS_MODE, options.getSubReceptorsMode(), addDefaults);
     addValue(mapToAddTo, Option.SUB_RECEPTOR_ZOOM_LEVEL, options.getSubReceptorZoomLevel(), addDefaults);
     addBooleanValue(mapToAddTo, Option.SPLIT_SUB_RECEPTOR_WORK, options.isSplitSubReceptorWork(), addDefaults);
