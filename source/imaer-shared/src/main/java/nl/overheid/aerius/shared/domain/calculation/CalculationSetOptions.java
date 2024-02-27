@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.result.EmissionResultKey;
 
@@ -29,7 +31,7 @@ import nl.overheid.aerius.shared.domain.result.EmissionResultKey;
  */
 public class CalculationSetOptions implements Serializable {
 
-  private static final long serialVersionUID = 4L;
+  private static final long serialVersionUID = 5L;
 
   private int calculationSetOptionsId;
   private CalculationMethod calculationMethod = CalculationMethod.FORMAL_ASSESSMENT;
@@ -38,7 +40,7 @@ public class CalculationSetOptions implements Serializable {
   private boolean useInCombinationArchive;
   private final ArrayList<Substance> substances = new ArrayList<>();
   private final Set<EmissionResultKey> emissionResultKeys = new HashSet<>();
-  private OwN2000CalculationOptions own2000CalculationOptions = new WNBCalculationOptions();
+  private WNBCalculationOptions owN2000CalculationOptions = new WNBCalculationOptions();
   private RBLCalculationOptions rblCalculationOptions = new RBLCalculationOptions();
   private NCACalculationOptions ncaCalculationOptions = new NCACalculationOptions();
   private Serializable experimentalOptions;
@@ -135,15 +137,16 @@ public class CalculationSetOptions implements Serializable {
   }
 
   public OwN2000CalculationOptions getOwN2000CalculationOptions() {
-    return own2000CalculationOptions;
+    return owN2000CalculationOptions;
   }
 
   /**
    * @deprecated replace calls with {@link #getOwN2000CalculationOptions()}
    */
   @Deprecated
+  @JsonProperty("owN2000CalculationOptions")
   public WNBCalculationOptions getWnbCalculationOptions() {
-    return (WNBCalculationOptions) own2000CalculationOptions;
+    return owN2000CalculationOptions;
   }
 
   public RBLCalculationOptions getRblCalculationOptions() {
@@ -172,7 +175,7 @@ public class CalculationSetOptions implements Serializable {
   public String toString() {
     return "CalculationSetOptions [calculationSetOptionsId=" + calculationSetOptionsId + ", calculationMethod=" + calculationMethod
         + ", calculateMaximumRange=" + calculateMaximumRange + ", substances=" + substances + ", emissionResultKeys=" + emissionResultKeys
-        + ", stacking=" + stacking + ", connectSuppliedOptions=" + connectSuppliedOptions + ", own2000CalculationOptions=" + own2000CalculationOptions
+        + ", stacking=" + stacking + ", connectSuppliedOptions=" + connectSuppliedOptions + ", own2000CalculationOptions=" + owN2000CalculationOptions
         + ", rblCalculationOptions=" + rblCalculationOptions + ", ncaCalculationOptions=" + ncaCalculationOptions + "]";
   }
 }
