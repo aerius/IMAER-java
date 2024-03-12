@@ -18,7 +18,6 @@ package nl.overheid.aerius.gml.base;
 
 import javax.xml.validation.Schema;
 
-import nl.overheid.aerius.gml.v5_0.togml.GMLVersionWriterV50;
 import nl.overheid.aerius.gml.v5_1.togml.GMLVersionWriterV51;
 import nl.overheid.aerius.gml.v6_0.togml.GMLVersionWriterV60;
 import nl.overheid.aerius.shared.domain.geo.HexagonZoomLevel;
@@ -29,8 +28,6 @@ public class GMLVersionWriterFactory {
   public static GMLVersionWriter createGMLVersionWriter(final HexagonZoomLevel zoomLevel1, final String srsName,
       final AeriusGMLVersion aeriusGMLVersion) {
     switch (aeriusGMLVersion) {
-    case V5_0:
-      return new GMLVersionWriterV50(zoomLevel1, srsName);
     case V5_1:
       return new GMLVersionWriterV51(zoomLevel1, srsName);
     case V6_0:
