@@ -20,6 +20,7 @@ import javax.xml.validation.Schema;
 
 import nl.overheid.aerius.gml.v5_0.togml.GMLVersionWriterV50;
 import nl.overheid.aerius.gml.v5_1.togml.GMLVersionWriterV51;
+import nl.overheid.aerius.gml.v6_0.togml.GMLVersionWriterV60;
 import nl.overheid.aerius.shared.domain.geo.HexagonZoomLevel;
 import nl.overheid.aerius.shared.exception.AeriusException;
 
@@ -32,6 +33,8 @@ public class GMLVersionWriterFactory {
       return new GMLVersionWriterV50(zoomLevel1, srsName);
     case V5_1:
       return new GMLVersionWriterV51(zoomLevel1, srsName);
+    case V6_0:
+      return new GMLVersionWriterV60(zoomLevel1, srsName);
     default:
       throw new IllegalArgumentException("Aerius GML version is not supported");
     }

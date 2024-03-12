@@ -154,11 +154,10 @@ class GMLRoundtripTest {
   private static final String REFERENCE = "-reference";
   private static final String TEST_FOLDER = "/roundtrip/";
   private static final AeriusGMLVersion CURRENT_GML_VERSION = GMLWriter.LATEST_WRITER_VERSION;
-  private static final String CURRENT_VERSION = CURRENT_GML_VERSION.name().toLowerCase();
 
   private static final List<Substance> SUBSTANCES = List.of(Substance.NOX, Substance.NO2, Substance.NH3);
 
-  private static final Set<AeriusGMLVersion> SUPPORTED_GML_WRITER_VERSIONS = EnumSet.of(AeriusGMLVersion.V5_1, AeriusGMLVersion.V5_0);
+  private static final Set<AeriusGMLVersion> SUPPORTED_GML_WRITER_VERSIONS = EnumSet.of(AeriusGMLVersion.V6_0, AeriusGMLVersion.V5_1);
 
   static List<Object[]> data() throws FileNotFoundException {
     final List<Object[]> files = new ArrayList<>();

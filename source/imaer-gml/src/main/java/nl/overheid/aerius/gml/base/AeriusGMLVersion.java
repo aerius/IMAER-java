@@ -24,6 +24,10 @@ import java.util.Locale;
 public enum AeriusGMLVersion {
 
   /**
+   * AERIUS GML version 6.0 (IMAER).
+   */
+  V6_0("6.0"),
+  /**
    * AERIUS GML version 5.1 (IMAER).
    */
   V5_1("5.1"),

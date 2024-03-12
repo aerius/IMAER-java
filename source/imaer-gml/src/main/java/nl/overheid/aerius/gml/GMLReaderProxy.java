@@ -38,6 +38,7 @@ import nl.overheid.aerius.gml.v3_1.GMLReaderFactoryV31;
 import nl.overheid.aerius.gml.v4_0.GMLReaderFactoryV40;
 import nl.overheid.aerius.gml.v5_0.GMLReaderFactoryV50;
 import nl.overheid.aerius.gml.v5_1.GMLReaderFactoryV51;
+import nl.overheid.aerius.gml.v6_0.GMLReaderFactoryV60;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 
@@ -63,6 +64,7 @@ class GMLReaderProxy {
     factories.add(new GMLReaderFactoryV40(legacyCodesSupplier));
     factories.add(new GMLReaderFactoryV50(legacyCodesSupplier));
     factories.add(new GMLReaderFactoryV51(legacyCodesSupplier));
+    factories.add(new GMLReaderFactoryV60(legacyCodesSupplier));
   }
 
   /**

@@ -66,7 +66,7 @@ final class InternalGMLWriter {
   /**
    * Current GML version data is exported to.
    */
-  static final AeriusGMLVersion LATEST_WRITER_VERSION = AeriusGMLVersion.V5_1;
+  static final AeriusGMLVersion LATEST_WRITER_VERSION = AeriusGMLVersion.V6_0;
 
   static final String LATEST_NAMESPACE = CalculatorSchema.NAMESPACE;
 
