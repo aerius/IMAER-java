@@ -71,3 +71,15 @@ with
 Along with the XSD a HTML file is generated for documentation purposes. This can be added to the actual release.
 
 It can be found at `<ShapeChange installation folder>\AERIUS\feature_catalogue_AERIUS.html` when done generating XSD.
+
+## XMI file
+
+Currently there is also an XMI file present (version 6.0 and further).
+The idea behind this file is that it'll help with reviewing changes done in the EAP file (which is a binary file).
+This file is exported in EAP through `<Publish>` -> `Export-XML` -> `Export XML for Current Package...`.
+Be sure to select `XMI 2.1` as export type, and export it to the correct location.
+
+When changing something in the EAP file, be sure to also export the changes to XMI and include it in the PR.
+This way, the 2 files should be kept in sync (though the EAP file will be leading, at least for now).
+
+Time will tell if this is useful, or if it's only added work that has no actual benefit.
