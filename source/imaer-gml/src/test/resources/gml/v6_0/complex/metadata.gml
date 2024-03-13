@@ -51,9 +51,9 @@
                     </imaer:heatContent>
                     <imaer:emissionHeight>11.12</imaer:emissionHeight>
                     <imaer:diurnalVariation>
-                        <imaer:StandardDiurnalVariation>
+                        <imaer:StandardTimeVaryingProfile>
                             <imaer:standardType>INDUSTRIAL_ACTIVITY</imaer:standardType>
-                        </imaer:StandardDiurnalVariation>
+                        </imaer:StandardTimeVaryingProfile>
                     </imaer:diurnalVariation>
                 </imaer:EmissionSourceCharacteristics>
             </imaer:emissionSourceCharacteristics>

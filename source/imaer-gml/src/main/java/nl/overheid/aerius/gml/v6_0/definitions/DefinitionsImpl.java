@@ -30,31 +30,31 @@ import nl.overheid.aerius.gml.v6_0.base.CalculatorSchema;
 @XmlType(name = "DefinitionsType", namespace = CalculatorSchema.NAMESPACE)
 public class DefinitionsImpl implements Definitions {
 
-  private List<CustomDiurnalVariationProperty> customDiurnalVariationProperties = new ArrayList<>();
+  private List<CustomTimeVaryingProfileProperty> customTimeVaryingProfileProperties = new ArrayList<>();
 
-  @XmlElement(name = "customDiurnalVariation", namespace = CalculatorSchema.NAMESPACE)
-  public List<CustomDiurnalVariationProperty> getCustomDiurnalVariationProperties() {
-    return customDiurnalVariationProperties;
+  @XmlElement(name = "customTimeVaryingProfile", namespace = CalculatorSchema.NAMESPACE)
+  public List<CustomTimeVaryingProfileProperty> getCustomTimeVaryingProfileProperties() {
+    return customTimeVaryingProfileProperties;
   }
 
-  public void setCustomDiurnalVariationProperties(final List<CustomDiurnalVariationProperty> properties) {
-    customDiurnalVariationProperties = properties;
+  public void setCustomTimeVaryingProfileProperties(final List<CustomTimeVaryingProfileProperty> properties) {
+    customTimeVaryingProfileProperties = properties;
   }
 
   @Override
   @XmlTransient
-  public List<CustomDiurnalVariation> getCustomTimeVaryingProfiles() {
-    return customDiurnalVariationProperties.stream()
-        .map(CustomDiurnalVariationProperty::getProperty)
+  public List<CustomTimeVaryingProfile> getCustomTimeVaryingProfiles() {
+    return customTimeVaryingProfileProperties.stream()
+        .map(CustomTimeVaryingProfileProperty::getProperty)
         .collect(Collectors.toList());
   }
 
-  public void setCustomDiurnalVariations(final List<CustomDiurnalVariation> customDiurnalVariations) {
-    if (customDiurnalVariations == null) {
-      customDiurnalVariationProperties = new ArrayList<>();
+  public void setCustomTimeVaryingProfiles(final List<CustomTimeVaryingProfile> customTimeVaryingProfiles) {
+    if (customTimeVaryingProfiles == null) {
+      customTimeVaryingProfileProperties = new ArrayList<>();
     } else {
-      customDiurnalVariationProperties = customDiurnalVariations.stream()
-          .map(CustomDiurnalVariationProperty::new)
+      customTimeVaryingProfileProperties = customTimeVaryingProfiles.stream()
+          .map(CustomTimeVaryingProfileProperty::new)
           .collect(Collectors.toList());
     }
   }

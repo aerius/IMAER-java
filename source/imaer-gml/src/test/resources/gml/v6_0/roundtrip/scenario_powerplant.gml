@@ -162,9 +162,9 @@
                     <imaer:emissionHeight>1.0</imaer:emissionHeight>
                     <imaer:spread>2.5</imaer:spread>
                     <imaer:diurnalVariation>
-                        <imaer:StandardDiurnalVariation>
+                        <imaer:StandardTimeVaryingProfile>
                             <imaer:standardType>INDUSTRIAL_ACTIVITY</imaer:standardType>
-                        </imaer:StandardDiurnalVariation>
+                        </imaer:StandardTimeVaryingProfile>
                     </imaer:diurnalVariation>
                 </imaer:EmissionSourceCharacteristics>
             </imaer:emissionSourceCharacteristics>
@@ -298,9 +298,9 @@
                     <imaer:emissionHeight>0.0</imaer:emissionHeight>
                     <imaer:spread>0.0</imaer:spread>
                     <imaer:diurnalVariation>
-                        <imaer:StandardDiurnalVariation>
+                        <imaer:StandardTimeVaryingProfile>
                             <imaer:standardType>CONTINUOUS</imaer:standardType>
-                        </imaer:StandardDiurnalVariation>
+                        </imaer:StandardTimeVaryingProfile>
                     </imaer:diurnalVariation>
                 </imaer:EmissionSourceCharacteristics>
             </imaer:emissionSourceCharacteristics>
@@ -521,9 +521,9 @@
                     </imaer:heatContent>
                     <imaer:emissionHeight>12.0</imaer:emissionHeight>
                     <imaer:diurnalVariation>
-                        <imaer:StandardDiurnalVariation>
+                        <imaer:StandardTimeVaryingProfile>
                             <imaer:standardType>INDUSTRIAL_ACTIVITY</imaer:standardType>
-                        </imaer:StandardDiurnalVariation>
+                        </imaer:StandardTimeVaryingProfile>
                     </imaer:diurnalVariation>
                 </imaer:EmissionSourceCharacteristics>
             </imaer:emissionSourceCharacteristics>
@@ -580,9 +580,9 @@
                     </imaer:heatContent>
                     <imaer:emissionHeight>12.0</imaer:emissionHeight>
                     <imaer:diurnalVariation>
-                        <imaer:StandardDiurnalVariation>
+                        <imaer:StandardTimeVaryingProfile>
                             <imaer:standardType>INDUSTRIAL_ACTIVITY</imaer:standardType>
-                        </imaer:StandardDiurnalVariation>
+                        </imaer:StandardTimeVaryingProfile>
                     </imaer:diurnalVariation>
                 </imaer:EmissionSourceCharacteristics>
             </imaer:emissionSourceCharacteristics>
@@ -639,9 +639,9 @@
                     </imaer:heatContent>
                     <imaer:emissionHeight>12.0</imaer:emissionHeight>
                     <imaer:diurnalVariation>
-                        <imaer:StandardDiurnalVariation>
+                        <imaer:StandardTimeVaryingProfile>
                             <imaer:standardType>INDUSTRIAL_ACTIVITY</imaer:standardType>
-                        </imaer:StandardDiurnalVariation>
+                        </imaer:StandardTimeVaryingProfile>
                     </imaer:diurnalVariation>
                 </imaer:EmissionSourceCharacteristics>
             </imaer:emissionSourceCharacteristics>
@@ -698,9 +698,9 @@
                     </imaer:heatContent>
                     <imaer:emissionHeight>12.0</imaer:emissionHeight>
                     <imaer:diurnalVariation>
-                        <imaer:StandardDiurnalVariation>
+                        <imaer:StandardTimeVaryingProfile>
                             <imaer:standardType>INDUSTRIAL_ACTIVITY</imaer:standardType>
-                        </imaer:StandardDiurnalVariation>
+                        </imaer:StandardTimeVaryingProfile>
                     </imaer:diurnalVariation>
                 </imaer:EmissionSourceCharacteristics>
             </imaer:emissionSourceCharacteristics>
@@ -829,9 +829,9 @@
                     </imaer:heatContent>
                     <imaer:emissionHeight>3.0</imaer:emissionHeight>
                     <imaer:diurnalVariation>
-                        <imaer:StandardDiurnalVariation>
+                        <imaer:StandardTimeVaryingProfile>
                             <imaer:standardType>INDUSTRIAL_ACTIVITY</imaer:standardType>
-                        </imaer:StandardDiurnalVariation>
+                        </imaer:StandardTimeVaryingProfile>
                     </imaer:diurnalVariation>
                 </imaer:EmissionSourceCharacteristics>
             </imaer:emissionSourceCharacteristics>
@@ -888,9 +888,9 @@
                     </imaer:heatContent>
                     <imaer:emissionHeight>3.0</imaer:emissionHeight>
                     <imaer:diurnalVariation>
-                        <imaer:StandardDiurnalVariation>
+                        <imaer:StandardTimeVaryingProfile>
                             <imaer:standardType>INDUSTRIAL_ACTIVITY</imaer:standardType>
-                        </imaer:StandardDiurnalVariation>
+                        </imaer:StandardTimeVaryingProfile>
                     </imaer:diurnalVariation>
                 </imaer:EmissionSourceCharacteristics>
             </imaer:emissionSourceCharacteristics>
@@ -947,9 +947,9 @@
                     </imaer:heatContent>
                     <imaer:emissionHeight>3.0</imaer:emissionHeight>
                     <imaer:diurnalVariation>
-                        <imaer:StandardDiurnalVariation>
+                        <imaer:StandardTimeVaryingProfile>
                             <imaer:standardType>INDUSTRIAL_ACTIVITY</imaer:standardType>
-                        </imaer:StandardDiurnalVariation>
+                        </imaer:StandardTimeVaryingProfile>
                     </imaer:diurnalVariation>
                 </imaer:EmissionSourceCharacteristics>
             </imaer:emissionSourceCharacteristics>
@@ -1006,9 +1006,9 @@
                     </imaer:heatContent>
                     <imaer:emissionHeight>20.0</imaer:emissionHeight>
                     <imaer:diurnalVariation>
-                        <imaer:StandardDiurnalVariation>
+                        <imaer:StandardTimeVaryingProfile>
                             <imaer:standardType>INDUSTRIAL_ACTIVITY</imaer:standardType>
-                        </imaer:StandardDiurnalVariation>
+                        </imaer:StandardTimeVaryingProfile>
                     </imaer:diurnalVariation>
                 </imaer:EmissionSourceCharacteristics>
             </imaer:emissionSourceCharacteristics>
@@ -1065,9 +1065,9 @@
                     </imaer:heatContent>
                     <imaer:emissionHeight>20.0</imaer:emissionHeight>
                     <imaer:diurnalVariation>
-                        <imaer:StandardDiurnalVariation>
+                        <imaer:StandardTimeVaryingProfile>
                             <imaer:standardType>INDUSTRIAL_ACTIVITY</imaer:standardType>
-                        </imaer:StandardDiurnalVariation>
+                        </imaer:StandardTimeVaryingProfile>
                     </imaer:diurnalVariation>
                 </imaer:EmissionSourceCharacteristics>
             </imaer:emissionSourceCharacteristics>

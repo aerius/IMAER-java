@@ -19,9 +19,9 @@ package nl.overheid.aerius.gml.v6_0.togml;
 import java.util.function.Supplier;
 
 import nl.overheid.aerius.gml.v6_0.base.ReferenceType;
-import nl.overheid.aerius.gml.v6_0.source.characteristics.AbstractDiurnalVariation;
-import nl.overheid.aerius.gml.v6_0.source.characteristics.ReferenceDiurnalVariation;
-import nl.overheid.aerius.gml.v6_0.source.characteristics.StandardDiurnalVariation;
+import nl.overheid.aerius.gml.v6_0.source.characteristics.AbstractTimeVaryingProfile;
+import nl.overheid.aerius.gml.v6_0.source.characteristics.ReferenceTimeVaryingProfile;
+import nl.overheid.aerius.gml.v6_0.source.characteristics.StandardTimeVaryingProfile;
 import nl.overheid.aerius.util.gml.GMLIdUtil;
 
 final class ToGMLUtil {
@@ -58,18 +58,18 @@ final class ToGMLUtil {
     return reference;
   }
 
-  static AbstractDiurnalVariation determineDiurnalVariation(final Supplier<String> customDiurnalVariationIdGetter,
+  static AbstractTimeVaryingProfile determineTimeVaryingProfile(final Supplier<String> customDiurnalVariationIdGetter,
       final Supplier<String> standardDiurnalVariationCodeGetter) {
-    AbstractDiurnalVariation gmlVariation = null;
+    AbstractTimeVaryingProfile gmlVariation = null;
     final String customDiurnalVariationId = customDiurnalVariationIdGetter.get();
     final String standardDiurnalVariationCode = standardDiurnalVariationCodeGetter.get();
     if (customDiurnalVariationId != null) {
-      final ReferenceDiurnalVariation referenceVariation = new ReferenceDiurnalVariation();
-      referenceVariation.setCustomDiurnalVariation(
+      final ReferenceTimeVaryingProfile referenceVariation = new ReferenceTimeVaryingProfile();
+      referenceVariation.setCustomTimeVaryingProfile(
           ToGMLUtil.toReferenceType(customDiurnalVariationId, GMLIdUtil.DIURNAL_VARIATION_PREFIX));
       gmlVariation = referenceVariation;
     } else if (standardDiurnalVariationCode != null) {
-      final StandardDiurnalVariation standardVariation = new StandardDiurnalVariation();
+      final StandardTimeVaryingProfile standardVariation = new StandardTimeVaryingProfile();
       standardVariation.setCode(standardDiurnalVariationCode);
       gmlVariation = standardVariation;
     }

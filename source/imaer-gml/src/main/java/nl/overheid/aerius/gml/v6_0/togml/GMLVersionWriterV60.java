@@ -34,7 +34,7 @@ import nl.overheid.aerius.gml.base.geo.Geometry2GML;
 import nl.overheid.aerius.gml.base.metadata.LegacySituationType;
 import nl.overheid.aerius.gml.v6_0.base.CalculatorSchema;
 import nl.overheid.aerius.gml.v6_0.collection.FeatureCollectionImpl;
-import nl.overheid.aerius.gml.v6_0.definitions.CustomDiurnalVariation;
+import nl.overheid.aerius.gml.v6_0.definitions.CustomTimeVaryingProfile;
 import nl.overheid.aerius.gml.v6_0.definitions.DefinitionsImpl;
 import nl.overheid.aerius.gml.v6_0.metadata.AddressImpl;
 import nl.overheid.aerius.gml.v6_0.metadata.ArchiveMetadata;
@@ -265,18 +265,18 @@ public class GMLVersionWriterV60 implements GMLVersionWriter {
     final DefinitionsImpl gmlDefinitions;
     if (definitions != null && definitions.hasContent()) {
       gmlDefinitions = new DefinitionsImpl();
-      final List<CustomDiurnalVariation> customDiurnalVariations = definitions.getCustomTimeVaryingProfiles().stream()
+      final List<CustomTimeVaryingProfile> customDiurnalVariations = definitions.getCustomTimeVaryingProfiles().stream()
           .map(this::convert)
           .collect(Collectors.toList());
-      gmlDefinitions.setCustomDiurnalVariations(customDiurnalVariations);
+      gmlDefinitions.setCustomTimeVaryingProfiles(customDiurnalVariations);
     } else {
       gmlDefinitions = null;
     }
     return gmlDefinitions;
   }
 
-  private CustomDiurnalVariation convert(final nl.overheid.aerius.shared.domain.v2.characteristics.CustomTimeVaryingProfile customVariation) {
-    final CustomDiurnalVariation gmlCustomVariation = new CustomDiurnalVariation();
+  private CustomTimeVaryingProfile convert(final nl.overheid.aerius.shared.domain.v2.characteristics.CustomTimeVaryingProfile customVariation) {
+    final CustomTimeVaryingProfile gmlCustomVariation = new CustomTimeVaryingProfile();
     final String validGmlId = GMLIdUtil.toValidGmlId(customVariation.getGmlId(), getNameSpace(), GMLIdUtil.DIURNAL_VARIATION_PREFIX);
     gmlCustomVariation.setId(validGmlId);
     gmlCustomVariation.setLabel(customVariation.getLabel());

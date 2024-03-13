@@ -20,6 +20,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
+import nl.overheid.aerius.gml.base.characteristics.IsGmlTimeVaryingProfile;
 import nl.overheid.aerius.gml.base.source.road.IsGmlADMSRoad;
 import nl.overheid.aerius.gml.v5_0.base.CalculatorSchema;
 import nl.overheid.aerius.gml.v5_0.source.characteristics.AbstractDiurnalVariation;
@@ -111,12 +112,19 @@ public class ADMSRoad extends RoadEmissionSource implements IsGmlADMSRoad {
 
   @Override
   @XmlTransient
-  public AbstractDiurnalVariation getTimeVaryingProfile() {
+  public AbstractDiurnalVariation getHourlyTimeVaryingProfile() {
     return diurnalVariation;
   }
 
   public void setDiurnalVariation(final AbstractDiurnalVariation diurnalVariation) {
     this.diurnalVariation = diurnalVariation;
+  }
+
+  @Override
+  @XmlTransient
+  public IsGmlTimeVaryingProfile getMonthlyTimeVaryingProfile() {
+    // Not available in this version
+    return null;
   }
 
 }

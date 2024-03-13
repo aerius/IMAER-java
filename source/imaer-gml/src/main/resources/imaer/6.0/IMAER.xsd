@@ -118,9 +118,14 @@ This class describes a road emissionsource including geometry. This definition i
               <documentation>The barrier on the right side of the road (compared to the geometry).</documentation>
             </annotation>
           </element>
-          <element minOccurs="0" name="diurnalVariation" type="IMAER:DiurnalVariationPropertyType">
+          <element minOccurs="0" name="hourlyVariation" type="IMAER:TimeVaryingProfilePropertyType">
             <annotation>
-              <documentation>Diurnal variation profile of the road source.</documentation>
+              <documentation>Hourly time-varying profile of the emission of the source.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="monthlyVariation" type="IMAER:TimeVaryingProfilePropertyType">
+            <annotation>
+              <documentation>Monthly time-varying profile of the emission of the source.</documentation>
             </annotation>
           </element>
         </sequence>
@@ -274,13 +279,12 @@ Each emission source is described on the basis of a number of characteristics, w
               <documentation>Mass flux (kg/s): mass flux of the emission.</documentation>
             </annotation>
           </element>
-          <element minOccurs="0" name="diurnalVariation" type="IMAER:DiurnalVariationPropertyType">
+          <element minOccurs="0" name="hourlyVariation" type="IMAER:TimeVaryingProfilePropertyType">
             <annotation>
-              <documentation>Diurnal variation of the emission of the source.
-Note: this might be renamed in a future version to hourlyVariation or hourlyVariationProfile.</documentation>
+              <documentation>Hourly time-varying profile of the emission of the source.</documentation>
             </annotation>
           </element>
-          <element minOccurs="0" name="monthlyVariation" type="IMAER:DiurnalVariationPropertyType">
+          <element minOccurs="0" name="monthlyVariation" type="IMAER:TimeVaryingProfilePropertyType">
             <annotation>
               <documentation>Monthly time-varying profile of the emission of the source.</documentation>
             </annotation>
@@ -630,12 +634,6 @@ Using this metadata object, information about the calculation can be recorded.</
   </element>
   <complexType name="CalculationMetadataType">
     <sequence>
-      <element minOccurs="0" name="type" type="IMAER:CalculationTypeType">
-        <annotation>
-          <documentation>Calculation type used.
-Deprecated, use 'method' from version 5.1.1.</documentation>
-        </annotation>
-      </element>
       <element minOccurs="0" name="method" type="string">
         <annotation>
           <documentation>Calculation method used.</documentation>
@@ -945,43 +943,6 @@ To determine the emissions of mobile equipment, the use of that vehicle can be t
       <element ref="IMAER:ConsumptionOffRoadVehicleSpecification"/>
     </sequence>
   </complexType>
-  <element name="CustomDiurnalVariation" substitutionGroup="gml:AbstractGML" type="IMAER:CustomDiurnalVariationType">
-    <annotation>
-      <documentation>Custom temporal variation. Consists of X values, where all values must add up to X * 100.
-As an example, a definition for hours per day: In this case there are 24 values, all of which must add up to 2400. For an equal distribution over the day, each value is 100.
-Note: this will be renamed in a future version to CustomTimeVaryingProfile.</documentation>
-    </annotation>
-  </element>
-  <complexType name="CustomDiurnalVariationType">
-    <complexContent>
-      <extension base="gml:AbstractGMLType">
-        <sequence>
-          <element minOccurs="0" name="label" type="string">
-            <annotation>
-              <documentation>An optional label for this custom definition.</documentation>
-            </annotation>
-          </element>
-          <element name="customType" type="string">
-            <annotation>
-              <documentation>The type of this custom definition. Implicitly indicates how many values are expected: for example, for a day definition, 24 values are expected.</documentation>
-            </annotation>
-          </element>
-          <element maxOccurs="unbounded" name="value" type="double">
-            <annotation>
-              <documentation>The values of this custom definition. Depending on the customType, a number of values are expected. If distributed equally over all values, this field has the value 100.</documentation>
-            </annotation>
-          </element>
-        </sequence>
-      </extension>
-    </complexContent>
-  </complexType>
-  <complexType name="CustomDiurnalVariationPropertyType">
-    <sequence minOccurs="0">
-      <element ref="IMAER:CustomDiurnalVariation"/>
-    </sequence>
-    <attributeGroup ref="gml:AssociationAttributeGroup"/>
-    <attributeGroup ref="gml:OwnershipAttributeGroup"/>
-  </complexType>
   <element name="CustomFarmLodging" substitutionGroup="IMAER:FarmLodging" type="IMAER:CustomFarmLodgingType">
     <annotation>
       <documentation>Self-defined lodging.
@@ -1273,6 +1234,42 @@ This class describes a self-defined mobile machinery source, summarizing the emi
       <element ref="IMAER:CustomOffRoadMobileSource"/>
     </sequence>
   </complexType>
+  <element name="CustomTimeVaryingProfile" substitutionGroup="gml:AbstractGML" type="IMAER:CustomTimeVaryingProfileType">
+    <annotation>
+      <documentation>Custom temporal variation. Consists of X values, where all values must add up to X * 100.
+As an example, a definition for hours per day: In this case there are 24 values, all of which must add up to 2400. For an equal distribution over the day, each value is 100.</documentation>
+    </annotation>
+  </element>
+  <complexType name="CustomTimeVaryingProfileType">
+    <complexContent>
+      <extension base="gml:AbstractGMLType">
+        <sequence>
+          <element minOccurs="0" name="label" type="string">
+            <annotation>
+              <documentation>An optional label for this custom definition.</documentation>
+            </annotation>
+          </element>
+          <element name="customType" type="string">
+            <annotation>
+              <documentation>The type of this custom definition. Implicitly indicates how many values are expected: for example, for a day definition, 24 values are expected.</documentation>
+            </annotation>
+          </element>
+          <element maxOccurs="unbounded" name="value" type="double">
+            <annotation>
+              <documentation>The values of this custom definition. Depending on the customType, a number of values are expected. If distributed equally over all values, this field has the value 100.</documentation>
+            </annotation>
+          </element>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="CustomTimeVaryingProfilePropertyType">
+    <sequence minOccurs="0">
+      <element ref="IMAER:CustomTimeVaryingProfile"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+    <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+  </complexType>
   <element name="CustomVehicle" substitutionGroup="IMAER:Vehicle" type="IMAER:CustomVehicleType">
     <annotation>
       <documentation>Characteristics for the emission type of self-defined road transport.
@@ -1310,7 +1307,7 @@ Some definitions can be used within multiple sources. To prevent each source fro
   </element>
   <complexType name="DefinitionsType">
     <sequence>
-      <element maxOccurs="unbounded" minOccurs="0" name="customDiurnalVariation">
+      <element maxOccurs="unbounded" minOccurs="0" name="customTimeVaryingProfile">
         <annotation>
           <documentation>Possible custom temporal variation definitions.</documentation>
         </annotation>
@@ -1318,7 +1315,7 @@ Some definitions can be used within multiple sources. To prevent each source fro
           <complexContent>
             <extension base="gml:AbstractMemberType">
               <sequence minOccurs="0">
-                <element ref="IMAER:CustomDiurnalVariation"/>
+                <element ref="IMAER:CustomTimeVaryingProfile"/>
               </sequence>
               <attributeGroup ref="gml:AssociationAttributeGroup"/>
             </extension>
@@ -1330,20 +1327,6 @@ Some definitions can be used within multiple sources. To prevent each source fro
   <complexType name="DefinitionsPropertyType">
     <sequence>
       <element ref="IMAER:Definitions"/>
-    </sequence>
-  </complexType>
-  <element abstract="true" name="DiurnalVariation" substitutionGroup="gml:AbstractObject" type="IMAER:DiurnalVariationType">
-    <annotation>
-      <documentation>Temporal variation.
-Note: this will be renamed in a future version to TimeVaryingProfile.</documentation>
-    </annotation>
-  </element>
-  <complexType abstract="true" name="DiurnalVariationType">
-    <sequence/>
-  </complexType>
-  <complexType name="DiurnalVariationPropertyType">
-    <sequence>
-      <element ref="IMAER:DiurnalVariation"/>
     </sequence>
   </complexType>
   <element name="Emission" substitutionGroup="IMAER:EmissionValueType" type="IMAER:EmissionType">
@@ -1451,7 +1434,7 @@ Each emission source is described on the basis of a number of characteristics, w
               <documentation>Distribution of the emission source in meters. Can only be used with point sources with a height.</documentation>
             </annotation>
           </element>
-          <element minOccurs="0" name="diurnalVariation" type="IMAER:DiurnalVariationPropertyType">
+          <element minOccurs="0" name="diurnalVariation" type="IMAER:TimeVaryingProfilePropertyType">
             <annotation>
               <documentation>Temporal variation of the emission from the source.</documentation>
             </annotation>
@@ -2687,20 +2670,19 @@ This class describes an additional stable technology that can be used in an exis
       <element ref="IMAER:ReductiveLodgingSystem"/>
     </sequence>
   </complexType>
-  <element name="ReferenceDiurnalVariation" substitutionGroup="IMAER:DiurnalVariation" type="IMAER:ReferenceDiurnalVariationType">
+  <element name="ReferenceTimeVaryingProfile" substitutionGroup="IMAER:TimeVaryingProfile" type="IMAER:ReferenceTimeVaryingProfileType">
     <annotation>
-      <documentation>Reference to a (reusable) custom-specified temporal variation definition.
-Note: this will be renamed in a future version to ReferenceTimeVaryingProfile.</documentation>
+      <documentation>Reference to a (reusable) custom-specified temporal variation definition.</documentation>
     </annotation>
   </element>
-  <complexType name="ReferenceDiurnalVariationType">
+  <complexType name="ReferenceTimeVaryingProfileType">
     <complexContent>
-      <extension base="IMAER:DiurnalVariationType">
+      <extension base="IMAER:TimeVaryingProfileType">
         <sequence>
-          <element name="customDiurnalVariation" type="gml:ReferenceType">
+          <element name="customTimeVaryingProfile" type="gml:ReferenceType">
             <annotation>
               <appinfo>
-                <targetElement xmlns="http://www.opengis.net/gml/3.2">IMAER:CustomDiurnalVariation</targetElement>
+                <targetElement xmlns="http://www.opengis.net/gml/3.2">IMAER:CustomTimeVaryingProfile</targetElement>
               </appinfo>
             </annotation>
           </element>
@@ -2708,9 +2690,9 @@ Note: this will be renamed in a future version to ReferenceTimeVaryingProfile.</
       </extension>
     </complexContent>
   </complexType>
-  <complexType name="ReferenceDiurnalVariationPropertyType">
+  <complexType name="ReferenceTimeVaryingProfilePropertyType">
     <sequence>
-      <element ref="IMAER:ReferenceDiurnalVariation"/>
+      <element ref="IMAER:ReferenceTimeVaryingProfile"/>
     </sequence>
   </complexType>
   <simpleType name="RejectionGroundsType">
@@ -3347,11 +3329,6 @@ For a situation you can indicate what type of situation it is. This affects how 
           <documentation>Temporary situation, intended for situation(s) that lead from the reference situation to the intended situation, for example the construction phase.</documentation>
         </annotation>
       </enumeration>
-      <enumeration value="NETTING">
-        <annotation>
-          <documentation>Netting situation, intended as a supplementary situation for external netting. In this situation type it is possible to specify a fraction/percentage, whereby this part of the deposition may NOT be emitted in the netting situation (for the benefit of nature). Deprecated, from version 5.1.2 use 'OFF_SITE_REDUCTION'.</documentation>
-        </annotation>
-      </enumeration>
       <enumeration value="OFF_SITE_REDUCTION">
         <annotation>
           <documentation>Netting situation, intended as a supplementary situation for external netting. In this situation type it is possible to specify a fraction/percentage, whereby this part of the deposition may NOT be emitted in the netting situation (for the benefit of nature).</documentation>
@@ -3437,30 +3414,6 @@ This class can be used if the heat content of an emission source is known.</docu
   <complexType name="SpecifiedHeatContentPropertyType">
     <sequence>
       <element ref="IMAER:SpecifiedHeatContent"/>
-    </sequence>
-  </complexType>
-  <element name="StandardDiurnalVariation" substitutionGroup="IMAER:DiurnalVariation" type="IMAER:StandardDiurnalVariationType">
-    <annotation>
-      <documentation>Temporal variation according to one of the standard values known within AERIUS (based on OPS).
-Note: this will be renamed in a future version to StandardTimeVaryingProfile.</documentation>
-    </annotation>
-  </element>
-  <complexType name="StandardDiurnalVariationType">
-    <complexContent>
-      <extension base="IMAER:DiurnalVariationType">
-        <sequence>
-          <element name="standardType" type="string">
-            <annotation>
-              <documentation>The standard type to be used. Due to expandability, it is not specified which values are possible, but there is a limited possibility.</documentation>
-            </annotation>
-          </element>
-        </sequence>
-      </extension>
-    </complexContent>
-  </complexType>
-  <complexType name="StandardDiurnalVariationPropertyType">
-    <sequence>
-      <element ref="IMAER:StandardDiurnalVariation"/>
     </sequence>
   </complexType>
   <element name="StandardFarmLodging" substitutionGroup="IMAER:FarmLodging" type="IMAER:StandardFarmLodgingType">
@@ -3705,6 +3658,29 @@ Mobile tools are described on the basis of a number of characteristics. These ar
       <element ref="IMAER:StandardOffRoadMobileSource"/>
     </sequence>
   </complexType>
+  <element name="StandardTimeVaryingProfile" substitutionGroup="IMAER:TimeVaryingProfile" type="IMAER:StandardTimeVaryingProfileType">
+    <annotation>
+      <documentation>Temporal variation according to one of the standard values known within AERIUS (based on OPS).</documentation>
+    </annotation>
+  </element>
+  <complexType name="StandardTimeVaryingProfileType">
+    <complexContent>
+      <extension base="IMAER:TimeVaryingProfileType">
+        <sequence>
+          <element name="standardType" type="string">
+            <annotation>
+              <documentation>The standard type to be used. Due to expandability, it is not specified which values are possible, but there is a limited possibility.</documentation>
+            </annotation>
+          </element>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="StandardTimeVaryingProfilePropertyType">
+    <sequence>
+      <element ref="IMAER:StandardTimeVaryingProfile"/>
+    </sequence>
+  </complexType>
   <element name="StandardVehicle" substitutionGroup="IMAER:Vehicle" type="IMAER:StandardVehicleType">
     <annotation>
       <documentation>Characteristics of a standard road transport class.</documentation>
@@ -3829,6 +3805,19 @@ The AERIUS calculation core can calculate emissions based on time units, which a
       <enumeration value="YEAR"/>
     </restriction>
   </simpleType>
+  <element abstract="true" name="TimeVaryingProfile" substitutionGroup="gml:AbstractObject" type="IMAER:TimeVaryingProfileType">
+    <annotation>
+      <documentation>Temporal variation.</documentation>
+    </annotation>
+  </element>
+  <complexType abstract="true" name="TimeVaryingProfileType">
+    <sequence/>
+  </complexType>
+  <complexType name="TimeVaryingProfilePropertyType">
+    <sequence>
+      <element ref="IMAER:TimeVaryingProfile"/>
+    </sequence>
+  </complexType>
   <simpleType name="TrafficDirectionType">
     <annotation>
       <documentation>List of different directions for traffic on roads.

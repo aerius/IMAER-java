@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import nl.overheid.aerius.gml.v6_0.source.TimeUnit;
-import nl.overheid.aerius.gml.v6_0.source.characteristics.AbstractDiurnalVariation;
+import nl.overheid.aerius.gml.v6_0.source.characteristics.AbstractTimeVaryingProfile;
 import nl.overheid.aerius.gml.v6_0.source.road.ADMSRoad;
 import nl.overheid.aerius.gml.v6_0.source.road.ADMSRoadSideBarrierProperty;
 import nl.overheid.aerius.gml.v6_0.source.road.CustomVehicle;
@@ -87,7 +87,7 @@ class Road2GML extends SpecificSource2GML<nl.overheid.aerius.shared.domain.v2.so
     returnSource.setGradient(emissionSource.getGradient());
     returnSource.setCoverage(emissionSource.getCoverage());
     handleBarriers(emissionSource, returnSource);
-    handleDiurnalVariation(emissionSource, returnSource);
+    handleTimeVaryingProfile(emissionSource, returnSource);
 
     return returnSource;
   }
@@ -198,13 +198,17 @@ class Road2GML extends SpecificSource2GML<nl.overheid.aerius.shared.domain.v2.so
     }
   }
 
-  private void handleDiurnalVariation(final ADMSRoadEmissionSource emissionSource, final ADMSRoad returnSource) {
+  private void handleTimeVaryingProfile(final ADMSRoadEmissionSource emissionSource, final ADMSRoad returnSource) {
     if (emissionSource.getCharacteristics() instanceof ADMSSourceCharacteristics) {
       final ADMSSourceCharacteristics characteristics = (ADMSSourceCharacteristics) emissionSource.getCharacteristics();
-      final AbstractDiurnalVariation diurnalVariation = ToGMLUtil.determineDiurnalVariation(
+      final AbstractTimeVaryingProfile hourlyProfile = ToGMLUtil.determineTimeVaryingProfile(
           characteristics::getCustomHourlyTimeVaryingProfileId,
           characteristics::getStandardHourlyTimeVaryingProfileCode);
-      returnSource.setDiurnalVariation(diurnalVariation);
+      returnSource.setHourlyTimeVaryingProfile(hourlyProfile);
+      final AbstractTimeVaryingProfile monthlyProfile = ToGMLUtil.determineTimeVaryingProfile(
+          characteristics::getCustomMonthlyTimeVaryingProfileId,
+          characteristics::getStandardMonthlyTimeVaryingProfileCode);
+      returnSource.setMonthlyTimeVaryingProfile(monthlyProfile);
     }
   }
 

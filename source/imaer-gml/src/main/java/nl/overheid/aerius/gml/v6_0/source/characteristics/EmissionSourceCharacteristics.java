@@ -35,7 +35,7 @@ public class EmissionSourceCharacteristics extends AbstractSourceCharacteristics
   private AbstractHeatContent heatContent;
   private double emissionHeight;
   private Double spread;
-  private AbstractDiurnalVariation diurnalVariation;
+  private AbstractTimeVaryingProfile diurnalVariation;
 
   @XmlElement(name = "heatContent", namespace = CalculatorSchema.NAMESPACE)
   public HeatContentProperty getHeatContentProperty() {
@@ -77,21 +77,21 @@ public class EmissionSourceCharacteristics extends AbstractSourceCharacteristics
   }
 
   @XmlElement(name = "diurnalVariation", namespace = CalculatorSchema.NAMESPACE)
-  public DiurnalVariationProperty getDiurnalVariationProperty() {
-    return diurnalVariation == null ? null : new DiurnalVariationProperty(diurnalVariation);
+  public TimeVaryingProfileProperty getDiurnalVariationProperty() {
+    return diurnalVariation == null ? null : new TimeVaryingProfileProperty(diurnalVariation);
   }
 
-  public void setDiurnalVariationProperty(final DiurnalVariationProperty diurnalVariation) {
+  public void setDiurnalVariationProperty(final TimeVaryingProfileProperty diurnalVariation) {
     this.diurnalVariation = diurnalVariation == null ? null : diurnalVariation.getProperty();
   }
 
   @Override
   @XmlTransient
-  public AbstractDiurnalVariation getTimeVaryingProfile() {
+  public AbstractTimeVaryingProfile getTimeVaryingProfile() {
     return diurnalVariation;
   }
 
-  public void setDiurnalVariation(final AbstractDiurnalVariation diurnalVariation) {
+  public void setDiurnalVariation(final AbstractTimeVaryingProfile diurnalVariation) {
     this.diurnalVariation = diurnalVariation;
   }
 

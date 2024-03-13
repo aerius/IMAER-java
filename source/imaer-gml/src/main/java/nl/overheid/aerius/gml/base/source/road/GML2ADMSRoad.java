@@ -81,7 +81,7 @@ public class GML2ADMSRoad<T extends IsGmlADMSRoad> extends GML2Road<T, ADMSRoadE
   private void setTimeVaryingProfile(final T source, final ADMSRoadEmissionSource emissionSource) {
     final ADMSSourceCharacteristics characteristics = new ADMSSourceCharacteristics();
     characteristics.setSourceType(SourceType.ROAD);
-    TimeVaryingProfileUtil.setTimeVaryingProfile(source.getTimeVaryingProfile(),
+    TimeVaryingProfileUtil.setTimeVaryingProfile(source.getHourlyTimeVaryingProfile(),
         characteristics::setStandardHourlyTimeVaryingProfileCode,
         characteristics::setCustomHourlyTimeVaryingProfileId);
     emissionSource.setCharacteristics(characteristics);

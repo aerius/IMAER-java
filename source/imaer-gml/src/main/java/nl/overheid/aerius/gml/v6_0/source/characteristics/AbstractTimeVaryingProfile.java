@@ -16,39 +16,14 @@
  */
 package nl.overheid.aerius.gml.v6_0.source.characteristics;
 
-import javax.xml.bind.annotation.XmlElementRef;
+import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
-import nl.overheid.aerius.gml.base.AbstractProperty;
+import nl.overheid.aerius.gml.base.characteristics.IsGmlTimeVaryingProfile;
 import nl.overheid.aerius.gml.v6_0.base.CalculatorSchema;
 
-@XmlType(name = "DiurnalVariationPropertyType", namespace = CalculatorSchema.NAMESPACE)
-public class DiurnalVariationProperty extends AbstractProperty<AbstractDiurnalVariation> {
-
-  /**
-   * Default constructor, needed for JAXB.
-   */
-  public DiurnalVariationProperty() {
-    super(null);
-  }
-
-  /**
-   * Convenience constructor.
-   * @param diurnalVariation The property to use.
-   */
-  public DiurnalVariationProperty(final AbstractDiurnalVariation diurnalVariation) {
-    super(diurnalVariation);
-  }
-
-  @XmlElementRef
-  @Override
-  public AbstractDiurnalVariation getProperty() {
-    return super.getProperty();
-  }
-
-  @Override
-  public void setProperty(final AbstractDiurnalVariation property) {
-    super.setProperty(property);
-  }
+@XmlSeeAlso({StandardTimeVaryingProfile.class, ReferenceTimeVaryingProfile.class})
+@XmlType(name = "TimeVaryingProfileType", namespace = CalculatorSchema.NAMESPACE)
+public class AbstractTimeVaryingProfile implements IsGmlTimeVaryingProfile {
 
 }

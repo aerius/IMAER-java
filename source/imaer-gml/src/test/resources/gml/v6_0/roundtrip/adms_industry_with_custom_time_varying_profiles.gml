@@ -43,15 +43,15 @@
                     <imaer:density>58.23</imaer:density>
                     <imaer:effluxType>VELOCITY</imaer:effluxType>
                     <imaer:verticalVelocity>49.2</imaer:verticalVelocity>
-                    <imaer:diurnalVariation>
-                        <imaer:ReferenceDiurnalVariation>
-                            <imaer:customDiurnalVariation xlink:href="#Custom_DV.1"/>
-                        </imaer:ReferenceDiurnalVariation>
-                    </imaer:diurnalVariation>
+                    <imaer:hourlyVariation>
+                        <imaer:ReferenceTimeVaryingProfile>
+                            <imaer:customTimeVaryingProfile xlink:href="#Custom_DV.1"/>
+                        </imaer:ReferenceTimeVaryingProfile>
+                    </imaer:hourlyVariation>
                     <imaer:monthlyVariation>
-                        <imaer:ReferenceDiurnalVariation>
-                            <imaer:customDiurnalVariation xlink:href="#Custom_DV.2"/>
-                        </imaer:ReferenceDiurnalVariation>
+                        <imaer:ReferenceTimeVaryingProfile>
+                            <imaer:customTimeVaryingProfile xlink:href="#Custom_DV.2"/>
+                        </imaer:ReferenceTimeVaryingProfile>
                     </imaer:monthlyVariation>
                 </imaer:ADMSSourceCharacteristics>
             </imaer:emissionSourceCharacteristics>
@@ -113,8 +113,8 @@
     </imaer:featureMember>
     <imaer:definitions>
         <imaer:Definitions>
-            <imaer:customDiurnalVariation>
-                <imaer:CustomDiurnalVariation gml:id="Custom_DV.1">
+            <imaer:customTimeVaryingProfile>
+                <imaer:CustomTimeVaryingProfile gml:id="Custom_DV.1">
                     <imaer:label>Example own spec</imaer:label>
                     <imaer:customType>THREE_DAY</imaer:customType>
                     <imaer:value>0.7</imaer:value>
@@ -189,10 +189,10 @@
                     <imaer:value>1.0</imaer:value>
                     <imaer:value>1.0</imaer:value>
                     <imaer:value>0.6</imaer:value>
-                </imaer:CustomDiurnalVariation>
-            </imaer:customDiurnalVariation>
-            <imaer:customDiurnalVariation>
-                <imaer:CustomDiurnalVariation gml:id="Custom_DV.2">
+                </imaer:CustomTimeVaryingProfile>
+            </imaer:customTimeVaryingProfile>
+            <imaer:customTimeVaryingProfile>
+                <imaer:CustomTimeVaryingProfile gml:id="Custom_DV.2">
                     <imaer:label>Example own spec month</imaer:label>
                     <imaer:customType>MONTHLY</imaer:customType>
                     <imaer:value>0.7</imaer:value>
@@ -207,8 +207,8 @@
                     <imaer:value>1.0</imaer:value>
                     <imaer:value>1.0</imaer:value>
                     <imaer:value>0.8</imaer:value>
-                </imaer:CustomDiurnalVariation>
-            </imaer:customDiurnalVariation>
+                </imaer:CustomTimeVaryingProfile>
+            </imaer:customTimeVaryingProfile>
         </imaer:Definitions>
     </imaer:definitions>
 </imaer:FeatureCollectionCalculator>

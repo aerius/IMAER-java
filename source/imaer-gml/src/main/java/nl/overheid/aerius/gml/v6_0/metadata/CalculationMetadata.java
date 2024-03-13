@@ -32,11 +32,10 @@ import nl.overheid.aerius.shared.domain.result.EmissionResultType;
 /**
  *
  */
-@XmlType(name = "CalculationMetadataType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"calculationType", "calculationMethod",
+@XmlType(name = "CalculationMetadataType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"calculationMethod",
     "calculationJobType", "substances", "resultTypes", "maximumRange", "researchArea", "monitorSrm2Year", "options", "otherSituations"})
 public class CalculationMetadata implements IsCalculationMetaData {
 
-  private String calculationType;
   private String calculationMethod;
   private String calculationJobType;
   private List<Substance> substances;
@@ -46,16 +45,6 @@ public class CalculationMetadata implements IsCalculationMetaData {
   private Integer monitorSrm2Year;
   private List<CalculationOptionProperty> options;
   private List<OtherSituationMetadataProperty> otherSituations = new ArrayList<>();
-
-  @Override
-  @XmlElement(name = "type", namespace = CalculatorSchema.NAMESPACE)
-  public String getCalculationType() {
-    return calculationType;
-  }
-
-  public void setCalculationType(final String calculationType) {
-    this.calculationType = calculationType;
-  }
 
   @Override
   @XmlElement(name = "method", namespace = CalculatorSchema.NAMESPACE)

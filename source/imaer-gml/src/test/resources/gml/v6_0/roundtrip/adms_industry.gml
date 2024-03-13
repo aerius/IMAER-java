@@ -43,11 +43,11 @@
                     <imaer:density>58.23</imaer:density>
                     <imaer:effluxType>VELOCITY</imaer:effluxType>
                     <imaer:verticalVelocity>49.2</imaer:verticalVelocity>
-                    <imaer:diurnalVariation>
-                        <imaer:StandardDiurnalVariation>
+                    <imaer:hourlyVariation>
+                        <imaer:StandardTimeVaryingProfile>
                             <imaer:standardType>SOME_TYPE</imaer:standardType>
-                        </imaer:StandardDiurnalVariation>
-                    </imaer:diurnalVariation>
+                        </imaer:StandardTimeVaryingProfile>
+                    </imaer:hourlyVariation>
                 </imaer:ADMSSourceCharacteristics>
             </imaer:emissionSourceCharacteristics>
             <imaer:geometry>
