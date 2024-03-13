@@ -659,16 +659,6 @@ Using this metadata object, information about the calculation can be recorded.</
           <documentation>Maximum radius in km within which the calculation was made.</documentation>
         </annotation>
       </element>
-      <element minOccurs="0" name="researchArea" type="boolean">
-        <annotation>
-          <documentation>Indication of whether the calculation concerns a research area.</documentation>
-        </annotation>
-      </element>
-      <element minOccurs="0" name="monitorSrm2Year" type="integer">
-        <annotation>
-          <documentation>Indication of whether the NSL monitor network was used for the SRM2 roads, and if so, from which year</documentation>
-        </annotation>
-      </element>
       <element maxOccurs="unbounded" minOccurs="0" name="option" type="IMAER:CalculationOptionPropertyType">
         <annotation>
           <documentation>Options used for the calculation results. Uses a generic key-value structure, where the key indicates which option it concerns, and the value is that for the option in question.</documentation>
@@ -881,34 +871,6 @@ This class describes the result for a specific substance/result type combination
       <element ref="IMAER:CalculationResult"/>
     </sequence>
   </complexType>
-  <simpleType name="CalculationTypeType">
-    <annotation>
-      <documentation>List of different calculation types.
-Determining receptors/calculation points of a calculation can be done in different ways. These methods are laid down here.</documentation>
-    </annotation>
-    <restriction base="string">
-      <enumeration value="PERMIT">
-        <annotation>
-          <documentation>Calculation of receptors according to the Nature Conservation Act.</documentation>
-        </annotation>
-      </enumeration>
-      <enumeration value="NATURE_AREA">
-        <annotation>
-          <documentation>Calculation uses hexagons containing natural areas within specified radius.</documentation>
-        </annotation>
-      </enumeration>
-      <enumeration value="RADIUS">
-        <annotation>
-          <documentation>Calculation uses hexagons within specified radius.</documentation>
-        </annotation>
-      </enumeration>
-      <enumeration value="CUSTOM_POINTS">
-        <annotation>
-          <documentation>Calculation uses user-defined points (CalculationPoint).</documentation>
-        </annotation>
-      </enumeration>
-    </restriction>
-  </simpleType>
   <element name="ConsumptionOffRoadVehicleSpecification" substitutionGroup="IMAER:OffRoadVehicleSpecification" type="IMAER:ConsumptionOffRoadVehicleSpecificationType">
     <annotation>
       <documentation>Class for a specification for the emissions of a self-defined off road vehicle source based on consumption.
@@ -2517,16 +2479,6 @@ Using this metadata object, project information about the emission sources can b
       <element name="year" type="integer">
         <annotation>
           <documentation>The AERIUS calculation core uses GDN basic data that is adjusted annually. This attribute indicates which year the basic data was used in the calculations.</documentation>
-        </annotation>
-      </element>
-      <element minOccurs="0" name="temporaryPeriod" type="integer">
-        <annotation>
-          <documentation>Duration of the project in years (only in case of temporary projects).</documentation>
-        </annotation>
-      </element>
-      <element minOccurs="0" name="permitCalculationRadiusType" type="string">
-        <annotation>
-          <documentation>Distance Limit value type for the Nature Conservation Act</documentation>
         </annotation>
       </element>
       <element minOccurs="0" name="name" type="string">

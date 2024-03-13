@@ -73,16 +73,6 @@ public interface MetaData {
   Address getFacilityLocation();
 
   /**
-   * @return The duration of a temporary project. Null indicates a non-temporary (permanent) project.
-   */
-  Integer getTemporaryPeriod();
-
-  /**
-   * @return The calculation radius type of the project.
-   */
-  String getPermitCalculationRadiusType();
-
-  /**
    * @return The description of the scenario in the featurecollection.
    */
   String getDescription();

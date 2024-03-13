@@ -140,8 +140,6 @@ class GMLWriterTest {
 
     }
     validateDefaultMetaDataFields(result, metaData);
-    assertFalse(result.contains("<imaer:temporaryPeriod>"), "Shouldn't contain temporaryPeriod");
-    assertFalse(result.contains("<imaer:permitCalculationRadiusType>"), "Shouldn't contain PermitCalculationRadiusType");
     assertNotEquals(originalReference, metaDataInput.getReference(), "Reference should be overwritten");
     assertTrue(result.contains(getExpectedElement("reference", metaDataInput.getReference())), "Should contain new generated reference");
   }

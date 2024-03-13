@@ -5,7 +5,6 @@
             <imaer:project>
                 <imaer:ProjectMetadata>
                     <imaer:year>2013</imaer:year>
-                    <imaer:temporaryPeriod>2</imaer:temporaryPeriod>
                     <imaer:name>SomeProject</imaer:name>
                     <imaer:corporation>Big Corp</imaer:corporation>
                     <imaer:facilityLocation>
