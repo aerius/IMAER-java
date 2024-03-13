@@ -48,7 +48,7 @@ final class SourceCharacteristics2GML {
     returnCharacteristics.setEmissionHeight(characteristics.getEmissionHeight());
     returnCharacteristics.setSpread(characteristics.getSpread());
     if (includeOptionals) {
-      returnCharacteristics.setDiurnalVariation(determineDiurnalVariation(characteristics));
+      returnCharacteristics.setTimeVaryingProfile(determineTimeVaryingProfile(characteristics));
     }
     returnCharacteristics.setBuilding(determineBuilding(characteristics));
     return returnCharacteristics;
@@ -77,7 +77,7 @@ final class SourceCharacteristics2GML {
     }
   }
 
-  private static AbstractTimeVaryingProfile determineDiurnalVariation(final OPSSourceCharacteristics characteristics) {
+  private static AbstractTimeVaryingProfile determineTimeVaryingProfile(final OPSSourceCharacteristics characteristics) {
     return ToGMLUtil.determineTimeVaryingProfile(
         () -> null,
         () -> characteristics.getDiurnalVariation() == null ? null : characteristics.getDiurnalVariation().getCode());

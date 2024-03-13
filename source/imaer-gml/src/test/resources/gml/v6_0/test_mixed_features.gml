@@ -73,11 +73,11 @@
                         </imaer:SpecifiedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>11.12</imaer:emissionHeight>
-                    <imaer:diurnalVariation>
+                    <imaer:timeVaryingProfile>
                         <imaer:StandardTimeVaryingProfile>
                             <imaer:standardType>INDUSTRIAL_ACTIVITY</imaer:standardType>
                         </imaer:StandardTimeVaryingProfile>
-                    </imaer:diurnalVariation>
+                    </imaer:timeVaryingProfile>
                 </imaer:EmissionSourceCharacteristics>
             </imaer:emissionSourceCharacteristics>
             <imaer:geometry>
@@ -128,11 +128,11 @@
                         </imaer:SpecifiedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>22.0</imaer:emissionHeight>
-                    <imaer:diurnalVariation>
+                    <imaer:timeVaryingProfile>
                         <imaer:StandardTimeVaryingProfile>
                             <imaer:standardType>INDUSTRIAL_ACTIVITY</imaer:standardType>
                         </imaer:StandardTimeVaryingProfile>
-                    </imaer:diurnalVariation>
+                    </imaer:timeVaryingProfile>
                 </imaer:EmissionSourceCharacteristics>
             </imaer:emissionSourceCharacteristics>
             <imaer:geometry>

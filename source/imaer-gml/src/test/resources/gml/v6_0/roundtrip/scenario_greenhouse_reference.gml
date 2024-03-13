@@ -43,11 +43,11 @@
                         </imaer:CalculatedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>9.0</imaer:emissionHeight>
-                    <imaer:diurnalVariation>
+                    <imaer:timeVaryingProfile>
                         <imaer:StandardTimeVaryingProfile>
                             <imaer:standardType>SPACE_HEATING_WITHOUT_SEASONAL_CORRECTION</imaer:standardType>
                         </imaer:StandardTimeVaryingProfile>
-                    </imaer:diurnalVariation>
+                    </imaer:timeVaryingProfile>
                 </imaer:EmissionSourceCharacteristics>
             </imaer:emissionSourceCharacteristics>
             <imaer:geometry>
@@ -98,11 +98,11 @@
                         </imaer:SpecifiedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>12.0</imaer:emissionHeight>
-                    <imaer:diurnalVariation>
+                    <imaer:timeVaryingProfile>
                         <imaer:StandardTimeVaryingProfile>
                             <imaer:standardType>SPACE_HEATING_WITHOUT_SEASONAL_CORRECTION</imaer:standardType>
                         </imaer:StandardTimeVaryingProfile>
-                    </imaer:diurnalVariation>
+                    </imaer:timeVaryingProfile>
                 </imaer:EmissionSourceCharacteristics>
             </imaer:emissionSourceCharacteristics>
             <imaer:geometry>
@@ -238,11 +238,11 @@
                         </imaer:SpecifiedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>9.0</imaer:emissionHeight>
-                    <imaer:diurnalVariation>
+                    <imaer:timeVaryingProfile>
                         <imaer:StandardTimeVaryingProfile>
                             <imaer:standardType>SPACE_HEATING_WITHOUT_SEASONAL_CORRECTION</imaer:standardType>
                         </imaer:StandardTimeVaryingProfile>
-                    </imaer:diurnalVariation>
+                    </imaer:timeVaryingProfile>
                 </imaer:EmissionSourceCharacteristics>
             </imaer:emissionSourceCharacteristics>
             <imaer:geometry>
@@ -293,11 +293,11 @@
                         </imaer:SpecifiedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>12.0</imaer:emissionHeight>
-                    <imaer:diurnalVariation>
+                    <imaer:timeVaryingProfile>
                         <imaer:StandardTimeVaryingProfile>
                             <imaer:standardType>SPACE_HEATING_WITHOUT_SEASONAL_CORRECTION</imaer:standardType>
                         </imaer:StandardTimeVaryingProfile>
-                    </imaer:diurnalVariation>
+                    </imaer:timeVaryingProfile>
                 </imaer:EmissionSourceCharacteristics>
             </imaer:emissionSourceCharacteristics>
             <imaer:geometry>

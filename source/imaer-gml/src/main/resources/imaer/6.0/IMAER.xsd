@@ -1434,7 +1434,7 @@ Each emission source is described on the basis of a number of characteristics, w
               <documentation>Distribution of the emission source in meters. Can only be used with point sources with a height.</documentation>
             </annotation>
           </element>
-          <element minOccurs="0" name="diurnalVariation" type="IMAER:TimeVaryingProfilePropertyType">
+          <element minOccurs="0" name="timeVaryingProfile" type="IMAER:TimeVaryingProfilePropertyType">
             <annotation>
               <documentation>Temporal variation of the emission from the source.</documentation>
             </annotation>

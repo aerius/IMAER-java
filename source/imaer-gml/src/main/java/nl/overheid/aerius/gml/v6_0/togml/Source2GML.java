@@ -116,9 +116,9 @@ final class Source2GML implements EmissionSourceVisitor<nl.overheid.aerius.gml.v
       if (sourceFeature.getGeometry() instanceof Point) {
         ((EmissionSourceCharacteristics) returnSource.getCharacteristics()).setSpread(null);
       }
-      //ensure diurnal variation isn't exported for sources other then generic ones.
+      //ensure time varying profile isn't exported for sources other then generic ones.
       if (!(source instanceof GenericEmissionSource)) { //
-        ((EmissionSourceCharacteristics) returnSource.getCharacteristics()).setDiurnalVariation(null);
+        ((EmissionSourceCharacteristics) returnSource.getCharacteristics()).setTimeVaryingProfile(null);
       }
     }
     // For ADMS, don't export characteristics for road.

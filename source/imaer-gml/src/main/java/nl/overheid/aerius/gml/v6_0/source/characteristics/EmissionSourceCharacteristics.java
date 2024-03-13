@@ -29,13 +29,13 @@ import nl.overheid.aerius.gml.v6_0.base.CalculatorSchema;
  */
 @XmlRootElement(name = "EmissionSourceCharacteristics", namespace = CalculatorSchema.NAMESPACE)
 @XmlType(name = "EmissionSourceCharacteristicsType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"heatContentProperty", "emissionHeight",
-    "spread", "diurnalVariationProperty"})
+    "spread", "timeVaryingProfileProperty"})
 public class EmissionSourceCharacteristics extends AbstractSourceCharacteristics implements IsGmlOPSSourceCharacteristics {
 
   private AbstractHeatContent heatContent;
   private double emissionHeight;
   private Double spread;
-  private AbstractTimeVaryingProfile diurnalVariation;
+  private AbstractTimeVaryingProfile timeVaryingProfile;
 
   @XmlElement(name = "heatContent", namespace = CalculatorSchema.NAMESPACE)
   public HeatContentProperty getHeatContentProperty() {
@@ -76,23 +76,23 @@ public class EmissionSourceCharacteristics extends AbstractSourceCharacteristics
     this.spread = spread;
   }
 
-  @XmlElement(name = "diurnalVariation", namespace = CalculatorSchema.NAMESPACE)
-  public TimeVaryingProfileProperty getDiurnalVariationProperty() {
-    return diurnalVariation == null ? null : new TimeVaryingProfileProperty(diurnalVariation);
+  @XmlElement(name = "timeVaryingProfile", namespace = CalculatorSchema.NAMESPACE)
+  public TimeVaryingProfileProperty getTimeVaryingProfileProperty() {
+    return timeVaryingProfile == null ? null : new TimeVaryingProfileProperty(timeVaryingProfile);
   }
 
-  public void setDiurnalVariationProperty(final TimeVaryingProfileProperty diurnalVariation) {
-    this.diurnalVariation = diurnalVariation == null ? null : diurnalVariation.getProperty();
+  public void setTimeVaryingProfileProperty(final TimeVaryingProfileProperty timeVaryingProfile) {
+    this.timeVaryingProfile = timeVaryingProfile == null ? null : timeVaryingProfile.getProperty();
   }
 
   @Override
   @XmlTransient
   public AbstractTimeVaryingProfile getTimeVaryingProfile() {
-    return diurnalVariation;
+    return timeVaryingProfile;
   }
 
-  public void setDiurnalVariation(final AbstractTimeVaryingProfile diurnalVariation) {
-    this.diurnalVariation = diurnalVariation;
+  public void setTimeVaryingProfile(final AbstractTimeVaryingProfile timeVaryingProfile) {
+    this.timeVaryingProfile = timeVaryingProfile;
   }
 
 }
