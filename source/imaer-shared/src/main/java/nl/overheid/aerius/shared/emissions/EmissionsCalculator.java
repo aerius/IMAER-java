@@ -31,7 +31,6 @@ import nl.overheid.aerius.shared.domain.v2.source.MaritimeShippingEmissionSource
 import nl.overheid.aerius.shared.domain.v2.source.MooringInlandShippingEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.MooringMaritimeShippingEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.OffRoadMobileEmissionSource;
-import nl.overheid.aerius.shared.domain.v2.source.PlanEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.SRM1RoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.SRM2RoadEmissionSource;
 import nl.overheid.aerius.shared.exception.AeriusException;
@@ -42,7 +41,6 @@ class EmissionsCalculator implements EmissionSourceVisitor<Map<Substance, Double
   private final FarmLodgingEmissionsCalculator farmLodgingEmissionsCalculator;
   private final FarmlandEmissionsCalculator farmlandEmissionsCalculator;
   private final ManureStorageEmissionsCalculator manureStorageEmissionsCalculator;
-  private final PlanEmissionsCalculator planEmissionsCalculator;
   private final OffRoadMobileEmissionsCalculator offRoadMobileEmissionsCalculator;
   private final SRMRoadEmissionsCalculator srmRoadEmissionsCalculator;
   private final ADMSRoadEmissionsCalculator admsRoadEmissionsCalculator;
@@ -53,7 +51,6 @@ class EmissionsCalculator implements EmissionSourceVisitor<Map<Substance, Double
     this(new FarmLodgingEmissionsCalculator(emissionFactorSupplier.farmLodging()),
         new FarmlandEmissionsCalculator(emissionFactorSupplier.farmland()),
         new ManureStorageEmissionsCalculator(emissionFactorSupplier.manureStorage()),
-        new PlanEmissionsCalculator(emissionFactorSupplier.plan()),
         new OffRoadMobileEmissionsCalculator(emissionFactorSupplier.offRoadMobile()),
         new SRMRoadEmissionsCalculator(emissionFactorSupplier.road(), geometryCalculator),
         new ADMSRoadEmissionsCalculator(emissionFactorSupplier.road(), geometryCalculator),
@@ -64,7 +61,6 @@ class EmissionsCalculator implements EmissionSourceVisitor<Map<Substance, Double
   EmissionsCalculator(final FarmLodgingEmissionsCalculator farmLodgingEmissionsCalculator,
       final FarmlandEmissionsCalculator farmlandEmissionsCalculator,
       final ManureStorageEmissionsCalculator manureStorageEmissionsCalculator,
-      final PlanEmissionsCalculator planEmissionsCalculator,
       final OffRoadMobileEmissionsCalculator offRoadMobileEmissionsCalculator,
       final SRMRoadEmissionsCalculator srmRoadEmissionsCalculator,
       final ADMSRoadEmissionsCalculator admsRoadEmissionsCalculator,
@@ -73,7 +69,6 @@ class EmissionsCalculator implements EmissionSourceVisitor<Map<Substance, Double
     this.farmLodgingEmissionsCalculator = farmLodgingEmissionsCalculator;
     this.farmlandEmissionsCalculator = farmlandEmissionsCalculator;
     this.manureStorageEmissionsCalculator = manureStorageEmissionsCalculator;
-    this.planEmissionsCalculator = planEmissionsCalculator;
     this.offRoadMobileEmissionsCalculator = offRoadMobileEmissionsCalculator;
     this.srmRoadEmissionsCalculator = srmRoadEmissionsCalculator;
     this.admsRoadEmissionsCalculator = admsRoadEmissionsCalculator;
@@ -94,11 +89,6 @@ class EmissionsCalculator implements EmissionSourceVisitor<Map<Substance, Double
   @Override
   public Map<Substance, Double> visit(final ManureStorageEmissionSource emissionSource, final IsFeature feature) throws AeriusException {
     return manureStorageEmissionsCalculator.updateEmissions(emissionSource);
-  }
-
-  @Override
-  public Map<Substance, Double> visit(final PlanEmissionSource emissionSource, final IsFeature feature) throws AeriusException {
-    return planEmissionsCalculator.calculateEmissions(emissionSource);
   }
 
   @Override

@@ -58,7 +58,6 @@ import nl.overheid.aerius.validation.InlandShippingValidationHelper;
 import nl.overheid.aerius.validation.ManureStorageValidationHelper;
 import nl.overheid.aerius.validation.MaritimeShippingValidationHelper;
 import nl.overheid.aerius.validation.OffRoadValidationHelper;
-import nl.overheid.aerius.validation.PlanValidationHelper;
 import nl.overheid.aerius.validation.RoadValidationHelper;
 import nl.overheid.aerius.validation.ValidationHelper;
 
@@ -68,7 +67,7 @@ import nl.overheid.aerius.validation.ValidationHelper;
 public class TestValidationAndEmissionHelper implements ValidationHelper, EmissionFactorSupplier,
     FarmLodgingEmissionFactorSupplier, FarmlandEmissionFactorSupplier, ManureStorageEmissionFactorSupplier, PlanEmissionFactorSupplier,
     OffRoadMobileEmissionFactorSupplier, RoadEmissionFactorSupplier, InlandShippingEmissionFactorSupplier, MaritimeShippingEmissionFactorSupplier,
-    FarmLodgingValidationHelper, FarmlandValidationHelper, ManureStorageValidationHelper, OffRoadValidationHelper, PlanValidationHelper,
+    FarmLodgingValidationHelper, FarmlandValidationHelper, ManureStorageValidationHelper, OffRoadValidationHelper,
     RoadValidationHelper, InlandShippingValidationHelper, MaritimeShippingValidationHelper {
 
   private static final List<FarmConstructHelper> FARM_LODGING_CATEGORIES = Arrays.asList(
@@ -538,11 +537,6 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
   }
 
   @Override
-  public PlanValidationHelper planValidation() {
-    return this;
-  }
-
-  @Override
   public RoadValidationHelper roadValidation() {
     return this;
   }
@@ -718,11 +712,6 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
   public boolean isValidManureStorageCode(final String manureStorageCode) {
     return MANURE_STORAGE_CATEGORIES.stream()
         .anyMatch(c -> c.equalsIgnoreCase(manureStorageCode));
-  }
-
-  @Override
-  public boolean isValidPlanCode(final String planCode) {
-    return plan(planCode).isPresent();
   }
 
   @Override

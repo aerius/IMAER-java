@@ -20,7 +20,6 @@ import java.util.Map;
 
 import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.v2.source.OffRoadMobileEmissionSource;
-import nl.overheid.aerius.shared.domain.v2.source.plan.Plan;
 import nl.overheid.aerius.shared.domain.v2.source.shipping.inland.InlandShipping;
 import nl.overheid.aerius.shared.domain.v2.source.shipping.inland.MooringInlandShipping;
 import nl.overheid.aerius.shared.domain.v2.source.shipping.maritime.MaritimeShipping;
@@ -34,34 +33,26 @@ import nl.overheid.aerius.shared.exception.AeriusException;
 public class SubSourceEmissionsCalculator {
 
   private final OffRoadMobileEmissionsCalculator offRoadMobileEmissionsCalculator;
-  private final PlanEmissionsCalculator planEmissionsCalculator;
   private final InlandShippingEmissionsCalculator inlandShippingEmissionsCalculator;
   private final MaritimeShippingEmissionsCalculator maritimeShippingEmissionsCalculator;
 
   public SubSourceEmissionsCalculator(final EmissionFactorSupplier emissionFactorSupplier) {
     this(
         new OffRoadMobileEmissionsCalculator(emissionFactorSupplier.offRoadMobile()),
-        new PlanEmissionsCalculator(emissionFactorSupplier.plan()),
         new InlandShippingEmissionsCalculator(emissionFactorSupplier.inlandShipping()),
         new MaritimeShippingEmissionsCalculator(emissionFactorSupplier.maritimeShipping()));
   }
 
   SubSourceEmissionsCalculator(final OffRoadMobileEmissionsCalculator offRoadMobileEmissionsCalculator,
-      final PlanEmissionsCalculator planEmissionsCalculator,
       final InlandShippingEmissionsCalculator inlandShippingEmissionsCalculator,
       final MaritimeShippingEmissionsCalculator maritimeShippingEmissionsCalculator) {
     this.offRoadMobileEmissionsCalculator = offRoadMobileEmissionsCalculator;
-    this.planEmissionsCalculator = planEmissionsCalculator;
     this.inlandShippingEmissionsCalculator = inlandShippingEmissionsCalculator;
     this.maritimeShippingEmissionsCalculator = maritimeShippingEmissionsCalculator;
   }
 
   public Map<Substance, Double> calculateOffRoadEmissions(final OffRoadMobileEmissionSource emissionSource) throws AeriusException {
     return offRoadMobileEmissionsCalculator.calculateEmissions(emissionSource);
-  }
-
-  public Map<Substance, Double> calculatePlanEmissions(final Plan plan) {
-    return planEmissionsCalculator.calculatePlanEmissions(plan);
   }
 
   public Map<Substance, Double> calculateInlandDockedEmissions(final MooringInlandShipping mooringInlandShipping, final ShippingLaden laden)

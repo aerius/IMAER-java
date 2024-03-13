@@ -38,7 +38,6 @@ import nl.overheid.aerius.shared.exception.AeriusException;
     @Type(value = FarmLodgingEmissionSource.class, name = EmissionSourceType.Names.FARM_LODGE),
     @Type(value = FarmlandEmissionSource.class, name = EmissionSourceType.Names.FARMLAND),
     @Type(value = ManureStorageEmissionSource.class, name = EmissionSourceType.Names.MANURE_STORAGE),
-    @Type(value = PlanEmissionSource.class, name = EmissionSourceType.Names.PLAN),
     @Type(value = OffRoadMobileEmissionSource.class, name = EmissionSourceType.Names.OFFROAD_MOBILE),
     @Type(value = SRM1RoadEmissionSource.class, name = EmissionSourceType.Names.SRM1_ROAD),
     @Type(value = SRM2RoadEmissionSource.class, name = EmissionSourceType.Names.SRM2_ROAD),
