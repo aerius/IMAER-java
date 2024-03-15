@@ -31,8 +31,6 @@ public interface EmissionFactorSupplier {
     return null;
   }
 
-  PlanEmissionFactorSupplier plan();
-
   OffRoadMobileEmissionFactorSupplier offRoadMobile();
 
   RoadEmissionFactorSupplier road();
