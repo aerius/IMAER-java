@@ -38,6 +38,7 @@ import nl.overheid.aerius.shared.domain.v2.source.road.RoadStandardsInterpolatio
 import nl.overheid.aerius.shared.domain.v2.source.shipping.inland.InlandWaterway;
 import nl.overheid.aerius.shared.domain.v2.source.shipping.inland.WaterwayDirection;
 import nl.overheid.aerius.shared.domain.v2.source.shipping.maritime.ShippingMovementType;
+import nl.overheid.aerius.shared.emissions.ColdStartEmissionFactorSupplier;
 import nl.overheid.aerius.shared.emissions.EmissionFactorSupplier;
 import nl.overheid.aerius.shared.emissions.FarmEmissionFactorType;
 import nl.overheid.aerius.shared.emissions.FarmLodgingEmissionFactorSupplier;
@@ -51,6 +52,7 @@ import nl.overheid.aerius.shared.emissions.shipping.InlandShippingRouteEmissionP
 import nl.overheid.aerius.shared.emissions.shipping.MaritimeShippingRouteEmissionPoint;
 import nl.overheid.aerius.shared.emissions.shipping.ShippingLaden;
 import nl.overheid.aerius.shared.exception.AeriusException;
+import nl.overheid.aerius.validation.ColdStartValidationHelper;
 import nl.overheid.aerius.validation.FarmLodgingValidationHelper;
 import nl.overheid.aerius.validation.FarmlandValidationHelper;
 import nl.overheid.aerius.validation.InlandShippingValidationHelper;
@@ -64,9 +66,9 @@ import nl.overheid.aerius.validation.ValidationHelper;
  * Test data for validation.
  */
 public class TestValidationAndEmissionHelper implements ValidationHelper, EmissionFactorSupplier,
-    FarmLodgingEmissionFactorSupplier, FarmlandEmissionFactorSupplier, ManureStorageEmissionFactorSupplier,
-    OffRoadMobileEmissionFactorSupplier, RoadEmissionFactorSupplier, InlandShippingEmissionFactorSupplier, MaritimeShippingEmissionFactorSupplier,
-    FarmLodgingValidationHelper, FarmlandValidationHelper, ManureStorageValidationHelper, OffRoadValidationHelper,
+    FarmLodgingEmissionFactorSupplier, FarmlandEmissionFactorSupplier, ManureStorageEmissionFactorSupplier, OffRoadMobileEmissionFactorSupplier,
+    ColdStartEmissionFactorSupplier, RoadEmissionFactorSupplier, InlandShippingEmissionFactorSupplier, MaritimeShippingEmissionFactorSupplier,
+    FarmLodgingValidationHelper, FarmlandValidationHelper, ManureStorageValidationHelper, OffRoadValidationHelper, ColdStartValidationHelper,
     RoadValidationHelper, InlandShippingValidationHelper, MaritimeShippingValidationHelper {
 
   private static final List<FarmConstructHelper> FARM_LODGING_CATEGORIES = Arrays.asList(
@@ -289,6 +291,8 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
           80, "Urb", "HGV", false,
           null));
 
+  private static final List<String> COLD_START_SOURCE_CATEGORIES = Arrays.asList();
+
   private static final List<String> ON_ROAD_MOBILE_SOURCE_CATEGORIES = Arrays.asList(
       "BA-B-E3",
       "BA-D-E6-ZW",
@@ -496,6 +500,11 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
   }
 
   @Override
+  public ColdStartEmissionFactorSupplier coldStart() {
+    return this;
+  }
+
+  @Override
   public RoadEmissionFactorSupplier road() {
     return this;
   }
@@ -527,6 +536,11 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
 
   @Override
   public OffRoadValidationHelper offRoadMobileValidation() {
+    return this;
+  }
+
+  @Override
+  public ColdStartValidationHelper coldStartValidation() {
     return this;
   }
 
@@ -764,6 +778,30 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
   }
 
   @Override
+  public Map<Substance, Double> getColdStartSpecificVehicleEmissionFactors(final String vehicleCode) {
+    return coldStartSpecific(vehicleCode)
+        .map(c -> Map.of(Substance.NOX, 10.0))
+        .orElse(null);
+  }
+
+  @Override
+  public Map<Substance, Double> getColdStartStandardVehicleEmissionFactors(final String vehicleCode) {
+    return coldStartSpecific(vehicleCode)
+        .map(c -> Map.of(Substance.NOX, 10.0))
+        .orElse(null);
+  }
+
+  @Override
+  public boolean isValidColdStartSpecificVehicleCode(final String vehicleCode) {
+    return coldStartSpecific(vehicleCode).isPresent();
+  }
+
+  @Override
+  public boolean isValidColdStartStandardVehicleCode(final String vehicleCode) {
+    return false;
+  }
+
+  @Override
   public boolean isValidRoadSpecificVehicleCode(final String specificVehicleCode) {
     return roadSpecific(specificVehicleCode).isPresent();
   }
@@ -905,6 +943,12 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
   private Optional<OffRoadConstructHelper> offRoad(final String offRoadMobileSourceCode) {
     return OFF_ROAD_MOBILE_SOURCE_CATEGORIES.stream()
         .filter(c -> c.code.equalsIgnoreCase(offRoadMobileSourceCode))
+        .findFirst();
+  }
+
+  private Optional<String> coldStartSpecific(final String specificVehicleCode) {
+    return COLD_START_SOURCE_CATEGORIES.stream()
+        .filter(c -> c.equalsIgnoreCase(specificVehicleCode))
         .findFirst();
   }
 

@@ -14,27 +14,13 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.shared.emissions;
+package nl.overheid.aerius.validation;
 
 /**
- * Supplier container for source type specific emission factor supppliers.
+ * Helper interface to validate ColdStart sources.
  */
-public interface EmissionFactorSupplier {
+public interface ColdStartValidationHelper {
+  boolean isValidColdStartSpecificVehicleCode(String vehicleCode);
 
-  FarmLodgingEmissionFactorSupplier farmLodging();
-
-  FarmlandEmissionFactorSupplier farmland();
-
-  ManureStorageEmissionFactorSupplier manureStorage();
-
-  OffRoadMobileEmissionFactorSupplier offRoadMobile();
-
-  ColdStartEmissionFactorSupplier coldStart();
-
-  RoadEmissionFactorSupplier road();
-
-  InlandShippingEmissionFactorSupplier inlandShipping();
-
-  MaritimeShippingEmissionFactorSupplier maritimeShipping();
-
+  boolean isValidColdStartStandardVehicleCode(String vehicleCode);
 }

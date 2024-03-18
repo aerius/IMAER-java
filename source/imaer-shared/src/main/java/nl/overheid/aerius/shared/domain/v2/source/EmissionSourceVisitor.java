@@ -33,6 +33,8 @@ public interface EmissionSourceVisitor<T> {
 
   T visit(OffRoadMobileEmissionSource emissionSource, IsFeature feature) throws AeriusException;
 
+  T visit(ColdStartEmissionSource emissionSource, IsFeature feature) throws AeriusException;
+
   T visit(SRM1RoadEmissionSource emissionSource, IsFeature feature) throws AeriusException;
 
   T visit(SRM2RoadEmissionSource emissionSource, IsFeature feature) throws AeriusException;

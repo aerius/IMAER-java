@@ -21,6 +21,7 @@ import java.util.List;
 
 import nl.overheid.aerius.shared.domain.v2.geojson.IsFeature;
 import nl.overheid.aerius.shared.domain.v2.source.ADMSRoadEmissionSource;
+import nl.overheid.aerius.shared.domain.v2.source.ColdStartEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceFeature;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceVisitor;
 import nl.overheid.aerius.shared.domain.v2.source.FarmLodgingEmissionSource;
@@ -113,6 +114,11 @@ public class ValidationVisitor implements EmissionSourceVisitor<Boolean> {
   @Override
   public Boolean visit(final OffRoadMobileEmissionSource emissionSource, final IsFeature feature) throws AeriusException {
     return new OffRoadValidator(errors, warnings, validationHelper.offRoadMobileValidation()).validate(emissionSource, feature);
+  }
+
+  @Override
+  public Boolean visit(final ColdStartEmissionSource emissionSource, final IsFeature feature) throws AeriusException {
+    return new ColdStartValidator(errors, warnings, validationHelper.coldStartValidation()).validate(emissionSource, feature);
   }
 
   @Override

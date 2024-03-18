@@ -21,6 +21,9 @@ import java.util.Map;
 
 import nl.overheid.aerius.shared.domain.Substance;
 
+/**
+ * Road vehicles where emissions factors are specified by the user.
+ */
 public class CustomVehicles extends Vehicles {
 
   private static final long serialVersionUID = 1L;

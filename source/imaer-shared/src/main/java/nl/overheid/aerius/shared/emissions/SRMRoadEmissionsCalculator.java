@@ -20,26 +20,23 @@ import java.math.BigDecimal;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.OptionalDouble;
 
 import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
 import nl.overheid.aerius.shared.domain.v2.source.RoadEmissionSource;
-import nl.overheid.aerius.shared.domain.v2.source.SRM1RoadEmissionSource;
-import nl.overheid.aerius.shared.domain.v2.source.SRM2RoadEmissionSource;
-import nl.overheid.aerius.shared.domain.v2.source.road.CustomVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.RoadStandardEmissionFactorsKey;
-import nl.overheid.aerius.shared.domain.v2.source.road.SpecificVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.StandardVehicleMeasure;
 import nl.overheid.aerius.shared.domain.v2.source.road.StandardVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.ValuesPerVehicleType;
 import nl.overheid.aerius.shared.domain.v2.source.road.Vehicles;
 import nl.overheid.aerius.shared.exception.AeriusException;
-import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 import nl.overheid.aerius.shared.geometry.GeometryCalculator;
 
-public class SRMRoadEmissionsCalculator {
+/**
+ * Calculate emissions of SRM1 and SRM2 road sources.
+ */
+class SRMRoadEmissionsCalculator extends BaseRoadEmissionsCalculator<RoadEmissionSource> {
 
   /**
    * Conversion from gram/meter to kilogram/kilometer.
@@ -54,90 +51,30 @@ public class SRMRoadEmissionsCalculator {
     this.geometryCalculator = geometryCalculator;
   }
 
-  public Map<Substance, Double> calculateEmissions(final SRM1RoadEmissionSource roadEmissionSource, final Geometry geometry) throws AeriusException {
-    final BigDecimal measure = BigDecimal.valueOf(geometryCalculator.determineMeasure(geometry));
+  public Map<Substance, Double> calculateEmissions(final RoadEmissionSource roadEmissionSource, final Geometry geometry) throws AeriusException {
+    return calculateEmissions(roadEmissionSource, BigDecimal.valueOf(geometryCalculator.determineMeasure(geometry)));
+  }
+
+  @Override
+  protected Double toTotalEmission(final RoadEmissionSource roadEmissionSource, final BigDecimal emissionPerMeter, final BigDecimal measure) {
     final BigDecimal tunnelFactor = BigDecimal.valueOf(roadEmissionSource.getTunnelFactor());
-    final Map<Substance, BigDecimal> summed = new EnumMap<>(Substance.class);
 
-    for (final Vehicles vehicles : roadEmissionSource.getSubSources()) {
-      final Map<Substance, BigDecimal> emissionsForVehicles = calculateEmissions(roadEmissionSource, vehicles);
-
-      emissionsForVehicles.forEach((key, value) -> vehicles.getEmissions().put(key, toTotalEmission(value, measure, tunnelFactor)));
-      emissionsForVehicles.forEach((key, value) -> summed.merge(key, value, (v1, v2) -> v1.add(v2)));
-    }
-    final Map<Substance, Double> result = new EnumMap<>(Substance.class);
-
-    summed.forEach((key, value) -> result.put(key, toTotalEmission(value, measure, tunnelFactor)));
-    return result;
+    return emissionPerMeter.multiply(tunnelFactor).multiply(measure).divide(GRAM_PER_KM_TO_KG_PER_METER).doubleValue();
   }
 
-  public Map<Substance, Double> calculateEmissions(final SRM2RoadEmissionSource roadEmissionSource, final Geometry geometry) throws AeriusException {
-    final BigDecimal measure = BigDecimal.valueOf(geometryCalculator.determineMeasure(geometry));
-    final BigDecimal tunnelFactor = BigDecimal.valueOf(roadEmissionSource.getTunnelFactor());
-    final Map<Substance, BigDecimal> summed = new EnumMap<>(Substance.class);
-
-    for (final Vehicles vehicles : roadEmissionSource.getSubSources()) {
-      final Map<Substance, BigDecimal> emissionsForVehicles = calculateEmissions(roadEmissionSource, vehicles);
-
-      emissionsForVehicles.forEach((key, value) -> vehicles.getEmissions().put(key, toTotalEmission(value, measure, tunnelFactor)));
-      emissionsForVehicles.forEach((key, value) -> summed.merge(key, value, (v1, v2) -> v1.add(v2)));
-    }
-    final Map<Substance, Double> result = new EnumMap<>(Substance.class);
-
-    summed.forEach((key, value) -> result.put(key, toTotalEmission(value, measure, tunnelFactor)));
-    return result;
+  @Override
+  protected Map<Substance, Double> getRoadSpecificVehicleEmissionFactors(final String vehicleCode, final RoadEmissionSource roadEmissionSource) {
+    return emissionFactorSupplier.getRoadSpecificVehicleEmissionFactors(vehicleCode, roadEmissionSource.getRoadTypeCode());
   }
 
-  private Map<Substance, BigDecimal> calculateEmissions(final RoadEmissionSource roadEmissionSource, final Vehicles vehicles)
-      throws AeriusException {
-    // Determine emissions per km
-    if (vehicles instanceof CustomVehicles) {
-      return calculateEmissions((CustomVehicles) vehicles);
-    } else if (vehicles instanceof SpecificVehicles) {
-      return calculateEmissions((SpecificVehicles) vehicles, roadEmissionSource.getRoadTypeCode());
-    } else if (vehicles instanceof StandardVehicles) {
-      return calculateEmissions((StandardVehicles) vehicles, roadEmissionSource.getRoadAreaCode(), roadEmissionSource.getRoadTypeCode());
-    } else {
-      throw new AeriusException(ImaerExceptionReason.INTERNAL_ERROR, "Unknown Vehicles type");
-    }
-  }
+  @Override
+  protected Map<Substance, BigDecimal> calculateEmissions(final StandardVehicles standardVehicles, final String standardVehicleCode,
+      final ValuesPerVehicleType valuesPerVehicleType, final RoadEmissionSource roadEmissionSource) {
+    final String roadAreaCode = roadEmissionSource.getRoadAreaCode();
+    final String roadTypeCode = roadEmissionSource.getRoadTypeCode();
 
-  Map<Substance, BigDecimal> calculateEmissions(final CustomVehicles customVehicles) {
     final Map<Substance, BigDecimal> results = new EnumMap<>(Substance.class);
-    final BigDecimal numberOfVehiclesPerYear = getVehiclesPerYear(customVehicles, customVehicles.getVehiclesPerTimeUnit());
-    customVehicles.getEmissionFactors().forEach(
-        (key, value) -> results.put(key, BigDecimal.valueOf(value).multiply(numberOfVehiclesPerYear)));
-    return results;
-  }
-
-  Map<Substance, BigDecimal> calculateEmissions(final SpecificVehicles specificVehicles, final String roadTypeCode) {
-    final Map<Substance, BigDecimal> results = new EnumMap<>(Substance.class);
-    final BigDecimal numberOfVehiclesPerYear = getVehiclesPerYear(specificVehicles, specificVehicles.getVehiclesPerTimeUnit());
-    final Map<Substance, Double> emissionFactors = emissionFactorSupplier
-        .getRoadSpecificVehicleEmissionFactors(specificVehicles.getVehicleCode(), roadTypeCode);
-    emissionFactors.forEach(
-        (key, value) -> results.put(key, BigDecimal.valueOf(value).multiply(numberOfVehiclesPerYear)));
-
-    return results;
-  }
-
-  Map<Substance, BigDecimal> calculateEmissions(final StandardVehicles standardVehicles, final String roadAreaCode, final String roadTypeCode) {
-    final Map<Substance, BigDecimal> results = new EnumMap<>(Substance.class);
-
-    for (final Entry<String, ValuesPerVehicleType> entry : standardVehicles.getValuesPerVehicleTypes().entrySet()) {
-      final Map<Substance, BigDecimal> emissionsForVehicles =
-          calculateEmissions(standardVehicles, entry.getKey(), entry.getValue(), roadAreaCode, roadTypeCode);
-
-      emissionsForVehicles.forEach((key, value) -> results.merge(key, value, (v1, v2) -> v1.add(v2)));
-    }
-
-    return results;
-  }
-
-  Map<Substance, BigDecimal> calculateEmissions(final StandardVehicles standardVehicles, final String standardVehicleCode,
-      final ValuesPerVehicleType valuesPerVehicleType, final String roadAreaCode, final String roadTypeCode) {
-    final Map<Substance, BigDecimal> results = new EnumMap<>(Substance.class);
-    final BigDecimal numberOfVehiclesPerYear = getVehiclesPerYear(standardVehicles, valuesPerVehicleType.getVehiclesPerTimeUnit());
+    final BigDecimal numberOfVehiclesPerYear = getVehiclesPerTimeUnit(standardVehicles, valuesPerVehicleType.getVehiclesPerTimeUnit());
     final Map<Substance, BigDecimal> emissions = calculateNonStagnatedEmissionsPerVehicle(standardVehicles, standardVehicleCode, valuesPerVehicleType,
         roadAreaCode, roadTypeCode);
     final Map<Substance, BigDecimal> stagnatedEmissions = calculateStagnatedEmissionsPerVehicle(standardVehicles, standardVehicleCode,
@@ -169,9 +106,8 @@ public class SRMRoadEmissionsCalculator {
       final String standardVehicleCode, final ValuesPerVehicleType valuesPerVehicleType, final String roadAreaCode, final String roadTypeCode) {
     final Map<Substance, BigDecimal> results = new EnumMap<>(Substance.class);
     final BigDecimal nonStagnatedFraction = BigDecimal.ONE.subtract(BigDecimal.valueOf(valuesPerVehicleType.getStagnationFraction()));
-    final Map<Substance, Double> emissionFactorsNotStagnated =
-        emissionFactorSupplier.getRoadStandardVehicleEmissionFactors(
-            new RoadStandardEmissionFactorsKey(roadAreaCode, roadTypeCode, standardVehicleCode,
+    final Map<Substance, Double> emissionFactorsNotStagnated = emissionFactorSupplier.getRoadStandardVehicleEmissionFactors(
+        new RoadStandardEmissionFactorsKey(roadAreaCode, roadTypeCode, standardVehicleCode,
             standardVehicles.getMaximumSpeed(), standardVehicles.getStrictEnforcement(), null));
 
     emissionFactorsNotStagnated.forEach((key, value) -> results.put(key, BigDecimal.valueOf(value).multiply(nonStagnatedFraction)));
@@ -190,12 +126,11 @@ public class SRMRoadEmissionsCalculator {
     return results;
   }
 
-  private static BigDecimal getVehiclesPerYear(final Vehicles vehicles, final double vehiclesPerTimeUnit) {
+  /**
+   * Returns the number of vehicles per year.
+   */
+  @Override
+  protected BigDecimal getVehiclesPerTimeUnit(final Vehicles vehicles, final double vehiclesPerTimeUnit) {
     return BigDecimal.valueOf(vehicles.getTimeUnit().getPerYear(vehiclesPerTimeUnit));
   }
-
-  private static double toTotalEmission(final BigDecimal emissionPerMeter, final BigDecimal measure, final BigDecimal tunnelFactor) {
-    return emissionPerMeter.multiply(tunnelFactor).multiply(measure).divide(GRAM_PER_KM_TO_KG_PER_METER).doubleValue();
-  }
-
 }

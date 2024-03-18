@@ -29,10 +29,11 @@ import nl.overheid.aerius.shared.domain.v2.source.base.AbstractSubSource;
     @Type(value = CustomVehicles.class, name = "CUSTOM"),
     @Type(value = SpecificVehicles.class, name = "SPECIFIC"),
     @Type(value = StandardVehicles.class, name = "STANDARD"),
+    @Type(value = StandardColdStartVehicles.class, name = "STANDARD_CS"),
 })
 public abstract class Vehicles extends AbstractSubSource {
 
-  private static final long serialVersionUID = 2L;
+  private static final long serialVersionUID = 3L;
 
   private TimeUnit timeUnit = TimeUnit.DAY;
 

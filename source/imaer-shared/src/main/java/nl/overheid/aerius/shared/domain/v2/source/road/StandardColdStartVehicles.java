@@ -14,27 +14,25 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.shared.emissions;
+package nl.overheid.aerius.shared.domain.v2.source.road;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * Supplier container for source type specific emission factor supppliers.
+ * Cold start standard vehicles.
  */
-public interface EmissionFactorSupplier {
+public class StandardColdStartVehicles extends Vehicles {
 
-  FarmLodgingEmissionFactorSupplier farmLodging();
+  private static final long serialVersionUID = 1L;
 
-  FarmlandEmissionFactorSupplier farmland();
+  private Map<String, Double> valuesPerVehicleTypes = new HashMap<>();
 
-  ManureStorageEmissionFactorSupplier manureStorage();
+  public Map<String, Double> getValuesPerVehicleTypes() {
+    return valuesPerVehicleTypes;
+  }
 
-  OffRoadMobileEmissionFactorSupplier offRoadMobile();
-
-  ColdStartEmissionFactorSupplier coldStart();
-
-  RoadEmissionFactorSupplier road();
-
-  InlandShippingEmissionFactorSupplier inlandShipping();
-
-  MaritimeShippingEmissionFactorSupplier maritimeShipping();
-
+  public void setValuesPerVehicleTypes(final Map<String, Double> valuesPerVehicleTypes) {
+    this.valuesPerVehicleTypes = valuesPerVehicleTypes;
+  }
 }

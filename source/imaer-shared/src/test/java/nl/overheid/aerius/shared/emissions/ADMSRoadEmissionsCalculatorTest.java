@@ -52,6 +52,9 @@ import nl.overheid.aerius.shared.domain.v2.source.road.Vehicles;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.geometry.GeometryCalculator;
 
+/**
+ * Test class for {@link ADMSRoadEmissionsCalculator}.
+ */
 @ExtendWith(MockitoExtension.class)
 class ADMSRoadEmissionsCalculatorTest {
 
@@ -70,9 +73,7 @@ class ADMSRoadEmissionsCalculatorTest {
 
   @Test
   void testCalculateEmissionsADMS() throws AeriusException {
-    final ADMSRoadEmissionSource emissionSource = new ADMSRoadEmissionSource();
-    emissionSource.setRoadAreaCode(TEST_ROAD_AREA);
-    emissionSource.setRoadTypeCode(TEST_ROAD_TYPE_ADMS);
+    final ADMSRoadEmissionSource emissionSource = createADMSRoadEmissionSource();
     final Geometry geometry = mock(Geometry.class);
     when(geometryCalculator.determineMeasure(geometry)).thenReturn(321.5);
     final double gradient = 3.4;
@@ -102,6 +103,13 @@ class ADMSRoadEmissionsCalculatorTest {
     assertEquals(1.7500E6, emissionSource.getSubSources().get(2).getEmissions().get(Substance.NH3), 1E3, "NH3 emissions third subsource");
   }
 
+  private ADMSRoadEmissionSource createADMSRoadEmissionSource() {
+    final ADMSRoadEmissionSource emissionSource = new ADMSRoadEmissionSource();
+    emissionSource.setRoadAreaCode(TEST_ROAD_AREA);
+    emissionSource.setRoadTypeCode(TEST_ROAD_TYPE_ADMS);
+    return emissionSource;
+  }
+
   @Test
   void testCalculateEmissionsCustomVehicles() {
     final CustomVehicles vehicles = createCustom();
@@ -116,7 +124,7 @@ class ADMSRoadEmissionsCalculatorTest {
   void testCalculateEmissionsSpecificVehicles() {
     final SpecificVehicles vehicles = createSpecific();
 
-    final Map<Substance, BigDecimal> results = emissionsCalculator.calculateEmissions(vehicles, TEST_ROAD_TYPE_ADMS);
+    final Map<Substance, BigDecimal> results = emissionsCalculator.calculateEmissions(vehicles, createADMSRoadEmissionSource());
 
     // 12 * 500 * 7.0 / 365
     assertEquals(115.0685, results.get(Substance.NOX).doubleValue(), 1E-3, "NOx emissions specific vehicle");

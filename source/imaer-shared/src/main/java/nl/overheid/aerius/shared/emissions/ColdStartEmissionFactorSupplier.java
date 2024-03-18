@@ -16,25 +16,29 @@
  */
 package nl.overheid.aerius.shared.emissions;
 
+import java.util.Map;
+
+import nl.overheid.aerius.shared.domain.Substance;
+
 /**
- * Supplier container for source type specific emission factor supppliers.
+ * Interface for getting the emission factors for cold start.
  */
-public interface EmissionFactorSupplier {
+public interface ColdStartEmissionFactorSupplier {
 
-  FarmLodgingEmissionFactorSupplier farmLodging();
+  /**
+   * Obtain emission factors per cold start for a specific vehicle based on the code.
+   *
+   * @param vehicleCode code for the vehicle
+   * @return emission factors
+   */
+  Map<Substance, Double> getColdStartSpecificVehicleEmissionFactors(String vehicleCode);
 
-  FarmlandEmissionFactorSupplier farmland();
-
-  ManureStorageEmissionFactorSupplier manureStorage();
-
-  OffRoadMobileEmissionFactorSupplier offRoadMobile();
-
-  ColdStartEmissionFactorSupplier coldStart();
-
-  RoadEmissionFactorSupplier road();
-
-  InlandShippingEmissionFactorSupplier inlandShipping();
-
-  MaritimeShippingEmissionFactorSupplier maritimeShipping();
+  /**
+   * Obtain emission factors per cold start for a standard vehicle based on the code.
+   *
+   * @param vehicleCode code for the vehicle
+   * @return emission factors
+   */
+  Map<Substance, Double> getColdStartStandardVehicleEmissionFactors(String vehicleCode);
 
 }

@@ -16,6 +16,9 @@
  */
 package nl.overheid.aerius.shared.domain.v2.source.road;
 
+/**
+ * Road vehicles with emission factors based on vehicle classes, like euro class.
+ */
 public class SpecificVehicles extends Vehicles {
 
   private static final long serialVersionUID = 1L;

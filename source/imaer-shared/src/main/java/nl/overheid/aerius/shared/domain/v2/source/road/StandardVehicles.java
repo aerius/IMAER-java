@@ -23,6 +23,9 @@ import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+/**
+ * Road vehicles with emission factors based on the type of vehicle.
+ */
 public class StandardVehicles extends Vehicles {
 
   private static final long serialVersionUID = 2L;
