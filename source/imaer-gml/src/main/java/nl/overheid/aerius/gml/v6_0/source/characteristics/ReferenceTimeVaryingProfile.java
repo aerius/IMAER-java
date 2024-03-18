@@ -16,39 +16,28 @@
  */
 package nl.overheid.aerius.gml.v6_0.source.characteristics;
 
-import javax.xml.bind.annotation.XmlElementRef;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-import nl.overheid.aerius.gml.base.AbstractProperty;
+import nl.overheid.aerius.gml.base.characteristics.IsGmlReferenceTimeVaryingProfile;
 import nl.overheid.aerius.gml.v6_0.base.CalculatorSchema;
+import nl.overheid.aerius.gml.v6_0.base.ReferenceType;
 
-@XmlType(name = "DiurnalVariationPropertyType", namespace = CalculatorSchema.NAMESPACE)
-public class DiurnalVariationProperty extends AbstractProperty<AbstractDiurnalVariation> {
+@XmlRootElement(name = "ReferenceTimeVaryingProfile", namespace = CalculatorSchema.NAMESPACE)
+@XmlType(name = "ReferenceTimeVaryingProfileType", namespace = CalculatorSchema.NAMESPACE)
+public class ReferenceTimeVaryingProfile extends AbstractTimeVaryingProfile implements IsGmlReferenceTimeVaryingProfile {
 
-  /**
-   * Default constructor, needed for JAXB.
-   */
-  public DiurnalVariationProperty() {
-    super(null);
-  }
-
-  /**
-   * Convenience constructor.
-   * @param diurnalVariation The property to use.
-   */
-  public DiurnalVariationProperty(final AbstractDiurnalVariation diurnalVariation) {
-    super(diurnalVariation);
-  }
-
-  @XmlElementRef
-  @Override
-  public AbstractDiurnalVariation getProperty() {
-    return super.getProperty();
-  }
+  private ReferenceType customTimeVaryingProfile;
 
   @Override
-  public void setProperty(final AbstractDiurnalVariation property) {
-    super.setProperty(property);
+  @XmlElement(namespace = CalculatorSchema.NAMESPACE)
+  public ReferenceType getCustomTimeVaryingProfile() {
+    return customTimeVaryingProfile;
+  }
+
+  public void setCustomTimeVaryingProfile(final ReferenceType customTimeVaryingProfile) {
+    this.customTimeVaryingProfile = customTimeVaryingProfile;
   }
 
 }

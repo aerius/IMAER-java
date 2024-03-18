@@ -40,7 +40,6 @@ import nl.overheid.aerius.shared.domain.v2.source.MaritimeShippingEmissionSource
 import nl.overheid.aerius.shared.domain.v2.source.MooringInlandShippingEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.MooringMaritimeShippingEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.OffRoadMobileEmissionSource;
-import nl.overheid.aerius.shared.domain.v2.source.PlanEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.SRM1RoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.SRM2RoadEmissionSource;
 import nl.overheid.aerius.shared.exception.AeriusException;
@@ -51,7 +50,6 @@ class EmissionsCalculatorTest {
   @Mock FarmLodgingEmissionsCalculator farmLodgingCalculator;
   @Mock FarmlandEmissionsCalculator farmlandCalculator;
   @Mock ManureStorageEmissionsCalculator manureStorageCalculator;
-  @Mock PlanEmissionsCalculator planCalculator;
   @Mock OffRoadMobileEmissionsCalculator offRoadMobileCalculator;
   @Mock SRMRoadEmissionsCalculator srmRoadCalculator;
   @Mock ADMSRoadEmissionsCalculator admsRoadCalculator;
@@ -63,7 +61,7 @@ class EmissionsCalculatorTest {
   @BeforeEach
   void beforeEach() throws AeriusException {
     emissionsCalculator =
-        new EmissionsCalculator(farmLodgingCalculator, farmlandCalculator, manureStorageCalculator, planCalculator, offRoadMobileCalculator,
+        new EmissionsCalculator(farmLodgingCalculator, farmlandCalculator, manureStorageCalculator, offRoadMobileCalculator,
             srmRoadCalculator, admsRoadCalculator, inlandShippingCalculator, maritimeShippingCalculator);
   }
 
@@ -101,18 +99,6 @@ class EmissionsCalculatorTest {
 
     assertEquals(calculatedEmissions, result,
         "Calculated emission values from ManureStorageEmissionsCalculator should be returned for manure storage source");
-  }
-
-  @Test
-  void testVisitPlan() throws AeriusException {
-    final Map<Substance, Double> calculatedEmissions = Map.of(Substance.NH3, 324.0);
-    final PlanEmissionSource emissionSource = mock(PlanEmissionSource.class);
-    when(planCalculator.calculateEmissions(emissionSource)).thenReturn(calculatedEmissions);
-
-    final Map<Substance, Double> result = emissionsCalculator.visit(emissionSource, null);
-
-    assertEquals(calculatedEmissions, result,
-        "Calculated emission values from PlanEmissionsCalculator should be returned for plan source");
   }
 
   @Test

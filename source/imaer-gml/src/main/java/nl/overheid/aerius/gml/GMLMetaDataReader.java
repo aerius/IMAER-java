@@ -102,22 +102,6 @@ public class GMLMetaDataReader {
   }
 
   /**
-   * Temporary project period specified in the GML data.
-   * @return temporary period for the project (null if permanent project).
-   */
-  public Integer readTemporaryProjectPeriodYear() {
-    return checkFeatureCollection(featureCollection) ? featureCollection.getMetaData().getTemporaryPeriod() : null;
-  }
-
-  /**
-   * Permit Calculation Radius type specified in the GML data.
-   * @return temporary period for the project (null if no calculation radius).
-   */
-  public String readPermitCalculationRadiusType() {
-    return checkFeatureCollection(featureCollection) ? featureCollection.getMetaData().getPermitCalculationRadiusType() : null;
-  }
-
-  /**
    * AERIUS version specified in the GML data.
    * @return AERIUS version
    */

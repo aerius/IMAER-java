@@ -22,14 +22,14 @@ import javax.xml.bind.annotation.XmlType;
 
 import nl.overheid.aerius.gml.base.source.road.IsGmlADMSRoad;
 import nl.overheid.aerius.gml.v6_0.base.CalculatorSchema;
-import nl.overheid.aerius.gml.v6_0.source.characteristics.AbstractDiurnalVariation;
-import nl.overheid.aerius.gml.v6_0.source.characteristics.DiurnalVariationProperty;
+import nl.overheid.aerius.gml.v6_0.source.characteristics.AbstractTimeVaryingProfile;
+import nl.overheid.aerius.gml.v6_0.source.characteristics.TimeVaryingProfileProperty;
 
 /**
  *
  */
 @XmlType(name = "ADMSRoad", namespace = CalculatorSchema.NAMESPACE, propOrder = {"width", "elevation", "gradient", "coverage",
-    "barrierLeft", "barrierRight", "diurnalVariationProperty"})
+    "barrierLeft", "barrierRight", "hourlyVariationProperty", "monthlyVariationProperty"})
 public class ADMSRoad extends RoadEmissionSource implements IsGmlADMSRoad {
 
   private double width;
@@ -38,7 +38,8 @@ public class ADMSRoad extends RoadEmissionSource implements IsGmlADMSRoad {
   private double coverage;
   private ADMSRoadSideBarrierProperty barrierLeft;
   private ADMSRoadSideBarrierProperty barrierRight;
-  private AbstractDiurnalVariation diurnalVariation;
+  private AbstractTimeVaryingProfile hourlyVariation;
+  private AbstractTimeVaryingProfile monthlyVariation;
 
   @Override
   @XmlElement(namespace = CalculatorSchema.NAMESPACE)
@@ -100,23 +101,42 @@ public class ADMSRoad extends RoadEmissionSource implements IsGmlADMSRoad {
     this.barrierRight = barrierRight;
   }
 
-  @XmlElement(name = "diurnalVariation", namespace = CalculatorSchema.NAMESPACE)
-  public DiurnalVariationProperty getDiurnalVariationProperty() {
-    return diurnalVariation == null ? null : new DiurnalVariationProperty(diurnalVariation);
+  @XmlElement(name = "hourlyVariation", namespace = CalculatorSchema.NAMESPACE)
+  public TimeVaryingProfileProperty getHourlyVariationProperty() {
+    return hourlyVariation == null ? null : new TimeVaryingProfileProperty(hourlyVariation);
   }
 
-  public void setDiurnalVariationProperty(final DiurnalVariationProperty diurnalVariation) {
-    this.diurnalVariation = diurnalVariation == null ? null : diurnalVariation.getProperty();
+  public void setHourlyVariationProperty(final TimeVaryingProfileProperty hourlyVariation) {
+    this.hourlyVariation = hourlyVariation == null ? null : hourlyVariation.getProperty();
   }
 
   @Override
   @XmlTransient
-  public AbstractDiurnalVariation getTimeVaryingProfile() {
-    return diurnalVariation;
+  public AbstractTimeVaryingProfile getHourlyTimeVaryingProfile() {
+    return hourlyVariation;
   }
 
-  public void setDiurnalVariation(final AbstractDiurnalVariation diurnalVariation) {
-    this.diurnalVariation = diurnalVariation;
+  public void setHourlyTimeVaryingProfile(final AbstractTimeVaryingProfile hourlyVariation) {
+    this.hourlyVariation = hourlyVariation;
+  }
+
+  @XmlElement(name = "monthlyVariation", namespace = CalculatorSchema.NAMESPACE)
+  public TimeVaryingProfileProperty getMonthlyVariationProperty() {
+    return monthlyVariation == null ? null : new TimeVaryingProfileProperty(monthlyVariation);
+  }
+
+  public void setMonthlyVariationProperty(final TimeVaryingProfileProperty monthlyVariation) {
+    this.monthlyVariation = monthlyVariation == null ? null : monthlyVariation.getProperty();
+  }
+
+  @Override
+  @XmlTransient
+  public AbstractTimeVaryingProfile getMonthlyTimeVaryingProfile() {
+    return monthlyVariation;
+  }
+
+  public void setMonthlyTimeVaryingProfile(final AbstractTimeVaryingProfile monthlyVariation) {
+    this.monthlyVariation = monthlyVariation;
   }
 
 }

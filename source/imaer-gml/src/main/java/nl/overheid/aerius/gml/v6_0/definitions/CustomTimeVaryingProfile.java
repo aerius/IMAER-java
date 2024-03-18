@@ -26,8 +26,8 @@ import nl.overheid.aerius.gml.base.GMLSchema;
 import nl.overheid.aerius.gml.base.characteristics.IsGmlCustomTimeVaryingProfile;
 import nl.overheid.aerius.gml.v6_0.base.CalculatorSchema;
 
-@XmlType(name = "CustomDiurnalVariation", namespace = CalculatorSchema.NAMESPACE, propOrder = {"label", "customType", "values"})
-public class CustomDiurnalVariation implements IsGmlCustomTimeVaryingProfile {
+@XmlType(name = "CustomTimeVaryingProfile", namespace = CalculatorSchema.NAMESPACE, propOrder = {"label", "customType", "values"})
+public class CustomTimeVaryingProfile implements IsGmlCustomTimeVaryingProfile {
 
   private String id;
   private String label;

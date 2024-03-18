@@ -33,7 +33,7 @@ import nl.overheid.aerius.shared.domain.v2.characteristics.adms.SourceType;
 @XmlRootElement(name = "ADMSSourceCharacteristics", namespace = CalculatorSchema.NAMESPACE)
 @XmlType(name = "ADMSSourceCharacteristicsType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"height", "specificHeatCapacity",
     "sourceType", "diameter", "elevationAngle", "horizontalAngle", "width", "verticalDimension", "buoyancyType", "density",
-    "temperature", "effluxType", "verticalVelocity", "volumetricFlowRate", "diurnalVariationProperty", "monthlyVariationProperty"})
+    "temperature", "effluxType", "verticalVelocity", "volumetricFlowRate", "hourlyVariationProperty", "monthlyVariationProperty"})
 public class ADMSSourceCharacteristics extends AbstractSourceCharacteristics implements IsGmlADMSSourceCharacteristics {
 
   private double height;
@@ -50,8 +50,8 @@ public class ADMSSourceCharacteristics extends AbstractSourceCharacteristics imp
   private EffluxType effluxType;
   private Double verticalVelocity;
   private Double volumetricFlowRate;
-  private AbstractDiurnalVariation diurnalVariation;
-  private AbstractDiurnalVariation monthlyVariation;
+  private AbstractTimeVaryingProfile hourlyVariation;
+  private AbstractTimeVaryingProfile monthlyVariation;
 
   @Override
   @XmlElement(namespace = CalculatorSchema.NAMESPACE)
@@ -193,41 +193,41 @@ public class ADMSSourceCharacteristics extends AbstractSourceCharacteristics imp
     this.volumetricFlowRate = volumetricFlowRate;
   }
 
-  @XmlElement(name = "diurnalVariation", namespace = CalculatorSchema.NAMESPACE)
-  public DiurnalVariationProperty getDiurnalVariationProperty() {
-    return diurnalVariation == null ? null : new DiurnalVariationProperty(diurnalVariation);
+  @XmlElement(name = "hourlyVariation", namespace = CalculatorSchema.NAMESPACE)
+  public TimeVaryingProfileProperty getHourlyVariationProperty() {
+    return hourlyVariation == null ? null : new TimeVaryingProfileProperty(hourlyVariation);
   }
 
-  public void setDiurnalVariationProperty(final DiurnalVariationProperty diurnalVariation) {
-    this.diurnalVariation = diurnalVariation == null ? null : diurnalVariation.getProperty();
+  public void setHourlyVariationProperty(final TimeVaryingProfileProperty hourlyVariation) {
+    this.hourlyVariation = hourlyVariation == null ? null : hourlyVariation.getProperty();
   }
 
   @Override
   @XmlTransient
-  public AbstractDiurnalVariation getHourlyTimeVaryingProfile() {
-    return diurnalVariation;
+  public AbstractTimeVaryingProfile getHourlyTimeVaryingProfile() {
+    return hourlyVariation;
   }
 
-  public void setDiurnalVariation(final AbstractDiurnalVariation diurnalVariation) {
-    this.diurnalVariation = diurnalVariation;
+  public void setHourlyTimeVaryingProfile(final AbstractTimeVaryingProfile hourlyVariation) {
+    this.hourlyVariation = hourlyVariation;
   }
 
   @XmlElement(name = "monthlyVariation", namespace = CalculatorSchema.NAMESPACE)
-  public DiurnalVariationProperty getMonthlyVariationProperty() {
-    return monthlyVariation == null ? null : new DiurnalVariationProperty(monthlyVariation);
+  public TimeVaryingProfileProperty getMonthlyVariationProperty() {
+    return monthlyVariation == null ? null : new TimeVaryingProfileProperty(monthlyVariation);
   }
 
-  public void setMonthlyVariationProperty(final DiurnalVariationProperty monthlyVariation) {
+  public void setMonthlyVariationProperty(final TimeVaryingProfileProperty monthlyVariation) {
     this.monthlyVariation = monthlyVariation == null ? null : monthlyVariation.getProperty();
   }
 
   @Override
   @XmlTransient
-  public AbstractDiurnalVariation getMonthlyTimeVaryingProfile() {
+  public AbstractTimeVaryingProfile getMonthlyTimeVaryingProfile() {
     return monthlyVariation;
   }
 
-  public void setMonthlyVariation(final AbstractDiurnalVariation monthlyVariation) {
+  public void setMonthlyTimeVaryingProfile(final AbstractTimeVaryingProfile monthlyVariation) {
     this.monthlyVariation = monthlyVariation;
   }
 

@@ -32,7 +32,6 @@ import nl.overheid.aerius.shared.domain.v2.source.MaritimeShippingEmissionSource
 import nl.overheid.aerius.shared.domain.v2.source.MooringInlandShippingEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.MooringMaritimeShippingEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.OffRoadMobileEmissionSource;
-import nl.overheid.aerius.shared.domain.v2.source.PlanEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.SRM1RoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.SRM2RoadEmissionSource;
 import nl.overheid.aerius.shared.exception.AeriusException;
@@ -114,11 +113,6 @@ public class ValidationVisitor implements EmissionSourceVisitor<Boolean> {
   @Override
   public Boolean visit(final OffRoadMobileEmissionSource emissionSource, final IsFeature feature) throws AeriusException {
     return new OffRoadValidator(errors, warnings, validationHelper.offRoadMobileValidation()).validate(emissionSource, feature);
-  }
-
-  @Override
-  public Boolean visit(final PlanEmissionSource emissionSource, final IsFeature feature) throws AeriusException {
-    return new PlanValidator(errors, warnings, validationHelper.planValidation()).validate(emissionSource, feature);
   }
 
   @Override

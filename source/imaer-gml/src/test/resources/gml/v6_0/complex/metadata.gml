@@ -5,7 +5,6 @@
             <imaer:project>
                 <imaer:ProjectMetadata>
                     <imaer:year>2013</imaer:year>
-                    <imaer:temporaryPeriod>2</imaer:temporaryPeriod>
                     <imaer:name>SomeProject</imaer:name>
                     <imaer:corporation>Big Corp</imaer:corporation>
                     <imaer:facilityLocation>
@@ -50,11 +49,11 @@
                         </imaer:SpecifiedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>11.12</imaer:emissionHeight>
-                    <imaer:diurnalVariation>
-                        <imaer:StandardDiurnalVariation>
+                    <imaer:timeVaryingProfile>
+                        <imaer:StandardTimeVaryingProfile>
                             <imaer:standardType>INDUSTRIAL_ACTIVITY</imaer:standardType>
-                        </imaer:StandardDiurnalVariation>
-                    </imaer:diurnalVariation>
+                        </imaer:StandardTimeVaryingProfile>
+                    </imaer:timeVaryingProfile>
                 </imaer:EmissionSourceCharacteristics>
             </imaer:emissionSourceCharacteristics>
             <imaer:geometry>

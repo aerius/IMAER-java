@@ -91,17 +91,17 @@
                     <imaer:porosity>11.5</imaer:porosity>
                 </imaer:ADMSRoadSideBarrier>
             </imaer:barrierLeft>
-            <imaer:diurnalVariation>
-                <imaer:ReferenceDiurnalVariation>
-                    <imaer:customDiurnalVariation xlink:href="#Custom_DV.1"/>
-                </imaer:ReferenceDiurnalVariation>
-            </imaer:diurnalVariation>
+            <imaer:hourlyVariation>
+                <imaer:ReferenceTimeVaryingProfile>
+                    <imaer:customTimeVaryingProfile xlink:href="#Custom_DV.1"/>
+                </imaer:ReferenceTimeVaryingProfile>
+            </imaer:hourlyVariation>
         </imaer:ADMSRoad>
     </imaer:featureMember>
     <imaer:definitions>
         <imaer:Definitions>
-            <imaer:customDiurnalVariation>
-                <imaer:CustomDiurnalVariation gml:id="Custom_DV.1">
+            <imaer:customTimeVaryingProfile>
+                <imaer:CustomTimeVaryingProfile gml:id="Custom_DV.1">
                     <imaer:label>Example own spec</imaer:label>
                     <imaer:customType>THREE_DAY</imaer:customType>
                     <imaer:value>0.7</imaer:value>
@@ -176,8 +176,8 @@
                     <imaer:value>1.0</imaer:value>
                     <imaer:value>1.0</imaer:value>
                     <imaer:value>0.6</imaer:value>
-                </imaer:CustomDiurnalVariation>
-            </imaer:customDiurnalVariation>
+                </imaer:CustomTimeVaryingProfile>
+            </imaer:customTimeVaryingProfile>
         </imaer:Definitions>
     </imaer:definitions>
 </imaer:FeatureCollectionCalculator>

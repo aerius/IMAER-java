@@ -46,7 +46,6 @@ import nl.overheid.aerius.shared.emissions.InlandShippingEmissionFactorSupplier;
 import nl.overheid.aerius.shared.emissions.ManureStorageEmissionFactorSupplier;
 import nl.overheid.aerius.shared.emissions.MaritimeShippingEmissionFactorSupplier;
 import nl.overheid.aerius.shared.emissions.OffRoadMobileEmissionFactorSupplier;
-import nl.overheid.aerius.shared.emissions.PlanEmissionFactorSupplier;
 import nl.overheid.aerius.shared.emissions.RoadEmissionFactorSupplier;
 import nl.overheid.aerius.shared.emissions.shipping.InlandShippingRouteEmissionPoint;
 import nl.overheid.aerius.shared.emissions.shipping.MaritimeShippingRouteEmissionPoint;
@@ -58,7 +57,6 @@ import nl.overheid.aerius.validation.InlandShippingValidationHelper;
 import nl.overheid.aerius.validation.ManureStorageValidationHelper;
 import nl.overheid.aerius.validation.MaritimeShippingValidationHelper;
 import nl.overheid.aerius.validation.OffRoadValidationHelper;
-import nl.overheid.aerius.validation.PlanValidationHelper;
 import nl.overheid.aerius.validation.RoadValidationHelper;
 import nl.overheid.aerius.validation.ValidationHelper;
 
@@ -66,9 +64,9 @@ import nl.overheid.aerius.validation.ValidationHelper;
  * Test data for validation.
  */
 public class TestValidationAndEmissionHelper implements ValidationHelper, EmissionFactorSupplier,
-    FarmLodgingEmissionFactorSupplier, FarmlandEmissionFactorSupplier, ManureStorageEmissionFactorSupplier, PlanEmissionFactorSupplier,
+    FarmLodgingEmissionFactorSupplier, FarmlandEmissionFactorSupplier, ManureStorageEmissionFactorSupplier,
     OffRoadMobileEmissionFactorSupplier, RoadEmissionFactorSupplier, InlandShippingEmissionFactorSupplier, MaritimeShippingEmissionFactorSupplier,
-    FarmLodgingValidationHelper, FarmlandValidationHelper, ManureStorageValidationHelper, OffRoadValidationHelper, PlanValidationHelper,
+    FarmLodgingValidationHelper, FarmlandValidationHelper, ManureStorageValidationHelper, OffRoadValidationHelper,
     RoadValidationHelper, InlandShippingValidationHelper, MaritimeShippingValidationHelper {
 
   private static final List<FarmConstructHelper> FARM_LODGING_CATEGORIES = Arrays.asList(
@@ -493,11 +491,6 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
   }
 
   @Override
-  public PlanEmissionFactorSupplier plan() {
-    return this;
-  }
-
-  @Override
   public OffRoadMobileEmissionFactorSupplier offRoadMobile() {
     return this;
   }
@@ -534,11 +527,6 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
 
   @Override
   public OffRoadValidationHelper offRoadMobileValidation() {
-    return this;
-  }
-
-  @Override
-  public PlanValidationHelper planValidation() {
     return this;
   }
 
@@ -718,24 +706,6 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
   public boolean isValidManureStorageCode(final String manureStorageCode) {
     return MANURE_STORAGE_CATEGORIES.stream()
         .anyMatch(c -> c.equalsIgnoreCase(manureStorageCode));
-  }
-
-  @Override
-  public boolean isValidPlanCode(final String planCode) {
-    return plan(planCode).isPresent();
-  }
-
-  @Override
-  public boolean isEmissionFactorPerUnits(final String planCode) {
-    // We have no NO_UNIT plans (anymore), so always true
-    return true;
-  }
-
-  @Override
-  public Map<Substance, Double> getPlanEmissionFactors(final String planCode) {
-    return plan(planCode)
-        .map(c -> c.emissions.toEmissions())
-        .orElse(Map.of());
   }
 
   @Override
@@ -929,12 +899,6 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
   private Optional<FarmFodderConstructHelper> farmFodderMeasure(final String fodderMeasureCode) {
     return FARM_FODDER_MEASURE_CATEGORIES.stream()
         .filter(c -> c.code.equalsIgnoreCase(fodderMeasureCode))
-        .findFirst();
-  }
-
-  private Optional<GenericConstructHelper> plan(final String planCode) {
-    return OLD_PLAN_CATEGORIES.stream()
-        .filter(c -> c.code.equalsIgnoreCase(planCode))
         .findFirst();
   }
 

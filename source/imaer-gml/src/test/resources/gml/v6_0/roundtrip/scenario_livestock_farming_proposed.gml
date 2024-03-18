@@ -223,11 +223,11 @@
                         </imaer:SpecifiedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>10.0</imaer:emissionHeight>
-                    <imaer:diurnalVariation>
-                        <imaer:StandardDiurnalVariation>
+                    <imaer:timeVaryingProfile>
+                        <imaer:StandardTimeVaryingProfile>
                             <imaer:standardType>CONTINUOUS</imaer:standardType>
-                        </imaer:StandardDiurnalVariation>
-                    </imaer:diurnalVariation>
+                        </imaer:StandardTimeVaryingProfile>
+                    </imaer:timeVaryingProfile>
                 </imaer:EmissionSourceCharacteristics>
             </imaer:emissionSourceCharacteristics>
             <imaer:geometry>

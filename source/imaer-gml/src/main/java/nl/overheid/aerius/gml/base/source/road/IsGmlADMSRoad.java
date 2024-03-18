@@ -33,6 +33,8 @@ public interface IsGmlADMSRoad extends IsGmlRoadEmissionSource {
 
   IsGmlProperty<IsGmlADMSRoadSideBarrier> getBarrierRight();
 
-  IsGmlTimeVaryingProfile getTimeVaryingProfile();
+  IsGmlTimeVaryingProfile getHourlyTimeVaryingProfile();
+
+  IsGmlTimeVaryingProfile getMonthlyTimeVaryingProfile();
 
 }

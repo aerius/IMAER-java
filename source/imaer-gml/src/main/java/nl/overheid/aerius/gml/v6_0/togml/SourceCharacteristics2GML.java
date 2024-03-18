@@ -17,7 +17,7 @@
 package nl.overheid.aerius.gml.v6_0.togml;
 
 import nl.overheid.aerius.gml.v6_0.base.ReferenceType;
-import nl.overheid.aerius.gml.v6_0.source.characteristics.AbstractDiurnalVariation;
+import nl.overheid.aerius.gml.v6_0.source.characteristics.AbstractTimeVaryingProfile;
 import nl.overheid.aerius.gml.v6_0.source.characteristics.AbstractHeatContent;
 import nl.overheid.aerius.gml.v6_0.source.characteristics.CalculatedHeatContent;
 import nl.overheid.aerius.gml.v6_0.source.characteristics.EmissionSourceCharacteristics;
@@ -48,7 +48,7 @@ final class SourceCharacteristics2GML {
     returnCharacteristics.setEmissionHeight(characteristics.getEmissionHeight());
     returnCharacteristics.setSpread(characteristics.getSpread());
     if (includeOptionals) {
-      returnCharacteristics.setDiurnalVariation(determineDiurnalVariation(characteristics));
+      returnCharacteristics.setTimeVaryingProfile(determineTimeVaryingProfile(characteristics));
     }
     returnCharacteristics.setBuilding(determineBuilding(characteristics));
     return returnCharacteristics;
@@ -77,8 +77,8 @@ final class SourceCharacteristics2GML {
     }
   }
 
-  private static AbstractDiurnalVariation determineDiurnalVariation(final OPSSourceCharacteristics characteristics) {
-    return ToGMLUtil.determineDiurnalVariation(
+  private static AbstractTimeVaryingProfile determineTimeVaryingProfile(final OPSSourceCharacteristics characteristics) {
+    return ToGMLUtil.determineTimeVaryingProfile(
         () -> null,
         () -> characteristics.getDiurnalVariation() == null ? null : characteristics.getDiurnalVariation().getCode());
   }
@@ -94,8 +94,8 @@ final class SourceCharacteristics2GML {
     determineSourceType(characteristics, returnCharacteristics);
     determineBuoyancyType(characteristics, returnCharacteristics);
     determineEffluxType(characteristics, returnCharacteristics);
-    returnCharacteristics.setDiurnalVariation(determineDiurnalVariation(characteristics));
-    returnCharacteristics.setMonthlyVariation(determineMonthlyVariation(characteristics));
+    returnCharacteristics.setHourlyTimeVaryingProfile(determineHourlyVariation(characteristics));
+    returnCharacteristics.setMonthlyTimeVaryingProfile(determineMonthlyVariation(characteristics));
 
     return returnCharacteristics;
   }
@@ -156,14 +156,14 @@ final class SourceCharacteristics2GML {
     }
   }
 
-  private static AbstractDiurnalVariation determineDiurnalVariation(final ADMSSourceCharacteristics characteristics) {
-    return ToGMLUtil.determineDiurnalVariation(
+  private static AbstractTimeVaryingProfile determineHourlyVariation(final ADMSSourceCharacteristics characteristics) {
+    return ToGMLUtil.determineTimeVaryingProfile(
         characteristics::getCustomHourlyTimeVaryingProfileId,
         characteristics::getStandardHourlyTimeVaryingProfileCode);
   }
 
-  private static AbstractDiurnalVariation determineMonthlyVariation(final ADMSSourceCharacteristics characteristics) {
-    return ToGMLUtil.determineDiurnalVariation(
+  private static AbstractTimeVaryingProfile determineMonthlyVariation(final ADMSSourceCharacteristics characteristics) {
+    return ToGMLUtil.determineTimeVaryingProfile(
         characteristics::getCustomMonthlyTimeVaryingProfileId,
         characteristics::getStandardMonthlyTimeVaryingProfileCode);
   }

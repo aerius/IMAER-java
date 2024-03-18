@@ -23,14 +23,13 @@ import nl.overheid.aerius.gml.base.geo.GML2Geometry;
 import nl.overheid.aerius.shared.domain.v2.characteristics.OPSSourceCharacteristics;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceFeature;
 import nl.overheid.aerius.shared.domain.v2.source.GenericEmissionSource;
-import nl.overheid.aerius.shared.domain.v2.source.PlanEmissionSource;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 
 /**
  *
  */
-public class GML2Plan<T extends IsGmlPlanEmissionSource> extends AbstractGML2Specific<T, PlanEmissionSource> {
+public class GML2Plan<T extends IsGmlPlanEmissionSource> extends AbstractGML2Specific<T, GenericEmissionSource> {
 
   private static final int DEFAULT_SECTOR = 9999;
   private static final String DESCRIPTION_PREFIX = "Plan";
@@ -46,7 +45,7 @@ public class GML2Plan<T extends IsGmlPlanEmissionSource> extends AbstractGML2Spe
   }
 
   @Override
-  public PlanEmissionSource convert(final T source) throws AeriusException {
+  public GenericEmissionSource convert(final T source) throws AeriusException {
     for (final IsGmlProperty<IsGmlPlan> planProperty : source.getPlans()) {
       final IsGmlPlan plan = planProperty.getProperty();
 

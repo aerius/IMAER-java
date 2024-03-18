@@ -49,10 +49,6 @@ public enum EmissionSourceType {
    */
   OFFROAD_MOBILE(Names.OFFROAD_MOBILE),
   /**
-   * Plan emission values.
-   */
-  PLAN(Names.PLAN),
-  /**
    * SRM 1 Road emission values.
    */
   SRM1_ROAD(Names.SRM1_ROAD),

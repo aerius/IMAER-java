@@ -32,30 +32,17 @@ import nl.overheid.aerius.shared.domain.result.EmissionResultType;
 /**
  *
  */
-@XmlType(name = "CalculationMetadataType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"calculationType", "calculationMethod",
-    "calculationJobType", "substances", "resultTypes", "maximumRange", "researchArea", "monitorSrm2Year", "options", "otherSituations"})
+@XmlType(name = "CalculationMetadataType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"calculationMethod",
+    "calculationJobType", "substances", "resultTypes", "maximumRange", "options", "otherSituations"})
 public class CalculationMetadata implements IsCalculationMetaData {
 
-  private String calculationType;
   private String calculationMethod;
   private String calculationJobType;
   private List<Substance> substances;
   private List<EmissionResultType> resultTypes;
   private Double maximumRange;
-  private Boolean researchArea;
-  private Integer monitorSrm2Year;
   private List<CalculationOptionProperty> options;
   private List<OtherSituationMetadataProperty> otherSituations = new ArrayList<>();
-
-  @Override
-  @XmlElement(name = "type", namespace = CalculatorSchema.NAMESPACE)
-  public String getCalculationType() {
-    return calculationType;
-  }
-
-  public void setCalculationType(final String calculationType) {
-    this.calculationType = calculationType;
-  }
 
   @Override
   @XmlElement(name = "method", namespace = CalculatorSchema.NAMESPACE)
@@ -111,24 +98,6 @@ public class CalculationMetadata implements IsCalculationMetaData {
 
   public void setMaximumRange(final Double maximumRange) {
     this.maximumRange = maximumRange;
-  }
-
-  @XmlElement(namespace = CalculatorSchema.NAMESPACE)
-  public Boolean getResearchArea() {
-    return researchArea;
-  }
-
-  public void setResearchArea(final Boolean researchArea) {
-    this.researchArea = researchArea;
-  }
-
-  @XmlElement(namespace = CalculatorSchema.NAMESPACE)
-  public Integer getMonitorSrm2Year() {
-    return monitorSrm2Year;
-  }
-
-  public void setMonitorSrm2Year(final Integer monitorSrm2Year) {
-    this.monitorSrm2Year = monitorSrm2Year;
   }
 
   @Override

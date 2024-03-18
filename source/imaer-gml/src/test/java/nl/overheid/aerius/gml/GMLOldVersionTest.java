@@ -71,7 +71,6 @@ class GMLOldVersionTest {
         AeriusGMLVersion.V1_1, AeriusGMLVersion.V2_0, AeriusGMLVersion.V2_1, AeriusGMLVersion.V2_2,
         AeriusGMLVersion.V3_0, AeriusGMLVersion.V3_1)),
     NETWORK_ROAD,
-    PLAN,
     ROUTE_INLAND_SHIPPING,
     ROUTE_MARITIME_SHIPPING,
     MOORING_INLAND_SHIPPING(true, Arrays.asList(AeriusGMLVersion.V0_5, AeriusGMLVersion.V1_0,

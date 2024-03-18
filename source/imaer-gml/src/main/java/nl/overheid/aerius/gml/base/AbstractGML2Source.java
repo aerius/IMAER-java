@@ -33,7 +33,6 @@ import nl.overheid.aerius.shared.domain.v2.source.MaritimeShippingEmissionSource
 import nl.overheid.aerius.shared.domain.v2.source.MooringInlandShippingEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.MooringMaritimeShippingEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.OffRoadMobileEmissionSource;
-import nl.overheid.aerius.shared.domain.v2.source.PlanEmissionSource;
 import nl.overheid.aerius.shared.exception.AeriusException;
 
 /**
@@ -126,7 +125,6 @@ public abstract class AbstractGML2Source<T extends IsGmlEmissionSource, S extend
         || returnSource instanceof MaritimeShippingEmissionSource
         || returnSource instanceof MooringMaritimeShippingEmissionSource
         || returnSource instanceof OffRoadMobileEmissionSource
-        || returnSource instanceof PlanEmissionSource
         || returnSource instanceof ADMSRoadEmissionSource)) {
       final S sectorCharacteristics = conversionData.determineDefaultCharacteristicsBySectorId(sectorId);
       if (source.getCharacteristics() == null) {

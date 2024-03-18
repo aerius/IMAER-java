@@ -25,13 +25,11 @@ import nl.overheid.aerius.gml.v6_0.base.CalculatorSchema;
 /**
  *
  */
-@XmlType(name = "ProjectMetadataType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"year", "temporaryPeriod", "permitCalculationRadiusType",
+@XmlType(name = "ProjectMetadataType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"year",
     "name", "corporation", "facilityLocationProperty", "description"})
 public class ProjectMetadata {
 
   private Integer year;
-  private Integer temporaryPeriod;
-  private String permitCalculationRadiusType;
   private String name;
   private String corporation;
   private AddressImpl facilityLocation;
@@ -44,24 +42,6 @@ public class ProjectMetadata {
 
   public void setYear(final Integer year) {
     this.year = year;
-  }
-
-  @XmlElement(namespace = CalculatorSchema.NAMESPACE)
-  public Integer getTemporaryPeriod() {
-    return temporaryPeriod;
-  }
-
-  public void setTemporaryPeriod(final Integer temporaryPeriod) {
-    this.temporaryPeriod = temporaryPeriod;
-  }
-
-  @XmlElement(namespace = CalculatorSchema.NAMESPACE)
-  public String getPermitCalculationRadiusType() {
-    return permitCalculationRadiusType;
-  }
-
-  public void setPermitCalculationRadiusType(final String permitCalculationRadiusType) {
-    this.permitCalculationRadiusType = permitCalculationRadiusType;
   }
 
   @XmlElement(namespace = CalculatorSchema.NAMESPACE)

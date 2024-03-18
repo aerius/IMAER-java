@@ -36,7 +36,6 @@
 			<targetParameter name="outputFilename" value="feature_catalogue_AERIUS"/>
 			<targetParameter name="package" value=""/>
 			<targetParameter name="inheritedProperties" value="false"/>
-			<targetParameter name="changeInfo" value="false"/>
 			<targetParameter name="outputFormat" value="HTML"/>
 			<targetParameter name="name" value=" 'IMAER'"/>
 			<targetParameter name="scope" value="IMAER, the information model for AERIUS, is an application of Basic Model Geo-Information (NEN 3610) for the policy field of nitrogen deposition calculations. This makes it one of the existing applications of this standard. In IMAER, as in NEN 3610, the file exchange format (the technical format for exchange) refers to GML 3.2.1 Simple Features Profile 2 (GML-SF2)."/>

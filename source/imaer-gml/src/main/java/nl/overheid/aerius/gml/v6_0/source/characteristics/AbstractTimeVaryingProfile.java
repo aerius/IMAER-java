@@ -14,23 +14,16 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.shared.emissions;
+package nl.overheid.aerius.gml.v6_0.source.characteristics;
 
-import java.util.Map;
+import javax.xml.bind.annotation.XmlSeeAlso;
+import javax.xml.bind.annotation.XmlType;
 
-import nl.overheid.aerius.shared.domain.Substance;
+import nl.overheid.aerius.gml.base.characteristics.IsGmlTimeVaryingProfile;
+import nl.overheid.aerius.gml.v6_0.base.CalculatorSchema;
 
-public interface PlanEmissionFactorSupplier {
-
-  /**
-   * Indicate if the emission factors are a flat value, or if they should be multiplied by an amount.
-   */
-  boolean isEmissionFactorPerUnits(final String planCode);
-
-  /**
-   * Obtain emission factors for plan.
-   * These should be per unit if needed.
-   */
-  Map<Substance, Double> getPlanEmissionFactors(final String planCode);
+@XmlSeeAlso({StandardTimeVaryingProfile.class, ReferenceTimeVaryingProfile.class})
+@XmlType(name = "TimeVaryingProfileType", namespace = CalculatorSchema.NAMESPACE)
+public class AbstractTimeVaryingProfile implements IsGmlTimeVaryingProfile {
 
 }

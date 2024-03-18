@@ -45,7 +45,6 @@ import nl.overheid.aerius.shared.domain.v2.source.MaritimeShippingEmissionSource
 import nl.overheid.aerius.shared.domain.v2.source.MooringInlandShippingEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.MooringMaritimeShippingEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.OffRoadMobileEmissionSource;
-import nl.overheid.aerius.shared.domain.v2.source.PlanEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.SRM1RoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.SRM2RoadEmissionSource;
 import nl.overheid.aerius.shared.exception.AeriusException;
@@ -163,12 +162,6 @@ final class Source2GML implements EmissionSourceVisitor<nl.overheid.aerius.gml.v
   public nl.overheid.aerius.gml.v5_1.source.EmissionSource visit(final OffRoadMobileEmissionSource emissionSource, final IsFeature feature)
       throws AeriusException {
     return new OffRoad2GML().convert(emissionSource);
-  }
-
-  @Override
-  public nl.overheid.aerius.gml.v5_1.source.EmissionSource visit(final PlanEmissionSource emissionSource, final IsFeature feature)
-      throws AeriusException {
-    return new Plan2GML().convert(emissionSource);
   }
 
   @Override

@@ -165,16 +165,6 @@ public class MetaDataImpl implements MetaData {
   }
 
   @Override
-  public Integer getTemporaryPeriod() {
-    return project == null ? null : project.getTemporaryPeriod();
-  }
-
-  @Override
-  public String getPermitCalculationRadiusType() {
-    return project == null ? null : project.getPermitCalculationRadiusType();
-  }
-
-  @Override
   public String getDescription() {
     return project == null ? null : project.getDescription();
   }

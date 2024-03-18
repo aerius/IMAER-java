@@ -132,7 +132,6 @@ public class MetaDataImpl implements MetaData {
     this.facilityLocation = facilityLocation;
   }
 
-  @Override
   @XmlElement(namespace = CalculatorSchema.NAMESPACE)
   public Integer getTemporaryPeriod() {
     return temporaryPeriod;
@@ -140,11 +139,6 @@ public class MetaDataImpl implements MetaData {
 
   public void setTemporaryPeriod(final Integer temporaryPeriod) {
     this.temporaryPeriod = temporaryPeriod;
-  }
-
-  @Override
-  public String getPermitCalculationRadiusType() {
-    return null;
   }
 
   @Override

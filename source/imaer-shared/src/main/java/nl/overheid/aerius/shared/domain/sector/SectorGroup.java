@@ -65,10 +65,6 @@ public enum SectorGroup implements Serializable {
    */
   SHIPPING,
   /**
-   * Future projects.
-   */
-  PLAN,
-  /**
    * Everything not in a specific category.
    */
   OTHER;

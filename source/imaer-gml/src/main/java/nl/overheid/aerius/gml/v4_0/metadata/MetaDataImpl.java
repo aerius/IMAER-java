@@ -64,6 +64,7 @@ public class MetaDataImpl implements MetaData {
     this.calculation = calculationProperty.getProperty();
   }
 
+  @Override
   @XmlTransient
   public CalculationMetadata getCalculation() {
     return calculation;
@@ -161,16 +162,6 @@ public class MetaDataImpl implements MetaData {
   @Override
   public Address getFacilityLocation() {
     return project == null ? null : project.getFacilityLocation();
-  }
-
-  @Override
-  public Integer getTemporaryPeriod() {
-    return project == null ? null : project.getTemporaryPeriod();
-  }
-
-  @Override
-  public String getPermitCalculationRadiusType() {
-    return project == null ? null : project.getPermitCalculationRadiusType();
   }
 
   @Override

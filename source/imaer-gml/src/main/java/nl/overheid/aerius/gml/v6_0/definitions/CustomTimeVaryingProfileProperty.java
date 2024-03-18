@@ -14,45 +14,40 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.gml.v6_0.source.plan;
+package nl.overheid.aerius.gml.v6_0.definitions;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 import nl.overheid.aerius.gml.base.AbstractProperty;
-import nl.overheid.aerius.gml.base.IsGmlProperty;
-import nl.overheid.aerius.gml.base.source.plan.IsGmlPlan;
 import nl.overheid.aerius.gml.v6_0.base.CalculatorSchema;
 
-/**
- *
- */
-@XmlType(name = "PlanPropertyType", namespace = CalculatorSchema.NAMESPACE)
-public class PlanProperty extends AbstractProperty<Plan> implements IsGmlProperty<IsGmlPlan> {
+@XmlType(name = "CustomTimeVaryingProfilePropertyType", namespace = CalculatorSchema.NAMESPACE)
+public class CustomTimeVaryingProfileProperty extends AbstractProperty<CustomTimeVaryingProfile> {
 
   /**
    * Default constructor, needed for JAXB.
    */
-  public PlanProperty() {
+  public CustomTimeVaryingProfileProperty() {
     super(null);
   }
 
   /**
    * Convenience constructor.
-   * @param plan The property to use.
+   * @param customTimeVaryingProfile The property to use.
    */
-  public PlanProperty(final Plan plan) {
-    super(plan);
+  public CustomTimeVaryingProfileProperty(final CustomTimeVaryingProfile customTimeVaryingProfile) {
+    super(customTimeVaryingProfile);
   }
 
   @Override
-  @XmlElement(name = "Plan", namespace = CalculatorSchema.NAMESPACE)
-  public Plan getProperty() {
+  @XmlElement(name = "CustomTimeVaryingProfile", namespace = CalculatorSchema.NAMESPACE)
+  public CustomTimeVaryingProfile getProperty() {
     return super.getProperty();
   }
 
   @Override
-  public void setProperty(final Plan property) {
+  public void setProperty(final CustomTimeVaryingProfile property) {
     super.setProperty(property);
   }
 

@@ -14,40 +14,40 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.gml.v6_0.definitions;
+package nl.overheid.aerius.gml.v6_0.source.characteristics;
 
-import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlType;
 
 import nl.overheid.aerius.gml.base.AbstractProperty;
 import nl.overheid.aerius.gml.v6_0.base.CalculatorSchema;
 
-@XmlType(name = "CustomDiurnalVariationPropertyType", namespace = CalculatorSchema.NAMESPACE)
-public class CustomDiurnalVariationProperty extends AbstractProperty<CustomDiurnalVariation> {
+@XmlType(name = "TimeVaryingProfilePropertyType", namespace = CalculatorSchema.NAMESPACE)
+public class TimeVaryingProfileProperty extends AbstractProperty<AbstractTimeVaryingProfile> {
 
   /**
    * Default constructor, needed for JAXB.
    */
-  public CustomDiurnalVariationProperty() {
+  public TimeVaryingProfileProperty() {
     super(null);
   }
 
   /**
    * Convenience constructor.
-   * @param customDiurnalVariation The property to use.
+   * @param timeVaryingProfile The property to use.
    */
-  public CustomDiurnalVariationProperty(final CustomDiurnalVariation customDiurnalVariation) {
-    super(customDiurnalVariation);
+  public TimeVaryingProfileProperty(final AbstractTimeVaryingProfile timeVaryingProfile) {
+    super(timeVaryingProfile);
   }
 
+  @XmlElementRef
   @Override
-  @XmlElement(name = "CustomDiurnalVariation", namespace = CalculatorSchema.NAMESPACE)
-  public CustomDiurnalVariation getProperty() {
+  public AbstractTimeVaryingProfile getProperty() {
     return super.getProperty();
   }
 
   @Override
-  public void setProperty(final CustomDiurnalVariation property) {
+  public void setProperty(final AbstractTimeVaryingProfile property) {
     super.setProperty(property);
   }
 

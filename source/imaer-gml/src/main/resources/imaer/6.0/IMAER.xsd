@@ -36,8 +36,7 @@ IMAER contains the objects required for calculating emissions and deposition of 
   </complexType>
   <simpleType name="ADMSBuoyancyTypeType">
     <annotation>
-      <documentation>ADMS Buoyancy Types
-NOTE ADMS Buoyancy Type, to be used as characteristic property.</documentation>
+      <documentation>ADMS Buoyancy Type, to be used as characteristic property.</documentation>
     </annotation>
     <restriction base="string">
       <enumeration value="AMBIENT">
@@ -59,8 +58,7 @@ NOTE ADMS Buoyancy Type, to be used as characteristic property.</documentation>
   </simpleType>
   <simpleType name="ADMSEffluxTypeType">
     <annotation>
-      <documentation>ADMS Efflux Types
-NOTE ADMS Efflux Type, to be used as characteristic property.</documentation>
+      <documentation>ADMS Efflux Type, to be used as characteristic property.</documentation>
     </annotation>
     <restriction base="string">
       <enumeration value="VELOCITY">
@@ -83,7 +81,7 @@ NOTE ADMS Efflux Type, to be used as characteristic property.</documentation>
   <element name="ADMSRoad" substitutionGroup="IMAER:RoadEmissionSource" type="IMAER:ADMSRoadType">
     <annotation>
       <documentation>ADMS EmissionSource representing a road.
-NOTE This class describes a road emissionsource including geometry. This definition is meant for calculations with ADMS.</documentation>
+This class describes a road emissionsource including geometry. This definition is meant for calculations with ADMS.</documentation>
     </annotation>
   </element>
   <complexType name="ADMSRoadType">
@@ -120,9 +118,14 @@ NOTE This class describes a road emissionsource including geometry. This definit
               <documentation>The barrier on the right side of the road (compared to the geometry).</documentation>
             </annotation>
           </element>
-          <element minOccurs="0" name="diurnalVariation" type="IMAER:DiurnalVariationPropertyType">
+          <element minOccurs="0" name="hourlyVariation" type="IMAER:TimeVaryingProfilePropertyType">
             <annotation>
-              <documentation>Diurnal variation profile of the road source.</documentation>
+              <documentation>Hourly time-varying profile of the emission of the source.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="monthlyVariation" type="IMAER:TimeVaryingProfilePropertyType">
+            <annotation>
+              <documentation>Monthly time-varying profile of the emission of the source.</documentation>
             </annotation>
           </element>
         </sequence>
@@ -139,7 +142,7 @@ NOTE This class describes a road emissionsource including geometry. This definit
   <element name="ADMSRoadSideBarrier" substitutionGroup="gml:AbstractObject" type="IMAER:ADMSRoadSideBarrierType">
     <annotation>
       <documentation>Characteristics of a barrier on the side of a road for ADMS.
-NOTE A barrier on the side of the road is described by a few characteristics. This data type contains the characteristics expected by ADMS.</documentation>
+A barrier on the side of the road is described by a few characteristics. This data type contains the characteristics expected by ADMS.</documentation>
     </annotation>
   </element>
   <complexType name="ADMSRoadSideBarrierType">
@@ -199,7 +202,7 @@ NOTE A barrier on the side of the road is described by a few characteristics. Th
   <element name="ADMSSourceCharacteristics" substitutionGroup="IMAER:SourceCharacteristicsType" type="IMAER:ADMSSourceCharacteristicsType">
     <annotation>
       <documentation>This data type describes the (ADMS) characteristics of an emission source.
-NOTE Each emission source is described on the basis of a number of characteristics, which are recorded in this separate data type.</documentation>
+Each emission source is described on the basis of a number of characteristics, which are recorded in this separate data type.</documentation>
     </annotation>
   </element>
   <complexType name="ADMSSourceCharacteristicsType">
@@ -276,13 +279,12 @@ NOTE Each emission source is described on the basis of a number of characteristi
               <documentation>Mass flux (kg/s): mass flux of the emission.</documentation>
             </annotation>
           </element>
-          <element minOccurs="0" name="diurnalVariation" type="IMAER:DiurnalVariationPropertyType">
+          <element minOccurs="0" name="hourlyVariation" type="IMAER:TimeVaryingProfilePropertyType">
             <annotation>
-              <documentation>Diurnal variation of the emission of the source.
-Note: this might be renamed in a future version to hourlyVariation or hourlyVariationProfile.</documentation>
+              <documentation>Hourly time-varying profile of the emission of the source.</documentation>
             </annotation>
           </element>
-          <element minOccurs="0" name="monthlyVariation" type="IMAER:DiurnalVariationPropertyType">
+          <element minOccurs="0" name="monthlyVariation" type="IMAER:TimeVaryingProfilePropertyType">
             <annotation>
               <documentation>Monthly time-varying profile of the emission of the source.</documentation>
             </annotation>
@@ -298,8 +300,7 @@ Note: this might be renamed in a future version to hourlyVariation or hourlyVari
   </complexType>
   <simpleType name="ADMSSourceTypeType">
     <annotation>
-      <documentation>ADMS Source Types
-NOTE ADMS Source Type, to be used as characteristic property.</documentation>
+      <documentation>ADMS Source Types, to be used as characteristic property.</documentation>
     </annotation>
     <restriction base="string">
       <enumeration value="POINT">
@@ -337,7 +338,7 @@ NOTE ADMS Source Type, to be used as characteristic property.</documentation>
   <element abstract="true" name="AbstractFarmlandActivity" substitutionGroup="IMAER:EmissionValueType" type="IMAER:AbstractFarmlandActivityType">
     <annotation>
       <documentation>Characteristics of an emission type for activity on farmland.
-NOTE There are different types of farmland use in the model. This abstract base class is a generalization of the different types in the model.</documentation>
+There are different types of farmland use in the model. This abstract base class is a generalization of the different types in the model.</documentation>
     </annotation>
   </element>
   <complexType abstract="true" name="AbstractFarmlandActivityType">
@@ -360,7 +361,7 @@ NOTE There are different types of farmland use in the model. This abstract base 
   <element name="AdditionalLodgingSystem" substitutionGroup="IMAER:LodgingSystem" type="IMAER:AdditionalLodgingSystemType">
     <annotation>
       <documentation>Additional lodging system description.
-NOTE This class describes an additional lodging system that can be used in an existing lodging, using a predefined code. This may apply to some of the animals indicated.</documentation>
+This class describes an additional lodging system that can be used in an existing lodging, using a predefined code. This may apply to some of the animals indicated.</documentation>
     </annotation>
   </element>
   <complexType name="AdditionalLodgingSystemType">
@@ -384,7 +385,7 @@ NOTE This class describes an additional lodging system that can be used in an ex
   <element name="Address" substitutionGroup="gml:AbstractObject" type="IMAER:AddressType">
     <annotation>
       <documentation>An address (for example for installation location).
-NOTE This data type contains the standard parts of an address.</documentation>
+This data type contains the standard parts of an address.</documentation>
     </annotation>
   </element>
   <complexType name="AddressType">
@@ -414,7 +415,7 @@ NOTE This data type contains the standard parts of an address.</documentation>
   <element name="AeriusCalculatorMetadata" substitutionGroup="gml:AbstractObject" type="IMAER:AeriusCalculatorMetadataType">
     <annotation>
       <documentation>Metadata about the AERIUS calculator that produced the GML and the captured project.
-NOTE This metadata is used to record which versions of software and underlying basic data were used to generate the GML file. Project information about the emission sources can also be recorded.</documentation>
+This metadata is used to record which versions of software and underlying basic data were used to generate the GML file. Project information about the emission sources can also be recorded.</documentation>
     </annotation>
   </element>
   <complexType name="AeriusCalculatorMetadataType">
@@ -459,7 +460,7 @@ NOTE This metadata is used to record which versions of software and underlying b
   <element name="ArchiveMetadata" substitutionGroup="gml:AbstractObject" type="IMAER:ArchiveMetadataType">
     <annotation>
       <documentation>Metadata with Archive information.
-NOTE This metadata object can be used to store archive related data.</documentation>
+This metadata object can be used to store archive related data.</documentation>
     </annotation>
   </element>
   <complexType name="ArchiveMetadataType">
@@ -484,7 +485,7 @@ NOTE This metadata object can be used to store archive related data.</documentat
   <element name="ArchiveProject" substitutionGroup="gml:AbstractObject" type="IMAER:ArchiveProjectType">
     <annotation>
       <documentation>Class for archive project information.
-NOTE This object can be used to store information about an archive project.</documentation>
+This object can be used to store information about an archive project.</documentation>
     </annotation>
   </element>
   <complexType name="ArchiveProjectType">
@@ -513,8 +514,7 @@ NOTE This object can be used to store information about an archive project.</doc
   </complexType>
   <element name="Building" substitutionGroup="IMAER:GeoObject" type="IMAER:BuildingType">
     <annotation>
-      <documentation>This feature type describes a building.
-NOTE This class describes a building, for inclusion in emission calculations.</documentation>
+      <documentation>This class describes a building, for inclusion in emission calculations.</documentation>
     </annotation>
   </element>
   <complexType name="BuildingType">
@@ -560,7 +560,7 @@ NOTE This class describes a building, for inclusion in emission calculations.</d
   <element name="BuildingGeometry" substitutionGroup="gml:AbstractObject" type="IMAER:BuildingGeometryType">
     <annotation>
       <documentation>Possible geometries of a building.
-NOTE This data type allows a choice of different types of geometries that a building can adopt.</documentation>
+This data type allows a choice of different types of geometries that a building can adopt.</documentation>
     </annotation>
   </element>
   <complexType name="BuildingGeometryType">
@@ -585,7 +585,7 @@ NOTE This data type allows a choice of different types of geometries that a buil
   <element name="CalculatedHeatContent" substitutionGroup="IMAER:HeatContent" type="IMAER:CalculatedHeatContentType">
     <annotation>
       <documentation>This data type describes the heat content to be included in the calculation.
-NOTE The heat content can be determined by the model based on the specified values.</documentation>
+The heat content can be determined by the model based on the specified values.</documentation>
     </annotation>
   </element>
   <complexType name="CalculatedHeatContentType">
@@ -629,17 +629,11 @@ NOTE The heat content can be determined by the model based on the specified valu
   <element name="CalculationMetadata" substitutionGroup="gml:AbstractObject" type="IMAER:CalculationMetadataType">
     <annotation>
       <documentation>Metadata for the calculation / calculation results.
-NOTE Using this metadata object, information about the calculation can be recorded.</documentation>
+Using this metadata object, information about the calculation can be recorded.</documentation>
     </annotation>
   </element>
   <complexType name="CalculationMetadataType">
     <sequence>
-      <element minOccurs="0" name="type" type="IMAER:CalculationTypeType">
-        <annotation>
-          <documentation>Calculation type used.
-Deprecated, use 'method' from version 5.1.1.</documentation>
-        </annotation>
-      </element>
       <element minOccurs="0" name="method" type="string">
         <annotation>
           <documentation>Calculation method used.</documentation>
@@ -663,16 +657,6 @@ Deprecated, use 'method' from version 5.1.1.</documentation>
       <element minOccurs="0" name="maximumRange" type="double">
         <annotation>
           <documentation>Maximum radius in km within which the calculation was made.</documentation>
-        </annotation>
-      </element>
-      <element minOccurs="0" name="researchArea" type="boolean">
-        <annotation>
-          <documentation>Indication of whether the calculation concerns a research area.</documentation>
-        </annotation>
-      </element>
-      <element minOccurs="0" name="monitorSrm2Year" type="integer">
-        <annotation>
-          <documentation>Indication of whether the NSL monitor network was used for the SRM2 roads, and if so, from which year</documentation>
         </annotation>
       </element>
       <element maxOccurs="unbounded" minOccurs="0" name="option" type="IMAER:CalculationOptionPropertyType">
@@ -719,7 +703,7 @@ Deprecated, use 'method' from version 5.1.1.</documentation>
   <element name="CalculationPoint" substitutionGroup="IMAER:CalculationPointType" type="IMAER:CalculationPointType">
     <annotation>
       <documentation>Self-defined calculation point.
-NOTE This class describes a self-defined calculation point.</documentation>
+This class describes a self-defined calculation point.</documentation>
     </annotation>
   </element>
   <complexType name="CalculationPointType">
@@ -739,7 +723,7 @@ NOTE This class describes a self-defined calculation point.</documentation>
   <element name="CalculationPointCorrection" substitutionGroup="gml:AbstractObject" type="IMAER:CalculationPointCorrectionType">
     <annotation>
       <documentation>Correction to results of a calculation point (NSL).
-NOTE It may happen that corrections need to be made to the results that come from the model. For example, because they structurally deviate from observed values.</documentation>
+It may happen that corrections need to be made to the results that come from the model. For example, because they structurally deviate from observed values.</documentation>
     </annotation>
   </element>
   <complexType name="CalculationPointCorrectionType">
@@ -784,7 +768,7 @@ NOTE It may happen that corrections need to be made to the results that come fro
   <element abstract="true" name="CalculationPointType" substitutionGroup="IMAER:GeoObject" type="IMAER:CalculationPointTypeType">
     <annotation>
       <documentation>Abstract base class for the description of calculation points.
-NOTE There are different types of calculation points in the model. This abstract base class is a generalization of the different types in this model.</documentation>
+There are different types of calculation points in the model. This abstract base class is a generalization of the different types in this model.</documentation>
     </annotation>
   </element>
   <complexType abstract="true" name="CalculationPointTypeType">
@@ -855,7 +839,7 @@ NOTE There are different types of calculation points in the model. This abstract
   <element name="CalculationResult" substitutionGroup="gml:AbstractObject" type="IMAER:CalculationResultType">
     <annotation>
       <documentation>Result for a calculation point.
-NOTE This class describes the result for a specific substance/result type combination for a calculation point.</documentation>
+This class describes the result for a specific substance/result type combination for a calculation point.</documentation>
     </annotation>
   </element>
   <complexType name="CalculationResultType">
@@ -887,38 +871,10 @@ NOTE This class describes the result for a specific substance/result type combin
       <element ref="IMAER:CalculationResult"/>
     </sequence>
   </complexType>
-  <simpleType name="CalculationTypeType">
-    <annotation>
-      <documentation>List of different calculation types.
-NOTE Determining receptors/calculation points of a calculation can be done in different ways. These methods are laid down here.</documentation>
-    </annotation>
-    <restriction base="string">
-      <enumeration value="PERMIT">
-        <annotation>
-          <documentation>Calculation of receptors according to the Nature Conservation Act.</documentation>
-        </annotation>
-      </enumeration>
-      <enumeration value="NATURE_AREA">
-        <annotation>
-          <documentation>Calculation uses hexagons containing natural areas within specified radius.</documentation>
-        </annotation>
-      </enumeration>
-      <enumeration value="RADIUS">
-        <annotation>
-          <documentation>Calculation uses hexagons within specified radius.</documentation>
-        </annotation>
-      </enumeration>
-      <enumeration value="CUSTOM_POINTS">
-        <annotation>
-          <documentation>Calculation uses user-defined points (CalculationPoint).</documentation>
-        </annotation>
-      </enumeration>
-    </restriction>
-  </simpleType>
   <element name="ConsumptionOffRoadVehicleSpecification" substitutionGroup="IMAER:OffRoadVehicleSpecification" type="IMAER:ConsumptionOffRoadVehicleSpecificationType">
     <annotation>
       <documentation>Class for a specification for the emissions of a self-defined off road vehicle source based on consumption.
-NOTE To determine the emissions of mobile equipment, the use of that vehicle can be taken into account. The characteristics in this type are used for this.</documentation>
+To determine the emissions of mobile equipment, the use of that vehicle can be taken into account. The characteristics in this type are used for this.</documentation>
     </annotation>
   </element>
   <complexType name="ConsumptionOffRoadVehicleSpecificationType">
@@ -949,47 +905,10 @@ NOTE To determine the emissions of mobile equipment, the use of that vehicle can
       <element ref="IMAER:ConsumptionOffRoadVehicleSpecification"/>
     </sequence>
   </complexType>
-  <element name="CustomDiurnalVariation" substitutionGroup="gml:AbstractGML" type="IMAER:CustomDiurnalVariationType">
-    <annotation>
-      <documentation>Custom temporal variation. Consists of X values, where all values must add up to X * 100.
-As an example, a definition for hours per day: In this case there are 24 values, all of which must add up to 2400. For an equal distribution over the day, each value is 100.
-Note: this will be renamed in a future version to CustomTimeVaryingProfile.</documentation>
-    </annotation>
-  </element>
-  <complexType name="CustomDiurnalVariationType">
-    <complexContent>
-      <extension base="gml:AbstractGMLType">
-        <sequence>
-          <element minOccurs="0" name="label" type="string">
-            <annotation>
-              <documentation>An optional label for this custom definition.</documentation>
-            </annotation>
-          </element>
-          <element name="customType" type="string">
-            <annotation>
-              <documentation>The type of this custom definition. Implicitly indicates how many values are expected: for example, for a day definition, 24 values are expected.</documentation>
-            </annotation>
-          </element>
-          <element maxOccurs="unbounded" name="value" type="double">
-            <annotation>
-              <documentation>The values of this custom definition. Depending on the customType, a number of values are expected. If distributed equally over all values, this field has the value 100.</documentation>
-            </annotation>
-          </element>
-        </sequence>
-      </extension>
-    </complexContent>
-  </complexType>
-  <complexType name="CustomDiurnalVariationPropertyType">
-    <sequence minOccurs="0">
-      <element ref="IMAER:CustomDiurnalVariation"/>
-    </sequence>
-    <attributeGroup ref="gml:AssociationAttributeGroup"/>
-    <attributeGroup ref="gml:OwnershipAttributeGroup"/>
-  </complexType>
   <element name="CustomFarmLodging" substitutionGroup="IMAER:FarmLodging" type="IMAER:CustomFarmLodgingType">
     <annotation>
       <documentation>Self-defined lodging.
-NOTE This class describes a self-defined lodging.</documentation>
+This class describes a self-defined lodging.</documentation>
     </annotation>
   </element>
   <complexType name="CustomFarmLodgingType">
@@ -1028,7 +947,7 @@ NOTE This class describes a self-defined lodging.</documentation>
   <element name="CustomInlandShipping" substitutionGroup="IMAER:InlandShipping" type="IMAER:CustomInlandShippingType">
     <annotation>
       <documentation>Self-defined shipping on an inland shipping route.
-NOTE This class describes a vessel on a shipping route, using a custom specification.</documentation>
+This class describes a vessel on a shipping route, using a custom specification.</documentation>
     </annotation>
   </element>
   <complexType name="CustomInlandShippingType">
@@ -1056,8 +975,7 @@ NOTE This class describes a vessel on a shipping route, using a custom specifica
   </complexType>
   <element name="CustomInlandShippingEmissionProperties" substitutionGroup="gml:AbstractObject" type="IMAER:CustomInlandShippingEmissionPropertiesType">
     <annotation>
-      <documentation>This data type describes the self-defined shipping type for inland shipping.
-NOTE Properties described in this object are for standard sources directly.</documentation>
+      <documentation>This data type describes the self-defined shipping type for inland shipping.</documentation>
     </annotation>
   </element>
   <complexType name="CustomInlandShippingEmissionPropertiesType">
@@ -1102,7 +1020,7 @@ NOTE Properties described in this object are for standard sources directly.</doc
   <element name="CustomManureStorage" substitutionGroup="IMAER:ManureStorage" type="IMAER:CustomManureStorageType">
     <annotation>
       <documentation>Self-defined manure storage description.
-NOTE This class describes a self-defined manure storage technique.</documentation>
+This class describes a self-defined manure storage technique.</documentation>
     </annotation>
   </element>
   <complexType name="CustomManureStorageType">
@@ -1141,7 +1059,7 @@ NOTE This class describes a self-defined manure storage technique.</documentatio
   <element name="CustomMaritimeShipping" substitutionGroup="IMAER:MaritimeShipping" type="IMAER:CustomMaritimeShippingType">
     <annotation>
       <documentation>Self-defined ships on a maritime shipping route.
-NOTE This class describes a ship on a shipping route, using its own specification.</documentation>
+This class describes a ship on a shipping route, using its own specification.</documentation>
     </annotation>
   </element>
   <complexType name="CustomMaritimeShippingType">
@@ -1169,8 +1087,7 @@ NOTE This class describes a ship on a shipping route, using its own specificatio
   </complexType>
   <element name="CustomMaritimeShippingEmissionProperties" substitutionGroup="gml:AbstractObject" type="IMAER:CustomMaritimeShippingEmissionPropertiesType">
     <annotation>
-      <documentation>This data type describes the self-defined ship type for marine shipping.
-NOTE Properties described in this object are for standard sources directly.</documentation>
+      <documentation>This data type describes the self-defined ship type for marine shipping.</documentation>
     </annotation>
   </element>
   <complexType name="CustomMaritimeShippingEmissionPropertiesType">
@@ -1200,7 +1117,7 @@ NOTE Properties described in this object are for standard sources directly.</doc
   <element name="CustomMooringInlandShipping" substitutionGroup="IMAER:MooringInlandShipping" type="IMAER:CustomMooringInlandShippingType">
     <annotation>
       <documentation>Self-defined ships at an inland shipping mooring
-NOTE This class describes a ship at a mooring, using a custom specification.</documentation>
+This class describes a ship at a mooring, using a custom specification.</documentation>
     </annotation>
   </element>
   <complexType name="CustomMooringInlandShippingType">
@@ -1224,7 +1141,7 @@ NOTE This class describes a ship at a mooring, using a custom specification.</do
   <element name="CustomMooringMaritimeShipping" substitutionGroup="IMAER:MooringMaritimeShipping" type="IMAER:CustomMooringMaritimeShippingType">
     <annotation>
       <documentation>Self-defined ships at a maritime shipping mooring.
-NOTE This class describes a ship at a mooring, using a custom specification.</documentation>
+This class describes a ship at a mooring, using a custom specification.</documentation>
     </annotation>
   </element>
   <complexType name="CustomMooringMaritimeShippingType">
@@ -1248,7 +1165,7 @@ NOTE This class describes a ship at a mooring, using a custom specification.</do
   <element name="CustomOffRoadMobileSource" substitutionGroup="IMAER:OffRoadMobileSource" type="IMAER:CustomOffRoadMobileSourceType">
     <annotation>
       <documentation>Self-defined mobile machinery source.
-NOTE This class describes a self-defined mobile machinery source, summarizing the emissions and other properties that are important for the various calculations.</documentation>
+This class describes a self-defined mobile machinery source, summarizing the emissions and other properties that are important for the various calculations.</documentation>
     </annotation>
   </element>
   <complexType name="CustomOffRoadMobileSourceType">
@@ -1279,10 +1196,46 @@ NOTE This class describes a self-defined mobile machinery source, summarizing th
       <element ref="IMAER:CustomOffRoadMobileSource"/>
     </sequence>
   </complexType>
+  <element name="CustomTimeVaryingProfile" substitutionGroup="gml:AbstractGML" type="IMAER:CustomTimeVaryingProfileType">
+    <annotation>
+      <documentation>Custom temporal variation. Consists of X values, where all values must add up to X * 100.
+As an example, a definition for hours per day: In this case there are 24 values, all of which must add up to 2400. For an equal distribution over the day, each value is 100.</documentation>
+    </annotation>
+  </element>
+  <complexType name="CustomTimeVaryingProfileType">
+    <complexContent>
+      <extension base="gml:AbstractGMLType">
+        <sequence>
+          <element minOccurs="0" name="label" type="string">
+            <annotation>
+              <documentation>An optional label for this custom definition.</documentation>
+            </annotation>
+          </element>
+          <element name="customType" type="string">
+            <annotation>
+              <documentation>The type of this custom definition. Implicitly indicates how many values are expected: for example, for a day definition, 24 values are expected.</documentation>
+            </annotation>
+          </element>
+          <element maxOccurs="unbounded" name="value" type="double">
+            <annotation>
+              <documentation>The values of this custom definition. Depending on the customType, a number of values are expected. If distributed equally over all values, this field has the value 100.</documentation>
+            </annotation>
+          </element>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="CustomTimeVaryingProfilePropertyType">
+    <sequence minOccurs="0">
+      <element ref="IMAER:CustomTimeVaryingProfile"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+    <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+  </complexType>
   <element name="CustomVehicle" substitutionGroup="IMAER:Vehicle" type="IMAER:CustomVehicleType">
     <annotation>
       <documentation>Characteristics for the emission type of self-defined road transport.
-NOTE Each road transport emission type is described on the basis of a number of characteristics, which are recorded in this separate data type.</documentation>
+Each road transport emission type is described on the basis of a number of characteristics, which are recorded in this separate data type.</documentation>
     </annotation>
   </element>
   <complexType name="CustomVehicleType">
@@ -1311,12 +1264,12 @@ NOTE Each road transport emission type is described on the basis of a number of 
   <element name="Definitions" substitutionGroup="gml:AbstractObject" type="IMAER:DefinitionsType">
     <annotation>
       <documentation>Container to keep track of definitions that can be referenced by other objects.
-NOTE Some definitions can be used within multiple sources. To prevent each source from having its own definition, these definitions can be referenced using a gml ID. This allows the definition to be adjusted in one place, if necessary. Because these objects do not have to be a featureMember or GeoObject, this container has been introduced.</documentation>
+Some definitions can be used within multiple sources. To prevent each source from having its own definition, these definitions can be referenced using a gml ID. This allows the definition to be adjusted in one place, if necessary. Because these objects do not have to be a featureMember or GeoObject, this container has been introduced.</documentation>
     </annotation>
   </element>
   <complexType name="DefinitionsType">
     <sequence>
-      <element maxOccurs="unbounded" minOccurs="0" name="customDiurnalVariation">
+      <element maxOccurs="unbounded" minOccurs="0" name="customTimeVaryingProfile">
         <annotation>
           <documentation>Possible custom temporal variation definitions.</documentation>
         </annotation>
@@ -1324,7 +1277,7 @@ NOTE Some definitions can be used within multiple sources. To prevent each sourc
           <complexContent>
             <extension base="gml:AbstractMemberType">
               <sequence minOccurs="0">
-                <element ref="IMAER:CustomDiurnalVariation"/>
+                <element ref="IMAER:CustomTimeVaryingProfile"/>
               </sequence>
               <attributeGroup ref="gml:AssociationAttributeGroup"/>
             </extension>
@@ -1338,24 +1291,10 @@ NOTE Some definitions can be used within multiple sources. To prevent each sourc
       <element ref="IMAER:Definitions"/>
     </sequence>
   </complexType>
-  <element abstract="true" name="DiurnalVariation" substitutionGroup="gml:AbstractObject" type="IMAER:DiurnalVariationType">
-    <annotation>
-      <documentation>Temporal variation.
-Note: this will be renamed in a future version to TimeVaryingProfile.</documentation>
-    </annotation>
-  </element>
-  <complexType abstract="true" name="DiurnalVariationType">
-    <sequence/>
-  </complexType>
-  <complexType name="DiurnalVariationPropertyType">
-    <sequence>
-      <element ref="IMAER:DiurnalVariation"/>
-    </sequence>
-  </complexType>
   <element name="Emission" substitutionGroup="IMAER:EmissionValueType" type="IMAER:EmissionType">
     <annotation>
       <documentation>The emission value for a substance.
-NOTE The emission value for a substance for an emission source.</documentation>
+The emission value for a substance for an emission source.</documentation>
     </annotation>
   </element>
   <complexType name="EmissionType">
@@ -1384,7 +1323,7 @@ NOTE The emission value for a substance for an emission source.</documentation>
   <element name="EmissionReduction" substitutionGroup="gml:AbstractObject" type="IMAER:EmissionReductionType">
     <annotation>
       <documentation>Class for an emission reduction specification (NSL).
-NOTE It may happen that emissions are reduced by a certain factor. In this class it can be recorded what this reduction is, per substance.</documentation>
+It may happen that emissions are reduced by a certain factor. In this class it can be recorded what this reduction is, per substance.</documentation>
     </annotation>
   </element>
   <complexType name="EmissionReductionType">
@@ -1409,7 +1348,7 @@ NOTE It may happen that emissions are reduced by a certain factor. In this class
   <element name="EmissionSource" substitutionGroup="IMAER:EmissionSourceType" type="IMAER:EmissionSourceType">
     <annotation>
       <documentation>Generic emission source.
-NOTE This class describes a generic emission source including geometry.</documentation>
+This class describes a generic emission source including geometry.</documentation>
     </annotation>
   </element>
   <complexType name="EmissionSourceType">
@@ -1435,7 +1374,7 @@ NOTE This class describes a generic emission source including geometry.</documen
   <element name="EmissionSourceCharacteristics" substitutionGroup="IMAER:SourceCharacteristicsType" type="IMAER:EmissionSourceCharacteristicsType">
     <annotation>
       <documentation>This data type describes the (OPS) characteristics of an emission source.
-NOTE Each emission source is described on the basis of a number of characteristics, which are recorded in this separate data type.</documentation>
+Each emission source is described on the basis of a number of characteristics, which are recorded in this separate data type.</documentation>
     </annotation>
   </element>
   <complexType name="EmissionSourceCharacteristicsType">
@@ -1457,7 +1396,7 @@ NOTE Each emission source is described on the basis of a number of characteristi
               <documentation>Distribution of the emission source in meters. Can only be used with point sources with a height.</documentation>
             </annotation>
           </element>
-          <element minOccurs="0" name="diurnalVariation" type="IMAER:DiurnalVariationPropertyType">
+          <element minOccurs="0" name="timeVaryingProfile" type="IMAER:TimeVaryingProfilePropertyType">
             <annotation>
               <documentation>Temporal variation of the emission from the source.</documentation>
             </annotation>
@@ -1474,7 +1413,7 @@ NOTE Each emission source is described on the basis of a number of characteristi
   <element name="EmissionSourceGeometry" substitutionGroup="gml:AbstractObject" type="IMAER:EmissionSourceGeometryType">
     <annotation>
       <documentation>Possible geometries of an emission source.
-NOTE This data type allows a choice of different types of geometries that an emission source can adopt.</documentation>
+This data type allows a choice of different types of geometries that an emission source can adopt.</documentation>
     </annotation>
   </element>
   <complexType name="EmissionSourceGeometryType">
@@ -1504,7 +1443,7 @@ NOTE This data type allows a choice of different types of geometries that an emi
   <element abstract="true" name="EmissionSourceType" substitutionGroup="IMAER:GeoObject" type="IMAER:EmissionSourceTypeType">
     <annotation>
       <documentation>Abstract base class for the description of emission sources.
-NOTE There are different types of emission sources present in the model. This abstract base class is a generalization of the different types of emission sources in the model. The geometry of these sources is included in the underlying types, because they differ per type of source.</documentation>
+There are different types of emission sources present in the model. This abstract base class is a generalization of the different types of emission sources in the model. The geometry of these sources is included in the underlying types, because they differ per type of source.</documentation>
     </annotation>
   </element>
   <complexType abstract="true" name="EmissionSourceTypeType">
@@ -1559,8 +1498,7 @@ NOTE There are different types of emission sources present in the model. This ab
   </complexType>
   <element abstract="true" name="EmissionValueType" substitutionGroup="gml:AbstractObject" type="IMAER:EmissionValueTypeType">
     <annotation>
-      <documentation>The emission value of an emission source.
-NOTE The emission value of an emission source.</documentation>
+      <documentation>The emission value of an emission source.</documentation>
     </annotation>
   </element>
   <complexType abstract="true" name="EmissionValueTypeType">
@@ -1574,7 +1512,7 @@ NOTE The emission value of an emission source.</documentation>
   <element abstract="true" name="FarmLodging" substitutionGroup="IMAER:EmissionValueType" type="IMAER:FarmLodgingType">
     <annotation>
       <documentation>Abstract base class for the description of farm lodging.
-NOTE There are different types of lodging in the model. This abstract base class is a generalization of the different types in the model.</documentation>
+There are different types of lodging in the model. This abstract base class is a generalization of the different types in the model.</documentation>
     </annotation>
   </element>
   <complexType abstract="true" name="FarmLodgingType">
@@ -1603,7 +1541,7 @@ NOTE There are different types of lodging in the model. This abstract base class
   <element name="FarmLodgingEmissionSource" substitutionGroup="IMAER:EmissionSourceType" type="IMAER:FarmLodgingEmissionSourceType">
     <annotation>
       <documentation>Emission source from a farm lodging.
-NOTE This class describes a lodging including geometry.</documentation>
+This class describes a lodging including geometry.</documentation>
     </annotation>
   </element>
   <complexType name="FarmLodgingEmissionSourceType">
@@ -1639,7 +1577,7 @@ NOTE This class describes a lodging including geometry.</documentation>
   <element name="FarmlandActivity" substitutionGroup="IMAER:AbstractFarmlandActivity" type="IMAER:FarmlandActivityType">
     <annotation>
       <documentation>Characteristics of a self-defined emission type for activity on farmland.
-NOTE Agricultural activity can be recorded directly as emissions. This is recorded in this data type.</documentation>
+Agricultural activity can be recorded directly as emissions. This is recorded in this data type.</documentation>
     </annotation>
   </element>
   <complexType name="FarmlandActivityType">
@@ -1663,7 +1601,7 @@ NOTE Agricultural activity can be recorded directly as emissions. This is record
   <element name="FarmlandEmissionSource" substitutionGroup="IMAER:EmissionSourceType" type="IMAER:FarmlandEmissionSourceType">
     <annotation>
       <documentation>Emission source from agricultural land.
-NOTE This class describes agricultural land, including geometry.</documentation>
+This class describes agricultural land, including geometry.</documentation>
     </annotation>
   </element>
   <complexType name="FarmlandEmissionSourceType">
@@ -1694,7 +1632,7 @@ NOTE This class describes agricultural land, including geometry.</documentation>
   <element abstract="true" name="GeoObject" substitutionGroup="gml:AbstractFeature" type="IMAER:GeoObjectType">
     <annotation>
       <documentation>Geo-object: Abstraction of a phenomenon in reality that is directly or indirectly associated with a location relative to the Earth
-NOTE No instances of this class are created. If an object is a geo-object, it is always an instance of a subclass of GeoObject.
+No instances of this class are created. If an object is a geo-object, it is always an instance of a subclass of GeoObject.
 All subclasses of GeoObject have the stereotype "featureType" in accordance with NEN-EN-ISO 19109:2005.</documentation>
     </annotation>
   </element>
@@ -1715,7 +1653,7 @@ All subclasses of GeoObject have the stereotype "featureType" in accordance with
   <element abstract="true" name="HeatContent" substitutionGroup="gml:AbstractObject" type="IMAER:HeatContentType">
     <annotation>
       <documentation>This abstract data type can be used to define the heat content.
-NOTE One characteristic of an emission source is its heat content. This can be entered directly, or it can be determined on the basis of other characteristics. The choice can be made through implementations of this class.</documentation>
+One characteristic of an emission source is its heat content. This can be entered directly, or it can be determined on the basis of other characteristics. The choice can be made through implementations of this class.</documentation>
     </annotation>
   </element>
   <complexType abstract="true" name="HeatContentType">
@@ -1729,7 +1667,7 @@ NOTE One characteristic of an emission source is its heat content. This can be e
   <simpleType name="InlandRouteDirectionTypeType">
     <annotation>
       <documentation>Options for the direction of mooring inland vessels.
-NOTE Characteristics have been provided for each inland vessel for both mooring and outgoing ships.</documentation>
+Characteristics have been provided for each inland vessel for both mooring and outgoing ships.</documentation>
     </annotation>
     <restriction base="string">
       <enumeration value="ARRIVE">
@@ -1747,7 +1685,7 @@ NOTE Characteristics have been provided for each inland vessel for both mooring 
   <element abstract="true" name="InlandShipping" substitutionGroup="IMAER:EmissionValueType" type="IMAER:InlandShippingType">
     <annotation>
       <documentation>Abstract base class for characteristics of an inland shipping route.
-NOTE Each inland shipping emission type for routes is described on the basis of a number of characteristics. This abstract base class is a generalization of the different types in the model.</documentation>
+Each inland shipping emission type for routes is described on the basis of a number of characteristics. This abstract base class is a generalization of the different types in the model.</documentation>
     </annotation>
   </element>
   <complexType abstract="true" name="InlandShippingType">
@@ -1801,7 +1739,7 @@ NOTE Each inland shipping emission type for routes is described on the basis of 
   <element name="InlandShippingEmissionSource" substitutionGroup="IMAER:EmissionSourceType" type="IMAER:InlandShippingEmissionSourceType">
     <annotation>
       <documentation>Emission source (sailing route) for inland shipping.
-NOTE This class describes a sailing route for inland shipping, including geometry. The class is a specialization of EmissionSourceType.</documentation>
+This class describes a sailing route for inland shipping, including geometry. The class is a specialization of EmissionSourceType.</documentation>
     </annotation>
   </element>
   <complexType name="InlandShippingEmissionSourceType">
@@ -1853,7 +1791,7 @@ NOTE This class describes a sailing route for inland shipping, including geometr
   <element name="InlandWaterway" substitutionGroup="gml:AbstractObject" type="IMAER:InlandWaterwayType">
     <annotation>
       <documentation>Characteristics of a sailing route for inland shipping (mooring).
-NOTE Each inland shipping mooring emission type for routes is described on the basis of a number of characteristics, which are recorded in this data type.</documentation>
+Each inland shipping mooring emission type for routes is described on the basis of a number of characteristics, which are recorded in this data type.</documentation>
     </annotation>
   </element>
   <complexType name="InlandWaterwayType">
@@ -1878,7 +1816,7 @@ NOTE Each inland shipping mooring emission type for routes is described on the b
   <element name="LodgingFodderMeasure" substitutionGroup="gml:AbstractObject" type="IMAER:LodgingFodderMeasureType">
     <annotation>
       <documentation>Extra feeding measure for stables.
-NOTE This class describes a feeding measure that can be used for an existing stable, using a predefined code. Use of this measure ensures a reduction (percentage) for all animals.</documentation>
+This class describes a feeding measure that can be used for an existing stable, using a predefined code. Use of this measure ensures a reduction (percentage) for all animals.</documentation>
     </annotation>
   </element>
   <complexType name="LodgingFodderMeasureType">
@@ -1898,7 +1836,7 @@ NOTE This class describes a feeding measure that can be used for an existing sta
   <element abstract="true" name="LodgingSystem" substitutionGroup="gml:AbstractObject" type="IMAER:LodgingSystemType">
     <annotation>
       <documentation>Abstract base class for additional stable techniques.
-NOTE There are various types of additional stable techniques available in the model. This abstract base class is a generalization of the different types in the model.</documentation>
+There are various types of additional stable techniques available in the model. This abstract base class is a generalization of the different types in the model.</documentation>
     </annotation>
   </element>
   <complexType abstract="true" name="LodgingSystemType">
@@ -1923,7 +1861,7 @@ NOTE There are various types of additional stable techniques available in the mo
   <element abstract="true" name="ManureStorage" substitutionGroup="IMAER:EmissionValueType" type="IMAER:ManureStorageType">
     <annotation>
       <documentation>Characteristics of an emission type for manure storage.
-NOTE There are different types of manure storage available in the model. This abstract base class is a generalization of the different types in the model.</documentation>
+There are different types of manure storage available in the model. This abstract base class is a generalization of the different types in the model.</documentation>
     </annotation>
   </element>
   <complexType abstract="true" name="ManureStorageType">
@@ -1957,7 +1895,7 @@ NOTE There are different types of manure storage available in the model. This ab
   <element name="ManureStorageEmissionSource" substitutionGroup="IMAER:EmissionSourceType" type="IMAER:ManureStorageEmissionSourceType">
     <annotation>
       <documentation>Emission source for manure storage.
-NOTE This class describes manure storage, including geometry.</documentation>
+This class describes manure storage, including geometry.</documentation>
     </annotation>
   </element>
   <complexType name="ManureStorageEmissionSourceType">
@@ -1984,7 +1922,7 @@ NOTE This class describes manure storage, including geometry.</documentation>
   <element abstract="true" name="MaritimeShipping" substitutionGroup="IMAER:EmissionValueType" type="IMAER:MaritimeShippingType">
     <annotation>
       <documentation>Abstract base class for characteristics of a shipping route.
-NOTE Each shipping emission type for routes is described on the basis of a number of characteristics. This abstract base class is a generalization of the different types in the model.</documentation>
+Each shipping emission type for routes is described on the basis of a number of characteristics. This abstract base class is a generalization of the different types in the model.</documentation>
     </annotation>
   </element>
   <complexType abstract="true" name="MaritimeShippingType">
@@ -2018,7 +1956,7 @@ NOTE Each shipping emission type for routes is described on the basis of a numbe
   <element name="MaritimeShippingEmissionSource" substitutionGroup="IMAER:EmissionSourceType" type="IMAER:MaritimeShippingEmissionSourceType">
     <annotation>
       <documentation>Emission source from shipping.
-NOTE This class describes a sailing route for maritime shipping, including geometry.</documentation>
+This class describes a sailing route for maritime shipping, including geometry.</documentation>
     </annotation>
   </element>
   <complexType name="MaritimeShippingEmissionSourceType">
@@ -2070,7 +2008,7 @@ NOTE This class describes a sailing route for maritime shipping, including geome
   <simpleType name="MaritimeShippingMovementTypeType">
     <annotation>
       <documentation>List of different movement types for shipping.
-NOTE There are various options for the type of movement for shipping routes. The options are listed here.</documentation>
+There are various options for the type of movement for shipping routes. The options are listed here.</documentation>
     </annotation>
     <restriction base="string">
       <enumeration value="INLAND">
@@ -2088,7 +2026,7 @@ NOTE There are various options for the type of movement for shipping routes. The
   <simpleType name="MonitorSubstanceType">
     <annotation>
       <documentation>Options for substances that apply to monitoring calculation points.
-NOTE A calculation point may apply to specific monitor substances. The options available for this are recorded within this enum.</documentation>
+A calculation point may apply to specific monitor substances. The options available for this are recorded within this enum.</documentation>
     </annotation>
     <restriction base="string">
       <enumeration value="NONE">
@@ -2111,7 +2049,7 @@ NOTE A calculation point may apply to specific monitor substances. The options a
   <element abstract="true" name="MooringInlandShipping" substitutionGroup="IMAER:EmissionValueType" type="IMAER:MooringInlandShippingType">
     <annotation>
       <documentation>Abstract base class for characteristics of an inland shipping mooring.
-NOTE Each mooring emission type for inland shipping is described on the basis of a number of characteristics. This abstract base class is a generalization of the different types in the model.</documentation>
+Each mooring emission type for inland shipping is described on the basis of a number of characteristics. This abstract base class is a generalization of the different types in the model.</documentation>
     </annotation>
   </element>
   <complexType abstract="true" name="MooringInlandShippingType">
@@ -2160,7 +2098,7 @@ NOTE Each mooring emission type for inland shipping is described on the basis of
   <element name="MooringInlandShippingEmissionSource" substitutionGroup="IMAER:EmissionSourceType" type="IMAER:MooringInlandShippingEmissionSourceType">
     <annotation>
       <documentation>Emission source from inland shipping (mooring).
-NOTE This class describes a berth including geometry and sailing route for inland shipping.</documentation>
+This class describes a berth including geometry and sailing route for inland shipping.</documentation>
     </annotation>
   </element>
   <complexType name="MooringInlandShippingEmissionSourceType">
@@ -2191,7 +2129,7 @@ NOTE This class describes a berth including geometry and sailing route for inlan
   <element abstract="true" name="MooringMaritimeShipping" substitutionGroup="IMAER:EmissionValueType" type="IMAER:MooringMaritimeShippingType">
     <annotation>
       <documentation>Abstract base class for characteristics of a marine emission type.
-NOTE Each shipping emission type for moorings is described on the basis of a number of characteristics. This abstract base class is a generalization of the different types in the model.</documentation>
+Each shipping emission type for moorings is described on the basis of a number of characteristics. This abstract base class is a generalization of the different types in the model.</documentation>
     </annotation>
   </element>
   <complexType abstract="true" name="MooringMaritimeShippingType">
@@ -2235,7 +2173,7 @@ NOTE Each shipping emission type for moorings is described on the basis of a num
   <element name="MooringMaritimeShippingEmissionSource" substitutionGroup="IMAER:EmissionSourceType" type="IMAER:MooringMaritimeShippingEmissionSourceType">
     <annotation>
       <documentation>Emission source from shipping.
-NOTE This class describes a mooring for sea shipping including geometry.</documentation>
+This class describes a mooring for sea shipping including geometry.</documentation>
     </annotation>
   </element>
   <complexType name="MooringMaritimeShippingEmissionSourceType">
@@ -2266,7 +2204,7 @@ NOTE This class describes a mooring for sea shipping including geometry.</docume
   <element name="NEN3610ID" substitutionGroup="gml:AbstractObject" type="IMAER:NEN3610IDType">
     <annotation>
       <documentation>Identifiers for the universal unique identification of an object
-NOTE The combination of a registration's namespace, local identification and version information makes an object uniquely identifiable. The information of this class can therefore be used to refer to the identified object with certainty.</documentation>
+The combination of a registration's namespace, local identification and version information makes an object uniquely identifiable. The information of this class can therefore be used to refer to the identified object with certainty.</documentation>
     </annotation>
   </element>
   <complexType name="NEN3610IDType">
@@ -2274,21 +2212,21 @@ NOTE The combination of a registration's namespace, local identification and ver
       <element name="namespace" type="string">
         <annotation>
           <documentation>Unique reference to a registration of objects
-NOTE The 'namespace' attribute is a unique reference to the registration that issues the identification. This list of registrations is managed within the context of NEN 3610. Within the Netherlands, this namespace will almost always include 'NL.' to start.
+The 'namespace' attribute is a unique reference to the registration that issues the identification. This list of registrations is managed within the context of NEN 3610. Within the Netherlands, this namespace will almost always include 'NL.' to start.
 The following characters may appear in a namespace indication: {"A"..."Z", "a"..."z", "0"..."9", "_", "-", " ,"," "."}</documentation>
         </annotation>
       </element>
       <element name="localId" type="string">
         <annotation>
           <documentation>Unique identification code within a registration
-NOTE 'LocalId' is the identification code that an object has within a (local) registration.
+'LocalId' is the identification code that an object has within a (local) registration.
 The following characters may appear in a localId: {"A"..."Z", "a"..."z", "0"..."9", "_", "-", ", ", "."}.</documentation>
         </annotation>
       </element>
       <element minOccurs="0" name="versionId" type="string">
         <annotation>
           <documentation>Version indication of an object
-NOTE The 'versionId' attribute is not part of the identification of the object but can be used to identify different versions of the same object.</documentation>
+The 'versionId' attribute is not part of the identification of the object but can be used to identify different versions of the same object.</documentation>
         </annotation>
       </element>
     </sequence>
@@ -2327,7 +2265,7 @@ NOTE The 'versionId' attribute is not part of the identification of the object b
   <element name="NcaCustomCalculationPoint" substitutionGroup="IMAER:CalculationPointType" type="IMAER:NcaCustomCalculationPointType">
     <annotation>
       <documentation>Self-defined calculation point in the context of NCA.
-NOTE This class describes a self-defined calculation point in the context of NCA (Nature Conservation Act).</documentation>
+This class describes a self-defined calculation point in the context of NCA (Nature Conservation Act).</documentation>
     </annotation>
   </element>
   <complexType name="NcaCustomCalculationPointType">
@@ -2353,7 +2291,7 @@ NOTE This class describes a self-defined calculation point in the context of NCA
   <element abstract="true" name="OffRoadMobileSource" substitutionGroup="IMAER:EmissionValueType" type="IMAER:OffRoadMobileSourceType">
     <annotation>
       <documentation>Abstract base class for describing mobile machinery resources.
-NOTE There are different types of mobile machinery descriptions in the model. This abstract base class is a generalization of the different types in the model.</documentation>
+There are different types of mobile machinery descriptions in the model. This abstract base class is a generalization of the different types in the model.</documentation>
     </annotation>
   </element>
   <complexType abstract="true" name="OffRoadMobileSourceType">
@@ -2377,7 +2315,7 @@ NOTE There are different types of mobile machinery descriptions in the model. Th
   <element name="OffRoadMobileSourceEmissionSource" substitutionGroup="IMAER:EmissionSourceType" type="IMAER:OffRoadMobileSourceEmissionSourceType">
     <annotation>
       <documentation>Emission source from mobile machinery.
-NOTE This class describes a collection of mobile machinery including geometry.</documentation>
+This class describes a collection of mobile machinery including geometry.</documentation>
     </annotation>
   </element>
   <complexType name="OffRoadMobileSourceEmissionSourceType">
@@ -2408,7 +2346,7 @@ NOTE This class describes a collection of mobile machinery including geometry.</
   <element abstract="true" name="OffRoadVehicleSpecification" substitutionGroup="gml:AbstractObject" type="IMAER:OffRoadVehicleSpecificationType">
     <annotation>
       <documentation>Abstract basic class of a specification for the emissions of a self-defined mobile equipment source.
-NOTE Various calculation methods can be used to determine the emissions of mobile equipment. These methods are fixed in the underlying types.</documentation>
+Various calculation methods can be used to determine the emissions of mobile equipment. These methods are fixed in the underlying types.</documentation>
     </annotation>
   </element>
   <complexType abstract="true" name="OffRoadVehicleSpecificationType">
@@ -2428,7 +2366,7 @@ NOTE Various calculation methods can be used to determine the emissions of mobil
   <element name="OperatingHoursOffRoadVehicleSpecification" substitutionGroup="IMAER:OffRoadVehicleSpecification" type="IMAER:OperatingHoursOffRoadVehicleSpecificationType">
     <annotation>
       <documentation>Class for a specification for the emissions of a self-defined mobile equipment source based on the operational hours.
-NOTE To determine the emissions of mobile equipment, the operational hours of that vehicle can be taken into account. The characteristics in this type are used for this.</documentation>
+To determine the emissions of mobile equipment, the operational hours of that vehicle can be taken into account. The characteristics in this type are used for this.</documentation>
     </annotation>
   </element>
   <complexType name="OperatingHoursOffRoadVehicleSpecificationType">
@@ -2467,7 +2405,7 @@ NOTE To determine the emissions of mobile equipment, the operational hours of th
   <element name="OtherSituationMetadata" substitutionGroup="gml:AbstractObject" type="IMAER:OtherSituationMetadataType">
     <annotation>
       <documentation>Metadata about other situations included in the calculation.
-NOTE Using this metadata object, information about other situations that have been calculated simultaneously in the same calculation can be recorded.</documentation>
+Using this metadata object, information about other situations that have been calculated simultaneously in the same calculation can be recorded.</documentation>
     </annotation>
   </element>
   <complexType name="OtherSituationMetadataType">
@@ -2479,7 +2417,7 @@ NOTE Using this metadata object, information about other situations that have be
       </element>
       <element name="name" type="string">
         <annotation>
-          <documentation>Name of the other situation.</documentation>
+          <documentation>same of the other situation.</documentation>
         </annotation>
       </element>
       <element name="reference" type="string">
@@ -2497,7 +2435,7 @@ NOTE Using this metadata object, information about other situations that have be
   <simpleType name="OutflowDirectionTypeType">
     <annotation>
       <documentation>Options for the outflow direction of emissions.
-NOTE In the case of an emission source with a heat content, it is important to take into account which direction the emission is forced in, for example through a chimney.</documentation>
+In the case of an emission source with a heat content, it is important to take into account which direction the emission is forced in, for example through a chimney.</documentation>
     </annotation>
     <restriction base="string">
       <enumeration value="VERTICAL">
@@ -2515,7 +2453,7 @@ NOTE In the case of an emission source with a heat content, it is important to t
   <simpleType name="OutflowVelocityTypeType">
     <annotation>
       <documentation>List of different ways in which the value for outflow velocity can be determined.
-NOTE With forced emission, a type can be specified for the outflow speed that says something about how the value was arrived at. The options are included in this list.</documentation>
+With forced emission, a type can be specified for the outflow speed that says something about how the value was arrived at. The options are included in this list.</documentation>
     </annotation>
     <restriction base="string">
       <enumeration value="ACTUAL_FLOW">
@@ -2530,75 +2468,10 @@ NOTE With forced emission, a type can be specified for the outflow speed that sa
       </enumeration>
     </restriction>
   </simpleType>
-  <element name="Plan" substitutionGroup="IMAER:EmissionValueType" type="IMAER:PlanType">
-    <annotation>
-      <documentation>Characteristics of spatial plan developments.
-NOTE Each spatial plan development source type is described on the basis of a number of characteristics. These are recorded in this data type.</documentation>
-    </annotation>
-  </element>
-  <complexType name="PlanType">
-    <complexContent>
-      <extension base="IMAER:EmissionValueTypeType">
-        <sequence>
-          <element name="description" type="string">
-            <annotation>
-              <documentation>The description of this plan.</documentation>
-            </annotation>
-          </element>
-          <element name="amount" type="integer">
-            <annotation>
-              <documentation>Each planType has a unit. The amount is the number of this unit.</documentation>
-            </annotation>
-          </element>
-        </sequence>
-        <attribute name="planType" type="string" use="required">
-          <annotation>
-            <documentation>The type of this plan.</documentation>
-          </annotation>
-        </attribute>
-      </extension>
-    </complexContent>
-  </complexType>
-  <complexType name="PlanPropertyType">
-    <sequence>
-      <element ref="IMAER:Plan"/>
-    </sequence>
-  </complexType>
-  <element name="PlanEmissionSource" substitutionGroup="IMAER:EmissionSourceType" type="IMAER:PlanEmissionSourceType">
-    <annotation>
-      <documentation>Emission source definition for spatial plan developments.
-NOTE This class describes a collection of spatial plan development resources including geometry.</documentation>
-    </annotation>
-  </element>
-  <complexType name="PlanEmissionSourceType">
-    <complexContent>
-      <extension base="IMAER:EmissionSourceTypeType">
-        <sequence>
-          <element maxOccurs="unbounded" minOccurs="0" name="emission" type="IMAER:EmissionPropertyType">
-            <annotation>
-              <documentation>Emission types from this source.</documentation>
-            </annotation>
-          </element>
-          <element maxOccurs="unbounded" name="plan" type="IMAER:PlanPropertyType">
-            <annotation>
-              <documentation>Specification of the plans for this emission type.</documentation>
-            </annotation>
-          </element>
-        </sequence>
-      </extension>
-    </complexContent>
-  </complexType>
-  <complexType name="PlanEmissionSourcePropertyType">
-    <sequence minOccurs="0">
-      <element ref="IMAER:PlanEmissionSource"/>
-    </sequence>
-    <attributeGroup ref="gml:AssociationAttributeGroup"/>
-    <attributeGroup ref="gml:OwnershipAttributeGroup"/>
-  </complexType>
   <element name="ProjectMetadata" substitutionGroup="gml:AbstractObject" type="IMAER:ProjectMetadataType">
     <annotation>
       <documentation>Metadata about the captured project.
-NOTE Using this metadata object, project information about the emission sources can be recorded.</documentation>
+Using this metadata object, project information about the emission sources can be recorded.</documentation>
     </annotation>
   </element>
   <complexType name="ProjectMetadataType">
@@ -2606,16 +2479,6 @@ NOTE Using this metadata object, project information about the emission sources 
       <element name="year" type="integer">
         <annotation>
           <documentation>The AERIUS calculation core uses GDN basic data that is adjusted annually. This attribute indicates which year the basic data was used in the calculations.</documentation>
-        </annotation>
-      </element>
-      <element minOccurs="0" name="temporaryPeriod" type="integer">
-        <annotation>
-          <documentation>Duration of the project in years (only in case of temporary projects).</documentation>
-        </annotation>
-      </element>
-      <element minOccurs="0" name="permitCalculationRadiusType" type="string">
-        <annotation>
-          <documentation>Distance Limit value type for the Nature Conservation Act</documentation>
         </annotation>
       </element>
       <element minOccurs="0" name="name" type="string">
@@ -2648,7 +2511,7 @@ NOTE Using this metadata object, project information about the emission sources 
   <element name="ReceptorPoint" substitutionGroup="IMAER:CalculationPointType" type="IMAER:ReceptorPointType">
     <annotation>
       <documentation>Receptor point.
-NOTE This class describes a calculation point on the AERIUS grid.</documentation>
+This class describes a calculation point on the AERIUS grid.</documentation>
     </annotation>
   </element>
   <complexType name="ReceptorPointType">
@@ -2679,7 +2542,7 @@ NOTE This class describes a calculation point on the AERIUS grid.</documentation
   <element name="ReductiveLodgingSystem" substitutionGroup="IMAER:LodgingSystem" type="IMAER:ReductiveLodgingSystemType">
     <annotation>
       <documentation>Extra reductive lodging technology description.
-NOTE This class describes an additional stable technology that can be used in an existing stable, using a predefined code. Use of this system ensures a reduction (percentage) for all animals.</documentation>
+This class describes an additional stable technology that can be used in an existing stable, using a predefined code. Use of this system ensures a reduction (percentage) for all animals.</documentation>
     </annotation>
   </element>
   <complexType name="ReductiveLodgingSystemType">
@@ -2694,20 +2557,19 @@ NOTE This class describes an additional stable technology that can be used in an
       <element ref="IMAER:ReductiveLodgingSystem"/>
     </sequence>
   </complexType>
-  <element name="ReferenceDiurnalVariation" substitutionGroup="IMAER:DiurnalVariation" type="IMAER:ReferenceDiurnalVariationType">
+  <element name="ReferenceTimeVaryingProfile" substitutionGroup="IMAER:TimeVaryingProfile" type="IMAER:ReferenceTimeVaryingProfileType">
     <annotation>
-      <documentation>Reference to a (reusable) custom-specified temporal variation definition.
-Note: this will be renamed in a future version to ReferenceTimeVaryingProfile.</documentation>
+      <documentation>Reference to a (reusable) custom-specified temporal variation definition.</documentation>
     </annotation>
   </element>
-  <complexType name="ReferenceDiurnalVariationType">
+  <complexType name="ReferenceTimeVaryingProfileType">
     <complexContent>
-      <extension base="IMAER:DiurnalVariationType">
+      <extension base="IMAER:TimeVaryingProfileType">
         <sequence>
-          <element name="customDiurnalVariation" type="gml:ReferenceType">
+          <element name="customTimeVaryingProfile" type="gml:ReferenceType">
             <annotation>
               <appinfo>
-                <targetElement xmlns="http://www.opengis.net/gml/3.2">IMAER:CustomDiurnalVariation</targetElement>
+                <targetElement xmlns="http://www.opengis.net/gml/3.2">IMAER:CustomTimeVaryingProfile</targetElement>
               </appinfo>
             </annotation>
           </element>
@@ -2715,15 +2577,15 @@ Note: this will be renamed in a future version to ReferenceTimeVaryingProfile.</
       </extension>
     </complexContent>
   </complexType>
-  <complexType name="ReferenceDiurnalVariationPropertyType">
+  <complexType name="ReferenceTimeVaryingProfilePropertyType">
     <sequence>
-      <element ref="IMAER:ReferenceDiurnalVariation"/>
+      <element ref="IMAER:ReferenceTimeVaryingProfile"/>
     </sequence>
   </complexType>
   <simpleType name="RejectionGroundsType">
     <annotation>
       <documentation>Options for rejection, for example when updating calculation points.
-NOTE When updating, a calculation point can be rejected. The reason for this is recorded within these options.</documentation>
+When updating, a calculation point can be rejected. The reason for this is recorded within these options.</documentation>
     </annotation>
     <restriction base="string">
       <enumeration value="NONE">
@@ -2733,7 +2595,7 @@ NOTE When updating, a calculation point can be rejected. The reason for this is 
       </enumeration>
       <enumeration value="COMPLIANCE_CRITERION">
         <annotation>
-          <documentation>Scope of application Criterion.</documentation>
+          <documentation>Scope of application citerion.</documentation>
         </annotation>
       </enumeration>
       <enumeration value="EXPOSURE_CRITERION">
@@ -2751,7 +2613,7 @@ NOTE When updating, a calculation point can be rejected. The reason for this is 
   <simpleType name="ResultTypeType">
     <annotation>
       <documentation>List of different types of results.
-NOTE The AERIUS calculation core can determine different result types of emissions. This includes concentrations and depositions. These types are listed here.</documentation>
+The AERIUS calculation core can determine different result types of emissions. This includes concentrations and depositions. These types are listed here.</documentation>
     </annotation>
     <restriction base="string">
       <enumeration value="DEPOSITION">
@@ -2761,7 +2623,7 @@ NOTE The AERIUS calculation core can determine different result types of emissio
       </enumeration>
       <enumeration value="CONCENTRATION">
         <annotation>
-          <documentation>Concentration (&amp;#181;g/m&amp;#179;)</documentation>
+          <documentation>Concentration (µg/m³)</documentation>
         </annotation>
       </enumeration>
       <enumeration value="EXCEEDANCE_DAYS">
@@ -2779,7 +2641,7 @@ NOTE The AERIUS calculation core can determine different result types of emissio
   <simpleType name="RoadElevationType">
     <annotation>
       <documentation>List of different types of road elevations.
-NOTE When calculating emissions for road traffic in suburban areas, the elevation of the road can be taken into account. (SRM2)</documentation>
+When calculating emissions for road traffic in suburban areas, the elevation of the road can be taken into account. (SRM2)</documentation>
     </annotation>
     <restriction base="string">
       <enumeration value="NORMAL">
@@ -2812,7 +2674,7 @@ NOTE When calculating emissions for road traffic in suburban areas, the elevatio
   <element abstract="true" name="RoadEmissionSource" substitutionGroup="IMAER:EmissionSourceType" type="IMAER:RoadEmissionSourceType">
     <annotation>
       <documentation>Emission source from a road.
-NOTE This class describes a road emission source including geometry.</documentation>
+This class describes a road emission source including geometry.</documentation>
     </annotation>
   </element>
   <complexType abstract="true" name="RoadEmissionSourceType">
@@ -2863,7 +2725,7 @@ NOTE This class describes a road emission source including geometry.</documentat
   <simpleType name="RoadManagerType">
     <annotation>
       <documentation>List of different types of road manager for a road
-NOTE For a road it can be indicated what kind of party the road manager is.</documentation>
+For a road it can be indicated what kind of party the road manager is.</documentation>
     </annotation>
     <restriction base="string">
       <enumeration value="MUNICIPALITY">
@@ -2896,7 +2758,7 @@ NOTE For a road it can be indicated what kind of party the road manager is.</doc
   <simpleType name="RoadProfileType">
     <annotation>
       <documentation>List of different types of road profile of a road
-NOTE When calculating emissions for road traffic in suburban areas, the road profile of the road (SRM1) can be taken into account.</documentation>
+When calculating emissions for road traffic in suburban areas, the road profile of the road (SRM1) can be taken into account.</documentation>
     </annotation>
     <restriction base="string">
       <enumeration value="WIDE_STREET_CANYON">
@@ -2924,7 +2786,7 @@ NOTE When calculating emissions for road traffic in suburban areas, the road pro
   <element name="RoadSideBarrier" substitutionGroup="gml:AbstractObject" type="IMAER:RoadSideBarrierType">
     <annotation>
       <documentation>Characteristics of a barrier (wall or screen) on the side of the road.
-NOTE A screen/wall on the side of a road is provided with a number of characteristics, which are recorded in this separate data type.</documentation>
+A screen/wall on the side of a road is provided with a number of characteristics, which are recorded in this separate data type.</documentation>
     </annotation>
   </element>
   <complexType name="RoadSideBarrierType">
@@ -2954,7 +2816,7 @@ NOTE A screen/wall on the side of a road is provided with a number of characteri
   <simpleType name="RoadSideBarrierTypeType">
     <annotation>
       <documentation>List of different types of roadside dividers.
-NOTE When calculating emissions for road traffic in suburban areas, screens and walls along the road can be taken into account. (SRM2)</documentation>
+When calculating emissions for road traffic in suburban areas, screens and walls along the road can be taken into account. (SRM2)</documentation>
     </annotation>
     <restriction base="string">
       <enumeration value="SCREEN">
@@ -2972,7 +2834,7 @@ NOTE When calculating emissions for road traffic in suburban areas, screens and 
   <element name="SRM1LinearReference" substitutionGroup="IMAER:SimpleLinearReference" type="IMAER:SRM1LinearReferenceType">
     <annotation>
       <documentation>Partial change in SRM1 attributes.
-NOTE This class can be used to give one or more attributes a different value for a section of the road. Can be used for SRM1Road.</documentation>
+This class can be used to give one or more attributes a different value for a section of the road. Can be used for SRM1Road.</documentation>
     </annotation>
   </element>
   <complexType name="SRM1LinearReferenceType">
@@ -2996,7 +2858,7 @@ NOTE This class can be used to give one or more attributes a different value for
   <element name="SRM1Road" substitutionGroup="IMAER:RoadEmissionSource" type="IMAER:SRM1RoadType">
     <annotation>
       <documentation>Emission source of an SRM1 road.
-NOTE This class describes a road emission source including geometry. This road is intended to be calculated according to SRM1. SRM1 includes roads that do not fall under SRM2, inner-city roads and non-provincial rural roads.</documentation>
+This class describes a road emission source including geometry. This road is intended to be calculated according to SRM1. SRM1 includes roads that do not fall under SRM2, inner-city roads and non-provincial rural roads.</documentation>
     </annotation>
   </element>
   <complexType name="SRM1RoadType">
@@ -3028,7 +2890,7 @@ This is a piece of Dynamic Segmentation or Linear Referencing.</documentation>
   <element name="SRM1RoadDispersionLine" substitutionGroup="IMAER:GeoObject" type="IMAER:SRM1RoadDispersionLineType">
     <annotation>
       <documentation>Dispersion line between an SRM1 road and a calculation point.
-NOTE This class describes the dispersion line between the road and a calculation point. This line is intended for calculations according to SRM1.</documentation>
+This class describes the dispersion line between the road and a calculation point. This line is intended for calculations according to SRM1.</documentation>
     </annotation>
   </element>
   <complexType name="SRM1RoadDispersionLineType">
@@ -3098,7 +2960,7 @@ NOTE This class describes the dispersion line between the road and a calculation
   <element name="SRM1RoadMeasure" substitutionGroup="gml:AbstractObject" type="IMAER:SRM1RoadMeasureType">
     <annotation>
       <documentation>Class for a specification of measures by vehicle type and speed type (NSL).
-NOTE It may happen that a measure applies to a specific vehicle type and a specific speed profile, which reduces emissions. In this class it can be determined what this reduction is, per vehicle type and speed profile</documentation>
+It may happen that a measure applies to a specific vehicle type and a specific speed profile, which reduces emissions. In this class it can be determined what this reduction is, per vehicle type and speed profile</documentation>
     </annotation>
   </element>
   <complexType name="SRM1RoadMeasureType">
@@ -3128,7 +2990,7 @@ NOTE It may happen that a measure applies to a specific vehicle type and a speci
   <element name="SRM1RoadMeasureArea" substitutionGroup="IMAER:GeoObject" type="IMAER:SRM1RoadMeasureAreaType">
     <annotation>
       <documentation>Class for the specification of measures that apply to SRM1 roads within an area (NSL).
-NOTE It may be that a measure reduces emissions for a specific area for SRM1 roads. In this class it can be recorded what this reduction is for an area.</documentation>
+It may be that a measure reduces emissions for a specific area for SRM1 roads. In this class it can be recorded what this reduction is for an area.</documentation>
     </annotation>
   </element>
   <complexType name="SRM1RoadMeasureAreaType">
@@ -3179,7 +3041,7 @@ NOTE It may be that a measure reduces emissions for a specific area for SRM1 roa
   <element name="SRM2LinearReference" substitutionGroup="IMAER:SimpleLinearReference" type="IMAER:SRM2LinearReferenceType">
     <annotation>
       <documentation>Partial change in SRM2 attributes.
-NOTE This class can be used to give one or more attributes a different value for a section of the road. Can be used for SRM2Road.</documentation>
+This class can be used to give one or more attributes a different value for a section of the road. Can be used for SRM2Road.</documentation>
     </annotation>
   </element>
   <complexType name="SRM2LinearReferenceType">
@@ -3223,7 +3085,7 @@ NOTE This class can be used to give one or more attributes a different value for
   <element name="SRM2Road" substitutionGroup="IMAER:RoadEmissionSource" type="IMAER:SRM2RoadType">
     <annotation>
       <documentation>Emission source of an SRM2 road.
-NOTE This class describes a road emission source including geometry. This road is intended to be calculated according to SRM2. SRM2 includes roads that do not fall under SRM1, suburban roads and highways.</documentation>
+This class describes a road emission source including geometry. This road is intended to be calculated according to SRM2. SRM2 includes roads that do not fall under SRM1, suburban roads and highways.</documentation>
     </annotation>
   </element>
   <complexType name="SRM2RoadType">
@@ -3275,7 +3137,7 @@ This is a piece of Dynamic Segmentation or Linear Referencing.</documentation>
   <element abstract="true" name="SimpleLinearReference" substitutionGroup="gml:AbstractObject" type="IMAER:SimpleLinearReferenceType">
     <annotation>
       <documentation>Partial change in attributes for an object.
-NOTE This class can be used to give one or more attributes a different value for a section of the road. Only to be used for objects defined by a LineString.</documentation>
+This class can be used to give one or more attributes a different value for a section of the road. Only to be used for objects defined by a LineString.</documentation>
     </annotation>
   </element>
   <complexType abstract="true" name="SimpleLinearReferenceType">
@@ -3300,7 +3162,7 @@ NOTE This class can be used to give one or more attributes a different value for
   <element name="SituationMetadata" substitutionGroup="gml:AbstractObject" type="IMAER:SituationMetadataType">
     <annotation>
       <documentation>Metadata about the recorded situation.
-NOTE Using this metadata object, information about the situation can be recorded.</documentation>
+Using this metadata object, information about the situation can be recorded.</documentation>
     </annotation>
   </element>
   <complexType name="SituationMetadataType">
@@ -3323,7 +3185,7 @@ NOTE Using this metadata object, information about the situation can be recorded
       <element minOccurs="0" name="nettingFactor" type="double">
         <annotation>
           <documentation>Skimming factor for netting (decimal fraction 0-1). The fraction of the deposition in the netting situation that may NOT be spent (for the benefit of nature).
-Only has an effect on situationType NETTING, and will then have an effect on the calculation results when granting a permit.</documentation>
+Only has an effect on situation type OFF_SITE_REDUCTION and will then have an effect on the calculation results when granting a permit.</documentation>
         </annotation>
       </element>
     </sequence>
@@ -3336,7 +3198,7 @@ Only has an effect on situationType NETTING, and will then have an effect on the
   <simpleType name="SituationTypeType">
     <annotation>
       <documentation>List of different types for situations.
-NOTE For a situation you can indicate what type of situation it is. This affects how the situation is included in difference calculations and permit granting.</documentation>
+For a situation you can indicate what type of situation it is. This affects how the situation is included in difference calculations and permit granting.</documentation>
     </annotation>
     <restriction base="string">
       <enumeration value="REFERENCE">
@@ -3352,11 +3214,6 @@ NOTE For a situation you can indicate what type of situation it is. This affects
       <enumeration value="TEMPORARY">
         <annotation>
           <documentation>Temporary situation, intended for situation(s) that lead from the reference situation to the intended situation, for example the construction phase.</documentation>
-        </annotation>
-      </enumeration>
-      <enumeration value="NETTING">
-        <annotation>
-          <documentation>Netting situation, intended as a supplementary situation for external netting. In this situation type it is possible to specify a fraction/percentage, whereby this part of the deposition may NOT be emitted in the netting situation (for the benefit of nature). Deprecated, from version 5.1.2 use 'OFF_SITE_REDUCTION'.</documentation>
         </annotation>
       </enumeration>
       <enumeration value="OFF_SITE_REDUCTION">
@@ -3379,7 +3236,7 @@ NOTE For a situation you can indicate what type of situation it is. This affects
   <element abstract="true" name="SourceCharacteristicsType" substitutionGroup="gml:AbstractObject" type="IMAER:SourceCharacteristicsTypeType">
     <annotation>
       <documentation>This data type describes the characteristics of an emission source.
-NOTE Each emission source is described on the basis of a number of characteristics, which are recorded in this separate data type.</documentation>
+Each emission source is described on the basis of a number of characteristics, which are recorded in this separate data type.</documentation>
     </annotation>
   </element>
   <complexType abstract="true" name="SourceCharacteristicsTypeType">
@@ -3402,7 +3259,7 @@ NOTE Each emission source is described on the basis of a number of characteristi
   <element name="SpecificVehicle" substitutionGroup="IMAER:Vehicle" type="IMAER:SpecificVehicleType">
     <annotation>
       <documentation>Characteristics of a specific type of vehicles with a class.
-NOTE Each road transport emission type is described on the basis of a number of characteristics, which are recorded in this separate data type.</documentation>
+Each road transport emission type is described on the basis of a number of characteristics, which are recorded in this separate data type.</documentation>
     </annotation>
   </element>
   <complexType name="SpecificVehicleType">
@@ -3425,7 +3282,7 @@ NOTE Each road transport emission type is described on the basis of a number of 
   <element name="SpecifiedHeatContent" substitutionGroup="IMAER:HeatContent" type="IMAER:SpecifiedHeatContentType">
     <annotation>
       <documentation>This data type describes the heat content where known.
-NOTE This class can be used if the heat content of an emission source is known.</documentation>
+This class can be used if the heat content of an emission source is known.</documentation>
     </annotation>
   </element>
   <complexType name="SpecifiedHeatContentType">
@@ -3446,34 +3303,10 @@ NOTE This class can be used if the heat content of an emission source is known.<
       <element ref="IMAER:SpecifiedHeatContent"/>
     </sequence>
   </complexType>
-  <element name="StandardDiurnalVariation" substitutionGroup="IMAER:DiurnalVariation" type="IMAER:StandardDiurnalVariationType">
-    <annotation>
-      <documentation>Temporal variation according to one of the standard values known within AERIUS (based on OPS).
-Note: this will be renamed in a future version to StandardTimeVaryingProfile.</documentation>
-    </annotation>
-  </element>
-  <complexType name="StandardDiurnalVariationType">
-    <complexContent>
-      <extension base="IMAER:DiurnalVariationType">
-        <sequence>
-          <element name="standardType" type="string">
-            <annotation>
-              <documentation>The standard type to be used. Due to expandability, it is not specified which values are possible, but there is a limited possibility.</documentation>
-            </annotation>
-          </element>
-        </sequence>
-      </extension>
-    </complexContent>
-  </complexType>
-  <complexType name="StandardDiurnalVariationPropertyType">
-    <sequence>
-      <element ref="IMAER:StandardDiurnalVariation"/>
-    </sequence>
-  </complexType>
   <element name="StandardFarmLodging" substitutionGroup="IMAER:FarmLodging" type="IMAER:StandardFarmLodgingType">
     <annotation>
       <documentation>General lodging description.
-NOTE This class describes a general lodging, using a predefined lodging code.</documentation>
+This class describes a general lodging, using a predefined lodging code.</documentation>
     </annotation>
   </element>
   <complexType name="StandardFarmLodgingType">
@@ -3512,7 +3345,7 @@ NOTE This class describes a general lodging, using a predefined lodging code.</d
   <element name="StandardFarmlandActivity" substitutionGroup="IMAER:AbstractFarmlandActivity" type="IMAER:StandardFarmlandActivityType">
     <annotation>
       <documentation>Characteristics of a standard emission type for farmland activity.
-NOTE Each use or activity emission type for farmland is described on the basis of a number of characteristics. These are recorded in this data type.</documentation>
+Each use or activity emission type for farmland is described on the basis of a number of characteristics. These are recorded in this data type.</documentation>
     </annotation>
   </element>
   <complexType name="StandardFarmlandActivityType">
@@ -3561,7 +3394,7 @@ NOTE Each use or activity emission type for farmland is described on the basis o
   <element name="StandardInlandShipping" substitutionGroup="IMAER:InlandShipping" type="IMAER:StandardInlandShippingType">
     <annotation>
       <documentation>General description of ships on an inland shipping route.
-NOTE This class describes a ship on a sailing route, using a predefined ship type.</documentation>
+This class describes a ship on a sailing route, using a predefined ship type.</documentation>
     </annotation>
   </element>
   <complexType name="StandardInlandShippingType">
@@ -3584,7 +3417,7 @@ NOTE This class describes a ship on a sailing route, using a predefined ship typ
   <element name="StandardManureStorage" substitutionGroup="IMAER:ManureStorage" type="IMAER:StandardManureStorageType">
     <annotation>
       <documentation>Standard manure storage description.
-NOTE This class describes a standard manure storage, using a predefined manure storage technique code.</documentation>
+This class describes a standard manure storage, using a predefined manure storage technique code.</documentation>
     </annotation>
   </element>
   <complexType name="StandardManureStorageType">
@@ -3607,7 +3440,7 @@ NOTE This class describes a standard manure storage, using a predefined manure s
   <element name="StandardMaritimeShipping" substitutionGroup="IMAER:MaritimeShipping" type="IMAER:StandardMaritimeShippingType">
     <annotation>
       <documentation>General description of ships on a maritime shipping route.
-NOTE This class describes a ship on a sailing route, using a predefined ship type.</documentation>
+This class describes a ship on a sailing route, using a predefined ship type.</documentation>
     </annotation>
   </element>
   <complexType name="StandardMaritimeShippingType">
@@ -3616,7 +3449,7 @@ NOTE This class describes a ship on a sailing route, using a predefined ship typ
         <sequence/>
         <attribute name="shipType" type="string" use="required">
           <annotation>
-            <documentation>Type schip.</documentation>
+            <documentation>Ship type.</documentation>
           </annotation>
         </attribute>
       </extension>
@@ -3630,7 +3463,7 @@ NOTE This class describes a ship on a sailing route, using a predefined ship typ
   <element name="StandardMooringInlandShipping" substitutionGroup="IMAER:MooringInlandShipping" type="IMAER:StandardMooringInlandShippingType">
     <annotation>
       <documentation>General description of ships at an inland shipping mooring.
-NOTE This class describes a ship at a mooring, using a predefined ship type.</documentation>
+This class describes a ship at a mooring, using a predefined ship type.</documentation>
     </annotation>
   </element>
   <complexType name="StandardMooringInlandShippingType">
@@ -3653,7 +3486,7 @@ NOTE This class describes a ship at a mooring, using a predefined ship type.</do
   <element name="StandardMooringMaritimeShipping" substitutionGroup="IMAER:MooringMaritimeShipping" type="IMAER:StandardMooringMaritimeShippingType">
     <annotation>
       <documentation>General description of ships at a maritime shipping mooring.
-NOTE This class describes a ship at a mooring, using a predefined ship type.</documentation>
+This class describes a ship at a mooring, using a predefined ship type.</documentation>
     </annotation>
   </element>
   <complexType name="StandardMooringMaritimeShippingType">
@@ -3676,7 +3509,7 @@ NOTE This class describes a ship at a mooring, using a predefined ship type.</do
   <element name="StandardOffRoadMobileSource" substitutionGroup="IMAER:OffRoadMobileSource" type="IMAER:StandardOffRoadMobileSourceType">
     <annotation>
       <documentation>Characteristics of an emission type for mobile equipment.
-NOTE Mobile tools are described on the basis of a number of characteristics. These are recorded in this data type.</documentation>
+Mobile tools are described on the basis of a number of characteristics. These are recorded in this data type.</documentation>
     </annotation>
   </element>
   <complexType name="StandardOffRoadMobileSourceType">
@@ -3710,6 +3543,29 @@ NOTE Mobile tools are described on the basis of a number of characteristics. The
   <complexType name="StandardOffRoadMobileSourcePropertyType">
     <sequence>
       <element ref="IMAER:StandardOffRoadMobileSource"/>
+    </sequence>
+  </complexType>
+  <element name="StandardTimeVaryingProfile" substitutionGroup="IMAER:TimeVaryingProfile" type="IMAER:StandardTimeVaryingProfileType">
+    <annotation>
+      <documentation>Temporal variation according to one of the standard values known within AERIUS (based on OPS).</documentation>
+    </annotation>
+  </element>
+  <complexType name="StandardTimeVaryingProfileType">
+    <complexContent>
+      <extension base="IMAER:TimeVaryingProfileType">
+        <sequence>
+          <element name="standardType" type="string">
+            <annotation>
+              <documentation>The standard type to be used. Due to expandability, it is not specified which values are possible, but there is a limited possibility.</documentation>
+            </annotation>
+          </element>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="StandardTimeVaryingProfilePropertyType">
+    <sequence>
+      <element ref="IMAER:StandardTimeVaryingProfile"/>
     </sequence>
   </complexType>
   <element name="StandardVehicle" substitutionGroup="IMAER:Vehicle" type="IMAER:StandardVehicleType">
@@ -3753,7 +3609,7 @@ NOTE Mobile tools are described on the basis of a number of characteristics. The
   <element name="SubPoint" substitutionGroup="IMAER:CalculationPointType" type="IMAER:SubPointType">
     <annotation>
       <documentation>Subpoint for a receptor point.
-NOTE This class describes a subcomputing point of a receptor point on the AERIUS grid.</documentation>
+This class describes a sub-calculation point of a receptor point on the AERIUS grid.</documentation>
     </annotation>
   </element>
   <complexType name="SubPointType">
@@ -3762,7 +3618,7 @@ NOTE This class describes a subcomputing point of a receptor point on the AERIUS
         <sequence>
           <element name="level" type="integer">
             <annotation>
-              <documentation>The level at which this subcalculation point is determined. The closer to a source, the higher level and the more subcomputing points are used for the receptor point.</documentation>
+              <documentation>The level at which this sub-calculation point is determined. The closer to a source, the higher level and the more sub-calculation points are used for the receptor point.</documentation>
             </annotation>
           </element>
         </sequence>
@@ -3789,7 +3645,7 @@ NOTE This class describes a subcomputing point of a receptor point on the AERIUS
   <simpleType name="SubstanceType">
     <annotation>
       <documentation>List of different substance names.
-NOTE the AERIUS calculation core can calculate emissions for a number of substances, which are listed here.</documentation>
+The AERIUS calculation core can calculate emissions for a number of substances, which are listed here.</documentation>
     </annotation>
     <restriction base="string">
       <enumeration value="NH3">
@@ -3827,7 +3683,7 @@ NOTE the AERIUS calculation core can calculate emissions for a number of substan
   <simpleType name="TimeUnitType">
     <annotation>
       <documentation>List of different time units.
-NOTE the AERIUS calculation core can calculate emissions based on time units, which are listed here.</documentation>
+The AERIUS calculation core can calculate emissions based on time units, which are listed here.</documentation>
     </annotation>
     <restriction base="string">
       <enumeration value="HOUR"/>
@@ -3836,10 +3692,23 @@ NOTE the AERIUS calculation core can calculate emissions based on time units, wh
       <enumeration value="YEAR"/>
     </restriction>
   </simpleType>
+  <element abstract="true" name="TimeVaryingProfile" substitutionGroup="gml:AbstractObject" type="IMAER:TimeVaryingProfileType">
+    <annotation>
+      <documentation>Temporal variation.</documentation>
+    </annotation>
+  </element>
+  <complexType abstract="true" name="TimeVaryingProfileType">
+    <sequence/>
+  </complexType>
+  <complexType name="TimeVaryingProfilePropertyType">
+    <sequence>
+      <element ref="IMAER:TimeVaryingProfile"/>
+    </sequence>
+  </complexType>
   <simpleType name="TrafficDirectionType">
     <annotation>
       <documentation>List of different directions for traffic on roads.
-NOTE For a road, it can be indicated in which direction the traffic travels on the line segment in relation to the drawn direction. The options are included in this list.</documentation>
+For a road, it can be indicated in which direction the traffic travels on the line segment in relation to the drawn direction. The options are included in this list.</documentation>
     </annotation>
     <restriction base="string">
       <enumeration value="BOTH">
@@ -3862,7 +3731,7 @@ NOTE For a road, it can be indicated in which direction the traffic travels on t
   <simpleType name="TreeProfileType">
     <annotation>
       <documentation>List of different types of tree profile between the road and the calculation point.
-NOTE When calculating emissions for road traffic in suburban areas, trees along the road can be taken into account (SRM1).</documentation>
+When calculating emissions for road traffic in suburban areas, trees along the road can be taken into account (SRM1).</documentation>
     </annotation>
     <restriction base="string">
       <enumeration value="NONE_OR_FEW">
@@ -3885,7 +3754,7 @@ NOTE When calculating emissions for road traffic in suburban areas, trees along 
   <element abstract="true" name="Vehicle" substitutionGroup="IMAER:EmissionValueType" type="IMAER:VehicleType">
     <annotation>
       <documentation>Characteristics of a road transport emission type.
-NOTE Each road transport emission type is described on the basis of a number of characteristics, which are recorded in this separate data type.</documentation>
+Each road transport emission type is described on the basis of a number of characteristics, which are recorded in this separate data type.</documentation>
     </annotation>
   </element>
   <complexType abstract="true" name="VehicleType">
@@ -3914,7 +3783,7 @@ NOTE Each road transport emission type is described on the basis of a number of 
   <element name="VersionMetadata" substitutionGroup="gml:AbstractObject" type="IMAER:VersionMetadataType">
     <annotation>
       <documentation>Metadata about version used.
-NOTE This data type contains the versions used to arrive at the data.</documentation>
+This data type contains the versions used to arrive at the data.</documentation>
     </annotation>
   </element>
   <complexType name="VersionMetadataType">
@@ -3939,7 +3808,7 @@ NOTE This data type contains the versions used to arrive at the data.</documenta
   <simpleType name="WaterwayDirectionTypeType">
     <annotation>
       <documentation>Options for the flow direction of routes for inland vessels.
-NOTE The flow for an inland shipping route can count towards the emission factors, depending on the waterway type. If not relevant, the flow direction is determined as the drawing direction.</documentation>
+The flow for an inland shipping route can count towards the emission factors, depending on the waterway type. If not relevant, the flow direction is determined as the drawing direction.</documentation>
     </annotation>
     <restriction base="string">
       <enumeration value="IRRELEVANT">
