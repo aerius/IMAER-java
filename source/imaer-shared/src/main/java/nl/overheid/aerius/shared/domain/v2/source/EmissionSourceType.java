@@ -41,9 +41,13 @@ public enum EmissionSourceType {
    */
   MEDIUM_COMBUSTION_PLANT(Names.MEDIUM_COMBUSTION_PLANT),
   /**
-   * Cold start emission values.
+   * Cold start parking emission values.
    */
-  COLD_START(Names.COLD_START),
+  COLD_START_PARKING(Names.COLD_START_PARKING),
+  /**
+   * Cold start other emission values.
+   */
+  COLD_START_OTHER(Names.COLD_START_OTHER),
   /**
    * Mobile off road emission values.
    */
@@ -88,7 +92,8 @@ public enum EmissionSourceType {
     public static final String GENERIC = "GENERIC";
     public static final String MEDIUM_COMBUSTION_PLANT = "MEDIUM_COMBUSTION_PLANT";
     public static final String OFFROAD_MOBILE = "OFFROAD_MOBILE";
-    public static final String COLD_START = "COLD_START";
+    public static final String COLD_START_PARKING = "COLD_START_PARKING";
+    public static final String COLD_START_OTHER = "COLD_START_OTHER";
     public static final String PLAN = "PLAN";
     public static final String SRM1_ROAD = "SRM1_ROAD";
     public static final String SRM2_ROAD = "SRM2_ROAD";
