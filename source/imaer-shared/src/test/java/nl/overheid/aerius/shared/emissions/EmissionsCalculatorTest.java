@@ -51,6 +51,7 @@ class EmissionsCalculatorTest {
   @Mock FarmlandEmissionsCalculator farmlandCalculator;
   @Mock ManureStorageEmissionsCalculator manureStorageCalculator;
   @Mock OffRoadMobileEmissionsCalculator offRoadMobileCalculator;
+  @Mock ColdStartEmissionsCalculator coldStartEmissionsCalculator;
   @Mock SRMRoadEmissionsCalculator srmRoadCalculator;
   @Mock ADMSRoadEmissionsCalculator admsRoadCalculator;
   @Mock InlandShippingEmissionsCalculator inlandShippingCalculator;
@@ -62,7 +63,7 @@ class EmissionsCalculatorTest {
   void beforeEach() throws AeriusException {
     emissionsCalculator =
         new EmissionsCalculator(farmLodgingCalculator, farmlandCalculator, manureStorageCalculator, offRoadMobileCalculator,
-            srmRoadCalculator, admsRoadCalculator, inlandShippingCalculator, maritimeShippingCalculator);
+            coldStartEmissionsCalculator, srmRoadCalculator, admsRoadCalculator, inlandShippingCalculator, maritimeShippingCalculator);
   }
 
   @Test

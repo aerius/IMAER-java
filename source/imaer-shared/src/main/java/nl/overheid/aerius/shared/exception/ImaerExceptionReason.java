@@ -486,13 +486,20 @@ public enum ImaerExceptionReason implements Reason {
    * @param 1 The code that is unknown.
    */
   GML_UNKNOWN_MANURE_STORAGE_CODE(5237),
-
   /**
    * Error that strict enforcement is used on a SRM1 source.
    *
    * @param 0 the id of the object containing the error.
    */
   SRM1_SOURCE_WITH_STRICT_ENFORCEMENT(5238),
+  /**
+   * GML contains an unknown cold start code that don't match a known vehicle category.
+   *
+   * @param 0 the id of the object containing the error.
+   * @param 1 cold start type category
+   */
+  GML_UNKNOWN_COLD_START_CATEGORY(5239),
+
 
   // Cohesion (between files) errors.
 

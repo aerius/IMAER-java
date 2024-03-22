@@ -29,6 +29,11 @@
   <name>IMAER :: Shared Data</name>
   <description>All data objects of IMAER shared data objects</description>
 
+  <properties>
+    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.target>11</maven.compiler.target>
+  </properties>
+
   <dependencies>
     <dependency>
       <groupId>com.google.jsinterop</groupId>

@@ -33,6 +33,7 @@ import nl.overheid.aerius.shared.domain.v2.characteristics.OPSSourceCharacterist
 import nl.overheid.aerius.shared.domain.v2.geojson.IsFeature;
 import nl.overheid.aerius.shared.domain.v2.geojson.Point;
 import nl.overheid.aerius.shared.domain.v2.source.ADMSRoadEmissionSource;
+import nl.overheid.aerius.shared.domain.v2.source.ColdStartEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceFeature;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceVisitor;
@@ -180,6 +181,11 @@ final class Source2GML implements EmissionSourceVisitor<nl.overheid.aerius.gml.v
   public nl.overheid.aerius.gml.v6_0.source.EmissionSource visit(final ManureStorageEmissionSource emissionSource, final IsFeature feature)
       throws AeriusException {
     return new ManureStorage2GML().convert(emissionSource);
+  }
+
+  @Override
+  public nl.overheid.aerius.gml.v6_0.source.EmissionSource visit(final ColdStartEmissionSource emissionSource, final IsFeature feature) throws AeriusException {
+    throw new IllegalArgumentException("Coldstart not yet supported.");
   }
 
   @Override

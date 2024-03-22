@@ -14,27 +14,23 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.shared.emissions;
+package nl.overheid.aerius.shared.domain.v2.source;
+
+import nl.overheid.aerius.shared.domain.v2.geojson.IsFeature;
+import nl.overheid.aerius.shared.domain.v2.source.road.Vehicles;
+import nl.overheid.aerius.shared.exception.AeriusException;
 
 /**
- * Supplier container for source type specific emission factor supppliers.
+ * Emission source for Cold Start (koude start) emission sources.
+ *
+ * It uses the {@link Vehicles} instances, and interprets number of vehicles as number of cold starts.
  */
-public interface EmissionFactorSupplier {
+public class ColdStartEmissionSource extends EmissionSourceWithSubSources<Vehicles> {
 
-  FarmLodgingEmissionFactorSupplier farmLodging();
+  private static final long serialVersionUID = 1L;
 
-  FarmlandEmissionFactorSupplier farmland();
-
-  ManureStorageEmissionFactorSupplier manureStorage();
-
-  OffRoadMobileEmissionFactorSupplier offRoadMobile();
-
-  ColdStartEmissionFactorSupplier coldStart();
-
-  RoadEmissionFactorSupplier road();
-
-  InlandShippingEmissionFactorSupplier inlandShipping();
-
-  MaritimeShippingEmissionFactorSupplier maritimeShipping();
-
+  @Override
+  <T> T accept(final EmissionSourceVisitor<T> visitor, final IsFeature feature) throws AeriusException {
+    return visitor.visit(this, feature);
+  }
 }

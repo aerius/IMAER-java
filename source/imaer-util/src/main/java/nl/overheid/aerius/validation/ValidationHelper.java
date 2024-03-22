@@ -29,6 +29,8 @@ public interface ValidationHelper {
 
   OffRoadValidationHelper offRoadMobileValidation();
 
+  ColdStartValidationHelper coldStartValidation();
+
   RoadValidationHelper roadValidation();
 
   InlandShippingValidationHelper inlandShippingValidation();

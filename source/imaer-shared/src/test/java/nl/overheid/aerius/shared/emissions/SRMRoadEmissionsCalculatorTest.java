@@ -49,6 +49,9 @@ import nl.overheid.aerius.shared.domain.v2.source.road.Vehicles;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.geometry.GeometryCalculator;
 
+/**
+ * Test class for {@link SRMRoadEmissionsCalculator}.
+ */
 @ExtendWith(MockitoExtension.class)
 class SRMRoadEmissionsCalculatorTest {
 
@@ -68,9 +71,7 @@ class SRMRoadEmissionsCalculatorTest {
 
   @Test
   void testCalculateEmissionsSRM1() throws AeriusException {
-    final SRM1RoadEmissionSource emissionSource = new SRM1RoadEmissionSource();
-    emissionSource.setRoadAreaCode(TEST_ROAD_AREA);
-    emissionSource.setRoadTypeCode(TEST_ROAD_TYPE_SRM1);
+    final SRM1RoadEmissionSource emissionSource = createSRM1EmissionSource();
     final Geometry geometry = mock(Geometry.class);
     when(geometryCalculator.determineMeasure(geometry)).thenReturn(321.5);
 
@@ -99,9 +100,7 @@ class SRMRoadEmissionsCalculatorTest {
 
   @Test
   void testCalculateEmissionsSRM2() throws AeriusException {
-    final SRM2RoadEmissionSource emissionSource = new SRM2RoadEmissionSource();
-    emissionSource.setRoadAreaCode(TEST_ROAD_AREA);
-    emissionSource.setRoadTypeCode(TEST_ROAD_TYPE_SRM2);
+    final SRM2RoadEmissionSource emissionSource = createSRM2EmissionSource();
     final Geometry geometry = mock(Geometry.class);
     when(geometryCalculator.determineMeasure(geometry)).thenReturn(321.5);
 
@@ -142,7 +141,7 @@ class SRMRoadEmissionsCalculatorTest {
   void testCalculateEmissionsSpecificVehicles() {
     final SpecificVehicles vehicles = createSpecific();
 
-    final Map<Substance, BigDecimal> results = emissionsCalculator.calculateEmissions(vehicles, TEST_ROAD_TYPE_SRM2);
+    final Map<Substance, BigDecimal> results = emissionsCalculator.calculateEmissions(vehicles, createSRM2EmissionSource());
 
     // 12 * 500 * 7.0
     assertEquals(new BigDecimal("42000.00"), results.get(Substance.NOX), "NOx emissions specific vehicle");
@@ -153,8 +152,7 @@ class SRMRoadEmissionsCalculatorTest {
   @Test
   void testCalculateEmissionsStandardVehiclesSrm1() {
     final StandardVehicles vehicles = createStandard();
-
-    final Map<Substance, BigDecimal> results = emissionsCalculator.calculateEmissions(vehicles, TEST_ROAD_AREA, TEST_ROAD_TYPE_SRM1);
+    final Map<Substance, BigDecimal> results = emissionsCalculator.calculateEmissions(vehicles, createSRM1EmissionSource());
 
     // 30000 * 6.0 * 0.8 + 30000 * 8.0 * 0.2
     assertEquals(new BigDecimal("192000.000"), results.get(Substance.NOX), "NOx emissions standard vehicle");
@@ -177,7 +175,7 @@ class SRMRoadEmissionsCalculatorTest {
 
     vehicles.getMeasures().add(measure);
 
-    final Map<Substance, BigDecimal> results = emissionsCalculator.calculateEmissions(vehicles, TEST_ROAD_AREA, TEST_ROAD_TYPE_SRM1);
+    final Map<Substance, BigDecimal> results = emissionsCalculator.calculateEmissions(vehicles, createSRM1EmissionSource());
 
     // (30000 * 6.0 * 0.8 + 30000 * 8.0 * 0.2) * 0.7
     assertEquals(new BigDecimal("134400.0000"), results.get(Substance.NOX), "NOx emissions standard vehicle with measure");
@@ -189,7 +187,7 @@ class SRMRoadEmissionsCalculatorTest {
   void testCalculateEmissionsStandardVehiclesSrm2() {
     final StandardVehicles vehicles = createStandard();
 
-    final Map<Substance, BigDecimal> results = emissionsCalculator.calculateEmissions(vehicles, TEST_ROAD_AREA, TEST_ROAD_TYPE_SRM2);
+    final Map<Substance, BigDecimal> results = emissionsCalculator.calculateEmissions(vehicles, createSRM2EmissionSource());
 
     // 30000 * 12.0 * 0.8 + 30000 * 16.0 * 0.2
     assertEquals(new BigDecimal("384000.000"), results.get(Substance.NOX), "NOx emissions standard vehicle");
@@ -201,12 +199,26 @@ class SRMRoadEmissionsCalculatorTest {
   void testCalculateEmissionsMultipleStandardVehiclesSrm2() {
     final StandardVehicles vehicles = createMultipleStandard();
 
-    final Map<Substance, BigDecimal> results = emissionsCalculator.calculateEmissions(vehicles, TEST_ROAD_AREA, TEST_ROAD_TYPE_SRM2);
+    final Map<Substance, BigDecimal> results = emissionsCalculator.calculateEmissions(vehicles, createSRM2EmissionSource());
 
     // 30000 * 12.0 * 0.8 + 30000 * 16.0 * 0.2 + 2000 * 10.0 * 0.8 + 2000 * 14.0 * 0.2
     assertEquals(new BigDecimal("405600.000"), results.get(Substance.NOX), "NOx emissions standard vehicles");
     // 30000 * 4.2 * 0.8 + 30000 * 8.6 * 0.2 + 2000 * 5.3 * 0.8 + 2000 * 9.4 * 0.2
     assertEquals(new BigDecimal("164640.000"), results.get(Substance.NH3), "NH3 emissions standard vehicles");
+  }
+
+  private static SRM1RoadEmissionSource createSRM1EmissionSource() {
+    final SRM1RoadEmissionSource source = new SRM1RoadEmissionSource();
+    source.setRoadAreaCode(TEST_ROAD_AREA);
+    source.setRoadTypeCode(TEST_ROAD_TYPE_SRM1);
+    return source;
+  }
+
+  private static SRM2RoadEmissionSource createSRM2EmissionSource() {
+    final SRM2RoadEmissionSource source = new SRM2RoadEmissionSource();
+    source.setRoadAreaCode(TEST_ROAD_AREA);
+    source.setRoadTypeCode(TEST_ROAD_TYPE_SRM2);
+    return source;
   }
 
   private CustomVehicles createCustom() {
