@@ -19,9 +19,6 @@ package nl.overheid.aerius.gml.v6_0.togml;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import nl.overheid.aerius.gml.base.FeatureMember;
 import nl.overheid.aerius.gml.base.geo.Geometry2GML;
 import nl.overheid.aerius.gml.v6_0.source.Emission;
@@ -55,8 +52,6 @@ import nl.overheid.aerius.util.gml.GMLIdUtil;
  * Util class to convert {@link EmissionSource} to GML object.
  */
 final class Source2GML implements EmissionSourceVisitor<nl.overheid.aerius.gml.v6_0.source.EmissionSource> {
-
-  private static final Logger LOG = LoggerFactory.getLogger(Source2GML.class);
 
   private final Geometry2GML geometry2gml;
 
@@ -111,8 +106,8 @@ final class Source2GML implements EmissionSourceVisitor<nl.overheid.aerius.gml.v
 
   private void toGMLCharacteristics(final EmissionSourceFeature sourceFeature, final EmissionSource source,
       final nl.overheid.aerius.gml.v6_0.source.EmissionSource returnSource) throws AeriusException {
-    if (source.getCharacteristics() instanceof OPSSourceCharacteristics) {
-      returnSource.setCharacteristics(SourceCharacteristics2GML.toGML((OPSSourceCharacteristics) source.getCharacteristics(), true));
+    if (source.getCharacteristics() instanceof final OPSSourceCharacteristics opsCharacteristics) {
+      returnSource.setCharacteristics(SourceCharacteristics2GML.toGML(opsCharacteristics, true));
       //ensure spread isn't exported for pointsources.
       if (sourceFeature.getGeometry() instanceof Point) {
         ((EmissionSourceCharacteristics) returnSource.getCharacteristics()).setSpread(null);
@@ -124,9 +119,9 @@ final class Source2GML implements EmissionSourceVisitor<nl.overheid.aerius.gml.v
     }
     // For ADMS, don't export characteristics for road.
     // It does not really use any characteristic but the diurnal variation, and that's specified directly on the object.
-    if (source.getCharacteristics() instanceof ADMSSourceCharacteristics
+    if (source.getCharacteristics() instanceof final ADMSSourceCharacteristics admsCharacteristics
         && !(source instanceof ADMSRoadEmissionSource)) {
-      returnSource.setCharacteristics(SourceCharacteristics2GML.toGML((ADMSSourceCharacteristics) source.getCharacteristics()));
+      returnSource.setCharacteristics(SourceCharacteristics2GML.toGML(admsCharacteristics));
     }
   }
 
@@ -184,8 +179,9 @@ final class Source2GML implements EmissionSourceVisitor<nl.overheid.aerius.gml.v
   }
 
   @Override
-  public nl.overheid.aerius.gml.v6_0.source.EmissionSource visit(final ColdStartEmissionSource emissionSource, final IsFeature feature) throws AeriusException {
-    throw new IllegalArgumentException("Coldstart not yet supported.");
+  public nl.overheid.aerius.gml.v6_0.source.EmissionSource visit(final ColdStartEmissionSource emissionSource, final IsFeature feature)
+      throws AeriusException {
+    return new ColdStart2GML().convert(emissionSource);
   }
 
   @Override

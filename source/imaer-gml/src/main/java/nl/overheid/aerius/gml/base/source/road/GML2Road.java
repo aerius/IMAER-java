@@ -23,13 +23,9 @@ import java.util.Optional;
 
 import nl.overheid.aerius.gml.base.AbstractGML2Specific;
 import nl.overheid.aerius.gml.base.GMLConversionData;
-import nl.overheid.aerius.gml.base.GMLLegacyCodeConverter.GMLLegacyCodeType;
 import nl.overheid.aerius.gml.base.IsGmlProperty;
-import nl.overheid.aerius.gml.base.source.IsGmlEmission;
 import nl.overheid.aerius.shared.domain.v2.base.TimeUnit;
 import nl.overheid.aerius.shared.domain.v2.source.RoadEmissionSource;
-import nl.overheid.aerius.shared.domain.v2.source.road.CustomVehicles;
-import nl.overheid.aerius.shared.domain.v2.source.road.SpecificVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.StandardVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.ValuesPerVehicleType;
 import nl.overheid.aerius.shared.domain.v2.source.road.Vehicles;
@@ -76,19 +72,18 @@ abstract class GML2Road<T extends IsGmlRoadEmissionSource, S extends RoadEmissio
   protected void addVehicleEmissions(final List<Vehicles> addToVehicles, final T source, final IsGmlProperty<IsGmlVehicle> vp,
       final List<StandardVehicles> mergingStandardVehicles) {
     final IsGmlVehicle av = vp.getProperty();
-    if (av instanceof IsGmlStandardVehicle) {
-      addEmissionValues(addToVehicles, source, (IsGmlStandardVehicle) av, mergingStandardVehicles);
-    } else if (av instanceof IsGmlSpecificVehicle) {
-      addEmissionValues(addToVehicles, source, (IsGmlSpecificVehicle) av);
-    } else if (av instanceof IsGmlCustomVehicle) {
-      addEmissionValues(addToVehicles, (IsGmlCustomVehicle) av);
+    if (av instanceof final IsGmlStandardVehicle standardVehicle) {
+      addEmissionValues(addToVehicles, source, standardVehicle, mergingStandardVehicles);
+    } else if (av instanceof final IsGmlSpecificVehicle specificVehicle) {
+      GML2VehicleUtil.addEmissionValuesSpecific(addToVehicles, source, specificVehicle, getConversionData());
+    } else if (av instanceof final IsGmlCustomVehicle customVehicle) {
+      GML2VehicleUtil.addEmissionValuesCustom(addToVehicles, customVehicle);
     } else {
       throw new IllegalArgumentException("Instance not supported:" + av.getClass().getCanonicalName());
     }
-
   }
 
-  protected void addEmissionValues(final List<Vehicles> addToVehicles, final T source, final IsGmlStandardVehicle sv,
+  private void addEmissionValues(final List<Vehicles> addToVehicles, final T source, final IsGmlStandardVehicle sv,
       final List<StandardVehicles> mergingStandardVehicles) {
     final StandardVehicles standardVehicle = findExistingMatch(sv, mergingStandardVehicles).orElseGet(() -> {
       final StandardVehicles vse = new StandardVehicles();
@@ -105,34 +100,13 @@ abstract class GML2Road<T extends IsGmlRoadEmissionSource, S extends RoadEmissio
     standardVehicle.getValuesPerVehicleTypes().put(sv.getVehicleType(), valuesPerVehicleType);
   }
 
-  protected Optional<StandardVehicles> findExistingMatch(final IsGmlStandardVehicle sv, final List<StandardVehicles> mergingStandardVehicles) {
+  private Optional<StandardVehicles> findExistingMatch(final IsGmlStandardVehicle sv, final List<StandardVehicles> mergingStandardVehicles) {
     return mergingStandardVehicles.stream()
         .filter(x -> Objects.equals(x.getMaximumSpeed(), sv.getMaximumSpeed()))
         .filter(x -> Objects.equals(x.getStrictEnforcement(), sv.isStrictEnforcement()))
         .filter(x -> x.getTimeUnit() == TimeUnit.valueOf(sv.getTimeUnit().name()))
         .filter(x -> !x.getValuesPerVehicleTypes().containsKey(sv.getVehicleType()))
         .findFirst();
-  }
-
-  protected void addEmissionValues(final List<Vehicles> addToVehicles, final T source, final IsGmlSpecificVehicle sv) {
-    final SpecificVehicles vse = new SpecificVehicles();
-    final String vehicleCode = getConversionData().getCode(GMLLegacyCodeType.ON_ROAD_MOBILE_SOURCE, sv.getCode(), source.getLabel());
-    vse.setVehicleCode(vehicleCode);
-    vse.setTimeUnit(TimeUnit.valueOf(sv.getTimeUnit().name()));
-    vse.setVehiclesPerTimeUnit(sv.getVehiclesPerTimeUnit());
-    addToVehicles.add(vse);
-  }
-
-  protected void addEmissionValues(final List<Vehicles> addToVehicles, final IsGmlCustomVehicle cv) {
-    final CustomVehicles vce = new CustomVehicles();
-    vce.setDescription(cv.getDescription());
-    for (final IsGmlProperty<IsGmlEmission> e : cv.getEmissionFactors()) {
-      final IsGmlEmission emission = e.getProperty();
-      vce.getEmissionFactors().put(emission.getSubstance(), emission.getValue());
-    }
-    vce.setTimeUnit(TimeUnit.valueOf(cv.getTimeUnit().name()));
-    vce.setVehiclesPerTimeUnit(cv.getVehiclesPerTimeUnit());
-    addToVehicles.add(vce);
   }
 
 }

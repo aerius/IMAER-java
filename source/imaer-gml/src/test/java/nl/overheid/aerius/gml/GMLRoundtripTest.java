@@ -109,6 +109,7 @@ class GMLRoundtripTest {
       {"road_empty", CharacteristicsType.OPS, EnumSet.of(ImaerExceptionReason.SRM2_SOURCE_NO_VEHICLES, ImaerExceptionReason.GML_SOURCE_NO_EMISSION)},
       {"road_direction", CharacteristicsType.OPS},
       {"road_specific_and_custom", CharacteristicsType.OPS},
+      {"coldstart", CharacteristicsType.OPS},
       {"metadata", CharacteristicsType.OPS},
       {"industry_with_calculated_heat_content", CharacteristicsType.OPS},
       {"industry_with_default_emission_temperature", CharacteristicsType.OPS},

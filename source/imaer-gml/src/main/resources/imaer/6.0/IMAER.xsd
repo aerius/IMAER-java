@@ -881,7 +881,7 @@ This class describes a cold start emission source including geometry. Cold start
     <complexContent>
       <extension base="IMAER:EmissionSourceTypeType">
         <sequence>
-          <element minOccurs="0" name="emission" type="IMAER:EmissionPropertyType"/>
+          <element maxOccurs="unbounded" minOccurs="0" name="emission" type="IMAER:EmissionPropertyType"/>
           <element maxOccurs="unbounded" name="vehicles" type="IMAER:VehiclePropertyType"/>
         </sequence>
       </extension>
@@ -903,9 +903,8 @@ This class describes a standard vehicle type group for cold start, using a prede
   <complexType name="ColdStartStandardVehicleType">
     <complexContent>
       <extension base="IMAER:VehicleType">
-        <sequence>
-          <element name="vehicleType" type="string"/>
-        </sequence>
+        <sequence/>
+        <attribute name="vehicleType" type="string" use="required"/>
       </extension>
     </complexContent>
   </complexType>
