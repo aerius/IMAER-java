@@ -253,26 +253,26 @@
                     <imaer:vehiclesPerTimeUnit>5000.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>YEAR</imaer:timeUnit>
                     <imaer:description>Tankwagen</imaer:description>
-                    <imaer:emission>
+                    <imaer:emissionFactor>
                         <imaer:Emission substance="NO2">
                             <imaer:value>0.0</imaer:value>
                         </imaer:Emission>
-                    </imaer:emission>
-                    <imaer:emission>
+                    </imaer:emissionFactor>
+                    <imaer:emissionFactor>
                         <imaer:Emission substance="PM10">
                             <imaer:value>0.0</imaer:value>
                         </imaer:Emission>
-                    </imaer:emission>
-                    <imaer:emission>
+                    </imaer:emissionFactor>
+                    <imaer:emissionFactor>
                         <imaer:Emission substance="NOX">
                             <imaer:value>5.9</imaer:value>
                         </imaer:Emission>
-                    </imaer:emission>
-                    <imaer:emission>
+                    </imaer:emissionFactor>
+                    <imaer:emissionFactor>
                         <imaer:Emission substance="NH3">
                             <imaer:value>0.0</imaer:value>
                         </imaer:Emission>
-                    </imaer:emission>
+                    </imaer:emissionFactor>
                 </imaer:CustomVehicle>
             </imaer:vehicles>
             <imaer:trafficDirection>A_TO_B</imaer:trafficDirection>
@@ -393,26 +393,26 @@
                     <imaer:vehiclesPerTimeUnit>140000.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>YEAR</imaer:timeUnit>
                     <imaer:description>Tankwagens</imaer:description>
-                    <imaer:emission>
+                    <imaer:emissionFactor>
                         <imaer:Emission substance="NO2">
                             <imaer:value>0.0</imaer:value>
                         </imaer:Emission>
-                    </imaer:emission>
-                    <imaer:emission>
+                    </imaer:emissionFactor>
+                    <imaer:emissionFactor>
                         <imaer:Emission substance="PM10">
                             <imaer:value>0.0</imaer:value>
                         </imaer:Emission>
-                    </imaer:emission>
-                    <imaer:emission>
+                    </imaer:emissionFactor>
+                    <imaer:emissionFactor>
                         <imaer:Emission substance="NOX">
                             <imaer:value>4.4</imaer:value>
                         </imaer:Emission>
-                    </imaer:emission>
-                    <imaer:emission>
+                    </imaer:emissionFactor>
+                    <imaer:emissionFactor>
                         <imaer:Emission substance="NH3">
                             <imaer:value>0.0</imaer:value>
                         </imaer:Emission>
-                    </imaer:emission>
+                    </imaer:emissionFactor>
                 </imaer:CustomVehicle>
             </imaer:vehicles>
             <imaer:trafficDirection>BOTH</imaer:trafficDirection>
@@ -473,26 +473,26 @@
                     <imaer:vehiclesPerTimeUnit>94900.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>YEAR</imaer:timeUnit>
                     <imaer:description>Personenauto's</imaer:description>
-                    <imaer:emission>
+                    <imaer:emissionFactor>
                         <imaer:Emission substance="NO2">
                             <imaer:value>0.0</imaer:value>
                         </imaer:Emission>
-                    </imaer:emission>
-                    <imaer:emission>
+                    </imaer:emissionFactor>
+                    <imaer:emissionFactor>
                         <imaer:Emission substance="PM10">
                             <imaer:value>0.0</imaer:value>
                         </imaer:Emission>
-                    </imaer:emission>
-                    <imaer:emission>
+                    </imaer:emissionFactor>
+                    <imaer:emissionFactor>
                         <imaer:Emission substance="NOX">
                             <imaer:value>0.3</imaer:value>
                         </imaer:Emission>
-                    </imaer:emission>
-                    <imaer:emission>
+                    </imaer:emissionFactor>
+                    <imaer:emissionFactor>
                         <imaer:Emission substance="NH3">
                             <imaer:value>0.0</imaer:value>
                         </imaer:Emission>
-                    </imaer:emission>
+                    </imaer:emissionFactor>
                 </imaer:CustomVehicle>
             </imaer:vehicles>
             <imaer:trafficDirection>BOTH</imaer:trafficDirection>

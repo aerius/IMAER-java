@@ -259,7 +259,7 @@ class Road2GML extends SpecificSource2GML<nl.overheid.aerius.shared.domain.v2.so
   private void addVehicleEmissionSource(final List<VehiclesProperty> vehiclesList, final CustomVehicles vce) {
     final CustomVehicle cv = new CustomVehicle();
     cv.setDescription(vce.getDescription());
-    cv.setEmissions(getEmissions(vce.getEmissionFactors(), Substance.NOX));
+    cv.setEmissionFactors(getEmissions(vce.getEmissionFactors(), Substance.NOX));
     cv.setVehiclesPerTimeUnit(vce.getVehiclesPerTimeUnit());
     cv.setTimeUnit(TimeUnit.from(vce.getTimeUnit()));
     vehiclesList.add(new VehiclesProperty(cv));

@@ -871,6 +871,49 @@ This class describes the result for a specific substance/result type combination
       <element ref="IMAER:CalculationResult"/>
     </sequence>
   </complexType>
+  <element name="ColdStartEmissionSource" substitutionGroup="IMAER:EmissionSourceType" type="IMAER:ColdStartEmissionSourceType">
+    <annotation>
+      <documentation>Emission source for cold starts.
+This class describes a cold start emission source including geometry. Cold start is used for parking areas, where starting a cold engine generates extra emission.</documentation>
+    </annotation>
+  </element>
+  <complexType name="ColdStartEmissionSourceType">
+    <complexContent>
+      <extension base="IMAER:EmissionSourceTypeType">
+        <sequence>
+          <element minOccurs="0" name="emission" type="IMAER:EmissionPropertyType"/>
+          <element maxOccurs="unbounded" name="vehicles" type="IMAER:VehiclePropertyType"/>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="ColdStartEmissionSourcePropertyType">
+    <sequence minOccurs="0">
+      <element ref="IMAER:ColdStartEmissionSource"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+    <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+  </complexType>
+  <element name="ColdStartStandardVehicle" substitutionGroup="IMAER:Vehicle" type="IMAER:ColdStartStandardVehicleType">
+    <annotation>
+      <documentation>Characteristics of a standard vehicle type class.
+This class describes a standard vehicle type group for cold start, using a predefined vehicle group code.</documentation>
+    </annotation>
+  </element>
+  <complexType name="ColdStartStandardVehicleType">
+    <complexContent>
+      <extension base="IMAER:VehicleType">
+        <sequence>
+          <element name="vehicleType" type="string"/>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="ColdStartStandardVehiclePropertyType">
+    <sequence>
+      <element ref="IMAER:ColdStartStandardVehicle"/>
+    </sequence>
+  </complexType>
   <element name="ConsumptionOffRoadVehicleSpecification" substitutionGroup="IMAER:OffRoadVehicleSpecification" type="IMAER:ConsumptionOffRoadVehicleSpecificationType">
     <annotation>
       <documentation>Class for a specification for the emissions of a self-defined off road vehicle source based on consumption.
@@ -1234,8 +1277,8 @@ As an example, a definition for hours per day: In this case there are 24 values,
   </complexType>
   <element name="CustomVehicle" substitutionGroup="IMAER:Vehicle" type="IMAER:CustomVehicleType">
     <annotation>
-      <documentation>Characteristics for the emission type of self-defined road transport.
-Each road transport emission type is described on the basis of a number of characteristics, which are recorded in this separate data type.</documentation>
+      <documentation>Characteristics for the emission type of self-defined vehicle type.
+This class describes a self-defined vehicle type.</documentation>
     </annotation>
   </element>
   <complexType name="CustomVehicleType">
@@ -1247,9 +1290,9 @@ Each road transport emission type is described on the basis of a number of chara
               <documentation>Characteristics of the self-defined vehicles.</documentation>
             </annotation>
           </element>
-          <element maxOccurs="unbounded" name="emission" type="IMAER:EmissionPropertyType">
+          <element maxOccurs="unbounded" name="emissionFactor" type="IMAER:EmissionPropertyType">
             <annotation>
-              <documentation>The emissions in g/km for the custom vehicle.</documentation>
+              <documentation>The emission factors in g/km for the custom vehicle. For cold start, this emission factor is in g/cold start.</documentation>
             </annotation>
           </element>
         </sequence>
@@ -3258,8 +3301,8 @@ Each emission source is described on the basis of a number of characteristics, w
   </complexType>
   <element name="SpecificVehicle" substitutionGroup="IMAER:Vehicle" type="IMAER:SpecificVehicleType">
     <annotation>
-      <documentation>Characteristics of a specific type of vehicles with a class.
-Each road transport emission type is described on the basis of a number of characteristics, which are recorded in this separate data type.</documentation>
+      <documentation>Characteristics of a specific type of vehicles class.
+This class describes a specific vehicle type, using a predefined vehicle code.</documentation>
     </annotation>
   </element>
   <complexType name="SpecificVehicleType">
@@ -3570,7 +3613,8 @@ Mobile tools are described on the basis of a number of characteristics. These ar
   </complexType>
   <element name="StandardVehicle" substitutionGroup="IMAER:Vehicle" type="IMAER:StandardVehicleType">
     <annotation>
-      <documentation>Characteristics of a standard road transport class.</documentation>
+      <documentation>Characteristics of a standard vehicle type class.
+This class describes a standard vehicle type group for moving traffic, using a predefined vehicle group code.</documentation>
     </annotation>
   </element>
   <complexType name="StandardVehicleType">
@@ -3753,8 +3797,8 @@ When calculating emissions for road traffic in suburban areas, trees along the r
   </simpleType>
   <element abstract="true" name="Vehicle" substitutionGroup="IMAER:EmissionValueType" type="IMAER:VehicleType">
     <annotation>
-      <documentation>Characteristics of a road transport emission type.
-Each road transport emission type is described on the basis of a number of characteristics, which are recorded in this separate data type.</documentation>
+      <documentation>Characteristics of a vehicle type.
+There are different vehicle types available in the model. This abstract base class is a generalization of the different types in the model.</documentation>
     </annotation>
   </element>
   <complexType abstract="true" name="VehicleType">

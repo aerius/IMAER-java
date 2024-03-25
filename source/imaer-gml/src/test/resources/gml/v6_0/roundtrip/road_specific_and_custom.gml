@@ -89,21 +89,21 @@
                     <imaer:vehiclesPerTimeUnit>22.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>HOUR</imaer:timeUnit>
                     <imaer:description>Mijn omschrijving</imaer:description>
-                    <imaer:emission>
+                    <imaer:emissionFactor>
                         <imaer:Emission substance="NO2">
                             <imaer:value>0.0</imaer:value>
                         </imaer:Emission>
-                    </imaer:emission>
-                    <imaer:emission>
+                    </imaer:emissionFactor>
+                    <imaer:emissionFactor>
                         <imaer:Emission substance="NOX">
                             <imaer:value>22.12</imaer:value>
                         </imaer:Emission>
-                    </imaer:emission>
-                    <imaer:emission>
+                    </imaer:emissionFactor>
+                    <imaer:emissionFactor>
                         <imaer:Emission substance="NH3">
                             <imaer:value>0.0</imaer:value>
                         </imaer:Emission>
-                    </imaer:emission>
+                    </imaer:emissionFactor>
                 </imaer:CustomVehicle>
             </imaer:vehicles>
             <imaer:tunnelFactor>1.1</imaer:tunnelFactor>
