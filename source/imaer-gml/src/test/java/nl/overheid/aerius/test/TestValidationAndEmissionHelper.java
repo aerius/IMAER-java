@@ -291,7 +291,9 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
           80, "Urb", "HGV", false,
           null));
 
-  private static final List<String> COLD_START_SOURCE_CATEGORIES = Arrays.asList();
+  private static final List<String> COLD_START_SOURCE_CATEGORIES = Arrays.asList(
+      "HEAVY_FREIGHT",
+      "LIGHT_TRAFFIC");
 
   private static final List<String> ON_ROAD_MOBILE_SOURCE_CATEGORIES = Arrays.asList(
       "BA-B-E3",
@@ -786,8 +788,8 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
 
   @Override
   public Map<Substance, Double> getColdStartStandardVehicleEmissionFactors(final String vehicleCode) {
-    return coldStartSpecific(vehicleCode)
-        .map(c -> Map.of(Substance.NOX, 10.0))
+    return coldStartStandard(vehicleCode)
+        .map(c -> Map.of(Substance.NOX, 7.4))
         .orElse(null);
   }
 
@@ -798,7 +800,7 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
 
   @Override
   public boolean isValidColdStartStandardVehicleCode(final String vehicleCode) {
-    return false;
+    return coldStartStandard(vehicleCode).isPresent();
   }
 
   @Override
@@ -946,8 +948,14 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
         .findFirst();
   }
 
-  private Optional<String> coldStartSpecific(final String specificVehicleCode) {
+  private Optional<String> coldStartStandard(final String standardVehicleCode) {
     return COLD_START_SOURCE_CATEGORIES.stream()
+        .filter(c -> c.equalsIgnoreCase(standardVehicleCode))
+        .findFirst();
+  }
+
+  private Optional<String> coldStartSpecific(final String specificVehicleCode) {
+    return ON_ROAD_MOBILE_SOURCE_CATEGORIES.stream()
         .filter(c -> c.equalsIgnoreCase(specificVehicleCode))
         .findFirst();
   }

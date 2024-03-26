@@ -132,7 +132,7 @@ abstract class GML2SRMRoad<T extends IsGmlRoadEmissionSource, S extends RoadEmis
   protected void addEmissionValues(final List<Vehicles> addToVehicles, final IsGmlCustomVehicle cv) {
     final CustomVehicles vce = new CustomVehicles();
     vce.setDescription(cv.getDescription());
-    for (final IsGmlProperty<IsGmlEmission> e : cv.getEmissions()) {
+    for (final IsGmlProperty<IsGmlEmission> e : cv.getEmissionFactors()) {
       final IsGmlEmission emission = e.getProperty();
       vce.getEmissionFactors().put(emission.getSubstance(), emission.getValue());
     }

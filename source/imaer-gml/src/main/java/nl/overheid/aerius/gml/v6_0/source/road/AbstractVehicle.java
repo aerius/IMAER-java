@@ -27,7 +27,7 @@ import nl.overheid.aerius.gml.v6_0.source.TimeUnit;
 /**
  *
  */
-@XmlSeeAlso({StandardVehicle.class, SpecificVehicle.class, CustomVehicle.class})
+@XmlSeeAlso({StandardVehicle.class, SpecificVehicle.class, CustomVehicle.class, ColdStartStandardVehicle.class})
 @XmlType(name = "VehicleType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"vehiclesPerTimeUnit", "timeUnit"})
 public abstract class AbstractVehicle implements IsGmlVehicle {
 

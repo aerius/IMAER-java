@@ -16,15 +16,8 @@
  */
 package nl.overheid.aerius.gml.base.source.road;
 
-import java.util.List;
+public interface IsGmlColdStartStandardVehicle extends IsGmlVehicle {
 
-import nl.overheid.aerius.gml.base.IsGmlProperty;
-import nl.overheid.aerius.gml.base.source.IsGmlEmission;
-
-public interface IsGmlCustomVehicle extends IsGmlVehicle {
-
-  String getDescription();
-
-  List<? extends IsGmlProperty<IsGmlEmission>> getEmissionFactors();
+  String getVehicleType();
 
 }
