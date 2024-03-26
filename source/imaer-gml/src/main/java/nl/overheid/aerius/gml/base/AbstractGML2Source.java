@@ -126,10 +126,11 @@ public abstract class AbstractGML2Source<T extends IsGmlEmissionSource, S extend
         || returnSource instanceof MaritimeShippingEmissionSource
         || returnSource instanceof MooringMaritimeShippingEmissionSource
         || returnSource instanceof OffRoadMobileEmissionSource
-        || returnSource instanceof ADMSRoadEmissionSource
-        || returnSource instanceof ColdStartEmissionSource)) {
+        || returnSource instanceof ADMSRoadEmissionSource)) {
       final S sectorCharacteristics = conversionData.determineDefaultCharacteristicsBySectorId(sectorId);
-      if (source.getCharacteristics() == null) {
+      if (returnSource instanceof ColdStartEmissionSource && source.getCharacteristics() == null) {
+        // NO-OP, allow characteristics to be null for cold start
+      } else if (source.getCharacteristics() == null) {
         // if characteristics weren't supplied in GML, use the sector default.
         returnSource.setCharacteristics(sectorCharacteristics);
       } else {
