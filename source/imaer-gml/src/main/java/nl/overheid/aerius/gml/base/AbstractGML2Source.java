@@ -128,7 +128,7 @@ public abstract class AbstractGML2Source<T extends IsGmlEmissionSource, S extend
         || returnSource instanceof OffRoadMobileEmissionSource
         || returnSource instanceof ADMSRoadEmissionSource)) {
       final S sectorCharacteristics = conversionData.determineDefaultCharacteristicsBySectorId(sectorId);
-      if (returnSource instanceof ColdStartEmissionSource && source.getCharacteristics() == null) {
+      if (returnSource instanceof final ColdStartEmissionSource coldStart && coldStart.isVehicleBasedCharacteristics()) {
         // NO-OP, allow characteristics to be null for cold start
       } else if (source.getCharacteristics() == null) {
         // if characteristics weren't supplied in GML, use the sector default.

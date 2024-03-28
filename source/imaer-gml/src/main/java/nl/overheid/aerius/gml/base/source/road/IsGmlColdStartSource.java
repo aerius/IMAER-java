@@ -23,6 +23,8 @@ import nl.overheid.aerius.gml.base.source.IsGmlEmissionSource;
 
 public interface IsGmlColdStartSource extends IsGmlEmissionSource {
 
+  boolean isVehicleBasedCharacteristics();
+
   List<? extends IsGmlProperty<IsGmlVehicle>> getVehicles();
 
 }

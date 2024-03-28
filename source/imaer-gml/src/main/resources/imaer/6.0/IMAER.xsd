@@ -881,8 +881,21 @@ This class describes a cold start emission source including geometry. Cold start
     <complexContent>
       <extension base="IMAER:EmissionSourceTypeType">
         <sequence>
-          <element maxOccurs="unbounded" minOccurs="0" name="emission" type="IMAER:EmissionPropertyType"/>
-          <element maxOccurs="unbounded" name="vehicles" type="IMAER:VehiclePropertyType"/>
+          <element maxOccurs="unbounded" minOccurs="0" name="emission" type="IMAER:EmissionPropertyType">
+            <annotation>
+              <documentation>Emissions from the cold starts.</documentation>
+            </annotation>
+          </element>
+          <element name="vehicleBasedCharacteristics">
+            <annotation>
+              <documentation>Indication if the source characteristics should be based on individual vehicles by the system, or if they should be based on the main source characteristics supplied. If true, characteristics supplied within GML will be ignored.</documentation>
+            </annotation>
+          </element>
+          <element maxOccurs="unbounded" name="vehicles" type="IMAER:VehiclePropertyType">
+            <annotation>
+              <documentation>Vehicle specification for this emission type.</documentation>
+            </annotation>
+          </element>
         </sequence>
       </extension>
     </complexContent>
@@ -1399,7 +1412,7 @@ This class describes a generic emission source including geometry.</documentatio
         <sequence>
           <element maxOccurs="unbounded" name="emission" type="IMAER:EmissionPropertyType">
             <annotation>
-              <documentation>Emission types of the emission source.</documentation>
+              <documentation>Emissions of the emission source.</documentation>
             </annotation>
           </element>
         </sequence>
@@ -1592,7 +1605,7 @@ This class describes a lodging including geometry.</documentation>
         <sequence>
           <element maxOccurs="unbounded" minOccurs="0" name="emission" type="IMAER:EmissionPropertyType">
             <annotation>
-              <documentation>Emission types from the lodging.</documentation>
+              <documentation>Emissions from the lodging.</documentation>
             </annotation>
           </element>
           <element maxOccurs="unbounded" minOccurs="0" name="farmLodging" type="IMAER:FarmLodgingPropertyType">
@@ -1652,7 +1665,7 @@ This class describes agricultural land, including geometry.</documentation>
         <sequence>
           <element maxOccurs="unbounded" minOccurs="0" name="emission" type="IMAER:EmissionPropertyType">
             <annotation>
-              <documentation>Emission types from agricultural land.</documentation>
+              <documentation>Emissions from agricultural land.</documentation>
             </annotation>
           </element>
           <element maxOccurs="unbounded" name="activity" type="IMAER:AbstractFarmlandActivityPropertyType">
@@ -1790,7 +1803,7 @@ This class describes a sailing route for inland shipping, including geometry. Th
         <sequence>
           <element maxOccurs="unbounded" minOccurs="0" name="emission" type="IMAER:EmissionPropertyType">
             <annotation>
-              <documentation>Emission types from this source.</documentation>
+              <documentation>Emissions from this source.</documentation>
             </annotation>
           </element>
           <element maxOccurs="unbounded" name="inlandShipping" type="IMAER:InlandShippingPropertyType">
@@ -1946,7 +1959,7 @@ This class describes manure storage, including geometry.</documentation>
         <sequence>
           <element maxOccurs="unbounded" minOccurs="0" name="emission" type="IMAER:EmissionPropertyType">
             <annotation>
-              <documentation>Emission types from this source.</documentation>
+              <documentation>Emissions from this source.</documentation>
             </annotation>
           </element>
           <element maxOccurs="unbounded" name="manureStorage" type="IMAER:ManureStoragePropertyType"/>
@@ -2007,7 +2020,7 @@ This class describes a sailing route for maritime shipping, including geometry.<
         <sequence>
           <element maxOccurs="unbounded" minOccurs="0" name="emission" type="IMAER:EmissionPropertyType">
             <annotation>
-              <documentation>Emission types from this source.</documentation>
+              <documentation>Emissions from this source.</documentation>
             </annotation>
           </element>
           <element maxOccurs="unbounded" name="maritimeShipping" type="IMAER:MaritimeShippingPropertyType">
@@ -2149,7 +2162,7 @@ This class describes a berth including geometry and sailing route for inland shi
         <sequence>
           <element maxOccurs="unbounded" minOccurs="0" name="emission" type="IMAER:EmissionPropertyType">
             <annotation>
-              <documentation>Emission types from this source.</documentation>
+              <documentation>Emissions from this source.</documentation>
             </annotation>
           </element>
           <element maxOccurs="unbounded" name="mooringInlandShipping" type="IMAER:MooringInlandShippingPropertyType">
@@ -2224,7 +2237,7 @@ This class describes a mooring for sea shipping including geometry.</documentati
         <sequence>
           <element maxOccurs="unbounded" minOccurs="0" name="emission" type="IMAER:EmissionPropertyType">
             <annotation>
-              <documentation>Emission types from this source.</documentation>
+              <documentation>Emissions from this source.</documentation>
             </annotation>
           </element>
           <element maxOccurs="unbounded" name="mooringMaritimeShipping" type="IMAER:MooringMaritimeShippingPropertyType">
@@ -2366,7 +2379,7 @@ This class describes a collection of mobile machinery including geometry.</docum
         <sequence>
           <element maxOccurs="unbounded" minOccurs="0" name="emission" type="IMAER:EmissionPropertyType">
             <annotation>
-              <documentation>Emission types from this source.</documentation>
+              <documentation>Emissions from this source.</documentation>
             </annotation>
           </element>
           <element maxOccurs="unbounded" minOccurs="0" name="offRoadMobileSource" type="IMAER:OffRoadMobileSourcePropertyType">
@@ -2725,7 +2738,7 @@ This class describes a road emission source including geometry.</documentation>
         <sequence>
           <element maxOccurs="unbounded" minOccurs="0" name="emission" type="IMAER:EmissionPropertyType">
             <annotation>
-              <documentation>Emission types from this source.</documentation>
+              <documentation>Emissions from this source.</documentation>
             </annotation>
           </element>
           <element maxOccurs="unbounded" name="vehicles" type="IMAER:VehiclePropertyType">

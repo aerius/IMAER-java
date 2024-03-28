@@ -50,6 +50,7 @@ public class GML2ColdStart<T extends IsGmlColdStartSource> extends AbstractGML2S
   @Override
   public ColdStartEmissionSource convert(final T source) throws AeriusException {
     final ColdStartEmissionSource emissionSource = new ColdStartEmissionSource();
+    emissionSource.setVehicleBasedCharacteristics(source.isVehicleBasedCharacteristics());
     final List<StandardColdStartVehicles> mergingStandardVehicles = new ArrayList<>();
     for (final IsGmlProperty<IsGmlVehicle> vp : source.getVehicles()) {
       addVehicleEmissions(emissionSource.getSubSources(), source, vp, mergingStandardVehicles);

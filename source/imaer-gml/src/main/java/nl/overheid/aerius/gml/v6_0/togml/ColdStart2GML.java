@@ -40,6 +40,7 @@ class ColdStart2GML extends SpecificSource2GML<nl.overheid.aerius.shared.domain.
       final nl.overheid.aerius.shared.domain.v2.source.ColdStartEmissionSource emissionSource) {
     final nl.overheid.aerius.gml.v6_0.source.road.ColdStartEmissionSource returnSource =
         new nl.overheid.aerius.gml.v6_0.source.road.ColdStartEmissionSource();
+    returnSource.setVehicleBasedCharacteristics(emissionSource.isVehicleBasedCharacteristics());
     returnSource.setVehicles(toVehicleProperties(emissionSource.getSubSources()));
     return returnSource;
   }

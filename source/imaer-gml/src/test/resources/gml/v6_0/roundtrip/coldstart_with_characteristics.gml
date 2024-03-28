@@ -71,6 +71,7 @@
                     <imaer:value>0.0</imaer:value>
                 </imaer:Emission>
             </imaer:emission>
+            <imaer:vehicleBasedCharacteristics>false</imaer:vehicleBasedCharacteristics>
             <imaer:vehicles>
                 <imaer:ColdStartStandardVehicle vehicleType="HEAVY_FREIGHT">
                     <imaer:vehiclesPerTimeUnit>10.0</imaer:vehiclesPerTimeUnit>

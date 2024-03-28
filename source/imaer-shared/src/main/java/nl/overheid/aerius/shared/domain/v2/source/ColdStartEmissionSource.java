@@ -27,10 +27,21 @@ import nl.overheid.aerius.shared.exception.AeriusException;
  */
 public class ColdStartEmissionSource extends EmissionSourceWithSubSources<Vehicles> {
 
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 2L;
+
+  private boolean vehicleBasedCharacteristics;
 
   @Override
   <T> T accept(final EmissionSourceVisitor<T> visitor, final IsFeature feature) throws AeriusException {
     return visitor.visit(this, feature);
   }
+
+  public boolean isVehicleBasedCharacteristics() {
+    return vehicleBasedCharacteristics;
+  }
+
+  public void setVehicleBasedCharacteristics(final boolean vehicleBasedCharacteristics) {
+    this.vehicleBasedCharacteristics = vehicleBasedCharacteristics;
+  }
+
 }

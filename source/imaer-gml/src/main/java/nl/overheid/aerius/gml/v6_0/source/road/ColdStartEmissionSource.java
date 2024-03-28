@@ -32,7 +32,19 @@ import nl.overheid.aerius.gml.v6_0.source.EmissionSource;
 @XmlType(name = "ColdStartEmissionSourceType", namespace = CalculatorSchema.NAMESPACE)
 public class ColdStartEmissionSource extends EmissionSource implements IsGmlColdStartSource {
 
+  private boolean vehicleBasedCharacteristics;
+
   private List<VehiclesProperty> vehicles = new ArrayList<>();
+
+  @Override
+  @XmlElement(namespace = CalculatorSchema.NAMESPACE)
+  public boolean isVehicleBasedCharacteristics() {
+    return vehicleBasedCharacteristics;
+  }
+
+  public void setVehicleBasedCharacteristics(final boolean vehicleBasedCharacteristics) {
+    this.vehicleBasedCharacteristics = vehicleBasedCharacteristics;
+  }
 
   @Override
   @XmlElement(namespace = CalculatorSchema.NAMESPACE)
