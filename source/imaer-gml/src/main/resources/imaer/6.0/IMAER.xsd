@@ -871,6 +871,61 @@ This class describes the result for a specific substance/result type combination
       <element ref="IMAER:CalculationResult"/>
     </sequence>
   </complexType>
+  <element name="ColdStartEmissionSource" substitutionGroup="IMAER:EmissionSourceType" type="IMAER:ColdStartEmissionSourceType">
+    <annotation>
+      <documentation>Emission source for cold starts.
+This class describes a cold start emission source including geometry. Cold start is used for parking areas, where starting a cold engine generates extra emission.</documentation>
+    </annotation>
+  </element>
+  <complexType name="ColdStartEmissionSourceType">
+    <complexContent>
+      <extension base="IMAER:EmissionSourceTypeType">
+        <sequence>
+          <element maxOccurs="unbounded" minOccurs="0" name="emission" type="IMAER:EmissionPropertyType">
+            <annotation>
+              <documentation>Emissions from the cold starts.</documentation>
+            </annotation>
+          </element>
+          <element name="vehicleBasedCharacteristics">
+            <annotation>
+              <documentation>Indication if the source characteristics should be based on individual vehicles by the system, or if they should be based on the main source characteristics supplied. If true, characteristics supplied within GML will be ignored.</documentation>
+            </annotation>
+          </element>
+          <element maxOccurs="unbounded" name="vehicles" type="IMAER:VehiclePropertyType">
+            <annotation>
+              <documentation>Vehicle specification for this emission type.</documentation>
+            </annotation>
+          </element>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="ColdStartEmissionSourcePropertyType">
+    <sequence minOccurs="0">
+      <element ref="IMAER:ColdStartEmissionSource"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+    <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+  </complexType>
+  <element name="ColdStartStandardVehicle" substitutionGroup="IMAER:Vehicle" type="IMAER:ColdStartStandardVehicleType">
+    <annotation>
+      <documentation>Characteristics of a standard vehicle type class.
+This class describes a standard vehicle type group for cold start, using a predefined vehicle group code.</documentation>
+    </annotation>
+  </element>
+  <complexType name="ColdStartStandardVehicleType">
+    <complexContent>
+      <extension base="IMAER:VehicleType">
+        <sequence/>
+        <attribute name="vehicleType" type="string" use="required"/>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="ColdStartStandardVehiclePropertyType">
+    <sequence>
+      <element ref="IMAER:ColdStartStandardVehicle"/>
+    </sequence>
+  </complexType>
   <element name="ConsumptionOffRoadVehicleSpecification" substitutionGroup="IMAER:OffRoadVehicleSpecification" type="IMAER:ConsumptionOffRoadVehicleSpecificationType">
     <annotation>
       <documentation>Class for a specification for the emissions of a self-defined off road vehicle source based on consumption.
@@ -1234,8 +1289,8 @@ As an example, a definition for hours per day: In this case there are 24 values,
   </complexType>
   <element name="CustomVehicle" substitutionGroup="IMAER:Vehicle" type="IMAER:CustomVehicleType">
     <annotation>
-      <documentation>Characteristics for the emission type of self-defined road transport.
-Each road transport emission type is described on the basis of a number of characteristics, which are recorded in this separate data type.</documentation>
+      <documentation>Characteristics for the emission type of self-defined vehicle type.
+This class describes a self-defined vehicle type.</documentation>
     </annotation>
   </element>
   <complexType name="CustomVehicleType">
@@ -1247,9 +1302,9 @@ Each road transport emission type is described on the basis of a number of chara
               <documentation>Characteristics of the self-defined vehicles.</documentation>
             </annotation>
           </element>
-          <element maxOccurs="unbounded" name="emission" type="IMAER:EmissionPropertyType">
+          <element maxOccurs="unbounded" name="emissionFactor" type="IMAER:EmissionPropertyType">
             <annotation>
-              <documentation>The emissions in g/km for the custom vehicle.</documentation>
+              <documentation>The emission factors in g/km for the custom vehicle. For cold start, this emission factor is in g/cold start.</documentation>
             </annotation>
           </element>
         </sequence>
@@ -1357,7 +1412,7 @@ This class describes a generic emission source including geometry.</documentatio
         <sequence>
           <element maxOccurs="unbounded" name="emission" type="IMAER:EmissionPropertyType">
             <annotation>
-              <documentation>Emission types of the emission source.</documentation>
+              <documentation>Emissions of the emission source.</documentation>
             </annotation>
           </element>
         </sequence>
@@ -1550,7 +1605,7 @@ This class describes a lodging including geometry.</documentation>
         <sequence>
           <element maxOccurs="unbounded" minOccurs="0" name="emission" type="IMAER:EmissionPropertyType">
             <annotation>
-              <documentation>Emission types from the lodging.</documentation>
+              <documentation>Emissions from the lodging.</documentation>
             </annotation>
           </element>
           <element maxOccurs="unbounded" minOccurs="0" name="farmLodging" type="IMAER:FarmLodgingPropertyType">
@@ -1610,7 +1665,7 @@ This class describes agricultural land, including geometry.</documentation>
         <sequence>
           <element maxOccurs="unbounded" minOccurs="0" name="emission" type="IMAER:EmissionPropertyType">
             <annotation>
-              <documentation>Emission types from agricultural land.</documentation>
+              <documentation>Emissions from agricultural land.</documentation>
             </annotation>
           </element>
           <element maxOccurs="unbounded" name="activity" type="IMAER:AbstractFarmlandActivityPropertyType">
@@ -1748,7 +1803,7 @@ This class describes a sailing route for inland shipping, including geometry. Th
         <sequence>
           <element maxOccurs="unbounded" minOccurs="0" name="emission" type="IMAER:EmissionPropertyType">
             <annotation>
-              <documentation>Emission types from this source.</documentation>
+              <documentation>Emissions from this source.</documentation>
             </annotation>
           </element>
           <element maxOccurs="unbounded" name="inlandShipping" type="IMAER:InlandShippingPropertyType">
@@ -1904,7 +1959,7 @@ This class describes manure storage, including geometry.</documentation>
         <sequence>
           <element maxOccurs="unbounded" minOccurs="0" name="emission" type="IMAER:EmissionPropertyType">
             <annotation>
-              <documentation>Emission types from this source.</documentation>
+              <documentation>Emissions from this source.</documentation>
             </annotation>
           </element>
           <element maxOccurs="unbounded" name="manureStorage" type="IMAER:ManureStoragePropertyType"/>
@@ -1965,7 +2020,7 @@ This class describes a sailing route for maritime shipping, including geometry.<
         <sequence>
           <element maxOccurs="unbounded" minOccurs="0" name="emission" type="IMAER:EmissionPropertyType">
             <annotation>
-              <documentation>Emission types from this source.</documentation>
+              <documentation>Emissions from this source.</documentation>
             </annotation>
           </element>
           <element maxOccurs="unbounded" name="maritimeShipping" type="IMAER:MaritimeShippingPropertyType">
@@ -2107,7 +2162,7 @@ This class describes a berth including geometry and sailing route for inland shi
         <sequence>
           <element maxOccurs="unbounded" minOccurs="0" name="emission" type="IMAER:EmissionPropertyType">
             <annotation>
-              <documentation>Emission types from this source.</documentation>
+              <documentation>Emissions from this source.</documentation>
             </annotation>
           </element>
           <element maxOccurs="unbounded" name="mooringInlandShipping" type="IMAER:MooringInlandShippingPropertyType">
@@ -2182,7 +2237,7 @@ This class describes a mooring for sea shipping including geometry.</documentati
         <sequence>
           <element maxOccurs="unbounded" minOccurs="0" name="emission" type="IMAER:EmissionPropertyType">
             <annotation>
-              <documentation>Emission types from this source.</documentation>
+              <documentation>Emissions from this source.</documentation>
             </annotation>
           </element>
           <element maxOccurs="unbounded" name="mooringMaritimeShipping" type="IMAER:MooringMaritimeShippingPropertyType">
@@ -2324,7 +2379,7 @@ This class describes a collection of mobile machinery including geometry.</docum
         <sequence>
           <element maxOccurs="unbounded" minOccurs="0" name="emission" type="IMAER:EmissionPropertyType">
             <annotation>
-              <documentation>Emission types from this source.</documentation>
+              <documentation>Emissions from this source.</documentation>
             </annotation>
           </element>
           <element maxOccurs="unbounded" minOccurs="0" name="offRoadMobileSource" type="IMAER:OffRoadMobileSourcePropertyType">
@@ -2683,7 +2738,7 @@ This class describes a road emission source including geometry.</documentation>
         <sequence>
           <element maxOccurs="unbounded" minOccurs="0" name="emission" type="IMAER:EmissionPropertyType">
             <annotation>
-              <documentation>Emission types from this source.</documentation>
+              <documentation>Emissions from this source.</documentation>
             </annotation>
           </element>
           <element maxOccurs="unbounded" name="vehicles" type="IMAER:VehiclePropertyType">
@@ -3258,8 +3313,8 @@ Each emission source is described on the basis of a number of characteristics, w
   </complexType>
   <element name="SpecificVehicle" substitutionGroup="IMAER:Vehicle" type="IMAER:SpecificVehicleType">
     <annotation>
-      <documentation>Characteristics of a specific type of vehicles with a class.
-Each road transport emission type is described on the basis of a number of characteristics, which are recorded in this separate data type.</documentation>
+      <documentation>Characteristics of a specific type of vehicles class.
+This class describes a specific vehicle type, using a predefined vehicle code.</documentation>
     </annotation>
   </element>
   <complexType name="SpecificVehicleType">
@@ -3570,7 +3625,8 @@ Mobile tools are described on the basis of a number of characteristics. These ar
   </complexType>
   <element name="StandardVehicle" substitutionGroup="IMAER:Vehicle" type="IMAER:StandardVehicleType">
     <annotation>
-      <documentation>Characteristics of a standard road transport class.</documentation>
+      <documentation>Characteristics of a standard vehicle type class.
+This class describes a standard vehicle type group for moving traffic, using a predefined vehicle group code.</documentation>
     </annotation>
   </element>
   <complexType name="StandardVehicleType">
@@ -3753,8 +3809,8 @@ When calculating emissions for road traffic in suburban areas, trees along the r
   </simpleType>
   <element abstract="true" name="Vehicle" substitutionGroup="IMAER:EmissionValueType" type="IMAER:VehicleType">
     <annotation>
-      <documentation>Characteristics of a road transport emission type.
-Each road transport emission type is described on the basis of a number of characteristics, which are recorded in this separate data type.</documentation>
+      <documentation>Characteristics of a vehicle type.
+There are different vehicle types available in the model. This abstract base class is a generalization of the different types in the model.</documentation>
     </annotation>
   </element>
   <complexType abstract="true" name="VehicleType">

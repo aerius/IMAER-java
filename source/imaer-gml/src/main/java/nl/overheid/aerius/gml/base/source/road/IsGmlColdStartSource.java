@@ -1,5 +1,5 @@
 /*
- * Copyright the State of the Netherlands
+ * Crown copyright
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -19,12 +19,12 @@ package nl.overheid.aerius.gml.base.source.road;
 import java.util.List;
 
 import nl.overheid.aerius.gml.base.IsGmlProperty;
-import nl.overheid.aerius.gml.base.source.IsGmlEmission;
+import nl.overheid.aerius.gml.base.source.IsGmlEmissionSource;
 
-public interface IsGmlCustomVehicle extends IsGmlVehicle {
+public interface IsGmlColdStartSource extends IsGmlEmissionSource {
 
-  String getDescription();
+  boolean isVehicleBasedCharacteristics();
 
-  List<? extends IsGmlProperty<IsGmlEmission>> getEmissionFactors();
+  List<? extends IsGmlProperty<IsGmlVehicle>> getVehicles();
 
 }

@@ -5,51 +5,40 @@
             <imaer:project>
                 <imaer:ProjectMetadata>
                     <imaer:year>2030</imaer:year>
-                    <imaer:name>Road sources</imaer:name>
+                    <imaer:name>Cold start sources</imaer:name>
                 </imaer:ProjectMetadata>
             </imaer:project>
             <imaer:situation>
                 <imaer:SituationMetadata>
-                    <imaer:name>Road sources</imaer:name>
-                    <imaer:reference>Rt3YbMBG7qMW</imaer:reference>
+                    <imaer:name>Cold start sources</imaer:name>
+                    <imaer:reference>ABCD1234</imaer:reference>
                     <imaer:situationType>PROPOSED</imaer:situationType>
                 </imaer:SituationMetadata>
             </imaer:situation>
             <imaer:version>
                 <imaer:VersionMetadata>
                     <imaer:aeriusVersion>DEV</imaer:aeriusVersion>
-                    <imaer:databaseVersion>BETA2_20130626_d131b24b59</imaer:databaseVersion>
+                    <imaer:databaseVersion>DEV_DB</imaer:databaseVersion>
                 </imaer:VersionMetadata>
             </imaer:version>
         </imaer:AeriusCalculatorMetadata>
     </imaer:metadata>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="FREEWAY" sectorId="3100" gml:id="ES.1">
+        <imaer:ColdStartEmissionSource sectorId="3150" gml:id="ES.1">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
                     <imaer:localId>ES.1</imaer:localId>
                 </imaer:NEN3610ID>
             </imaer:identifier>
-            <imaer:label>SomeRoadSource</imaer:label>
-            <imaer:emissionSourceCharacteristics>
-                <imaer:EmissionSourceCharacteristics>
-                    <imaer:heatContent>
-                        <imaer:SpecifiedHeatContent>
-                            <imaer:value>0.28</imaer:value>
-                        </imaer:SpecifiedHeatContent>
-                    </imaer:heatContent>
-                    <imaer:emissionHeight>22.0</imaer:emissionHeight>
-                    <imaer:spread>11.0</imaer:spread>
-                </imaer:EmissionSourceCharacteristics>
-            </imaer:emissionSourceCharacteristics>
+            <imaer:label>SomeColdStartSource</imaer:label>
             <imaer:geometry>
                 <imaer:EmissionSourceGeometry>
-                    <imaer:GM_Curve>
-                        <gml:LineString srsName="urn:ogc:def:crs:EPSG::28992" gml:id="ES.1.CURVE">
-                            <gml:posList>136558.0 455251.0 208413.0 474162.0</gml:posList>
-                        </gml:LineString>
-                    </imaer:GM_Curve>
+                    <imaer:GM_Point>
+                        <gml:Point srsName="urn:ogc:def:crs:EPSG::28992" gml:id="ES.1.POINT">
+                            <gml:pos>69462.46 443548.56</gml:pos>
+                        </gml:Point>
+                    </imaer:GM_Point>
                 </imaer:EmissionSourceGeometry>
             </imaer:geometry>
             <imaer:emission>
@@ -59,7 +48,7 @@
             </imaer:emission>
             <imaer:emission>
                 <imaer:Emission substance="NOX">
-                    <imaer:value>585035.2680296783</imaer:value>
+                    <imaer:value>7455.0764</imaer:value>
                 </imaer:Emission>
             </imaer:emission>
             <imaer:emission>
@@ -72,6 +61,19 @@
                     <imaer:value>0.0</imaer:value>
                 </imaer:Emission>
             </imaer:emission>
+            <imaer:vehicleBasedCharacteristics>true</imaer:vehicleBasedCharacteristics>
+            <imaer:vehicles>
+                <imaer:ColdStartStandardVehicle vehicleType="HEAVY_FREIGHT">
+                    <imaer:vehiclesPerTimeUnit>10.0</imaer:vehiclesPerTimeUnit>
+                    <imaer:timeUnit>DAY</imaer:timeUnit>
+                </imaer:ColdStartStandardVehicle>
+            </imaer:vehicles>
+            <imaer:vehicles>
+                <imaer:ColdStartStandardVehicle vehicleType="LIGHT_TRAFFIC">
+                    <imaer:vehiclesPerTimeUnit>100.0</imaer:vehiclesPerTimeUnit>
+                    <imaer:timeUnit>DAY</imaer:timeUnit>
+                </imaer:ColdStartStandardVehicle>
+            </imaer:vehicles>
             <imaer:vehicles>
                 <imaer:SpecificVehicle vehicleType="BA-B-E3">
                     <imaer:vehiclesPerTimeUnit>300.0</imaer:vehiclesPerTimeUnit>
@@ -106,23 +108,6 @@
                     </imaer:emissionFactor>
                 </imaer:CustomVehicle>
             </imaer:vehicles>
-            <imaer:tunnelFactor>1.1</imaer:tunnelFactor>
-            <imaer:elevation>STEEP_DYKE</imaer:elevation>
-            <imaer:elevationHeight>2</imaer:elevationHeight>
-            <imaer:barrierLeft>
-                <imaer:RoadSideBarrier>
-                    <imaer:barrierType>SCREEN</imaer:barrierType>
-                    <imaer:height>2.6</imaer:height>
-                    <imaer:distance>3.2</imaer:distance>
-                </imaer:RoadSideBarrier>
-            </imaer:barrierLeft>
-            <imaer:barrierRight>
-                <imaer:RoadSideBarrier>
-                    <imaer:barrierType>WALL</imaer:barrierType>
-                    <imaer:height>3.1</imaer:height>
-                    <imaer:distance>5.1</imaer:distance>
-                </imaer:RoadSideBarrier>
-            </imaer:barrierRight>
-        </imaer:SRM2Road>
+        </imaer:ColdStartEmissionSource>
     </imaer:featureMember>
 </imaer:FeatureCollectionCalculator>

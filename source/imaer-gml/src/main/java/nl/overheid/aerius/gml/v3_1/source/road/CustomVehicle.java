@@ -31,11 +31,11 @@ import nl.overheid.aerius.gml.v3_1.source.EmissionProperty;
  *
  */
 @XmlRootElement(name = "CustomVehicle", namespace = CalculatorSchema.NAMESPACE)
-@XmlType(name = "CustomVehicleType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"description", "emissions"})
+@XmlType(name = "CustomVehicleType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"description", "emissionFactors"})
 public class CustomVehicle extends AbstractVehicle implements IsGmlCustomVehicle {
 
   private String description;
-  private List<EmissionProperty> emissions = new ArrayList<>();
+  private List<EmissionProperty> emissionFactors = new ArrayList<>();
 
   @Override
   @XmlElement(name = "description", namespace = CalculatorSchema.NAMESPACE)
@@ -49,11 +49,11 @@ public class CustomVehicle extends AbstractVehicle implements IsGmlCustomVehicle
 
   @Override
   @XmlElement(name = "emission", namespace = CalculatorSchema.NAMESPACE)
-  public List<EmissionProperty> getEmissions() {
-    return emissions;
+  public List<EmissionProperty> getEmissionFactors() {
+    return emissionFactors;
   }
 
-  public void setEmissions(final List<EmissionProperty> emissions) {
-    this.emissions = emissions;
+  public void setEmissionFactors(final List<EmissionProperty> emissionFactors) {
+    this.emissionFactors = emissionFactors;
   }
 }

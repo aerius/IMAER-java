@@ -14,34 +14,46 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.shared.domain.v2.source;
+package nl.overheid.aerius.gml.v6_0.source.road;
 
-import nl.overheid.aerius.shared.domain.v2.geojson.IsFeature;
-import nl.overheid.aerius.shared.domain.v2.source.road.Vehicles;
-import nl.overheid.aerius.shared.exception.AeriusException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
+
+import nl.overheid.aerius.gml.base.source.road.IsGmlColdStartSource;
+import nl.overheid.aerius.gml.v6_0.base.CalculatorSchema;
+import nl.overheid.aerius.gml.v6_0.source.EmissionSource;
 
 /**
- * Emission source for Cold Start (koude start) emission sources.
  *
- * It uses the {@link Vehicles} instances, and interprets number of vehicles as number of cold starts.
  */
-public class ColdStartEmissionSource extends EmissionSourceWithSubSources<Vehicles> {
-
-  private static final long serialVersionUID = 2L;
+@XmlType(name = "ColdStartEmissionSourceType", namespace = CalculatorSchema.NAMESPACE)
+public class ColdStartEmissionSource extends EmissionSource implements IsGmlColdStartSource {
 
   private boolean vehicleBasedCharacteristics;
 
-  @Override
-  <T> T accept(final EmissionSourceVisitor<T> visitor, final IsFeature feature) throws AeriusException {
-    return visitor.visit(this, feature);
-  }
+  private List<VehiclesProperty> vehicles = new ArrayList<>();
 
+  @Override
+  @XmlElement(namespace = CalculatorSchema.NAMESPACE)
   public boolean isVehicleBasedCharacteristics() {
     return vehicleBasedCharacteristics;
   }
 
   public void setVehicleBasedCharacteristics(final boolean vehicleBasedCharacteristics) {
     this.vehicleBasedCharacteristics = vehicleBasedCharacteristics;
+  }
+
+  @Override
+  @XmlElement(namespace = CalculatorSchema.NAMESPACE)
+  public List<VehiclesProperty> getVehicles() {
+    return vehicles;
+  }
+
+  public void setVehicles(final List<VehiclesProperty> vehicles) {
+    this.vehicles = vehicles;
   }
 
 }
