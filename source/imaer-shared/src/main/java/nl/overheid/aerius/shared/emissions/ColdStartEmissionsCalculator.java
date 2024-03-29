@@ -41,7 +41,7 @@ import nl.overheid.aerius.shared.exception.AeriusException;
  * 1000: divide by 1000 to convert gram to kilogram
  * </pre>
  */
-class ColdStartEmissionsCalculator extends BaseRoadEmissionsCalculator<ColdStartEmissionSource> {
+public class ColdStartEmissionsCalculator extends BaseRoadEmissionsCalculator<ColdStartEmissionSource> {
   /**
    * Conversion from gram to kilogram.
    */
@@ -68,7 +68,7 @@ class ColdStartEmissionsCalculator extends BaseRoadEmissionsCalculator<ColdStart
   }
 
   @Override
-  protected Map<Substance, BigDecimal> calculateColdStartEmissions(final StandardColdStartVehicles vehicles, final String standardVehicleCode,
+  public Map<Substance, BigDecimal> calculateColdStartEmissions(final StandardColdStartVehicles vehicles, final String standardVehicleCode,
       final Double coldStartsPerTimeUnit) {
     final BigDecimal numberOfColdStartsPerYear = getVehiclesPerTimeUnit(vehicles, coldStartsPerTimeUnit);
 

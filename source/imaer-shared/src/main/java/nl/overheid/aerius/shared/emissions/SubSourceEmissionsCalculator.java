@@ -17,9 +17,12 @@
 package nl.overheid.aerius.shared.emissions;
 
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.v2.source.OffRoadMobileEmissionSource;
+import nl.overheid.aerius.shared.domain.v2.source.road.StandardColdStartVehicles;
+import nl.overheid.aerius.shared.domain.v2.source.road.Vehicles;
 import nl.overheid.aerius.shared.domain.v2.source.shipping.inland.InlandShipping;
 import nl.overheid.aerius.shared.domain.v2.source.shipping.inland.MooringInlandShipping;
 import nl.overheid.aerius.shared.domain.v2.source.shipping.maritime.MaritimeShipping;
@@ -30,25 +33,32 @@ import nl.overheid.aerius.shared.emissions.shipping.MaritimeShippingRouteEmissio
 import nl.overheid.aerius.shared.emissions.shipping.ShippingLaden;
 import nl.overheid.aerius.shared.exception.AeriusException;
 
+/**
+ * Helper class with all methods for calculating emissions on sub source emission objects.
+ */
 public class SubSourceEmissionsCalculator {
 
   private final OffRoadMobileEmissionsCalculator offRoadMobileEmissionsCalculator;
   private final InlandShippingEmissionsCalculator inlandShippingEmissionsCalculator;
   private final MaritimeShippingEmissionsCalculator maritimeShippingEmissionsCalculator;
+  private final ColdStartEmissionsCalculator coldStartEmissionsCalculator;
 
   public SubSourceEmissionsCalculator(final EmissionFactorSupplier emissionFactorSupplier) {
     this(
         new OffRoadMobileEmissionsCalculator(emissionFactorSupplier.offRoadMobile()),
         new InlandShippingEmissionsCalculator(emissionFactorSupplier.inlandShipping()),
-        new MaritimeShippingEmissionsCalculator(emissionFactorSupplier.maritimeShipping()));
+        new MaritimeShippingEmissionsCalculator(emissionFactorSupplier.maritimeShipping()),
+        new ColdStartEmissionsCalculator(emissionFactorSupplier.coldStart()));
   }
 
   SubSourceEmissionsCalculator(final OffRoadMobileEmissionsCalculator offRoadMobileEmissionsCalculator,
       final InlandShippingEmissionsCalculator inlandShippingEmissionsCalculator,
-      final MaritimeShippingEmissionsCalculator maritimeShippingEmissionsCalculator) {
+      final MaritimeShippingEmissionsCalculator maritimeShippingEmissionsCalculator,
+      final ColdStartEmissionsCalculator coldStartEmissionsCalculator) {
     this.offRoadMobileEmissionsCalculator = offRoadMobileEmissionsCalculator;
     this.inlandShippingEmissionsCalculator = inlandShippingEmissionsCalculator;
     this.maritimeShippingEmissionsCalculator = maritimeShippingEmissionsCalculator;
+    this.coldStartEmissionsCalculator = coldStartEmissionsCalculator;
   }
 
   public Map<Substance, Double> calculateOffRoadEmissions(final OffRoadMobileEmissionSource emissionSource) throws AeriusException {
@@ -77,4 +87,27 @@ public class SubSourceEmissionsCalculator {
         maritimeShipping);
   }
 
+  /**
+   * Calculates the emission of a {@link Vehicles} object.
+   *
+   * @param vehicle vehicle to calculate the emission on
+   * @return emissions calculated emissions
+   */
+  public Map<Substance, Double> calculateColdStartEmissions(final Vehicles vehicle) throws AeriusException {
+    // null is passed as road emission source since it has no additional information with coldstart for emission calculations.
+    return coldStartEmissionsCalculator.calculateEmissions(null, vehicle)
+        .entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getValue().doubleValue()));
+  }
+
+  /**
+   * Calculates the emission of a vehicle type on {@link StandardColdStartVehicles} object.
+   *
+   * @param vehicles object to get the time unit from
+   * @param vehicleType vehicle type of the standard vehicle
+   * @return emissions calculated emissions
+   */
+  public Map<Substance, Double> calculateColdStartEmissions(final StandardColdStartVehicles vehicles, final String vehicleType) {
+    return coldStartEmissionsCalculator.calculateColdStartEmissions(vehicles, vehicleType, vehicles.getValuesPerVehicleTypes().get(vehicleType))
+        .entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getValue().doubleValue()));
+  }
 }
