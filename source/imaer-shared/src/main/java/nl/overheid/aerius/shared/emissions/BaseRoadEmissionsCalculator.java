@@ -64,7 +64,7 @@ abstract class BaseRoadEmissionsCalculator<R extends EmissionSourceWithSubSource
 
   protected abstract Double toTotalEmission(R roadEmissionSource, BigDecimal value, BigDecimal measure);
 
-  protected Map<Substance, BigDecimal> calculateEmissions(final R roadEmissionSource, final Vehicles vehicles)
+  public Map<Substance, BigDecimal> calculateEmissions(final R roadEmissionSource, final Vehicles vehicles)
       throws AeriusException {
     // Determine emissions per km
     if (vehicles instanceof CustomVehicles) {

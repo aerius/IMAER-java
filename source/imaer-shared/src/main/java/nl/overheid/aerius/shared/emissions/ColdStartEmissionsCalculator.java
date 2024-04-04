@@ -68,7 +68,7 @@ class ColdStartEmissionsCalculator extends BaseRoadEmissionsCalculator<ColdStart
   }
 
   @Override
-  protected Map<Substance, BigDecimal> calculateColdStartEmissions(final StandardColdStartVehicles vehicles, final String standardVehicleCode,
+  public Map<Substance, BigDecimal> calculateColdStartEmissions(final StandardColdStartVehicles vehicles, final String standardVehicleCode,
       final Double coldStartsPerTimeUnit) {
     final BigDecimal numberOfColdStartsPerYear = getVehiclesPerTimeUnit(vehicles, coldStartsPerTimeUnit);
 
