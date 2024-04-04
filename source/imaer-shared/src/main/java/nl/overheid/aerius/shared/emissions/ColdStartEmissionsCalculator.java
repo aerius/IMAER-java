@@ -41,7 +41,7 @@ import nl.overheid.aerius.shared.exception.AeriusException;
  * 1000: divide by 1000 to convert gram to kilogram
  * </pre>
  */
-public class ColdStartEmissionsCalculator extends BaseRoadEmissionsCalculator<ColdStartEmissionSource> {
+class ColdStartEmissionsCalculator extends BaseRoadEmissionsCalculator<ColdStartEmissionSource> {
   /**
    * Conversion from gram to kilogram.
    */
