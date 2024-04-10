@@ -41,9 +41,9 @@ public enum EmissionSourceType {
    */
   MEDIUM_COMBUSTION_PLANT(Names.MEDIUM_COMBUSTION_PLANT),
   /**
-   * Cold start parking emission values.
+   * Cold start emission values.
    */
-  COLD_START(Names.COLD_START_PARKING_GARAGE),
+  COLD_START(Names.COLD_START),
   /**
    * Cold start parking emission values.
    *
