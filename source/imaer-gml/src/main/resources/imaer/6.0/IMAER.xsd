@@ -886,7 +886,7 @@ This class describes a cold start emission source including geometry. Cold start
               <documentation>Emissions from the cold starts.</documentation>
             </annotation>
           </element>
-          <element name="vehicleBasedCharacteristics">
+          <element name="vehicleBasedCharacteristics" type="boolean">
             <annotation>
               <documentation>Indication if the source characteristics should be based on individual vehicles by the system, or if they should be based on the main source characteristics supplied. If true, characteristics supplied within GML will be ignored.</documentation>
             </annotation>
@@ -1308,6 +1308,11 @@ This class describes a self-defined vehicle type.</documentation>
             </annotation>
           </element>
         </sequence>
+        <attribute name="vehicleType" type="string">
+          <annotation>
+            <documentation>Indication of the standard vehicle group this custom vehicle corresponds with.</documentation>
+          </annotation>
+        </attribute>
       </extension>
     </complexContent>
   </complexType>

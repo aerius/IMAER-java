@@ -41,11 +41,11 @@ class ColdStart2GML extends SpecificSource2GML<nl.overheid.aerius.shared.domain.
     final nl.overheid.aerius.gml.v6_0.source.road.ColdStartEmissionSource returnSource =
         new nl.overheid.aerius.gml.v6_0.source.road.ColdStartEmissionSource();
     returnSource.setVehicleBasedCharacteristics(emissionSource.isVehicleBasedCharacteristics());
-    returnSource.setVehicles(toVehicleProperties(emissionSource.getSubSources()));
+    returnSource.setVehicles(toVehicleProperties(emissionSource.getSubSources(), emissionSource.isVehicleBasedCharacteristics()));
     return returnSource;
   }
 
-  private List<VehiclesProperty> toVehicleProperties(final List<Vehicles> vehicleGroups) {
+  private List<VehiclesProperty> toVehicleProperties(final List<Vehicles> vehicleGroups, final boolean vehicleBasedCharacteristics) {
     final List<VehiclesProperty> vehiclesList = new ArrayList<>(vehicleGroups.size());
 
     for (final Vehicles vehicleGroup : vehicleGroups) {
@@ -54,7 +54,7 @@ class ColdStart2GML extends SpecificSource2GML<nl.overheid.aerius.shared.domain.
       } else if (vehicleGroup instanceof final SpecificVehicles specificVehicles) {
         addVehicleEmissionSource(vehiclesList, specificVehicles);
       } else if (vehicleGroup instanceof final CustomVehicles customVehicles) {
-        addVehicleEmissionSource(vehiclesList, customVehicles);
+        addVehicleEmissionSource(vehiclesList, customVehicles, vehicleBasedCharacteristics);
       } else {
         throw new IllegalArgumentException("Class for cold start not permitted: " + vehicleGroup);
       }
@@ -85,12 +85,15 @@ class ColdStart2GML extends SpecificSource2GML<nl.overheid.aerius.shared.domain.
     vehiclesList.add(new VehiclesProperty(sv));
   }
 
-  private void addVehicleEmissionSource(final List<VehiclesProperty> vehiclesList, final CustomVehicles vce) {
+  private void addVehicleEmissionSource(final List<VehiclesProperty> vehiclesList, final CustomVehicles vce, final boolean vehicleBasedCharacteristics) {
     final CustomVehicle cv = new CustomVehicle();
     cv.setDescription(vce.getDescription());
     cv.setEmissionFactors(getEmissions(vce.getEmissionFactors(), Substance.NOX));
     cv.setVehiclesPerTimeUnit(vce.getVehiclesPerTimeUnit());
     cv.setTimeUnit(TimeUnit.from(vce.getTimeUnit()));
+    if (vehicleBasedCharacteristics) {
+      cv.setVehicleType(vce.getVehicleType());
+    }
     vehiclesList.add(new VehiclesProperty(cv));
   }
 

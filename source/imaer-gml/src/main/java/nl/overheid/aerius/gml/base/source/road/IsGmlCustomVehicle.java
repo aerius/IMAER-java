@@ -27,4 +27,8 @@ public interface IsGmlCustomVehicle extends IsGmlVehicle {
 
   List<? extends IsGmlProperty<IsGmlEmission>> getEmissionFactors();
 
+  default String getVehicleType() {
+    return null;
+  }
+
 }

@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import nl.overheid.aerius.shared.domain.v2.source.ColdStartEmissionSource;
+import nl.overheid.aerius.shared.domain.v2.source.road.CustomVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.SpecificVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.StandardColdStartVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.Vehicles;
@@ -42,19 +43,22 @@ class ColdStartValidator extends SourceValidator<ColdStartEmissionSource> {
   boolean validate(final ColdStartEmissionSource source) {
     boolean valid = true;
     for (final Vehicles vehicleEmissions : source.getSubSources()) {
-      valid = validateVehicles(vehicleEmissions, source.getLabel()) && valid;
+      valid = validateVehicles(vehicleEmissions, source.getLabel(), source.isVehicleBasedCharacteristics()) && valid;
     }
     return valid;
   }
 
-  private boolean validateVehicles(final Vehicles vehicleEmissions, final String sourceLabel) {
+  private boolean validateVehicles(final Vehicles vehicleEmissions, final String sourceLabel, final boolean vehicleBasedCharacteristics) {
     boolean valid = true;
 
     if (vehicleEmissions instanceof final SpecificVehicles specificVehicles) {
       valid = validateSpecificVehicles(specificVehicles, sourceLabel) && valid;
     } else if (vehicleEmissions instanceof final StandardColdStartVehicles standardVehicles) {
       valid = validateStandardVehicles(standardVehicles, sourceLabel) && valid;
+    } else if (vehicleEmissions instanceof final CustomVehicles customVehicles) {
+      valid = validateCustomVehicles(customVehicles, sourceLabel, vehicleBasedCharacteristics) && valid;
     }
+
     return valid;
   }
 
@@ -77,6 +81,16 @@ class ColdStartValidator extends SourceValidator<ColdStartEmissionSource> {
         getErrors().add(new AeriusException(ImaerExceptionReason.GML_UNKNOWN_COLD_START_CATEGORY, sourceLabel, vehicleType));
         valid = false;
       }
+    }
+    return valid;
+  }
+
+  private boolean validateCustomVehicles(final CustomVehicles vehicles, final String sourceLabel, final boolean vehicleBasedCharacteristics) {
+    final String vehicleType = vehicles.getVehicleType();
+    boolean valid = true;
+    if (vehicleBasedCharacteristics && !validationHelper.isValidColdStartStandardVehicleCode(vehicleType)) {
+      getErrors().add(new AeriusException(ImaerExceptionReason.GML_UNKNOWN_COLD_START_CATEGORY, sourceLabel, vehicleType));
+      valid = false;
     }
     return valid;
   }
