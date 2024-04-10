@@ -66,7 +66,7 @@ public class GML2ColdStart<T extends IsGmlColdStartSource> extends AbstractGML2S
     } else if (av instanceof final IsGmlSpecificVehicle specificVehicle) {
       GML2VehicleUtil.addEmissionValuesSpecific(addToVehicles, source, specificVehicle, getConversionData());
     } else if (av instanceof final IsGmlCustomVehicle customVehicle) {
-      GML2VehicleUtil.addEmissionValuesCustom(addToVehicles, customVehicle);
+      GML2VehicleUtil.addEmissionValuesCustom(addToVehicles, customVehicle, source.isVehicleBasedCharacteristics());
     } else {
       LOG.error("Don't know how to treat cold start vehicle type: {}", av.getClass());
       throw new AeriusException(ImaerExceptionReason.INTERNAL_ERROR);

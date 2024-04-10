@@ -19,6 +19,7 @@ package nl.overheid.aerius.gml.v6_0.source.road;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
@@ -34,8 +35,19 @@ import nl.overheid.aerius.gml.v6_0.source.EmissionProperty;
 @XmlType(name = "CustomVehicleType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"description", "emissionFactors"})
 public class CustomVehicle extends AbstractVehicle implements IsGmlCustomVehicle {
 
+  private String vehicleType;
   private String description;
   private List<EmissionProperty> emissionFactors = new ArrayList<>();
+
+  @Override
+  @XmlAttribute(name = "vehicleType")
+  public String getVehicleType() {
+    return vehicleType;
+  }
+
+  public void setVehicleType(final String vehicleType) {
+    this.vehicleType = vehicleType;
+  }
 
   @Override
   @XmlElement(name = "description", namespace = CalculatorSchema.NAMESPACE)

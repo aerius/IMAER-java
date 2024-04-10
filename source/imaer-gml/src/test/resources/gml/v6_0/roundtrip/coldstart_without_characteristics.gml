@@ -87,7 +87,7 @@
                 </imaer:SpecificVehicle>
             </imaer:vehicles>
             <imaer:vehicles>
-                <imaer:CustomVehicle>
+                <imaer:CustomVehicle vehicleType="HEAVY_FREIGHT">
                     <imaer:vehiclesPerTimeUnit>22.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>HOUR</imaer:timeUnit>
                     <imaer:description>Mijn omschrijving</imaer:description>

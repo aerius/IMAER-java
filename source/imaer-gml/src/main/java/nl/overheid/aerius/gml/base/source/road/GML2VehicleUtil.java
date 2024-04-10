@@ -47,7 +47,7 @@ class GML2VehicleUtil {
     addToVehicles.add(vse);
   }
 
-  static void addEmissionValuesCustom(final List<Vehicles> addToVehicles, final IsGmlCustomVehicle cv) {
+  static void addEmissionValuesCustom(final List<Vehicles> addToVehicles, final IsGmlCustomVehicle cv, final boolean includeVehicleType) {
     final CustomVehicles vce = new CustomVehicles();
     vce.setDescription(cv.getDescription());
     for (final IsGmlProperty<IsGmlEmission> e : cv.getEmissionFactors()) {
@@ -56,6 +56,9 @@ class GML2VehicleUtil {
     }
     vce.setTimeUnit(TimeUnit.valueOf(cv.getTimeUnit().name()));
     vce.setVehiclesPerTimeUnit(cv.getVehiclesPerTimeUnit());
+    if (includeVehicleType) {
+      vce.setVehicleType(cv.getVehicleType());
+    }
     addToVehicles.add(vce);
   }
 
