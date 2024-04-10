@@ -1,0 +1,41 @@
+{
+  "type" : "Feature",
+  "id" : "1",
+  "geometry" : {
+    "type" : "Point",
+    "coordinates" : [ 130.12, -123.99 ]
+  },
+  "properties" : {
+    "emissionSourceType" : "COLD_START",
+    "sectorId" : 3160,
+    "label" : "Label 3160",
+    "emissions" : {
+      "NH3" : 10.0,
+      "NOX" : 11.0
+    },
+    "subSources" : [ {
+      "vehicleType" : "STANDARD_CS",
+      "timeUnit" : "DAY",
+      "valuesPerVehicleTypes" : {
+        "LIGHT_TRAFFIC" : 101.1,
+        "HEAVY_FREIGHT" : 54.7
+      }
+    }, {
+      "vehicleType" : "CUSTOM",
+      "timeUnit" : "YEAR",
+      "vehiclesPerTimeUnit" : 2000.0,
+      "description" : "Oude eenden",
+      "emissionFactors" : {
+        "NOX" : 1.5,
+        "NH3" : 0.6
+      },
+      "vehicleCode" : "HEAVY_FREIGHT"
+    }, {
+      "vehicleType" : "SPECIFIC",
+      "timeUnit" : "MONTH",
+      "vehiclesPerTimeUnit" : 300.0,
+      "vehicleCode" : "BA-B-E3"
+    } ],
+    "vehicleBasedCharacteristics" : true
+  }
+}

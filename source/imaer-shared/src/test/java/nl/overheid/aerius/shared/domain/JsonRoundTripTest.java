@@ -83,7 +83,9 @@ class JsonRoundTripTest {
       "MooringInlandShippingEmissionSource.json",
       "InlandMaritimeShippingEmissionSource.json",
       "MaritimeMaritimeShippingEmissionSource.json",
-      "MooringMaritimeShippingEmissionSource.json"
+      "MooringMaritimeShippingEmissionSource.json",
+      "ColdStartEmissionSourceParkingGarage.json",
+      "ColdStartEmissionSourceOther.json"
   })
   void testConvertEmissionSourceTypes(final String fileName) throws IOException {
     final String originalJson = getFileContent(fileName);

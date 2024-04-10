@@ -19,6 +19,8 @@ package nl.overheid.aerius.shared.domain.v2.source.road;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import nl.overheid.aerius.shared.domain.Substance;
 
 /**
@@ -41,6 +43,7 @@ public class CustomVehicles extends Vehicles {
     this.vehiclesPerTimeUnit = vehiclesPerTimeUnit;
   }
 
+  @JsonProperty("vehicleCode")
   public String getVehicleType() {
     return vehicleType;
   }

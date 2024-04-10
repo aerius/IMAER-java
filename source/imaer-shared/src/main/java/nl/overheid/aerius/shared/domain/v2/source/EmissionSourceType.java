@@ -41,12 +41,22 @@ public enum EmissionSourceType {
    */
   MEDIUM_COMBUSTION_PLANT(Names.MEDIUM_COMBUSTION_PLANT),
   /**
-   * Cold start parking emission values.
+   * Cold start emission values.
    */
+  COLD_START(Names.COLD_START),
+  /**
+   * Cold start parking emission values.
+   *
+   * @Deprecated Use COLD_START instead.
+   */
+  @Deprecated
   COLD_START_PARKING_GARAGE(Names.COLD_START_PARKING_GARAGE),
   /**
    * Cold start other emission values.
+   *
+   * @Deprecated Use COLD_START instead.
    */
+  @Deprecated
   COLD_START_OTHER(Names.COLD_START_OTHER),
   /**
    * Mobile off road emission values.
@@ -92,7 +102,16 @@ public enum EmissionSourceType {
     public static final String GENERIC = "GENERIC";
     public static final String MEDIUM_COMBUSTION_PLANT = "MEDIUM_COMBUSTION_PLANT";
     public static final String OFFROAD_MOBILE = "OFFROAD_MOBILE";
+    public static final String COLD_START = "COLD_START";
+    /**
+     * @Deprecated Use COLD_START instead.
+     */
+    @Deprecated
     public static final String COLD_START_PARKING_GARAGE = "COLD_START_PARKING_GARAGE";
+    /**
+     * @Deprecated Use COLD_START instead.
+     */
+    @Deprecated
     public static final String COLD_START_OTHER = "COLD_START_OTHER";
     public static final String PLAN = "PLAN";
     public static final String SRM1_ROAD = "SRM1_ROAD";
@@ -104,7 +123,8 @@ public enum EmissionSourceType {
     public static final String SHIPPING_MARITIME_INLAND = "SHIPPING_MARITIME_INLAND";
     public static final String SHIPPING_MARITIME_MARITIME = "SHIPPING_MARITIME_MARITIME";
 
-    private Names() {}
+    private Names() {
+    }
   }
 
   private final String name;
