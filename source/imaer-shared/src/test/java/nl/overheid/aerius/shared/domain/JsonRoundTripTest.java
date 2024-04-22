@@ -72,6 +72,7 @@ class JsonRoundTripTest {
       "GenericEmissionSource.json",
       "GenericADMSEmissionSource.json",
       "FarmLodgingEmissionSource.json",
+      "FarmAnimalHousingEmissionSource.json",
       "FarmlandEmissionSource.json",
       "OffRoadMobileEmissionSource.json",
       "SRM1RoadEmissionSource.json",

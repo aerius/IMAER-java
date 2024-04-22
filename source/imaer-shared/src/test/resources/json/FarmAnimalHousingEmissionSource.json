@@ -1,0 +1,62 @@
+{
+  "type" : "Feature",
+  "id" : "ES.1",
+  "geometry" : {
+    "type" : "Point",
+    "coordinates" : [ 136558.0, 455251.0 ]
+  },
+  "properties" : {
+    "emissionSourceType" : "FARM_ANIMAL_HOUSING",
+    "sectorId" : 4110,
+    "label" : "SomeSource",
+    "characteristics" : {
+      "type" : "OPS",
+      "heatContent" : 564.584,
+      "emissionHeight" : 5.0
+    },
+    "emissions" : {
+      "NH3" : 1923.1321
+    },
+    "subSources" : [ {
+      "animalHousingType" : "STANDARD",
+      "numberOfAnimals" : 300,
+      "animalTypeCode" : "A",
+      "animalHousingCode" : "FIEH_1",
+      "additionalSystems" : [ {
+        "additionalSystemType" : "STANDARD",
+        "additionalSystemCode" : "ADD_4_2"
+      }, {
+        "additionalSystemType" : "CUSTOM",
+        "emissionReductionFactors" : {
+          "NH3" : 0.3
+        }
+      } ]
+    }, {
+      "animalHousingType" : "STANDARD",
+      "numberOfAnimals" : 100,
+      "numberOfDays" : 365,
+      "animalTypeCode" : "C",
+      "animalHousingCode" : "FAH_5"
+    }, {
+      "animalHousingType" : "CUSTOM",
+      "numberOfAnimals" : 324,
+      "numberOfDays" : 365,
+      "animalTypeCode" : "A",
+      "description" : "Koetje",
+      "farmEmissionFactorType" : "PER_ANIMAL_PER_DAY",
+      "emissionFactors" : {
+        "NOX" : 3000.0,
+        "NH3" : 1000.0
+      }
+    }, {
+      "animalHousingType" : "CUSTOM",
+      "numberOfAnimals" : 908,
+      "animalTypeCode" : "B",
+      "description" : "Schaap",
+      "emissionFactors" : {
+        "NH3" : 2000.0
+      }
+    } ],
+    "established" : "1981-02-23"
+  }
+}
