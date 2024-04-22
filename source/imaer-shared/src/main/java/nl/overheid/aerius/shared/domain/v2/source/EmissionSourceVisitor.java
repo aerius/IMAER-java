@@ -25,6 +25,10 @@ import nl.overheid.aerius.shared.exception.AeriusException;
  */
 public interface EmissionSourceVisitor<T> {
 
+  /**
+   * @Deprecated Replaced by animal housing, will be removed in the future.
+   */
+  @Deprecated(forRemoval = true)
   T visit(FarmLodgingEmissionSource emissionSource, IsFeature feature) throws AeriusException;
 
   T visit(FarmlandEmissionSource emissionSource, IsFeature feature) throws AeriusException;

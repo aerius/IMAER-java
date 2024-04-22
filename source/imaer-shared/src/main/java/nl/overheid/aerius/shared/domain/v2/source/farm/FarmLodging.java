@@ -24,6 +24,10 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import nl.overheid.aerius.shared.domain.v2.source.base.AbstractSubSource;
 import nl.overheid.aerius.shared.emissions.IsFarmEmissionFactorTypeObject;
 
+/**
+ * @Deprecated Replaced by Animal Housing approach
+ */
+@Deprecated(forRemoval = true)
 @JsonTypeInfo(property = "farmLodgingType", use = Id.NAME)
 @JsonSubTypes({
     @Type(value = CustomFarmLodging.class, name = "CUSTOM"),

@@ -34,6 +34,10 @@ import nl.overheid.aerius.shared.domain.v2.source.farm.StandardFarmLodging;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 
+/**
+ * @Deprecated Replaced by Animal Housing approach
+ */
+@Deprecated(forRemoval = true)
 public class FarmLodgingEmissionsCalculator {
 
   /**

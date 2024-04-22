@@ -20,6 +20,10 @@ import java.util.Map;
 
 import nl.overheid.aerius.shared.domain.Substance;
 
+/**
+ * @Deprecated Replaced by Animal Housing approach
+ */
+@Deprecated(forRemoval = true)
 public interface FarmLodgingEmissionFactorSupplier {
 
   /**

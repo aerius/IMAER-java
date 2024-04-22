@@ -22,6 +22,10 @@ import nl.overheid.aerius.shared.domain.v2.geojson.IsFeature;
 import nl.overheid.aerius.shared.domain.v2.source.farm.FarmLodging;
 import nl.overheid.aerius.shared.exception.AeriusException;
 
+/**
+ * @Deprecated Replaced by Animal Housing approach
+ */
+@Deprecated(forRemoval = true)
 public class FarmLodgingEmissionSource extends EmissionSourceWithSubSources<FarmLodging> {
 
   private static final long serialVersionUID = 1L;

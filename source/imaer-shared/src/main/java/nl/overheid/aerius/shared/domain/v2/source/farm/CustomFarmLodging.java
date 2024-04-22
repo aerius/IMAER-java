@@ -22,6 +22,10 @@ import java.util.Map;
 import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.emissions.FarmEmissionFactorType;
 
+/**
+ * @Deprecated Replaced by Animal Housing approach
+ */
+@Deprecated(forRemoval = true)
 public class CustomFarmLodging extends FarmLodging {
 
   private static final long serialVersionUID = 2L;

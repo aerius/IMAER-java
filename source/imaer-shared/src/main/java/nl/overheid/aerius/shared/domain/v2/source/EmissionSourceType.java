@@ -22,7 +22,9 @@ import jsinterop.annotations.JsType;
 public enum EmissionSourceType {
   /**
    * Farm Lodge emission values.
+   * @Deprecated Replaced by Animal Housing approach
    */
+  @Deprecated(forRemoval = true)
   FARM_LODGE(Names.FARM_LODGE),
   /**
    * Farmland emission values.
