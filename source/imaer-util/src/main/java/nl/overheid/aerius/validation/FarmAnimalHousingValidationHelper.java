@@ -16,28 +16,20 @@
  */
 package nl.overheid.aerius.validation;
 
-/**
- * Interface to help with validating sources.
- */
-public interface ValidationHelper {
+import nl.overheid.aerius.shared.emissions.FarmEmissionFactorType;
 
-  FarmLodgingValidationHelper farmLodgingValidation();
+public interface FarmAnimalHousingValidationHelper {
 
-  default FarmAnimalHousingValidationHelper farmAnimalHousingValidation() {
-    return null;
-  }
+  boolean isValidFarmAnimalCode(String animalCode);
 
-  FarmlandValidationHelper farmlandValidation();
+  boolean isValidFarmAnimalHousingCode(String animalHousingCode);
 
-  ManureStorageValidationHelper manureStorageValidation();
+  boolean isValidFarmAnimalHousingCombination(String animalCode, String animalHousingCode);
 
-  OffRoadValidationHelper offRoadMobileValidation();
+  boolean isValidFarmAdditionalSystemCode(String systemCode);
 
-  ColdStartValidationHelper coldStartValidation();
+  boolean isValidFarmAdditionalSystemCombination(String animalCode, String systemCode);
 
-  RoadValidationHelper roadValidation();
+  FarmEmissionFactorType getAnimalHousingEmissionFactorType(final String animalHousingCode);
 
-  InlandShippingValidationHelper inlandShippingValidation();
-
-  MaritimeShippingValidationHelper maritimeShippingValidation();
 }

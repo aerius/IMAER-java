@@ -40,6 +40,7 @@ import nl.overheid.aerius.shared.domain.v2.source.shipping.inland.WaterwayDirect
 import nl.overheid.aerius.shared.domain.v2.source.shipping.maritime.ShippingMovementType;
 import nl.overheid.aerius.shared.emissions.ColdStartEmissionFactorSupplier;
 import nl.overheid.aerius.shared.emissions.EmissionFactorSupplier;
+import nl.overheid.aerius.shared.emissions.FarmAnimalHousingEmissionFactorSupplier;
 import nl.overheid.aerius.shared.emissions.FarmEmissionFactorType;
 import nl.overheid.aerius.shared.emissions.FarmLodgingEmissionFactorSupplier;
 import nl.overheid.aerius.shared.emissions.FarmlandEmissionFactorSupplier;
@@ -53,6 +54,7 @@ import nl.overheid.aerius.shared.emissions.shipping.MaritimeShippingRouteEmissio
 import nl.overheid.aerius.shared.emissions.shipping.ShippingLaden;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.validation.ColdStartValidationHelper;
+import nl.overheid.aerius.validation.FarmAnimalHousingValidationHelper;
 import nl.overheid.aerius.validation.FarmLodgingValidationHelper;
 import nl.overheid.aerius.validation.FarmlandValidationHelper;
 import nl.overheid.aerius.validation.InlandShippingValidationHelper;
@@ -66,20 +68,21 @@ import nl.overheid.aerius.validation.ValidationHelper;
  * Test data for validation.
  */
 public class TestValidationAndEmissionHelper implements ValidationHelper, EmissionFactorSupplier,
-    FarmLodgingEmissionFactorSupplier, FarmlandEmissionFactorSupplier, ManureStorageEmissionFactorSupplier, OffRoadMobileEmissionFactorSupplier,
-    ColdStartEmissionFactorSupplier, RoadEmissionFactorSupplier, InlandShippingEmissionFactorSupplier, MaritimeShippingEmissionFactorSupplier,
-    FarmLodgingValidationHelper, FarmlandValidationHelper, ManureStorageValidationHelper, OffRoadValidationHelper, ColdStartValidationHelper,
-    RoadValidationHelper, InlandShippingValidationHelper, MaritimeShippingValidationHelper {
+    FarmLodgingEmissionFactorSupplier, FarmAnimalHousingEmissionFactorSupplier, FarmlandEmissionFactorSupplier, ManureStorageEmissionFactorSupplier,
+    OffRoadMobileEmissionFactorSupplier, ColdStartEmissionFactorSupplier, RoadEmissionFactorSupplier, InlandShippingEmissionFactorSupplier,
+    MaritimeShippingEmissionFactorSupplier, FarmLodgingValidationHelper, FarmAnimalHousingValidationHelper, FarmlandValidationHelper,
+    ManureStorageValidationHelper, OffRoadValidationHelper, ColdStartValidationHelper, RoadValidationHelper, InlandShippingValidationHelper,
+    MaritimeShippingValidationHelper {
 
   private static final List<FarmConstructHelper> FARM_LODGING_CATEGORIES = Arrays.asList(
       new FarmConstructHelper("A1.4", 9.2, false),
       new FarmConstructHelper("B1.100", 0.7, false),
       new FarmConstructHelper("C1.100", 1.9, false),
-      new FarmConstructHelper("D3.1", 4.5, false, "BWL2001.21"),
+      new FarmConstructHelper("D3.1", 4.5, false),
       new FarmConstructHelper("D1.3.3", 2.5, false),
       new FarmConstructHelper("D3.2.7.2.1", 1.5, false),
       new FarmConstructHelper("F4.4", 0.2, true),
-      new FarmConstructHelper("A4.2", 1.1, true, "BWL2011.12"),
+      new FarmConstructHelper("A4.2", 1.1, true),
       new FarmConstructHelper("A3.100", 4.4, false),
       new FarmConstructHelper("A2.100", 4.1, false),
       new FarmConstructHelper("A1.1", 5.7, false),
@@ -98,6 +101,36 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
       new FarmFodderConstructHelper("PAS2015.01-01", 0.16, 0.16, 0.16, 0.3, 0.7, true),
       new FarmFodderConstructHelper("PAS2015.05-01", 0.2, 0.2, 0.2, 0.3, 0.7, true),
       new FarmFodderConstructHelper("PAS2015.04-01", 0.1, 0.1, 0.1, 0.3, 0.7, false));
+
+  private static final List<String> FARM_ANIMAL_CATEGORIES = Arrays.asList(
+      "HA1",
+      "HA2",
+      "HA3",
+      "HA4",
+      "HB1",
+      "HC1",
+      "HD1",
+      "HD3",
+      "HF1");
+
+  private static final List<FarmConstructHelper> FARM_ANIMAL_HOUSING_CATEGORIES = Arrays.asList(
+      new FarmConstructHelper("HA1.1", 5.7),
+      new FarmConstructHelper("HA1.28", 9.9),
+      new FarmConstructHelper("HA1.100", 13),
+      new FarmConstructHelper("HA2.100", 4.4),
+      new FarmConstructHelper("HA3.2", 1.9),
+      new FarmConstructHelper("HA4.100", 4.1),
+      new FarmConstructHelper("HB1.100", 0.7),
+      new FarmConstructHelper("HC1.100", 1.9),
+      new FarmConstructHelper("HD1.3.2", 0.25),
+      new FarmConstructHelper("HD3.1", 2.4),
+      new FarmConstructHelper("HD3.8.2", 2.5),
+      new FarmConstructHelper("HF1.4", 0.2));
+
+  private static final List<FarmConstructHelper> FARM_ADDITIONAL_HOUSING_SYSTEM_CATEGORIES = Arrays.asList(
+      new FarmConstructHelper("LW1.1", 0.7, true),
+      new FarmConstructHelper("LW2.9", 0.7, true),
+      new FarmConstructHelper("AV1.1", 0.4, false));
 
   private static final List<String> FARMLAND_CATEGORIES = Arrays.asList(
       "PASTURE",
@@ -403,13 +436,15 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
     final String code;
     final double emissionFactor;
     final boolean scrubber;
-    final List<String> systemDefinitions;
 
-    FarmConstructHelper(final String code, final double emissionFactor, final boolean scrubber, final String... systemDefinitions) {
+    FarmConstructHelper(final String code, final double emissionFactor) {
+      this(code, emissionFactor, false);
+    }
+
+    FarmConstructHelper(final String code, final double emissionFactor, final boolean scrubber) {
       this.code = code;
       this.emissionFactor = emissionFactor;
       this.scrubber = scrubber;
-      this.systemDefinitions = Arrays.asList(systemDefinitions);
     }
   }
 
@@ -487,6 +522,11 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
   }
 
   @Override
+  public FarmAnimalHousingEmissionFactorSupplier farmAnimalHousing() {
+    return this;
+  }
+
+  @Override
   public FarmlandEmissionFactorSupplier farmland() {
     return this;
   }
@@ -523,6 +563,11 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
 
   @Override
   public FarmLodgingValidationHelper farmLodgingValidation() {
+    return this;
+  }
+
+  @Override
+  public FarmAnimalHousingValidationHelper farmAnimalHousingValidation() {
     return this;
   }
 
@@ -570,6 +615,11 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
 
   @Override
   public FarmEmissionFactorType getLodgingEmissionFactorType(final String lodgingCode) {
+    return FarmEmissionFactorType.PER_ANIMAL_PER_YEAR;
+  }
+
+  @Override
+  public FarmEmissionFactorType getAnimalHousingEmissionFactorType(final String animalHousingCode) {
     return FarmEmissionFactorType.PER_ANIMAL_PER_YEAR;
   }
 
@@ -704,6 +754,57 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
   @Override
   public boolean isValidFarmLodgingFodderMeasureCode(final String fodderMeasureCode) {
     return farmFodderMeasure(fodderMeasureCode).isPresent();
+  }
+
+  @Override
+  public Map<Substance, Double> getAnimalHousingEmissionFactors(final String animalHousingCode) {
+    return farmAnimalHousing(animalHousingCode)
+        .map(c -> Map.of(Substance.NH3, c.emissionFactor))
+        .orElse(Map.of());
+  }
+
+  @Override
+  public boolean isAdditionalHousingSystemAirScrubber(final String additionalSystemCode) {
+    return farmAnimalHousing(additionalSystemCode)
+        .map(c -> c.scrubber)
+        .orElse(false);
+  }
+
+  @Override
+  public String getAnimalBasicHousingCode(final String animalCode) {
+    return animalCode + ".100";
+  }
+
+  @Override
+  public Map<Substance, Double> getAdditionalHousingSystemReductionFractions(final String additionalSystemCode, final String animalCode) {
+    return farmAnimalHousing(additionalSystemCode)
+        .map(c -> Map.of(Substance.NH3, c.emissionFactor))
+        .orElse(Map.of());
+  }
+
+  @Override
+  public boolean isValidFarmAnimalCode(final String animalCode) {
+    return farmAnimal(animalCode).isPresent();
+  }
+
+  @Override
+  public boolean isValidFarmAnimalHousingCode(final String animalHousingCode) {
+    return farmAnimalHousing(animalHousingCode).isPresent();
+  }
+
+  @Override
+  public boolean isValidFarmAnimalHousingCombination(final String animalCode, final String animalHousingCode) {
+    return animalHousingCode.startsWith(animalCode);
+  }
+
+  @Override
+  public boolean isValidFarmAdditionalSystemCode(final String systemCode) {
+    return farmAdditionalHousingSystem(systemCode).isPresent();
+  }
+
+  @Override
+  public boolean isValidFarmAdditionalSystemCombination(final String animalCode, final String systemCode) {
+    return animalCode.startsWith("HA");
   }
 
   @Override
@@ -939,6 +1040,24 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
   private Optional<FarmFodderConstructHelper> farmFodderMeasure(final String fodderMeasureCode) {
     return FARM_FODDER_MEASURE_CATEGORIES.stream()
         .filter(c -> c.code.equalsIgnoreCase(fodderMeasureCode))
+        .findFirst();
+  }
+
+  private Optional<String> farmAnimal(final String farmAnimalCode) {
+    return FARM_ANIMAL_CATEGORIES.stream()
+        .filter(c -> c.equalsIgnoreCase(farmAnimalCode))
+        .findFirst();
+  }
+
+  private Optional<FarmConstructHelper> farmAnimalHousing(final String farmAnimalHousingCode) {
+    return FARM_ANIMAL_HOUSING_CATEGORIES.stream()
+        .filter(c -> c.code.equalsIgnoreCase(farmAnimalHousingCode))
+        .findFirst();
+  }
+
+  private Optional<FarmConstructHelper> farmAdditionalHousingSystem(final String farmAdditionalSystemCode) {
+    return FARM_ADDITIONAL_HOUSING_SYSTEM_CATEGORIES.stream()
+        .filter(c -> c.code.equalsIgnoreCase(farmAdditionalSystemCode))
         .findFirst();
   }
 

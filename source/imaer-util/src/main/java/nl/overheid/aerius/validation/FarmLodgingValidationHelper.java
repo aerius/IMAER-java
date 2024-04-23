@@ -18,6 +18,10 @@ package nl.overheid.aerius.validation;
 
 import nl.overheid.aerius.shared.emissions.FarmEmissionFactorType;
 
+/**
+ * @Deprecated Replaced by Animal Housing approach
+ */
+@Deprecated(forRemoval = true)
 public interface FarmLodgingValidationHelper {
 
   boolean isValidFarmLodgingCode(String lodgingCode);

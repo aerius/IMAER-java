@@ -31,6 +31,10 @@ import nl.overheid.aerius.shared.emissions.FarmEmissionFactorType;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 
+/**
+ * @Deprecated Replaced by Animal Housing approach
+ */
+@Deprecated(forRemoval = true)
 class FarmLodgingValidator extends SourceValidator<FarmLodgingEmissionSource> {
 
   private static final Set<FarmEmissionFactorType> EXPECTED_EMISSION_FACTOR_TYPES =

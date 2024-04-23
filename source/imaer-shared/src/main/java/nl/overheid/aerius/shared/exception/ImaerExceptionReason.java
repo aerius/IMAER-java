@@ -499,6 +499,27 @@ public enum ImaerExceptionReason implements Reason {
    * @param 1 cold start type category
    */
   GML_UNKNOWN_COLD_START_CATEGORY(5239),
+  /**
+   * GML contains a unknown animal housing code.
+   *
+   * @param 0 the id of the object containing the error.
+   * @param 1 The code that is unknown.
+   */
+  GML_UNKNOWN_ANIMAL_HOUSING_CODE(5240),
+  /**
+   * GML contains a unknown animal housing code.
+   *
+   * @param 0 the id of the object containing the error.
+   * @param 1 The first code that does not combine.
+   * @param 2 The second code that does not combine.
+   */
+  GML_UNSUPPORTED_ANIMAL_HOUSING_COMBINATION(5241),
+  /**
+   * GML contains incorrect custom factors.
+   *
+   * @param 0 the id of the object containing the error.
+   */
+  GML_INCORRECT_CUSTOM_FACTORS(5242),
 
 
   // Cohesion (between files) errors.

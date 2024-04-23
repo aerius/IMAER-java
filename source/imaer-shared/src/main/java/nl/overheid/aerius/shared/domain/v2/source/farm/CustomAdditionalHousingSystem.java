@@ -29,7 +29,8 @@ public class CustomAdditionalHousingSystem extends AdditionalHousingSystem {
   private static final long serialVersionUID = 1L;
 
   private String description;
-  private Map<Substance, Double> emissionReductionFactors = new HashMap<>();
+  private boolean airScrubber;
+  private final Map<Substance, Double> emissionReductionFactors = new HashMap<>();
 
   public String getDescription() {
     return description;
@@ -37,6 +38,14 @@ public class CustomAdditionalHousingSystem extends AdditionalHousingSystem {
 
   public void setDescription(final String description) {
     this.description = description;
+  }
+
+  public boolean isAirScrubber() {
+    return airScrubber;
+  }
+
+  public void setAirScrubber(final boolean airScrubber) {
+    this.airScrubber = airScrubber;
   }
 
   public Map<Substance, Double> getEmissionReductionFactors() {

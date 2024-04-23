@@ -27,6 +27,7 @@
         "additionalSystemCode" : "ADD_4_2"
       }, {
         "additionalSystemType" : "CUSTOM",
+        "airScrubber" : false,
         "emissionReductionFactors" : {
           "NH3" : 0.3
         }
