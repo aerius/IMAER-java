@@ -34,6 +34,7 @@ import nl.overheid.aerius.shared.domain.v2.source.ColdStartEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceFeature;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceVisitor;
+import nl.overheid.aerius.shared.domain.v2.source.FarmAnimalHousingEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.FarmLodgingEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.FarmlandEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.GenericEmissionSource;
@@ -164,6 +165,13 @@ final class Source2GML implements EmissionSourceVisitor<nl.overheid.aerius.gml.v
   public nl.overheid.aerius.gml.v6_0.source.EmissionSource visit(final FarmLodgingEmissionSource emissionSource, final IsFeature feature)
       throws AeriusException {
     return new Farm2GML().convert(emissionSource);
+  }
+
+  @Override
+  public nl.overheid.aerius.gml.v6_0.source.EmissionSource visit(final FarmAnimalHousingEmissionSource emissionSource, final IsFeature feature)
+      throws AeriusException {
+    // TODO: actual IMAER part (AER-2828)
+    return new nl.overheid.aerius.gml.v6_0.source.EmissionSource();
   }
 
   @Override

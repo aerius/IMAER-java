@@ -25,20 +25,21 @@ import nl.overheid.aerius.shared.domain.v2.source.base.AbstractSubSource;
 import nl.overheid.aerius.shared.emissions.IsFarmEmissionFactorTypeObject;
 
 /**
- * @Deprecated Replaced by Animal Housing approach
+ * Base class for farm animal housing sub sources.
+ * Animal housing represents a number of animals of a certain animal type that are housed together.
  */
-@Deprecated(forRemoval = true)
-@JsonTypeInfo(property = "farmLodgingType", use = Id.NAME)
+@JsonTypeInfo(property = "animalHousingType", use = Id.NAME)
 @JsonSubTypes({
-    @Type(value = CustomFarmLodging.class, name = "CUSTOM"),
-    @Type(value = StandardFarmLodging.class, name = "STANDARD"),
+    @Type(value = CustomFarmAnimalHousing.class, name = "CUSTOM"),
+    @Type(value = StandardFarmAnimalHousing.class, name = "STANDARD"),
 })
-public abstract class FarmLodging extends AbstractSubSource implements IsFarmEmissionFactorTypeObject {
+public abstract class FarmAnimalHousing extends AbstractSubSource implements IsFarmEmissionFactorTypeObject {
 
-  private static final long serialVersionUID = 3L;
+  private static final long serialVersionUID = 1L;
 
   private int numberOfAnimals;
   private Integer numberOfDays;
+  private String animalTypeCode;
 
   @Override
   public Integer getNumberOfAnimals() {
@@ -58,4 +59,13 @@ public abstract class FarmLodging extends AbstractSubSource implements IsFarmEmi
   public void setNumberOfDays(final Integer numberOfDays) {
     this.numberOfDays = numberOfDays;
   }
+
+  public String getAnimalTypeCode() {
+    return animalTypeCode;
+  }
+
+  public void setAnimalTypeCode(final String animalTypeCode) {
+    this.animalTypeCode = animalTypeCode;
+  }
+
 }

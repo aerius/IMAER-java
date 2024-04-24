@@ -14,24 +14,22 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.shared.domain.v2.source.farm;
+package nl.overheid.aerius.validation;
 
-/**
- * @Deprecated Replaced by Animal Housing approach
- */
-@Deprecated(forRemoval = true)
-public class AdditionalLodgingSystem extends LodgingSystem {
+import nl.overheid.aerius.shared.emissions.FarmEmissionFactorType;
 
-  private static final long serialVersionUID = 1L;
+public interface FarmAnimalHousingValidationHelper {
 
-  private int numberOfAnimals;
+  boolean isValidFarmAnimalCode(String animalCode);
 
-  public int getNumberOfAnimals() {
-    return numberOfAnimals;
-  }
+  boolean isValidFarmAnimalHousingCode(String animalHousingCode);
 
-  public void setNumberOfAnimals(final int numberOfAnimals) {
-    this.numberOfAnimals = numberOfAnimals;
-  }
+  boolean isValidFarmAnimalHousingCombination(String animalCode, String animalHousingCode);
+
+  boolean isValidFarmAdditionalSystemCode(String systemCode);
+
+  boolean isValidFarmAdditionalSystemCombination(String animalCode, String systemCode);
+
+  FarmEmissionFactorType getAnimalHousingEmissionFactorType(final String animalHousingCode);
 
 }

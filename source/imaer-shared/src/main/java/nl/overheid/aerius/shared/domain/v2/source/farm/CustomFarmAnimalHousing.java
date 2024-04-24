@@ -23,28 +23,22 @@ import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.emissions.FarmEmissionFactorType;
 
 /**
- * @Deprecated Replaced by Animal Housing approach
+ * Custom farm animal housing definition, based on user supplied emission factors.
  */
-@Deprecated(forRemoval = true)
-public class CustomFarmLodging extends FarmLodging {
+public class CustomFarmAnimalHousing extends FarmAnimalHousing {
 
-  private static final long serialVersionUID = 2L;
+  private static final long serialVersionUID = 1L;
 
-  private String animalCode;
   private String description;
   private FarmEmissionFactorType farmEmissionFactorType;
-  private final Map<Substance, Double> emissionFactors = new HashMap<>();
-
-  public String getAnimalCode() {
-    return animalCode;
-  }
-
-  public void setAnimalCode(final String animalCode) {
-    this.animalCode = animalCode;
-  }
+  private Map<Substance, Double> emissionFactors = new HashMap<>();
 
   public String getDescription() {
     return description;
+  }
+
+  public void setDescription(final String description) {
+    this.description = description;
   }
 
   public FarmEmissionFactorType getFarmEmissionFactorType() {
@@ -53,10 +47,6 @@ public class CustomFarmLodging extends FarmLodging {
 
   public void setFarmEmissionFactorType(final FarmEmissionFactorType farmEmissionFactorType) {
     this.farmEmissionFactorType = farmEmissionFactorType;
-  }
-
-  public void setDescription(final String description) {
-    this.description = description;
   }
 
   public Map<Substance, Double> getEmissionFactors() {

@@ -23,6 +23,10 @@ import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 
+/**
+ * @Deprecated Replaced by Animal Housing approach
+ */
+@Deprecated(forRemoval = true)
 @JsonTypeInfo(property = "lodgingSystemType", use = Id.NAME)
 @JsonSubTypes({
     @Type(value = ReductiveLodgingSystem.class, name = "REDUCTIVE"),

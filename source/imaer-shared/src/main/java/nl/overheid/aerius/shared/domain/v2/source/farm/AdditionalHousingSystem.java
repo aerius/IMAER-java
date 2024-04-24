@@ -16,22 +16,24 @@
  */
 package nl.overheid.aerius.shared.domain.v2.source.farm;
 
+import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
+
 /**
- * @Deprecated Replaced by Animal Housing approach
+ * Base class for farm animal additional housing systems.
+ * These additional systems can be used to reduce emissions.
  */
-@Deprecated(forRemoval = true)
-public class AdditionalLodgingSystem extends LodgingSystem {
+@JsonTypeInfo(property = "additionalSystemType", use = Id.NAME)
+@JsonSubTypes({
+    @Type(value = StandardAdditionalHousingSystem.class, name = "STANDARD"),
+    @Type(value = CustomAdditionalHousingSystem.class, name = "CUSTOM"),
+})
+public abstract class AdditionalHousingSystem implements Serializable {
 
   private static final long serialVersionUID = 1L;
-
-  private int numberOfAnimals;
-
-  public int getNumberOfAnimals() {
-    return numberOfAnimals;
-  }
-
-  public void setNumberOfAnimals(final int numberOfAnimals) {
-    this.numberOfAnimals = numberOfAnimals;
-  }
 
 }

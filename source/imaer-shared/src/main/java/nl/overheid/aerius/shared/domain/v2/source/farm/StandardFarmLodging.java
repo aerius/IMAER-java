@@ -19,6 +19,10 @@ package nl.overheid.aerius.shared.domain.v2.source.farm;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @Deprecated Replaced by Animal Housing approach
+ */
+@Deprecated(forRemoval = true)
 public class StandardFarmLodging extends FarmLodging {
 
   private static final long serialVersionUID = 1L;

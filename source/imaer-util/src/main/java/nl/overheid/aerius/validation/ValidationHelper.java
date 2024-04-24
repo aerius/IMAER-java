@@ -23,6 +23,10 @@ public interface ValidationHelper {
 
   FarmLodgingValidationHelper farmLodgingValidation();
 
+  default FarmAnimalHousingValidationHelper farmAnimalHousingValidation() {
+    return null;
+  }
+
   FarmlandValidationHelper farmlandValidation();
 
   ManureStorageValidationHelper manureStorageValidation();

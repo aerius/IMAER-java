@@ -16,22 +16,29 @@
  */
 package nl.overheid.aerius.shared.domain.v2.source.farm;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * @Deprecated Replaced by Animal Housing approach
+ * Standard farm animal housing definition, based on a known housing code.
  */
-@Deprecated(forRemoval = true)
-public class AdditionalLodgingSystem extends LodgingSystem {
+public class StandardFarmAnimalHousing extends FarmAnimalHousing {
 
   private static final long serialVersionUID = 1L;
 
-  private int numberOfAnimals;
+  private String animalHousingCode;
+  private final List<AdditionalHousingSystem> additionalSystems = new ArrayList<>();
 
-  public int getNumberOfAnimals() {
-    return numberOfAnimals;
+  public String getAnimalHousingCode() {
+    return animalHousingCode;
   }
 
-  public void setNumberOfAnimals(final int numberOfAnimals) {
-    this.numberOfAnimals = numberOfAnimals;
+  public void setAnimalHousingCode(final String animalHousingCode) {
+    this.animalHousingCode = animalHousingCode;
+  }
+
+  public List<AdditionalHousingSystem> getAdditionalSystems() {
+    return additionalSystems;
   }
 
 }

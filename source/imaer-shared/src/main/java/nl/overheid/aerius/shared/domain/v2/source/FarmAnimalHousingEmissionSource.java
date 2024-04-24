@@ -14,24 +14,34 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.shared.domain.v2.source.farm;
+package nl.overheid.aerius.shared.domain.v2.source;
+
+import java.time.LocalDate;
+
+import nl.overheid.aerius.shared.domain.v2.geojson.IsFeature;
+import nl.overheid.aerius.shared.domain.v2.source.farm.FarmAnimalHousing;
+import nl.overheid.aerius.shared.exception.AeriusException;
 
 /**
- * @Deprecated Replaced by Animal Housing approach
+ * Emission source for farm animal housing.
  */
-@Deprecated(forRemoval = true)
-public class AdditionalLodgingSystem extends LodgingSystem {
+public class FarmAnimalHousingEmissionSource extends EmissionSourceWithSubSources<FarmAnimalHousing> {
 
   private static final long serialVersionUID = 1L;
 
-  private int numberOfAnimals;
+  private LocalDate established;
 
-  public int getNumberOfAnimals() {
-    return numberOfAnimals;
+  public LocalDate getEstablished() {
+    return established;
   }
 
-  public void setNumberOfAnimals(final int numberOfAnimals) {
-    this.numberOfAnimals = numberOfAnimals;
+  public void setEstablished(final LocalDate established) {
+    this.established = established;
+  }
+
+  @Override
+  <T> T accept(final EmissionSourceVisitor<T> visitor, final IsFeature feature) throws AeriusException {
+    return visitor.visit(this, feature);
   }
 
 }

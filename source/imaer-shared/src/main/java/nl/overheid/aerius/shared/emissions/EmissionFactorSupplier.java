@@ -23,6 +23,10 @@ public interface EmissionFactorSupplier {
 
   FarmLodgingEmissionFactorSupplier farmLodging();
 
+  default FarmAnimalHousingEmissionFactorSupplier farmAnimalHousing() {
+    return null;
+  }
+
   FarmlandEmissionFactorSupplier farmland();
 
   ManureStorageEmissionFactorSupplier manureStorage();

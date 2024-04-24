@@ -17,21 +17,20 @@
 package nl.overheid.aerius.shared.domain.v2.source.farm;
 
 /**
- * @Deprecated Replaced by Animal Housing approach
+ * Standard farm additional animal housing system, based on a known housing code.
  */
-@Deprecated(forRemoval = true)
-public class AdditionalLodgingSystem extends LodgingSystem {
+public class StandardAdditionalHousingSystem extends AdditionalHousingSystem {
 
   private static final long serialVersionUID = 1L;
 
-  private int numberOfAnimals;
+  private String additionalSystemCode;
 
-  public int getNumberOfAnimals() {
-    return numberOfAnimals;
+  public String getAdditionalSystemCode() {
+    return additionalSystemCode;
   }
 
-  public void setNumberOfAnimals(final int numberOfAnimals) {
-    this.numberOfAnimals = numberOfAnimals;
+  public void setAdditionalSystemCode(final String additionalSystemCode) {
+    this.additionalSystemCode = additionalSystemCode;
   }
 
 }
