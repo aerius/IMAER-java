@@ -505,7 +505,7 @@ public enum ImaerExceptionReason implements Reason {
    * @param 0 the id of the object containing the error.
    * @param 1 The code that is unknown.
    */
-  GML_UNKNOWN_ANIMAL_HOUSING_CODE(5240),
+  GML_UNKNOWN_ANIMAL_HOUSING_CODE(5260),
   /**
    * GML contains a unknown animal housing code.
    *
@@ -513,13 +513,13 @@ public enum ImaerExceptionReason implements Reason {
    * @param 1 The first code that does not combine.
    * @param 2 The second code that does not combine.
    */
-  GML_UNSUPPORTED_ANIMAL_HOUSING_COMBINATION(5241),
+  GML_UNSUPPORTED_ANIMAL_HOUSING_COMBINATION(5261),
   /**
    * GML contains incorrect custom factors.
    *
    * @param 0 the id of the object containing the error.
    */
-  GML_INCORRECT_CUSTOM_FACTORS(5242),
+  GML_INCORRECT_CUSTOM_FACTORS(5262),
 
 
   // Cohesion (between files) errors.
