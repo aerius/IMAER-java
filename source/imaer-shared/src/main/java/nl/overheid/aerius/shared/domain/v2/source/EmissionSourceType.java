@@ -24,7 +24,7 @@ public enum EmissionSourceType {
    * Farm Lodge emission values.
    * @Deprecated Replaced by Animal Housing approach
    */
-  @Deprecated(forRemoval = true)
+  @Deprecated
   FARM_LODGE(Names.FARM_LODGE),
   /**
    * Farm animal housing emission values.
