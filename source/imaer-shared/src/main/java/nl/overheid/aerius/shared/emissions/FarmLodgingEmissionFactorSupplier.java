@@ -23,7 +23,7 @@ import nl.overheid.aerius.shared.domain.Substance;
 /**
  * @Deprecated Replaced by Animal Housing approach
  */
-@Deprecated(forRemoval = true)
+@Deprecated
 public interface FarmLodgingEmissionFactorSupplier {
 
   /**

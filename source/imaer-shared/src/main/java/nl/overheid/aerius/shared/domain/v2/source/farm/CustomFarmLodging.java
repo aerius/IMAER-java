@@ -25,7 +25,7 @@ import nl.overheid.aerius.shared.emissions.FarmEmissionFactorType;
 /**
  * @Deprecated Replaced by Animal Housing approach
  */
-@Deprecated(forRemoval = true)
+@Deprecated
 public class CustomFarmLodging extends FarmLodging {
 
   private static final long serialVersionUID = 2L;

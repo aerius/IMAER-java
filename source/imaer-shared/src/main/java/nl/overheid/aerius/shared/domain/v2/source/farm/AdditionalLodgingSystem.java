@@ -19,7 +19,7 @@ package nl.overheid.aerius.shared.domain.v2.source.farm;
 /**
  * @Deprecated Replaced by Animal Housing approach
  */
-@Deprecated(forRemoval = true)
+@Deprecated
 public class AdditionalLodgingSystem extends LodgingSystem {
 
   private static final long serialVersionUID = 1L;

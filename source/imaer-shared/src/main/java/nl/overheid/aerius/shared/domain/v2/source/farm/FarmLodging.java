@@ -27,7 +27,7 @@ import nl.overheid.aerius.shared.emissions.IsFarmEmissionFactorTypeObject;
 /**
  * @Deprecated Replaced by Animal Housing approach
  */
-@Deprecated(forRemoval = true)
+@Deprecated
 @JsonTypeInfo(property = "farmLodgingType", use = Id.NAME)
 @JsonSubTypes({
     @Type(value = CustomFarmLodging.class, name = "CUSTOM"),

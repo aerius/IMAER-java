@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * @Deprecated Replaced by Animal Housing approach
  */
-@Deprecated(forRemoval = true)
+@Deprecated
 public class StandardFarmLodging extends FarmLodging {
 
   private static final long serialVersionUID = 1L;
