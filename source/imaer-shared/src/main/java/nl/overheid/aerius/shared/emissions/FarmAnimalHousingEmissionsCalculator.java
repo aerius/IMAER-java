@@ -131,14 +131,15 @@ public class FarmAnimalHousingEmissionsCalculator {
 
   private boolean isAnyAdditionalSystemScrubber(final StandardFarmAnimalHousing standardLodging) {
     for (final AdditionalHousingSystem additionalSystem : standardLodging.getAdditionalSystems()) {
-      if (additionalSystem instanceof StandardAdditionalHousingSystem && emissionFactorSupplier
-            .isAdditionalHousingSystemAirScrubber(((StandardAdditionalHousingSystem) additionalSystem).getAdditionalSystemCode())) {
-          return true;
-      } else if (additionalSystem instanceof CustomAdditionalHousingSystem &&
-          ((CustomAdditionalHousingSystem) additionalSystem).isAirScrubber()) {
-          return true;
-        }
+      if (additionalSystem instanceof StandardAdditionalHousingSystem
+          && emissionFactorSupplier
+              .isAdditionalHousingSystemAirScrubber(((StandardAdditionalHousingSystem) additionalSystem).getAdditionalSystemCode())) {
+        return true;
+      } else if (additionalSystem instanceof CustomAdditionalHousingSystem
+          && ((CustomAdditionalHousingSystem) additionalSystem).isAirScrubber()) {
+        return true;
       }
+    }
     return false;
   }
 
