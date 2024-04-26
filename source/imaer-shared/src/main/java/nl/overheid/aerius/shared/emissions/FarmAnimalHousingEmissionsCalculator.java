@@ -130,18 +130,17 @@ public class FarmAnimalHousingEmissionsCalculator {
   }
 
   private boolean isAnyAdditionalSystemScrubber(final StandardFarmAnimalHousing standardLodging) {
-    final boolean hasAdditionalStandardScrubber = standardLodging.getAdditionalSystems().stream()
-        .filter(StandardAdditionalHousingSystem.class::isInstance)
-        .map(StandardAdditionalHousingSystem.class::cast)
-        .map(StandardAdditionalHousingSystem::getAdditionalSystemCode)
-        .anyMatch(emissionFactorSupplier::isAdditionalHousingSystemAirScrubber);
-
-    final boolean hasAdditionalCustomScrubber = standardLodging.getAdditionalSystems().stream()
-        .filter(CustomAdditionalHousingSystem.class::isInstance)
-        .map(CustomAdditionalHousingSystem.class::cast)
-        .anyMatch(CustomAdditionalHousingSystem::isAirScrubber);
-
-    return hasAdditionalStandardScrubber || hasAdditionalCustomScrubber;
+    for (final AdditionalHousingSystem additionalSystem : standardLodging.getAdditionalSystems()) {
+      if (additionalSystem instanceof StandardAdditionalHousingSystem
+          && emissionFactorSupplier
+              .isAdditionalHousingSystemAirScrubber(((StandardAdditionalHousingSystem) additionalSystem).getAdditionalSystemCode())) {
+        return true;
+      } else if (additionalSystem instanceof CustomAdditionalHousingSystem
+          && ((CustomAdditionalHousingSystem) additionalSystem).isAirScrubber()) {
+        return true;
+      }
+    }
+    return false;
   }
 
   /**

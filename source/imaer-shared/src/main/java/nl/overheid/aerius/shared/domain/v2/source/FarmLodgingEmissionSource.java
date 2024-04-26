@@ -25,7 +25,7 @@ import nl.overheid.aerius.shared.exception.AeriusException;
 /**
  * @Deprecated Replaced by Animal Housing approach
  */
-@Deprecated(forRemoval = true)
+@Deprecated
 public class FarmLodgingEmissionSource extends EmissionSourceWithSubSources<FarmLodging> {
 
   private static final long serialVersionUID = 1L;

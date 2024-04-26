@@ -28,7 +28,7 @@ public interface EmissionSourceVisitor<T> {
   /**
    * @Deprecated Replaced by animal housing, will be removed in the future.
    */
-  @Deprecated(forRemoval = true)
+  @Deprecated
   T visit(FarmLodgingEmissionSource emissionSource, IsFeature feature) throws AeriusException;
 
   default T visit(final FarmAnimalHousingEmissionSource emissionSource, final IsFeature feature) throws AeriusException {

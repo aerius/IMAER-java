@@ -37,7 +37,7 @@ import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 /**
  * @Deprecated Replaced by Animal Housing approach
  */
-@Deprecated(forRemoval = true)
+@Deprecated
 public class FarmLodgingEmissionsCalculator {
 
   /**
