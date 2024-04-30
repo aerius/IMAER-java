@@ -164,14 +164,14 @@ final class Source2GML implements EmissionSourceVisitor<nl.overheid.aerius.gml.v
   @Override
   public nl.overheid.aerius.gml.v6_0.source.EmissionSource visit(final FarmLodgingEmissionSource emissionSource, final IsFeature feature)
       throws AeriusException {
-    return new Farm2GML().convert(emissionSource);
+    // Not supported from 6.0 onwards, just return a generic emission source.
+    return new nl.overheid.aerius.gml.v6_0.source.EmissionSource();
   }
 
   @Override
   public nl.overheid.aerius.gml.v6_0.source.EmissionSource visit(final FarmAnimalHousingEmissionSource emissionSource, final IsFeature feature)
       throws AeriusException {
-    // TODO: actual IMAER part (AER-2828)
-    return new nl.overheid.aerius.gml.v6_0.source.EmissionSource();
+    return new Farm2GML().convert(emissionSource);
   }
 
   @Override

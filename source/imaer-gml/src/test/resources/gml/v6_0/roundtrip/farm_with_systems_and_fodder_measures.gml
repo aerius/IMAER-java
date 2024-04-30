@@ -25,7 +25,7 @@
         </imaer:AeriusCalculatorMetadata>
     </imaer:metadata>
     <imaer:featureMember>
-        <imaer:FarmLodgingEmissionSource sectorId="4110" gml:id="ES.1">
+        <imaer:EmissionSource sectorId="4110" gml:id="ES.1">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -72,61 +72,6 @@
                     <imaer:value>0.0</imaer:value>
                 </imaer:Emission>
             </imaer:emission>
-            <imaer:farmLodging>
-                <imaer:StandardFarmLodging farmLodgingType="D3.1">
-                    <imaer:numberOfAnimals>3</imaer:numberOfAnimals>
-                    <imaer:farmLodgingSystemDefinitionType>BWL2001.21</imaer:farmLodgingSystemDefinitionType>
-                    <imaer:fodderMeasure>
-                        <imaer:LodgingFodderMeasure>
-                            <imaer:fodderMeasureType>PAS2015.01-01</imaer:fodderMeasureType>
-                        </imaer:LodgingFodderMeasure>
-                    </imaer:fodderMeasure>
-                    <imaer:fodderMeasure>
-                        <imaer:LodgingFodderMeasure>
-                            <imaer:fodderMeasureType>PAS2015.05-01</imaer:fodderMeasureType>
-                        </imaer:LodgingFodderMeasure>
-                    </imaer:fodderMeasure>
-                    <imaer:lodgingSystem>
-                        <imaer:AdditionalLodgingSystem>
-                            <imaer:lodgingSystemType>E6.1.a</imaer:lodgingSystemType>
-                            <imaer:numberOfAnimals>2</imaer:numberOfAnimals>
-                        </imaer:AdditionalLodgingSystem>
-                    </imaer:lodgingSystem>
-                    <imaer:lodgingSystem>
-                        <imaer:AdditionalLodgingSystem>
-                            <imaer:lodgingSystemType>E6.5.b</imaer:lodgingSystemType>
-                            <imaer:numberOfAnimals>1</imaer:numberOfAnimals>
-                        </imaer:AdditionalLodgingSystem>
-                    </imaer:lodgingSystem>
-                    <imaer:lodgingSystem>
-                        <imaer:ReductiveLodgingSystem>
-                            <imaer:lodgingSystemType>G2.1.2</imaer:lodgingSystemType>
-                        </imaer:ReductiveLodgingSystem>
-                    </imaer:lodgingSystem>
-                    <imaer:lodgingSystem>
-                        <imaer:ReductiveLodgingSystem>
-                            <imaer:lodgingSystemType>A4.3</imaer:lodgingSystemType>
-                        </imaer:ReductiveLodgingSystem>
-                    </imaer:lodgingSystem>
-                </imaer:StandardFarmLodging>
-            </imaer:farmLodging>
-            <imaer:farmLodging>
-                <imaer:StandardFarmLodging farmLodgingType="A3.100">
-                    <imaer:numberOfAnimals>100</imaer:numberOfAnimals>
-                </imaer:StandardFarmLodging>
-            </imaer:farmLodging>
-            <imaer:farmLodging>
-                <imaer:CustomFarmLodging>
-                    <imaer:numberOfAnimals>908</imaer:numberOfAnimals>
-                    <imaer:description>Schaap</imaer:description>
-                    <imaer:emissionFactor>
-                        <imaer:Emission substance="NH3">
-                            <imaer:value>2000.0</imaer:value>
-                        </imaer:Emission>
-                    </imaer:emissionFactor>
-                    <imaer:emissionFactorType>PER_ANIMAL_PER_YEAR</imaer:emissionFactorType>
-                </imaer:CustomFarmLodging>
-            </imaer:farmLodging>
-        </imaer:FarmLodgingEmissionSource>
+        </imaer:EmissionSource>
     </imaer:featureMember>
 </imaer:FeatureCollectionCalculator>

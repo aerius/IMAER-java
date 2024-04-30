@@ -358,28 +358,18 @@ There are different types of farmland use in the model. This abstract base class
       <element ref="IMAER:AbstractFarmlandActivity"/>
     </sequence>
   </complexType>
-  <element name="AdditionalLodgingSystem" substitutionGroup="IMAER:LodgingSystem" type="IMAER:AdditionalLodgingSystemType">
+  <element abstract="true" name="AdditionalHousingSystem" substitutionGroup="gml:AbstractObject" type="IMAER:AdditionalHousingSystemType">
     <annotation>
-      <documentation>Additional lodging system description.
-This class describes an additional lodging system that can be used in an existing lodging, using a predefined code. This may apply to some of the animals indicated.</documentation>
+      <documentation>Abstract base class for additional farm animal housing techniques.
+There are various types of additional housing systems available in the model. This abstract base class is a generalization of the different types in the model.</documentation>
     </annotation>
   </element>
-  <complexType name="AdditionalLodgingSystemType">
-    <complexContent>
-      <extension base="IMAER:LodgingSystemType">
-        <sequence>
-          <element name="numberOfAnimals" type="integer">
-            <annotation>
-              <documentation>Number of animals for which this extra technique applies. This should not be greater than the total number of animals of the FarmLodging where this technique is used</documentation>
-            </annotation>
-          </element>
-        </sequence>
-      </extension>
-    </complexContent>
+  <complexType abstract="true" name="AdditionalHousingSystemType">
+    <sequence/>
   </complexType>
-  <complexType name="AdditionalLodgingSystemPropertyType">
+  <complexType name="AdditionalHousingSystemPropertyType">
     <sequence>
-      <element ref="IMAER:AdditionalLodgingSystem"/>
+      <element ref="IMAER:AdditionalHousingSystem"/>
     </sequence>
   </complexType>
   <element name="Address" substitutionGroup="gml:AbstractObject" type="IMAER:AddressType">
@@ -960,24 +950,53 @@ To determine the emissions of mobile equipment, the use of that vehicle can be t
       <element ref="IMAER:ConsumptionOffRoadVehicleSpecification"/>
     </sequence>
   </complexType>
-  <element name="CustomFarmLodging" substitutionGroup="IMAER:FarmLodging" type="IMAER:CustomFarmLodgingType">
+  <element name="CustomAdditionalHousingSystem" substitutionGroup="IMAER:AdditionalHousingSystem" type="IMAER:CustomAdditionalHousingSystemType">
     <annotation>
-      <documentation>Self-defined lodging.
-This class describes a self-defined lodging.</documentation>
+      <documentation>User defined additional housing system description.
+This class describes an additional farm animal housing system that can be used in an existing animal housing, with user defined reduction factors.</documentation>
     </annotation>
   </element>
-  <complexType name="CustomFarmLodgingType">
+  <complexType name="CustomAdditionalHousingSystemType">
     <complexContent>
-      <extension base="IMAER:FarmLodgingType">
+      <extension base="IMAER:AdditionalHousingSystemType">
         <sequence>
-          <element minOccurs="0" name="animalType" type="string">
-            <annotation>
-              <documentation>Code that indicates the animal type.</documentation>
-            </annotation>
-          </element>
           <element name="description" type="string">
             <annotation>
-              <documentation>Description of the lodging.</documentation>
+              <documentation>Description of the additional housing system.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="airScrubber" type="boolean">
+            <annotation>
+              <documentation>Indication if the additional system is an air scrubber. If not present, it is not considered an air scrubber for calculation rules where this matters.</documentation>
+            </annotation>
+          </element>
+          <element maxOccurs="unbounded" name="emissionReductionFactor" type="IMAER:EmissionPropertyType">
+            <annotation>
+              <documentation>The emission reduction factor(s) to be used for this custom additional housing system. These should be supplied in factors: if the additional system reduces the emission of the housing system by 70%, the reduction factor should be 0.7.</documentation>
+            </annotation>
+          </element>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="CustomAdditionalHousingSystemPropertyType">
+    <sequence>
+      <element ref="IMAER:CustomAdditionalHousingSystem"/>
+    </sequence>
+  </complexType>
+  <element name="CustomFarmAnimalHousing" substitutionGroup="IMAER:FarmAnimalHousing" type="IMAER:CustomFarmAnimalHousingType">
+    <annotation>
+      <documentation>Self-defined animal housing.
+This class describes a self-defined farm animal housing.</documentation>
+    </annotation>
+  </element>
+  <complexType name="CustomFarmAnimalHousingType">
+    <complexContent>
+      <extension base="IMAER:FarmAnimalHousingType">
+        <sequence>
+          <element name="description" type="string">
+            <annotation>
+              <documentation>Description of the animal housing.</documentation>
             </annotation>
           </element>
           <element maxOccurs="unbounded" name="emissionFactor" type="IMAER:EmissionPropertyType">
@@ -994,9 +1013,9 @@ This class describes a self-defined lodging.</documentation>
       </extension>
     </complexContent>
   </complexType>
-  <complexType name="CustomFarmLodgingPropertyType">
+  <complexType name="CustomFarmAnimalHousingPropertyType">
     <sequence>
-      <element ref="IMAER:CustomFarmLodging"/>
+      <element ref="IMAER:CustomFarmAnimalHousing"/>
     </sequence>
   </complexType>
   <element name="CustomInlandShipping" substitutionGroup="IMAER:InlandShipping" type="IMAER:CustomInlandShippingType">
@@ -1569,13 +1588,13 @@ There are different types of emission sources present in the model. This abstrac
       <element ref="IMAER:EmissionValueType"/>
     </sequence>
   </complexType>
-  <element abstract="true" name="FarmLodging" substitutionGroup="IMAER:EmissionValueType" type="IMAER:FarmLodgingType">
+  <element abstract="true" name="FarmAnimalHousing" substitutionGroup="IMAER:EmissionValueType" type="IMAER:FarmAnimalHousingType">
     <annotation>
-      <documentation>Abstract base class for the description of farm lodging.
-There are different types of lodging in the model. This abstract base class is a generalization of the different types in the model.</documentation>
+      <documentation>Abstract base class for the description of farm animal housing.
+There are different types of animal housing in the model. This abstract base class is a generalization of the different types in the model.</documentation>
     </annotation>
   </element>
-  <complexType abstract="true" name="FarmLodgingType">
+  <complexType abstract="true" name="FarmAnimalHousingType">
     <complexContent>
       <extension base="IMAER:EmissionValueTypeType">
         <sequence>
@@ -1590,46 +1609,51 @@ There are different types of lodging in the model. This abstract base class is a
             </annotation>
           </element>
         </sequence>
+        <attribute name="animalType" type="string" use="required">
+          <annotation>
+            <documentation>Code that indicates the animal type.</documentation>
+          </annotation>
+        </attribute>
       </extension>
     </complexContent>
   </complexType>
-  <complexType name="FarmLodgingPropertyType">
+  <complexType name="FarmAnimalHousingPropertyType">
     <sequence>
-      <element ref="IMAER:FarmLodging"/>
+      <element ref="IMAER:FarmAnimalHousing"/>
     </sequence>
   </complexType>
-  <element name="FarmLodgingEmissionSource" substitutionGroup="IMAER:EmissionSourceType" type="IMAER:FarmLodgingEmissionSourceType">
+  <element name="FarmAnimalHousingSource" substitutionGroup="IMAER:EmissionSourceType" type="IMAER:FarmAnimalHousingSourceType">
     <annotation>
-      <documentation>Emission source from a farm lodging.
-This class describes a lodging including geometry.</documentation>
+      <documentation>Emission source for farm animal housing.
+This class describes an animal housing emission source including geometry.</documentation>
     </annotation>
   </element>
-  <complexType name="FarmLodgingEmissionSourceType">
+  <complexType name="FarmAnimalHousingSourceType">
     <complexContent>
       <extension base="IMAER:EmissionSourceTypeType">
         <sequence>
           <element maxOccurs="unbounded" minOccurs="0" name="emission" type="IMAER:EmissionPropertyType">
             <annotation>
-              <documentation>Emissions from the lodging.</documentation>
+              <documentation>Emissions from the animal housing.</documentation>
             </annotation>
           </element>
-          <element maxOccurs="unbounded" minOccurs="0" name="farmLodging" type="IMAER:FarmLodgingPropertyType">
+          <element maxOccurs="unbounded" minOccurs="0" name="animalHousing" type="IMAER:FarmAnimalHousingPropertyType">
             <annotation>
-              <documentation>Lodging types.</documentation>
+              <documentation>Animal housing specification.</documentation>
             </annotation>
           </element>
           <element minOccurs="0" name="established" type="date">
             <annotation>
-              <documentation>Date of establishment (or replacement or extension) of the animal lodging.</documentation>
+              <documentation>Date of establishment (or replacement or extension) of the animal housing.</documentation>
             </annotation>
           </element>
         </sequence>
       </extension>
     </complexContent>
   </complexType>
-  <complexType name="FarmLodgingEmissionSourcePropertyType">
+  <complexType name="FarmAnimalHousingSourcePropertyType">
     <sequence minOccurs="0">
-      <element ref="IMAER:FarmLodgingEmissionSource"/>
+      <element ref="IMAER:FarmAnimalHousingSource"/>
     </sequence>
     <attributeGroup ref="gml:AssociationAttributeGroup"/>
     <attributeGroup ref="gml:OwnershipAttributeGroup"/>
@@ -1871,51 +1895,6 @@ Each inland shipping mooring emission type for routes is described on the basis 
   <complexType name="InlandWaterwayPropertyType">
     <sequence>
       <element ref="IMAER:InlandWaterway"/>
-    </sequence>
-  </complexType>
-  <element name="LodgingFodderMeasure" substitutionGroup="gml:AbstractObject" type="IMAER:LodgingFodderMeasureType">
-    <annotation>
-      <documentation>Extra feeding measure for stables.
-This class describes a feeding measure that can be used for an existing stable, using a predefined code. Use of this measure ensures a reduction (percentage) for all animals.</documentation>
-    </annotation>
-  </element>
-  <complexType name="LodgingFodderMeasureType">
-    <sequence>
-      <element name="fodderMeasureType" type="string">
-        <annotation>
-          <documentation>Fixed code that indicates what type of feeding measure it concerns.</documentation>
-        </annotation>
-      </element>
-    </sequence>
-  </complexType>
-  <complexType name="LodgingFodderMeasurePropertyType">
-    <sequence>
-      <element ref="IMAER:LodgingFodderMeasure"/>
-    </sequence>
-  </complexType>
-  <element abstract="true" name="LodgingSystem" substitutionGroup="gml:AbstractObject" type="IMAER:LodgingSystemType">
-    <annotation>
-      <documentation>Abstract base class for additional stable techniques.
-There are various types of additional stable techniques available in the model. This abstract base class is a generalization of the different types in the model.</documentation>
-    </annotation>
-  </element>
-  <complexType abstract="true" name="LodgingSystemType">
-    <sequence>
-      <element name="lodgingSystemType" type="string">
-        <annotation>
-          <documentation>Fixed code that indicates what kind of extra stable technology is involved.</documentation>
-        </annotation>
-      </element>
-      <element minOccurs="0" name="farmLodgingSystemDefinitionType" type="string">
-        <annotation>
-          <documentation>Fixed (BWL) code that indicates what type of stable technology is involved.</documentation>
-        </annotation>
-      </element>
-    </sequence>
-  </complexType>
-  <complexType name="LodgingSystemPropertyType">
-    <sequence>
-      <element ref="IMAER:LodgingSystem"/>
     </sequence>
   </complexType>
   <element abstract="true" name="ManureStorage" substitutionGroup="IMAER:EmissionValueType" type="IMAER:ManureStorageType">
@@ -2598,24 +2577,6 @@ This class describes a calculation point on the AERIUS grid.</documentation>
     </sequence>
     <attributeGroup ref="gml:AssociationAttributeGroup"/>
     <attributeGroup ref="gml:OwnershipAttributeGroup"/>
-  </complexType>
-  <element name="ReductiveLodgingSystem" substitutionGroup="IMAER:LodgingSystem" type="IMAER:ReductiveLodgingSystemType">
-    <annotation>
-      <documentation>Extra reductive lodging technology description.
-This class describes an additional stable technology that can be used in an existing stable, using a predefined code. Use of this system ensures a reduction (percentage) for all animals.</documentation>
-    </annotation>
-  </element>
-  <complexType name="ReductiveLodgingSystemType">
-    <complexContent>
-      <extension base="IMAER:LodgingSystemType">
-        <sequence/>
-      </extension>
-    </complexContent>
-  </complexType>
-  <complexType name="ReductiveLodgingSystemPropertyType">
-    <sequence>
-      <element ref="IMAER:ReductiveLodgingSystem"/>
-    </sequence>
   </complexType>
   <element name="ReferenceTimeVaryingProfile" substitutionGroup="IMAER:TimeVaryingProfile" type="IMAER:ReferenceTimeVaryingProfileType">
     <annotation>
@@ -3363,43 +3324,57 @@ This class can be used if the heat content of an emission source is known.</docu
       <element ref="IMAER:SpecifiedHeatContent"/>
     </sequence>
   </complexType>
-  <element name="StandardFarmLodging" substitutionGroup="IMAER:FarmLodging" type="IMAER:StandardFarmLodgingType">
+  <element name="StandardAdditionalHousingSystem" substitutionGroup="IMAER:AdditionalHousingSystem" type="IMAER:StandardAdditionalHousingSystemType">
     <annotation>
-      <documentation>General lodging description.
-This class describes a general lodging, using a predefined lodging code.</documentation>
+      <documentation>Standard additional housing system description.
+This class describes an additional farm animal housing system that can be used in an existing animal housing, using a predefined code.</documentation>
     </annotation>
   </element>
-  <complexType name="StandardFarmLodgingType">
+  <complexType name="StandardAdditionalHousingSystemType">
     <complexContent>
-      <extension base="IMAER:FarmLodgingType">
+      <extension base="IMAER:AdditionalHousingSystemType">
         <sequence>
-          <element minOccurs="0" name="farmLodgingSystemDefinitionType" type="string">
+          <element name="additionalSystemType" type="string">
             <annotation>
-              <documentation>Fixed (BWL) code that indicates what type of stable technology is involved.</documentation>
-            </annotation>
-          </element>
-          <element maxOccurs="unbounded" minOccurs="0" name="fodderMeasure" type="IMAER:LodgingFodderMeasurePropertyType">
-            <annotation>
-              <documentation>Specification of the additional feeding measures used for this stable.</documentation>
-            </annotation>
-          </element>
-          <element maxOccurs="unbounded" minOccurs="0" name="lodgingSystem" type="IMAER:LodgingSystemPropertyType">
-            <annotation>
-              <documentation>Specification of the extra (additional or reducing) stable techniques used for this stable.</documentation>
+              <documentation>Fixed code that indicates what kind of extra housing technology is involved.</documentation>
             </annotation>
           </element>
         </sequence>
-        <attribute name="farmLodgingType" type="string" use="required">
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="StandardAdditionalHousingSystemPropertyType">
+    <sequence>
+      <element ref="IMAER:StandardAdditionalHousingSystem"/>
+    </sequence>
+  </complexType>
+  <element name="StandardFarmAnimalHousing" substitutionGroup="IMAER:FarmAnimalHousing" type="IMAER:StandardFarmAnimalHousingType">
+    <annotation>
+      <documentation>General animal housing description.
+This class describes a general animal housing, using a predefined animal housing code.</documentation>
+    </annotation>
+  </element>
+  <complexType name="StandardFarmAnimalHousingType">
+    <complexContent>
+      <extension base="IMAER:FarmAnimalHousingType">
+        <sequence>
+          <element maxOccurs="unbounded" minOccurs="0" name="additionalSystem" type="IMAER:AdditionalHousingSystemPropertyType">
+            <annotation>
+              <documentation>Specification of the extra stable techniques used for this animal housing.</documentation>
+            </annotation>
+          </element>
+        </sequence>
+        <attribute name="animalHousingType" type="string" use="required">
           <annotation>
-            <documentation>Fixed (RAV) code that indicates what type of stable it concerns.</documentation>
+            <documentation>Fixed code that indicates what type of animal housing it concerns.</documentation>
           </annotation>
         </attribute>
       </extension>
     </complexContent>
   </complexType>
-  <complexType name="StandardFarmLodgingPropertyType">
+  <complexType name="StandardFarmAnimalHousingPropertyType">
     <sequence>
-      <element ref="IMAER:StandardFarmLodging"/>
+      <element ref="IMAER:StandardFarmAnimalHousing"/>
     </sequence>
   </complexType>
   <element name="StandardFarmlandActivity" substitutionGroup="IMAER:AbstractFarmlandActivity" type="IMAER:StandardFarmlandActivityType">

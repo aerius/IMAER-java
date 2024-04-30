@@ -61,10 +61,15 @@ class GMLOldVersionTest {
 
   private static final Logger LOG = LoggerFactory.getLogger(GMLOldVersionTest.class);
 
+  private static final List<AeriusGMLVersion> FARM_LODGING_VERSIONS = Arrays.asList(AeriusGMLVersion.V0_5, AeriusGMLVersion.V1_0,
+      AeriusGMLVersion.V1_1, AeriusGMLVersion.V2_0, AeriusGMLVersion.V2_1, AeriusGMLVersion.V2_2,
+      AeriusGMLVersion.V3_0, AeriusGMLVersion.V3_1, AeriusGMLVersion.V4_0, AeriusGMLVersion.V5_0, AeriusGMLVersion.V5_1);
+
   private enum TestFile {
-    FARM,
-    FARM_WITH_SYSTEMS,
-    FARM_WITH_SYSTEMS_AND_FODDER_MEASURES,
+    FARM(FARM_LODGING_VERSIONS),
+    FARM_WITH_SYSTEMS(FARM_LODGING_VERSIONS),
+    FARM_WITH_SYSTEMS_AND_FODDER_MEASURES(FARM_LODGING_VERSIONS),
+    FARM_ANIMAL_HOUSING,
     ROAD(Arrays.asList(AeriusGMLVersion.V0_5, AeriusGMLVersion.V1_0)),
     ON_ROAD,
     OFF_ROAD(true, Arrays.asList(AeriusGMLVersion.V0_5, AeriusGMLVersion.V1_0,

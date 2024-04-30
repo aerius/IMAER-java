@@ -24,7 +24,7 @@
         </imaer:AeriusCalculatorMetadata>
     </imaer:metadata>
     <imaer:featureMember>
-        <imaer:FarmLodgingEmissionSource sectorId="4110" gml:id="ES.6">
+        <imaer:EmissionSource sectorId="4110" gml:id="ES.6">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -71,44 +71,6 @@
                     <imaer:value>0.0</imaer:value>
                 </imaer:Emission>
             </imaer:emission>
-            <imaer:farmLodging>
-                <imaer:StandardFarmLodging farmLodgingType="A1.4">
-                    <imaer:numberOfAnimals>100</imaer:numberOfAnimals>
-                </imaer:StandardFarmLodging>
-            </imaer:farmLodging>
-            <imaer:farmLodging>
-                <imaer:StandardFarmLodging farmLodgingType="B1.100">
-                    <imaer:numberOfAnimals>300</imaer:numberOfAnimals>
-                </imaer:StandardFarmLodging>
-            </imaer:farmLodging>
-            <imaer:farmLodging>
-                <imaer:StandardFarmLodging farmLodgingType="C1.100">
-                    <imaer:numberOfAnimals>10</imaer:numberOfAnimals>
-                </imaer:StandardFarmLodging>
-            </imaer:farmLodging>
-            <imaer:farmLodging>
-                <imaer:StandardFarmLodging farmLodgingType="D3.2.7.2.1">
-                    <imaer:numberOfAnimals>200</imaer:numberOfAnimals>
-                </imaer:StandardFarmLodging>
-            </imaer:farmLodging>
-            <imaer:farmLodging>
-                <imaer:CustomFarmLodging>
-                    <imaer:numberOfAnimals>1000</imaer:numberOfAnimals>
-                    <imaer:description>Koeien, extra luchtwasser</imaer:description>
-                    <imaer:emissionFactor>
-                        <imaer:Emission substance="NH3">
-                            <imaer:value>0.3</imaer:value>
-                        </imaer:Emission>
-                    </imaer:emissionFactor>
-                    <imaer:emissionFactorType>PER_ANIMAL_PER_YEAR</imaer:emissionFactorType>
-                </imaer:CustomFarmLodging>
-            </imaer:farmLodging>
-            <imaer:farmLodging>
-                <imaer:StandardFarmLodging farmLodgingType="F4.4">
-                    <imaer:numberOfAnimals>2000</imaer:numberOfAnimals>
-                </imaer:StandardFarmLodging>
-            </imaer:farmLodging>
-            <imaer:established>2021-06-09</imaer:established>
-        </imaer:FarmLodgingEmissionSource>
+        </imaer:EmissionSource>
     </imaer:featureMember>
 </imaer:FeatureCollectionCalculator>

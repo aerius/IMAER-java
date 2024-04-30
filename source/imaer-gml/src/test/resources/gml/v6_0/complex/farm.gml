@@ -25,7 +25,7 @@
         </imaer:AeriusCalculatorMetadata>
     </imaer:metadata>
     <imaer:featureMember>
-        <imaer:FarmLodgingEmissionSource sectorId="4110" gml:id="ES.1">
+        <imaer:EmissionSource sectorId="4110" gml:id="ES.1">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -72,27 +72,6 @@
                     <imaer:value>0.0</imaer:value>
                 </imaer:Emission>
             </imaer:emission>
-            <imaer:farmLodging>
-                <imaer:StandardFarmLodging farmLodgingType="A2.100">
-                    <imaer:numberOfAnimals>3</imaer:numberOfAnimals>
-                </imaer:StandardFarmLodging>
-            </imaer:farmLodging>
-            <imaer:farmLodging>
-                <imaer:StandardFarmLodging farmLodgingType="A3.100">
-                    <imaer:numberOfAnimals>100</imaer:numberOfAnimals>
-                </imaer:StandardFarmLodging>
-            </imaer:farmLodging>
-            <imaer:farmLodging>
-                <imaer:CustomFarmLodging>
-                    <imaer:numberOfAnimals>908</imaer:numberOfAnimals>
-                    <imaer:description>Schaap</imaer:description>
-                    <imaer:emissionFactor>
-                        <imaer:Emission substance="NH3">
-                            <imaer:value>2000.0</imaer:value>
-                        </imaer:Emission>
-                    </imaer:emissionFactor>
-                </imaer:CustomFarmLodging>
-            </imaer:farmLodging>
-        </imaer:FarmLodgingEmissionSource>
+        </imaer:EmissionSource>
     </imaer:featureMember>
 </imaer:FeatureCollectionCalculator>
