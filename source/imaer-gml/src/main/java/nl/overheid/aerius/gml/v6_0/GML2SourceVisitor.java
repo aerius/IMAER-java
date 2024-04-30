@@ -38,7 +38,6 @@ import nl.overheid.aerius.gml.base.source.ship.GML2MaritimeRoute;
 import nl.overheid.aerius.gml.v6_0.source.EmissionSource;
 import nl.overheid.aerius.gml.v6_0.source.farmland.FarmlandEmissionSource;
 import nl.overheid.aerius.gml.v6_0.source.housing.FarmAnimalHousingEmissionSource;
-import nl.overheid.aerius.gml.v6_0.source.lodging.FarmLodgingEmissionSource;
 import nl.overheid.aerius.gml.v6_0.source.manure.ManureStorageEmissionSource;
 import nl.overheid.aerius.gml.v6_0.source.mobile.OffRoadMobileEmissionSource;
 import nl.overheid.aerius.gml.v6_0.source.road.ADMSRoad;
@@ -63,7 +62,6 @@ class GML2SourceVisitor<S extends SourceCharacteristics> implements IsGML2Source
 
   GML2SourceVisitor(final GMLConversionData conversionData, final GML2SourceCharacteristics<S> gml2SourceCharacteristics) {
     handlers.put(EmissionSource.class, new GML2Generic<EmissionSource>(conversionData));
-    handlers.put(FarmLodgingEmissionSource.class, new GML2Generic<FarmLodgingEmissionSource>(conversionData));
     handlers.put(FarmAnimalHousingEmissionSource.class, new GML2FarmAnimalHousing<FarmAnimalHousingEmissionSource>(conversionData));
     handlers.put(FarmlandEmissionSource.class, new GML2Farmland<FarmlandEmissionSource>(conversionData));
     handlers.put(ManureStorageEmissionSource.class, new GML2ManureStorage<ManureStorageEmissionSource>(conversionData));
