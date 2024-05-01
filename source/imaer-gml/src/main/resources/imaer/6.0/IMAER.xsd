@@ -1600,12 +1600,12 @@ There are different types of animal housing in the model. This abstract base cla
         <sequence>
           <element name="numberOfAnimals" type="integer">
             <annotation>
-              <documentation>Number of animals in this stable.</documentation>
+              <documentation>Number of animals in this animal housing.</documentation>
             </annotation>
           </element>
           <element minOccurs="0" name="numberOfDays" type="integer">
             <annotation>
-              <documentation>Number of days that the animals are in this lodging. Only has an effect with certain combinations.</documentation>
+              <documentation>Number of days that the animals are in this animal housing. Only has an effect with certain combinations, depending on emission factor type.</documentation>
             </annotation>
           </element>
         </sequence>
@@ -3333,13 +3333,12 @@ This class describes an additional farm animal housing system that can be used i
   <complexType name="StandardAdditionalHousingSystemType">
     <complexContent>
       <extension base="IMAER:AdditionalHousingSystemType">
-        <sequence>
-          <element name="additionalSystemType" type="string">
-            <annotation>
-              <documentation>Fixed code that indicates what kind of extra housing technology is involved.</documentation>
-            </annotation>
-          </element>
-        </sequence>
+        <sequence/>
+        <attribute name="additionalSystemType" type="string" use="required">
+          <annotation>
+            <documentation>Fixed code that indicates what kind of extra housing technology is involved.</documentation>
+          </annotation>
+        </attribute>
       </extension>
     </complexContent>
   </complexType>

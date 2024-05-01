@@ -151,6 +151,8 @@ class GMLRoundtripTest {
       {"nca_calculation_options_quick_run", CharacteristicsType.ADMS},
       {"archive_metadata", CharacteristicsType.ADMS},
       {"farm_animal_housing", CharacteristicsType.OPS},
+      {"farm_animal_housing_with_systems", CharacteristicsType.OPS},
+      {"farm_animal_housing_custom_per_day", CharacteristicsType.OPS},
   };
 
   private static final String LATEST_VERSION = "latest";

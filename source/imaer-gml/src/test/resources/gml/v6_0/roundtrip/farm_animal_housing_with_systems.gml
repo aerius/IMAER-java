@@ -54,7 +54,7 @@
             </imaer:geometry>
             <imaer:emission>
                 <imaer:Emission substance="NH3">
-                    <imaer:value>1816423.2</imaer:value>
+                    <imaer:value>259.2</imaer:value>
                 </imaer:Emission>
             </imaer:emission>
             <imaer:emission>
@@ -75,26 +75,30 @@
             <imaer:animalHousing>
                 <imaer:StandardFarmAnimalHousing animalHousingType="HA2.100" animalType="HA2">
                     <imaer:numberOfAnimals>3</imaer:numberOfAnimals>
+                    <imaer:additionalSystem>
+                        <imaer:StandardAdditionalHousingSystem additionalSystemType="LW1.1"/>
+                    </imaer:additionalSystem>
+                    <imaer:additionalSystem>
+                        <imaer:StandardAdditionalHousingSystem additionalSystemType="LW2.9"/>
+                    </imaer:additionalSystem>
                 </imaer:StandardFarmAnimalHousing>
             </imaer:animalHousing>
             <imaer:animalHousing>
                 <imaer:StandardFarmAnimalHousing animalHousingType="HA4.100" animalType="HA4">
                     <imaer:numberOfAnimals>100</imaer:numberOfAnimals>
+                    <imaer:additionalSystem>
+                        <imaer:CustomAdditionalHousingSystem>
+                            <imaer:description>Eigen wasser</imaer:description>
+                            <imaer:airScrubber>true</imaer:airScrubber>
+                            <imaer:emissionReductionFactor>
+<imaer:Emission substance="NH3">
+    <imaer:value>0.4</imaer:value>
+</imaer:Emission>
+                            </imaer:emissionReductionFactor>
+                        </imaer:CustomAdditionalHousingSystem>
+                    </imaer:additionalSystem>
                 </imaer:StandardFarmAnimalHousing>
             </imaer:animalHousing>
-            <imaer:animalHousing>
-                <imaer:CustomFarmAnimalHousing animalType="HD1">
-                    <imaer:numberOfAnimals>908</imaer:numberOfAnimals>
-                    <imaer:description>Schaap</imaer:description>
-                    <imaer:emissionFactor>
-                        <imaer:Emission substance="NH3">
-                            <imaer:value>2000.0</imaer:value>
-                        </imaer:Emission>
-                    </imaer:emissionFactor>
-                    <imaer:emissionFactorType>PER_ANIMAL_PER_YEAR</imaer:emissionFactorType>
-                </imaer:CustomFarmAnimalHousing>
-            </imaer:animalHousing>
-            <imaer:established>2021-06-09</imaer:established>
         </imaer:FarmAnimalHousingSource>
     </imaer:featureMember>
 </imaer:FeatureCollectionCalculator>

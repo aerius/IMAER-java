@@ -54,7 +54,7 @@
             </imaer:geometry>
             <imaer:emission>
                 <imaer:Emission substance="NH3">
-                    <imaer:value>1816423.2</imaer:value>
+                    <imaer:value>600.0</imaer:value>
                 </imaer:Emission>
             </imaer:emission>
             <imaer:emission>
@@ -73,28 +73,18 @@
                 </imaer:Emission>
             </imaer:emission>
             <imaer:animalHousing>
-                <imaer:StandardFarmAnimalHousing animalHousingType="HA2.100" animalType="HA2">
-                    <imaer:numberOfAnimals>3</imaer:numberOfAnimals>
-                </imaer:StandardFarmAnimalHousing>
-            </imaer:animalHousing>
-            <imaer:animalHousing>
-                <imaer:StandardFarmAnimalHousing animalHousingType="HA4.100" animalType="HA4">
-                    <imaer:numberOfAnimals>100</imaer:numberOfAnimals>
-                </imaer:StandardFarmAnimalHousing>
-            </imaer:animalHousing>
-            <imaer:animalHousing>
                 <imaer:CustomFarmAnimalHousing animalType="HD1">
-                    <imaer:numberOfAnimals>908</imaer:numberOfAnimals>
-                    <imaer:description>Schaap</imaer:description>
+                    <imaer:numberOfAnimals>1000</imaer:numberOfAnimals>
+                    <imaer:numberOfDays>200</imaer:numberOfDays>
+                    <imaer:description>Koeien, extra luchtwasser</imaer:description>
                     <imaer:emissionFactor>
                         <imaer:Emission substance="NH3">
-                            <imaer:value>2000.0</imaer:value>
+                            <imaer:value>0.003</imaer:value>
                         </imaer:Emission>
                     </imaer:emissionFactor>
-                    <imaer:emissionFactorType>PER_ANIMAL_PER_YEAR</imaer:emissionFactorType>
+                    <imaer:emissionFactorType>PER_ANIMAL_PER_DAY</imaer:emissionFactorType>
                 </imaer:CustomFarmAnimalHousing>
             </imaer:animalHousing>
-            <imaer:established>2021-06-09</imaer:established>
         </imaer:FarmAnimalHousingSource>
     </imaer:featureMember>
 </imaer:FeatureCollectionCalculator>

@@ -16,7 +16,7 @@
  */
 package nl.overheid.aerius.gml.v6_0.source.housing;
 
-import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -33,7 +33,7 @@ public class StandardAdditionalHousingSystem extends AbstractAdditionalHousingSy
   private String code;
 
   @Override
-  @XmlElement(name = "additionalSystemType", namespace = CalculatorSchema.NAMESPACE)
+  @XmlAttribute(name = "additionalSystemType")
   public String getCode() {
     return code;
   }
