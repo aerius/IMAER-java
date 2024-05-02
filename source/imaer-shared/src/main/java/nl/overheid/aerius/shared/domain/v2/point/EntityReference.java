@@ -16,6 +16,9 @@
  */
 package nl.overheid.aerius.shared.domain.v2.point;
 
+/**
+ * Entity references of a NCA custom calculation point.
+ */
 public class EntityReference {
   private String code;
   private String description;

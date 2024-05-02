@@ -20,6 +20,6 @@ package nl.overheid.aerius.shared.domain.v2.point;
  * Entity types of entity references
  */
 public enum EntityType {
-  HABITAT,
-  SPECIES
+  HABITAT_TYPE,
+  SPECIES_TYPE
 }
