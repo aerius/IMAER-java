@@ -16,6 +16,9 @@
  */
 package nl.overheid.aerius.shared.domain.v2.point;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import nl.overheid.aerius.shared.domain.v2.geojson.IsFeature;
 import nl.overheid.aerius.shared.exception.AeriusException;
 
@@ -24,6 +27,7 @@ public class NcaCustomCalculationPoint extends CustomCalculationPoint {
   private static final long serialVersionUID = 1L;
 
   private Double roadLocalFractionNO2;
+  private List<EntityReference> entityReferences = new ArrayList<>();
 
   public Double getRoadLocalFractionNO2() {
     return roadLocalFractionNO2;
@@ -33,8 +37,17 @@ public class NcaCustomCalculationPoint extends CustomCalculationPoint {
     this.roadLocalFractionNO2 = roadLocalFractionNO2;
   }
 
+  public List<EntityReference> getEntityReferences() {
+    return entityReferences;
+  }
+
+  public void setEntityReferences(final List<EntityReference> entityReferences) {
+    this.entityReferences = entityReferences;
+  }
+
   @Override
   <T> T accept(final CalculationPointVisitor<T> visitor, final IsFeature feature) throws AeriusException {
     return visitor.visit(this, feature);
   }
+
 }

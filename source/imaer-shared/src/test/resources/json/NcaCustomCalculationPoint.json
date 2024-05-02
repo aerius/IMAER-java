@@ -11,6 +11,11 @@
     "customPointId" : 234,
     "height" : 2.4,
     "assessmentCategory" : "HUMAN_HEALTH",
-    "roadLocalFractionNO2" : 0.423
+    "roadLocalFractionNO2" : 0.423,
+    "entityReferences" : [ {
+      "code" : "Habitat code",
+      "description" : "Description of habitat",
+      "entityType" : "HABITAT_TYPE"
+    } ]
   }
 }
