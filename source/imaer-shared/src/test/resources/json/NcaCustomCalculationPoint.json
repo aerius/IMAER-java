@@ -16,10 +16,6 @@
       "code" : "Habitat code",
       "description" : "Description of habitat",
       "entityType" : "HABITAT_TYPE"
-    }, {
-      "code" : "Species code",
-      "description" : "Description of species",
-      "entityType" : "SPECIES_TYPE"
     } ]
   }
 }
