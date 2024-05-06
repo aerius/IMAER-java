@@ -23,7 +23,7 @@
         </imaer:AeriusCalculatorMetadata>
     </imaer:metadata>
     <imaer:featureMember>
-        <imaer:FarmLodgingEmissionSource sectorId="4110" gml:id="ES.1">
+        <imaer:EmissionSource sectorId="4110" gml:id="ES.1">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -71,13 +71,7 @@
                     <imaer:value>0.0</imaer:value>
                 </imaer:Emission>
             </imaer:emission>
-            <imaer:farmLodging>
-                <imaer:StandardFarmLodging farmLodgingType="A3.100">
-                    <imaer:numberOfAnimals>120</imaer:numberOfAnimals>
-                    <imaer:farmLodgingSystemDefinitionType>Overig</imaer:farmLodgingSystemDefinitionType>
-                </imaer:StandardFarmLodging>
-            </imaer:farmLodging>
-        </imaer:FarmLodgingEmissionSource>
+        </imaer:EmissionSource>
     </imaer:featureMember>
     <imaer:featureMember>
         <imaer:OffRoadMobileSourceEmissionSource sectorId="3210" gml:id="ES.2">
@@ -277,7 +271,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:FarmLodgingEmissionSource sectorId="4110" gml:id="ES.7">
+        <imaer:EmissionSource sectorId="4110" gml:id="ES.7">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -324,13 +318,7 @@
                     <imaer:value>0.0</imaer:value>
                 </imaer:Emission>
             </imaer:emission>
-            <imaer:farmLodging>
-                <imaer:StandardFarmLodging farmLodgingType="A3.100">
-                    <imaer:numberOfAnimals>30</imaer:numberOfAnimals>
-                    <imaer:farmLodgingSystemDefinitionType>Overig</imaer:farmLodgingSystemDefinitionType>
-                </imaer:StandardFarmLodging>
-            </imaer:farmLodging>
-        </imaer:FarmLodgingEmissionSource>
+        </imaer:EmissionSource>
     </imaer:featureMember>
     <imaer:featureMember>
         <imaer:Building gml:id="Building.1">

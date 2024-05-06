@@ -14,43 +14,32 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.gml.v6_0.source.lodging;
+package nl.overheid.aerius.gml.v6_0.source.housing;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlSeeAlso;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-import nl.overheid.aerius.gml.base.source.lodging.IsGmlLodgingSystem;
+import nl.overheid.aerius.gml.base.source.housing.IsGmlStandardAdditionalHousingSystem;
 import nl.overheid.aerius.gml.v6_0.base.CalculatorSchema;
 
 /**
  *
  */
-@XmlSeeAlso({AdditionalLodgingSystem.class, ReductiveLodgingSystem.class})
-@XmlType(name = "LodgingSystemType", namespace = CalculatorSchema.NAMESPACE)
-public abstract class AbstractLodgingSystem implements IsGmlLodgingSystem {
+@XmlRootElement(name = "StandardAdditionalHousingSystem", namespace = CalculatorSchema.NAMESPACE)
+@XmlType(name = "StandardAdditionalHousingSystemType", namespace = CalculatorSchema.NAMESPACE)
+public class StandardAdditionalHousingSystem extends AbstractAdditionalHousingSystem implements IsGmlStandardAdditionalHousingSystem {
 
   private String code;
-  private String lodgingSystemDefinitionCode;
 
   @Override
-  @XmlElement(name = "lodgingSystemType", namespace = CalculatorSchema.NAMESPACE)
+  @XmlAttribute(name = "additionalSystemType")
   public String getCode() {
     return code;
   }
 
   public void setCode(final String code) {
     this.code = code;
-  }
-
-  @Override
-  @XmlElement(name = "farmLodgingSystemDefinitionType", namespace = CalculatorSchema.NAMESPACE)
-  public String getLodgingSystemDefinitionCode() {
-    return lodgingSystemDefinitionCode;
-  }
-
-  public void setLodgingSystemDefinitionCode(final String lodgingSystemDefinitionCode) {
-    this.lodgingSystemDefinitionCode = lodgingSystemDefinitionCode;
   }
 
 }

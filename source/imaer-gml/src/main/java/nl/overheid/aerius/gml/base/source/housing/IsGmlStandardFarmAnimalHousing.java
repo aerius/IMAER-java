@@ -14,19 +14,16 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.gml.v6_0.source.lodging;
+package nl.overheid.aerius.gml.base.source.housing;
 
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
+import java.util.List;
 
-import nl.overheid.aerius.gml.base.source.lodging.IsGmlReductiveLodgingSystem;
-import nl.overheid.aerius.gml.v6_0.base.CalculatorSchema;
+import nl.overheid.aerius.gml.base.IsGmlProperty;
 
-/**
- *
- */
-@XmlRootElement(name = "ReductiveLodgingSystem", namespace = CalculatorSchema.NAMESPACE)
-@XmlType(name = "ReductiveLodgingSystemType", namespace = CalculatorSchema.NAMESPACE)
-public class ReductiveLodgingSystem extends AbstractLodgingSystem implements IsGmlReductiveLodgingSystem {
+public interface IsGmlStandardFarmAnimalHousing extends IsGmlFarmAnimalHousing {
+
+  String getCode();
+
+  List<? extends IsGmlProperty<IsGmlAdditionalHousingSystem>> getAdditionalSystems();
 
 }

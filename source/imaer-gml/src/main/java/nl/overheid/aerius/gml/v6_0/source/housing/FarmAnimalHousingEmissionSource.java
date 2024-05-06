@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.gml.v6_0.source.lodging;
+package nl.overheid.aerius.gml.v6_0.source.housing;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -25,27 +25,27 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import nl.overheid.aerius.gml.base.LocalDateAdapter;
-import nl.overheid.aerius.gml.base.source.lodging.IsGmlFarmLodgingEmissionSource;
+import nl.overheid.aerius.gml.base.source.housing.IsGmlFarmAnimalHousingSource;
 import nl.overheid.aerius.gml.v6_0.base.CalculatorSchema;
 import nl.overheid.aerius.gml.v6_0.source.EmissionSource;
 
 /**
  *
  */
-@XmlType(name = "FarmLodgingEmissionSourceType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"farmLodgings", "established"})
-public class FarmLodgingEmissionSource extends EmissionSource implements IsGmlFarmLodgingEmissionSource {
+@XmlType(name = "FarmAnimalHousingEmissionSourceType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"farmAnimalHousings", "established"})
+public class FarmAnimalHousingEmissionSource extends EmissionSource implements IsGmlFarmAnimalHousingSource {
 
-  private List<FarmLodgingProperty> farmLodgings = new ArrayList<>();
+  private List<FarmAnimalHousingProperty> farmAnimalHousings = new ArrayList<>();
   private LocalDate established;
 
   @Override
-  @XmlElement(name = "farmLodging", namespace = CalculatorSchema.NAMESPACE)
-  public List<FarmLodgingProperty> getFarmLodgings() {
-    return farmLodgings;
+  @XmlElement(name = "animalHousing", namespace = CalculatorSchema.NAMESPACE)
+  public List<FarmAnimalHousingProperty> getFarmAnimalHousings() {
+    return farmAnimalHousings;
   }
 
-  public void setFarmLodgings(final List<FarmLodgingProperty> farmLodgings) {
-    this.farmLodgings = farmLodgings;
+  public void setFarmAnimalHousings(final List<FarmAnimalHousingProperty> farmAnimalHousings) {
+    this.farmAnimalHousings = farmAnimalHousings;
   }
 
   @Override

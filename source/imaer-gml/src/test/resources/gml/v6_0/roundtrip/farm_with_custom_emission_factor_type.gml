@@ -24,7 +24,7 @@
         </imaer:AeriusCalculatorMetadata>
     </imaer:metadata>
     <imaer:featureMember>
-        <imaer:FarmLodgingEmissionSource sectorId="4110" gml:id="ES.6">
+        <imaer:EmissionSource sectorId="4110" gml:id="ES.6">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -71,20 +71,6 @@
                     <imaer:value>0.0</imaer:value>
                 </imaer:Emission>
             </imaer:emission>
-            <imaer:farmLodging>
-                <imaer:CustomFarmLodging>
-                    <imaer:numberOfAnimals>1000</imaer:numberOfAnimals>
-                    <imaer:numberOfDays>200</imaer:numberOfDays>
-                    <imaer:animalType>A</imaer:animalType>
-                    <imaer:description>Koeien, extra luchtwasser</imaer:description>
-                    <imaer:emissionFactor>
-                        <imaer:Emission substance="NH3">
-                            <imaer:value>0.003</imaer:value>
-                        </imaer:Emission>
-                    </imaer:emissionFactor>
-                    <imaer:emissionFactorType>PER_ANIMAL_PER_DAY</imaer:emissionFactorType>
-                </imaer:CustomFarmLodging>
-            </imaer:farmLodging>
-        </imaer:FarmLodgingEmissionSource>
+        </imaer:EmissionSource>
     </imaer:featureMember>
 </imaer:FeatureCollectionCalculator>

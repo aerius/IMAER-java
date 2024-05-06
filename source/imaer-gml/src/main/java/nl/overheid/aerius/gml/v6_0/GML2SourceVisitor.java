@@ -24,7 +24,7 @@ import nl.overheid.aerius.gml.base.IsGML2SourceVisitor;
 import nl.overheid.aerius.gml.base.characteristics.GML2SourceCharacteristics;
 import nl.overheid.aerius.gml.base.source.GML2Generic;
 import nl.overheid.aerius.gml.base.source.farmland.GML2Farmland;
-import nl.overheid.aerius.gml.base.source.lodging.GML2Farm;
+import nl.overheid.aerius.gml.base.source.housing.GML2FarmAnimalHousing;
 import nl.overheid.aerius.gml.base.source.manure.GML2ManureStorage;
 import nl.overheid.aerius.gml.base.source.mobile.v40.GML2OffRoad;
 import nl.overheid.aerius.gml.base.source.road.GML2ADMSRoad;
@@ -37,7 +37,7 @@ import nl.overheid.aerius.gml.base.source.ship.GML2MaritimeMooring;
 import nl.overheid.aerius.gml.base.source.ship.GML2MaritimeRoute;
 import nl.overheid.aerius.gml.v6_0.source.EmissionSource;
 import nl.overheid.aerius.gml.v6_0.source.farmland.FarmlandEmissionSource;
-import nl.overheid.aerius.gml.v6_0.source.lodging.FarmLodgingEmissionSource;
+import nl.overheid.aerius.gml.v6_0.source.housing.FarmAnimalHousingEmissionSource;
 import nl.overheid.aerius.gml.v6_0.source.manure.ManureStorageEmissionSource;
 import nl.overheid.aerius.gml.v6_0.source.mobile.OffRoadMobileEmissionSource;
 import nl.overheid.aerius.gml.v6_0.source.road.ADMSRoad;
@@ -62,7 +62,7 @@ class GML2SourceVisitor<S extends SourceCharacteristics> implements IsGML2Source
 
   GML2SourceVisitor(final GMLConversionData conversionData, final GML2SourceCharacteristics<S> gml2SourceCharacteristics) {
     handlers.put(EmissionSource.class, new GML2Generic<EmissionSource>(conversionData));
-    handlers.put(FarmLodgingEmissionSource.class, new GML2Farm<FarmLodgingEmissionSource>(conversionData));
+    handlers.put(FarmAnimalHousingEmissionSource.class, new GML2FarmAnimalHousing<FarmAnimalHousingEmissionSource>(conversionData));
     handlers.put(FarmlandEmissionSource.class, new GML2Farmland<FarmlandEmissionSource>(conversionData));
     handlers.put(ManureStorageEmissionSource.class, new GML2ManureStorage<ManureStorageEmissionSource>(conversionData));
     handlers.put(MooringInlandShippingEmissionSource.class, new GML2InlandMooring<MooringInlandShippingEmissionSource>(conversionData));

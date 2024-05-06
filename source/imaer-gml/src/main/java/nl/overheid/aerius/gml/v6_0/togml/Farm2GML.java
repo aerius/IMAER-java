@@ -19,102 +19,89 @@ package nl.overheid.aerius.gml.v6_0.togml;
 import java.util.ArrayList;
 import java.util.List;
 
-import nl.overheid.aerius.gml.v6_0.source.lodging.AbstractFarmLodging;
-import nl.overheid.aerius.gml.v6_0.source.lodging.AdditionalLodgingSystem;
-import nl.overheid.aerius.gml.v6_0.source.lodging.CustomFarmLodging;
-import nl.overheid.aerius.gml.v6_0.source.lodging.FarmLodging;
-import nl.overheid.aerius.gml.v6_0.source.lodging.FarmLodgingEmissionSource;
-import nl.overheid.aerius.gml.v6_0.source.lodging.FarmLodgingProperty;
-import nl.overheid.aerius.gml.v6_0.source.lodging.LodgingFodderMeasure;
-import nl.overheid.aerius.gml.v6_0.source.lodging.LodgingFodderMeasureProperty;
-import nl.overheid.aerius.gml.v6_0.source.lodging.LodgingSystemProperty;
-import nl.overheid.aerius.gml.v6_0.source.lodging.ReductiveLodgingSystem;
+import nl.overheid.aerius.gml.v6_0.source.housing.AbstractAdditionalHousingSystem;
+import nl.overheid.aerius.gml.v6_0.source.housing.AbstractFarmAnimalHousing;
+import nl.overheid.aerius.gml.v6_0.source.housing.AdditionalHousingSystemProperty;
+import nl.overheid.aerius.gml.v6_0.source.housing.CustomAdditionalHousingSystem;
+import nl.overheid.aerius.gml.v6_0.source.housing.CustomFarmAnimalHousing;
+import nl.overheid.aerius.gml.v6_0.source.housing.FarmAnimalHousingEmissionSource;
+import nl.overheid.aerius.gml.v6_0.source.housing.FarmAnimalHousingProperty;
+import nl.overheid.aerius.gml.v6_0.source.housing.StandardAdditionalHousingSystem;
+import nl.overheid.aerius.gml.v6_0.source.housing.StandardFarmAnimalHousing;
 import nl.overheid.aerius.shared.domain.Substance;
-import nl.overheid.aerius.shared.domain.v2.source.farm.StandardFarmLodging;
 
 /**
  *
  */
-class Farm2GML extends SpecificSource2GML<nl.overheid.aerius.shared.domain.v2.source.FarmLodgingEmissionSource> {
+class Farm2GML extends SpecificSource2GML<nl.overheid.aerius.shared.domain.v2.source.FarmAnimalHousingEmissionSource> {
 
   @Override
   public nl.overheid.aerius.gml.v6_0.source.EmissionSource convert(
-      final nl.overheid.aerius.shared.domain.v2.source.FarmLodgingEmissionSource emissionSource) {
-    final FarmLodgingEmissionSource returnSource = new FarmLodgingEmissionSource();
-    final List<FarmLodgingProperty> lodgings = new ArrayList<>();
+      final nl.overheid.aerius.shared.domain.v2.source.FarmAnimalHousingEmissionSource emissionSource) {
+    final FarmAnimalHousingEmissionSource returnSource = new FarmAnimalHousingEmissionSource();
+    final List<FarmAnimalHousingProperty> housings = new ArrayList<>();
 
-    for (final nl.overheid.aerius.shared.domain.v2.source.farm.FarmLodging lodging : emissionSource.getSubSources()) {
-      if (lodging instanceof StandardFarmLodging) {
-        lodgings.add(convert((StandardFarmLodging) lodging));
-      } else if (lodging instanceof nl.overheid.aerius.shared.domain.v2.source.farm.CustomFarmLodging) {
-        lodgings.add(convert((nl.overheid.aerius.shared.domain.v2.source.farm.CustomFarmLodging) lodging));
+    for (final nl.overheid.aerius.shared.domain.v2.source.farm.FarmAnimalHousing animalHousing : emissionSource.getSubSources()) {
+      if (animalHousing instanceof final nl.overheid.aerius.shared.domain.v2.source.farm.StandardFarmAnimalHousing standard) {
+        housings.add(convert(standard));
+      } else if (animalHousing instanceof final nl.overheid.aerius.shared.domain.v2.source.farm.CustomFarmAnimalHousing custom) {
+        housings.add(convert(custom));
       }
     }
-    returnSource.setFarmLodgings(lodgings);
+    returnSource.setFarmAnimalHousings(housings);
 
     returnSource.setEstablished(emissionSource.getEstablished());
 
     return returnSource;
   }
 
-  private FarmLodgingProperty convert(final StandardFarmLodging lodging) {
-    final FarmLodging gmlLodging = new FarmLodging();
-    gmlLodging.setCode(lodging.getFarmLodgingCode());
-    copyGenericProperties(lodging, gmlLodging);
+  private FarmAnimalHousingProperty convert(final nl.overheid.aerius.shared.domain.v2.source.farm.StandardFarmAnimalHousing housing) {
+    final StandardFarmAnimalHousing gmlHousing = new StandardFarmAnimalHousing();
+    gmlHousing.setCode(housing.getAnimalHousingCode());
+    copyGenericProperties(housing, gmlHousing);
 
-    gmlLodging.setLodgingSystemDefinitionCode(lodging.getSystemDefinitionCode());
-
-    //add the lodging system code and additional/reductive ones based on input.
-    for (final nl.overheid.aerius.shared.domain.v2.source.farm.AdditionalLodgingSystem additional : lodging.getAdditionalLodgingSystems()) {
-      gmlLodging.getLodgingSystems().add(new LodgingSystemProperty(convert(additional)));
-    }
-    for (final nl.overheid.aerius.shared.domain.v2.source.farm.ReductiveLodgingSystem reductive : lodging.getReductiveLodgingSystems()) {
-      gmlLodging.getLodgingSystems().add(new LodgingSystemProperty(convert(reductive)));
-    }
-    for (final nl.overheid.aerius.shared.domain.v2.source.farm.LodgingFodderMeasure fodderMeasure : lodging.getFodderMeasures()) {
-      gmlLodging.getFodderMeasures().add(new LodgingFodderMeasureProperty(convert(fodderMeasure)));
+    //add the additional systems based on input.
+    for (final nl.overheid.aerius.shared.domain.v2.source.farm.AdditionalHousingSystem additional : housing.getAdditionalSystems()) {
+      if (additional instanceof final nl.overheid.aerius.shared.domain.v2.source.farm.StandardAdditionalHousingSystem standard) {
+        gmlHousing.getAdditionalSystems().add(new AdditionalHousingSystemProperty(convert(standard)));
+      } else if (additional instanceof final nl.overheid.aerius.shared.domain.v2.source.farm.CustomAdditionalHousingSystem custom) {
+        gmlHousing.getAdditionalSystems().add(new AdditionalHousingSystemProperty(convert(custom)));
+      }
     }
 
-    //we're not adding emissionfactor/description to avoid impression that it will be used on import.
-    return new FarmLodgingProperty(gmlLodging);
+    return new FarmAnimalHousingProperty(gmlHousing);
   }
 
-  private FarmLodgingProperty convert(final nl.overheid.aerius.shared.domain.v2.source.farm.CustomFarmLodging lodging) {
-    final CustomFarmLodging gmlLodging = new CustomFarmLodging();
-    copyGenericProperties(lodging, gmlLodging);
-    gmlLodging.setAnimalCode(lodging.getAnimalCode());
-    gmlLodging.setEmissionFactors(getEmissions(lodging.getEmissionFactors(), Substance.NH3));
-    gmlLodging.setDescription(lodging.getDescription());
-    gmlLodging.setEmissionFactorType(lodging.getFarmEmissionFactorType().name());
-    //custom farm does NOT have a code other than the optional animal code.
-    return new FarmLodgingProperty(gmlLodging);
+  private FarmAnimalHousingProperty convert(final nl.overheid.aerius.shared.domain.v2.source.farm.CustomFarmAnimalHousing housing) {
+    final CustomFarmAnimalHousing gmlHousing = new CustomFarmAnimalHousing();
+    copyGenericProperties(housing, gmlHousing);
+    gmlHousing.setEmissionFactors(getEmissions(housing.getEmissionFactors(), Substance.NH3));
+    gmlHousing.setDescription(housing.getDescription());
+    gmlHousing.setEmissionFactorType(housing.getFarmEmissionFactorType().name());
+    return new FarmAnimalHousingProperty(gmlHousing);
   }
 
-  private void copyGenericProperties(final nl.overheid.aerius.shared.domain.v2.source.farm.FarmLodging lodging,
-      final AbstractFarmLodging gmlLodging) {
-    gmlLodging.setNumberOfAnimals(lodging.getNumberOfAnimals());
-    gmlLodging.setNumberOfDays(lodging.getNumberOfDays());
+  private void copyGenericProperties(final nl.overheid.aerius.shared.domain.v2.source.farm.FarmAnimalHousing housing,
+      final AbstractFarmAnimalHousing gmlHousing) {
+    gmlHousing.setAnimalCode(housing.getAnimalTypeCode());
+    gmlHousing.setNumberOfAnimals(housing.getNumberOfAnimals());
+    gmlHousing.setNumberOfDays(housing.getNumberOfDays());
   }
 
-  private AdditionalLodgingSystem convert(final nl.overheid.aerius.shared.domain.v2.source.farm.AdditionalLodgingSystem farmLodgingAdditional) {
-    final AdditionalLodgingSystem additionalLodgingSystem = new AdditionalLodgingSystem();
-    additionalLodgingSystem.setCode(farmLodgingAdditional.getLodgingSystemCode());
-    additionalLodgingSystem.setNumberOfAnimals(farmLodgingAdditional.getNumberOfAnimals());
-    additionalLodgingSystem.setLodgingSystemDefinitionCode(farmLodgingAdditional.getSystemDefinitionCode());
-    return additionalLodgingSystem;
+  private AbstractAdditionalHousingSystem convert(
+      final nl.overheid.aerius.shared.domain.v2.source.farm.StandardAdditionalHousingSystem standardSystem) {
+    final StandardAdditionalHousingSystem gmlAdditionalSystem = new StandardAdditionalHousingSystem();
+    gmlAdditionalSystem.setCode(standardSystem.getAdditionalSystemCode());
+    return gmlAdditionalSystem;
   }
 
-  private LodgingFodderMeasure convert(final nl.overheid.aerius.shared.domain.v2.source.farm.LodgingFodderMeasure fodderMeasure) {
-    final LodgingFodderMeasure lodgingFodderMeasure = new LodgingFodderMeasure();
-    lodgingFodderMeasure.setCode(fodderMeasure.getFodderMeasureCode());
-    return lodgingFodderMeasure;
-  }
-
-  private ReductiveLodgingSystem convert(final nl.overheid.aerius.shared.domain.v2.source.farm.ReductiveLodgingSystem farmLodgingReductive) {
-    final ReductiveLodgingSystem reductiveLodgingSystem = new ReductiveLodgingSystem();
-    reductiveLodgingSystem.setCode(farmLodgingReductive.getLodgingSystemCode());
-    reductiveLodgingSystem.setLodgingSystemDefinitionCode(farmLodgingReductive.getSystemDefinitionCode());
-    return reductiveLodgingSystem;
+  private AbstractAdditionalHousingSystem convert(
+      final nl.overheid.aerius.shared.domain.v2.source.farm.CustomAdditionalHousingSystem customSystem) {
+    final CustomAdditionalHousingSystem gmlAdditionalSystem = new CustomAdditionalHousingSystem();
+    gmlAdditionalSystem.setDescription(customSystem.getDescription());
+    gmlAdditionalSystem.setAirScrubber(customSystem.isAirScrubber());
+    gmlAdditionalSystem.setEmissionReductionFactors(getEmissions(customSystem.getEmissionReductionFactors(), Substance.NH3));
+    return gmlAdditionalSystem;
   }
 
 }

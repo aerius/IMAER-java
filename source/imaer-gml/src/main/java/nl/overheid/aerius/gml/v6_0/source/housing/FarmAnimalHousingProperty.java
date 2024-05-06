@@ -14,42 +14,45 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.gml.v6_0.source.lodging;
+package nl.overheid.aerius.gml.v6_0.source.housing;
 
 import javax.xml.bind.annotation.XmlElementRef;
+import javax.xml.bind.annotation.XmlType;
 
 import nl.overheid.aerius.gml.base.AbstractProperty;
 import nl.overheid.aerius.gml.base.IsGmlProperty;
-import nl.overheid.aerius.gml.base.source.lodging.IsGmlLodgingSystem;
+import nl.overheid.aerius.gml.base.source.housing.IsGmlFarmAnimalHousing;
+import nl.overheid.aerius.gml.v6_0.base.CalculatorSchema;
 
 /**
  *
  */
-public class LodgingSystemProperty extends AbstractProperty<AbstractLodgingSystem> implements IsGmlProperty<IsGmlLodgingSystem> {
+@XmlType(name = "FarmAnimalHousingPropertyType", namespace = CalculatorSchema.NAMESPACE)
+public class FarmAnimalHousingProperty extends AbstractProperty<AbstractFarmAnimalHousing> implements IsGmlProperty<IsGmlFarmAnimalHousing> {
 
   /**
    * Default constructor, needed for JAXB.
    */
-  public LodgingSystemProperty() {
+  public FarmAnimalHousingProperty() {
     super(null);
   }
 
   /**
    * Convenience constructor.
-   * @param lodgingSystem The property to use.
+   * @param farmAnimalHousing The property to use.
    */
-  public LodgingSystemProperty(final AbstractLodgingSystem lodgingSystem) {
-    super(lodgingSystem);
+  public FarmAnimalHousingProperty(final AbstractFarmAnimalHousing farmAnimalHousing) {
+    super(farmAnimalHousing);
   }
 
   @XmlElementRef
   @Override
-  public AbstractLodgingSystem getProperty() {
+  public AbstractFarmAnimalHousing getProperty() {
     return super.getProperty();
   }
 
   @Override
-  public void setProperty(final AbstractLodgingSystem property) {
+  public void setProperty(final AbstractFarmAnimalHousing property) {
     super.setProperty(property);
   }
 

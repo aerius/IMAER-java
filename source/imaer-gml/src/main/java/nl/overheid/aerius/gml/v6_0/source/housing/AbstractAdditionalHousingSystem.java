@@ -14,31 +14,19 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.gml.v6_0.source.lodging;
+package nl.overheid.aerius.gml.v6_0.source.housing;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
-import nl.overheid.aerius.gml.base.source.lodging.IsGmlAdditionalLodgingSystem;
+import nl.overheid.aerius.gml.base.source.housing.IsGmlAdditionalHousingSystem;
 import nl.overheid.aerius.gml.v6_0.base.CalculatorSchema;
 
 /**
  *
  */
-@XmlRootElement(name = "AdditionalLodgingSystem", namespace = CalculatorSchema.NAMESPACE)
-@XmlType(name = "AdditionalLodgingSystemType", namespace = CalculatorSchema.NAMESPACE)
-public class AdditionalLodgingSystem extends AbstractLodgingSystem implements IsGmlAdditionalLodgingSystem {
+@XmlSeeAlso({CustomAdditionalHousingSystem.class, StandardAdditionalHousingSystem.class})
+@XmlType(name = "AdditionalHousingSystemType", namespace = CalculatorSchema.NAMESPACE)
+public abstract class AbstractAdditionalHousingSystem implements IsGmlAdditionalHousingSystem {
 
-  private int numberOfAnimals;
-
-  @Override
-  @XmlElement(name = "numberOfAnimals", namespace = CalculatorSchema.NAMESPACE)
-  public int getNumberOfAnimals() {
-    return numberOfAnimals;
-  }
-
-  public void setNumberOfAnimals(final int numberOfAnimals) {
-    this.numberOfAnimals = numberOfAnimals;
-  }
 }

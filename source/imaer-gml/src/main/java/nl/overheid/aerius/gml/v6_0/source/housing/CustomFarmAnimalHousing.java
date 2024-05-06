@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.gml.v6_0.source.lodging;
+package nl.overheid.aerius.gml.v6_0.source.housing;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,32 +23,21 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-import nl.overheid.aerius.gml.base.source.lodging.IsGmlCustomFarmLodging;
+import nl.overheid.aerius.gml.base.source.housing.IsGmlCustomFarmAnimalHousing;
 import nl.overheid.aerius.gml.v6_0.base.CalculatorSchema;
 import nl.overheid.aerius.gml.v6_0.source.EmissionProperty;
 
 /**
  *
  */
-@XmlRootElement(name = "CustomFarmLodging", namespace = CalculatorSchema.NAMESPACE)
-@XmlType(name = "CustomFarmLodgingType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"animalCode", "description", "emissionFactors",
+@XmlRootElement(name = "CustomFarmAnimalHousing", namespace = CalculatorSchema.NAMESPACE)
+@XmlType(name = "CustomFarmAnimalHousingType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"description", "emissionFactors",
     "emissionFactorType"})
-public class CustomFarmLodging extends AbstractFarmLodging implements IsGmlCustomFarmLodging {
+public class CustomFarmAnimalHousing extends AbstractFarmAnimalHousing implements IsGmlCustomFarmAnimalHousing {
 
-  private String animalCode;
   private String description;
   private String emissionFactorType;
   private List<EmissionProperty> emissionFactors = new ArrayList<>();
-
-  @Override
-  @XmlElement(name = "animalType", namespace = CalculatorSchema.NAMESPACE)
-  public String getAnimalCode() {
-    return animalCode;
-  }
-
-  public void setAnimalCode(final String animalCode) {
-    this.animalCode = animalCode;
-  }
 
   @Override
   @XmlElement(namespace = CalculatorSchema.NAMESPACE)

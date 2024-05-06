@@ -14,32 +14,47 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.gml.v6_0.source.lodging;
+package nl.overheid.aerius.gml.v6_0.source.housing;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-import nl.overheid.aerius.gml.base.source.lodging.IsGmlLodgingFodderMeasure;
+import nl.overheid.aerius.gml.base.source.housing.IsGmlStandardFarmAnimalHousing;
 import nl.overheid.aerius.gml.v6_0.base.CalculatorSchema;
 
 /**
  *
  */
-@XmlRootElement(name = "LodgingFodderMeasure", namespace = CalculatorSchema.NAMESPACE)
-@XmlType(name = "LodgingFodderMeasureType", namespace = CalculatorSchema.NAMESPACE)
-public class LodgingFodderMeasure implements IsGmlLodgingFodderMeasure {
+@XmlRootElement(name = "StandardFarmAnimalHousing", namespace = CalculatorSchema.NAMESPACE)
+@XmlType(name = "StandardFarmAnimalHousingType", namespace = CalculatorSchema.NAMESPACE)
+public class StandardFarmAnimalHousing extends AbstractFarmAnimalHousing implements IsGmlStandardFarmAnimalHousing {
 
   private String code;
+  private List<AdditionalHousingSystemProperty> additionalSystems = new ArrayList<>();
 
   @Override
-  @XmlElement(name = "fodderMeasureType", namespace = CalculatorSchema.NAMESPACE)
+  @XmlAttribute(name = "animalHousingType")
   public String getCode() {
     return code;
   }
 
   public void setCode(final String code) {
     this.code = code;
+  }
+
+  @Override
+  @XmlElement(name = "additionalSystem", namespace = CalculatorSchema.NAMESPACE)
+  public List<AdditionalHousingSystemProperty> getAdditionalSystems() {
+    return additionalSystems;
+  }
+
+  public void setAdditionalSystems(final List<AdditionalHousingSystemProperty> additionalSystems) {
+    this.additionalSystems = additionalSystems;
   }
 
 }

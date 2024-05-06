@@ -24,7 +24,7 @@
         </imaer:AeriusCalculatorMetadata>
     </imaer:metadata>
     <imaer:featureMember>
-        <imaer:FarmLodgingEmissionSource sectorId="4110" gml:id="ES.1">
+        <imaer:EmissionSource sectorId="4110" gml:id="ES.1">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -71,23 +71,10 @@
                     <imaer:value>0.0</imaer:value>
                 </imaer:Emission>
             </imaer:emission>
-            <imaer:farmLodging>
-                <imaer:CustomFarmLodging>
-                    <imaer:numberOfAnimals>1</imaer:numberOfAnimals>
-                    <imaer:animalType></imaer:animalType>
-                    <imaer:description>Saldering stal 1</imaer:description>
-                    <imaer:emissionFactor>
-                        <imaer:Emission substance="NH3">
-                            <imaer:value>900.0</imaer:value>
-                        </imaer:Emission>
-                    </imaer:emissionFactor>
-                    <imaer:emissionFactorType>PER_ANIMAL_PER_YEAR</imaer:emissionFactorType>
-                </imaer:CustomFarmLodging>
-            </imaer:farmLodging>
-        </imaer:FarmLodgingEmissionSource>
+        </imaer:EmissionSource>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:FarmLodgingEmissionSource sectorId="4110" gml:id="ES.2">
+        <imaer:EmissionSource sectorId="4110" gml:id="ES.2">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -134,19 +121,6 @@
                     <imaer:value>0.0</imaer:value>
                 </imaer:Emission>
             </imaer:emission>
-            <imaer:farmLodging>
-                <imaer:CustomFarmLodging>
-                    <imaer:numberOfAnimals>1</imaer:numberOfAnimals>
-                    <imaer:animalType></imaer:animalType>
-                    <imaer:description>stal 2</imaer:description>
-                    <imaer:emissionFactor>
-                        <imaer:Emission substance="NH3">
-                            <imaer:value>200.2</imaer:value>
-                        </imaer:Emission>
-                    </imaer:emissionFactor>
-                    <imaer:emissionFactorType>PER_ANIMAL_PER_YEAR</imaer:emissionFactorType>
-                </imaer:CustomFarmLodging>
-            </imaer:farmLodging>
-        </imaer:FarmLodgingEmissionSource>
+        </imaer:EmissionSource>
     </imaer:featureMember>
 </imaer:FeatureCollectionCalculator>

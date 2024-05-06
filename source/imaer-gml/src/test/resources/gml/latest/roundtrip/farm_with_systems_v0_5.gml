@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<imaer:FeatureCollectionCalculator xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:imaer="http://imaer.aerius.nl/5.1" gml:id="NL.IMAER.Collection" xsi:schemaLocation="http://imaer.aerius.nl/5.1 http://imaer.aerius.nl/5.1/IMAER.xsd">
+<imaer:FeatureCollectionCalculator xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:imaer="http://imaer.aerius.nl/5.1" gml:id="NL.IMAER.Collection" xsi:schemaLocation="http://imaer.aerius.nl/6.0 http://imaer.aerius.nl/6.0/IMAER.xsd">
     <imaer:metadata>
         <imaer:AeriusCalculatorMetadata>
             <imaer:project>
@@ -25,7 +25,7 @@
         </imaer:AeriusCalculatorMetadata>
     </imaer:metadata>
     <imaer:featureMember>
-        <imaer:FarmLodgingEmissionSource sectorId="4110" gml:id="ES.1">
+        <imaer:EmissionSource sectorId="4110" gml:id="ES.1">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -72,53 +72,6 @@
                     <imaer:value>0.0</imaer:value>
                 </imaer:Emission>
             </imaer:emission>
-            <imaer:farmLodging>
-                <imaer:StandardFarmLodging farmLodgingType="A4.2">
-                    <imaer:numberOfAnimals>3</imaer:numberOfAnimals>
-                    <imaer:farmLodgingSystemDefinitionType>BWL2011.12</imaer:farmLodgingSystemDefinitionType>
-                    <imaer:lodgingSystem>
-                        <imaer:AdditionalLodgingSystem>
-                            <imaer:lodgingSystemType>E6.1.a</imaer:lodgingSystemType>
-                            <imaer:farmLodgingSystemDefinitionType>overig</imaer:farmLodgingSystemDefinitionType>
-                            <imaer:numberOfAnimals>2</imaer:numberOfAnimals>
-                        </imaer:AdditionalLodgingSystem>
-                    </imaer:lodgingSystem>
-                    <imaer:lodgingSystem>
-                        <imaer:AdditionalLodgingSystem>
-                            <imaer:lodgingSystemType>E6.5.b</imaer:lodgingSystemType>
-                            <imaer:numberOfAnimals>1</imaer:numberOfAnimals>
-                        </imaer:AdditionalLodgingSystem>
-                    </imaer:lodgingSystem>
-                    <imaer:lodgingSystem>
-                        <imaer:ReductiveLodgingSystem>
-                            <imaer:lodgingSystemType>A4.3</imaer:lodgingSystemType>
-                            <imaer:farmLodgingSystemDefinitionType>overig</imaer:farmLodgingSystemDefinitionType>
-                        </imaer:ReductiveLodgingSystem>
-                    </imaer:lodgingSystem>
-                    <imaer:lodgingSystem>
-                        <imaer:ReductiveLodgingSystem>
-                            <imaer:lodgingSystemType>G2.1.2</imaer:lodgingSystemType>
-                        </imaer:ReductiveLodgingSystem>
-                    </imaer:lodgingSystem>
-                </imaer:StandardFarmLodging>
-            </imaer:farmLodging>
-            <imaer:farmLodging>
-                <imaer:CustomFarmLodging>
-                    <imaer:numberOfAnimals>908</imaer:numberOfAnimals>
-                    <imaer:description>Schaap</imaer:description>
-                    <imaer:emissionFactor>
-                        <imaer:Emission substance="NH3">
-                            <imaer:value>2.0</imaer:value>
-                        </imaer:Emission>
-                    </imaer:emissionFactor>
-                    <imaer:emissionFactorType>PER_ANIMAL_PER_YEAR</imaer:emissionFactorType>
-                </imaer:CustomFarmLodging>
-            </imaer:farmLodging>
-            <imaer:farmLodging>
-                <imaer:StandardFarmLodging farmLodgingType="A3.100">
-                    <imaer:numberOfAnimals>100</imaer:numberOfAnimals>
-                </imaer:StandardFarmLodging>
-            </imaer:farmLodging>
-        </imaer:FarmLodgingEmissionSource>
+        </imaer:EmissionSource>
     </imaer:featureMember>
 </imaer:FeatureCollectionCalculator>

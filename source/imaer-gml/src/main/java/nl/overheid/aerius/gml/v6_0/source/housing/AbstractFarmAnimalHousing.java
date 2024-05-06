@@ -14,24 +14,36 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.gml.v6_0.source.lodging;
+package nl.overheid.aerius.gml.v6_0.source.housing;
 
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
-import nl.overheid.aerius.gml.base.source.lodging.IsGmlFarmLodging;
+import nl.overheid.aerius.gml.base.source.housing.IsGmlFarmAnimalHousing;
 import nl.overheid.aerius.gml.v6_0.base.CalculatorSchema;
 
 /**
  *
  */
-@XmlSeeAlso({FarmLodging.class, CustomFarmLodging.class})
-@XmlType(name = "FarmLodgingType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"numberOfAnimals", "numberOfDays"})
-public class AbstractFarmLodging implements IsGmlFarmLodging {
+@XmlSeeAlso({StandardFarmAnimalHousing.class, CustomFarmAnimalHousing.class})
+@XmlType(name = "FarmAnimalHousingType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"numberOfAnimals", "numberOfDays"})
+public class AbstractFarmAnimalHousing implements IsGmlFarmAnimalHousing {
 
+  private String animalCode;
   private int numberOfAnimals;
   private Integer numberOfDays;
+
+  @Override
+  @XmlAttribute(name = "animalType")
+  public String getAnimalCode() {
+    return animalCode;
+  }
+
+  public void setAnimalCode(final String animalCode) {
+    this.animalCode = animalCode;
+  }
 
   @Override
   @XmlElement(name = "numberOfAnimals", namespace = CalculatorSchema.NAMESPACE)
