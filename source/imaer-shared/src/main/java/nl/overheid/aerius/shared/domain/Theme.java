@@ -25,6 +25,10 @@ import java.util.stream.Stream;
  */
 public enum Theme {
   /**
+   * Centraal Instrument Monitoring Luchtkwaliteit (CIMLK).
+   */
+  CIMLK,
+  /**
    * UK Nature Conservation Act calculation (NCA).
    */
   NCA,
@@ -34,7 +38,9 @@ public enum Theme {
   OWN2000,
   /**
    * Dutch Regeling Beoordeling Luchtkwaliteit (RBL).
+   * @deprecated Replaced by CIMLK
    */
+  @Deprecated
   RBL,
   /**
    * Dutch Wet NatuurBescherming (WNB)

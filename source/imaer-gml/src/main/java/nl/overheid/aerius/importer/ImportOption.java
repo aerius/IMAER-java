@@ -80,9 +80,15 @@ public enum ImportOption {
    */
   VALIDATE_METADATA,
   /**
-   * If set, validates the cohesion of input files related to RBL required data restrictions.
+   * If set, validates the cohesion of input files related to CIMLK required data restrictions.
+   * @deprecated Replaced with VALIDATE_CIMLK_COHESION
    */
+  @Deprecated
   VALIDATE_RBL_COHESION,
+  /**
+   * If set, validates the cohesion of input files related to CIMLK required data restrictions.
+   */
+  VALIDATE_CIMLK_COHESION,
   /**
    * If set, source will be validated. Any missing field will result in an AeriusException added to the errors list.
    */

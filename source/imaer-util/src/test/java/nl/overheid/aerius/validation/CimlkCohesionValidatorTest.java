@@ -47,9 +47,9 @@ import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 
 /**
- * Test class for {@link RblCohesionValidator}.
+ * Test class for {@link CimlkCohesionValidator}.
  */
-class RblCohesionValidatorTest {
+class CimlkCohesionValidatorTest {
 
   private static final String DEFAULT_ROAD_ID = "342";
   private static final String DEFAULT_POINT_ID = "6584";
@@ -111,7 +111,7 @@ class RblCohesionValidatorTest {
 
   @Test
   void testNonDuplicatePointIds() {
-    final Scenario scenario = new Scenario(Theme.RBL);
+    final Scenario scenario = new Scenario(Theme.CIMLK);
     final CalculationPointFeature point1 = examplePoint(DEFAULT_POINT_ID);
     final CalculationPointFeature point2 = examplePoint(DEFAULT_POINT_ID + 1);
     scenario.getCustomPointsList().addAll(Arrays.asList(point1, point2));
@@ -124,7 +124,7 @@ class RblCohesionValidatorTest {
 
   @Test
   void testDuplicatePointIdsInSameImport() {
-    final Scenario scenario = new Scenario(Theme.RBL);
+    final Scenario scenario = new Scenario(Theme.CIMLK);
     final CalculationPointFeature point1 = examplePoint(DEFAULT_POINT_ID);
     final CalculationPointFeature point2 = examplePoint(DEFAULT_POINT_ID);
     scenario.getCustomPointsList().addAll(Arrays.asList(point1, point2));
@@ -458,7 +458,7 @@ class RblCohesionValidatorTest {
   }
 
   private void check(final Scenario scenario) {
-    final RblCohesionValidator checker = new RblCohesionValidator();
+    final CimlkCohesionValidator checker = new CimlkCohesionValidator();
     checker.checkCohesion(scenario, errors, warnings);
   }
 
