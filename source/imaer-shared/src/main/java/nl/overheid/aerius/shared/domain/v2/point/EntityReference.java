@@ -16,6 +16,7 @@
  */
 package nl.overheid.aerius.shared.domain.v2.point;
 
+import java.io.Serializable;
 import java.util.Map;
 
 import nl.overheid.aerius.shared.domain.result.EmissionResultKey;
@@ -23,7 +24,10 @@ import nl.overheid.aerius.shared.domain.result.EmissionResultKey;
 /**
  * Entity references of a NCA custom calculation point.
  */
-public class EntityReference {
+public class EntityReference implements Serializable {
+
+  private static final long serialVersionUID = 1L;
+
   private String description;
   private String code;
   private EntityType entityType;
