@@ -1588,6 +1588,35 @@ There are different types of emission sources present in the model. This abstrac
       <element ref="IMAER:EmissionValueType"/>
     </sequence>
   </complexType>
+  <element name="EntityReference" substitutionGroup="gml:AbstractObject" type="IMAER:EntityReferenceType">
+    <annotation>
+      <documentation>Generic class that can be used to reference a entity. Type and code make up the reference, while the description is an indication for the user what is referenced.</documentation>
+    </annotation>
+  </element>
+  <complexType name="EntityReferenceType">
+    <sequence>
+      <element name="entityType" type="string">
+        <annotation>
+          <documentation>The type of the entity being referenced.</documentation>
+        </annotation>
+      </element>
+      <element name="code" type="string">
+        <annotation>
+          <documentation>The code that uniquely references the entity.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="description" type="string">
+        <annotation>
+          <documentation>Optional description that is a human readable description of the entity being referenced.</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="EntityReferencePropertyType">
+    <sequence>
+      <element ref="IMAER:EntityReference"/>
+    </sequence>
+  </complexType>
   <element abstract="true" name="FarmAnimalHousing" substitutionGroup="IMAER:EmissionValueType" type="IMAER:FarmAnimalHousingType">
     <annotation>
       <documentation>Abstract base class for the description of farm animal housing.
@@ -2314,6 +2343,11 @@ This class describes a self-defined calculation point in the context of NCA (Nat
           <element minOccurs="0" name="roadLocalFractionNO2" type="double">
             <annotation>
               <documentation>An optional value for the local fraction of NO2 that must be used when determining the concentration of NO2 based on NOx as a result of road traffic. Only used with specific calculation settings.</documentation>
+            </annotation>
+          </element>
+          <element maxOccurs="unbounded" minOccurs="0" name="entityReference" type="IMAER:EntityReferencePropertyType">
+            <annotation>
+              <documentation>Entities that are linked to this custom calculation point. For instance, habitat types can be linked to this point for assessment reasons.</documentation>
             </annotation>
           </element>
         </sequence>
