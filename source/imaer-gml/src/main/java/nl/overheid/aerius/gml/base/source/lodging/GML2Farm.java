@@ -24,6 +24,7 @@ import nl.overheid.aerius.gml.base.GMLConversionData;
 import nl.overheid.aerius.gml.base.IsGmlProperty;
 import nl.overheid.aerius.gml.base.conversion.FarmLodgingConversion;
 import nl.overheid.aerius.gml.base.source.IsGmlEmission;
+import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.FarmAnimalHousingEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.FarmLodgingEmissionSource;
@@ -124,6 +125,8 @@ public class GML2Farm<T extends IsGmlFarmLodgingEmissionSource> extends Abstract
         ? " "
         : standardLodging.getCode().substring(0, 1));
     customEmissions.setDescription("TBC");
+    customEmissions.setFarmEmissionFactorType(FarmEmissionFactorType.PER_ANIMAL_PER_YEAR);
+    customEmissions.getEmissionFactors().put(Substance.NH3, 0.0);
     // Warn the user that this source has been converted to custom animal housing.
     // TODO: proper reason
     getConversionData().getWarnings().add(new AeriusException(ImaerExceptionReason.GML_UNKNOWN_FARM_EMISSION_FACTOR_TYPE, sourceId));

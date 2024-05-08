@@ -26,6 +26,7 @@ import java.util.stream.Collectors;
 
 import nl.overheid.aerius.gml.base.GMLLegacyCodeConverter.Conversion;
 import nl.overheid.aerius.gml.base.GMLLegacyCodeConverter.GMLLegacyCodeType;
+import nl.overheid.aerius.gml.base.conversion.FarmLodgingConversion;
 import nl.overheid.aerius.gml.base.conversion.MobileSourceOffRoadConversion;
 import nl.overheid.aerius.gml.base.conversion.PlanConversion;
 import nl.overheid.aerius.shared.domain.Substance;
@@ -204,6 +205,10 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
       new GenericConstructHelper("PIA", new EmissionHelper(0.675, 0.0)),
       new GenericConstructHelper("PWA", new EmissionHelper(341647, 0.0)),
       new GenericConstructHelper("PFA", new EmissionHelper(109614, 0.0)));
+
+  private static final List<FarmLodgingOldCodesHelper> FARM_LODGING_OLD_CODES = Arrays.asList(
+      new FarmLodgingOldCodesHelper("A1.4", "HA1", "HA1.1", "LW1.1"),
+      new FarmLodgingOldCodesHelper("B1.100", "HB1", "HB1.100", null));
 
   private static final List<RoadConstructHelper> ROAD_CATEGORIES = Arrays.asList(
       new RoadConstructHelper("",
@@ -470,6 +475,11 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
     }
   }
 
+  private static record FarmLodgingOldCodesHelper(String oldCode, String newAnimalTypeCode, String newAnimalHousingCode,
+      String newAdditionalSystemCode) {
+
+  }
+
   public static Map<GMLLegacyCodeType, Map<String, Conversion>> legacyCodes() {
     final Map<GMLLegacyCodeType, Map<String, Conversion>> legacyCodes = new HashMap<>();
     final Map<String, Conversion> onroadConversions = new HashMap<>();
@@ -514,6 +524,14 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
     characteristics.setParticleSizeDistribution(index);
     characteristics.setDiurnalVariation(DiurnalVariation.INDUSTRIAL_ACTIVITY);
     return characteristics;
+  }
+
+  public static Map<String, FarmLodgingConversion> legacyFarmLodgingConversions() {
+    final Map<String, FarmLodgingConversion> conversions = new HashMap<>();
+    FARM_LODGING_OLD_CODES.forEach(
+        helper -> conversions.put(helper.oldCode,
+            new FarmLodgingConversion(helper.newAnimalTypeCode, helper.newAnimalHousingCode, helper.newAdditionalSystemCode)));
+    return conversions;
   }
 
   @Override
