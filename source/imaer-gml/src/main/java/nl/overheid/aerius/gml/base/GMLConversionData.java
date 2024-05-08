@@ -25,6 +25,7 @@ import java.util.Set;
 
 import nl.overheid.aerius.gml.base.GMLLegacyCodeConverter.Conversion;
 import nl.overheid.aerius.gml.base.GMLLegacyCodeConverter.GMLLegacyCodeType;
+import nl.overheid.aerius.gml.base.conversion.FarmLodgingConversion;
 import nl.overheid.aerius.gml.base.conversion.MobileSourceOffRoadConversion;
 import nl.overheid.aerius.gml.base.conversion.PlanConversion;
 import nl.overheid.aerius.gml.base.source.ship.v31.InlandShippingUtil;
@@ -184,6 +185,14 @@ public class GMLConversionData {
   public OPSSourceCharacteristics determinePlanActivityCharacteristics(final String oldCode) {
     final PlanConversion conversion = legacyCodeConverter.getPlanConversion(oldCode);
     return conversion == null ? null : conversion.getCharacteristics();
+  }
+
+  public boolean hasFarmLodgingConversions() {
+    return legacyCodeConverter.hasFarmLodgingConversions();
+  }
+
+  public FarmLodgingConversion determineFarmLodgingConversion(final String oldCode) {
+    return legacyCodeConverter.getFarmLodgingConversion(oldCode);
   }
 
   private Reason getReason(final GMLLegacyCodeType codeType) {

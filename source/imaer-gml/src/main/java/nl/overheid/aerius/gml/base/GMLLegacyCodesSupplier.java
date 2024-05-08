@@ -20,6 +20,7 @@ import java.util.Map;
 
 import nl.overheid.aerius.gml.base.GMLLegacyCodeConverter.Conversion;
 import nl.overheid.aerius.gml.base.GMLLegacyCodeConverter.GMLLegacyCodeType;
+import nl.overheid.aerius.gml.base.conversion.FarmLodgingConversion;
 import nl.overheid.aerius.gml.base.conversion.MobileSourceOffRoadConversion;
 import nl.overheid.aerius.gml.base.conversion.PlanConversion;
 import nl.overheid.aerius.shared.exception.AeriusException;
@@ -55,6 +56,16 @@ public interface GMLLegacyCodesSupplier {
    * @throws AeriusException
    */
   default Map<String, PlanConversion> getLegacyPlanConversions() throws AeriusException {
+    return Map.of();
+  }
+
+  /**
+   * Returns a map with old codes and the values to use for conversion for farm lodgings.
+   *
+   * @return mapping of the codes
+   * @throws AeriusException
+   */
+  default Map<String, FarmLodgingConversion> getLegacyFarmLodgingConversions() throws AeriusException {
     return Map.of();
   }
 
