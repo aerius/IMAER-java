@@ -520,6 +520,30 @@ public enum ImaerExceptionReason implements Reason {
    * @param 0 the id of the object containing the error.
    */
   GML_INCORRECT_CUSTOM_FACTORS(5262),
+  /**
+   * GML contained a farm lodging that was converted to standard animal housing.
+   *
+   * @param 0 the id of the object that was converted.
+   * @param 1 the code of the lodging that was converted.
+   */
+  GML_CONVERTED_LODGING(5263),
+  /**
+   * GML contained a farm lodging that was converted to standard animal housing.
+   * In this case, the lodging contained additional or reductive systems or fodder measures, which were not converted.
+   *
+   * @param 0 the id of the object that was converted.
+   * @param 1 the code of the lodging that was converted.
+   */
+  GML_CONVERTED_LODGING_WITH_SYSTEMS(5264),
+  /**
+   * GML contained a farm lodging that was converted to custom animal housing.
+   * In this case, the lodging was of a type that could not be converted to animal housing.
+   * A custom animal housing has been created instead, with 0 emission factors.
+   *
+   * @param 0 the id of the object that was converted.
+   * @param 1 the code of the lodging that could not be converted.
+   */
+  GML_CONVERTED_LODGING_TO_CUSTOM(5265),
 
 
   // Cohesion (between files) errors.
