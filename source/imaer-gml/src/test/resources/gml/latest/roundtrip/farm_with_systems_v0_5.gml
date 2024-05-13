@@ -25,7 +25,7 @@
         </imaer:AeriusCalculatorMetadata>
     </imaer:metadata>
     <imaer:featureMember>
-        <imaer:EmissionSource sectorId="4110" gml:id="ES.1">
+        <imaer:FarmAnimalHousingSource sectorId="4110" gml:id="ES.1">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -54,7 +54,7 @@
             </imaer:geometry>
             <imaer:emission>
                 <imaer:Emission substance="NH3">
-                    <imaer:value>2256.30015</imaer:value>
+                    <imaer:value>2231.7</imaer:value>
                 </imaer:Emission>
             </imaer:emission>
             <imaer:emission>
@@ -72,6 +72,28 @@
                     <imaer:value>0.0</imaer:value>
                 </imaer:Emission>
             </imaer:emission>
-        </imaer:EmissionSource>
+            <imaer:animalHousing>
+                <imaer:StandardFarmAnimalHousing animalHousingType="HA3.2" animalType="HA3">
+                    <imaer:numberOfAnimals>3</imaer:numberOfAnimals>
+                </imaer:StandardFarmAnimalHousing>
+            </imaer:animalHousing>
+            <imaer:animalHousing>
+                <imaer:CustomFarmAnimalHousing animalType="">
+                    <imaer:numberOfAnimals>908</imaer:numberOfAnimals>
+                    <imaer:description>Schaap</imaer:description>
+                    <imaer:emissionFactor>
+                        <imaer:Emission substance="NH3">
+                            <imaer:value>2.0</imaer:value>
+                        </imaer:Emission>
+                    </imaer:emissionFactor>
+                    <imaer:emissionFactorType>PER_ANIMAL_PER_YEAR</imaer:emissionFactorType>
+                </imaer:CustomFarmAnimalHousing>
+            </imaer:animalHousing>
+            <imaer:animalHousing>
+                <imaer:StandardFarmAnimalHousing animalHousingType="HA4.100" animalType="HA4">
+                    <imaer:numberOfAnimals>100</imaer:numberOfAnimals>
+                </imaer:StandardFarmAnimalHousing>
+            </imaer:animalHousing>
+        </imaer:FarmAnimalHousingSource>
     </imaer:featureMember>
 </imaer:FeatureCollectionCalculator>

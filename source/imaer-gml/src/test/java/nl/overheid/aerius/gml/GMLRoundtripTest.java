@@ -80,12 +80,18 @@ class GMLRoundtripTest {
   private static final Logger LOG = LoggerFactory.getLogger(GMLRoundtripTest.class);
 
   private static final Object[][] FILES = {
-      {"farm", CharacteristicsType.OPS},
-      {"farm_with_systems", CharacteristicsType.OPS},
-      {"farm_with_systems_and_fodder_measures", CharacteristicsType.OPS},
-      {"farm_with_established", CharacteristicsType.OPS},
-      {"farm_with_custom_animal", CharacteristicsType.OPS},
-      {"farm_with_custom_emission_factor_type", CharacteristicsType.OPS},
+      {"farm", CharacteristicsType.OPS,
+          EnumSet.of(ImaerExceptionReason.GML_CONVERTED_LODGING), true},
+      {"farm_with_systems", CharacteristicsType.OPS,
+          EnumSet.of(ImaerExceptionReason.GML_CONVERTED_LODGING, ImaerExceptionReason.GML_CONVERTED_LODGING_WITH_SYSTEMS), true},
+      {"farm_with_systems_and_fodder_measures", CharacteristicsType.OPS,
+          EnumSet.of(ImaerExceptionReason.GML_CONVERTED_LODGING, ImaerExceptionReason.GML_CONVERTED_LODGING_WITH_SYSTEMS), true},
+      {"farm_with_established", CharacteristicsType.OPS,
+          EnumSet.of(ImaerExceptionReason.GML_CONVERTED_LODGING), true},
+      {"farm_with_custom_animal", CharacteristicsType.OPS,
+          EnumSet.noneOf(ImaerExceptionReason.class), true},
+      {"farm_with_custom_emission_factor_type", CharacteristicsType.OPS,
+          EnumSet.noneOf(ImaerExceptionReason.class), true},
       {"industry", CharacteristicsType.OPS},
       {"inlandshipping", CharacteristicsType.OPS},
       {"inlandshipping_with_waterway", CharacteristicsType.OPS},
@@ -137,9 +143,12 @@ class GMLRoundtripTest {
       {"scenario_composting_reference", CharacteristicsType.OPS},
       {"scenario_greenhouse_reference", CharacteristicsType.OPS},
       {"scenario_greenhouse_proposed", CharacteristicsType.OPS},
-      {"scenario_livestock_farming_proposed", CharacteristicsType.OPS},
-      {"scenario_livestock_farming_reference", CharacteristicsType.OPS},
-      {"scenario_livestock_farming_netting", CharacteristicsType.OPS},
+      {"scenario_livestock_farming_proposed", CharacteristicsType.OPS,
+          EnumSet.of(ImaerExceptionReason.GML_CONVERTED_LODGING), true},
+      {"scenario_livestock_farming_reference", CharacteristicsType.OPS,
+          EnumSet.of(ImaerExceptionReason.GML_CONVERTED_LODGING), true},
+      {"scenario_livestock_farming_netting", CharacteristicsType.OPS,
+          EnumSet.noneOf(ImaerExceptionReason.class), true},
       {"scenario_powerplant", CharacteristicsType.OPS, EnumSet.of(ImaerExceptionReason.GML_SOURCE_NO_EMISSION)},
       {"scenario_smokehouse_proposed", CharacteristicsType.OPS},
       {"scenario_smokehouse_reference", CharacteristicsType.OPS},
@@ -177,7 +186,8 @@ class GMLRoundtripTest {
 
   private static void addArguments(final List<Object[]> files, final AeriusGMLVersion version, final AeriusGMLVersion targetVersion) {
     for (final Object[] object : FILES) {
-      if (!skipThisTest(version, (String) object[0])) {
+      final boolean skipConvertingToOld = object.length >= 4 ? (boolean) object[3] : false;
+      if (!skipThisTest(version, (String) object[0], targetVersion, skipConvertingToOld)) {
         final Object[] f = new Object[5];
         f[0] = version;
         f[1] = object[0];
@@ -191,8 +201,9 @@ class GMLRoundtripTest {
     }
   }
 
-  private static boolean skipThisTest(final AeriusGMLVersion version, final String file) {
-    boolean skipThisTest = false;
+  private static boolean skipThisTest(final AeriusGMLVersion version, final String file, final AeriusGMLVersion targetVersion,
+      final boolean skipOld) {
+    boolean skipThisTest = false || (skipOld && targetVersion != CURRENT_GML_VERSION);
     final String relativePath = getRelativePath(version.name().toLowerCase(), TEST_FOLDER);
     // Assuming that if there is no file present for the version, it's not possible to do the roundtrip due to newly added functionality.
     if (AssertGML.getFileResource(relativePath, file) == null) {
@@ -202,14 +213,21 @@ class GMLRoundtripTest {
   }
 
   private static Set<Reason> getWarningReasons(final Object[] object, final AeriusGMLVersion version) {
-    final Set<Reason> warnings = object.length == 3 ? new HashSet<>((Set<Reason>) object[2]) : new HashSet<>();
+    final Set<Reason> warnings = object.length >= 3 ? new HashSet<>((Set<Reason>) object[2]) : new HashSet<>();
 
     if (version != CURRENT_GML_VERSION) {
       warnings.add(ImaerExceptionReason.GML_VERSION_NOT_LATEST);
     }
-    // GML_INVALID_OFF_ROAD_CATEGORY_MATCH is a warning that should only pop up for versions < 4.0
+    // GML_OFF_ROAD_CATEGORY_CONVERTED is a warning that should only pop up for versions < 4.0
     if (warnings.contains(ImaerExceptionReason.GML_OFF_ROAD_CATEGORY_CONVERTED) && version.ordinal() <= AeriusGMLVersion.V4_0.ordinal()) {
       warnings.remove(ImaerExceptionReason.GML_OFF_ROAD_CATEGORY_CONVERTED);
+    }
+    // GML_CONVERTED_LODGING is a warning that should only pop up for versions < 6.0
+    if (warnings.contains(ImaerExceptionReason.GML_CONVERTED_LODGING) && version.ordinal() <= AeriusGMLVersion.V6_0.ordinal()) {
+      warnings.remove(ImaerExceptionReason.GML_CONVERTED_LODGING);
+    }
+    if (warnings.contains(ImaerExceptionReason.GML_CONVERTED_LODGING_WITH_SYSTEMS) && version.ordinal() <= AeriusGMLVersion.V6_0.ordinal()) {
+      warnings.remove(ImaerExceptionReason.GML_CONVERTED_LODGING_WITH_SYSTEMS);
     }
     return warnings;
   }

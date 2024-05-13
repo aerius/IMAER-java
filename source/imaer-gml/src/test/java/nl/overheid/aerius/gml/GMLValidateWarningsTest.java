@@ -19,7 +19,7 @@ package nl.overheid.aerius.gml;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -47,6 +48,9 @@ import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 class GMLValidateWarningsTest {
 
   private static final String LATEST_WARNINGS_VALIDATE = "latest/validate/warnings/";
+  private static final Set<ImaerExceptionReason> ACCEPTED_WARNINGS = Set.of(
+      ImaerExceptionReason.GML_VERSION_NOT_LATEST,
+      ImaerExceptionReason.GML_CONVERTED_LODGING);
 
   private enum TestFile {
     WARNING_OLD_GML_VERSION;
@@ -90,8 +94,7 @@ class GMLValidateWarningsTest {
     } else {
       // warnings test on allowed
       for (final AeriusException warning : oldResult.getWarnings()) {
-        assertSame(ImaerExceptionReason.GML_VERSION_NOT_LATEST,
-            warning.getReason(), "Not expected warning, got " + warning.getReason() + " " + warning.getMessage());
+        assertTrue(ACCEPTED_WARNINGS.contains(warning.getReason()), "Not expected warning, got " + warning.getReason() + " " + warning.getMessage());
       }
     }
   }

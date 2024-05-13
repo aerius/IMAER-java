@@ -24,7 +24,7 @@
         </imaer:AeriusCalculatorMetadata>
     </imaer:metadata>
     <imaer:featureMember>
-        <imaer:EmissionSource sectorId="4110" gml:id="ES.6">
+        <imaer:FarmAnimalHousingSource sectorId="4110" gml:id="ES.6">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -53,7 +53,7 @@
             </imaer:geometry>
             <imaer:emission>
                 <imaer:Emission substance="NH3">
-                    <imaer:value>2149.0</imaer:value>
+                    <imaer:value>1999.0</imaer:value>
                 </imaer:Emission>
             </imaer:emission>
             <imaer:emission>
@@ -71,6 +71,46 @@
                     <imaer:value>0.0</imaer:value>
                 </imaer:Emission>
             </imaer:emission>
-        </imaer:EmissionSource>
+            <imaer:animalHousing>
+                <imaer:StandardFarmAnimalHousing animalHousingType="HA1.1" animalType="HA1">
+                    <imaer:numberOfAnimals>100</imaer:numberOfAnimals>
+                    <imaer:additionalSystem>
+                        <imaer:StandardAdditionalHousingSystem additionalSystemType="LW1.1"/>
+                    </imaer:additionalSystem>
+                </imaer:StandardFarmAnimalHousing>
+            </imaer:animalHousing>
+            <imaer:animalHousing>
+                <imaer:StandardFarmAnimalHousing animalHousingType="HB1.100" animalType="HB1">
+                    <imaer:numberOfAnimals>300</imaer:numberOfAnimals>
+                </imaer:StandardFarmAnimalHousing>
+            </imaer:animalHousing>
+            <imaer:animalHousing>
+                <imaer:StandardFarmAnimalHousing animalHousingType="HC1.100" animalType="HC1">
+                    <imaer:numberOfAnimals>10</imaer:numberOfAnimals>
+                </imaer:StandardFarmAnimalHousing>
+            </imaer:animalHousing>
+            <imaer:animalHousing>
+                <imaer:StandardFarmAnimalHousing animalHousingType="HD3.8.2" animalType="HD3">
+                    <imaer:numberOfAnimals>200</imaer:numberOfAnimals>
+                </imaer:StandardFarmAnimalHousing>
+            </imaer:animalHousing>
+            <imaer:animalHousing>
+                <imaer:CustomFarmAnimalHousing animalType="">
+                    <imaer:numberOfAnimals>1000</imaer:numberOfAnimals>
+                    <imaer:description>Koeien, extra luchtwasser</imaer:description>
+                    <imaer:emissionFactor>
+                        <imaer:Emission substance="NH3">
+                            <imaer:value>0.3</imaer:value>
+                        </imaer:Emission>
+                    </imaer:emissionFactor>
+                    <imaer:emissionFactorType>PER_ANIMAL_PER_YEAR</imaer:emissionFactorType>
+                </imaer:CustomFarmAnimalHousing>
+            </imaer:animalHousing>
+            <imaer:animalHousing>
+                <imaer:StandardFarmAnimalHousing animalHousingType="HF1.4" animalType="HF1">
+                    <imaer:numberOfAnimals>2000</imaer:numberOfAnimals>
+                </imaer:StandardFarmAnimalHousing>
+            </imaer:animalHousing>
+        </imaer:FarmAnimalHousingSource>
     </imaer:featureMember>
 </imaer:FeatureCollectionCalculator>

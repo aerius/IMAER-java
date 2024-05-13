@@ -207,8 +207,18 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
       new GenericConstructHelper("PFA", new EmissionHelper(109614, 0.0)));
 
   private static final List<FarmLodgingOldCodesHelper> FARM_LODGING_OLD_CODES = Arrays.asList(
+      new FarmLodgingOldCodesHelper("A1.1", "HA1", "HA1.1", null),
       new FarmLodgingOldCodesHelper("A1.4", "HA1", "HA1.1", "LW1.1"),
-      new FarmLodgingOldCodesHelper("B1.100", "HB1", "HB1.100", null));
+      new FarmLodgingOldCodesHelper("A1.28", "HA1", "HA1.28", null),
+      new FarmLodgingOldCodesHelper("A1.100", "HA1", "HA1.100", null),
+      new FarmLodgingOldCodesHelper("A2.100", "HA2", "HA2.100", null),
+      new FarmLodgingOldCodesHelper("A3.100", "HA4", "HA4.100", null),
+      new FarmLodgingOldCodesHelper("A4.2", "HA3", "HA3.2", null),
+      new FarmLodgingOldCodesHelper("B1.100", "HB1", "HB1.100", null),
+      new FarmLodgingOldCodesHelper("C1.100", "HC1", "HC1.100", null),
+      new FarmLodgingOldCodesHelper("D3.1", "HD3", "HD3.1", null),
+      new FarmLodgingOldCodesHelper("D3.2.7.2.1", "HD3", "HD3.8.2", null),
+      new FarmLodgingOldCodesHelper("F4.4", "HF1", "HF1.4", null));
 
   private static final List<RoadConstructHelper> ROAD_CATEGORIES = Arrays.asList(
       new RoadConstructHelper("",
