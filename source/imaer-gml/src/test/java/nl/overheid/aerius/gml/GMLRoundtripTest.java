@@ -203,7 +203,7 @@ class GMLRoundtripTest {
 
   private static boolean skipThisTest(final AeriusGMLVersion version, final String file, final AeriusGMLVersion targetVersion,
       final boolean skipOld) {
-    boolean skipThisTest = false || (skipOld && targetVersion != CURRENT_GML_VERSION);
+    boolean skipThisTest = skipOld && targetVersion != CURRENT_GML_VERSION;
     final String relativePath = getRelativePath(version.name().toLowerCase(), TEST_FOLDER);
     // Assuming that if there is no file present for the version, it's not possible to do the roundtrip due to newly added functionality.
     if (AssertGML.getFileResource(relativePath, file) == null) {

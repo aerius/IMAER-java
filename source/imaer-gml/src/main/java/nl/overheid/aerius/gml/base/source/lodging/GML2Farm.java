@@ -57,7 +57,7 @@ public class GML2Farm<T extends IsGmlFarmLodgingEmissionSource> extends Abstract
 
   @Override
   public EmissionSource convert(final T source) throws AeriusException {
-    EmissionSource converted;
+    final EmissionSource converted;
     if (getConversionData().hasFarmLodgingConversions()) {
       converted = convertToAnimalHousing(source);
     } else {
@@ -67,7 +67,7 @@ public class GML2Farm<T extends IsGmlFarmLodgingEmissionSource> extends Abstract
     return converted;
   }
 
-  public FarmAnimalHousingEmissionSource convertToAnimalHousing(final T source) throws AeriusException {
+  private FarmAnimalHousingEmissionSource convertToAnimalHousing(final T source) throws AeriusException {
     final FarmAnimalHousingEmissionSource animalHousingSource = new FarmAnimalHousingEmissionSource();
     for (final IsGmlProperty<IsGmlFarmLodging> lodging : source.getFarmLodgings()) {
       animalHousingSource.getSubSources().add(getAnimalHousing(lodging.getProperty(), source.getId()));
