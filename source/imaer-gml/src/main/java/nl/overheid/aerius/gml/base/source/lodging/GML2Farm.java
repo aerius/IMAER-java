@@ -148,7 +148,7 @@ public class GML2Farm<T extends IsGmlFarmLodgingEmissionSource> extends Abstract
       // We can't convert additional systems: no data available to do so.
       // Instead, add a specific warning that the user has to check additional systems for this source.
       addWarningForSource(ImaerExceptionReason.GML_CONVERTED_LODGING_WITH_SYSTEMS, sourceId, standardLodging);
-    } else {
+    } else if (!conversion.getAnimalHousingCode().equals(standardLodging.getCode())) {
       // Warn the user that this source has been converted.
       addWarningForSource(ImaerExceptionReason.GML_CONVERTED_LODGING, sourceId, standardLodging);
     }
