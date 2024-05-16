@@ -126,7 +126,7 @@ public class GML2Farm<T extends IsGmlFarmLodgingEmissionSource> extends Abstract
     customEmissions.setAnimalTypeCode(standardLodging.getCode() == null || standardLodging.getCode().length() <= 1
         ? UNKNOWN_ANIMAL_TYPE_CODE
         : standardLodging.getCode().substring(0, 1));
-    customEmissions.setDescription("TBC");
+    customEmissions.setDescription("");
     customEmissions.setFarmEmissionFactorType(FarmEmissionFactorType.PER_ANIMAL_PER_YEAR);
     customEmissions.getEmissionFactors().put(Substance.NH3, 0.0);
     // Warn the user that this source has been converted to custom animal housing.
