@@ -18,6 +18,7 @@ package nl.overheid.aerius.gml.base;
 
 import java.util.Map;
 
+import nl.overheid.aerius.gml.base.conversion.FarmLodgingConversion;
 import nl.overheid.aerius.gml.base.conversion.MobileSourceOffRoadConversion;
 import nl.overheid.aerius.gml.base.conversion.PlanConversion;
 
@@ -40,18 +41,25 @@ public class GMLLegacyCodeConverter {
   private final Map<GMLLegacyCodeType, Map<String, Conversion>> codeMaps;
   private final Map<String, MobileSourceOffRoadConversion> mobileSourceOffRoadConversions;
   private final Map<String, PlanConversion> planConversions;
+  private final Map<String, FarmLodgingConversion> farmLodgingConversions;
 
   /**
    * @param codeMaps The &lt;OldCode, NewCode&gt; maps to use for each legacy code type.
    * @param mobileSourceOffRoadConversions The &lt;OldCode, ConversionValues&gt; to use for mobile sources.
    * @param planConversions The &lt;OldCode, ConversionValues&gt; to use for plan activities.
+   * @param farmLodgingConversions The &lt;OldCode, ConversionValues&gt; to use for farm lodgings.
    */
   public GMLLegacyCodeConverter(final Map<GMLLegacyCodeType, Map<String, Conversion>> codeMaps,
       final Map<String, MobileSourceOffRoadConversion> mobileSourceOffRoadConversions,
-      final Map<String, PlanConversion> planConversions) {
-    this.codeMaps = codeMaps == null ? Map.of() : codeMaps;
-    this.mobileSourceOffRoadConversions = mobileSourceOffRoadConversions == null ? Map.of() : mobileSourceOffRoadConversions;
-    this.planConversions = planConversions == null ? Map.of() : planConversions;
+      final Map<String, PlanConversion> planConversions, final Map<String, FarmLodgingConversion> farmLodgingConversions) {
+    this.codeMaps = safe(codeMaps);
+    this.mobileSourceOffRoadConversions = safe(mobileSourceOffRoadConversions);
+    this.planConversions = safe(planConversions);
+    this.farmLodgingConversions = safe(farmLodgingConversions);
+  }
+
+  private static <S, Y> Map<S, Y> safe(final Map<S, Y> map) {
+    return map == null ? Map.of() : map;
   }
 
   /**
@@ -71,6 +79,14 @@ public class GMLLegacyCodeConverter {
 
   protected PlanConversion getPlanConversion(final String oldCode) {
     return planConversions.get(oldCode);
+  }
+
+  protected boolean hasFarmLodgingConversions() {
+    return !farmLodgingConversions.isEmpty();
+  }
+
+  protected FarmLodgingConversion getFarmLodgingConversion(final String oldCode) {
+    return farmLodgingConversions.get(oldCode);
   }
 
   /**

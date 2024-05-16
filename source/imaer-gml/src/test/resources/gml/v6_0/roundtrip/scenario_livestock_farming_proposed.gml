@@ -23,7 +23,7 @@
         </imaer:AeriusCalculatorMetadata>
     </imaer:metadata>
     <imaer:featureMember>
-        <imaer:EmissionSource sectorId="4110" gml:id="ES.1">
+        <imaer:FarmAnimalHousingSource sectorId="4110" gml:id="ES.1">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -53,7 +53,7 @@
             </imaer:geometry>
             <imaer:emission>
                 <imaer:Emission substance="NH3">
-                    <imaer:value>483.7</imaer:value>
+                    <imaer:value>1122.0</imaer:value>
                 </imaer:Emission>
             </imaer:emission>
             <imaer:emission>
@@ -71,10 +71,25 @@
                     <imaer:value>0.0</imaer:value>
                 </imaer:Emission>
             </imaer:emission>
-        </imaer:EmissionSource>
+            <imaer:animalHousing>
+                <imaer:StandardFarmAnimalHousing animalHousingType="HA1.100" animalType="HA1">
+                    <imaer:numberOfAnimals>42</imaer:numberOfAnimals>
+                </imaer:StandardFarmAnimalHousing>
+            </imaer:animalHousing>
+            <imaer:animalHousing>
+                <imaer:StandardFarmAnimalHousing animalHousingType="HA4.100" animalType="HA4">
+                    <imaer:numberOfAnimals>27</imaer:numberOfAnimals>
+                </imaer:StandardFarmAnimalHousing>
+            </imaer:animalHousing>
+            <imaer:animalHousing>
+                <imaer:StandardFarmAnimalHousing animalHousingType="HA1.28" animalType="HA1">
+                    <imaer:numberOfAnimals>47</imaer:numberOfAnimals>
+                </imaer:StandardFarmAnimalHousing>
+            </imaer:animalHousing>
+        </imaer:FarmAnimalHousingSource>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:EmissionSource sectorId="4110" gml:id="ES.2">
+        <imaer:FarmAnimalHousingSource sectorId="4110" gml:id="ES.2">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -103,7 +118,7 @@
             </imaer:geometry>
             <imaer:emission>
                 <imaer:Emission substance="NH3">
-                    <imaer:value>176.0</imaer:value>
+                    <imaer:value>164.0</imaer:value>
                 </imaer:Emission>
             </imaer:emission>
             <imaer:emission>
@@ -121,7 +136,12 @@
                     <imaer:value>0.0</imaer:value>
                 </imaer:Emission>
             </imaer:emission>
-        </imaer:EmissionSource>
+            <imaer:animalHousing>
+                <imaer:StandardFarmAnimalHousing animalHousingType="HA4.100" animalType="HA4">
+                    <imaer:numberOfAnimals>40</imaer:numberOfAnimals>
+                </imaer:StandardFarmAnimalHousing>
+            </imaer:animalHousing>
+        </imaer:FarmAnimalHousingSource>
     </imaer:featureMember>
     <imaer:featureMember>
         <imaer:OffRoadMobileSourceEmissionSource sectorId="3210" gml:id="ES.4">
@@ -315,7 +335,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:EmissionSource sectorId="4110" gml:id="ES.7">
+        <imaer:FarmAnimalHousingSource sectorId="4110" gml:id="ES.7">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -345,7 +365,7 @@
             </imaer:geometry>
             <imaer:emission>
                 <imaer:Emission substance="NH3">
-                    <imaer:value>254.2</imaer:value>
+                    <imaer:value>613.8</imaer:value>
                 </imaer:Emission>
             </imaer:emission>
             <imaer:emission>
@@ -363,7 +383,12 @@
                     <imaer:value>0.0</imaer:value>
                 </imaer:Emission>
             </imaer:emission>
-        </imaer:EmissionSource>
+            <imaer:animalHousing>
+                <imaer:StandardFarmAnimalHousing animalHousingType="HA1.28" animalType="HA1">
+                    <imaer:numberOfAnimals>62</imaer:numberOfAnimals>
+                </imaer:StandardFarmAnimalHousing>
+            </imaer:animalHousing>
+        </imaer:FarmAnimalHousingSource>
     </imaer:featureMember>
     <imaer:featureMember>
         <imaer:Building gml:id="Building.1">

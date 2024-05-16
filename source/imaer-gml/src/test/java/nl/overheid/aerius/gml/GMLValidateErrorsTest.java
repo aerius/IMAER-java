@@ -102,7 +102,8 @@ class GMLValidateErrorsTest {
 
   @Test
   void testGMLUnknownRav() throws IOException {
-    assertResult("fout_5207_unknown_rav", "GML Unknown rav", ImaerExceptionReason.GML_UNKNOWN_RAV_CODE);
+    // With animal housing, unknown lodging codes are just converted to custom animal housing.
+    assertResult("fout_5207_unknown_rav", "GML Unknown rav", ImaerExceptionReason.GML_CONVERTED_LODGING_WITH_SYSTEMS);
   }
 
   @Test
@@ -148,20 +149,21 @@ class GMLValidateErrorsTest {
 
   @Test
   void testGMLUnknownPasMeasure() throws IOException {
-    assertResult("fout_5216_unknown_pas_measure", "GML Unknown PAS measure", ImaerExceptionReason.GML_UNKNOWN_PAS_MEASURE_CODE,
+    // With animal housing, lodgings with systems are just converted with special warning.
+    assertResult("fout_5216_unknown_pas_measure", "GML Unknown PAS measure", ImaerExceptionReason.GML_CONVERTED_LODGING_WITH_SYSTEMS,
         e -> {
           assertEquals("ES.1", e.getArgs()[0], "Id");
-          assertEquals("PAS2013.09-01", e.getArgs()[1], "code");
+          assertEquals("A1.1", e.getArgs()[1], "Code of lodging");
         });
   }
 
   @Test
   void testGMLUnsupportedLodingMeasure() throws IOException {
-    assertResult("fout_5217_unsupported_lodging_measure", "GML Unsupported loding measure", ImaerExceptionReason.GML_INVALID_PAS_MEASURE_CATEGORY,
+    // With animal housing, lodgings with systems are just converted with special warning.
+    assertResult("fout_5217_unsupported_lodging_measure", "GML Unsupported loding measure", ImaerExceptionReason.GML_CONVERTED_LODGING_WITH_SYSTEMS,
         e -> {
           assertEquals("ES.1", e.getArgs()[0], "Label");
-          assertEquals("PAS2015.04-01", e.getArgs()[1], "Offending category code");
-          assertEquals("A1.1", e.getArgs()[2], "Category");
+          assertEquals("A1.1", e.getArgs()[1], "Code of lodging");
         });
   }
 

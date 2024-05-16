@@ -26,6 +26,7 @@ import java.util.stream.Collectors;
 
 import nl.overheid.aerius.gml.base.GMLLegacyCodeConverter.Conversion;
 import nl.overheid.aerius.gml.base.GMLLegacyCodeConverter.GMLLegacyCodeType;
+import nl.overheid.aerius.gml.base.conversion.FarmLodgingConversion;
 import nl.overheid.aerius.gml.base.conversion.MobileSourceOffRoadConversion;
 import nl.overheid.aerius.gml.base.conversion.PlanConversion;
 import nl.overheid.aerius.shared.domain.Substance;
@@ -204,6 +205,20 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
       new GenericConstructHelper("PIA", new EmissionHelper(0.675, 0.0)),
       new GenericConstructHelper("PWA", new EmissionHelper(341647, 0.0)),
       new GenericConstructHelper("PFA", new EmissionHelper(109614, 0.0)));
+
+  private static final List<FarmLodgingOldCodesHelper> FARM_LODGING_OLD_CODES = Arrays.asList(
+      new FarmLodgingOldCodesHelper("A1.1", "HA1", "HA1.1", null),
+      new FarmLodgingOldCodesHelper("A1.4", "HA1", "HA1.1", "LW1.1"),
+      new FarmLodgingOldCodesHelper("A1.28", "HA1", "HA1.28", null),
+      new FarmLodgingOldCodesHelper("A1.100", "HA1", "HA1.100", null),
+      new FarmLodgingOldCodesHelper("A2.100", "HA2", "HA2.100", null),
+      new FarmLodgingOldCodesHelper("A3.100", "HA4", "HA4.100", null),
+      new FarmLodgingOldCodesHelper("A4.2", "HA3", "HA3.2", null),
+      new FarmLodgingOldCodesHelper("B1.100", "HB1", "HB1.100", null),
+      new FarmLodgingOldCodesHelper("C1.100", "HC1", "HC1.100", null),
+      new FarmLodgingOldCodesHelper("D3.1", "HD3", "HD3.1", null),
+      new FarmLodgingOldCodesHelper("D3.2.7.2.1", "HD3", "HD3.8.2", null),
+      new FarmLodgingOldCodesHelper("F4.4", "HF1", "HF1.4", null));
 
   private static final List<RoadConstructHelper> ROAD_CATEGORIES = Arrays.asList(
       new RoadConstructHelper("",
@@ -470,6 +485,11 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
     }
   }
 
+  private static record FarmLodgingOldCodesHelper(String oldCode, String newAnimalTypeCode, String newAnimalHousingCode,
+      String newAdditionalSystemCode) {
+
+  }
+
   public static Map<GMLLegacyCodeType, Map<String, Conversion>> legacyCodes() {
     final Map<GMLLegacyCodeType, Map<String, Conversion>> legacyCodes = new HashMap<>();
     final Map<String, Conversion> onroadConversions = new HashMap<>();
@@ -514,6 +534,14 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
     characteristics.setParticleSizeDistribution(index);
     characteristics.setDiurnalVariation(DiurnalVariation.INDUSTRIAL_ACTIVITY);
     return characteristics;
+  }
+
+  public static Map<String, FarmLodgingConversion> legacyFarmLodgingConversions() {
+    final Map<String, FarmLodgingConversion> conversions = new HashMap<>();
+    FARM_LODGING_OLD_CODES.forEach(
+        helper -> conversions.put(helper.oldCode,
+            new FarmLodgingConversion(helper.newAnimalTypeCode, helper.newAnimalHousingCode, helper.newAdditionalSystemCode)));
+    return conversions;
   }
 
   @Override
