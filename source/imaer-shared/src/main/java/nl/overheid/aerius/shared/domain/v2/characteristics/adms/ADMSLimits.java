@@ -91,6 +91,8 @@ public final class ADMSLimits implements BuildingLimits {
   public static final double BUILDING_LENGTH_MINIMUM = 0.001;
   public static final double BUILDING_LENGTH_MAXIMUM = 1_000;
 
+  public static final double BUILDING_DIAMETER_MAXIMUM = 1_000;
+
   public static final int ROAD_GRADIENT_MIN = -50;
   public static final int ROAD_GRADIENT_MAX = 50;
   public static final int ROAD_ELEVATION_MIN = 0;
@@ -173,5 +175,10 @@ public final class ADMSLimits implements BuildingLimits {
   @Override
   public double buildingLengthMaximum() {
     return BUILDING_LENGTH_MAXIMUM;
+  }
+
+  @Override
+  public double buildingDiameterMaximum() {
+    return BUILDING_DIAMETER_MAXIMUM;
   }
 }

@@ -43,4 +43,11 @@ public interface BuildingLimits extends Serializable {
   double buildingLengthMinimum();
 
   double buildingLengthMaximum();
+
+  /**
+   * @return Maximum building diameter for circular buildings.
+   */
+  default double buildingDiameterMaximum() {
+    return -1; // -1 when no circular building supported
+  }
 }
