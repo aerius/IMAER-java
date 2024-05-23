@@ -33,11 +33,12 @@ import nl.overheid.aerius.shared.domain.calculation.CalculationMethod;
 import nl.overheid.aerius.shared.domain.calculation.CalculationRoadOPS;
 import nl.overheid.aerius.shared.domain.calculation.CalculationSetOptions;
 import nl.overheid.aerius.shared.domain.calculation.ConnectSuppliedOptions;
+import nl.overheid.aerius.shared.domain.calculation.MetDatasetType;
 import nl.overheid.aerius.shared.domain.calculation.NCACalculationOptions;
 import nl.overheid.aerius.shared.domain.calculation.OPSOptions;
+import nl.overheid.aerius.shared.domain.calculation.OwN2000CalculationOptions;
 import nl.overheid.aerius.shared.domain.calculation.RoadLocalFractionNO2Option;
 import nl.overheid.aerius.shared.domain.calculation.SubReceptorsMode;
-import nl.overheid.aerius.shared.domain.calculation.OwN2000CalculationOptions;
 import nl.overheid.aerius.shared.domain.meteo.Meteo;
 
 /**
@@ -198,8 +199,6 @@ class OptionsMetadataUtilTest {
 
     ncaOptions.setAdmsVersion("5.0.0.1");
     ncaOptions.setPermitArea("London");
-    ncaOptions.setMeteoSiteLocation("Near London");
-    ncaOptions.setMeteoYears(List.of("2022", "2023"));
     ncaOptions.setRoadLocalFractionNO2ReceptorsOption(RoadLocalFractionNO2Option.ONE_CUSTOM_VALUE);
     ncaOptions.setRoadLocalFractionNO2PointsOption(RoadLocalFractionNO2Option.ONE_CUSTOM_VALUE);
     ncaOptions.setRoadLocalFractionNO2(0.4);
@@ -213,6 +212,8 @@ class OptionsMetadataUtilTest {
     adms.setSpatiallyVaryingRoughness(true);
     adms.setComplexTerrain(true);
     adms.setMetSiteId(100);
+    adms.setMetDatasetType(MetDatasetType.OBS_RAW_GT_90PCT);
+    adms.setMetYears(List.of("2022", "2023"));
     adms.setMsRoughness(0.8);
     adms.setMsMinMoninObukhovLength(1.1);
     adms.setMsSurfaceAlbedo(1.2);
@@ -221,8 +222,6 @@ class OptionsMetadataUtilTest {
 
     assertEquals("5.0.0.1", result.get("adms_version"), "adms_version should be set");
     assertEquals("London", result.get("adms_permit_area"), "adms_permit_area should be set");
-    assertEquals("Near London", result.get("adms_meteo_site_location"), "adms_meteo_site_location should be set");
-    assertEquals("2022,2023", result.get("adms_meteo_years"), "adms_meteo_years should be set");
     assertEquals("12.3", result.get("adms_min_monin_obukhov_length"), "adms_min_monin_obukhov_length should be set");
     assertEquals("23.4", result.get("adms_surface_albedo"), "adms_surface_albedo should be set");
     assertEquals("34.5", result.get("adms_priestley_taylor_parameter"), "adms_priestley_taylor_parameter should be set");
@@ -231,6 +230,8 @@ class OptionsMetadataUtilTest {
     assertEquals("true", result.get("adms_spatially_varying_roughness"), "adms_spatially_varying_roughness should be set");
     assertEquals("true", result.get("adms_complex_terrain"), "adms_complex_terrain should be set");
     assertEquals("100", result.get("adms_met_site_id"), "adms_met_site_id should be set");
+    assertEquals("OBS_RAW_GT_90PCT", result.get("adms_met_dataset_type"), "adms_met_dataset_type should be set");
+    assertEquals("2022,2023", result.get("adms_met_years"), "adms_years should be set");
     assertEquals("0.8", result.get("adms_met_site_roughness"), "adms_met_site_roughness should be set");
     assertEquals("1.1", result.get("adms_met_site_min_monin_obukhov_length"), "adms_met_site_min_monin_obukhov_length should be set");
     assertEquals("1.2", result.get("adms_met_site_surface_albedo"), "adms_met_site_surface_albedo should be set");
@@ -276,8 +277,6 @@ class OptionsMetadataUtilTest {
     final NCACalculationOptions ncaOptions = options.getNcaCalculationOptions();
 
     ncaOptions.setPermitArea("London");
-    ncaOptions.setMeteoSiteLocation("Near London");
-    ncaOptions.setMeteoYears(List.of("2022", "2023"));
     ncaOptions.setRoadLocalFractionNO2ReceptorsOption(RoadLocalFractionNO2Option.ONE_CUSTOM_VALUE);
     ncaOptions.setRoadLocalFractionNO2PointsOption(RoadLocalFractionNO2Option.ONE_CUSTOM_VALUE);
     ncaOptions.setRoadLocalFractionNO2(0.4);
@@ -291,6 +290,8 @@ class OptionsMetadataUtilTest {
     adms.setSpatiallyVaryingRoughness(true);
     adms.setComplexTerrain(true);
     adms.setMetSiteId(100);
+    adms.setMetDatasetType(MetDatasetType.OBS_RAW_GT_90PCT);
+    adms.setMetYears(List.of("2022", "2023"));
     adms.setMsRoughness(0.8);
     adms.setMsMinMoninObukhovLength(1.1);
     adms.setMsSurfaceAlbedo(1.2);

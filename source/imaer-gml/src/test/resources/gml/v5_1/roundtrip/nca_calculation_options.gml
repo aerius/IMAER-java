@@ -26,12 +26,6 @@
                     <imaer:resultType>DEPOSITION</imaer:resultType>
                     <imaer:option>
                         <imaer:CalculationOption>
-                            <imaer:key>adms_meteo_years</imaer:key>
-                            <imaer:value></imaer:value>
-                        </imaer:CalculationOption>
-                    </imaer:option>
-                    <imaer:option>
-                        <imaer:CalculationOption>
                             <imaer:key>road_local_fraction_no2_receptors_option</imaer:key>
                             <imaer:value>ONE_CUSTOM_VALUE</imaer:value>
                         </imaer:CalculationOption>
