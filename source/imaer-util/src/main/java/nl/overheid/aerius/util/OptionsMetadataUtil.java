@@ -28,6 +28,7 @@ import nl.overheid.aerius.shared.domain.calculation.CalculationJobType;
 import nl.overheid.aerius.shared.domain.calculation.CalculationRoadOPS;
 import nl.overheid.aerius.shared.domain.calculation.CalculationSetOptions;
 import nl.overheid.aerius.shared.domain.calculation.ConnectSuppliedOptions;
+import nl.overheid.aerius.shared.domain.calculation.MetDatasetType;
 import nl.overheid.aerius.shared.domain.calculation.NCACalculationOptions;
 import nl.overheid.aerius.shared.domain.calculation.OPSOptions;
 import nl.overheid.aerius.shared.domain.calculation.OwN2000CalculationOptions;
@@ -77,8 +78,6 @@ public final class OptionsMetadataUtil {
     /* ADMS options related */
     ADMS_VERSION,
     ADMS_PERMIT_AREA,
-    ADMS_METEO_SITE_LOCATION,
-    ADMS_METEO_YEARS,
     ADMS_MIN_MONIN_OBUKHOV_LENGTH,
     ADMS_SURFACE_ALBEDO,
     ADMS_PRIESTLEY_TAYLOR_PARAMETER,
@@ -87,6 +86,8 @@ public final class OptionsMetadataUtil {
     ADMS_SPATIALLY_VARYING_ROUGHNESS,
     ADMS_COMPLEX_TERRAIN,
     ADMS_MET_SITE_ID,
+    ADMS_MET_DATASET_TYPE,
+    ADMS_MET_YEARS,
     ADMS_MET_SITE_ROUGHNESS,
     ADMS_MET_SITE_MIN_MONIN_OBUKHOV_LENGTH,
     ADMS_MET_SITE_SURFACE_ALBEDO,
@@ -188,7 +189,6 @@ public final class OptionsMetadataUtil {
 
   private static void ncaOptionsFromMap(final NCACalculationOptions options, final Map<Option, String> map) {
     options.setPermitArea(map.get(Option.ADMS_PERMIT_AREA));
-    options.setMeteoSiteLocation(map.get(Option.ADMS_METEO_SITE_LOCATION));
     options.setRoadLocalFractionNO2ReceptorsOption(RoadLocalFractionNO2Option.safeValueOf(map.get(Option.ROAD_LOCAL_FRACTION_NO2_RECEPTORS_OPTION)));
     options.setRoadLocalFractionNO2PointsOption(RoadLocalFractionNO2Option.safeValueOf(map.get(Option.ROAD_LOCAL_FRACTION_NO2_POINTS_OPTION)));
     if (options.getRoadLocalFractionNO2ReceptorsOption() == RoadLocalFractionNO2Option.ONE_CUSTOM_VALUE
@@ -196,29 +196,29 @@ public final class OptionsMetadataUtil {
       options.setRoadLocalFractionNO2(
           Optional.ofNullable(map.get(Option.ROAD_LOCAL_FRACTION_NO2_CUSTOM_VALUE)).map(Double::parseDouble).orElse(null));
     }
-    parseMeteoYears(options, map);
 
-    options.getAdmsOptions()
-        .setMinMoninObukhovLength(getOrDefault(map, Option.ADMS_MIN_MONIN_OBUKHOV_LENGTH, ADMSLimits.MIN_MONIN_OBUKHOV_LENGTH_DEFAULT));
-    options.getAdmsOptions().setSurfaceAlbedo(getOrDefault(map, Option.ADMS_SURFACE_ALBEDO, ADMSLimits.SURFACE_ALBEDO_DEFAULT));
-    options.getAdmsOptions()
-        .setPriestleyTaylorParameter(getOrDefault(map, Option.ADMS_PRIESTLEY_TAYLOR_PARAMETER, ADMSLimits.PRIESTLEY_TAYLOR_PARAMETER_DEFAULT));
+    final ADMSOptions admsOptions = options.getAdmsOptions();
+    admsOptions.setMinMoninObukhovLength(getOrDefault(map, Option.ADMS_MIN_MONIN_OBUKHOV_LENGTH, ADMSLimits.MIN_MONIN_OBUKHOV_LENGTH_DEFAULT));
+    admsOptions.setSurfaceAlbedo(getOrDefault(map, Option.ADMS_SURFACE_ALBEDO, ADMSLimits.SURFACE_ALBEDO_DEFAULT));
+    admsOptions.setPriestleyTaylorParameter(getOrDefault(map, Option.ADMS_PRIESTLEY_TAYLOR_PARAMETER, ADMSLimits.PRIESTLEY_TAYLOR_PARAMETER_DEFAULT));
 
     if (map.get(Option.ADMS_MET_SITE_ID) != null) {
-      options.getAdmsOptions().setMetSiteId(Integer.parseInt(map.get(Option.ADMS_MET_SITE_ID)));
-      options.getAdmsOptions().setMsRoughness(getOrDefault(map, Option.ADMS_MET_SITE_ROUGHNESS, ADMSLimits.ROUGHNESS_DEFAULT));
-      options.getAdmsOptions()
+      admsOptions.setMetSiteId(Integer.parseInt(map.get(Option.ADMS_MET_SITE_ID)));
+      admsOptions.setMetDatasetType(MetDatasetType.safeValueOf(map.get(Option.ADMS_MET_DATASET_TYPE)));
+      parseMetYears(admsOptions, map);
+      admsOptions.setMsRoughness(getOrDefault(map, Option.ADMS_MET_SITE_ROUGHNESS, ADMSLimits.ROUGHNESS_DEFAULT));
+      admsOptions
           .setMsMinMoninObukhovLength(getOrDefault(map, Option.ADMS_MET_SITE_MIN_MONIN_OBUKHOV_LENGTH, ADMSLimits.MIN_MONIN_OBUKHOV_LENGTH_DEFAULT));
-      options.getAdmsOptions().setMsSurfaceAlbedo(getOrDefault(map, Option.ADMS_MET_SITE_SURFACE_ALBEDO, ADMSLimits.SURFACE_ALBEDO_DEFAULT));
-      options.getAdmsOptions().setMsPriestleyTaylorParameter(
+      admsOptions.setMsSurfaceAlbedo(getOrDefault(map, Option.ADMS_MET_SITE_SURFACE_ALBEDO, ADMSLimits.SURFACE_ALBEDO_DEFAULT));
+      admsOptions.setMsPriestleyTaylorParameter(
           getOrDefault(map, Option.ADMS_MET_SITE_PRIESTLEY_TAYLOR_PARAMETER, ADMSLimits.PRIESTLEY_TAYLOR_PARAMETER_DEFAULT));
     }
 
-    options.getAdmsOptions().setPlumeDepletionNH3(getOrDefault(map, Option.ADMS_PLUME_DEPLETION_NH3, ADMSLimits.ADMS_PLUME_DEPLETION_NH3_DEFAULT));
-    options.getAdmsOptions().setPlumeDepletionNOX(getOrDefault(map, Option.ADMS_PLUME_DEPLETION_NOX, ADMSLimits.ADMS_PLUME_DEPLETION_NOX_DEFAULT));
-    options.getAdmsOptions()
+    admsOptions.setPlumeDepletionNH3(getOrDefault(map, Option.ADMS_PLUME_DEPLETION_NH3, ADMSLimits.ADMS_PLUME_DEPLETION_NH3_DEFAULT));
+    admsOptions.setPlumeDepletionNOX(getOrDefault(map, Option.ADMS_PLUME_DEPLETION_NOX, ADMSLimits.ADMS_PLUME_DEPLETION_NOX_DEFAULT));
+    admsOptions
         .setSpatiallyVaryingRoughness(getOrDefault(map, Option.ADMS_SPATIALLY_VARYING_ROUGHNESS, ADMSLimits.SPATIALLY_VARYING_ROUGHNESS_DEFAULT));
-    options.getAdmsOptions().setComplexTerrain(getOrDefault(map, Option.ADMS_COMPLEX_TERRAIN, ADMSLimits.ADMS_COMPLEX_TERRAIN_DEFAULT));
+    admsOptions.setComplexTerrain(getOrDefault(map, Option.ADMS_COMPLEX_TERRAIN, ADMSLimits.ADMS_COMPLEX_TERRAIN_DEFAULT));
   }
 
   private static double getOrDefault(final Map<Option, String> map, final Option option, final double defaultValue) {
@@ -229,12 +229,12 @@ public final class OptionsMetadataUtil {
     return Optional.ofNullable(map.get(option)).map(Boolean::parseBoolean).orElse(defaultValue);
   }
 
-  private static void parseMeteoYears(final NCACalculationOptions options, final Map<Option, String> map) {
-    final String meteoYearString = map.get(Option.ADMS_METEO_YEARS);
-    if (meteoYearString != null && !meteoYearString.isBlank()) {
-      final String[] meteoYears = meteoYearString.split(METEO_YEARS_SEPARATOR);
+  private static void parseMetYears(final ADMSOptions admsOptions, final Map<Option, String> map) {
+    final String metYearString = map.get(Option.ADMS_MET_YEARS);
+    if (metYearString != null && !metYearString.isBlank()) {
+      final String[] meteoYears = metYearString.split(METEO_YEARS_SEPARATOR);
       if (meteoYears.length > 0) {
-        options.setMeteoYears(Arrays.asList(meteoYears));
+        admsOptions.setMetYears(Arrays.asList(meteoYears));
       }
     }
   }
@@ -243,8 +243,6 @@ public final class OptionsMetadataUtil {
     if (options != null) {
       addValue(mapToAddTo, Option.ADMS_VERSION, options.getAdmsVersion(), addDefaults);
       addValue(mapToAddTo, Option.ADMS_PERMIT_AREA, options.getPermitArea(), addDefaults);
-      addValue(mapToAddTo, Option.ADMS_METEO_SITE_LOCATION, options.getMeteoSiteLocation(), addDefaults);
-      addValue(mapToAddTo, Option.ADMS_METEO_YEARS, String.join(METEO_YEARS_SEPARATOR, options.getMeteoYears()), addDefaults);
       addValue(mapToAddTo, Option.ROAD_LOCAL_FRACTION_NO2_RECEPTORS_OPTION, options.getRoadLocalFractionNO2ReceptorsOption(), addDefaults);
       addValue(mapToAddTo, Option.ROAD_LOCAL_FRACTION_NO2_POINTS_OPTION, options.getRoadLocalFractionNO2PointsOption(), addDefaults);
       if (options.getRoadLocalFractionNO2ReceptorsOption() == RoadLocalFractionNO2Option.ONE_CUSTOM_VALUE
@@ -258,6 +256,9 @@ public final class OptionsMetadataUtil {
         addValue(mapToAddTo, Option.ADMS_SURFACE_ALBEDO, adms.getSurfaceAlbedo(), addDefaults);
         addValue(mapToAddTo, Option.ADMS_PRIESTLEY_TAYLOR_PARAMETER, adms.getPriestleyTaylorParameter(), addDefaults);
         addIntValue(mapToAddTo, Option.ADMS_MET_SITE_ID, adms.getMetSiteId(), addDefaults);
+        addValue(mapToAddTo, Option.ADMS_MET_DATASET_TYPE, adms.getMetDatasetType(), addDefaults);
+        addValue(mapToAddTo, Option.ADMS_MET_YEARS, adms.getMetYears().isEmpty() ? null : String.join(METEO_YEARS_SEPARATOR, adms.getMetYears()),
+            addDefaults);
         addValue(mapToAddTo, Option.ADMS_MET_SITE_ROUGHNESS, adms.getMsRoughness(), addDefaults);
         addValue(mapToAddTo, Option.ADMS_MET_SITE_MIN_MONIN_OBUKHOV_LENGTH, adms.getMsMinMoninObukhovLength(), addDefaults);
         addValue(mapToAddTo, Option.ADMS_MET_SITE_SURFACE_ALBEDO, adms.getMsSurfaceAlbedo(), addDefaults);

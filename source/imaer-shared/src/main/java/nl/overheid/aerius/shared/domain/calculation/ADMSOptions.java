@@ -17,18 +17,22 @@
 package nl.overheid.aerius.shared.domain.calculation;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Contains ADMS specific options for a calculation.
  */
 public class ADMSOptions implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 2L;
 
   private double minMoninObukhovLength;
   private double surfaceAlbedo;
   private double priestleyTaylorParameter;
   private int metSiteId;
+  private MetDatasetType metDatasetType;
+  private List<String> metYears = new ArrayList<>();
   private double msRoughness;
   private double msMinMoninObukhovLength;
   private double msSurfaceAlbedo;
@@ -68,6 +72,22 @@ public class ADMSOptions implements Serializable {
 
   public void setMetSiteId(final int metSiteId) {
     this.metSiteId = metSiteId;
+  }
+
+  public MetDatasetType getMetDatasetType() {
+    return metDatasetType;
+  }
+
+  public void setMetDatasetType(final MetDatasetType metDatasetType) {
+    this.metDatasetType = metDatasetType;
+  }
+
+  public List<String> getMetYears() {
+    return metYears;
+  }
+
+  public void setMetYears(final List<String> metYears) {
+    this.metYears = metYears;
   }
 
   public double getMsRoughness() {

@@ -43,6 +43,7 @@ import nl.overheid.aerius.shared.domain.calculation.ADMSOptions;
 import nl.overheid.aerius.shared.domain.calculation.CalculationJobType;
 import nl.overheid.aerius.shared.domain.calculation.CalculationMethod;
 import nl.overheid.aerius.shared.domain.calculation.CalculationSetOptions;
+import nl.overheid.aerius.shared.domain.calculation.MetDatasetType;
 import nl.overheid.aerius.shared.domain.calculation.NCACalculationOptions;
 import nl.overheid.aerius.shared.domain.v2.characteristics.adms.ADMSLimits;
 
@@ -194,6 +195,8 @@ class GMLCalculationSetOptionsReaderTest {
     suppliedOptions.add(mockCalculationOption("adms_surface_albedo", "4.5"));
     suppliedOptions.add(mockCalculationOption("adms_priestley_taylor_parameter", "5.6"));
     suppliedOptions.add(mockCalculationOption("adms_met_site_id", "939"));
+    suppliedOptions.add(mockCalculationOption("adms_met_dataset_type", "OBS_RAW_GT_90PCT"));
+    suppliedOptions.add(mockCalculationOption("adms_met_years", "2022,2023"));
     suppliedOptions.add(mockCalculationOption("adms_met_site_roughness", "3.1"));
     suppliedOptions.add(mockCalculationOption("adms_met_site_min_monin_obukhov_length", "4.2"));
     suppliedOptions.add(mockCalculationOption("adms_met_site_surface_albedo", "5.3"));
@@ -215,13 +218,13 @@ class GMLCalculationSetOptionsReaderTest {
     assertEquals(CalculationJobType.MAX_TEMPORARY_EFFECT, options.getCalculationJobType(), "Calculation job type should match");
     final NCACalculationOptions ncaOptions = options.getNcaCalculationOptions();
     assertEquals("somewhere", ncaOptions.getPermitArea(), "PermitArea");
-    assertEquals("some meteo loc", ncaOptions.getMeteoSiteLocation(), "MeteoSiteLocation");
-    assertEquals(List.of("2040", "2042"), ncaOptions.getMeteoYears(), "MeteoYears");
     final ADMSOptions admsOptions = ncaOptions.getAdmsOptions();
     assertEquals(3.4, admsOptions.getMinMoninObukhovLength(), "MinMoninObukhovLength");
     assertEquals(4.5, admsOptions.getSurfaceAlbedo(), "SurfaceAlbedo");
     assertEquals(5.6, admsOptions.getPriestleyTaylorParameter(), "PriestleyTaylorParameter");
     assertEquals(939, admsOptions.getMetSiteId(), "MetSiteId");
+    assertEquals(MetDatasetType.OBS_RAW_GT_90PCT, admsOptions.getMetDatasetType(), "MetDatasetType");
+    assertEquals(List.of("2022", "2023"), admsOptions.getMetYears(), "MetYears");
     assertEquals(3.1, admsOptions.getMsRoughness(), "MsRoughness");
     assertEquals(4.2, admsOptions.getMsMinMoninObukhovLength(), "MsMinMoninObukhovLength");
     assertEquals(5.3, admsOptions.getMsSurfaceAlbedo(), "MsSurfaceAlbedo");
@@ -353,7 +356,6 @@ class GMLCalculationSetOptionsReaderTest {
     final CalculationSetOptions options = reader.readCalculationSetOptions(Theme.NCA);
     assertNotNull(options, "returned options shouldn't be null");
     final NCACalculationOptions ncaOptions = options.getNcaCalculationOptions();
-    assertEquals(List.of("MySpecialYear"), ncaOptions.getMeteoYears(), "MeteoYears");
     final ADMSOptions admsOptions = ncaOptions.getAdmsOptions();
     assertEquals(false, admsOptions.isPlumeDepletionNH3(), "PlumeDepletionNH3");
     assertEquals(false, admsOptions.isPlumeDepletionNOX(), "PlumeDepletionNOX");
