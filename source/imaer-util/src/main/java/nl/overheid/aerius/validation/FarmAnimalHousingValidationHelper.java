@@ -28,7 +28,7 @@ public interface FarmAnimalHousingValidationHelper {
 
   boolean isValidFarmAdditionalSystemCode(String systemCode);
 
-  boolean isValidFarmAdditionalSystemCombination(String animalCode, String systemCode);
+  boolean isValidFarmAdditionalSystemCombination(String housingCode, String systemCode);
 
   FarmEmissionFactorType getAnimalHousingEmissionFactorType(final String animalHousingCode);
 

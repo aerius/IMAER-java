@@ -75,7 +75,7 @@ class FarmAnimalHousingValidator extends SourceValidator<FarmAnimalHousingEmissi
       valid = false;
     } else {
       valid = validateNumberOfDays(subSource, sourceId) && valid;
-      valid = validateAdditionalSystems(subSource.getAdditionalSystems(), animalCode, sourceId) && valid;
+      valid = validateAdditionalSystems(subSource.getAdditionalSystems(), housingCode, sourceId) && valid;
     }
     return valid;
   }
@@ -86,11 +86,11 @@ class FarmAnimalHousingValidator extends SourceValidator<FarmAnimalHousingEmissi
     return FarmEmissionFactorTypeValidatorUtil.validate(EXPECTED_EMISSION_FACTOR_TYPES, emissionFactorType, subSource, sourceId, getErrors());
   }
 
-  private boolean validateAdditionalSystems(final List<AdditionalHousingSystem> additionalSystems, final String animalCode, final String sourceId) {
+  private boolean validateAdditionalSystems(final List<AdditionalHousingSystem> additionalSystems, final String housingCode, final String sourceId) {
     boolean valid = true;
     for (final AdditionalHousingSystem additionalSystem : additionalSystems) {
       if (additionalSystem instanceof final StandardAdditionalHousingSystem standardSystem) {
-        valid = validateStandardAdditionalSystem(standardSystem, animalCode, sourceId) && valid;
+        valid = validateStandardAdditionalSystem(standardSystem, housingCode, sourceId) && valid;
       } else if (additionalSystem instanceof final CustomAdditionalHousingSystem customSystem) {
         valid = validateCustomAdditionalSystem(customSystem, sourceId) && valid;
       } else {
@@ -101,15 +101,15 @@ class FarmAnimalHousingValidator extends SourceValidator<FarmAnimalHousingEmissi
     return valid;
   }
 
-  private boolean validateStandardAdditionalSystem(final StandardAdditionalHousingSystem standardSystem, final String animalCode,
+  private boolean validateStandardAdditionalSystem(final StandardAdditionalHousingSystem standardSystem, final String housingCode,
       final String sourceId) {
     final String code = standardSystem.getAdditionalSystemCode();
     boolean valid = true;
     if (!validationHelper.isValidFarmAdditionalSystemCode(code)) {
       getErrors().add(new AeriusException(ImaerExceptionReason.GML_UNKNOWN_ANIMAL_HOUSING_CODE, sourceId, code));
       valid = false;
-    } else if (!validationHelper.isValidFarmAdditionalSystemCombination(animalCode, code)) {
-      getErrors().add(new AeriusException(ImaerExceptionReason.GML_UNSUPPORTED_ANIMAL_HOUSING_COMBINATION, sourceId, animalCode, code));
+    } else if (!validationHelper.isValidFarmAdditionalSystemCombination(housingCode, code)) {
+      getErrors().add(new AeriusException(ImaerExceptionReason.GML_UNSUPPORTED_ANIMAL_HOUSING_COMBINATION, sourceId, housingCode, code));
       valid = false;
     }
     return valid;
