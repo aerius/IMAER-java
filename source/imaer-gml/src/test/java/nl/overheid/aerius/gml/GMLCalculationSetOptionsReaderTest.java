@@ -195,7 +195,7 @@ class GMLCalculationSetOptionsReaderTest {
     suppliedOptions.add(mockCalculationOption("adms_surface_albedo", "4.5"));
     suppliedOptions.add(mockCalculationOption("adms_priestley_taylor_parameter", "5.6"));
     suppliedOptions.add(mockCalculationOption("adms_met_site_id", "939"));
-    suppliedOptions.add(mockCalculationOption("adms_met_dataset_type", "OBS_RAW_GT_75PCT"));
+    suppliedOptions.add(mockCalculationOption("adms_met_dataset_type", "OBS_RAW_GT_90PCT"));
     suppliedOptions.add(mockCalculationOption("adms_met_years", "2022,2023"));
     suppliedOptions.add(mockCalculationOption("adms_met_site_roughness", "3.1"));
     suppliedOptions.add(mockCalculationOption("adms_met_site_min_monin_obukhov_length", "4.2"));
@@ -223,7 +223,7 @@ class GMLCalculationSetOptionsReaderTest {
     assertEquals(4.5, admsOptions.getSurfaceAlbedo(), "SurfaceAlbedo");
     assertEquals(5.6, admsOptions.getPriestleyTaylorParameter(), "PriestleyTaylorParameter");
     assertEquals(939, admsOptions.getMetSiteId(), "MetSiteId");
-    assertEquals(MetDatasetType.OBS_RAW_GT_75PCT, admsOptions.getMetDatasetType(), "MetDatasetType");
+    assertEquals(MetDatasetType.OBS_RAW_GT_90PCT, admsOptions.getMetDatasetType(), "MetDatasetType");
     assertEquals(List.of("2022", "2023"), admsOptions.getMetYears(), "MetYears");
     assertEquals(3.1, admsOptions.getMsRoughness(), "MsRoughness");
     assertEquals(4.2, admsOptions.getMsMinMoninObukhovLength(), "MsMinMoninObukhovLength");

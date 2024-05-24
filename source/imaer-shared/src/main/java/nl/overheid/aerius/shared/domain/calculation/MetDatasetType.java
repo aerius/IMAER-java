@@ -23,16 +23,15 @@ import java.util.Locale;
  */
 public enum MetDatasetType {
 
-  OBS_RAW_GT_90PCT(false, "raw_gt_90pct_OBS"),
-  OBS_RAW_GT_75PCT(false, "raw_gt_75pct_OBS"),
-  NWP_3_KM2(true, "3km2_NWP");
+  OBS_RAW_GT_90PCT(false),
+  // Expect another observed set, but what the term will be exactly is unsure so uncommented for now.
+//  OBS_RAW_GT_75PCT(false),
+  NWP_3KM2(true);
 
   private final boolean nwp;
-  private final String alternativeName;
 
-  MetDatasetType(final boolean nwp, final String alternativeName) {
+  MetDatasetType(final boolean nwp) {
     this.nwp = nwp;
-    this.alternativeName = alternativeName;
   }
 
   public boolean isObserved() {
@@ -43,9 +42,6 @@ public enum MetDatasetType {
     return nwp;
   }
 
-  public String getAlternativeName() {
-    return alternativeName;
-  }
 
   /**
    * Safely returns a MetDatasetType. It is case independent and returns null in
@@ -58,26 +54,8 @@ public enum MetDatasetType {
     try {
       return value == null ? null : valueOf(value.toUpperCase(Locale.ROOT));
     } catch (final IllegalArgumentException e) {
-      return byAlternativeName(value);
+      return null;
     }
-  }
-
-  /**
-   * Determine MetDatasetType by alternative name. It is case independent and returns null in
-   * case the dataset type could not be found.
-   *
-   * @param value value to convert
-   * @return MetDatasetType or null if no valid input
-   */
-  public static MetDatasetType byAlternativeName(final String value) {
-    MetDatasetType correct = null;
-    for (final MetDatasetType type : values()) {
-      if (type.alternativeName.equalsIgnoreCase(value)) {
-        correct = type;
-        break;
-      }
-    }
-    return correct;
   }
 
 }
