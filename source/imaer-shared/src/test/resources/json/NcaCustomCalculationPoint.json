@@ -13,9 +13,17 @@
     "assessmentCategory" : "HUMAN_HEALTH",
     "roadLocalFractionNO2" : 0.423,
     "entityReferences" : [ {
-      "code" : "Habitat code",
       "description" : "Description of habitat",
-      "entityType" : "HABITAT_TYPE"
+      "code" : "Habitat code",
+      "entityType" : "HABITAT_TYPE",
+      "criticalLevels" : {
+        "NOX_CONCENTRATION" : 1.23,
+        "NH3_CONCENTRATION" : 4.56,
+        "EC_CONCENTRATION" : 7.89
+      }
+    }, {
+      "description" : "Description of habitat",
+      "entityType" : "CRITICAL_LEVEL_ENTITY"
     } ]
   }
 }
