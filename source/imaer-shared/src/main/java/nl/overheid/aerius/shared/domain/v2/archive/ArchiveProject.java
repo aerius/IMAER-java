@@ -23,11 +23,13 @@ import java.io.Serializable;
  */
 public class ArchiveProject implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 2L;
 
   private String id;
   private String name;
   private String aeriusVersion;
+  private String permitReference;
+  private String planningReference;
 
   public String getId() {
     return id;
@@ -53,4 +55,19 @@ public class ArchiveProject implements Serializable {
     this.aeriusVersion = aeriusVersion;
   }
 
+  public String getPermitReference() {
+    return permitReference;
+  }
+
+  public void setPermitReference(final String permitReference) {
+    this.permitReference = permitReference;
+  }
+
+  public String getPlanningReference() {
+    return planningReference;
+  }
+
+  public void setPlanningReference(final String planningReference) {
+    this.planningReference = planningReference;
+  }
 }
