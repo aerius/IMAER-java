@@ -20,5 +20,6 @@ package nl.overheid.aerius.shared.domain.v2.point;
  * Entity types of entity references
  */
 public enum EntityType {
+  CRITICAL_LEVEL_ENTITY,
   HABITAT_TYPE
 }

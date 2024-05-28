@@ -16,20 +16,18 @@
  */
 package nl.overheid.aerius.shared.domain.v2.point;
 
+import java.util.Map;
+
+import nl.overheid.aerius.shared.domain.result.EmissionResultKey;
+
 /**
  * Entity references of a NCA custom calculation point.
  */
 public class EntityReference {
-  private String code;
   private String description;
+  private String code;
   private EntityType entityType;
-
-  public String getCode() {
-    return code;
-  }
-  public void setCode(final String code) {
-    this.code = code;
-  }
+  private Map<EmissionResultKey, Double> criticalLevels;
 
   public String getDescription() {
     return description;
@@ -39,12 +37,28 @@ public class EntityReference {
     this.description = description;
   }
 
+  public String getCode() {
+    return code;
+  }
+
+  public void setCode(final String code) {
+    this.code = code;
+  }
+
   public EntityType getEntityType() {
     return entityType;
   }
 
   public void setEntityType(final EntityType entityType) {
     this.entityType = entityType;
+  }
+
+  public Map<EmissionResultKey, Double> getCriticalLevels() {
+    return criticalLevels;
+  }
+
+  public void setCriticalLevels(final Map<EmissionResultKey, Double> criticalLevels) {
+    this.criticalLevels = criticalLevels;
   }
 
 }
