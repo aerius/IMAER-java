@@ -15,15 +15,15 @@
     "entityReferences" : [ {
       "description" : "Description of habitat",
       "code" : "Habitat code",
-      "entityType" : "HABITAT_TYPE",
+      "entityType" : "HABITAT_TYPE"
+    }, {
+      "description" : "Description of critical level entity",
+      "entityType" : "CRITICAL_LEVEL_ENTITY",
       "criticalLevels" : {
         "NOX_CONCENTRATION" : 1.23,
         "NH3_CONCENTRATION" : 4.56,
         "EC_CONCENTRATION" : 7.89
       }
-    }, {
-      "description" : "Description of habitat",
-      "entityType" : "CRITICAL_LEVEL_ENTITY"
     } ]
   }
 }
