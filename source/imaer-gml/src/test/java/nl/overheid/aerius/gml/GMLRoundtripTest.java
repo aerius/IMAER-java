@@ -156,6 +156,7 @@ class GMLRoundtripTest {
       {"scenario_traffic_network_reference", CharacteristicsType.OPS},
       {"scenario_traffic_network_proposed", CharacteristicsType.OPS},
       {"nca_calculation_point", CharacteristicsType.ADMS},
+      {"nca_calculation_point_entity_references", CharacteristicsType.ADMS},
       {"nca_calculation_options", CharacteristicsType.ADMS},
       {"nca_calculation_options_quick_run", CharacteristicsType.ADMS},
       {"archive_metadata", CharacteristicsType.ADMS},

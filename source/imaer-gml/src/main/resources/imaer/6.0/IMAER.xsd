@@ -950,6 +950,35 @@ To determine the emissions of mobile equipment, the use of that vehicle can be t
       <element ref="IMAER:ConsumptionOffRoadVehicleSpecification"/>
     </sequence>
   </complexType>
+  <element name="CriticalLevel" substitutionGroup="gml:AbstractObject" type="IMAER:CriticalLevelType">
+    <annotation>
+      <documentation>Class to describe critical level(s). This is a value for a certain substance/result type that is considered critical.</documentation>
+    </annotation>
+  </element>
+  <complexType name="CriticalLevelType">
+    <sequence>
+      <element name="value" type="double">
+        <annotation>
+          <documentation>Critical level value.</documentation>
+        </annotation>
+      </element>
+    </sequence>
+    <attribute name="substance" type="IMAER:SubstanceType" use="required">
+      <annotation>
+        <documentation>Substance type of this critical level.</documentation>
+      </annotation>
+    </attribute>
+    <attribute name="resultType" type="IMAER:ResultTypeType" use="required">
+      <annotation>
+        <documentation>Result type.</documentation>
+      </annotation>
+    </attribute>
+  </complexType>
+  <complexType name="CriticalLevelPropertyType">
+    <sequence>
+      <element ref="IMAER:CriticalLevel"/>
+    </sequence>
+  </complexType>
   <element name="CustomAdditionalHousingSystem" substitutionGroup="IMAER:AdditionalHousingSystem" type="IMAER:CustomAdditionalHousingSystemType">
     <annotation>
       <documentation>User defined additional housing system description.
@@ -1600,7 +1629,7 @@ There are different types of emission sources present in the model. This abstrac
           <documentation>The type of the entity being referenced.</documentation>
         </annotation>
       </element>
-      <element name="code" type="string">
+      <element minOccurs="0" name="code" type="string">
         <annotation>
           <documentation>The code that uniquely references the entity.</documentation>
         </annotation>
@@ -1608,6 +1637,11 @@ There are different types of emission sources present in the model. This abstrac
       <element minOccurs="0" name="description" type="string">
         <annotation>
           <documentation>Optional description that is a human readable description of the entity being referenced.</documentation>
+        </annotation>
+      </element>
+      <element maxOccurs="unbounded" minOccurs="0" name="criticalLevel" type="IMAER:CriticalLevelPropertyType">
+        <annotation>
+          <documentation>The critical level associated with this entity.</documentation>
         </annotation>
       </element>
     </sequence>
@@ -3745,6 +3779,11 @@ The AERIUS calculation core can calculate emissions for a number of substances, 
       <enumeration value="EC">
         <annotation>
           <documentation>EC (elemental carbon).</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="NOXNH3">
+        <annotation>
+          <documentation>Combination of NOx and NH3, mostly used for Nitrogen deposition as a result of these substances.</documentation>
         </annotation>
       </enumeration>
     </restriction>

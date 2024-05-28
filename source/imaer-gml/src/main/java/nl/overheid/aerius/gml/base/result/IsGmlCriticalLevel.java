@@ -1,5 +1,5 @@
 /*
- * Crown copyright
+ * Copyright the State of the Netherlands
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -16,14 +16,15 @@
  */
 package nl.overheid.aerius.gml.base.result;
 
-import java.util.List;
+import nl.overheid.aerius.shared.domain.Substance;
+import nl.overheid.aerius.shared.domain.result.EmissionResultType;
 
-import nl.overheid.aerius.gml.base.IsGmlProperty;
+public interface IsGmlCriticalLevel {
 
-public interface IsGmlNcaCustomCalculationPoint extends IsGmlCalculationPoint {
+  Substance getSubstance();
 
-  Double getRoadLocalFractionNO2();
+  EmissionResultType getResultType();
 
-  List<? extends IsGmlProperty<IsGmlEntityReference>> getEntityReferences();
+  double getValue();
 
 }

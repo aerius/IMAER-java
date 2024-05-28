@@ -16,9 +16,13 @@
  */
 package nl.overheid.aerius.gml.v5_1.result;
 
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
+import nl.overheid.aerius.gml.base.IsGmlProperty;
+import nl.overheid.aerius.gml.base.result.IsGmlEntityReference;
 import nl.overheid.aerius.gml.base.result.IsGmlNcaCustomCalculationPoint;
 import nl.overheid.aerius.gml.v5_1.base.CalculatorSchema;
 
@@ -38,6 +42,11 @@ public class NcaCustomCalculationPoint extends AbstractCalculationPoint implemen
 
   public void setRoadLocalFractionNO2(final Double roadLocalFractionNO2) {
     this.roadLocalFractionNO2 = roadLocalFractionNO2;
+  }
+
+  @Override
+  public List<? extends IsGmlProperty<IsGmlEntityReference>> getEntityReferences() {
+    return null;
   }
 
 }

@@ -1,5 +1,5 @@
 /*
- * Crown copyright
+ * Copyright the State of the Netherlands
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -20,10 +20,17 @@ import java.util.List;
 
 import nl.overheid.aerius.gml.base.IsGmlProperty;
 
-public interface IsGmlNcaCustomCalculationPoint extends IsGmlCalculationPoint {
+/**
+ *
+ */
+public interface IsGmlEntityReference {
 
-  Double getRoadLocalFractionNO2();
+  String getEntityType();
 
-  List<? extends IsGmlProperty<IsGmlEntityReference>> getEntityReferences();
+  String getCode();
+
+  String getDescription();
+
+  List<? extends IsGmlProperty<IsGmlCriticalLevel>> getCriticalLevels();
 
 }
