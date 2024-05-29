@@ -17,19 +17,24 @@
 package nl.overheid.aerius.shared.domain.v2.archive;
 
 import java.io.Serializable;
+import java.util.Map;
+
+import nl.overheid.aerius.shared.domain.Substance;
 
 /**
  * A project in archive.
  */
 public class ArchiveProject implements Serializable {
 
-  private static final long serialVersionUID = 2L;
+  private static final long serialVersionUID = 3L;
 
   private String id;
   private String name;
-  private String aeriusVersion;
+  private String type;
   private String permitReference;
   private String planningReference;
+  private Map<Substance, Double> netEmissions;
+  private String aeriusVersion;
 
   public String getId() {
     return id;
@@ -47,12 +52,12 @@ public class ArchiveProject implements Serializable {
     this.name = name;
   }
 
-  public String getAeriusVersion() {
-    return aeriusVersion;
+  public String getType() {
+    return type;
   }
 
-  public void setAeriusVersion(final String aeriusVersion) {
-    this.aeriusVersion = aeriusVersion;
+  public void setType(final String type) {
+    this.type = type;
   }
 
   public String getPermitReference() {
@@ -69,5 +74,21 @@ public class ArchiveProject implements Serializable {
 
   public void setPlanningReference(final String planningReference) {
     this.planningReference = planningReference;
+  }
+
+  public Map<Substance, Double> getNetEmissions() {
+    return netEmissions;
+  }
+
+  public void setNetEmissions(final Map<Substance, Double> netEmissions) {
+    this.netEmissions = netEmissions;
+  }
+
+  public String getAeriusVersion() {
+    return aeriusVersion;
+  }
+
+  public void setAeriusVersion(final String aeriusVersion) {
+    this.aeriusVersion = aeriusVersion;
   }
 }
