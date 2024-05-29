@@ -17,7 +17,9 @@
 package nl.overheid.aerius.gml.base.result;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,6 +37,8 @@ import nl.overheid.aerius.shared.domain.v2.point.CIMLKCalculationPoint;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPoint;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPointFeature;
 import nl.overheid.aerius.shared.domain.v2.point.CustomCalculationPoint;
+import nl.overheid.aerius.shared.domain.v2.point.EntityReference;
+import nl.overheid.aerius.shared.domain.v2.point.EntityType;
 import nl.overheid.aerius.shared.domain.v2.point.NcaCustomCalculationPoint;
 import nl.overheid.aerius.shared.domain.v2.point.ReceptorPoint;
 import nl.overheid.aerius.shared.domain.v2.point.SubPoint;
@@ -62,9 +66,9 @@ public class GML2Result {
   public List<CalculationPointFeature> fromGML(final List<FeatureMember> members, final boolean includeResults) {
     final List<CalculationPointFeature> calculationPoints = new ArrayList<>();
     for (final FeatureMember member : members) {
-      if (member instanceof IsGmlCalculationPoint) {
+      if (member instanceof final IsGmlCalculationPoint point) {
         try {
-          calculationPoints.add(fromGML((IsGmlCalculationPoint) member, includeResults));
+          calculationPoints.add(fromGML(point, includeResults));
         } catch (final AeriusException e) {
           conversionData.getErrors().add(e);
         }
@@ -96,16 +100,16 @@ public class GML2Result {
 
   private CalculationPoint determineSpecificType(final IsGmlCalculationPoint calculationPoint) throws AeriusException {
     final CalculationPoint returnPoint;
-    if (calculationPoint instanceof IsGmlReceptorPoint) {
-      returnPoint = createReceptorPoint((IsGmlReceptorPoint) calculationPoint);
-    } else if (calculationPoint instanceof IsGmlSubPoint) {
-      returnPoint = createSubPoint((IsGmlSubPoint) calculationPoint);
-    } else if (calculationPoint instanceof IsGmlCIMLKCalculationPoint) {
-      returnPoint = createCIMLKCalculationPoint((IsGmlCIMLKCalculationPoint) calculationPoint);
-    } else if (calculationPoint instanceof IsGmlNcaCustomCalculationPoint) {
-      returnPoint = createNcaCustomCalculationPoint((IsGmlNcaCustomCalculationPoint) calculationPoint);
-    } else if (calculationPoint instanceof IsGmlCustomCalculationPoint) {
-      returnPoint = createCustomPoint((IsGmlCustomCalculationPoint) calculationPoint);
+    if (calculationPoint instanceof final IsGmlReceptorPoint receptor) {
+      returnPoint = createReceptorPoint(receptor);
+    } else if (calculationPoint instanceof final IsGmlSubPoint subPoint) {
+      returnPoint = createSubPoint(subPoint);
+    } else if (calculationPoint instanceof final IsGmlCIMLKCalculationPoint cimlkPoint) {
+      returnPoint = createCIMLKCalculationPoint(cimlkPoint);
+    } else if (calculationPoint instanceof final IsGmlNcaCustomCalculationPoint ncaPoint) {
+      returnPoint = createNcaCustomCalculationPoint(ncaPoint);
+    } else if (calculationPoint instanceof final IsGmlCustomCalculationPoint customPoint) {
+      returnPoint = createCustomPoint(customPoint);
     } else {
       throw new AeriusException(ImaerExceptionReason.INTERNAL_ERROR, "Could not handle calculation point: " + calculationPoint.getClass());
     }
@@ -116,8 +120,8 @@ public class GML2Result {
 
   private Point determineGeometry(final IsGmlCalculationPoint origin) throws AeriusException {
     final Point point;
-    if (origin instanceof IsGmlReceptorPoint) {
-      point = toReceptorPoint((IsGmlReceptorPoint) origin);
+    if (origin instanceof final IsGmlReceptorPoint receptor) {
+      point = toReceptorPoint(receptor);
     } else {
       point = toGeometry(origin);
     }
@@ -125,11 +129,10 @@ public class GML2Result {
   }
 
   private Point toGeometry(final IsGmlCalculationPoint origin) throws AeriusException {
-    final Point point;
     try {
       final Geometry geometry = gml2geometry.getGeometry(origin);
-      if (geometry instanceof Point) {
-        point = (Point) geometry;
+      if (geometry instanceof final Point point) {
+        return point;
       } else {
         LOG.trace("Unexpected geometry type after conversion ({}), throwing AeriusException", geometry);
         throw new AeriusException(ImaerExceptionReason.GML_GEOMETRY_INVALID, origin.getId());
@@ -138,7 +141,6 @@ public class GML2Result {
       LOG.trace("Geometry exception, rethrown as AeriusException", e);
       throw new AeriusException(ImaerExceptionReason.GML_GEOMETRY_INVALID, origin.getId());
     }
-    return point;
   }
 
   private Point toReceptorPoint(final IsGmlReceptorPoint origin) {
@@ -184,12 +186,47 @@ public class GML2Result {
     target.setRoadLocalFractionNO2(origin.getRoadLocalFractionNO2());
     setCustomProperties(origin, target);
     target.setHeight(NcaPointHeightSupplier.getHeight(target.getAssessmentCategory(), origin.getHeight()));
+    target.setEntityReferences(createEntityReferences(origin.getEntityReferences()));
     return target;
   }
 
   private void setCustomProperties(final IsGmlCalculationPoint origin, final CustomCalculationPoint target) {
     target.setAssessmentCategory(AssessmentCategory.safeValueOf(origin.getAssessmentCategory()));
     target.setHeight(origin.getHeight());
+  }
+
+  private List<EntityReference> createEntityReferences(final List<? extends IsGmlProperty<IsGmlEntityReference>> entityReferenceProperties) {
+    final List<EntityReference> converted = new ArrayList<>();
+    if (entityReferenceProperties != null) {
+      for (final IsGmlProperty<IsGmlEntityReference> entityReferenceProperty : entityReferenceProperties) {
+        converted.add(convert(entityReferenceProperty));
+      }
+    }
+    return converted;
+  }
+
+  private EntityReference convert(final IsGmlProperty<IsGmlEntityReference> entityReferenceProperty) {
+    final IsGmlEntityReference gmlObject = entityReferenceProperty.getProperty();
+    final EntityReference convert = new EntityReference();
+    convert.setEntityType(EntityType.safeValueOf(gmlObject.getEntityType()));
+    convert.setCode(gmlObject.getCode());
+    convert.setDescription(gmlObject.getDescription());
+    convert.setCriticalLevels(convert(gmlObject.getCriticalLevels()));
+    return convert;
+  }
+
+  private Map<EmissionResultKey, Double> convert(final List<? extends IsGmlProperty<IsGmlCriticalLevel>> criticalLevelProperties) {
+    final Map<EmissionResultKey, Double> converted = new HashMap<>();
+    if (criticalLevelProperties != null) {
+      for (final IsGmlProperty<IsGmlCriticalLevel> criticalLevelProperty : criticalLevelProperties) {
+        final IsGmlCriticalLevel gmlCriticalLevel = criticalLevelProperty.getProperty();
+        final EmissionResultKey key = EmissionResultKey.safeValueOf(gmlCriticalLevel.getSubstance(), gmlCriticalLevel.getResultType());
+        if (key != null) {
+          converted.put(key, gmlCriticalLevel.getValue());
+        }
+      }
+    }
+    return converted;
   }
 
   /**

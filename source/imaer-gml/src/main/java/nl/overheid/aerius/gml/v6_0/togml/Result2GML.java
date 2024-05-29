@@ -19,10 +19,8 @@ package nl.overheid.aerius.gml.v6_0.togml;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map.Entry;
-import java.util.stream.Collectors;
 
 import nl.overheid.aerius.gml.base.geo.Geometry2GML;
 import nl.overheid.aerius.gml.v6_0.base.CalculatorSchema;
@@ -31,7 +29,11 @@ import nl.overheid.aerius.gml.v6_0.result.AbstractCalculationPoint;
 import nl.overheid.aerius.gml.v6_0.result.CIMLKCalculationPoint;
 import nl.overheid.aerius.gml.v6_0.result.CalculationPointCorrection;
 import nl.overheid.aerius.gml.v6_0.result.CalculationPointCorrectionProperty;
+import nl.overheid.aerius.gml.v6_0.result.CriticalLevel;
+import nl.overheid.aerius.gml.v6_0.result.CriticalLevelProperty;
 import nl.overheid.aerius.gml.v6_0.result.CustomCalculationPoint;
+import nl.overheid.aerius.gml.v6_0.result.EntityReference;
+import nl.overheid.aerius.gml.v6_0.result.EntityReferenceProperty;
 import nl.overheid.aerius.gml.v6_0.result.NcaCustomCalculationPoint;
 import nl.overheid.aerius.gml.v6_0.result.ReceptorPoint;
 import nl.overheid.aerius.gml.v6_0.result.Result;
@@ -94,8 +96,7 @@ final class Result2GML {
 
   private String determineId(final CalculationPoint point) {
     //avoid conflicting IDs by using a prefix.
-    if (point instanceof nl.overheid.aerius.shared.domain.v2.point.SubPoint) {
-      final nl.overheid.aerius.shared.domain.v2.point.SubPoint subPoint = (nl.overheid.aerius.shared.domain.v2.point.SubPoint) point;
+    if (point instanceof final nl.overheid.aerius.shared.domain.v2.point.SubPoint subPoint) {
       return GMLIdUtil.toValidGmlId(point.getGmlId(), GMLIdUtil.SUB_POINT_PREFIX, subPoint.getReceptorId() + "_" + subPoint.getSubPointId());
     } else {
       return GMLIdUtil.toValidGmlId(point.getGmlId(), GMLIdUtil.POINT_PREFIX, String.valueOf(point.getId()));
@@ -104,14 +105,14 @@ final class Result2GML {
 
   private AbstractCalculationPoint determineSpecificType(final CalculationPoint aeriusPoint, final Point point) throws AeriusException {
     final AbstractCalculationPoint returnPoint;
-    if (aeriusPoint instanceof nl.overheid.aerius.shared.domain.v2.point.CIMLKCalculationPoint) {
-      returnPoint = fromAeriusCalculationPoint((nl.overheid.aerius.shared.domain.v2.point.CIMLKCalculationPoint) aeriusPoint);
-    } else if (aeriusPoint instanceof nl.overheid.aerius.shared.domain.v2.point.NcaCustomCalculationPoint) {
-      returnPoint = fromNcaCustomPoint((nl.overheid.aerius.shared.domain.v2.point.NcaCustomCalculationPoint) aeriusPoint);
-    } else if (aeriusPoint instanceof nl.overheid.aerius.shared.domain.v2.point.CustomCalculationPoint) {
-      returnPoint = fromCustomPoint((nl.overheid.aerius.shared.domain.v2.point.CustomCalculationPoint) aeriusPoint);
-    } else if (aeriusPoint instanceof nl.overheid.aerius.shared.domain.v2.point.SubPoint) {
-      returnPoint = fromSubPoint((nl.overheid.aerius.shared.domain.v2.point.SubPoint) aeriusPoint);
+    if (aeriusPoint instanceof final nl.overheid.aerius.shared.domain.v2.point.CIMLKCalculationPoint cimlkPoint) {
+      returnPoint = fromAeriusCalculationPoint(cimlkPoint);
+    } else if (aeriusPoint instanceof final nl.overheid.aerius.shared.domain.v2.point.NcaCustomCalculationPoint ncaPoint) {
+      returnPoint = fromNcaCustomPoint(ncaPoint);
+    } else if (aeriusPoint instanceof final nl.overheid.aerius.shared.domain.v2.point.CustomCalculationPoint customPoint) {
+      returnPoint = fromCustomPoint(customPoint);
+    } else if (aeriusPoint instanceof final nl.overheid.aerius.shared.domain.v2.point.SubPoint subPoint) {
+      returnPoint = fromSubPoint(subPoint);
     } else {
       returnPoint = fromReceptorPoint((nl.overheid.aerius.shared.domain.v2.point.ReceptorPoint) aeriusPoint, point);
     }
@@ -132,7 +133,39 @@ final class Result2GML {
     returnPoint.setRoadLocalFractionNO2(aeriusPoint.getRoadLocalFractionNO2());
     setCustomProperties(aeriusPoint, returnPoint);
     returnPoint.setHeight(NcaPointHeightSupplier.getHeight(aeriusPoint));
+    returnPoint.setEntityReferences(fromEntityReferences(aeriusPoint.getEntityReferences()));
     return returnPoint;
+  }
+
+  private List<EntityReferenceProperty> fromEntityReferences(final List<nl.overheid.aerius.shared.domain.v2.point.EntityReference> entityReferences) {
+    final List<EntityReferenceProperty> converted = new ArrayList<>();
+    if (entityReferences != null) {
+      for (final nl.overheid.aerius.shared.domain.v2.point.EntityReference entityReference : entityReferences) {
+        converted.add(new EntityReferenceProperty(convert(entityReference)));
+      }
+    }
+    return converted;
+  }
+
+  private EntityReference convert(final nl.overheid.aerius.shared.domain.v2.point.EntityReference entityReference) {
+    final EntityReference gmlEntityReference = new EntityReference();
+    gmlEntityReference.setEntityType(entityReference.getEntityType().name());
+    gmlEntityReference.setCode(entityReference.getCode());
+    gmlEntityReference.setDescription(entityReference.getDescription());
+    if (entityReference.getCriticalLevels() != null) {
+      for (final Entry<EmissionResultKey, Double> entry : entityReference.getCriticalLevels().entrySet()) {
+        gmlEntityReference.getCriticalLevels().add(new CriticalLevelProperty(convert(entry.getKey(), entry.getValue())));
+      }
+    }
+    return gmlEntityReference;
+  }
+
+  private CriticalLevel convert(final EmissionResultKey key, final Double value) {
+    final CriticalLevel criticalLevel = new CriticalLevel();
+    criticalLevel.setResultType(key.getEmissionResultType());
+    criticalLevel.setSubstance(key.getSubstance());
+    criticalLevel.setValue(value);
+    return criticalLevel;
   }
 
   private AbstractCalculationPoint fromCustomPoint(final nl.overheid.aerius.shared.domain.v2.point.CustomCalculationPoint aeriusPoint) {
@@ -168,9 +201,9 @@ final class Result2GML {
     returnReceptorPoint.setEdgeEffect(aeriusPoint.getEdgeEffect());
     //receptor are represented by a hexagon.
     final Geometry geometry = HexagonUtil.createHexagon(point, zoomLevel1);
-    if (geometry instanceof nl.overheid.aerius.shared.domain.v2.geojson.Polygon) {
+    if (geometry instanceof final nl.overheid.aerius.shared.domain.v2.geojson.Polygon polygon) {
       returnReceptorPoint.setRepresentation(
-          geometry2gml.toXMLPolygon((nl.overheid.aerius.shared.domain.v2.geojson.Polygon) geometry, new Polygon()));
+          geometry2gml.toXMLPolygon(polygon, new Polygon()));
     }
     return returnReceptorPoint;
   }
@@ -180,20 +213,16 @@ final class Result2GML {
     final List<ResultProperty> results = toResultProperties(aeriusPoint, substanceList);
     //sort the list so the substances ordering is preserved and the ordering is always the same (concentration before deposition).
     //some of the unittests expect this ordering, but for consistency sake it's better to return the results in the same order.
-    Collections.sort(results, new Comparator<ResultProperty>() {
-
-      @Override
-      public int compare(final ResultProperty o1, final ResultProperty o2) {
-        final Result result1 = o1.getProperty();
-        final Result result2 = o2.getProperty();
-        int compared = Integer.compare(
-            substanceList.indexOf(result1.getSubstance()),
-            substanceList.indexOf(result2.getSubstance()));
-        if (compared == 0) {
-          compared = result1.getResultType().name().compareTo(result2.getResultType().name());
-        }
-        return compared;
+    Collections.sort(results, (o1, o2) -> {
+      final Result result1 = o1.getProperty();
+      final Result result2 = o2.getProperty();
+      int compared = Integer.compare(
+          substanceList.indexOf(result1.getSubstance()),
+          substanceList.indexOf(result2.getSubstance()));
+      if (compared == 0) {
+        compared = result1.getResultType().name().compareTo(result2.getResultType().name());
       }
+      return compared;
     });
     //to avoid having empty depositions tag, return null when empty.
     return results.isEmpty() ? null : results;
@@ -225,7 +254,7 @@ final class Result2GML {
         .filter(correction -> correction.getCalculationPointGmlId().equals(aeriusPoint.getGmlId()))
         .map(this::toGMLCorrection)
         .map(CalculationPointCorrectionProperty::new)
-        .collect(Collectors.toList());
+        .toList();
   }
 
   public CalculationPointCorrection toGMLCorrection(final CIMLKCorrection correction) {

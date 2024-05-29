@@ -16,10 +16,30 @@
  */
 package nl.overheid.aerius.shared.domain.v2.point;
 
+import java.util.Locale;
+
 /**
  * Entity types of entity references
  */
 public enum EntityType {
   CRITICAL_LEVEL_ENTITY,
-  HABITAT_TYPE
+  HABITAT_TYPE;
+
+  /**
+   * Safely returns a EntityType. It is case independent and returns null in case the input was null or the entity type could not be found.
+   *
+   * @param value value to convert
+   * @return EntityType or null if no valid input
+   */
+  public static EntityType safeValueOf(final String value) {
+    EntityType returnValue = null;
+    if (value != null) {
+      try {
+        returnValue = valueOf(value.toUpperCase(Locale.ROOT));
+      } catch (final IllegalArgumentException e) {
+        // not a correct value apparently, return null.
+      }
+    }
+    return returnValue;
+  }
 }
