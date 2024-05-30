@@ -153,7 +153,9 @@ class GMLValidateErrorsTest {
     assertResult("fout_5216_unknown_pas_measure", "GML Unknown PAS measure", ImaerExceptionReason.GML_CONVERTED_LODGING_WITH_SYSTEMS,
         e -> {
           assertEquals("ES.1", e.getArgs()[0], "Id");
-          assertEquals("A1.1", e.getArgs()[1], "Code of lodging");
+          assertEquals("Bron 1", e.getArgs()[1], "Label");
+          assertEquals("A1.1", e.getArgs()[2], "Code of lodging");
+          assertEquals("GL_BB93.06.009", e.getArgs()[3], "System definition code of lodging");
         });
   }
 
@@ -162,8 +164,10 @@ class GMLValidateErrorsTest {
     // With animal housing, lodgings with systems are just converted with special warning.
     assertResult("fout_5217_unsupported_lodging_measure", "GML Unsupported loding measure", ImaerExceptionReason.GML_CONVERTED_LODGING_WITH_SYSTEMS,
         e -> {
-          assertEquals("ES.1", e.getArgs()[0], "Label");
-          assertEquals("A1.1", e.getArgs()[1], "Code of lodging");
+          assertEquals("ES.1", e.getArgs()[0], "ID");
+          assertEquals("Bron 1", e.getArgs()[1], "Label");
+          assertEquals("A1.1", e.getArgs()[2], "Code of lodging");
+          assertEquals("GL_BB93.06.009", e.getArgs()[3], "System definition code of lodging");
         });
   }
 

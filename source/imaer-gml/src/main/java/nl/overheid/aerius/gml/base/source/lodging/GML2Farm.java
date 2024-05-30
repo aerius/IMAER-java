@@ -70,18 +70,18 @@ public class GML2Farm<T extends IsGmlFarmLodgingEmissionSource> extends Abstract
   private FarmAnimalHousingEmissionSource convertToAnimalHousing(final T source) throws AeriusException {
     final FarmAnimalHousingEmissionSource animalHousingSource = new FarmAnimalHousingEmissionSource();
     for (final IsGmlProperty<IsGmlFarmLodging> lodging : source.getFarmLodgings()) {
-      animalHousingSource.getSubSources().add(getAnimalHousing(lodging.getProperty(), source.getId()));
+      animalHousingSource.getSubSources().add(getAnimalHousing(lodging.getProperty(), source));
     }
     animalHousingSource.setEstablished(source.getEstablished());
     return animalHousingSource;
   }
 
-  private FarmAnimalHousing getAnimalHousing(final IsGmlFarmLodging lodging, final String sourceId) throws AeriusException {
+  private FarmAnimalHousing getAnimalHousing(final IsGmlFarmLodging lodging, final T source) throws AeriusException {
     final FarmAnimalHousing returnAnimalHousing;
     if (lodging instanceof final IsGmlCustomFarmLodging customLodging) {
-      returnAnimalHousing = convertCustom(customLodging, sourceId);
+      returnAnimalHousing = convertCustom(customLodging, source);
     } else if (lodging instanceof final IsGmlStandardFarmLodging standardLodging) {
-      returnAnimalHousing = convertStandard(standardLodging, sourceId);
+      returnAnimalHousing = convertStandard(standardLodging, source);
     } else {
       LOG.error("Don't know how to treat lodging type: {}", lodging.getClass());
       throw new AeriusException(ImaerExceptionReason.INTERNAL_ERROR);
@@ -91,11 +91,11 @@ public class GML2Farm<T extends IsGmlFarmLodgingEmissionSource> extends Abstract
     return returnAnimalHousing;
   }
 
-  private CustomFarmAnimalHousing convertCustom(final IsGmlCustomFarmLodging customLodging, final String sourceId) throws AeriusException {
+  private CustomFarmAnimalHousing convertCustom(final IsGmlCustomFarmLodging customLodging, final T source) throws AeriusException {
     final CustomFarmAnimalHousing customEmissions = new CustomFarmAnimalHousing();
     customEmissions.setAnimalTypeCode(customLodging.getAnimalCode() == null ? UNKNOWN_ANIMAL_TYPE_CODE : customLodging.getAnimalCode());
     customEmissions.setDescription(customLodging.getDescription());
-    customEmissions.setFarmEmissionFactorType(determineEmissionFactorType(customLodging.getEmissionFactorType(), sourceId));
+    customEmissions.setFarmEmissionFactorType(determineEmissionFactorType(customLodging.getEmissionFactorType(), source.getId()));
     for (final IsGmlProperty<IsGmlEmission> emissionProperty : customLodging.getEmissionFactors()) {
       final IsGmlEmission emission = emissionProperty.getProperty();
       customEmissions.getEmissionFactors().put(emission.getSubstance(), emission.getValue());
@@ -103,15 +103,15 @@ public class GML2Farm<T extends IsGmlFarmLodgingEmissionSource> extends Abstract
     return customEmissions;
   }
 
-  private FarmAnimalHousing convertStandard(final IsGmlStandardFarmLodging standardLodging, final String sourceId) {
+  private FarmAnimalHousing convertStandard(final IsGmlStandardFarmLodging standardLodging, final T source) {
     final FarmAnimalHousing converted;
     final String oldCode = standardLodging.getCode();
 
     final FarmLodgingConversion conversion = getConversionData().determineFarmLodgingConversion(oldCode);
     if (conversion == null) {
-      converted = convertStandardWithoutConversion(standardLodging, sourceId);
+      converted = convertStandardWithoutConversion(standardLodging, source);
     } else {
-      converted = convertStandardWithConversion(conversion, standardLodging, sourceId);
+      converted = convertStandardWithConversion(conversion, standardLodging, source);
     }
     converted.setNumberOfAnimals(standardLodging.getNumberOfAnimals());
     converted.setNumberOfDays(standardLodging.getNumberOfDays());
@@ -120,7 +120,7 @@ public class GML2Farm<T extends IsGmlFarmLodgingEmissionSource> extends Abstract
   }
 
   private CustomFarmAnimalHousing convertStandardWithoutConversion(
-      final IsGmlStandardFarmLodging standardLodging, final String sourceId) {
+      final IsGmlStandardFarmLodging standardLodging, final T source) {
     final CustomFarmAnimalHousing customEmissions = new CustomFarmAnimalHousing();
     // Not sure if this'll stick: relies on custom animal housing using the old AnimalType codes.
     customEmissions.setAnimalTypeCode(standardLodging.getCode() == null || standardLodging.getCode().length() <= 1
@@ -130,12 +130,12 @@ public class GML2Farm<T extends IsGmlFarmLodgingEmissionSource> extends Abstract
     customEmissions.setFarmEmissionFactorType(FarmEmissionFactorType.PER_ANIMAL_PER_YEAR);
     customEmissions.getEmissionFactors().put(Substance.NH3, 0.0);
     // Warn the user that this source has been converted to custom animal housing.
-    addWarningForSource(ImaerExceptionReason.GML_CONVERTED_LODGING_TO_CUSTOM, sourceId, standardLodging);
+    addWarningForSource(ImaerExceptionReason.GML_CONVERTED_LODGING_TO_CUSTOM, source, standardLodging);
     return customEmissions;
   }
 
   private StandardFarmAnimalHousing convertStandardWithConversion(final FarmLodgingConversion conversion,
-      final IsGmlStandardFarmLodging standardLodging, final String sourceId) {
+      final IsGmlStandardFarmLodging standardLodging, final T source) {
     final StandardFarmAnimalHousing standardEmissions = new StandardFarmAnimalHousing();
     standardEmissions.setAnimalTypeCode(conversion.getAnimalTypeCode());
     standardEmissions.setAnimalHousingCode(conversion.getAnimalHousingCode());
@@ -147,16 +147,21 @@ public class GML2Farm<T extends IsGmlFarmLodgingEmissionSource> extends Abstract
     if (!standardLodging.getLodgingSystems().isEmpty() || !standardLodging.getFodderMeasures().isEmpty()) {
       // We can't convert additional systems: no data available to do so.
       // Instead, add a specific warning that the user has to check additional systems for this source.
-      addWarningForSource(ImaerExceptionReason.GML_CONVERTED_LODGING_WITH_SYSTEMS, sourceId, standardLodging);
+      addWarningForSource(ImaerExceptionReason.GML_CONVERTED_LODGING_WITH_SYSTEMS, source, standardLodging);
     } else if (!conversion.getAnimalHousingCode().equals(standardLodging.getCode())) {
       // Warn the user that this source has been converted.
-      addWarningForSource(ImaerExceptionReason.GML_CONVERTED_LODGING, sourceId, standardLodging);
+      addWarningForSource(ImaerExceptionReason.GML_CONVERTED_LODGING, source, standardLodging);
     }
     return standardEmissions;
   }
 
-  private void addWarningForSource(final ImaerExceptionReason reason, final String sourceId, final IsGmlStandardFarmLodging standardLodging) {
-    getConversionData().getWarnings().add(new AeriusException(reason, sourceId, standardLodging.getCode()));
+  private void addWarningForSource(final ImaerExceptionReason reason, final T source, final IsGmlStandardFarmLodging standardLodging) {
+    getConversionData().getWarnings().add(new AeriusException(reason, source.getId(), safe(source.getLabel()),
+        standardLodging.getCode(), safe(standardLodging.getLodgingSystemDefinitionCode())));
+  }
+
+  private String safe(final String value) {
+    return value == null ? "" : value;
   }
 
   public FarmLodgingEmissionSource convertLegacy(final T source) throws AeriusException {
