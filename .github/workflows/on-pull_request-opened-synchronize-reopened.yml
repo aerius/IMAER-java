@@ -21,3 +21,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ROOT_POM_DIRECTORY: repo/source
           JDK_VERSION: 17
+          IGNORE_TEST_FAILURES: false
