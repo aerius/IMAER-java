@@ -23,8 +23,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.DoubleStream;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import nl.overheid.aerius.shared.domain.v2.characteristics.CustomTimeVaryingProfile;
 import nl.overheid.aerius.shared.domain.v2.characteristics.CustomTimeVaryingProfileType;
@@ -133,6 +137,41 @@ class DefinitionsValidatorTest {
     assertEquals(ImaerExceptionReason.CUSTOM_TIME_VARYING_PROFILE_INVALID_SUM, errors.get(0).getReason(), "Error reason");
     assertArrayEquals(new Object[] {"24", "26.4"}, errors.get(0).getArgs(), "Arguments");
     assertEquals(List.of(), warnings, "No warnings");
+  }
+
+  @ParameterizedTest
+  @MethodSource("casesEqualEnough")
+  void testTimeVaryingProfileSumValuesEqualEnough(final double lastValue, final boolean valid, final String argumentWhenInvalid) {
+    final Definitions definitions = new Definitions();
+    final List<Double> values = DoubleStream.generate(() -> 1.0)
+        .limit(23)
+        .mapToObj(Double::valueOf)
+        .collect(Collectors.toList());
+    values.add(lastValue);
+    final CustomTimeVaryingProfile timeVaryingProfile = createTimeVaryingProfile(CustomTimeVaryingProfileType.DAY, values);
+    definitions.getCustomTimeVaryingProfiles().add(timeVaryingProfile);
+
+    final List<AeriusException> errors = new ArrayList<>();
+    final List<AeriusException> warnings = new ArrayList<>();
+
+    DefinitionsValidator.validateDefinitions(definitions, errors, warnings);
+
+    if (valid) {
+      assertEquals(List.of(), errors, "No errors");
+    } else {
+      assertEquals(1, errors.size(), "Number of errors");
+      assertEquals(ImaerExceptionReason.CUSTOM_TIME_VARYING_PROFILE_INVALID_SUM, errors.get(0).getReason(), "Error reason");
+      assertArrayEquals(new Object[] {"24", argumentWhenInvalid}, errors.get(0).getArgs(), "Arguments");
+    }
+    assertEquals(List.of(), warnings, "No warnings");
+  }
+
+  private static Stream<Arguments> casesEqualEnough() {
+    return Stream.of(
+        Arguments.of(0.49999, false, "23.5"),
+        Arguments.of(0.5, true, null),
+        Arguments.of(1.5, true, null),
+        Arguments.of(1.50001, false, "24.5"));
   }
 
   private static CustomTimeVaryingProfile createTimeVaryingProfile(final CustomTimeVaryingProfileType type, final List<Double> values) {

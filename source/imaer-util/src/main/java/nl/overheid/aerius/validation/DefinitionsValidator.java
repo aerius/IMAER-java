@@ -57,7 +57,7 @@ public final class DefinitionsValidator {
     }
     final double valuesSum = customType.sum(timeVaryingProfile.getValues());
     final double expectedSum = customType.getExpectedTotalNumberOfValues();
-    if (Math.abs(expectedSum - valuesSum) >= CustomTimeVaryingProfile.ALLOWED_EPSILON) {
+    if (Math.abs(expectedSum - valuesSum) > CustomTimeVaryingProfile.ALLOWED_EPSILON) {
       return Optional.of(new AeriusException(ImaerExceptionReason.CUSTOM_TIME_VARYING_PROFILE_INVALID_SUM,
           DECIMAL_FORMAT.format(expectedSum),
           DECIMAL_FORMAT.format(valuesSum)));
