@@ -649,6 +649,13 @@ public enum ImaerExceptionReason implements Reason {
   BUILDING_HEIGHT_TOO_HIGH(5244),
 
   /**
+   * There are more buildings in a situation than the maximum
+   *
+   * @param 0 The maximum number of allowed buildings
+   */
+  TOO_MANY_BUILDINGS_IN_SITUATION(5245),
+
+  /**
    * Value is <= 0.
    *
    * @param 0 Label of the object that has an unexpected negative value.

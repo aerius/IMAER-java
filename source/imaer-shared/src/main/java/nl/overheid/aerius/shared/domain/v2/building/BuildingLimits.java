@@ -51,4 +51,6 @@ public interface BuildingLimits extends Serializable {
   double buildingDiameterMinimum();
 
   double buildingDiameterMaximum();
+
+  int buildingMaximumPerSituation();
 }

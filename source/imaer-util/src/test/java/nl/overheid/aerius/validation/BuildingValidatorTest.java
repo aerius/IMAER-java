@@ -23,6 +23,7 @@ import static org.mockito.Mockito.mock;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
@@ -162,6 +163,23 @@ class BuildingValidatorTest {
     assertEquals(List.of(), warnings, "No warnings");
   }
 
+  @Test
+  void testTooManyBuildings() {
+    final BuildingFeature building = createBuilding(1);
+    building.setGeometry(new Point(0, 0));
+    building.getProperties().setDiameter(1);
+
+    final List<AeriusException> errors = new ArrayList<>();
+    final List<AeriusException> warnings = new ArrayList<>();
+
+    BuildingValidator.validateBuildings(IntStream.range(1, 80).mapToObj(s -> building).toList(), limits(false), errors, warnings);
+
+    assertEquals(1, errors.size(), "Number of errors");
+    assertEquals(ImaerExceptionReason.TOO_MANY_BUILDINGS_IN_SITUATION, errors.get(0).getReason(), "Error reason");
+    assertArrayEquals(new Object[] {"50"}, errors.get(0).getArgs(), "Arguments");
+    assertEquals(List.of(), warnings, "No warnings");
+  }
+
   private static BuildingLimits limits(final boolean upperLimitWarning) {
     final BuildingLimits limits = mock(BuildingLimits.class);
     lenient().when(limits.isCircularBuildingSupported()).thenReturn(true);
@@ -170,6 +188,7 @@ class BuildingValidatorTest {
     lenient().when(limits.buildingDiameterMinimum()).thenReturn(0.0);
     lenient().when(limits.buildingDiameterMaximum()).thenReturn(3.0);
     lenient().when(limits.isBuildingUpperLimitWarning()).thenReturn(upperLimitWarning);
+    lenient().when(limits.buildingMaximumPerSituation()).thenReturn(50);
     return limits;
   }
 

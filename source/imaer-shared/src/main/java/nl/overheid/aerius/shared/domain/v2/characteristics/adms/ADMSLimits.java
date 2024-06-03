@@ -133,6 +133,8 @@ public final class ADMSLimits implements BuildingLimits {
   public static final boolean SPATIALLY_VARYING_ROUGHNESS_DEFAULT = true;
   public static final boolean ADMS_COMPLEX_TERRAIN_DEFAULT = false;
 
+  private static final int ADMS_MAX_BUILDINGS_PER_SITUATION = 50;
+
   public static final ADMSLimits INSTANCE = new ADMSLimits();
 
   private ADMSLimits() {
@@ -192,5 +194,10 @@ public final class ADMSLimits implements BuildingLimits {
   @Override
   public double buildingDiameterMaximum() {
     return BUILDING_DIAMETER_MAXIMUM;
+  }
+
+  @Override
+  public int buildingMaximumPerSituation() {
+    return ADMS_MAX_BUILDINGS_PER_SITUATION;
   }
 }
