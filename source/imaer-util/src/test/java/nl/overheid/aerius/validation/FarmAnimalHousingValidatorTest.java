@@ -47,6 +47,7 @@ import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 class FarmAnimalHousingValidatorTest {
 
   private static final String SOURCE_ID = "OurSourceId";
+  private static final String HOUSING_CODE = "SomeStandardHouse";
 
   @Mock FarmAnimalHousingValidationHelper validationHelper;
 
@@ -166,9 +167,8 @@ class FarmAnimalHousingValidatorTest {
     final StandardFarmAnimalHousing subSource = new StandardFarmAnimalHousing();
     final String animalCode = "SomeAnimalCode";
     subSource.setAnimalTypeCode(animalCode);
-    final String housingCode = "SomeStandardHouse";
-    mockHousingCategory(housingCode, animalCode);
-    subSource.setAnimalHousingCode(housingCode);
+    mockHousingCategory(HOUSING_CODE, animalCode);
+    subSource.setAnimalHousingCode(HOUSING_CODE);
     source.getSubSources().add(subSource);
 
     final List<AeriusException> errors = new ArrayList<>();
@@ -189,8 +189,7 @@ class FarmAnimalHousingValidatorTest {
     final String animalCode = "SomeAnimalCode";
     mockAnimalCategory(animalCode);
     subSource.setAnimalTypeCode(animalCode);
-    final String housingCode = "SomeStandardHouse";
-    subSource.setAnimalHousingCode(housingCode);
+    subSource.setAnimalHousingCode(HOUSING_CODE);
     source.getSubSources().add(subSource);
 
     final List<AeriusException> errors = new ArrayList<>();
@@ -200,7 +199,7 @@ class FarmAnimalHousingValidatorTest {
     final boolean valid = validator.validate(source);
 
     assertInvalidCase(valid, errors, warnings, ImaerExceptionReason.GML_UNKNOWN_ANIMAL_HOUSING_CODE, new Object[] {
-        SOURCE_ID, housingCode
+        SOURCE_ID, HOUSING_CODE
     });
   }
 
@@ -211,9 +210,8 @@ class FarmAnimalHousingValidatorTest {
     final String animalCode = "SomeAnimalCode";
     mockAnimalCategory(animalCode);
     subSource.setAnimalTypeCode(animalCode);
-    final String housingCode = "SomeStandardHouse";
-    mockHousingCategory(housingCode, "otherAnimalCode");
-    subSource.setAnimalHousingCode(housingCode);
+    mockHousingCategory(HOUSING_CODE, "otherAnimalCode");
+    subSource.setAnimalHousingCode(HOUSING_CODE);
     source.getSubSources().add(subSource);
 
     final List<AeriusException> errors = new ArrayList<>();
@@ -223,7 +221,7 @@ class FarmAnimalHousingValidatorTest {
     final boolean valid = validator.validate(source);
 
     assertInvalidCase(valid, errors, warnings, ImaerExceptionReason.GML_UNSUPPORTED_ANIMAL_HOUSING_COMBINATION, new Object[] {
-        SOURCE_ID, animalCode, housingCode
+        SOURCE_ID, animalCode, HOUSING_CODE
     });
   }
 
@@ -235,7 +233,7 @@ class FarmAnimalHousingValidatorTest {
 
     final String additionalSystemCode = "SomeAdditionalCode";
     final StandardAdditionalHousingSystem additionalSystem = new StandardAdditionalHousingSystem();
-    mockAdditionalSystemCategory(additionalSystemCode, animalCode);
+    mockAdditionalSystemCategory(additionalSystemCode, HOUSING_CODE);
     additionalSystem.setAdditionalSystemCode(additionalSystemCode);
     subSource.getAdditionalSystems().add(additionalSystem);
     source.getSubSources().add(subSource);
@@ -279,7 +277,7 @@ class FarmAnimalHousingValidatorTest {
     final StandardFarmAnimalHousing subSource = mockValidStandardHousing(animalCode);
 
     final String additionalSystemCode = "SomeAdditionalCode";
-    mockAdditionalSystemCategory(additionalSystemCode, "OtherAnimalCode");
+    mockAdditionalSystemCategory(additionalSystemCode, "OtherHousingCode");
     final StandardAdditionalHousingSystem additionalSystem = new StandardAdditionalHousingSystem();
     additionalSystem.setAdditionalSystemCode(additionalSystemCode);
     subSource.getAdditionalSystems().add(additionalSystem);
@@ -292,7 +290,7 @@ class FarmAnimalHousingValidatorTest {
     final boolean valid = validator.validate(source);
 
     assertInvalidCase(valid, errors, warnings, ImaerExceptionReason.GML_UNSUPPORTED_ANIMAL_HOUSING_COMBINATION, new Object[] {
-        SOURCE_ID, animalCode, additionalSystemCode
+        SOURCE_ID, HOUSING_CODE, additionalSystemCode
     });
   }
 
@@ -300,9 +298,8 @@ class FarmAnimalHousingValidatorTest {
     final StandardFarmAnimalHousing subSource = new StandardFarmAnimalHousing();
     mockAnimalCategory(animalCode);
     subSource.setAnimalTypeCode(animalCode);
-    final String housingCode = "SomeStandardHouse";
-    mockHousingCategory(housingCode, animalCode);
-    subSource.setAnimalHousingCode(housingCode);
+    mockHousingCategory(HOUSING_CODE, animalCode);
+    subSource.setAnimalHousingCode(HOUSING_CODE);
     return subSource;
   }
 
@@ -313,10 +310,9 @@ class FarmAnimalHousingValidatorTest {
     final String animalCode = "SomeAnimalCode";
     mockAnimalCategory(animalCode);
     subSource.setAnimalTypeCode(animalCode);
-    final String housingCode = "SomeStandardHouse";
-    mockHousingCategory(housingCode, animalCode);
-    when(validationHelper.getAnimalHousingEmissionFactorType(housingCode)).thenReturn(FarmEmissionFactorType.PER_ANIMAL_PER_DAY);
-    subSource.setAnimalHousingCode(housingCode);
+    mockHousingCategory(HOUSING_CODE, animalCode);
+    when(validationHelper.getAnimalHousingEmissionFactorType(HOUSING_CODE)).thenReturn(FarmEmissionFactorType.PER_ANIMAL_PER_DAY);
+    subSource.setAnimalHousingCode(HOUSING_CODE);
     subSource.setNumberOfDays(40);
     source.getSubSources().add(subSource);
 
@@ -336,10 +332,9 @@ class FarmAnimalHousingValidatorTest {
     final String animalCode = "SomeAnimalCode";
     mockAnimalCategory(animalCode);
     subSource.setAnimalTypeCode(animalCode);
-    final String housingCode = "SomeStandardHouse";
-    mockHousingCategory(housingCode, animalCode);
-    when(validationHelper.getAnimalHousingEmissionFactorType(housingCode)).thenReturn(FarmEmissionFactorType.PER_ANIMAL_PER_DAY);
-    subSource.setAnimalHousingCode(housingCode);
+    mockHousingCategory(HOUSING_CODE, animalCode);
+    when(validationHelper.getAnimalHousingEmissionFactorType(HOUSING_CODE)).thenReturn(FarmEmissionFactorType.PER_ANIMAL_PER_DAY);
+    subSource.setAnimalHousingCode(HOUSING_CODE);
     source.getSubSources().add(subSource);
 
     final List<AeriusException> errors = new ArrayList<>();
@@ -471,9 +466,9 @@ class FarmAnimalHousingValidatorTest {
     lenient().when(validationHelper.getAnimalHousingEmissionFactorType(code)).thenReturn(FarmEmissionFactorType.PER_ANIMAL_PER_YEAR);
   }
 
-  private void mockAdditionalSystemCategory(final String code, final String animalCode) {
+  private void mockAdditionalSystemCategory(final String code, final String housingCode) {
     lenient().when(validationHelper.isValidFarmAdditionalSystemCode(code)).thenReturn(true);
-    lenient().when(validationHelper.isValidFarmAdditionalSystemCombination(animalCode, code)).thenReturn(true);
+    lenient().when(validationHelper.isValidFarmAdditionalSystemCombination(housingCode, code)).thenReturn(true);
   }
 
   private static void assertValidCase(final boolean valid, final List<AeriusException> errors, final List<AeriusException> warnings) {

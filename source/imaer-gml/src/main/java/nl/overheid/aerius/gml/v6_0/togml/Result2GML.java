@@ -156,8 +156,17 @@ final class Result2GML {
       for (final Entry<EmissionResultKey, Double> entry : entityReference.getCriticalLevels().entrySet()) {
         gmlEntityReference.getCriticalLevels().add(new CriticalLevelProperty(convert(entry.getKey(), entry.getValue())));
       }
+      gmlEntityReference.getCriticalLevels().sort(Result2GML::compare);
     }
     return gmlEntityReference;
+  }
+
+  private static int compare(final CriticalLevelProperty o1, final CriticalLevelProperty o2) {
+    int sort = o1.getProperty().getResultType().compareTo(o2.getProperty().getResultType());
+    if (sort == 0) {
+      sort = o1.getProperty().getSubstance().compareTo(o2.getProperty().getSubstance());
+    }
+    return sort;
   }
 
   private CriticalLevel convert(final EmissionResultKey key, final Double value) {
