@@ -99,6 +99,12 @@ public final class ADMSLimits implements BuildingLimits {
   public static final int ROAD_WIDTH_MAX = 100;
   public static final int ROAD_COVERAGE_MIN = 0;
   public static final int ROAD_COVERAGE_MAX = 100;
+  public static final double ROAD_BARRIER_WIDTH_MIN = 0.0;
+  public static final double ROAD_BARRIER_MAXIMUM_HEIGHT_MIN = 0.001;
+  public static final double ROAD_BARRIER_AVERAGE_HEIGHT_MIN = 0.001;
+  public static final double ROAD_BARRIER_MINIMUM_HEIGHT_MIN = 0.0;
+  public static final double ROAD_BARRIER_POROSITY_MIN = 0.0;
+  public static final double ROAD_BARRIER_POROSITY_MAX = 100.0;
 
   public static final double ELEVATION_ANGLE_DEFAULT = 0.0;
   public static final double ELEVATION_ANGLE_MIN = 0.0;
