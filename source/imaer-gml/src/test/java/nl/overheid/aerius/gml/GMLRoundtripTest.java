@@ -163,6 +163,9 @@ class GMLRoundtripTest {
       {"farm_animal_housing", CharacteristicsType.OPS},
       {"farm_animal_housing_with_systems", CharacteristicsType.OPS},
       {"farm_animal_housing_custom_per_day", CharacteristicsType.OPS},
+      // Case where lodging could not be converted directly to animal housing
+      {"farm_no_conversion", CharacteristicsType.OPS,
+        EnumSet.of(ImaerExceptionReason.GML_SOURCE_NO_EMISSION, ImaerExceptionReason.GML_CONVERTED_LODGING_TO_CUSTOM), true},
   };
 
   private static final String LATEST_VERSION = "latest";
@@ -229,6 +232,9 @@ class GMLRoundtripTest {
     }
     if (warnings.contains(ImaerExceptionReason.GML_CONVERTED_LODGING_WITH_SYSTEMS) && version.ordinal() <= AeriusGMLVersion.V6_0.ordinal()) {
       warnings.remove(ImaerExceptionReason.GML_CONVERTED_LODGING_WITH_SYSTEMS);
+    }
+    if (warnings.contains(ImaerExceptionReason.GML_CONVERTED_LODGING_TO_CUSTOM) && version.ordinal() <= AeriusGMLVersion.V6_0.ordinal()) {
+      warnings.remove(ImaerExceptionReason.GML_CONVERTED_LODGING_TO_CUSTOM);
     }
     return warnings;
   }
