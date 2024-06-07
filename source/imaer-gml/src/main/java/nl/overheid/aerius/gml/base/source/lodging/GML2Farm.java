@@ -16,6 +16,10 @@
  */
 package nl.overheid.aerius.gml.base.source.lodging;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -126,7 +130,10 @@ public class GML2Farm<T extends IsGmlFarmLodgingEmissionSource> extends Abstract
     customEmissions.setAnimalTypeCode(standardLodging.getCode() == null || standardLodging.getCode().length() <= 1
         ? UNKNOWN_ANIMAL_TYPE_CODE
         : standardLodging.getCode().substring(0, 1));
-    customEmissions.setDescription("");
+    final List<String> descriptionParts = new ArrayList<>();
+    Optional.ofNullable(standardLodging.getCode()).ifPresent(descriptionParts::add);
+    Optional.ofNullable(standardLodging.getLodgingSystemDefinitionCode()).ifPresent(descriptionParts::add);
+    customEmissions.setDescription(String.join(", ", descriptionParts));
     customEmissions.setFarmEmissionFactorType(FarmEmissionFactorType.PER_ANIMAL_PER_YEAR);
     customEmissions.getEmissionFactors().put(Substance.NH3, 0.0);
     // Warn the user that this source has been converted to custom animal housing.
