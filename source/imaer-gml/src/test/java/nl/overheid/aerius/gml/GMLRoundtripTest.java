@@ -121,7 +121,7 @@ class GMLRoundtripTest {
       {"industry_with_calculated_heat_content", CharacteristicsType.OPS},
       {"industry_with_default_emission_temperature", CharacteristicsType.OPS},
       {"industry_with_building", CharacteristicsType.OPS},
-      {"industry_with_circular_building", CharacteristicsType.OPS},
+      {"industry_with_circular_building", CharacteristicsType.ADMS},
       {"two_networks", CharacteristicsType.OPS},
       {"road_srm1", CharacteristicsType.OPS},
       {"nsl_full_example", CharacteristicsType.OPS},

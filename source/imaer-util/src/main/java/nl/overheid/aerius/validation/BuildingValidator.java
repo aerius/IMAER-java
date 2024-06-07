@@ -18,8 +18,10 @@ package nl.overheid.aerius.validation;
 
 import java.util.List;
 
+import nl.overheid.aerius.shared.domain.ops.OPSLimits;
 import nl.overheid.aerius.shared.domain.v2.building.Building;
 import nl.overheid.aerius.shared.domain.v2.building.BuildingFeature;
+import nl.overheid.aerius.shared.domain.v2.building.BuildingLimits;
 import nl.overheid.aerius.shared.domain.v2.geojson.Point;
 import nl.overheid.aerius.shared.domain.v2.geojson.Polygon;
 import nl.overheid.aerius.shared.exception.AeriusException;
@@ -31,42 +33,61 @@ public final class BuildingValidator {
     // Util class
   }
 
+  /**
+   * @Deprecated Use the variant with a BuildingLimits parameter instead.
+   * This version uses OPS buildings limits as default.
+   */
+  @Deprecated
   public static void validateBuildings(final List<BuildingFeature> buildings, final List<AeriusException> errors,
       final List<AeriusException> warnings) {
-    checkBuildingGeometry(buildings, errors);
-    checkBuildingHeight(buildings, errors, warnings);
-    checkBuildingDiameter(buildings, errors);
+    validateBuildings(buildings, OPSLimits.INSTANCE, errors, warnings);
   }
 
-  private static void checkBuildingGeometry(final List<BuildingFeature> buildings, final List<AeriusException> errors) {
+  public static void validateBuildings(final List<BuildingFeature> buildings, final BuildingLimits buildingLimits,
+      final List<AeriusException> errors, final List<AeriusException> warnings) {
     for (final BuildingFeature feature : buildings) {
-      // Only polygon and point geometries are supported.
-      if (!(feature.getGeometry() instanceof Polygon || feature.getGeometry() instanceof Point)) {
-        errors.add(new AeriusException(ImaerExceptionReason.GML_GEOMETRY_NOT_PERMITTED, feature.getProperties().getLabel()));
+      final boolean valid = checkBuildingGeometry(feature, buildingLimits, errors);
+      // If geometry is not valid, don't bother checking the rest
+      if (valid) {
+        checkBuildingHeight(feature, buildingLimits, errors, warnings);
+        checkBuildingDiameter(feature, buildingLimits, errors);
       }
     }
   }
 
-  private static void checkBuildingHeight(final List<BuildingFeature> buildings, final List<AeriusException> errors,
-      final List<AeriusException> warnings) {
-    for (final BuildingFeature feature : buildings) {
-      final Building building = feature.getProperties();
-      if (building.getHeight() < 0) {
-        errors.add(new AeriusException(ImaerExceptionReason.BUILDING_HEIGHT_TOO_LOW, building.getLabel()));
-      } else if (building.getHeight() == 0) {
-        warnings.add(new AeriusException(ImaerExceptionReason.BUILDING_HEIGHT_ZERO, building.getLabel()));
-      }
+  private static boolean checkBuildingGeometry(final BuildingFeature feature, final BuildingLimits buildingLimits,
+      final List<AeriusException> errors) {
+    boolean valid = true;
+    // Only polygon and point geometries are supported.
+    if (!(feature.getGeometry() instanceof Polygon
+        || (buildingLimits.isCircularBuildingSupported() && feature.getGeometry() instanceof Point))) {
+      errors.add(new AeriusException(ImaerExceptionReason.GML_GEOMETRY_NOT_PERMITTED, feature.getProperties().getLabel()));
+      valid = false;
+    }
+    return valid;
+  }
+
+  private static void checkBuildingHeight(final BuildingFeature feature, final BuildingLimits buildingLimits,
+      final List<AeriusException> errors, final List<AeriusException> warnings) {
+    final Building building = feature.getProperties();
+    if (building.getHeight() < buildingLimits.buildingHeightMinimum()) {
+      errors.add(new AeriusException(ImaerExceptionReason.BUILDING_HEIGHT_TOO_LOW, building.getLabel()));
+    } else if (building.getHeight() == 0) {
+      warnings.add(new AeriusException(ImaerExceptionReason.BUILDING_HEIGHT_ZERO, building.getLabel()));
+    } else if (building.getHeight() > buildingLimits.buildingHeightMaximum()) {
+      errors.add(new AeriusException(ImaerExceptionReason.BUILDING_HEIGHT_TOO_HIGH, building.getLabel()));
     }
   }
 
-  private static void checkBuildingDiameter(final List<BuildingFeature> buildings, final List<AeriusException> errors) {
-    for (final BuildingFeature feature : buildings) {
-      final Building building = feature.getProperties();
-      // When the geometry is a point, that indicates that a circular building is defined.
-      // A circular building consists of a point and a positive diameter.
-      if (feature.getGeometry() instanceof Point && building.getDiameter() <= 0) {
-        errors.add(new AeriusException(ImaerExceptionReason.CIRCULAR_BUILDING_INCORRECT_DIAMETER, building.getLabel()));
-      }
+  private static void checkBuildingDiameter(final BuildingFeature feature, final BuildingLimits buildingLimits,
+      final List<AeriusException> errors) {
+    final Building building = feature.getProperties();
+    // When the geometry is a point, that indicates that a circular building is defined.
+    // A circular building consists of a point and a positive diameter.
+    final double diameter = building.getDiameter();
+    if (feature.getGeometry() instanceof Point
+        && (diameter <= buildingLimits.buildingDiameterMinimum() || diameter > buildingLimits.buildingDiameterMaximum())) {
+      errors.add(new AeriusException(ImaerExceptionReason.CIRCULAR_BUILDING_INCORRECT_DIAMETER, building.getLabel()));
     }
   }
 

@@ -25,7 +25,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 import org.apache.commons.io.input.ReaderInputStream;
 import org.slf4j.Logger;
@@ -284,7 +283,7 @@ public class ImaerImporter {
   private static List<CalculationPointFeature> filterCalculationPoints(final List<CalculationPointFeature> points) {
     return points.stream()
         .filter(p -> p.getProperties() instanceof CustomCalculationPoint)
-        .collect(Collectors.toList());
+        .toList();
   }
 
   /**
@@ -341,12 +340,13 @@ public class ImaerImporter {
     }
   }
 
-  private static void addBuildings(final GMLReader reader, final Set<ImportOption> importOptions, final ImportParcel result,
+  private void addBuildings(final GMLReader reader, final Set<ImportOption> importOptions, final ImportParcel result,
       final ScenarioSituation situation) {
     if (ImportOption.INCLUDE_SOURCES.in(importOptions)) {
       final List<BuildingFeature> buildings = reader.getBuildings();
       if (ImportOption.VALIDATE_SOURCES.in(importOptions)) {
-        BuildingValidator.validateBuildings(buildings, result.getExceptions(), result.getWarnings());
+        BuildingValidator.validateBuildings(buildings, factory.createValidationHelper().buildingLimits(),
+            result.getExceptions(), result.getWarnings());
       }
       situation.getBuildingsList().addAll(buildings);
     }

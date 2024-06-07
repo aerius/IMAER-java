@@ -628,9 +628,9 @@ public enum ImaerExceptionReason implements Reason {
   BUILDING_HEIGHT_ZERO(5241),
 
   /**
-   * Buildingheight is < 0.
+   * Buildingheight is too low.
    *
-   * @param 0 Label of the building that has height < 0.
+   * @param 0 Label of the building that has too low a height (model-dependent).
    */
   BUILDING_HEIGHT_TOO_LOW(5242),
 
@@ -640,6 +640,13 @@ public enum ImaerExceptionReason implements Reason {
    * @param 0 Label of the circular building that has an incorrect diameter.
    */
   CIRCULAR_BUILDING_INCORRECT_DIAMETER(5243),
+
+  /**
+   * Buildingheight is too high.
+   *
+   * @param 0 Label of the building that has too high a height (model-dependent).
+   */
+  BUILDING_HEIGHT_TOO_HIGH(5244),
 
   /**
    * Value is <= 0.

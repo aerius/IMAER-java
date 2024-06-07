@@ -484,4 +484,15 @@ public final class OPSLimits implements BuildingLimits {
   public double buildingLengthMaximum() {
     return SCOPE_BUILDING_LENGTH_MAXIMUM;
   }
+
+  @Override
+  public double buildingDiameterMinimum() {
+    return 0;
+  }
+
+  @Override
+  public double buildingDiameterMaximum() {
+    return Double.MAX_VALUE;
+  }
+
 }

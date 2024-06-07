@@ -203,7 +203,8 @@ public final class AssertGML {
     when(gmlHelper.getReceptorGridSettings()).thenReturn(RECEPTOR_GRID_SETTINGS);
     mockEmissionSourceGeometryLimits(gmlHelper);
     when(gmlHelper.getCharacteristicsType()).thenAnswer((i) -> currentCharacteristicsType);
-    final TestValidationAndEmissionHelper valiationAndEmissionHelper = new TestValidationAndEmissionHelper();
+    final TestValidationAndEmissionHelper valiationAndEmissionHelper = new TestValidationAndEmissionHelper(
+        () -> currentCharacteristicsType);
     doAnswer(invocation -> {
       final List<EmissionSourceFeature> arg1 = (List<EmissionSourceFeature>) invocation.getArgument(1);
 
