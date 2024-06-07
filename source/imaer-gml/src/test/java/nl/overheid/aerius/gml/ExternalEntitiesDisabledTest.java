@@ -19,7 +19,6 @@ package nl.overheid.aerius.gml;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -88,7 +87,6 @@ class ExternalEntitiesDisabledTest {
 
     assertNotNull(content, "No content read from xml.");
     assertEquals(referencedText, content, "Invalid content.");
-    fail("Just testing");
   }
 
   /**
