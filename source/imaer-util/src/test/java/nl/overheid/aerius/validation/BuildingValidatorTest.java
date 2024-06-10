@@ -135,7 +135,7 @@ class BuildingValidatorTest {
     final List<AeriusException> errors = new ArrayList<>();
     final List<AeriusException> warnings = new ArrayList<>();
 
-    final BuildingLimits limits = mock(BuildingLimits.class);
+    final BuildingLimits limits = limits();
     lenient().when(limits.isCircularBuildingSupported()).thenReturn(false);
 
     BuildingValidator.validateBuildings(List.of(building), limits, errors, warnings);

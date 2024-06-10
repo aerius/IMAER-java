@@ -46,25 +46,19 @@ public final class BuildingValidator {
   public static void validateBuildings(final List<BuildingFeature> buildings, final BuildingLimits buildingLimits,
       final List<AeriusException> errors, final List<AeriusException> warnings) {
     for (final BuildingFeature feature : buildings) {
-      final boolean valid = checkBuildingGeometry(feature, buildingLimits, errors);
-      // If geometry is not valid, don't bother checking the rest
-      if (valid) {
-        checkBuildingHeight(feature, buildingLimits, errors, warnings);
-        checkBuildingDiameter(feature, buildingLimits, errors);
-      }
+      checkBuildingGeometry(feature, buildingLimits, errors);
+      checkBuildingHeight(feature, buildingLimits, errors, warnings);
+      checkBuildingDiameter(feature, buildingLimits, errors);
     }
   }
 
-  private static boolean checkBuildingGeometry(final BuildingFeature feature, final BuildingLimits buildingLimits,
+  private static void checkBuildingGeometry(final BuildingFeature feature, final BuildingLimits buildingLimits,
       final List<AeriusException> errors) {
-    boolean valid = true;
     // Only polygon and point geometries are supported.
     if (!(feature.getGeometry() instanceof Polygon
         || (buildingLimits.isCircularBuildingSupported() && feature.getGeometry() instanceof Point))) {
       errors.add(new AeriusException(ImaerExceptionReason.GML_GEOMETRY_NOT_PERMITTED, feature.getProperties().getLabel()));
-      valid = false;
     }
-    return valid;
   }
 
   private static void checkBuildingHeight(final BuildingFeature feature, final BuildingLimits buildingLimits,
@@ -73,6 +67,9 @@ public final class BuildingValidator {
     if (building.getHeight() < buildingLimits.buildingHeightMinimum()) {
       errors.add(new AeriusException(ImaerExceptionReason.BUILDING_HEIGHT_TOO_LOW, building.getLabel()));
     } else if (building.getHeight() == 0) {
+      // This warning only comes into play when the normal building height minimum is 0 or less.
+      // Some models have a higher minimum height, and in that case we don't want this warning to pop up.
+      // Other models do allow it, but modeling it that way would be a bit weird, hence the warning.
       warnings.add(new AeriusException(ImaerExceptionReason.BUILDING_HEIGHT_ZERO, building.getLabel()));
     } else if (building.getHeight() > buildingLimits.buildingHeightMaximum()) {
       errors.add(new AeriusException(ImaerExceptionReason.BUILDING_HEIGHT_TOO_HIGH, building.getLabel()));
