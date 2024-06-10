@@ -82,7 +82,7 @@ public final class BuildingValidator {
     // When the geometry is a point, that indicates that a circular building is defined.
     // A circular building consists of a point and a positive diameter.
     final double diameter = building.getDiameter();
-    if (feature.getGeometry() instanceof Point
+    if (buildingLimits.isCircularBuildingSupported() && feature.getGeometry() instanceof Point
         && (diameter <= buildingLimits.buildingDiameterMinimum() || diameter > buildingLimits.buildingDiameterMaximum())) {
       errors.add(new AeriusException(ImaerExceptionReason.CIRCULAR_BUILDING_INCORRECT_DIAMETER, building.getLabel()));
     }
