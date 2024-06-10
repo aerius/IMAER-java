@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.OptionalDouble;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import nl.overheid.aerius.gml.base.GMLLegacyCodeConverter.Conversion;
@@ -31,8 +32,12 @@ import nl.overheid.aerius.gml.base.conversion.MobileSourceOffRoadConversion;
 import nl.overheid.aerius.gml.base.conversion.PlanConversion;
 import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.ops.DiurnalVariation;
+import nl.overheid.aerius.shared.domain.ops.OPSLimits;
+import nl.overheid.aerius.shared.domain.v2.building.BuildingLimits;
+import nl.overheid.aerius.shared.domain.v2.characteristics.CharacteristicsType;
 import nl.overheid.aerius.shared.domain.v2.characteristics.HeatContentType;
 import nl.overheid.aerius.shared.domain.v2.characteristics.OPSSourceCharacteristics;
+import nl.overheid.aerius.shared.domain.v2.characteristics.adms.ADMSLimits;
 import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
 import nl.overheid.aerius.shared.domain.v2.source.road.RoadStandardEmissionFactorsKey;
 import nl.overheid.aerius.shared.domain.v2.source.road.RoadStandardsInterpolationValues;
@@ -542,6 +547,17 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
         helper -> conversions.put(helper.oldCode,
             new FarmLodgingConversion(helper.newAnimalTypeCode, helper.newAnimalHousingCode, helper.newAdditionalSystemCode)));
     return conversions;
+  }
+
+  private final Supplier<CharacteristicsType> characteristicsType;
+
+  public TestValidationAndEmissionHelper(final Supplier<CharacteristicsType> characteristicsType) {
+    this.characteristicsType = characteristicsType;
+  }
+
+  @Override
+  public BuildingLimits buildingLimits() {
+    return characteristicsType.get() == CharacteristicsType.ADMS ? ADMSLimits.INSTANCE : OPSLimits.INSTANCE;
   }
 
   @Override

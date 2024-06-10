@@ -44,7 +44,7 @@ public final class ScenarioSituationValidator {
    */
   public static void validateSituation(final ScenarioSituation situation, final ValidationHelper validationHelper) throws AeriusException {
     validateSources(situation.getEmissionSourcesList(), validationHelper);
-    validateBuildings(situation.getBuildingsList());
+    validateBuildings(situation.getBuildingsList(), validationHelper);
     validateCimlkMeasures(situation.getCimlkMeasuresList());
     validateDefinitions(situation.getDefinitions());
   }
@@ -57,9 +57,9 @@ public final class ScenarioSituationValidator {
     }
   }
 
-  public static void validateBuildings(final List<BuildingFeature> buildings) throws AeriusException {
+  public static void validateBuildings(final List<BuildingFeature> buildings, final ValidationHelper validationHelper) throws AeriusException {
     final List<AeriusException> errors = new ArrayList<>();
-    BuildingValidator.validateBuildings(buildings, errors, new ArrayList<>());
+    BuildingValidator.validateBuildings(buildings, validationHelper.buildingLimits(), errors, new ArrayList<>());
     if (!errors.isEmpty()) {
       throw errors.get(0);
     }

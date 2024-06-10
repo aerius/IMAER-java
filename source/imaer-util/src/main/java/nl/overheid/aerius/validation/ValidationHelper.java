@@ -16,10 +16,17 @@
  */
 package nl.overheid.aerius.validation;
 
+import nl.overheid.aerius.shared.domain.ops.OPSLimits;
+import nl.overheid.aerius.shared.domain.v2.building.BuildingLimits;
+
 /**
- * Interface to help with validating sources.
+ * Interface to help with validating sources and buildings.
  */
 public interface ValidationHelper {
+
+  default BuildingLimits buildingLimits() {
+    return OPSLimits.INSTANCE;
+  }
 
   FarmLodgingValidationHelper farmLodgingValidation();
 

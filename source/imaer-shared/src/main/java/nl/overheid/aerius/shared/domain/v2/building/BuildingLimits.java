@@ -43,4 +43,8 @@ public interface BuildingLimits extends Serializable {
   double buildingLengthMinimum();
 
   double buildingLengthMaximum();
+
+  double buildingDiameterMinimum();
+
+  double buildingDiameterMaximum();
 }
