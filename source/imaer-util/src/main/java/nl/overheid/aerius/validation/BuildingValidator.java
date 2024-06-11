@@ -48,7 +48,7 @@ public final class BuildingValidator {
     for (final BuildingFeature feature : buildings) {
       checkBuildingGeometry(feature, buildingLimits, errors);
       checkBuildingHeight(feature, buildingLimits, errors, warnings);
-      checkBuildingDiameter(feature, buildingLimits, errors);
+      checkBuildingDiameter(feature, buildingLimits, errors, warnings);
     }
   }
 
@@ -72,19 +72,24 @@ public final class BuildingValidator {
       // Other models do allow it, but modeling it that way would be a bit weird, hence the warning.
       warnings.add(new AeriusException(ImaerExceptionReason.BUILDING_HEIGHT_ZERO, building.getLabel()));
     } else if (building.getHeight() > buildingLimits.buildingHeightMaximum()) {
-      errors.add(new AeriusException(ImaerExceptionReason.BUILDING_HEIGHT_TOO_HIGH, building.getLabel()));
+      final List<AeriusException> addTo = buildingLimits.isBuildingUpperLimitWarning() ? warnings : errors;
+      addTo.add(new AeriusException(ImaerExceptionReason.BUILDING_HEIGHT_TOO_HIGH, building.getLabel()));
     }
   }
 
   private static void checkBuildingDiameter(final BuildingFeature feature, final BuildingLimits buildingLimits,
-      final List<AeriusException> errors) {
+      final List<AeriusException> errors, final List<AeriusException> warnings) {
     final Building building = feature.getProperties();
     // When the geometry is a point, that indicates that a circular building is defined.
     // A circular building consists of a point and a positive diameter.
     final double diameter = building.getDiameter();
-    if (buildingLimits.isCircularBuildingSupported() && feature.getGeometry() instanceof Point
-        && (diameter <= buildingLimits.buildingDiameterMinimum() || diameter > buildingLimits.buildingDiameterMaximum())) {
-      errors.add(new AeriusException(ImaerExceptionReason.CIRCULAR_BUILDING_INCORRECT_DIAMETER, building.getLabel()));
+    if (buildingLimits.isCircularBuildingSupported() && feature.getGeometry() instanceof Point) {
+      if (diameter <= buildingLimits.buildingDiameterMinimum()) {
+        errors.add(new AeriusException(ImaerExceptionReason.CIRCULAR_BUILDING_INCORRECT_DIAMETER, building.getLabel()));
+      } else if (diameter > buildingLimits.buildingDiameterMaximum()) {
+        final List<AeriusException> addTo = buildingLimits.isBuildingUpperLimitWarning() ? warnings : errors;
+        addTo.add(new AeriusException(ImaerExceptionReason.CIRCULAR_BUILDING_INCORRECT_DIAMETER, building.getLabel()));
+      }
     }
   }
 

@@ -28,6 +28,10 @@ public interface BuildingLimits extends Serializable {
     return false;
   }
 
+  default boolean isBuildingUpperLimitWarning() {
+    return false;
+  }
+
   int buildingDigitsPrecision();
 
   double buildingHeightMinimum();

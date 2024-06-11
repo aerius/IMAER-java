@@ -446,6 +446,11 @@ public final class OPSLimits implements BuildingLimits {
   }
 
   @Override
+  public boolean isBuildingUpperLimitWarning() {
+    return true;
+  }
+
+  @Override
   public int buildingDigitsPrecision() {
     return SOURCE_BUILDING_DIGITS_PRECISION;
   }
