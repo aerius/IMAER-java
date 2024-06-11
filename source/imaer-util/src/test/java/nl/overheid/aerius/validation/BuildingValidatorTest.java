@@ -46,13 +46,14 @@ class BuildingValidatorTest {
 
   @ParameterizedTest
   @MethodSource("casesForPolygonBuilding")
-  void testValidBuilding(final double height, final ImaerExceptionReason errorReason, final ImaerExceptionReason warningReason) {
+  void testValidBuilding(final double height, final boolean upperLimitWarning, final ImaerExceptionReason errorReason,
+      final ImaerExceptionReason warningReason) {
     final BuildingFeature building = createBuilding(height);
 
     final List<AeriusException> errors = new ArrayList<>();
     final List<AeriusException> warnings = new ArrayList<>();
 
-    BuildingValidator.validateBuildings(List.of(building), limits(), errors, warnings);
+    BuildingValidator.validateBuildings(List.of(building), limits(upperLimitWarning), errors, warnings);
 
     if (errorReason == null) {
       assertEquals(List.of(), errors, "No errors");
@@ -72,11 +73,16 @@ class BuildingValidatorTest {
 
   private static Stream<Arguments> casesForPolygonBuilding() {
     return Stream.of(
-        Arguments.of(-0.00001, ImaerExceptionReason.BUILDING_HEIGHT_TOO_LOW, null),
-        Arguments.of(0.0, null, ImaerExceptionReason.BUILDING_HEIGHT_ZERO),
-        Arguments.of(0.00001, null, null),
-        Arguments.of(2.0, null, null),
-        Arguments.of(2.00001, ImaerExceptionReason.BUILDING_HEIGHT_TOO_HIGH, null));
+        Arguments.of(-0.00001, false, ImaerExceptionReason.BUILDING_HEIGHT_TOO_LOW, null),
+        Arguments.of(0.0, false, null, ImaerExceptionReason.BUILDING_HEIGHT_ZERO),
+        Arguments.of(0.00001, false, null, null),
+        Arguments.of(2.0, false, null, null),
+        Arguments.of(2.00001, false, ImaerExceptionReason.BUILDING_HEIGHT_TOO_HIGH, null),
+        Arguments.of(-0.00001, true, ImaerExceptionReason.BUILDING_HEIGHT_TOO_LOW, null),
+        Arguments.of(0.0, true, null, ImaerExceptionReason.BUILDING_HEIGHT_ZERO),
+        Arguments.of(0.00001, true, null, null),
+        Arguments.of(2.0, true, null, null),
+        Arguments.of(2.00001, true, null, ImaerExceptionReason.BUILDING_HEIGHT_TOO_HIGH));
   }
 
   @Test
@@ -87,7 +93,7 @@ class BuildingValidatorTest {
     final List<AeriusException> errors = new ArrayList<>();
     final List<AeriusException> warnings = new ArrayList<>();
 
-    BuildingValidator.validateBuildings(List.of(building), limits(), errors, warnings);
+    BuildingValidator.validateBuildings(List.of(building), limits(false), errors, warnings);
 
     assertEquals(1, errors.size(), "Number of errors");
     assertEquals(ImaerExceptionReason.GML_GEOMETRY_NOT_PERMITTED, errors.get(0).getReason(), "Error reason");
@@ -97,7 +103,7 @@ class BuildingValidatorTest {
 
   @ParameterizedTest
   @MethodSource("casesForCircularBuilding")
-  void testValidCircularBuilding(final double diameter, final boolean valid) {
+  void testValidCircularBuilding(final double diameter, final boolean upperLimitWarning, final boolean expectError, final boolean expectWarning) {
     final BuildingFeature building = createBuilding(1);
     building.setGeometry(new Point(0, 0));
     building.getProperties().setDiameter(diameter);
@@ -105,25 +111,35 @@ class BuildingValidatorTest {
     final List<AeriusException> errors = new ArrayList<>();
     final List<AeriusException> warnings = new ArrayList<>();
 
-    BuildingValidator.validateBuildings(List.of(building), limits(), errors, warnings);
+    BuildingValidator.validateBuildings(List.of(building), limits(upperLimitWarning), errors, warnings);
 
-    if (valid) {
-      assertEquals(List.of(), errors, "No errors");
-      assertEquals(List.of(), warnings, "No warnings");
-    } else {
+    if (expectError) {
       assertEquals(1, errors.size(), "Number of errors");
       assertEquals(ImaerExceptionReason.CIRCULAR_BUILDING_INCORRECT_DIAMETER, errors.get(0).getReason(), "Error reason");
       assertArrayEquals(new Object[] {BUILDING_LABEL}, errors.get(0).getArgs(), "Arguments");
+    } else {
+      assertEquals(List.of(), errors, "No errors");
+
+    }
+    if (expectWarning) {
+      assertEquals(1, warnings.size(), "Number of warnings");
+      assertEquals(ImaerExceptionReason.CIRCULAR_BUILDING_INCORRECT_DIAMETER, warnings.get(0).getReason(), "Error reason");
+      assertArrayEquals(new Object[] {BUILDING_LABEL}, warnings.get(0).getArgs(), "Arguments");
+    } else {
       assertEquals(List.of(), warnings, "No warnings");
     }
   }
 
   private static Stream<Arguments> casesForCircularBuilding() {
     return Stream.of(
-        Arguments.of(0.0, false),
-        Arguments.of(0.00001, true),
-        Arguments.of(3.0, true),
-        Arguments.of(3.00001, false));
+        Arguments.of(0.0, false, true, false),
+        Arguments.of(0.00001, false, false, false),
+        Arguments.of(3.0, false, false, false),
+        Arguments.of(3.00001, false, true, false),
+        Arguments.of(0.0, true, true, false),
+        Arguments.of(0.00001, true, false, false),
+        Arguments.of(3.0, true, false, false),
+        Arguments.of(3.00001, true, false, true));
   }
 
   @Test
@@ -135,7 +151,7 @@ class BuildingValidatorTest {
     final List<AeriusException> errors = new ArrayList<>();
     final List<AeriusException> warnings = new ArrayList<>();
 
-    final BuildingLimits limits = limits();
+    final BuildingLimits limits = limits(false);
     lenient().when(limits.isCircularBuildingSupported()).thenReturn(false);
 
     BuildingValidator.validateBuildings(List.of(building), limits, errors, warnings);
@@ -146,13 +162,14 @@ class BuildingValidatorTest {
     assertEquals(List.of(), warnings, "No warnings");
   }
 
-  private static BuildingLimits limits() {
+  private static BuildingLimits limits(final boolean upperLimitWarning) {
     final BuildingLimits limits = mock(BuildingLimits.class);
     lenient().when(limits.isCircularBuildingSupported()).thenReturn(true);
     lenient().when(limits.buildingHeightMinimum()).thenReturn(0.0);
     lenient().when(limits.buildingHeightMaximum()).thenReturn(2.0);
     lenient().when(limits.buildingDiameterMinimum()).thenReturn(0.0);
     lenient().when(limits.buildingDiameterMaximum()).thenReturn(3.0);
+    lenient().when(limits.isBuildingUpperLimitWarning()).thenReturn(upperLimitWarning);
     return limits;
   }
 
