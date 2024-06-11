@@ -45,10 +45,17 @@ public final class BuildingValidator {
 
   public static void validateBuildings(final List<BuildingFeature> buildings, final BuildingLimits buildingLimits,
       final List<AeriusException> errors, final List<AeriusException> warnings) {
+    checkBuildingCount(buildings, buildingLimits, errors);
     for (final BuildingFeature feature : buildings) {
       checkBuildingGeometry(feature, buildingLimits, errors);
       checkBuildingHeight(feature, buildingLimits, errors, warnings);
       checkBuildingDiameter(feature, buildingLimits, errors, warnings);
+    }
+  }
+
+  private static void checkBuildingCount(final List<BuildingFeature> buildings, final BuildingLimits buildingLimits, final List<AeriusException> errors) {
+    if (buildings.size() > buildingLimits.buildingMaximumPerSituation()) {
+      errors.add(new AeriusException(ImaerExceptionReason.TOO_MANY_BUILDINGS_IN_SITUATION, String.valueOf(buildingLimits.buildingMaximumPerSituation())));
     }
   }
 

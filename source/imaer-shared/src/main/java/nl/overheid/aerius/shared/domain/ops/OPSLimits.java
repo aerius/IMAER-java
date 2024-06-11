@@ -500,4 +500,9 @@ public final class OPSLimits implements BuildingLimits {
     return Double.MAX_VALUE;
   }
 
+
+  @Override
+  public int buildingMaximumPerSituation() {
+    return Integer.MAX_VALUE;
+  }
 }
