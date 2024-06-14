@@ -77,6 +77,7 @@ public class CalculationPointDuplicator implements CalculationPointVisitor<Calcu
   protected CustomCalculationPoint constructDuplicateNcaPoint(final NcaCustomCalculationPoint originalPoint) {
     final NcaCustomCalculationPoint duplicateNcaPoint = new NcaCustomCalculationPoint();
     duplicateNcaPoint.setRoadLocalFractionNO2(originalPoint.getRoadLocalFractionNO2());
+    duplicateNcaPoint.setEntityReferences(originalPoint.getEntityReferences());
     copyCustomProperties(originalPoint, duplicateNcaPoint);
     return duplicateNcaPoint;
   }
