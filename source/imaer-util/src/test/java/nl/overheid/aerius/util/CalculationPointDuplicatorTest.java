@@ -21,6 +21,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
+
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
@@ -33,6 +36,7 @@ import nl.overheid.aerius.shared.domain.v2.point.CIMLKCalculationPoint;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPoint;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPointFeature;
 import nl.overheid.aerius.shared.domain.v2.point.CustomCalculationPoint;
+import nl.overheid.aerius.shared.domain.v2.point.EntityReference;
 import nl.overheid.aerius.shared.domain.v2.point.NcaCustomCalculationPoint;
 import nl.overheid.aerius.shared.domain.v2.point.ReceptorPoint;
 import nl.overheid.aerius.shared.domain.v2.point.SubPoint;
@@ -95,6 +99,7 @@ class CalculationPointDuplicatorTest {
     ncaCustomPoint.setCustomPointId(4398);
     ncaCustomPoint.setHeight(-4.2);
     ncaCustomPoint.setRoadLocalFractionNO2(0.234);
+    ncaCustomPoint.setEntityReferences(List.of(mock(EntityReference.class)));
 
     final CalculationPointFeature original = construct(ncaCustomPoint);
     final CalculationPointDuplicator duplicator = new CalculationPointDuplicator();
@@ -108,6 +113,7 @@ class CalculationPointDuplicatorTest {
     assertEquals(ncaCustomPoint.getCustomPointId(), duplicatedNcaCustomPoint.getCustomPointId(), "custom point ID");
     assertEquals(ncaCustomPoint.getHeight(), duplicatedNcaCustomPoint.getHeight(), "height");
     assertEquals(ncaCustomPoint.getRoadLocalFractionNO2(), duplicatedNcaCustomPoint.getRoadLocalFractionNO2(), "Road local fraction NO2");
+    assertEquals(ncaCustomPoint.getEntityReferences(), duplicatedNcaCustomPoint.getEntityReferences(), "Entity references");
   }
 
   @Test
