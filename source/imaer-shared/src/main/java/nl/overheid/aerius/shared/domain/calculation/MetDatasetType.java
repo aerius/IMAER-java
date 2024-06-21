@@ -24,8 +24,8 @@ import java.util.Locale;
 public enum MetDatasetType {
 
   OBS_RAW_GT_90PCT(false),
-  // Expect another observed set, but what the term will be exactly is unsure so uncommented for now.
-//  OBS_RAW_GT_75PCT(false),
+  OBS_I_GT_75P(false),
+  OBS_WINDS_GT_90PCT(false),
   NWP_3KM2(true);
 
   private final boolean nwp;
