@@ -24,7 +24,7 @@ import java.util.Locale;
 public enum MetDatasetType {
 
   OBS_RAW_GT_90PCT(false),
-  OBS_I_GT_75P(false),
+  OBS_I_GT_75PCT(false),
   OBS_WINDS_GT_90PCT(false),
   NWP_3KM2(true);
 
