@@ -49,7 +49,7 @@ abstract class SourceValidator<T extends EmissionSource> {
    */
   final boolean validate(final T source, final IsFeature feature) {
     boolean valid = validateGeometry(feature.getGeometry());
-    valid = validateCharacteristics(source.getCharacteristics(), source.getGmlId()) && valid;
+    valid = validateCharacteristics(source.getCharacteristics(), feature.getGeometry(), source.getGmlId()) && valid;
     valid = validate(source) && valid;
     return valid;
   }
@@ -69,11 +69,11 @@ abstract class SourceValidator<T extends EmissionSource> {
     return true;
   }
 
-  protected boolean validateCharacteristics(final SourceCharacteristics characteristics, final String sourceId) {
-    if (characteristics instanceof OPSSourceCharacteristics) {
-      return new OPSCharacteristicsValidator(errors, warnings, sourceId).validate((OPSSourceCharacteristics) characteristics);
-    } else if (characteristics instanceof ADMSSourceCharacteristics) {
-      return new ADMSCharacteristicsValidator(errors, warnings, sourceId).validate((ADMSSourceCharacteristics) characteristics);
+  protected boolean validateCharacteristics(final SourceCharacteristics characteristics, final Geometry sourceGeometry, final String sourceId) {
+    if (characteristics instanceof final OPSSourceCharacteristics opsChars) {
+      return new OPSCharacteristicsValidator(errors, warnings, sourceId).validate(opsChars, sourceGeometry);
+    } else if (characteristics instanceof final ADMSSourceCharacteristics admsChars) {
+      return new ADMSCharacteristicsValidator(errors, warnings, sourceId).validate(admsChars, sourceGeometry);
     } else {
       return true;
     }

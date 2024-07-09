@@ -19,6 +19,7 @@ package nl.overheid.aerius.validation;
 import java.util.List;
 
 import nl.overheid.aerius.shared.domain.v2.characteristics.SourceCharacteristics;
+import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
 import nl.overheid.aerius.shared.exception.AeriusException;
 
 /**
@@ -41,8 +42,9 @@ abstract class CharacteristicsValidator<T extends SourceCharacteristics> {
    * If no validation errors should return true.
    *
    * @param characteristics characteristics to validate
+   * @param sourceGeometry the geometry of the associated source
    * @return true if no validation errors
    */
-  abstract boolean validate(final T characteristics);
+  abstract boolean validate(final T characteristics, final Geometry sourceGeometry);
 
 }

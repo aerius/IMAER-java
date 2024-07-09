@@ -133,6 +133,8 @@ public final class ADMSLimits implements BuildingLimits {
   public static final boolean SPATIALLY_VARYING_ROUGHNESS_DEFAULT = true;
   public static final boolean ADMS_COMPLEX_TERRAIN_DEFAULT = false;
 
+  public static final int MAX_POLYGON_CONVEX_VERTICES = 50;
+
   private static final int ADMS_MAX_BUILDINGS_PER_SITUATION = 50;
 
   public static final ADMSLimits INSTANCE = new ADMSLimits();

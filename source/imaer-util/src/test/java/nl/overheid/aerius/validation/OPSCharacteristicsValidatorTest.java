@@ -20,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +34,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import nl.overheid.aerius.shared.domain.ops.OPSLimits;
 import nl.overheid.aerius.shared.domain.v2.characteristics.HeatContentType;
 import nl.overheid.aerius.shared.domain.v2.characteristics.OPSSourceCharacteristics;
+import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 
@@ -53,7 +55,7 @@ class OPSCharacteristicsValidatorTest {
     final List<AeriusException> warnings = new ArrayList<>();
     final OPSCharacteristicsValidator validator = new OPSCharacteristicsValidator(errors, warnings, SOURCE_ID);
 
-    final boolean valid = validator.validate(characteristics);
+    final boolean valid = validator.validate(characteristics, mockGeometry());
 
     assertTrue(valid, "Valid test case");
     assertEquals(List.of(), errors, "No errors");
@@ -69,7 +71,7 @@ class OPSCharacteristicsValidatorTest {
     final List<AeriusException> warnings = new ArrayList<>();
     final OPSCharacteristicsValidator validator = new OPSCharacteristicsValidator(errors, warnings, SOURCE_ID);
 
-    final boolean valid = validator.validate(characteristics);
+    final boolean valid = validator.validate(characteristics, mockGeometry());
 
     assertFalse(valid, "Invalid test case");
     assertEquals(1, errors.size(), "Number of errors");
@@ -89,7 +91,7 @@ class OPSCharacteristicsValidatorTest {
     final List<AeriusException> warnings = new ArrayList<>();
     final OPSCharacteristicsValidator validator = new OPSCharacteristicsValidator(errors, warnings, SOURCE_ID);
 
-    final boolean valid = validator.validate(characteristics);
+    final boolean valid = validator.validate(characteristics, mockGeometry());
 
     assertFalse(valid, "Invalid test case");
     assertEquals(1, errors.size(), "Number of errors");
@@ -110,7 +112,7 @@ class OPSCharacteristicsValidatorTest {
     final List<AeriusException> warnings = new ArrayList<>();
     final OPSCharacteristicsValidator validator = new OPSCharacteristicsValidator(errors, warnings, SOURCE_ID);
 
-    final boolean valid = validator.validate(characteristics);
+    final boolean valid = validator.validate(characteristics, mockGeometry());
 
     if (expectedValid) {
       assertTrue(valid, "Valid test case");
@@ -146,12 +148,16 @@ class OPSCharacteristicsValidatorTest {
     final List<AeriusException> warnings = new ArrayList<>();
     final OPSCharacteristicsValidator validator = new OPSCharacteristicsValidator(errors, warnings, SOURCE_ID);
 
-    final boolean valid = validator.validate(characteristics);
+    final boolean valid = validator.validate(characteristics, mockGeometry());
 
     // Shouldn't be validating heat content when it's not used.
     assertTrue(valid, "Valid test case");
     assertEquals(List.of(), errors, "No errors");
     assertEquals(List.of(), warnings, "No warnings");
+  }
+
+  private Geometry mockGeometry() {
+    return mock(Geometry.class);
   }
 
 }

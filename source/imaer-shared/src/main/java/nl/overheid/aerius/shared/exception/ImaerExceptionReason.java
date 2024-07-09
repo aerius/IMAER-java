@@ -550,6 +550,12 @@ public enum ImaerExceptionReason implements Reason {
    * @param 3 the system definition code of the lodging that was converted.
    */
   GML_CONVERTED_LODGING_TO_CUSTOM(5265),
+  /**
+   * Geometry contains too many vertices.
+   *
+   * @param 0 the ID of the source with too many vertices.
+   */
+  GEOMETRY_TOO_MANY_VERTICES(5271),
 
 
   // Cohesion (between files) errors.
