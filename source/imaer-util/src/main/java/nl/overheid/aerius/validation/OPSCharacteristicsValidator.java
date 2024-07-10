@@ -21,6 +21,7 @@ import java.util.List;
 import nl.overheid.aerius.shared.domain.ops.OPSLimits;
 import nl.overheid.aerius.shared.domain.v2.characteristics.HeatContentType;
 import nl.overheid.aerius.shared.domain.v2.characteristics.OPSSourceCharacteristics;
+import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 
@@ -34,7 +35,7 @@ class OPSCharacteristicsValidator extends CharacteristicsValidator<OPSSourceChar
   }
 
   @Override
-  boolean validate(final OPSSourceCharacteristics characteristics) {
+  boolean validate(final OPSSourceCharacteristics characteristics, final Geometry sourceGeometry) {
     boolean valid = true;
     if (characteristics.getHeatContentType() == HeatContentType.NOT_FORCED) {
       valid = validateOPSForcedHeatContent(characteristics);
