@@ -169,7 +169,7 @@ public final class GMLReaderFactory {
     final StringBuilder errorLine = new StringBuilder();
     for (final ValidationEvent event : list) {
       errorLine.append(event.getMessage());
-      errorLine.append(' ');
+      errorLine.append('|');
     }
     LOG.debug("validation error: {}", errorLine);
     return new AeriusException(ImaerExceptionReason.GML_VALIDATION_FAILED, errorLine.toString().trim());
