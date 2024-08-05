@@ -346,9 +346,13 @@ class GMLValidateErrorsTest {
   private static void assertResults(final String fileName, final List<String> expectedReasonsTxt, final Reason expectedReason)
       throws IOException, AeriusException {
     final ImportParcel result = getImportResult(LATEST_VALIDATE, fileName);
+    assertEquals(expectedReasonsTxt.size(), result.getExceptions().size(), "Number of exceptions should match number of expected reason texts");
+
     for (int i = 0; i < expectedReasonsTxt.size(); i++) {
       final AeriusException aeriusException = result.getExceptions().get(i);
-      assertSame(expectedReason, aeriusException.getReason(), expectedReasonsTxt.get(i));
+      assertEquals(1, aeriusException.getArgs().length, "Only one argument expected");
+      assertEquals(expectedReasonsTxt.get(i), aeriusException.getArgs()[0], "Reason texts should match");
+      assertEquals(expectedReason, aeriusException.getReason(), "Reasons should match");
     }
   }
 
