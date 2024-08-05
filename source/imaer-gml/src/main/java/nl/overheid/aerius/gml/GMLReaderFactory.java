@@ -169,7 +169,7 @@ public final class GMLReaderFactory {
   private static List<AeriusException> newValidationFailed(final List<ValidationEvent> list) {
     final List<AeriusException> errors = new ArrayList<>();
     for (final ValidationEvent event : list) {
-      final String errorMessage = event.getMessage().toString().trim();
+      final String errorMessage = event.getMessage().trim();
       final AeriusException error = new AeriusException(ImaerExceptionReason.GML_VALIDATION_FAILED, errorMessage);
       errors.add(error);
       LOG.debug("validation error: {}", errorMessage);
