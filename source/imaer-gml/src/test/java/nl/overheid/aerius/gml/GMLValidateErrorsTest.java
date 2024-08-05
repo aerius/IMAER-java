@@ -91,6 +91,16 @@ class GMLValidateErrorsTest {
   }
 
   @Test
+  void testGMLMultipleErrors() throws IOException, AeriusException {
+    final List<String> expectedErrors = List.of(
+        "cvc-enumeration-valid: Value 'None' is not facet-valid with respect to enumeration '[HOUR, DAY, MONTH, YEAR]'. It must be a value from the enumeration.",
+        "cvc-type.3.1.3: The value 'None' of element 'imaer:timeUnit' is not valid.",
+        "cvc-complex-type.2.4.b: The content of element 'imaer:CustomVehicle' is not complete. One of '{\"http://imaer.aerius.nl/5.1\":emission}' is expected.",
+        "cvc-complex-type.2.4.a: Invalid content was found starting with element '{\"http://imaer.aerius.nl/5.1\":diurnalVariation}'. One of '{\"http://imaer.aerius.nl/5.1\":vehicles, \"http://imaer.aerius.nl/5.1\":roadManager, \"http://imaer.aerius.nl/5.1\":trafficDirection, \"http://imaer.aerius.nl/5.1\":width}' is expected.");
+    assertResults("fout_multiple_errors", expectedErrors, ImaerExceptionReason.GML_VALIDATION_FAILED);
+  }
+
+  @Test
   void testGMLGeometryUnknown() throws IOException {
     assertResult("fout_5206_unsupported_geometry", "GML Geometry unkown", ImaerExceptionReason.GML_VALIDATION_FAILED,
         e -> {
@@ -331,6 +341,14 @@ class GMLValidateErrorsTest {
           }
         },
         "Expected an exception " + clazz.getSimpleName());
+  }
+
+  private static void assertResults(final String fileName, final List<String> expectedReasonsTxt, final Reason expectedReason) throws IOException, AeriusException {
+    final ImportParcel result = getImportResult(LATEST_VALIDATE, fileName);
+    for (int i = 0; i < expectedReasonsTxt.size(); i++) {
+      final AeriusException aeriusException = result.getExceptions().get(i);
+      assertSame(expectedReason, aeriusException.getReason(), expectedReasonsTxt.get(i));
+    }
   }
 
   private static ImportParcel getImportResult(final String relativePath, final String fileName)
