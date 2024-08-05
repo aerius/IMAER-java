@@ -121,8 +121,7 @@ public final class GMLReaderFactory {
   }
 
   private static List<AeriusException> checkEvents(final List<ValidationEvent> events) throws AeriusException {
-    // information like required elements not being present will not throw an exception, but will trigger an event.
-    // check for these events and throw exception if present.
+    // Return any error events found.
     if ((events != null) && !events.isEmpty()) {
       return newValidationFailed(events);
     }
