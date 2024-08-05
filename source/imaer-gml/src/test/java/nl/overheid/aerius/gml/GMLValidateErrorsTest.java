@@ -343,7 +343,8 @@ class GMLValidateErrorsTest {
         "Expected an exception " + clazz.getSimpleName());
   }
 
-  private static void assertResults(final String fileName, final List<String> expectedReasonsTxt, final Reason expectedReason) throws IOException, AeriusException {
+  private static void assertResults(final String fileName, final List<String> expectedReasonsTxt, final Reason expectedReason)
+      throws IOException, AeriusException {
     final ImportParcel result = getImportResult(LATEST_VALIDATE, fileName);
     for (int i = 0; i < expectedReasonsTxt.size(); i++) {
       final AeriusException aeriusException = result.getExceptions().get(i);
