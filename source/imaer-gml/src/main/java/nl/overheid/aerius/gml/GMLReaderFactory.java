@@ -120,7 +120,7 @@ public final class GMLReaderFactory {
     return gmlHelper.getValidationHelper();
   }
 
-  private static List<AeriusException> checkEvents(final List<ValidationEvent> events) throws AeriusException {
+  private static List<AeriusException> checkEvents(final List<ValidationEvent> events) {
     // Return any error events found.
     if ((events != null) && !events.isEmpty()) {
       return newValidationFailed(events);
@@ -150,8 +150,8 @@ public final class GMLReaderFactory {
   private static void processException(final JAXBException e) throws AeriusException {
     if ((e.getLinkedException() instanceof UTFDataFormatException) || (e.getLinkedException() instanceof UnsupportedEncodingException)) {
       throw new AeriusException(ImaerExceptionReason.GML_ENCODING_INCORRECT);
-    } else if (e.getLinkedException() instanceof XMLStreamException) {
-      throw newGmlParseError((XMLStreamException) e.getLinkedException());
+    } else if (e.getLinkedException() instanceof final XMLStreamException streamException) {
+      throw newGmlParseError(streamException);
     }
   }
 
