@@ -152,7 +152,7 @@ public final class GMLReaderFactory {
       throw new AeriusException(ImaerExceptionReason.GML_ENCODING_INCORRECT);
     } else if (e.getLinkedException() instanceof final XMLStreamException streamException) {
       throw newGmlParseError(streamException);
-    }
+    } // Rely on custom event collection instead
   }
 
   private static AeriusException newGmlParseError(final XMLStreamException e) {
