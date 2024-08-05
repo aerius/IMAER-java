@@ -19,6 +19,7 @@ package nl.overheid.aerius.gml;
 import java.io.InputStream;
 import java.io.UTFDataFormatException;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -105,8 +106,11 @@ public final class GMLReaderFactory {
       //determine version of the XML based on the namespaces available.
       factory = readerProxy.determineReaderFactory(reader.getNamespaceContext());
       final GMLReader gmlr = new GMLReader(gmlHelper, factory, convertToCollection(reader, factory, vec, validate), errors, warnings);
-      checkEvents(vec.getEvents());
-      return gmlr;
+      errors.addAll(checkEvents(vec.getEvents()));
+      if (errors.isEmpty()) {
+        return gmlr;
+      }
+      return null;
     } catch (final XMLStreamException e) {
       throw newGmlParseError(e);
     }
@@ -116,12 +120,13 @@ public final class GMLReaderFactory {
     return gmlHelper.getValidationHelper();
   }
 
-  private static void checkEvents(final List<ValidationEvent> events) throws AeriusException {
+  private static List<AeriusException> checkEvents(final List<ValidationEvent> events) throws AeriusException {
     // information like required elements not being present will not throw an exception, but will trigger an event.
     // check for these events and throw exception if present.
     if ((events != null) && !events.isEmpty()) {
-      throw newValidationFailed(events);
+      return newValidationFailed(events);
     }
+    return List.of();
   }
 
   private static FeatureCollection convertToCollection(final XMLStreamReader xmlStreamReader, final GMLVersionReaderFactory factory,
@@ -138,19 +143,16 @@ public final class GMLReaderFactory {
     } catch (final NumberFormatException e) {
       throw new AeriusException(ImaerExceptionReason.GML_GENERIC_PARSE_ERROR, e.getMessage());
     } catch (final JAXBException e) {
-      processException(vec, e);
+      processException(e);
     }
     return collection;
   }
 
-  private static void processException(final CustomValidationEventCollector vec, final JAXBException e) throws AeriusException {
+  private static void processException(final JAXBException e) throws AeriusException {
     if ((e.getLinkedException() instanceof UTFDataFormatException) || (e.getLinkedException() instanceof UnsupportedEncodingException)) {
       throw new AeriusException(ImaerExceptionReason.GML_ENCODING_INCORRECT);
     } else if (e.getLinkedException() instanceof XMLStreamException) {
       throw newGmlParseError((XMLStreamException) e.getLinkedException());
-    } else {
-      LOG.error("JAXBException occurred.", e);
-      throw newValidationFailed(vec.getEvents());
     }
   }
 
@@ -165,13 +167,14 @@ public final class GMLReaderFactory {
     }
   }
 
-  private static AeriusException newValidationFailed(final List<ValidationEvent> list) {
-    final StringBuilder errorLine = new StringBuilder();
+  private static List<AeriusException> newValidationFailed(final List<ValidationEvent> list) {
+    final List<AeriusException> errors = new ArrayList<>();
     for (final ValidationEvent event : list) {
-      errorLine.append(event.getMessage());
-      errorLine.append('|');
+      final String errorMessage = event.getMessage().toString().trim();
+      final AeriusException error = new AeriusException(ImaerExceptionReason.GML_VALIDATION_FAILED, errorMessage);
+      errors.add(error);
+      LOG.debug("validation error: {}", errorMessage);
     }
-    LOG.debug("validation error: {}", errorLine);
-    return new AeriusException(ImaerExceptionReason.GML_VALIDATION_FAILED, errorLine.toString().trim());
+    return errors;
   }
 }
