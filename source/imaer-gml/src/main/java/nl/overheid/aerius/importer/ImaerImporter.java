@@ -126,6 +126,10 @@ public class ImaerImporter {
       result.getExceptions().add(e);
       return;
     }
+    if (reader == null) {
+      return;
+    }
+
     final AeriusGMLVersion version = reader.getVersion();
     setImportResultMetaData(result, reader);
     GMLValidator.validateMetaData(result.getImportedMetaData(), result.getExceptions(), ImportOption.VALIDATE_METADATA.in(importOptions)
