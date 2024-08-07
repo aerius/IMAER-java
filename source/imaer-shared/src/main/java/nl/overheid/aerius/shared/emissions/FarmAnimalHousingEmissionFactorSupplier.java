@@ -42,13 +42,14 @@ public interface FarmAnimalHousingEmissionFactorSupplier {
   boolean isAdditionalHousingSystemAirScrubber(String additionalSystemCode);
 
   /**
-   * Get the code of the basic housing system for an animal type.
+   * Get the code of the basic housing system for a housing system.
+   * Can return null, or the same housing code, to indicate that the housing system itself is a basic one.
    */
-  String getAnimalBasicHousingCode(String animalCode);
+  String getAnimalBasicHousingCode(String animalHousingCode);
 
   /**
    * Obtain the remaining fraction of emission for additonal system for animal housing.
    */
-  Map<Substance, Double> getAdditionalHousingSystemReductionFractions(String additionalSystemCode, String animalCode);
+  Map<Substance, Double> getAdditionalHousingSystemReductionFractions(String additionalSystemCode, String animalHousingCode);
 
 }

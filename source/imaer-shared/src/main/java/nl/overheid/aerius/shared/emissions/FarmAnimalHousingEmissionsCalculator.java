@@ -94,7 +94,7 @@ public class FarmAnimalHousingEmissionsCalculator {
     final Map<Substance, BigDecimal> emissions = getFlatEmission(standardAnimalHousing);
 
     // Reduce emissions based on additional systems
-    processAdditionalSystems(emissions, standardAnimalHousing.getAdditionalSystems(), standardAnimalHousing.getAnimalTypeCode());
+    processAdditionalSystems(emissions, standardAnimalHousing.getAdditionalSystems(), standardAnimalHousing.getAnimalHousingCode());
 
     final BigDecimal periodFactor =
         emissionFactorSupplier
@@ -120,7 +120,7 @@ public class FarmAnimalHousingEmissionsCalculator {
     final Map<Substance, Double> housingEmissionFactors = emissionFactorSupplier.getAnimalHousingEmissionFactors(animalHousingCode);
 
     if (isAnyAdditionalSystemScrubber(standardAnimalHousing)) {
-      final String basicHousingCode = emissionFactorSupplier.getAnimalBasicHousingCode(standardAnimalHousing.getAnimalTypeCode());
+      final String basicHousingCode = emissionFactorSupplier.getAnimalBasicHousingCode(animalHousingCode);
       return basicHousingCode == null || basicHousingCode.equals(animalHousingCode)
           ? housingEmissionFactors
           : obtainConstrainedEmissionFactors(housingEmissionFactors, emissionFactorSupplier.getAnimalHousingEmissionFactors(basicHousingCode));
@@ -131,16 +131,19 @@ public class FarmAnimalHousingEmissionsCalculator {
 
   private boolean isAnyAdditionalSystemScrubber(final StandardFarmAnimalHousing standardLodging) {
     for (final AdditionalHousingSystem additionalSystem : standardLodging.getAdditionalSystems()) {
-      if (additionalSystem instanceof StandardAdditionalHousingSystem
-          && emissionFactorSupplier
-              .isAdditionalHousingSystemAirScrubber(((StandardAdditionalHousingSystem) additionalSystem).getAdditionalSystemCode())) {
-        return true;
-      } else if (additionalSystem instanceof CustomAdditionalHousingSystem
-          && ((CustomAdditionalHousingSystem) additionalSystem).isAirScrubber()) {
+      if (isAdditionalSystemScrubber(additionalSystem)) {
         return true;
       }
     }
     return false;
+  }
+
+  private boolean isAdditionalSystemScrubber(final AdditionalHousingSystem additionalSystem) {
+    return (additionalSystem instanceof StandardAdditionalHousingSystem
+        && emissionFactorSupplier
+            .isAdditionalHousingSystemAirScrubber(((StandardAdditionalHousingSystem) additionalSystem).getAdditionalSystemCode()))
+        || (additionalSystem instanceof CustomAdditionalHousingSystem
+            && ((CustomAdditionalHousingSystem) additionalSystem).isAirScrubber());
   }
 
   /**
@@ -152,7 +155,7 @@ public class FarmAnimalHousingEmissionsCalculator {
    * In essence this means the ammonia emissionfactor of the housing system is constrained to a maximum of 30% of the associated
    * basic housing system.
    */
-  private Map<Substance, Double> obtainConstrainedEmissionFactors(final Map<Substance, Double> systemEmissionFactors,
+  private static Map<Substance, Double> obtainConstrainedEmissionFactors(final Map<Substance, Double> systemEmissionFactors,
       final Map<Substance, Double> basicEmissionFactors) {
     final Map<Substance, Double> constrained = new EnumMap<>(Substance.class);
     systemEmissionFactors.forEach((substance, factor) -> {
@@ -167,12 +170,12 @@ public class FarmAnimalHousingEmissionsCalculator {
   }
 
   private void processAdditionalSystems(final Map<Substance, BigDecimal> emissions, final List<AdditionalHousingSystem> additionalSystems,
-      final String animalTypeCode) throws AeriusException {
+      final String animalHousingCode) throws AeriusException {
     for (final AdditionalHousingSystem additionalSystem : additionalSystems) {
       final Map<Substance, BigDecimal> reductionFractions;
       if (additionalSystem instanceof StandardAdditionalHousingSystem) {
         reductionFractions = toBigDecimalMap(emissionFactorSupplier.getAdditionalHousingSystemReductionFractions(
-            ((StandardAdditionalHousingSystem) additionalSystem).getAdditionalSystemCode(), animalTypeCode));
+            ((StandardAdditionalHousingSystem) additionalSystem).getAdditionalSystemCode(), animalHousingCode));
       } else if (additionalSystem instanceof CustomAdditionalHousingSystem) {
         reductionFractions = toBigDecimalMap(
             ((CustomAdditionalHousingSystem) additionalSystem).getEmissionReductionFactors());

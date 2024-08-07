@@ -325,7 +325,6 @@ class FarmAnimalHousingEmissionsCalculatorTest {
     housing.setNumberOfAnimals(1000);
     final String housingCode = "ABC";
     housing.setAnimalHousingCode(housingCode);
-    housing.setAnimalTypeCode("OWL");
 
     final Map<Substance, Double> emissionFactors = Map.of(Substance.NH3, 3.0);
     when(emissionFactorSupplier.getAnimalHousingEmissionFactors(housingCode)).thenReturn(emissionFactors);
@@ -338,14 +337,12 @@ class FarmAnimalHousingEmissionsCalculatorTest {
     housing.setNumberOfAnimals(1000);
     final String housingCode = "ABC";
     final String basicCode = "DEF";
-    final String animalCode = "OWL";
     housing.setAnimalHousingCode(housingCode);
-    housing.setAnimalTypeCode(animalCode);
 
     final Map<Substance, Double> emissionFactors = Map.of(Substance.NH3, 1.0, Substance.PM10, 10.0);
     final Map<Substance, Double> emissionFactorsConstrained = Map.of(Substance.NH3, 8.0, Substance.PM10, 80.0);
     lenient().when(emissionFactorSupplier.getAnimalHousingEmissionFactors(housingCode)).thenReturn(emissionFactors);
-    lenient().when(emissionFactorSupplier.getAnimalBasicHousingCode(animalCode)).thenReturn(basicCode);
+    lenient().when(emissionFactorSupplier.getAnimalBasicHousingCode(housingCode)).thenReturn(basicCode);
     lenient().when(emissionFactorSupplier.getAnimalHousingEmissionFactors(basicCode)).thenReturn(emissionFactorsConstrained);
 
     return housing;
@@ -361,7 +358,7 @@ class FarmAnimalHousingEmissionsCalculatorTest {
     additionalSystem.setAdditionalSystemCode(systemCode);
 
     final Map<Substance, Double> emissionFactors = Map.of(Substance.NH3, 0.4, Substance.PM10, 0.6);
-    when(emissionFactorSupplier.getAdditionalHousingSystemReductionFractions(systemCode, housing.getAnimalTypeCode())).thenReturn(emissionFactors);
+    when(emissionFactorSupplier.getAdditionalHousingSystemReductionFractions(systemCode, housing.getAnimalHousingCode())).thenReturn(emissionFactors);
     lenient().when(emissionFactorSupplier.isAdditionalHousingSystemAirScrubber(systemCode)).thenReturn(airScrubber);
 
     housing.getAdditionalSystems().add(additionalSystem);
@@ -373,7 +370,7 @@ class FarmAnimalHousingEmissionsCalculatorTest {
     additionalSystem.setAdditionalSystemCode(systemCode);
 
     final Map<Substance, Double> emissionFactors = Map.of(Substance.NH3, 0.05);
-    when(emissionFactorSupplier.getAdditionalHousingSystemReductionFractions(systemCode, housing.getAnimalTypeCode())).thenReturn(emissionFactors);
+    when(emissionFactorSupplier.getAdditionalHousingSystemReductionFractions(systemCode, housing.getAnimalHousingCode())).thenReturn(emissionFactors);
 
     housing.getAdditionalSystems().add(additionalSystem);
   }
@@ -392,7 +389,6 @@ class FarmAnimalHousingEmissionsCalculatorTest {
     housing.setNumberOfDays(175);
     final String housingCode = "ABC";
     housing.setAnimalHousingCode(housingCode);
-    housing.setAnimalTypeCode("OWL");
 
     final Map<Substance, Double> emissionFactors = Map.of(Substance.NH3, 0.02);
     when(emissionFactorSupplier.getAnimalHousingEmissionFactors(housingCode)).thenReturn(emissionFactors);
