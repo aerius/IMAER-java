@@ -815,12 +815,12 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
   }
 
   @Override
-  public String getAnimalBasicHousingCode(final String animalCode) {
-    return animalCode + ".100";
+  public String getAnimalBasicHousingCode(final String housingCode) {
+    return housingCode;
   }
 
   @Override
-  public Map<Substance, Double> getAdditionalHousingSystemReductionFractions(final String additionalSystemCode, final String animalCode) {
+  public Map<Substance, Double> getAdditionalHousingSystemReductionFractions(final String additionalSystemCode, final String housingCode) {
     return farmAnimalHousing(additionalSystemCode)
         .map(c -> Map.of(Substance.NH3, c.emissionFactor))
         .orElse(Map.of());
