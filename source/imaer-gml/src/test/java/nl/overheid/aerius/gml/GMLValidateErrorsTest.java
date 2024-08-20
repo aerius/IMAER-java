@@ -93,6 +93,9 @@ class GMLValidateErrorsTest {
   @Test
   void testGMLMultipleErrors() throws IOException, AeriusException {
     final List<String> expectedErrors = List.of(
+        "None",
+        "cvc-datatype-valid.1.2.1: 'None' is not a valid value for 'double'.",
+        "cvc-type.3.1.3: The value 'None' of element 'imaer:vehiclesPerTimeUnit' is not valid.",
         "cvc-enumeration-valid: Value 'None' is not facet-valid with respect to enumeration '[HOUR, DAY, MONTH, YEAR]'. It must be a value from the enumeration.",
         "cvc-type.3.1.3: The value 'None' of element 'imaer:timeUnit' is not valid.",
         "cvc-complex-type.2.4.b: The content of element 'imaer:CustomVehicle' is not complete. One of '{\"http://imaer.aerius.nl/5.1\":emission}' is expected.",

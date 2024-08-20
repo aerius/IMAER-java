@@ -30,7 +30,7 @@
             </imaer:geometry>
             <imaer:vehicles>
                 <imaer:CustomVehicle>
-                    <imaer:vehiclesPerTimeUnit>3</imaer:vehiclesPerTimeUnit>
+                    <imaer:vehiclesPerTimeUnit>None</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>None</imaer:timeUnit>
                     <imaer:description>None</imaer:description>
                 </imaer:CustomVehicle>
