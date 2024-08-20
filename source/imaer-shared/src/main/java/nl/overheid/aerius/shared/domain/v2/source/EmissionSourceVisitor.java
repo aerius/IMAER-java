@@ -31,9 +31,7 @@ public interface EmissionSourceVisitor<T> {
   @Deprecated
   T visit(FarmLodgingEmissionSource emissionSource, IsFeature feature) throws AeriusException;
 
-  default T visit(final FarmAnimalHousingEmissionSource emissionSource, final IsFeature feature) throws AeriusException {
-    return null;
-  }
+  T visit(FarmAnimalHousingEmissionSource emissionSource, IsFeature feature) throws AeriusException;
 
   T visit(FarmlandEmissionSource emissionSource, IsFeature feature) throws AeriusException;
 

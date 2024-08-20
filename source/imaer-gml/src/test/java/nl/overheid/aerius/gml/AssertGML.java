@@ -64,6 +64,7 @@ import nl.overheid.aerius.shared.domain.v2.source.InlandShippingEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.MaritimeShippingEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.MooringInlandShippingEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.MooringMaritimeShippingEmissionSource;
+import nl.overheid.aerius.shared.domain.v2.source.base.AbstractSubSource;
 import nl.overheid.aerius.shared.domain.v2.source.shipping.inland.InlandWaterway;
 import nl.overheid.aerius.shared.emissions.EmissionsUpdater;
 import nl.overheid.aerius.shared.exception.AeriusException;
@@ -257,8 +258,12 @@ public final class AssertGML {
         || source instanceof MooringInlandShippingEmissionSource
         || source instanceof MaritimeShippingEmissionSource
         || source instanceof MooringMaritimeShippingEmissionSource) {
+      final EmissionSourceWithSubSources<?> sourceWithSubSources = (EmissionSourceWithSubSources<?>) source;
       for (final Substance substance : Substance.values()) {
-        object.getProperties().getEmissions().put(substance, ((EmissionSourceWithSubSources<?>) source).getSubSources().size() *
+        for (final AbstractSubSource subSource : sourceWithSubSources.getSubSources()) {
+          subSource.getEmissions().put(substance, substance.getId() * 1.234);
+        }
+        source.getEmissions().put(substance, sourceWithSubSources.getSubSources().size() *
             substance.getId() * 1.234);
       }
     } else {

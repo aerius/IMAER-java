@@ -674,6 +674,13 @@ public enum ImaerExceptionReason implements Reason {
    */
   UNEXPECTED_FRACTION_VALUE(5252),
 
+  /**
+   * Warning: the emission values of a subsource are zero.
+   *
+   * @param 0 The label of the source that has a subsource with zero emissions.
+   */
+  SUB_SOURCE_NO_EMISSION(5253),
+
   // SRM related errors.
 
   /**

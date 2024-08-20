@@ -31,6 +31,8 @@ import nl.overheid.aerius.shared.domain.v2.geojson.GeometryType;
 import nl.overheid.aerius.shared.domain.v2.scenario.ScenarioSituation;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceFeature;
+import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceWithSubSources;
+import nl.overheid.aerius.shared.domain.v2.source.base.AbstractSubSource;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 import nl.overheid.aerius.util.GeometryUtil;
@@ -38,6 +40,7 @@ import nl.overheid.aerius.util.GeometryUtil;
 public final class EmissionSourceValidator {
 
   private static final Validator VALIDATOR = Validation.buildDefaultValidatorFactory().getValidator();
+  private static final SubSourceExpectsEmissionsVisitor SUB_SOURCE_EMISSION_VISITOR = new SubSourceExpectsEmissionsVisitor();
 
   private EmissionSourceValidator() {
     // Util class
@@ -59,8 +62,26 @@ public final class EmissionSourceValidator {
       if (source.getEmissions().isEmpty() || source.getEmissions().values().stream()
           .noneMatch(value -> value > 0)) {
         warnings.add(new AeriusException(ImaerExceptionReason.GML_SOURCE_NO_EMISSION, source.getLabel()));
+      } else if (source instanceof final EmissionSourceWithSubSources<?> sourceWithSubSources
+          && expectsSubSourceEmissions(feature)
+          && sourceWithSubSources.getSubSources().stream()
+              .anyMatch(EmissionSourceValidator::hasNoEmissions)) {
+        warnings.add(new AeriusException(ImaerExceptionReason.SUB_SOURCE_NO_EMISSION, source.getLabel()));
       }
     }
+  }
+
+  private static boolean expectsSubSourceEmissions(final EmissionSourceFeature feature) {
+    try {
+      return feature.accept(SUB_SOURCE_EMISSION_VISITOR);
+    } catch (final AeriusException e) {
+      // Silently ignore, visitor implementation shouldn't throw this.
+      return false;
+    }
+  }
+
+  private static boolean hasNoEmissions(final AbstractSubSource subSource) {
+    return subSource.getEmissions().values().stream().noneMatch(value -> value > 0);
   }
 
   private static void validateContraints(final List<AeriusException> exceptions, final List<AeriusException> warnings,
