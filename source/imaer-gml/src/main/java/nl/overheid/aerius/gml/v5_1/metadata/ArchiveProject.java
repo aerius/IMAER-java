@@ -16,10 +16,15 @@
  */
 package nl.overheid.aerius.gml.v5_1.metadata;
 
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 import nl.overheid.aerius.gml.base.IsArchiveProject;
+import nl.overheid.aerius.gml.base.IsGmlProperty;
+import nl.overheid.aerius.gml.base.geo.GmlPoint;
+import nl.overheid.aerius.gml.base.source.IsGmlEmission;
 import nl.overheid.aerius.gml.v5_1.base.CalculatorSchema;
 
 /**
@@ -61,5 +66,37 @@ public class ArchiveProject implements IsArchiveProject {
   public void setAeriusVersion(final String aeriusVersion) {
     this.aeriusVersion = aeriusVersion;
   }
+
+  @Override
+  public String getProjectType() {
+    // Not available in this version
+    return null;
+  }
+
+  @Override
+  public String getPermitReference() {
+    // Not available in this version
+    return null;
+  }
+
+  @Override
+  public String getPlanningReference() {
+    // Not available in this version
+    return null;
+  }
+
+  @Override
+  public List<? extends IsGmlProperty<IsGmlEmission>> getNetEmissions() {
+    // Not available in this version
+    return List.of();
+  }
+
+  @Override
+  public GmlPoint getCentroid() {
+    // Not available in this version
+    return null;
+  }
+
+
 
 }

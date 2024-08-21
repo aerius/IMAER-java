@@ -16,6 +16,11 @@
  */
 package nl.overheid.aerius.gml.base;
 
+import java.util.List;
+
+import nl.overheid.aerius.gml.base.geo.GmlPoint;
+import nl.overheid.aerius.gml.base.source.IsGmlEmission;
+
 /**
  * Interface for an AERIUS archive project object
  */
@@ -26,5 +31,11 @@ public interface IsArchiveProject {
   String getName();
 
   String getAeriusVersion();
+
+  String getProjectType();
+  String getPermitReference();
+  String getPlanningReference();
+  List<? extends IsGmlProperty<IsGmlEmission>> getNetEmissions();
+  GmlPoint getCentroid();
 
 }

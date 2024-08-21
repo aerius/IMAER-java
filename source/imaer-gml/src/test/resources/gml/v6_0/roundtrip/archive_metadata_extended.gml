@@ -25,21 +25,19 @@
                             <imaer:permitReference>permitRef1</imaer:permitReference>
                             <imaer:planningReference>planningRef1</imaer:planningReference>
                             <imaer:netEmission>
-                                <imaer:Emission substance="NOX">
-                                    <imaer:value>1000.0</imaer:value>
-                                </imaer:Emission>
+<imaer:Emission substance="NOX">
+    <imaer:value>1000.0</imaer:value>
+</imaer:Emission>
                             </imaer:netEmission>
                             <imaer:netEmission>
-                                <imaer:Emission substance="NH3">
-                                    <imaer:value>500.0</imaer:value>
-                                </imaer:Emission>
+<imaer:Emission substance="NH3">
+    <imaer:value>500.0</imaer:value>
+</imaer:Emission>
                             </imaer:netEmission>
                             <imaer:centroid>
-                                <imaer:GM_Point>
-                                    <gml:Point srsName="urn:ogc:def:crs:EPSG::28992" gml:id="AP.1.POINT">
-                                        <gml:pos>184080.38 430602.3</gml:pos>
-                                    </gml:Point>
-                                </imaer:GM_Point>
+<gml:Point srsName="urn:ogc:def:crs:EPSG::28992" gml:id="APM.1.POINT">
+    <gml:pos>184080.38 430602.3</gml:pos>
+</gml:Point>
                             </imaer:centroid>
                         </imaer:ArchiveProject>
                     </imaer:project>
@@ -52,21 +50,19 @@
                             <imaer:permitReference>permitRef2</imaer:permitReference>
                             <imaer:planningReference>planningRef2</imaer:planningReference>
                             <imaer:netEmission>
-                                <imaer:Emission substance="NOX">
-                                    <imaer:value>100.0</imaer:value>
-                                </imaer:Emission>
+<imaer:Emission substance="NOX">
+    <imaer:value>100.0</imaer:value>
+</imaer:Emission>
                             </imaer:netEmission>
                             <imaer:netEmission>
-                                <imaer:Emission substance="NH3">
-                                    <imaer:value>-300.0</imaer:value>
-                                </imaer:Emission>
+<imaer:Emission substance="NH3">
+    <imaer:value>-300.0</imaer:value>
+</imaer:Emission>
                             </imaer:netEmission>
                             <imaer:centroid>
-                                <imaer:GM_Point>
-                                    <gml:Point srsName="urn:ogc:def:crs:EPSG::28992" gml:id="AP.2.POINT">
-                                        <gml:pos>194080.38 420602.3</gml:pos>
-                                    </gml:Point>
-                                </imaer:GM_Point>
+<gml:Point srsName="urn:ogc:def:crs:EPSG::28992" gml:id="APM.2.POINT">
+    <gml:pos>194080.38 420602.3</gml:pos>
+</gml:Point>
                             </imaer:centroid>
                         </imaer:ArchiveProject>
                     </imaer:project>

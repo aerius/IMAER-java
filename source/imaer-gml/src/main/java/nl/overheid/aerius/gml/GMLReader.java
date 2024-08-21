@@ -66,9 +66,9 @@ public final class GMLReader {
     this.gmlHelper = gmlHelper;
     this.factory = factory;
     this.featureCollection = featureCollection;
-    metaDataReader = new GMLMetaDataReader(featureCollection);
-    calculationSetOptionsReader = new GMLCalculationSetOptionsReader(featureCollection);
     conversionData = new GMLConversionData(gmlHelper, factory.getLegacyCodeConverter(), errors, warnings);
+    metaDataReader = new GMLMetaDataReader(featureCollection, conversionData);
+    calculationSetOptionsReader = new GMLCalculationSetOptionsReader(featureCollection);
     versionReader = factory.createReader(conversionData);
   }
 

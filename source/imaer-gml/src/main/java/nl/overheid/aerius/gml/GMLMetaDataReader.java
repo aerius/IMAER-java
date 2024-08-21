@@ -17,15 +17,24 @@
 package nl.overheid.aerius.gml;
 
 import java.time.LocalDate;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.List;
+import java.util.Map;
 
 import nl.overheid.aerius.gml.base.FeatureCollection;
+import nl.overheid.aerius.gml.base.GMLConversionData;
 import nl.overheid.aerius.gml.base.IsArchiveMetadata;
 import nl.overheid.aerius.gml.base.IsArchiveProject;
+import nl.overheid.aerius.gml.base.IsGmlProperty;
 import nl.overheid.aerius.gml.base.MetaData;
+import nl.overheid.aerius.gml.base.geo.GML2Geometry;
+import nl.overheid.aerius.gml.base.source.IsGmlEmission;
+import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.v2.archive.ArchiveMetaData;
 import nl.overheid.aerius.shared.domain.v2.archive.ArchiveProject;
 import nl.overheid.aerius.shared.domain.v2.scenario.ScenarioMetaData;
+import nl.overheid.aerius.shared.exception.AeriusException;
 
 /**
  * Reads metadata from the feature collection.
@@ -33,9 +42,11 @@ import nl.overheid.aerius.shared.domain.v2.scenario.ScenarioMetaData;
 public class GMLMetaDataReader {
 
   private final FeatureCollection featureCollection;
+  private final GML2Geometry gml2geometry;
 
-  public GMLMetaDataReader(final FeatureCollection featureCollection) {
+  public GMLMetaDataReader(final FeatureCollection featureCollection, final GMLConversionData conversionData) {
     this.featureCollection = featureCollection;
+    gml2geometry = new GML2Geometry(conversionData.getSrid());
   }
 
   /**
@@ -62,25 +73,45 @@ public class GMLMetaDataReader {
    * Returns the {@link ArchiveMetaData} from the GML data.
    * @return ArchiveMetaData object
    */
-  public ArchiveMetaData readArchiveMetaData() {
+  public ArchiveMetaData readArchiveMetaData() throws AeriusException {
     if (!hasArchiveMetadata(featureCollection)) {
       return null;
     }
     final ArchiveMetaData archiveMetaData = new ArchiveMetaData();
     final IsArchiveMetadata gmlMetaData = featureCollection.getMetaData().getArchive();
     archiveMetaData.setRetrievalDateTime(gmlMetaData.getRetrievalDateTime());
-    archiveMetaData.setArchiveProjects(gmlMetaData.getArchiveProjects().stream()
-        .map(GMLMetaDataReader::mapProject)
-        .collect(Collectors.toList()));
+    final List<ArchiveProject> archiveProjects = new ArrayList<>();
+    for (final IsArchiveProject gmlProject : gmlMetaData.getArchiveProjects()) {
+      archiveProjects.add(mapProject(gmlProject));
+    }
+    archiveMetaData.setArchiveProjects(archiveProjects);
     return archiveMetaData;
   }
 
-  private static ArchiveProject mapProject(final IsArchiveProject gmlProject) {
+  private ArchiveProject mapProject(final IsArchiveProject gmlProject) throws AeriusException {
     final ArchiveProject project = new ArchiveProject();
     project.setId(gmlProject.getId());
     project.setName(gmlProject.getName());
     project.setAeriusVersion(gmlProject.getAeriusVersion());
+    project.setType(gmlProject.getProjectType());
+    project.setPermitReference(gmlProject.getPermitReference());
+    project.setPlanningReference(gmlProject.getPlanningReference());
+    if (gmlProject.getNetEmissions() != null) {
+      project.setNetEmissions(convertEmissions(gmlProject.getNetEmissions()));
+    }
+    if (gmlProject.getCentroid() != null) {
+      project.setCentroid(gml2geometry.fromXMLPoint(gmlProject.getCentroid()));
+    }
     return project;
+  }
+
+  private static Map<Substance, Double> convertEmissions(final List<? extends IsGmlProperty<IsGmlEmission>> emissions) {
+    final Map<Substance, Double> converted = new EnumMap<>(Substance.class);
+    for (final IsGmlProperty<IsGmlEmission> emissionProperty : emissions) {
+      final IsGmlEmission emission = emissionProperty.getProperty();
+      converted.put(emission.getSubstance(), emission.getValue());
+    }
+    return converted;
   }
 
   /**
