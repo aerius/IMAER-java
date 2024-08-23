@@ -16,21 +16,32 @@
  */
 package nl.overheid.aerius.gml.v6_0.metadata;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 import nl.overheid.aerius.gml.base.IsArchiveProject;
 import nl.overheid.aerius.gml.v6_0.base.CalculatorSchema;
+import nl.overheid.aerius.gml.v6_0.geo.Point;
+import nl.overheid.aerius.gml.v6_0.source.EmissionProperty;
 
 /**
  *
  */
-@XmlType(name = "ArchiveProjectType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"id", "name", "aeriusVersion"})
+@XmlType(name = "ArchiveProjectType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"id", "name", "aeriusVersion",
+    "projectType", "permitReference", "planningReference", "netEmissions", "centroid"})
 public class ArchiveProject implements IsArchiveProject {
 
   private String id;
   private String name;
   private String aeriusVersion;
+  private String projectType;
+  private String permitReference;
+  private String planningReference;
+  private Point centroid;
+  private List<EmissionProperty> netEmissions = new ArrayList<>();
 
   @Override
   @XmlElement(namespace = CalculatorSchema.NAMESPACE)
@@ -60,6 +71,56 @@ public class ArchiveProject implements IsArchiveProject {
 
   public void setAeriusVersion(final String aeriusVersion) {
     this.aeriusVersion = aeriusVersion;
+  }
+
+  @XmlElement(namespace = CalculatorSchema.NAMESPACE)
+  @Override
+  public String getProjectType() {
+    return projectType;
+  }
+
+  public void setProjectType(final String projectType) {
+    this.projectType = projectType;
+  }
+
+  @XmlElement(namespace = CalculatorSchema.NAMESPACE)
+  @Override
+  public String getPermitReference() {
+    return permitReference;
+  }
+
+  public void setPermitReference(final String permitReference) {
+    this.permitReference = permitReference;
+  }
+
+  @XmlElement(namespace = CalculatorSchema.NAMESPACE)
+  @Override
+  public String getPlanningReference() {
+    return planningReference;
+  }
+
+  public void setPlanningReference(final String planningReference) {
+    this.planningReference = planningReference;
+  }
+
+  @XmlElement(namespace = CalculatorSchema.NAMESPACE)
+  @Override
+  public Point getCentroid() {
+    return centroid;
+  }
+
+  public void setCentroid(final Point point) {
+    this.centroid = point;
+  }
+
+  @XmlElement(namespace = CalculatorSchema.NAMESPACE, name = "netEmission")
+  @Override
+  public List<EmissionProperty> getNetEmissions() {
+    return netEmissions;
+  }
+
+  public void setNetEmissions(final List<EmissionProperty> netEmissions) {
+    this.netEmissions = netEmissions;
   }
 
 }

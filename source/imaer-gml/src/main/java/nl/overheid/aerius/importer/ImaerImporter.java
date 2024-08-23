@@ -217,7 +217,7 @@ public class ImaerImporter {
     setCrsIf(result.getCalculationPoints(), crs);
   }
 
-  private void setCrsIf(final FeatureCollection<?> featureCollection, final Crs crs) {
+  private static void setCrsIf(final FeatureCollection<?> featureCollection, final Crs crs) {
     if (!featureCollection.getFeatures().isEmpty()) {
       featureCollection.setCrs(crs);
     }
@@ -231,7 +231,7 @@ public class ImaerImporter {
    * @return
    * @throws AeriusException
    */
-  private InputStream filterResults(final InputStream inputStream, final Set<ImportOption> importOptions) {
+  private static InputStream filterResults(final InputStream inputStream, final Set<ImportOption> importOptions) {
     if (importOptions.contains(ImportOption.INCLUDE_RESULTS)) {
       return inputStream;
     } else {
@@ -309,7 +309,7 @@ public class ImaerImporter {
     return list;
   }
 
-  private void setImportResultMetaData(final ImportParcel result, final GMLReader reader) {
+  private static void setImportResultMetaData(final ImportParcel result, final GMLReader reader) throws AeriusException {
     final GMLMetaDataReader metaDataReader = reader.metaDataReader();
     result.getSituation().setYear(metaDataReader.readYear());
     result.setVersion(metaDataReader.readAeriusVersion());

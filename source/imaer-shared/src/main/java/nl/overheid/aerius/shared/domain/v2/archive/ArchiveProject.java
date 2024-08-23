@@ -20,13 +20,14 @@ import java.io.Serializable;
 import java.util.Map;
 
 import nl.overheid.aerius.shared.domain.Substance;
+import nl.overheid.aerius.shared.domain.v2.geojson.Point;
 
 /**
  * A project in archive.
  */
 public class ArchiveProject implements Serializable {
 
-  private static final long serialVersionUID = 3L;
+  private static final long serialVersionUID = 4L;
 
   private String id;
   private String name;
@@ -35,6 +36,7 @@ public class ArchiveProject implements Serializable {
   private String planningReference;
   private Map<Substance, Double> netEmissions;
   private String aeriusVersion;
+  private Point centroid;
 
   public String getId() {
     return id;
@@ -91,4 +93,13 @@ public class ArchiveProject implements Serializable {
   public void setAeriusVersion(final String aeriusVersion) {
     this.aeriusVersion = aeriusVersion;
   }
+
+  public Point getCentroid() {
+    return centroid;
+  }
+
+  public void setCentroid(final Point centroid) {
+    this.centroid = centroid;
+  }
+
 }

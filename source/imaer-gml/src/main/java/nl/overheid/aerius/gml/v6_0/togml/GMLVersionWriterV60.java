@@ -19,8 +19,8 @@ package nl.overheid.aerius.gml.v6_0.togml;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import nl.overheid.aerius.gml.base.AeriusGMLVersion;
 import nl.overheid.aerius.gml.base.Definitions;
@@ -36,6 +36,7 @@ import nl.overheid.aerius.gml.v6_0.base.CalculatorSchema;
 import nl.overheid.aerius.gml.v6_0.collection.FeatureCollectionImpl;
 import nl.overheid.aerius.gml.v6_0.definitions.CustomTimeVaryingProfile;
 import nl.overheid.aerius.gml.v6_0.definitions.DefinitionsImpl;
+import nl.overheid.aerius.gml.v6_0.geo.Point;
 import nl.overheid.aerius.gml.v6_0.metadata.AddressImpl;
 import nl.overheid.aerius.gml.v6_0.metadata.ArchiveMetadata;
 import nl.overheid.aerius.gml.v6_0.metadata.CalculationMetadata;
@@ -47,6 +48,8 @@ import nl.overheid.aerius.gml.v6_0.metadata.OtherSituationMetadataProperty;
 import nl.overheid.aerius.gml.v6_0.metadata.ProjectMetadata;
 import nl.overheid.aerius.gml.v6_0.metadata.SituationMetadata;
 import nl.overheid.aerius.gml.v6_0.metadata.VersionMetadata;
+import nl.overheid.aerius.gml.v6_0.source.Emission;
+import nl.overheid.aerius.gml.v6_0.source.EmissionProperty;
 import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.Theme;
 import nl.overheid.aerius.shared.domain.calculation.CalculationSetOptions;
@@ -71,6 +74,7 @@ import nl.overheid.aerius.util.gml.GMLIdUtil;
  */
 public class GMLVersionWriterV60 implements GMLVersionWriter {
 
+  private final Geometry2GML geometry2gml;
   private final Source2GML source2gml;
   private final Building2GML building2gml;
   private final Result2GML result2gml;
@@ -78,7 +82,7 @@ public class GMLVersionWriterV60 implements GMLVersionWriter {
   private final CIMLKDispersionLine2GML dispersionLine2gml;
 
   public GMLVersionWriterV60(final HexagonZoomLevel zoomLevel1, final String srsName) {
-    final Geometry2GML geometry2gml = new Geometry2GML(srsName);
+    geometry2gml = new Geometry2GML(srsName);
     source2gml = new Source2GML(geometry2gml);
     building2gml = new Building2GML(geometry2gml);
     result2gml = new Result2GML(geometry2gml, zoomLevel1);
@@ -175,7 +179,7 @@ public class GMLVersionWriterV60 implements GMLVersionWriter {
         && !StringUtils.isEmpty(scenarioData.getCity());
   }
 
-  private CalculationMetadata getCalculation(final MetaDataInput input) {
+  private static CalculationMetadata getCalculation(final MetaDataInput input) {
     final CalculationMetadata calculation;
     if (input.isResultsIncluded()) {
       calculation = new CalculationMetadata();
@@ -194,14 +198,14 @@ public class GMLVersionWriterV60 implements GMLVersionWriter {
     return calculation;
   }
 
-  private VersionMetadata getVersion(final MetaDataInput input) {
+  private static VersionMetadata getVersion(final MetaDataInput input) {
     final VersionMetadata version = new VersionMetadata();
     version.setAeriusVersion(input.getVersion());
     version.setDatabaseVersion(input.getDatabaseVersion());
     return version;
   }
 
-  private ArchiveMetadata getArchive(final MetaDataInput input) {
+  private ArchiveMetadata getArchive(final MetaDataInput input) throws AeriusException {
     final ArchiveMetadata archive;
     if (input.getArchiveMetaData() == null) {
       archive = null;
@@ -213,46 +217,67 @@ public class GMLVersionWriterV60 implements GMLVersionWriter {
     return archive;
   }
 
-  private List<nl.overheid.aerius.gml.v6_0.metadata.ArchiveProject> archiveProjects2GML(final List<ArchiveProject> archveProjects) {
-    return archveProjects.stream()
-        .map(this::archiveProject2GML)
-        .collect(Collectors.toList());
+  private List<nl.overheid.aerius.gml.v6_0.metadata.ArchiveProject> archiveProjects2GML(final List<ArchiveProject> archiveProjects)
+      throws AeriusException {
+    final List<nl.overheid.aerius.gml.v6_0.metadata.ArchiveProject> converted = new ArrayList<>();
+    for (final ArchiveProject archiveProject : archiveProjects) {
+      converted.add(archiveProject2GML(archiveProject, archiveProjects.indexOf(archiveProject) + 1));
+    }
+    return converted;
   }
 
-  private nl.overheid.aerius.gml.v6_0.metadata.ArchiveProject archiveProject2GML(final ArchiveProject archiveProject) {
+  private nl.overheid.aerius.gml.v6_0.metadata.ArchiveProject archiveProject2GML(final ArchiveProject archiveProject, final int index)
+      throws AeriusException {
     final nl.overheid.aerius.gml.v6_0.metadata.ArchiveProject gmlArchiveProject = new nl.overheid.aerius.gml.v6_0.metadata.ArchiveProject();
     gmlArchiveProject.setId(archiveProject.getId());
     gmlArchiveProject.setName(archiveProject.getName());
     gmlArchiveProject.setAeriusVersion(archiveProject.getAeriusVersion());
+    gmlArchiveProject.setProjectType(archiveProject.getType());
+    gmlArchiveProject.setPermitReference(archiveProject.getPermitReference());
+    gmlArchiveProject.setPlanningReference(archiveProject.getPlanningReference());
+    if (archiveProject.getNetEmissions() != null && !archiveProject.getNetEmissions().isEmpty()) {
+      final List<EmissionProperty> netEmissions = new ArrayList<>();
+      for (final Entry<Substance, Double> entry : archiveProject.getNetEmissions().entrySet()) {
+        final Emission emission = new Emission();
+        emission.setSubstance(entry.getKey());
+        emission.setValue(entry.getValue());
+        netEmissions.add(new EmissionProperty(emission));
+      }
+      gmlArchiveProject.setNetEmissions(netEmissions);
+    }
+    if (archiveProject.getCentroid() != null) {
+      gmlArchiveProject.setCentroid(geometry2gml.toXMLPoint(archiveProject.getCentroid(), new Point()));
+      gmlArchiveProject.getCentroid().getGmlPoint().setId("APM." + index + ".POINT");
+    }
     return gmlArchiveProject;
   }
 
-  private List<EmissionResultType> determineResultTypes(final Set<EmissionResultKey> keys) {
+  private static List<EmissionResultType> determineResultTypes(final Set<EmissionResultKey> keys) {
     final List<EmissionResultType> types = new ArrayList<>();
     for (final EmissionResultKey key : keys) {
       if (!types.contains(key.getEmissionResultType())) {
         types.add(key.getEmissionResultType());
       }
     }
-    return types.stream().sorted().collect(Collectors.toList());
+    return types.stream().sorted().toList();
   }
 
-  private List<CalculationOptionProperty> options2GML(final Theme theme, final CalculationSetOptions options) {
+  private static List<CalculationOptionProperty> options2GML(final Theme theme, final CalculationSetOptions options) {
     final Map<String, String> gmlOptionsMap = OptionsMetadataUtil.optionsToMap(theme, options, false);
     return gmlOptionsMap.entrySet().stream()
         .map(entry -> new CalculationOption(entry.getKey(), entry.getValue()))
         .map(CalculationOptionProperty::new)
-        .collect(Collectors.toList());
+        .toList();
   }
 
-  private List<OtherSituationMetadataProperty> otherSituations2GML(final List<OtherSituationMetaData> otherSituations) {
+  private static List<OtherSituationMetadataProperty> otherSituations2GML(final List<OtherSituationMetaData> otherSituations) {
     return otherSituations.stream()
-        .map(this::otherSituation2GML)
+        .map(GMLVersionWriterV60::otherSituation2GML)
         .map(OtherSituationMetadataProperty::new)
-        .collect(Collectors.toList());
+        .toList();
   }
 
-  private OtherSituationMetadata otherSituation2GML(final OtherSituationMetaData otherSituation) {
+  private static OtherSituationMetadata otherSituation2GML(final OtherSituationMetaData otherSituation) {
     final OtherSituationMetadata gmlOtherSituation = new OtherSituationMetadata();
     gmlOtherSituation.setSituationType(otherSituation.getSituationType());
     gmlOtherSituation.setName(otherSituation.getName());
@@ -267,7 +292,7 @@ public class GMLVersionWriterV60 implements GMLVersionWriter {
       gmlDefinitions = new DefinitionsImpl();
       final List<CustomTimeVaryingProfile> customDiurnalVariations = definitions.getCustomTimeVaryingProfiles().stream()
           .map(this::convert)
-          .collect(Collectors.toList());
+          .toList();
       gmlDefinitions.setCustomTimeVaryingProfiles(customDiurnalVariations);
     } else {
       gmlDefinitions = null;

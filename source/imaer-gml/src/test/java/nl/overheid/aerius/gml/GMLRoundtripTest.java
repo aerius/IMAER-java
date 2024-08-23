@@ -160,12 +160,13 @@ class GMLRoundtripTest {
       {"nca_calculation_options", CharacteristicsType.ADMS},
       {"nca_calculation_options_quick_run", CharacteristicsType.ADMS},
       {"archive_metadata", CharacteristicsType.ADMS},
+      {"archive_metadata_extended", CharacteristicsType.ADMS},
       {"farm_animal_housing", CharacteristicsType.OPS},
       {"farm_animal_housing_with_systems", CharacteristicsType.OPS},
       {"farm_animal_housing_custom_per_day", CharacteristicsType.OPS},
       // Case where lodging could not be converted directly to animal housing
       {"farm_no_conversion", CharacteristicsType.OPS,
-        EnumSet.of(ImaerExceptionReason.GML_SOURCE_NO_EMISSION, ImaerExceptionReason.GML_CONVERTED_LODGING_TO_CUSTOM), true},
+          EnumSet.of(ImaerExceptionReason.GML_SOURCE_NO_EMISSION, ImaerExceptionReason.GML_CONVERTED_LODGING_TO_CUSTOM), true},
   };
 
   private static final String LATEST_VERSION = "latest";
@@ -366,7 +367,9 @@ class GMLRoundtripTest {
       protected GMLReader createGMLReader(final InputStream inputStream, final Set<ImportOption> importOptions, final ImportParcel result)
           throws AeriusException {
         final GMLReader reader = super.createGMLReader(inputStream, importOptions, result);
-        readVersion.set(reader.getVersion().name().toLowerCase());
+        if (reader != null) {
+          readVersion.set(reader.getVersion().name().toLowerCase());
+        }
         return reader;
       }
     };
