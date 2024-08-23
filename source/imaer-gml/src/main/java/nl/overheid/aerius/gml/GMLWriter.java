@@ -210,10 +210,27 @@ public class GMLWriter {
    * @param fileId The ID that should be reflected in the filename.
    * @return The file generated.
    * @throws AeriusException When exception occurred generating the GML.
+   * @deprecated Use version with path argument that directly writes to supplied file instead.
    */
+  @Deprecated
   public File writeArchiveContributionsToFile(final File dir, final List<CalculationPointFeature> points, final MetaDataInput metaData,
       final int fileId) throws AeriusException {
     final Path file = new File(dir, getFileName(Optional.empty(), fileId, Optional.of(ARCHIVE_FILE_PART), Optional.empty())).toPath();
+    return writeArchiveContributionsToFile(file, points, metaData);
+  }
+
+  /**
+   * Build archive GML and write it directly to file.
+   * The GML content will be written directly to the supplied file.
+   *
+   * @param file The file path to write the file to.
+   * @param points Points including the archive contributions.
+   * @param metaData The metadata to write for this file.
+   * @return The file generated.
+   * @throws AeriusException When exception occurred generating the GML.
+   */
+  public File writeArchiveContributionsToFile(final Path file, final List<CalculationPointFeature> points, final MetaDataInput metaData)
+      throws AeriusException {
     try (final OutputStream outputStream = Files.newOutputStream(file)) {
       writeAeriusPoints(outputStream, points, metaData);
     } catch (final IOException e) {
@@ -226,10 +243,9 @@ public class GMLWriter {
     return file.toFile();
   }
 
-
   /**
    * Build GML and write it directly to file.
-   * The GML file will be generated in the supplied file.
+   * The GML content will be written directly to the supplied file.
    *
    * @param file The file path to write the file to.
    * @param scenario Scenario containing all scenario related data
