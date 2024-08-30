@@ -88,26 +88,28 @@ public class SubSourceEmissionsCalculator {
   }
 
   /**
-   * Calculates the emission of a {@link Vehicles} object.
+   * Calculates the emission of a {@link Vehicles} object and returns the values in Kg/Year.
    *
    * @param vehicle vehicle to calculate the emission on
-   * @return emissions calculated emissions
+   * @return emissions calculated emissions in Kg/Year.
    */
   public Map<Substance, Double> calculateColdStartEmissions(final Vehicles vehicle) throws AeriusException {
     // null is passed as road emission source since it has no additional information with coldstart for emission calculations.
     return coldStartEmissionsCalculator.calculateEmissions(null, vehicle)
-        .entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getValue().doubleValue()));
+        .entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, entry ->
+            coldStartEmissionsCalculator.toTotalEmission(null, entry.getValue(), null).doubleValue()));
   }
 
   /**
-   * Calculates the emission of a vehicle type on {@link StandardColdStartVehicles} object.
+   * Calculates the emission of a vehicle type on {@link StandardColdStartVehicles} object and returns the values in Kg/Year.
    *
    * @param vehicles object to get the time unit from
    * @param vehicleType vehicle type of the standard vehicle
-   * @return emissions calculated emissions
+   * @return emissions calculated emissions in Kg/Year.
    */
   public Map<Substance, Double> calculateColdStartEmissions(final StandardColdStartVehicles vehicles, final String vehicleType) {
     return coldStartEmissionsCalculator.calculateColdStartEmissions(vehicles, vehicleType, vehicles.getValuesPerVehicleTypes().get(vehicleType))
-        .entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getValue().doubleValue()));
+        .entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, entry ->
+            coldStartEmissionsCalculator.toTotalEmission(null, entry.getValue(), null).doubleValue()));
   }
 }
