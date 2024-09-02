@@ -82,6 +82,7 @@ public class GMLWriter {
 
   private final AeriusGMLVersion version;
   private Boolean formattedOutput = Boolean.TRUE;
+  private boolean withRepresentation = true;
 
   public GMLWriter(final ReceptorGridSettings rgs, final ReferenceGenerator referenceGenerator) {
     this(rgs, referenceGenerator, LATEST_WRITER_VERSION);
@@ -100,6 +101,13 @@ public class GMLWriter {
    */
   public void setFormattedOutput(final Boolean formattedOutput) {
     this.formattedOutput = formattedOutput;
+  }
+
+  /**
+   * If called GML Receptors won't be generated with the hexagon representation geometry.
+   */
+  public void setNoReceptorRepresentation() {
+    this.withRepresentation = false;
   }
 
   /**
@@ -359,7 +367,7 @@ public class GMLWriter {
   }
 
   private InternalGMLWriter createInternalWriter() throws AeriusException {
-    return new InternalGMLWriter(receptorGridSettings, referenceGenerator, formattedOutput, version);
+    return new InternalGMLWriter(receptorGridSettings, referenceGenerator, formattedOutput, version, withRepresentation);
   }
 
 }

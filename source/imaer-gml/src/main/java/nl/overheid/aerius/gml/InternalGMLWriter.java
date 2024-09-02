@@ -87,8 +87,9 @@ final class InternalGMLWriter {
   private final Boolean formattedOutput;
 
   InternalGMLWriter(final ReceptorGridSettings rgs, final ReferenceGenerator referenceGenerator, final Boolean formattedOutput,
-      final AeriusGMLVersion version) throws AeriusException {
-    writer = GMLVersionWriterFactory.createGMLVersionWriter(rgs.getZoomLevel1(), GMLSchema.getSRSName(rgs.getEPSG().getSrid()), version);
+      final AeriusGMLVersion version, final boolean withRepresentation) throws AeriusException {
+    writer = GMLVersionWriterFactory.createGMLVersionWriter(rgs.getZoomLevel1(), GMLSchema.getSRSName(rgs.getEPSG().getSrid()), version,
+        withRepresentation);
     this.referenceGenerator = referenceGenerator;
     this.schema = GMLVersionWriterFactory.getSchema(version);
     this.formattedOutput = formattedOutput;

@@ -28,6 +28,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
@@ -69,6 +70,7 @@ class GMLWriterTest {
   private static final String RECEPTORS_CONCENTRATION_ONLY_FILE = "test_receptors_concentration_only";
   private static final String RECEPTORS_EDGE_EFFECT_FILE = "test_receptors_edge_effect";
   private static final String RECEPTORS_ALL_FILE = "test_receptors";
+  private static final Object RECEPTORS_NO_REPRESENTATION = "test_receptors_no_representation";
   private static final String MIXED_FEATURES_FILE = "test_mixed_features";
   private static final String PATH_CURRENT_VERSION = GMLWriter.LATEST_WRITER_VERSION.name().toLowerCase() + "/";
 
@@ -110,7 +112,7 @@ class GMLWriterTest {
     final List<EmissionSourceFeature> sources1 = getExampleEmissionSources();
     sources1.get(0).setGeometry(null);
 
-    final IllegalArgumentException e = assertThrows(
+    assertThrows(
         IllegalArgumentException.class,
         () -> getConversionResult(converter, sources1),
         "Emissionsource not allowed to have no geometry.");
@@ -216,24 +218,32 @@ class GMLWriterTest {
 
   private static Stream<Arguments> convertReceptorsData() {
     return Stream.of(
-        Arguments.of(RECEPTORS_ALL_FILE, true, true, false),
-        Arguments.of(RECEPTORS_DEPOSITION_ONLY_FILE, true, false, false),
-        Arguments.of(RECEPTORS_CONCENTRATION_ONLY_FILE, false, true, false),
-        Arguments.of(RECEPTORS_EDGE_EFFECT_FILE, true, true, true));
+        Arguments.of(RECEPTORS_ALL_FILE, Set.of(ConvertReceptorsOptions.INCLUDE_DEPOSITION, ConvertReceptorsOptions.INCLUDE_CONCENTRATION)),
+        Arguments.of(RECEPTORS_DEPOSITION_ONLY_FILE, Set.of(ConvertReceptorsOptions.INCLUDE_DEPOSITION)),
+        Arguments.of(RECEPTORS_CONCENTRATION_ONLY_FILE, Set.of(ConvertReceptorsOptions.INCLUDE_CONCENTRATION)),
+        Arguments.of(RECEPTORS_EDGE_EFFECT_FILE, Set.of(ConvertReceptorsOptions.INCLUDE_DEPOSITION, ConvertReceptorsOptions.INCLUDE_CONCENTRATION,
+            ConvertReceptorsOptions.INCLUDE_OVERLAPPING)),
+        Arguments.of(RECEPTORS_NO_REPRESENTATION, Set.of(ConvertReceptorsOptions.INCLUDE_DEPOSITION, ConvertReceptorsOptions.INCLUDE_CONCENTRATION,
+            ConvertReceptorsOptions.NO_REPRESENTATION)));
   }
 
   @ParameterizedTest(name = "Testfile: {0}")
   @MethodSource("convertReceptorsData")
-  void testConvertReceptors(final String receptorFile, final boolean includeDeposition, final boolean includeConcentration,
-      final boolean includeOverlapping) throws IOException, AeriusException {
-    final ArrayList<CalculationPointFeature> receptors = getExampleAeriusPoints(includeDeposition, includeConcentration, includeOverlapping);
+  void testConvertReceptors(final String receptorFile, final Set<ConvertReceptorsOptions> options) throws IOException, AeriusException {
+    final ArrayList<CalculationPointFeature> receptors = getExampleAeriusPoints(
+        ConvertReceptorsOptions.INCLUDE_DEPOSITION.in(options),
+        ConvertReceptorsOptions.INCLUDE_CONCENTRATION.in(options),
+        ConvertReceptorsOptions.INCLUDE_OVERLAPPING.in(options));
     final MetaDataInput metaDataInput = getMetaDataInput(new ScenarioMetaData());
     metaDataInput.setName(null);
     metaDataInput.setReference(null);
     metaDataInput.setSituationType(null);
     metaDataInput.setResultsIncluded(true);
     final GMLWriter writer = new GMLWriter(RECEPTOR_GRID_SETTINGS, GMLTestDomain.TEST_REFERENCE_GENERATOR);
-    String result;
+    if (ConvertReceptorsOptions.NO_REPRESENTATION.in(options)) {
+      writer.setNoReceptorRepresentation();
+    }
+    final String result;
     try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
       writer.writeAeriusPoints(bos, receptors, metaDataInput);
       result = bos.toString(StandardCharsets.UTF_8.name());
@@ -387,4 +397,26 @@ class GMLWriterTest {
     return metaData;
   }
 
+  private enum ConvertReceptorsOptions {
+    /**
+     * Include deposition results.
+     */
+    INCLUDE_DEPOSITION,
+    /**
+     * Include concentration results.
+     */
+    INCLUDE_CONCENTRATION,
+    /**
+     * Include edge effect results.
+     */
+    INCLUDE_OVERLAPPING,
+    /**
+     * Don't include hexagon representation geometry.
+     */
+    NO_REPRESENTATION;
+
+    public boolean in(final Set<ConvertReceptorsOptions> options) {
+      return options.contains(this);
+    }
+  }
 }

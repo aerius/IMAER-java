@@ -60,10 +60,12 @@ final class Result2GML {
 
   private final Geometry2GML geometry2gml;
   private final HexagonZoomLevel zoomLevel1;
+  private final boolean withRepresentation;
 
-  public Result2GML(final Geometry2GML geometry2gml, final HexagonZoomLevel zoomLevel1) {
+  public Result2GML(final Geometry2GML geometry2gml, final HexagonZoomLevel zoomLevel1, final boolean withRepresentation) {
     this.geometry2gml = geometry2gml;
     this.zoomLevel1 = zoomLevel1;
+    this.withRepresentation = withRepresentation;
   }
 
   /**
@@ -147,7 +149,7 @@ final class Result2GML {
     return converted;
   }
 
-  private EntityReference convert(final nl.overheid.aerius.shared.domain.v2.point.EntityReference entityReference) {
+  private static EntityReference convert(final nl.overheid.aerius.shared.domain.v2.point.EntityReference entityReference) {
     final EntityReference gmlEntityReference = new EntityReference();
     gmlEntityReference.setEntityType(entityReference.getEntityType().name());
     gmlEntityReference.setCode(entityReference.getCode());
@@ -169,7 +171,7 @@ final class Result2GML {
     return sort;
   }
 
-  private CriticalLevel convert(final EmissionResultKey key, final Double value) {
+  private static CriticalLevel convert(final EmissionResultKey key, final Double value) {
     final CriticalLevel criticalLevel = new CriticalLevel();
     criticalLevel.setResultType(key.getEmissionResultType());
     criticalLevel.setSubstance(key.getSubstance());
@@ -177,7 +179,7 @@ final class Result2GML {
     return criticalLevel;
   }
 
-  private AbstractCalculationPoint fromCustomPoint(final nl.overheid.aerius.shared.domain.v2.point.CustomCalculationPoint aeriusPoint) {
+  private static AbstractCalculationPoint fromCustomPoint(final nl.overheid.aerius.shared.domain.v2.point.CustomCalculationPoint aeriusPoint) {
     //treat as a custom calculation point
     //The proper representation of a custompoint would be a circle with a surface of 1ha.
     //Unclear at this point if this is required for GML and if it should be implemented by a GML polygon, arc or circle.
@@ -187,13 +189,13 @@ final class Result2GML {
     return returnPoint;
   }
 
-  private void setCustomProperties(final nl.overheid.aerius.shared.domain.v2.point.CustomCalculationPoint aeriusPoint,
+  private static void setCustomProperties(final nl.overheid.aerius.shared.domain.v2.point.CustomCalculationPoint aeriusPoint,
       final AbstractCalculationPoint returnPoint) {
     returnPoint.setAssessmentCategory(aeriusPoint.getAssessmentCategory() == null ? null : aeriusPoint.getAssessmentCategory().name());
     returnPoint.setHeight(aeriusPoint.getHeight());
   }
 
-  private AbstractCalculationPoint fromSubPoint(final nl.overheid.aerius.shared.domain.v2.point.SubPoint aeriusPoint) {
+  private static AbstractCalculationPoint fromSubPoint(final nl.overheid.aerius.shared.domain.v2.point.SubPoint aeriusPoint) {
     final SubPoint returnSubPoint = new SubPoint();
     returnSubPoint.setSubPointId(aeriusPoint.getSubPointId());
     returnSubPoint.setReceptorPointId(aeriusPoint.getReceptorId());
@@ -206,15 +208,28 @@ final class Result2GML {
       throws AeriusException {
     //treat as receptor point.
     final ReceptorPoint returnReceptorPoint = new ReceptorPoint();
+
     returnReceptorPoint.setReceptorPointId(aeriusPoint.getId());
     returnReceptorPoint.setEdgeEffect(aeriusPoint.getEdgeEffect());
-    //receptor are represented by a hexagon.
-    final Geometry geometry = HexagonUtil.createHexagon(point, zoomLevel1);
-    if (geometry instanceof final nl.overheid.aerius.shared.domain.v2.geojson.Polygon polygon) {
-      returnReceptorPoint.setRepresentation(
-          geometry2gml.toXMLPolygon(polygon, new Polygon()));
-    }
+    setRepresentation(point, returnReceptorPoint);
     return returnReceptorPoint;
+  }
+
+  /**
+   * Receptors are represented by a hexagon.
+   *
+   * @param point
+   * @param receptorPoint
+   * @throws AeriusException
+   */
+  private void setRepresentation(final Point point, final ReceptorPoint receptorPoint) throws AeriusException {
+    if (withRepresentation) {
+      final Geometry geometry = HexagonUtil.createHexagon(point, zoomLevel1);
+
+      if (geometry instanceof final nl.overheid.aerius.shared.domain.v2.geojson.Polygon polygon) {
+        receptorPoint.setRepresentation(geometry2gml.toXMLPolygon(polygon, new Polygon()));
+      }
+    }
   }
 
   private static List<ResultProperty> getResults(final CalculationPoint aeriusPoint, final Substance[] substances) {
