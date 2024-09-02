@@ -51,7 +51,7 @@ class ColdStartEmissionsCalculatorTest {
   ColdStartEmissionsCalculator emissionsCalculator;
 
   @BeforeEach
-  void beforeEach() throws AeriusException {
+  void beforeEach() {
     emissionsCalculator = new ColdStartEmissionsCalculator(emissionFactorSupplier);
   }
 
