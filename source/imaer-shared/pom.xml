@@ -22,7 +22,7 @@
   <parent>
     <groupId>nl.aerius</groupId>
     <artifactId>imaer-parent</artifactId>
-    <version>6.0.0-2</version>
+    <version>6.0.0-3-SNAPSHOT</version>
   </parent>
 
   <artifactId>imaer-shared</artifactId>
