@@ -87,31 +87,4 @@ public final class HexagonUtil {
     // sqrt(4/3) would be 1 ( 4 / 3 = 1) however, so use 2/sqrt(3)
     return (int) Math.ceil((2 / Math.sqrt(3)) * radius / zoomLevel.getHexagonHeight());
   }
-
-  /**
-   * <pre>
-   *       a (radius * 0.5)
-   *                _____
-   *               |    /
-   *               |   /
-   *  (height/2) b |  /  c (radius)
-   *               | /
-   *               |/
-   *
-   * a = x * 0.5;
-   * b = half the hexagon height
-   * c = x
-   *
-   * Therefore b = sqrt((halfHeight ^ 2 * 4) / 3)
-   * </pre>
-   *
-   * Model.
-   *
-   * @param halfHeight of the hexagon
-   *
-   * @return x
-   */
-  public static double convertHalfHeightToRadius(final double halfHeight) {
-    return Math.sqrt((Math.pow(halfHeight, 2) * 4) / 3);
-  }
 }

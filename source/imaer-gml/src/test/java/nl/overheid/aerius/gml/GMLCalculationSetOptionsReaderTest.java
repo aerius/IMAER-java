@@ -17,9 +17,11 @@
 package nl.overheid.aerius.gml;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -56,7 +58,7 @@ class GMLCalculationSetOptionsReaderTest {
   private static final String CALCULATION_JOB_TYPE = "MAX_TEMPORARY_EFFECT";
 
   @Test
-  void getCalculationMethod() {
+  void testGetCalculationMethod() {
     final FeatureCollection featureCollection = mock(FeatureCollection.class);
     when(featureCollection.getMetaData()).thenReturn(null);
 
@@ -229,11 +231,11 @@ class GMLCalculationSetOptionsReaderTest {
     assertEquals(4.2, admsOptions.getMsMinMoninObukhovLength(), "MsMinMoninObukhovLength");
     assertEquals(5.3, admsOptions.getMsSurfaceAlbedo(), "MsSurfaceAlbedo");
     assertEquals(6.4, admsOptions.getMsPriestleyTaylorParameter(), "MsPriestleyTaylorParameter");
-    assertEquals(true, admsOptions.isPlumeDepletionNH3(), "PlumeDepletionNH3");
-    assertEquals(true, admsOptions.isPlumeDepletionNOX(), "PlumeDepletionNOX");
+    assertTrue(admsOptions.isPlumeDepletionNH3(), "PlumeDepletionNH3");
+    assertTrue(admsOptions.isPlumeDepletionNOX(), "PlumeDepletionNOX");
     assertEquals(spatiallyVaryingRoughness == null || spatiallyVaryingRoughness, admsOptions.isSpatiallyVaryingRoughness(),
         "SpatiallyVaryingRoughness");
-    assertEquals(true, admsOptions.isComplexTerrain(), "ComplexTerrain");
+    assertTrue(admsOptions.isComplexTerrain(), "ComplexTerrain");
 
     assertEquals(40.0, options.getCalculateMaximumRange(), "Maximum range read");
   }
@@ -258,8 +260,6 @@ class GMLCalculationSetOptionsReaderTest {
     assertNull(options.getCalculationJobType(), "CalculationJobType");
     final NCACalculationOptions ncaOptions = options.getNcaCalculationOptions();
     assertNull(ncaOptions.getPermitArea(), "PermitArea");
-    assertNull(ncaOptions.getMeteoSiteLocation(), "MeteoSiteLocation");
-    assertEquals(List.of(), ncaOptions.getMeteoYears(), "MeteoYears");
     final ADMSOptions admsOptions = ncaOptions.getAdmsOptions();
     assertEquals(ADMSLimits.MIN_MONIN_OBUKHOV_LENGTH_DEFAULT, admsOptions.getMinMoninObukhovLength(),
         "MinMoninObukhovLength");
@@ -267,14 +267,15 @@ class GMLCalculationSetOptionsReaderTest {
     assertEquals(ADMSLimits.PRIESTLEY_TAYLOR_PARAMETER_DEFAULT, admsOptions.getPriestleyTaylorParameter(),
         "PriestleyTaylorParameter");
     assertEquals(0, admsOptions.getMetSiteId(), "MetSiteId");
+    assertEquals(List.of(), admsOptions.getMetYears(), "MeteoYears");
     assertEquals(0.0, admsOptions.getMsRoughness(), "MsRoughness");
     assertEquals(0.0, admsOptions.getMsMinMoninObukhovLength(), "MsMinMoninObukhovLength");
     assertEquals(0.0, admsOptions.getMsSurfaceAlbedo(), "MsSurfaceAlbedo");
     assertEquals(0.0, admsOptions.getMsPriestleyTaylorParameter(), "MsPriestleyTaylorParameter");
-    assertEquals(false, admsOptions.isPlumeDepletionNH3(), "PlumeDepletionNH3");
-    assertEquals(false, admsOptions.isPlumeDepletionNOX(), "PlumeDepletionNOX");
-    assertEquals(true, admsOptions.isSpatiallyVaryingRoughness(), "SpatiallyVaryingRoughness");
-    assertEquals(false, admsOptions.isComplexTerrain(), "ComplexTerrain");
+    assertFalse(admsOptions.isPlumeDepletionNH3(), "PlumeDepletionNH3");
+    assertFalse(admsOptions.isPlumeDepletionNOX(), "PlumeDepletionNOX");
+    assertTrue(admsOptions.isSpatiallyVaryingRoughness(), "SpatiallyVaryingRoughness");
+    assertFalse(admsOptions.isComplexTerrain(), "ComplexTerrain");
 
     assertEquals(0.0, options.getCalculateMaximumRange(), "Maximum range read");
   }
@@ -314,21 +315,20 @@ class GMLCalculationSetOptionsReaderTest {
     assertEquals(CalculationMethod.FORMAL_ASSESSMENT, options.getCalculationMethod(), "Calculation type should match");
     final NCACalculationOptions ncaOptions = options.getNcaCalculationOptions();
     assertNull(ncaOptions.getPermitArea(), "PermitArea");
-    assertNull(ncaOptions.getMeteoSiteLocation(), "MeteoSiteLocation");
-    assertEquals(List.of(), ncaOptions.getMeteoYears(), "MeteoYears");
     final ADMSOptions admsOptions = ncaOptions.getAdmsOptions();
     assertEquals(0.0, admsOptions.getMinMoninObukhovLength(), "MinMoninObukhovLength");
     assertEquals(0.0, admsOptions.getSurfaceAlbedo(), "SurfaceAlbedo");
     assertEquals(0.0, admsOptions.getPriestleyTaylorParameter(), "PriestleyTaylorParameter");
     assertEquals(0, admsOptions.getMetSiteId(), "MetSiteId");
+    assertEquals(List.of(), admsOptions.getMetYears(), "MeteoYears");
     assertEquals(0.0, admsOptions.getMsRoughness(), "MsRoughness");
     assertEquals(0.0, admsOptions.getMsMinMoninObukhovLength(), "MsMinMoninObukhovLength");
     assertEquals(0.0, admsOptions.getMsSurfaceAlbedo(), "MsSurfaceAlbedo");
     assertEquals(0.0, admsOptions.getMsPriestleyTaylorParameter(), "MsPriestleyTaylorParameter");
-    assertEquals(false, admsOptions.isPlumeDepletionNH3(), "PlumeDepletionNH3");
-    assertEquals(false, admsOptions.isPlumeDepletionNOX(), "PlumeDepletionNOX");
-    assertEquals(false, admsOptions.isSpatiallyVaryingRoughness(), "SpatiallyVaryingRoughness");
-    assertEquals(false, admsOptions.isComplexTerrain(), "ComplexTerrain");
+    assertFalse(admsOptions.isPlumeDepletionNH3(), "PlumeDepletionNH3");
+    assertFalse(admsOptions.isPlumeDepletionNOX(), "PlumeDepletionNOX");
+    assertFalse(admsOptions.isSpatiallyVaryingRoughness(), "SpatiallyVaryingRoughness");
+    assertFalse(admsOptions.isComplexTerrain(), "ComplexTerrain");
 
     assertEquals(40.0, options.getCalculateMaximumRange(), "Maximum range read");
   }
@@ -357,10 +357,10 @@ class GMLCalculationSetOptionsReaderTest {
     assertNotNull(options, "returned options shouldn't be null");
     final NCACalculationOptions ncaOptions = options.getNcaCalculationOptions();
     final ADMSOptions admsOptions = ncaOptions.getAdmsOptions();
-    assertEquals(false, admsOptions.isPlumeDepletionNH3(), "PlumeDepletionNH3");
-    assertEquals(false, admsOptions.isPlumeDepletionNOX(), "PlumeDepletionNOX");
-    assertEquals(false, admsOptions.isSpatiallyVaryingRoughness(), "SpatiallyVaryingRoughness");
-    assertEquals(false, admsOptions.isComplexTerrain(), "ComplexTerrain");
+    assertFalse(admsOptions.isPlumeDepletionNH3(), "PlumeDepletionNH3");
+    assertFalse(admsOptions.isPlumeDepletionNOX(), "PlumeDepletionNOX");
+    assertFalse(admsOptions.isSpatiallyVaryingRoughness(), "SpatiallyVaryingRoughness");
+    assertFalse(admsOptions.isComplexTerrain(), "ComplexTerrain");
   }
 
   @ParameterizedTest
@@ -383,7 +383,8 @@ class GMLCalculationSetOptionsReaderTest {
 
     final GMLCalculationSetOptionsReader reader = new GMLCalculationSetOptionsReader(featureCollection);
 
-    assertThrows(expectedException, () -> reader.readCalculationSetOptions(Theme.NCA));
+    assertThrows(expectedException, () -> reader.readCalculationSetOptions(Theme.NCA),
+        " Should throw the expected exception because values are not readable.");
   }
 
   private static Stream<Arguments> unparseableValues() {

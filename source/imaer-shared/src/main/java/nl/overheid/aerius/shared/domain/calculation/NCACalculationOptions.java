@@ -75,38 +75,6 @@ public class NCACalculationOptions implements Serializable {
     this.permitArea = permitArea;
   }
 
-  /**
-   * @Deprecated Use Met information on ADMSOptions instead.
-   */
-  @Deprecated
-  public String getMeteoSiteLocation() {
-    return meteoSiteLocation;
-  }
-
-  /**
-   * @Deprecated Use Met information on ADMSOptions instead.
-   */
-  @Deprecated
-  public void setMeteoSiteLocation(final String meteoSiteLocation) {
-    this.meteoSiteLocation = meteoSiteLocation;
-  }
-
-  /**
-   * @Deprecated Use Met information on ADMSOptions instead.
-   */
-  @Deprecated
-  public List<String> getMeteoYears() {
-    return meteoYears;
-  }
-
-  /**
-   * @Deprecated Use Met information on ADMSOptions instead.
-   */
-  @Deprecated
-  public void setMeteoYears(final List<String> meteoYears) {
-    this.meteoYears = meteoYears;
-  }
-
   public ADMSOptions getAdmsOptions() {
     return admsOptions;
   }

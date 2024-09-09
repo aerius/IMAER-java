@@ -14,15 +14,17 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.shared.domain.calculation;
+package nl.overheid.aerius.gml;
 
 import java.util.Locale;
+
+import nl.overheid.aerius.shared.domain.calculation.CalculationMethod;
 
 /**
  * Type of calculation. It be a radius from the source point or to only
  * calculate points within nature areas.
  */
-public enum CalculationType {
+enum CalculationType {
 
   /**
    * Calculate with custom points (fixed set of receptors or user defined points).
@@ -47,7 +49,7 @@ public enum CalculationType {
 
   private CalculationMethod calculationMethod;
 
-  private CalculationType(final CalculationMethod calculationMethod) {
+  CalculationType(final CalculationMethod calculationMethod) {
     this.calculationMethod = calculationMethod;
   }
 
@@ -76,10 +78,6 @@ public enum CalculationType {
     } catch (final IllegalArgumentException e) {
       return null;
     }
-  }
-
-  public String type() {
-    return name();
   }
 
   /**

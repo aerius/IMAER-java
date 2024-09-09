@@ -103,21 +103,6 @@ public class ImaerFileUtil {
   }
 
   /**
-   * Get an (Aerius) file name without extension.
-   * Format: prefix_datestring[_optionalName]
-   * @param prefix Prefix to use in the filename.
-   * @param optionalName The optional name to use in the filename.
-   * @param optionalDate The optional date to use for the datestring. If null, current time will be used.
-   * @return The file name that can be used without extension.
-   */
-  public static String getFileName(final String prefix, final String optionalName, final Date optionalDate) {
-    if (prefix == null) {
-      throw new IllegalArgumentException("Prefix not allowed to be null.");
-    }
-    return getActualFileName(prefix, null, optionalName, optionalDate);
-  }
-
-  /**
    * Get an (Aerius) file name.
    * Format: prefix_datestring[_optionalName][.]extension
    * @param prefix Prefix to use in the filename.
