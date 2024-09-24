@@ -229,7 +229,7 @@ class GMLReaderTest {
     metaDataInput.getOptions().getRblCalculationOptions().setMonitorSrm2Year(MONITOR_SRM2_YEAR);
     metaDataInput.setResultsIncluded(true);
     final InternalGMLWriter writer = new InternalGMLWriter(gridSettings, GMLTestDomain.TEST_REFERENCE_GENERATOR, Boolean.TRUE,
-        GMLWriter.LATEST_WRITER_VERSION);
+        GMLWriter.LATEST_WRITER_VERSION, true);
     return writer.getWriter().metaData2GML(metaDataInput);
   }
 
