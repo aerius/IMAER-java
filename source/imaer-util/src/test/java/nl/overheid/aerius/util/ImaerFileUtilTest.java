@@ -33,7 +33,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Test class for {@link ImaerFileUtil}.
  */
-public class ImaerFileUtilTest {
+class ImaerFileUtilTest {
 
   private static final String TEST_FILE_NAME = "someFile";
   private static final String TEST_FILE_NAME_WITH_SPACES = "some Fil   e   ";
@@ -61,7 +61,7 @@ public class ImaerFileUtilTest {
   }
 
   @Test
-  public void testGetSafeFilename() {
+  void testGetSafeFilename() {
     String fileName = ImaerFileUtil.getSafeFilename(null);
     assertNull(fileName, "Supplying null should return null");
     fileName = ImaerFileUtil.getSafeFilename("");
@@ -73,7 +73,7 @@ public class ImaerFileUtilTest {
   }
 
   @Test
-  public void testGetFileName() {
+  void testGetFileName() {
     String fileName = ImaerFileUtil.getFileName(TEST_FILE_PREFIX, TEST_FILE_NAME_EXTENSION, null, null);
     assertNotNull(fileName, "filename returned shouldn't be null");
     assertTrue(fileName.startsWith(TEST_FILE_PREFIX), "filename should start with prefix. " + fileName);
@@ -92,15 +92,7 @@ public class ImaerFileUtilTest {
   }
 
   @Test
-  public void testGetFileNameWithoutExtendsionNullPrefix() {
-    assertThrows(
-        IllegalArgumentException.class,
-        () -> ImaerFileUtil.getFileName(null, null, null),
-        "Expected IllegalArgumentException");
-  }
-
-  @Test
-  public void testGetFileNameNullPrefix() {
+  void testGetFileNameNullPrefix() {
     assertThrows(
         IllegalArgumentException.class,
         () -> ImaerFileUtil.getFileName(null, TEST_FILE_NAME_EXTENSION, null, null),
@@ -108,7 +100,7 @@ public class ImaerFileUtilTest {
   }
 
   @Test
-  public void testGetFileNameNullExtension() {
+  void testGetFileNameNullExtension() {
     assertThrows(
         IllegalArgumentException.class,
         () -> ImaerFileUtil.getFileName(TEST_FILE_NAME, null, null, null),
@@ -116,7 +108,7 @@ public class ImaerFileUtilTest {
   }
 
   @Test
-  public void testGetFileNameOptional() {
+  void testGetFileNameOptional() {
     String longFileName = TEST_LONG_FILE_NAME;
     while (longFileName.length() < ImaerFileUtil.MAX_OPTIONAL_FILENAME_LENGTH) {
       longFileName += TEST_LONG_FILE_NAME;
@@ -127,13 +119,4 @@ public class ImaerFileUtilTest {
     assertFalse(fileName.contains(longFileName.substring(0, ImaerFileUtil.MAX_OPTIONAL_FILENAME_LENGTH + 1)),
         "filename shouldn't contain more than the first X letters of the optional name. " + fileName);
   }
-
-  @Test
-  public void testGetFileNameEmpty() {
-    final String fileName = ImaerFileUtil.getFileName(TEST_FILE_PREFIX, null, null);
-    assertNotNull(fileName, "filename returned shouldn't be null");
-    assertTrue(fileName.startsWith(TEST_FILE_PREFIX), "filename should start with prefix. " + fileName);
-    assertFalse(fileName.endsWith("."), "filename should end with extension. " + fileName);
-  }
-
 }

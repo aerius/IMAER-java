@@ -29,7 +29,6 @@ import nl.overheid.aerius.shared.domain.Theme;
 import nl.overheid.aerius.shared.domain.calculation.CalculationJobType;
 import nl.overheid.aerius.shared.domain.calculation.CalculationMethod;
 import nl.overheid.aerius.shared.domain.calculation.CalculationSetOptions;
-import nl.overheid.aerius.shared.domain.calculation.CalculationType;
 import nl.overheid.aerius.shared.domain.v2.scenario.ScenarioMetaData;
 import nl.overheid.aerius.util.OptionsMetadataUtil;
 
@@ -82,7 +81,7 @@ public class GMLCalculationSetOptionsReader {
    * @param calculationMetaData
    * @param options
    */
-  private void setCalculationMethod(final IsCalculationMetaData calculationMetaData, final CalculationSetOptions options) {
+  private static void setCalculationMethod(final IsCalculationMetaData calculationMetaData, final CalculationSetOptions options) {
     final String method = calculationMetaData.getCalculationMethod();
 
     options.setCalculationMethod(
@@ -92,7 +91,7 @@ public class GMLCalculationSetOptionsReader {
   /**
    * Set the calculation job type.
    */
-  private void setCalculationJobType(final IsCalculationMetaData calculationMetaData, final CalculationSetOptions options) {
+  private static void setCalculationJobType(final IsCalculationMetaData calculationMetaData, final CalculationSetOptions options) {
     final String jobType = calculationMetaData.getCalculationJobType();
 
     options.setCalculationJobType(jobType == null ? null : CalculationJobType.safeValueOf(jobType));
