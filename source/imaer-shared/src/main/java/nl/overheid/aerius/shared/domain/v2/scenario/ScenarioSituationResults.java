@@ -16,6 +16,7 @@
  */
 package nl.overheid.aerius.shared.domain.v2.scenario;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,10 +25,12 @@ import nl.overheid.aerius.shared.domain.v2.point.CalculationPointFeature;
 /**
  * Object to keep track of results related to a scenario situation.
  */
-public class ScenarioSituationResults {
+public class ScenarioSituationResults implements Serializable {
+
+  private static final long serialVersionUID = 1L;
 
   private int calculationId;
-  private List<CalculationPointFeature> results = new ArrayList<>();
+  private transient List<CalculationPointFeature> results = new ArrayList<>();
 
   public int getCalculationId() {
     return calculationId;
