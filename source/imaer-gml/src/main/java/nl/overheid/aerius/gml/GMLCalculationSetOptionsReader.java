@@ -16,8 +16,7 @@
  */
 package nl.overheid.aerius.gml;
 
-import java.util.EnumMap;
-import java.util.Locale;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -54,21 +53,17 @@ public class GMLCalculationSetOptionsReader {
     }
 
     final IsCalculationMetaData calculationMetaData = optionalCheck.get();
-
     final CalculationSetOptions options = new CalculationSetOptions();
+
     if (calculationMetaData.getOptions() != null) {
-      final Map<OptionsMetadataUtil.Option, String> optionsMap = new EnumMap<>(OptionsMetadataUtil.Option.class);
+      final Map<String, String> optionsMap = new HashMap<>();
+
+      // Use forEach to remove duplicate entries.
       calculationMetaData.getOptions().stream()
           .map(IsGmlProperty::getProperty)
-          .forEach(option -> {
-            final OptionsMetadataUtil.Option parsed = OptionsMetadataUtil.Option.safeValueOf(option.getKey().toUpperCase(Locale.ROOT));
-            if (parsed != null) {
-              optionsMap.put(parsed, option.getValue());
-            }
-          });
+          .forEach(p -> optionsMap.put(p.getKey(), p.getValue()));
       OptionsMetadataUtil.addOptionsFromMap(theme, optionsMap, options);
     }
-
     setCalculationMethod(calculationMetaData, options);
     setCalculationJobType(calculationMetaData, options);
     options.setCalculateMaximumRange(calculationMetaData.getMaximumRange() == null ? 0.0 : calculationMetaData.getMaximumRange());
