@@ -26,16 +26,18 @@ public class MetSurfaceCharacteristics implements Serializable {
   private double minMoninObukhovLength;
   private double surfaceAlbedo;
   private double priestleyTaylorParameter;
+  private boolean windInSectors;
 
   MetSurfaceCharacteristics() {
   }
 
   private MetSurfaceCharacteristics(final double roughness, final double minMoninObukhovLength, final double surfaceAlbedo,
-      final double priestleyTaylorParameter) {
+      final double priestleyTaylorParameter, final boolean windInSectors) {
     this.roughness = roughness;
     this.minMoninObukhovLength = minMoninObukhovLength;
     this.surfaceAlbedo = surfaceAlbedo;
     this.priestleyTaylorParameter = priestleyTaylorParameter;
+    this.windInSectors = windInSectors;
   }
 
   public double getRoughness() {
@@ -54,6 +56,9 @@ public class MetSurfaceCharacteristics implements Serializable {
     return priestleyTaylorParameter;
   }
 
+  public boolean isWindInSectors() {
+    return windInSectors;
+  }
 
   void setRoughness(final double roughness) {
     this.roughness = roughness;
@@ -71,6 +76,10 @@ public class MetSurfaceCharacteristics implements Serializable {
     this.priestleyTaylorParameter = priestleyTaylorParameter;
   }
 
+  void setWindInSectors(final boolean windInSectors) {
+    this.windInSectors = windInSectors;
+  }
+
   public static Builder builder() {
     return new Builder();
   }
@@ -80,6 +89,7 @@ public class MetSurfaceCharacteristics implements Serializable {
     private double minMoninObukhovLength;
     private double surfaceAlbedo;
     private double priestleyTaylorParameter;
+    private boolean windInSectors;
 
     public Builder roughness(final double roughness) {
       this.roughness = roughness;
@@ -101,8 +111,13 @@ public class MetSurfaceCharacteristics implements Serializable {
       return this;
     }
 
+    public Builder windInSectors(final boolean windInSectors) {
+      this.windInSectors = windInSectors;
+      return this;
+    }
+
     public MetSurfaceCharacteristics build() {
-      return new MetSurfaceCharacteristics(roughness, minMoninObukhovLength, surfaceAlbedo, priestleyTaylorParameter);
+      return new MetSurfaceCharacteristics(roughness, minMoninObukhovLength, surfaceAlbedo, priestleyTaylorParameter, windInSectors);
     }
   }
 }

@@ -22,6 +22,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * Contains ADMS specific options for a calculation.
  */
@@ -37,6 +39,7 @@ public class ADMSOptions implements Serializable {
   private List<String> metYears = new ArrayList<>();
   // Map<meteo year, MetSiteSurfaceCharacteristics>
   private Map<String, MetSurfaceCharacteristics> metSiteSurfaceCharacteristics = new HashMap<>();
+  private double metSiteLatitude;
 
   private boolean plumeDepletionNH3;
   private boolean plumeDepletionNOX;
@@ -91,6 +94,10 @@ public class ADMSOptions implements Serializable {
     this.metYears = metYears;
   }
 
+  public Map<String, MetSurfaceCharacteristics> getMetSiteSurfaceCharacteristics() {
+    return metSiteSurfaceCharacteristics;
+  }
+
   public MetSurfaceCharacteristics getMetSiteCharacteristics(final String meteoYear) {
     return metSiteSurfaceCharacteristics == null || !metSiteSurfaceCharacteristics.containsKey(meteoYear)
         ? getLegacyMetSiteCharacteristics()
@@ -105,41 +112,58 @@ public class ADMSOptions implements Serializable {
     this.metSiteSurfaceCharacteristics.put(metYear, msc);
   }
 
+  public double getMetSiteLatitude() {
+    return metSiteLatitude;
+  }
+
+  public void setMetSiteLatitude(final double metSiteLatitude) {
+    this.metSiteLatitude = metSiteLatitude;
+  }
+
+  @Deprecated
+  @JsonIgnore
   public double getMsRoughness() {
     return getLegacyMetSiteCharacteristics().getRoughness();
   }
 
   @Deprecated
+  @JsonIgnore
   public void setMsRoughness(final double msRoughness) {
     getLegacyMetSiteCharacteristics().setRoughness(msRoughness);
   }
 
   @Deprecated
+  @JsonIgnore
   public double getMsMinMoninObukhovLength() {
     return getLegacyMetSiteCharacteristics().getMinMoninObukhovLength();
   }
 
   @Deprecated
+  @JsonIgnore
   public void setMsMinMoninObukhovLength(final double msMinMoninObukhovLength) {
     getLegacyMetSiteCharacteristics().setMinMoninObukhovLength(msMinMoninObukhovLength);
   }
 
   @Deprecated
+  @JsonIgnore
   public double getMsSurfaceAlbedo() {
     return getLegacyMetSiteCharacteristics().getSurfaceAlbedo();
   }
 
   @Deprecated
+  @JsonIgnore
   public void setMsSurfaceAlbedo(final double msSurfaceAlbedo) {
     getLegacyMetSiteCharacteristics().setSurfaceAlbedo(msSurfaceAlbedo);
   }
 
   @Deprecated
+  @JsonIgnore
   public double getMsPriestleyTaylorParameter() {
     return getLegacyMetSiteCharacteristics().getPriestleyTaylorParameter();
   }
 
   @Deprecated
+  @JsonIgnore
   public void setMsPriestleyTaylorParameter(final double msPriestleyTaylorParameter) {
     getLegacyMetSiteCharacteristics().setPriestleyTaylorParameter(msPriestleyTaylorParameter);
   }

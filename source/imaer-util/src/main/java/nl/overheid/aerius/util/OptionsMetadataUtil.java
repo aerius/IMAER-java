@@ -16,6 +16,15 @@
  */
 package nl.overheid.aerius.util;
 
+import static nl.overheid.aerius.shared.domain.v2.characteristics.adms.ADMSLimits.ADMS_COMPLEX_TERRAIN_DEFAULT;
+import static nl.overheid.aerius.shared.domain.v2.characteristics.adms.ADMSLimits.ADMS_PLUME_DEPLETION_NH3_DEFAULT;
+import static nl.overheid.aerius.shared.domain.v2.characteristics.adms.ADMSLimits.ADMS_PLUME_DEPLETION_NOX_DEFAULT;
+import static nl.overheid.aerius.shared.domain.v2.characteristics.adms.ADMSLimits.MIN_MONIN_OBUKHOV_LENGTH_DEFAULT;
+import static nl.overheid.aerius.shared.domain.v2.characteristics.adms.ADMSLimits.PRIESTLEY_TAYLOR_PARAMETER_DEFAULT;
+import static nl.overheid.aerius.shared.domain.v2.characteristics.adms.ADMSLimits.ROUGHNESS_DEFAULT;
+import static nl.overheid.aerius.shared.domain.v2.characteristics.adms.ADMSLimits.SPATIALLY_VARYING_ROUGHNESS_DEFAULT;
+import static nl.overheid.aerius.shared.domain.v2.characteristics.adms.ADMSLimits.SURFACE_ALBEDO_DEFAULT;
+
 import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.HashMap;
@@ -37,7 +46,6 @@ import nl.overheid.aerius.shared.domain.calculation.NCACalculationOptions;
 import nl.overheid.aerius.shared.domain.calculation.OPSOptions;
 import nl.overheid.aerius.shared.domain.calculation.OwN2000CalculationOptions;
 import nl.overheid.aerius.shared.domain.calculation.RoadLocalFractionNO2Option;
-import nl.overheid.aerius.shared.domain.v2.characteristics.adms.ADMSLimits;
 
 /**
  * Utility class to convert calculation options to metadata.
@@ -91,12 +99,14 @@ public final class OptionsMetadataUtil {
     ADMS_SPATIALLY_VARYING_ROUGHNESS,
     ADMS_COMPLEX_TERRAIN,
     ADMS_MET_SITE_ID,
+    ADMS_MET_SITE_LATITUDE,
     ADMS_MET_DATASET_TYPE,
     ADMS_MET_YEARS,
     ADMS_MET_SITE_ROUGHNESS,
     ADMS_MET_SITE_MIN_MONIN_OBUKHOV_LENGTH,
     ADMS_MET_SITE_SURFACE_ALBEDO,
     ADMS_MET_SITE_PRIESTLEY_TAYLOR_PARAMETER,
+    ADMS_MET_SITE_WIND_IN_SECTORS,
 
     /* Road NOX - NO2 calculation related */
     ROAD_LOCAL_FRACTION_NO2_RECEPTORS_OPTION,
@@ -238,21 +248,21 @@ public final class OptionsMetadataUtil {
     }
 
     final ADMSOptions admsOptions = options.getAdmsOptions();
-    admsOptions.setMinMoninObukhovLength(getOrDefault(map, Option.ADMS_MIN_MONIN_OBUKHOV_LENGTH, ADMSLimits.MIN_MONIN_OBUKHOV_LENGTH_DEFAULT));
-    admsOptions.setSurfaceAlbedo(getOrDefault(map, Option.ADMS_SURFACE_ALBEDO, ADMSLimits.SURFACE_ALBEDO_DEFAULT));
-    admsOptions.setPriestleyTaylorParameter(getOrDefault(map, Option.ADMS_PRIESTLEY_TAYLOR_PARAMETER, ADMSLimits.PRIESTLEY_TAYLOR_PARAMETER_DEFAULT));
+    admsOptions.setMinMoninObukhovLength(getOrDefault(map, Option.ADMS_MIN_MONIN_OBUKHOV_LENGTH, MIN_MONIN_OBUKHOV_LENGTH_DEFAULT));
+    admsOptions.setSurfaceAlbedo(getOrDefault(map, Option.ADMS_SURFACE_ALBEDO, SURFACE_ALBEDO_DEFAULT));
+    admsOptions.setPriestleyTaylorParameter(getOrDefault(map, Option.ADMS_PRIESTLEY_TAYLOR_PARAMETER, PRIESTLEY_TAYLOR_PARAMETER_DEFAULT));
 
     if (map.get(Option.ADMS_MET_SITE_ID) != null) {
       admsOptions.setMetSiteId(Integer.parseInt(map.get(Option.ADMS_MET_SITE_ID)));
+      admsOptions.setMetSiteLatitude(Optional.ofNullable(map.get(Option.ADMS_MET_SITE_LATITUDE)).map(Double::parseDouble).orElse(0.0));
       admsOptions.setMetDatasetType(MetDatasetType.safeValueOf(map.get(Option.ADMS_MET_DATASET_TYPE)));
       ncaParseMetYears(admsOptions, map);
       ncaMetSiteOptions(prefixedOptionsMap, admsOptions, map);
     }
-    admsOptions.setPlumeDepletionNH3(isOrDefault(map, Option.ADMS_PLUME_DEPLETION_NH3, ADMSLimits.ADMS_PLUME_DEPLETION_NH3_DEFAULT));
-    admsOptions.setPlumeDepletionNOX(isOrDefault(map, Option.ADMS_PLUME_DEPLETION_NOX, ADMSLimits.ADMS_PLUME_DEPLETION_NOX_DEFAULT));
-    admsOptions
-        .setSpatiallyVaryingRoughness(isOrDefault(map, Option.ADMS_SPATIALLY_VARYING_ROUGHNESS, ADMSLimits.SPATIALLY_VARYING_ROUGHNESS_DEFAULT));
-    admsOptions.setComplexTerrain(isOrDefault(map, Option.ADMS_COMPLEX_TERRAIN, ADMSLimits.ADMS_COMPLEX_TERRAIN_DEFAULT));
+    admsOptions.setPlumeDepletionNH3(isOrDefault(map, Option.ADMS_PLUME_DEPLETION_NH3, ADMS_PLUME_DEPLETION_NH3_DEFAULT));
+    admsOptions.setPlumeDepletionNOX(isOrDefault(map, Option.ADMS_PLUME_DEPLETION_NOX, ADMS_PLUME_DEPLETION_NOX_DEFAULT));
+    admsOptions.setSpatiallyVaryingRoughness(isOrDefault(map, Option.ADMS_SPATIALLY_VARYING_ROUGHNESS, SPATIALLY_VARYING_ROUGHNESS_DEFAULT));
+    admsOptions.setComplexTerrain(isOrDefault(map, Option.ADMS_COMPLEX_TERRAIN, ADMS_COMPLEX_TERRAIN_DEFAULT));
   }
 
   /**
@@ -273,12 +283,13 @@ public final class OptionsMetadataUtil {
 
   private static void ncaPutMetSiteOptions(final ADMSOptions admsOptions, final String metYear, final Map<Option, String> prefixedMap) {
     final MetSurfaceCharacteristics msc = MetSurfaceCharacteristics.builder()
-        .roughness(getOrDefault(prefixedMap, Option.ADMS_MET_SITE_ROUGHNESS, ADMSLimits.ROUGHNESS_DEFAULT))
-        .minMoninObukhovLength(
-            getOrDefault(prefixedMap, Option.ADMS_MET_SITE_MIN_MONIN_OBUKHOV_LENGTH, ADMSLimits.MIN_MONIN_OBUKHOV_LENGTH_DEFAULT))
-        .surfaceAlbedo(getOrDefault(prefixedMap, Option.ADMS_MET_SITE_SURFACE_ALBEDO, ADMSLimits.SURFACE_ALBEDO_DEFAULT))
-        .priestleyTaylorParameter(
-            getOrDefault(prefixedMap, Option.ADMS_MET_SITE_PRIESTLEY_TAYLOR_PARAMETER, ADMSLimits.PRIESTLEY_TAYLOR_PARAMETER_DEFAULT))
+        .roughness(getOrDefault(prefixedMap, Option.ADMS_MET_SITE_ROUGHNESS, ROUGHNESS_DEFAULT))
+        .minMoninObukhovLength(getOrDefault(prefixedMap, Option.ADMS_MET_SITE_MIN_MONIN_OBUKHOV_LENGTH,
+            MIN_MONIN_OBUKHOV_LENGTH_DEFAULT))
+        .surfaceAlbedo(getOrDefault(prefixedMap, Option.ADMS_MET_SITE_SURFACE_ALBEDO, SURFACE_ALBEDO_DEFAULT))
+        .priestleyTaylorParameter(getOrDefault(prefixedMap, Option.ADMS_MET_SITE_PRIESTLEY_TAYLOR_PARAMETER,
+            PRIESTLEY_TAYLOR_PARAMETER_DEFAULT))
+        .windInSectors(isOrDefault(prefixedMap, Option.ADMS_MET_SITE_WIND_IN_SECTORS, false))
         .build();
     admsOptions.putMetSiteCharacteristics(metYear, msc);
   }
@@ -318,6 +329,9 @@ public final class OptionsMetadataUtil {
         addValue(mapToAddTo, Option.ADMS_SURFACE_ALBEDO, adms.getSurfaceAlbedo(), addDefaults);
         addValue(mapToAddTo, Option.ADMS_PRIESTLEY_TAYLOR_PARAMETER, adms.getPriestleyTaylorParameter(), addDefaults);
         addIntValue(mapToAddTo, Option.ADMS_MET_SITE_ID, adms.getMetSiteId(), addDefaults);
+        if (adms.getMetSiteLatitude() != 0.0) {
+          addValue(mapToAddTo, Option.ADMS_MET_SITE_LATITUDE, adms.getMetSiteLatitude(), addDefaults);
+        }
         addValue(mapToAddTo, Option.ADMS_MET_DATASET_TYPE, adms.getMetDatasetType(), addDefaults);
         ncaAddMetSite(mapToAddTo, addDefaults, adms);
         // Always add the following fields to the GML as it also gives an indication if run in demo mode.
@@ -356,6 +370,9 @@ public final class OptionsMetadataUtil {
     addValue(mapToAddTo, prefix + Option.ADMS_MET_SITE_MIN_MONIN_OBUKHOV_LENGTH.toKey(), msc.getMinMoninObukhovLength(), addDefaults);
     addValue(mapToAddTo, prefix + Option.ADMS_MET_SITE_SURFACE_ALBEDO.toKey(), msc.getSurfaceAlbedo(), addDefaults);
     addValue(mapToAddTo, prefix + Option.ADMS_MET_SITE_PRIESTLEY_TAYLOR_PARAMETER.toKey(), msc.getPriestleyTaylorParameter(), addDefaults);
+    if (msc.isWindInSectors()) {
+      addValue(mapToAddTo, prefix + Option.ADMS_MET_SITE_WIND_IN_SECTORS.toKey(), String.valueOf(msc.isWindInSectors()), addDefaults);
+    }
   }
 
   private static void addValue(final Map<String, String> mapToAddTo, final Option key, final Object value, final boolean addDefaults) {
