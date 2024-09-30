@@ -251,7 +251,7 @@ public final class OptionsMetadataUtil {
     admsOptions.setPlumeDepletionNH3(isOrDefault(map, Option.ADMS_PLUME_DEPLETION_NH3, ADMSLimits.ADMS_PLUME_DEPLETION_NH3_DEFAULT));
     admsOptions.setPlumeDepletionNOX(isOrDefault(map, Option.ADMS_PLUME_DEPLETION_NOX, ADMSLimits.ADMS_PLUME_DEPLETION_NOX_DEFAULT));
     admsOptions
-    .setSpatiallyVaryingRoughness(isOrDefault(map, Option.ADMS_SPATIALLY_VARYING_ROUGHNESS, ADMSLimits.SPATIALLY_VARYING_ROUGHNESS_DEFAULT));
+        .setSpatiallyVaryingRoughness(isOrDefault(map, Option.ADMS_SPATIALLY_VARYING_ROUGHNESS, ADMSLimits.SPATIALLY_VARYING_ROUGHNESS_DEFAULT));
     admsOptions.setComplexTerrain(isOrDefault(map, Option.ADMS_COMPLEX_TERRAIN, ADMSLimits.ADMS_COMPLEX_TERRAIN_DEFAULT));
   }
 
