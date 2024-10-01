@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import nl.overheid.aerius.gml.base.AeriusGMLVersion;
 import nl.overheid.aerius.gml.base.Definitions;
@@ -175,7 +174,7 @@ public class GMLVersionWriterV51 implements GMLVersionWriter {
         && !StringUtils.isEmpty(scenarioData.getCity());
   }
 
-  private CalculationMetadata getCalculation(final MetaDataInput input) {
+  private static CalculationMetadata getCalculation(final MetaDataInput input) {
     final CalculationMetadata calculation;
     if (input.isResultsIncluded()) {
       calculation = new CalculationMetadata();
@@ -194,14 +193,14 @@ public class GMLVersionWriterV51 implements GMLVersionWriter {
     return calculation;
   }
 
-  private VersionMetadata getVersion(final MetaDataInput input) {
+  private static VersionMetadata getVersion(final MetaDataInput input) {
     final VersionMetadata version = new VersionMetadata();
     version.setAeriusVersion(input.getVersion());
     version.setDatabaseVersion(input.getDatabaseVersion());
     return version;
   }
 
-  private ArchiveMetadata getArchive(final MetaDataInput input) {
+  private static ArchiveMetadata getArchive(final MetaDataInput input) {
     final ArchiveMetadata archive;
     if (input.getArchiveMetaData() == null) {
       archive = null;
@@ -213,13 +212,13 @@ public class GMLVersionWriterV51 implements GMLVersionWriter {
     return archive;
   }
 
-  private List<nl.overheid.aerius.gml.v5_1.metadata.ArchiveProject> archiveProjects2GML(final List<ArchiveProject> archveProjects) {
+  private static List<nl.overheid.aerius.gml.v5_1.metadata.ArchiveProject> archiveProjects2GML(final List<ArchiveProject> archveProjects) {
     return archveProjects.stream()
-        .map(this::archiveProject2GML)
-        .collect(Collectors.toList());
+        .map(GMLVersionWriterV51::archiveProject2GML)
+        .toList();
   }
 
-  private nl.overheid.aerius.gml.v5_1.metadata.ArchiveProject archiveProject2GML(final ArchiveProject archiveProject) {
+  private static nl.overheid.aerius.gml.v5_1.metadata.ArchiveProject archiveProject2GML(final ArchiveProject archiveProject) {
     final nl.overheid.aerius.gml.v5_1.metadata.ArchiveProject gmlArchiveProject = new nl.overheid.aerius.gml.v5_1.metadata.ArchiveProject();
     gmlArchiveProject.setId(archiveProject.getId());
     gmlArchiveProject.setName(archiveProject.getName());
@@ -227,32 +226,32 @@ public class GMLVersionWriterV51 implements GMLVersionWriter {
     return gmlArchiveProject;
   }
 
-  private List<EmissionResultType> determineResultTypes(final Set<EmissionResultKey> keys) {
+  private static List<EmissionResultType> determineResultTypes(final Set<EmissionResultKey> keys) {
     final List<EmissionResultType> types = new ArrayList<>();
     for (final EmissionResultKey key : keys) {
       if (!types.contains(key.getEmissionResultType())) {
         types.add(key.getEmissionResultType());
       }
     }
-    return types.stream().sorted().collect(Collectors.toList());
+    return types.stream().sorted().toList();
   }
 
-  private List<CalculationOptionProperty> options2GML(final Theme theme, final CalculationSetOptions options) {
+  private static List<CalculationOptionProperty> options2GML(final Theme theme, final CalculationSetOptions options) {
     final Map<String, String> gmlOptionsMap = OptionsMetadataUtil.optionsToMap(theme, options, false);
     return gmlOptionsMap.entrySet().stream()
         .map(entry -> new CalculationOption(entry.getKey(), entry.getValue()))
         .map(CalculationOptionProperty::new)
-        .collect(Collectors.toList());
+        .toList();
   }
 
-  private List<OtherSituationMetadataProperty> otherSituations2GML(final List<OtherSituationMetaData> otherSituations) {
+  private static List<OtherSituationMetadataProperty> otherSituations2GML(final List<OtherSituationMetaData> otherSituations) {
     return otherSituations.stream()
-        .map(this::otherSituation2GML)
+        .map(GMLVersionWriterV51::otherSituation2GML)
         .map(OtherSituationMetadataProperty::new)
-        .collect(Collectors.toList());
+        .toList();
   }
 
-  private OtherSituationMetadata otherSituation2GML(final OtherSituationMetaData otherSituation) {
+  private static OtherSituationMetadata otherSituation2GML(final OtherSituationMetaData otherSituation) {
     final OtherSituationMetadata gmlOtherSituation = new OtherSituationMetadata();
     gmlOtherSituation.setSituationType(otherSituation.getSituationType());
     gmlOtherSituation.setName(otherSituation.getName());
@@ -267,7 +266,7 @@ public class GMLVersionWriterV51 implements GMLVersionWriter {
       gmlDefinitions = new DefinitionsImpl();
       final List<CustomDiurnalVariation> customDiurnalVariations = definitions.getCustomTimeVaryingProfiles().stream()
           .map(this::convert)
-          .collect(Collectors.toList());
+          .toList();
       gmlDefinitions.setCustomDiurnalVariations(customDiurnalVariations);
     } else {
       gmlDefinitions = null;

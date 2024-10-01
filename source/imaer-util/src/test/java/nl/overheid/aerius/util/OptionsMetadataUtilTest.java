@@ -21,7 +21,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -34,6 +33,7 @@ import nl.overheid.aerius.shared.domain.calculation.CalculationRoadOPS;
 import nl.overheid.aerius.shared.domain.calculation.CalculationSetOptions;
 import nl.overheid.aerius.shared.domain.calculation.ConnectSuppliedOptions;
 import nl.overheid.aerius.shared.domain.calculation.MetDatasetType;
+import nl.overheid.aerius.shared.domain.calculation.MetSurfaceCharacteristics;
 import nl.overheid.aerius.shared.domain.calculation.NCACalculationOptions;
 import nl.overheid.aerius.shared.domain.calculation.OPSOptions;
 import nl.overheid.aerius.shared.domain.calculation.OwN2000CalculationOptions;
@@ -214,10 +214,14 @@ class OptionsMetadataUtilTest {
     adms.setMetSiteId(100);
     adms.setMetDatasetType(MetDatasetType.OBS_RAW_GT_90PCT);
     adms.setMetYears(List.of("2022", "2023"));
-    adms.setMsRoughness(0.8);
-    adms.setMsMinMoninObukhovLength(1.1);
-    adms.setMsSurfaceAlbedo(1.2);
-    adms.setMsPriestleyTaylorParameter(1.3);
+
+    final MetSurfaceCharacteristics msc = MetSurfaceCharacteristics.builder()
+        .roughness(0.8)
+        .minMoninObukhovLength(1.1)
+        .surfaceAlbedo(1.2)
+        .priestleyTaylorParameter(1.3)
+        .build();
+    adms.setMetSiteCharacteristics(Map.of("2022", msc, "2023", msc));
     final Map<String, String> result = OptionsMetadataUtil.optionsToMap(Theme.NCA, options, false);
 
     assertEquals("5.0.0.1", result.get("adms_version"), "adms_version should be set");
@@ -232,10 +236,10 @@ class OptionsMetadataUtilTest {
     assertEquals("100", result.get("adms_met_site_id"), "adms_met_site_id should be set");
     assertEquals("OBS_RAW_GT_90PCT", result.get("adms_met_dataset_type"), "adms_met_dataset_type should be set");
     assertEquals("2022,2023", result.get("adms_met_years"), "adms_years should be set");
-    assertEquals("0.8", result.get("adms_met_site_roughness"), "adms_met_site_roughness should be set");
-    assertEquals("1.1", result.get("adms_met_site_min_monin_obukhov_length"), "adms_met_site_min_monin_obukhov_length should be set");
-    assertEquals("1.2", result.get("adms_met_site_surface_albedo"), "adms_met_site_surface_albedo should be set");
-    assertEquals("1.3", result.get("adms_met_site_priestley_taylor_parameter"), "adms_met_site_priestley_taylor_parameter should be set");
+    assertEquals("0.8", result.get("2022-adms_met_site_roughness"), "adms_met_site_roughness should be set");
+    assertEquals("1.1", result.get("2022-adms_met_site_min_monin_obukhov_length"), "adms_met_site_min_monin_obukhov_length should be set");
+    assertEquals("1.2", result.get("2022-adms_met_site_surface_albedo"), "adms_met_site_surface_albedo should be set");
+    assertEquals("1.3", result.get("2022-adms_met_site_priestley_taylor_parameter"), "adms_met_site_priestley_taylor_parameter should be set");
     assertEquals("ONE_CUSTOM_VALUE", result.get("road_local_fraction_no2_receptors_option"),
         "road_local_fraction_no2_receptors_option should be set");
     assertEquals("ONE_CUSTOM_VALUE", result.get("road_local_fraction_no2_points_option"), "road_local_fraction_no2_points_option should be set");
@@ -292,15 +296,18 @@ class OptionsMetadataUtilTest {
     adms.setMetSiteId(100);
     adms.setMetDatasetType(MetDatasetType.OBS_RAW_GT_90PCT);
     adms.setMetYears(List.of("2022", "2023"));
-    adms.setMsRoughness(0.8);
-    adms.setMsMinMoninObukhovLength(1.1);
-    adms.setMsSurfaceAlbedo(1.2);
-    adms.setMsPriestleyTaylorParameter(1.3);
+    final MetSurfaceCharacteristics msc = MetSurfaceCharacteristics.builder()
+        .roughness(0.8)
+        .minMoninObukhovLength(1.1)
+        .surfaceAlbedo(1.2)
+        .priestleyTaylorParameter(1.3)
+        .build();
+    adms.setMetSiteCharacteristics(Map.of("2022", msc, "2023", msc));
 
     final Map<String, String> result1 = OptionsMetadataUtil.optionsToMap(Theme.NCA, options, false);
     final CalculationSetOptions roundTripOptions = new CalculationSetOptions();
     OptionsMetadataUtil.addOptionsFromMap(Theme.NCA, result1.entrySet().stream()
-        .collect(Collectors.toMap(entry -> OptionsMetadataUtil.Option.valueOf(entry.getKey().toUpperCase(Locale.ROOT)), Map.Entry::getValue)),
+        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)),
         roundTripOptions);
     final Map<String, String> result2 = OptionsMetadataUtil.optionsToMap(Theme.NCA, roundTripOptions, false);
 

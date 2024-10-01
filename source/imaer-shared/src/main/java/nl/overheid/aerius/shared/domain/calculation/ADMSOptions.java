@@ -18,14 +18,18 @@ package nl.overheid.aerius.shared.domain.calculation;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Contains ADMS specific options for a calculation.
  */
 public class ADMSOptions implements Serializable {
 
-  private static final long serialVersionUID = 2L;
+  private static final long serialVersionUID = 3L;
 
   private double minMoninObukhovLength;
   private double surfaceAlbedo;
@@ -33,10 +37,10 @@ public class ADMSOptions implements Serializable {
   private int metSiteId;
   private MetDatasetType metDatasetType;
   private List<String> metYears = new ArrayList<>();
-  private double msRoughness;
-  private double msMinMoninObukhovLength;
-  private double msSurfaceAlbedo;
-  private double msPriestleyTaylorParameter;
+  // Map<meteo year, MetSiteSurfaceCharacteristics>
+  private Map<String, MetSurfaceCharacteristics> metSiteSurfaceCharacteristics = new HashMap<>();
+  private double metSiteLatitude;
+
   private boolean plumeDepletionNH3;
   private boolean plumeDepletionNOX;
   private boolean spatiallyVaryingRoughness;
@@ -90,36 +94,82 @@ public class ADMSOptions implements Serializable {
     this.metYears = metYears;
   }
 
+  public Map<String, MetSurfaceCharacteristics> getMetSiteSurfaceCharacteristics() {
+    return metSiteSurfaceCharacteristics;
+  }
+
+  public MetSurfaceCharacteristics getMetSiteCharacteristics(final String meteoYear) {
+    return metSiteSurfaceCharacteristics == null || !metSiteSurfaceCharacteristics.containsKey(meteoYear)
+        ? getLegacyMetSiteCharacteristics()
+        : metSiteSurfaceCharacteristics.get(meteoYear);
+  }
+
+  public void setMetSiteCharacteristics(final Map<String, MetSurfaceCharacteristics> metSiteSurfaceCharacteristics) {
+    this.metSiteSurfaceCharacteristics = metSiteSurfaceCharacteristics;
+  }
+
+  public void putMetSiteCharacteristics(final String metYear, final MetSurfaceCharacteristics msc) {
+    this.metSiteSurfaceCharacteristics.put(metYear, msc);
+  }
+
+  public double getMetSiteLatitude() {
+    return metSiteLatitude;
+  }
+
+  public void setMetSiteLatitude(final double metSiteLatitude) {
+    this.metSiteLatitude = metSiteLatitude;
+  }
+
+  @Deprecated
+  @JsonIgnore
   public double getMsRoughness() {
-    return msRoughness;
+    return getLegacyMetSiteCharacteristics().getRoughness();
   }
 
+  @Deprecated
+  @JsonIgnore
   public void setMsRoughness(final double msRoughness) {
-    this.msRoughness = msRoughness;
+    getLegacyMetSiteCharacteristics().setRoughness(msRoughness);
   }
 
+  @Deprecated
+  @JsonIgnore
   public double getMsMinMoninObukhovLength() {
-    return msMinMoninObukhovLength;
+    return getLegacyMetSiteCharacteristics().getMinMoninObukhovLength();
   }
 
+  @Deprecated
+  @JsonIgnore
   public void setMsMinMoninObukhovLength(final double msMinMoninObukhovLength) {
-    this.msMinMoninObukhovLength = msMinMoninObukhovLength;
+    getLegacyMetSiteCharacteristics().setMinMoninObukhovLength(msMinMoninObukhovLength);
   }
 
+  @Deprecated
+  @JsonIgnore
   public double getMsSurfaceAlbedo() {
-    return msSurfaceAlbedo;
+    return getLegacyMetSiteCharacteristics().getSurfaceAlbedo();
   }
 
+  @Deprecated
+  @JsonIgnore
   public void setMsSurfaceAlbedo(final double msSurfaceAlbedo) {
-    this.msSurfaceAlbedo = msSurfaceAlbedo;
+    getLegacyMetSiteCharacteristics().setSurfaceAlbedo(msSurfaceAlbedo);
   }
 
+  @Deprecated
+  @JsonIgnore
   public double getMsPriestleyTaylorParameter() {
-    return msPriestleyTaylorParameter;
+    return getLegacyMetSiteCharacteristics().getPriestleyTaylorParameter();
   }
 
+  @Deprecated
+  @JsonIgnore
   public void setMsPriestleyTaylorParameter(final double msPriestleyTaylorParameter) {
-    this.msPriestleyTaylorParameter = msPriestleyTaylorParameter;
+    getLegacyMetSiteCharacteristics().setPriestleyTaylorParameter(msPriestleyTaylorParameter);
+  }
+
+  private MetSurfaceCharacteristics getLegacyMetSiteCharacteristics() {
+    return metSiteSurfaceCharacteristics.computeIfAbsent("", k -> new MetSurfaceCharacteristics());
   }
 
   public boolean isSpatiallyVaryingRoughness() {
@@ -157,9 +207,7 @@ public class ADMSOptions implements Serializable {
   @Override
   public String toString() {
     return "ADMSOptions [minMoninObukhovLength=" + minMoninObukhovLength + ", surfaceAlbedo=" + surfaceAlbedo + ", priestleyTaylorParameter="
-        + priestleyTaylorParameter + ", metSiteId=" + metSiteId + ", msRoughness=" + msRoughness + ", msMinMoninObukhovLength="
-        + msMinMoninObukhovLength + ", msSurfaceAlbedo=" + msSurfaceAlbedo + ", msPriestleyTaylorParameter=" + msPriestleyTaylorParameter
-        + ", plumeDepletionNH3=" + plumeDepletionNH3 + ", plumeDepletionNOX=" + plumeDepletionNOX + ", spatiallyVaryingRoughness="
-        + spatiallyVaryingRoughness + ", complexTerrain=" + complexTerrain + "]";
+        + priestleyTaylorParameter + ", metSiteId=" + metSiteId + ", plumeDepletionNH3=" + plumeDepletionNH3 + ", plumeDepletionNOX="
+        + plumeDepletionNOX + ", spatiallyVaryingRoughness=" + spatiallyVaryingRoughness + ", complexTerrain=" + complexTerrain + "]";
   }
 }
