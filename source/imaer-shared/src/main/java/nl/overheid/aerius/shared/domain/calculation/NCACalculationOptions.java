@@ -27,6 +27,8 @@ public class NCACalculationOptions implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
+  private ProjectCategory projectCategory = ProjectCategory.AGRICULTURE;
+
   /**
    * Regional area for which a permit calculation would apply to.
    */
@@ -40,7 +42,7 @@ public class NCACalculationOptions implements Serializable {
   /**
    * List of meteo years to calculate.
    */
-  private List<String> meteoYears = new ArrayList<>();
+  private final List<String> meteoYears = new ArrayList<>();
 
   /**
    * ADMS version to use.
@@ -66,6 +68,15 @@ public class NCACalculationOptions implements Serializable {
    * Value for fNO2 when either receptors or points is configured as {@link RoadLocalFractionNO2Option#ONE_CUSTOM_VALUE}.
    */
   private Double roadLocalFractionNO2;
+
+
+  public ProjectCategory getProjectCategory() {
+    return projectCategory;
+  }
+
+  public void setProjectCategory(final ProjectCategory projectCategory) {
+    this.projectCategory = projectCategory;
+  }
 
   public String getPermitArea() {
     return permitArea;

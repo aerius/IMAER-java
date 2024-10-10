@@ -37,6 +37,7 @@ import nl.overheid.aerius.shared.domain.calculation.MetSurfaceCharacteristics;
 import nl.overheid.aerius.shared.domain.calculation.NCACalculationOptions;
 import nl.overheid.aerius.shared.domain.calculation.OPSOptions;
 import nl.overheid.aerius.shared.domain.calculation.OwN2000CalculationOptions;
+import nl.overheid.aerius.shared.domain.calculation.ProjectCategory;
 import nl.overheid.aerius.shared.domain.calculation.RoadLocalFractionNO2Option;
 import nl.overheid.aerius.shared.domain.calculation.SubReceptorsMode;
 import nl.overheid.aerius.shared.domain.meteo.Meteo;
@@ -198,6 +199,7 @@ class OptionsMetadataUtilTest {
     final NCACalculationOptions ncaOptions = options.getNcaCalculationOptions();
 
     ncaOptions.setAdmsVersion("5.0.0.1");
+    ncaOptions.setProjectCategory(ProjectCategory.AGRICULTURE);
     ncaOptions.setPermitArea("London");
     ncaOptions.setRoadLocalFractionNO2ReceptorsOption(RoadLocalFractionNO2Option.ONE_CUSTOM_VALUE);
     ncaOptions.setRoadLocalFractionNO2PointsOption(RoadLocalFractionNO2Option.ONE_CUSTOM_VALUE);
@@ -281,6 +283,7 @@ class OptionsMetadataUtilTest {
     final NCACalculationOptions ncaOptions = options.getNcaCalculationOptions();
 
     ncaOptions.setPermitArea("London");
+    ncaOptions.setProjectCategory(ProjectCategory.ROADS);
     ncaOptions.setRoadLocalFractionNO2ReceptorsOption(RoadLocalFractionNO2Option.ONE_CUSTOM_VALUE);
     ncaOptions.setRoadLocalFractionNO2PointsOption(RoadLocalFractionNO2Option.ONE_CUSTOM_VALUE);
     ncaOptions.setRoadLocalFractionNO2(0.4);

@@ -45,6 +45,7 @@ import nl.overheid.aerius.shared.domain.calculation.MetSurfaceCharacteristics;
 import nl.overheid.aerius.shared.domain.calculation.NCACalculationOptions;
 import nl.overheid.aerius.shared.domain.calculation.OPSOptions;
 import nl.overheid.aerius.shared.domain.calculation.OwN2000CalculationOptions;
+import nl.overheid.aerius.shared.domain.calculation.ProjectCategory;
 import nl.overheid.aerius.shared.domain.calculation.RoadLocalFractionNO2Option;
 
 /**
@@ -90,6 +91,7 @@ public final class OptionsMetadataUtil {
 
     /* ADMS options related */
     ADMS_VERSION,
+    ADMS_PROJECT_CATEGORY,
     ADMS_PERMIT_AREA,
     ADMS_MIN_MONIN_OBUKHOV_LENGTH,
     ADMS_SURFACE_ALBEDO,
@@ -238,6 +240,7 @@ public final class OptionsMetadataUtil {
 
   private static void ncaOptionsFromMap(final NCACalculationOptions options, final Map<Option, String> map,
       final Map<String, Map<Option, String>> prefixedOptionsMap) {
+    options.setProjectCategory(ProjectCategory.safeValueOf(map.get(Option.ADMS_PROJECT_CATEGORY)));
     options.setPermitArea(map.get(Option.ADMS_PERMIT_AREA));
     options.setRoadLocalFractionNO2ReceptorsOption(RoadLocalFractionNO2Option.safeValueOf(map.get(Option.ROAD_LOCAL_FRACTION_NO2_RECEPTORS_OPTION)));
     options.setRoadLocalFractionNO2PointsOption(RoadLocalFractionNO2Option.safeValueOf(map.get(Option.ROAD_LOCAL_FRACTION_NO2_POINTS_OPTION)));
@@ -315,6 +318,7 @@ public final class OptionsMetadataUtil {
   private static void ncaOptionsToMap(final Map<String, String> mapToAddTo, final NCACalculationOptions options, final boolean addDefaults) {
     if (options != null) {
       addValue(mapToAddTo, Option.ADMS_VERSION, options.getAdmsVersion(), addDefaults);
+      addValue(mapToAddTo, Option.ADMS_PROJECT_CATEGORY, options.getProjectCategory(), addDefaults);
       addValue(mapToAddTo, Option.ADMS_PERMIT_AREA, options.getPermitArea(), addDefaults);
       addValue(mapToAddTo, Option.ROAD_LOCAL_FRACTION_NO2_RECEPTORS_OPTION, options.getRoadLocalFractionNO2ReceptorsOption(), addDefaults);
       addValue(mapToAddTo, Option.ROAD_LOCAL_FRACTION_NO2_POINTS_OPTION, options.getRoadLocalFractionNO2PointsOption(), addDefaults);
