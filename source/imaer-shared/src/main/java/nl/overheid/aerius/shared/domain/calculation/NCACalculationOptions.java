@@ -27,7 +27,7 @@ public class NCACalculationOptions implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
-  private ProjectCategory projectCategory = ProjectCategory.AGRICULTURE;
+  private ProjectCategory projectCategory;
 
   /**
    * Regional area for which a permit calculation would apply to.
@@ -42,7 +42,7 @@ public class NCACalculationOptions implements Serializable {
   /**
    * List of meteo years to calculate.
    */
-  private final List<String> meteoYears = new ArrayList<>();
+  private List<String> meteoYears = new ArrayList<>();
 
   /**
    * ADMS version to use.
