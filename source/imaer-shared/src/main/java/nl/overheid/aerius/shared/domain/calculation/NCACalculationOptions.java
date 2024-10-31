@@ -17,8 +17,6 @@
 package nl.overheid.aerius.shared.domain.calculation;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Calculation options related to the NCA theme.
@@ -27,22 +25,12 @@ public class NCACalculationOptions implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
-  private ProjectCategory projectCategory;
+  private String projectCategory;
 
   /**
    * Regional area for which a permit calculation would apply to.
    */
   private String permitArea;
-
-  /**
-   * Location of the meteorological site location.
-   */
-  private String meteoSiteLocation;
-
-  /**
-   * List of meteo years to calculate.
-   */
-  private List<String> meteoYears = new ArrayList<>();
 
   /**
    * ADMS version to use.
@@ -69,12 +57,11 @@ public class NCACalculationOptions implements Serializable {
    */
   private Double roadLocalFractionNO2;
 
-
-  public ProjectCategory getProjectCategory() {
+  public String getProjectCategory() {
     return projectCategory;
   }
 
-  public void setProjectCategory(final ProjectCategory projectCategory) {
+  public void setProjectCategory(final String projectCategory) {
     this.projectCategory = projectCategory;
   }
 

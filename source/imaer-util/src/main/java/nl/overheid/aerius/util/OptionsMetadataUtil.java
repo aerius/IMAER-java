@@ -45,7 +45,6 @@ import nl.overheid.aerius.shared.domain.calculation.MetSurfaceCharacteristics;
 import nl.overheid.aerius.shared.domain.calculation.NCACalculationOptions;
 import nl.overheid.aerius.shared.domain.calculation.OPSOptions;
 import nl.overheid.aerius.shared.domain.calculation.OwN2000CalculationOptions;
-import nl.overheid.aerius.shared.domain.calculation.ProjectCategory;
 import nl.overheid.aerius.shared.domain.calculation.RoadLocalFractionNO2Option;
 
 /**
@@ -240,7 +239,7 @@ public final class OptionsMetadataUtil {
 
   private static void ncaOptionsFromMap(final NCACalculationOptions options, final Map<Option, String> map,
       final Map<String, Map<Option, String>> prefixedOptionsMap) {
-    options.setProjectCategory(ProjectCategory.safeValueOf(map.get(Option.ADMS_PROJECT_CATEGORY)));
+    options.setProjectCategory(map.get(Option.ADMS_PROJECT_CATEGORY));
     options.setPermitArea(map.get(Option.ADMS_PERMIT_AREA));
     options.setRoadLocalFractionNO2ReceptorsOption(RoadLocalFractionNO2Option.safeValueOf(map.get(Option.ROAD_LOCAL_FRACTION_NO2_RECEPTORS_OPTION)));
     options.setRoadLocalFractionNO2PointsOption(RoadLocalFractionNO2Option.safeValueOf(map.get(Option.ROAD_LOCAL_FRACTION_NO2_POINTS_OPTION)));

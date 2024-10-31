@@ -37,7 +37,6 @@ import nl.overheid.aerius.shared.domain.calculation.MetSurfaceCharacteristics;
 import nl.overheid.aerius.shared.domain.calculation.NCACalculationOptions;
 import nl.overheid.aerius.shared.domain.calculation.OPSOptions;
 import nl.overheid.aerius.shared.domain.calculation.OwN2000CalculationOptions;
-import nl.overheid.aerius.shared.domain.calculation.ProjectCategory;
 import nl.overheid.aerius.shared.domain.calculation.RoadLocalFractionNO2Option;
 import nl.overheid.aerius.shared.domain.calculation.SubReceptorsMode;
 import nl.overheid.aerius.shared.domain.meteo.Meteo;
@@ -199,7 +198,7 @@ class OptionsMetadataUtilTest {
     final NCACalculationOptions ncaOptions = options.getNcaCalculationOptions();
 
     ncaOptions.setAdmsVersion("5.0.0.1");
-    ncaOptions.setProjectCategory(ProjectCategory.AGRICULTURE);
+    ncaOptions.setProjectCategory("SHALLOW_WATER_FISHING");
     ncaOptions.setPermitArea("London");
     ncaOptions.setRoadLocalFractionNO2ReceptorsOption(RoadLocalFractionNO2Option.ONE_CUSTOM_VALUE);
     ncaOptions.setRoadLocalFractionNO2PointsOption(RoadLocalFractionNO2Option.ONE_CUSTOM_VALUE);
@@ -227,7 +226,7 @@ class OptionsMetadataUtilTest {
     final Map<String, String> result = OptionsMetadataUtil.optionsToMap(Theme.NCA, options, false);
 
     assertEquals("5.0.0.1", result.get("adms_version"), "adms_version should be set");
-    assertEquals("AGRICULTURE", result.get("adms_project_category"), "project_category should be set");
+    assertEquals("SHALLOW_WATER_FISHING", result.get("adms_project_category"), "project_category should be set");
     assertEquals("London", result.get("adms_permit_area"), "adms_permit_area should be set");
     assertEquals("12.3", result.get("adms_min_monin_obukhov_length"), "adms_min_monin_obukhov_length should be set");
     assertEquals("23.4", result.get("adms_surface_albedo"), "adms_surface_albedo should be set");
@@ -284,7 +283,7 @@ class OptionsMetadataUtilTest {
     final NCACalculationOptions ncaOptions = options.getNcaCalculationOptions();
 
     ncaOptions.setPermitArea("London");
-    ncaOptions.setProjectCategory(ProjectCategory.ROADS);
+    ncaOptions.setProjectCategory("HIGHWAY_GO_KARTING");
     ncaOptions.setRoadLocalFractionNO2ReceptorsOption(RoadLocalFractionNO2Option.ONE_CUSTOM_VALUE);
     ncaOptions.setRoadLocalFractionNO2PointsOption(RoadLocalFractionNO2Option.ONE_CUSTOM_VALUE);
     ncaOptions.setRoadLocalFractionNO2(0.4);
