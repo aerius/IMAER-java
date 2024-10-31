@@ -17,6 +17,8 @@
 package nl.overheid.aerius.shared.domain.calculation;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Calculation options related to the NCA theme.
@@ -51,11 +53,13 @@ public class NCACalculationOptions implements Serializable {
   /**
    * Option on what fNO2 to use when calculating custom calculation points.
    */
-  private RoadLocalFractionNO2Option roadLocalFractionNO2PoinsOption = RoadLocalFractionNO2Option.LOCATION_BASED;
+  private RoadLocalFractionNO2Option roadLocalFractionNO2PointsOption = RoadLocalFractionNO2Option.LOCATION_BASED;
   /**
    * Value for fNO2 when either receptors or points is configured as {@link RoadLocalFractionNO2Option#ONE_CUSTOM_VALUE}.
    */
   private Double roadLocalFractionNO2;
+
+  private List<String> developmentPressureSourceIds = new ArrayList<>();
 
   public String getProjectCategory() {
     return projectCategory;
@@ -98,11 +102,11 @@ public class NCACalculationOptions implements Serializable {
   }
 
   public RoadLocalFractionNO2Option getRoadLocalFractionNO2PointsOption() {
-    return roadLocalFractionNO2PoinsOption;
+    return roadLocalFractionNO2PointsOption;
   }
 
   public void setRoadLocalFractionNO2PointsOption(final RoadLocalFractionNO2Option roadLocalFractionNO2PointsOption) {
-    this.roadLocalFractionNO2PoinsOption = roadLocalFractionNO2PointsOption;
+    this.roadLocalFractionNO2PointsOption = roadLocalFractionNO2PointsOption;
   }
 
   public Double getRoadLocalFractionNO2() {
@@ -111,6 +115,14 @@ public class NCACalculationOptions implements Serializable {
 
   public void setRoadLocalFractionNO2(final Double roadLocalFractionNO2) {
     this.roadLocalFractionNO2 = roadLocalFractionNO2;
+  }
+
+  public List<String> getDevelopmentPressureSourceIds() {
+    return developmentPressureSourceIds;
+  }
+
+  public void setDevelopmentPressureSourceIds(final List<String> developmentPressureSourceIds) {
+    this.developmentPressureSourceIds = developmentPressureSourceIds;
   }
 
 }

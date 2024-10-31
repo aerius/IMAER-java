@@ -200,6 +200,7 @@ class OptionsMetadataUtilTest {
     ncaOptions.setAdmsVersion("5.0.0.1");
     ncaOptions.setProjectCategory("SHALLOW_WATER_FISHING");
     ncaOptions.setPermitArea("London");
+    ncaOptions.setDevelopmentPressureSourceIds(List.of("source_id_1", "source_id_2"));
     ncaOptions.setRoadLocalFractionNO2ReceptorsOption(RoadLocalFractionNO2Option.ONE_CUSTOM_VALUE);
     ncaOptions.setRoadLocalFractionNO2PointsOption(RoadLocalFractionNO2Option.ONE_CUSTOM_VALUE);
     ncaOptions.setRoadLocalFractionNO2(0.4);
@@ -228,6 +229,7 @@ class OptionsMetadataUtilTest {
     assertEquals("5.0.0.1", result.get("adms_version"), "adms_version should be set");
     assertEquals("SHALLOW_WATER_FISHING", result.get("project_category"), "project_category should be set");
     assertEquals("London", result.get("permit_area"), "permit area should be set");
+    assertEquals("source_id_1,source_id_2", result.get("development_pressure_source_ids"), "Development pressure source IDs should be set");
     assertEquals("12.3", result.get("adms_min_monin_obukhov_length"), "adms_min_monin_obukhov_length should be set");
     assertEquals("23.4", result.get("adms_surface_albedo"), "adms_surface_albedo should be set");
     assertEquals("34.5", result.get("adms_priestley_taylor_parameter"), "adms_priestley_taylor_parameter should be set");
@@ -284,6 +286,7 @@ class OptionsMetadataUtilTest {
 
     ncaOptions.setPermitArea("London");
     ncaOptions.setProjectCategory("HIGHWAY_GO_KARTING");
+    ncaOptions.setDevelopmentPressureSourceIds(List.of("farm_4", "manure_storage_9"));
     ncaOptions.setRoadLocalFractionNO2ReceptorsOption(RoadLocalFractionNO2Option.ONE_CUSTOM_VALUE);
     ncaOptions.setRoadLocalFractionNO2PointsOption(RoadLocalFractionNO2Option.ONE_CUSTOM_VALUE);
     ncaOptions.setRoadLocalFractionNO2(0.4);

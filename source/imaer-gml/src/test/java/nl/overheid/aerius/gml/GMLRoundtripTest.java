@@ -160,6 +160,7 @@ class GMLRoundtripTest {
       {"nca_calculation_options", CharacteristicsType.ADMS},
       {"nca_calculation_options_quick_run", CharacteristicsType.ADMS},
       {"nca_calculation_options_multi_met_years", CharacteristicsType.ADMS},
+      {"nca_calculation_options_decision_framework", CharacteristicsType.ADMS},
       {"archive_metadata", CharacteristicsType.ADMS},
       {"archive_metadata_extended", CharacteristicsType.ADMS},
       {"farm_animal_housing", CharacteristicsType.OPS},
