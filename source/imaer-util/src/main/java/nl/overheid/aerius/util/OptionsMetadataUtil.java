@@ -90,8 +90,6 @@ public final class OptionsMetadataUtil {
 
     /* ADMS options related */
     ADMS_VERSION,
-    ADMS_PROJECT_CATEGORY,
-    ADMS_PERMIT_AREA,
     ADMS_MIN_MONIN_OBUKHOV_LENGTH,
     ADMS_SURFACE_ALBEDO,
     ADMS_PRIESTLEY_TAYLOR_PARAMETER,
@@ -108,6 +106,10 @@ public final class OptionsMetadataUtil {
     ADMS_MET_SITE_SURFACE_ALBEDO,
     ADMS_MET_SITE_PRIESTLEY_TAYLOR_PARAMETER,
     ADMS_MET_SITE_WIND_IN_SECTORS,
+
+    /* NCA options related */
+    PROJECT_CATEGORY,
+    PERMIT_AREA,
 
     /* Road NOX - NO2 calculation related */
     ROAD_LOCAL_FRACTION_NO2_RECEPTORS_OPTION,
@@ -239,8 +241,8 @@ public final class OptionsMetadataUtil {
 
   private static void ncaOptionsFromMap(final NCACalculationOptions options, final Map<Option, String> map,
       final Map<String, Map<Option, String>> prefixedOptionsMap) {
-    options.setProjectCategory(map.get(Option.ADMS_PROJECT_CATEGORY));
-    options.setPermitArea(map.get(Option.ADMS_PERMIT_AREA));
+    options.setProjectCategory(map.get(Option.PROJECT_CATEGORY));
+    options.setPermitArea(map.get(Option.PERMIT_AREA));
     options.setRoadLocalFractionNO2ReceptorsOption(RoadLocalFractionNO2Option.safeValueOf(map.get(Option.ROAD_LOCAL_FRACTION_NO2_RECEPTORS_OPTION)));
     options.setRoadLocalFractionNO2PointsOption(RoadLocalFractionNO2Option.safeValueOf(map.get(Option.ROAD_LOCAL_FRACTION_NO2_POINTS_OPTION)));
     if (options.getRoadLocalFractionNO2ReceptorsOption() == RoadLocalFractionNO2Option.ONE_CUSTOM_VALUE
@@ -317,8 +319,8 @@ public final class OptionsMetadataUtil {
   private static void ncaOptionsToMap(final Map<String, String> mapToAddTo, final NCACalculationOptions options, final boolean addDefaults) {
     if (options != null) {
       addValue(mapToAddTo, Option.ADMS_VERSION, options.getAdmsVersion(), addDefaults);
-      addValue(mapToAddTo, Option.ADMS_PROJECT_CATEGORY, options.getProjectCategory(), addDefaults);
-      addValue(mapToAddTo, Option.ADMS_PERMIT_AREA, options.getPermitArea(), addDefaults);
+      addValue(mapToAddTo, Option.PROJECT_CATEGORY, options.getProjectCategory(), addDefaults);
+      addValue(mapToAddTo, Option.PERMIT_AREA, options.getPermitArea(), addDefaults);
       addValue(mapToAddTo, Option.ROAD_LOCAL_FRACTION_NO2_RECEPTORS_OPTION, options.getRoadLocalFractionNO2ReceptorsOption(), addDefaults);
       addValue(mapToAddTo, Option.ROAD_LOCAL_FRACTION_NO2_POINTS_OPTION, options.getRoadLocalFractionNO2PointsOption(), addDefaults);
       if (options.getRoadLocalFractionNO2ReceptorsOption() == RoadLocalFractionNO2Option.ONE_CUSTOM_VALUE

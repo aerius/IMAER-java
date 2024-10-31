@@ -226,8 +226,8 @@ class OptionsMetadataUtilTest {
     final Map<String, String> result = OptionsMetadataUtil.optionsToMap(Theme.NCA, options, false);
 
     assertEquals("5.0.0.1", result.get("adms_version"), "adms_version should be set");
-    assertEquals("SHALLOW_WATER_FISHING", result.get("adms_project_category"), "project_category should be set");
-    assertEquals("London", result.get("adms_permit_area"), "adms_permit_area should be set");
+    assertEquals("SHALLOW_WATER_FISHING", result.get("project_category"), "project_category should be set");
+    assertEquals("London", result.get("permit_area"), "permit area should be set");
     assertEquals("12.3", result.get("adms_min_monin_obukhov_length"), "adms_min_monin_obukhov_length should be set");
     assertEquals("23.4", result.get("adms_surface_albedo"), "adms_surface_albedo should be set");
     assertEquals("34.5", result.get("adms_priestley_taylor_parameter"), "adms_priestley_taylor_parameter should be set");

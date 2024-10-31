@@ -164,8 +164,8 @@ class GMLCalculationSetOptionsReaderTest {
     when(metaData.getCalculation()).thenReturn(calculationMetaData);
 
     final List<IsGmlProperty<IsCalculationOption>> suppliedOptions = new ArrayList<>();
-    suppliedOptions.add(mockCalculationOption("adms_permit_area", "somewhere"));
-    suppliedOptions.add(mockCalculationOption("adms_permit_area", "somewhere else"));
+    suppliedOptions.add(mockCalculationOption("permit_area", "somewhere"));
+    suppliedOptions.add(mockCalculationOption("permit_area", "somewhere else"));
     when(calculationMetaData.getOptions()).thenAnswer(a -> suppliedOptions);
 
     final GMLCalculationSetOptionsReader reader = new GMLCalculationSetOptionsReader(featureCollection);
@@ -191,7 +191,7 @@ class GMLCalculationSetOptionsReaderTest {
     when(metaData.getCalculation()).thenReturn(calculationMetaData);
 
     final List<IsGmlProperty<IsCalculationOption>> suppliedOptions = new ArrayList<>();
-    suppliedOptions.add(mockCalculationOption("adms_permit_area", "somewhere"));
+    suppliedOptions.add(mockCalculationOption("permit_area", "somewhere"));
     suppliedOptions.add(mockCalculationOption("adms_meteo_site_location", "some meteo loc"));
     suppliedOptions.add(mockCalculationOption("adms_meteo_years", "2040,2042"));
     suppliedOptions.add(mockCalculationOption("adms_min_monin_obukhov_length", "3.4"));
