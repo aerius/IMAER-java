@@ -33,6 +33,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 import nl.overheid.aerius.shared.domain.Theme;
 import nl.overheid.aerius.shared.domain.calculation.ADMSOptions;
@@ -45,7 +46,6 @@ import nl.overheid.aerius.shared.domain.calculation.MetSurfaceCharacteristics;
 import nl.overheid.aerius.shared.domain.calculation.NCACalculationOptions;
 import nl.overheid.aerius.shared.domain.calculation.OPSOptions;
 import nl.overheid.aerius.shared.domain.calculation.OwN2000CalculationOptions;
-import nl.overheid.aerius.shared.domain.calculation.ProjectCategory;
 import nl.overheid.aerius.shared.domain.calculation.RoadLocalFractionNO2Option;
 
 /**
@@ -53,7 +53,7 @@ import nl.overheid.aerius.shared.domain.calculation.RoadLocalFractionNO2Option;
  */
 public final class OptionsMetadataUtil {
 
-  private static final String METEO_YEARS_SEPARATOR = ",";
+  private static final String LIST_OPTION_SEPARATOR = ",";
   private static final String OPTION_KEY_SPLIT = "-";
 
   public enum Option {
@@ -91,8 +91,6 @@ public final class OptionsMetadataUtil {
 
     /* ADMS options related */
     ADMS_VERSION,
-    ADMS_PROJECT_CATEGORY,
-    ADMS_PERMIT_AREA,
     ADMS_MIN_MONIN_OBUKHOV_LENGTH,
     ADMS_SURFACE_ALBEDO,
     ADMS_PRIESTLEY_TAYLOR_PARAMETER,
@@ -109,6 +107,11 @@ public final class OptionsMetadataUtil {
     ADMS_MET_SITE_SURFACE_ALBEDO,
     ADMS_MET_SITE_PRIESTLEY_TAYLOR_PARAMETER,
     ADMS_MET_SITE_WIND_IN_SECTORS,
+
+    /* NCA options related */
+    PROJECT_CATEGORY,
+    PERMIT_AREA,
+    DEVELOPMENT_PRESSURE_SOURCE_IDS,
 
     /* Road NOX - NO2 calculation related */
     ROAD_LOCAL_FRACTION_NO2_RECEPTORS_OPTION,
@@ -240,8 +243,9 @@ public final class OptionsMetadataUtil {
 
   private static void ncaOptionsFromMap(final NCACalculationOptions options, final Map<Option, String> map,
       final Map<String, Map<Option, String>> prefixedOptionsMap) {
-    options.setProjectCategory(ProjectCategory.safeValueOf(map.get(Option.ADMS_PROJECT_CATEGORY)));
-    options.setPermitArea(map.get(Option.ADMS_PERMIT_AREA));
+    options.setProjectCategory(map.get(Option.PROJECT_CATEGORY));
+    options.setPermitArea(map.get(Option.PERMIT_AREA));
+    parseListOption(Option.DEVELOPMENT_PRESSURE_SOURCE_IDS, map, options::setDevelopmentPressureSourceIds);
     options.setRoadLocalFractionNO2ReceptorsOption(RoadLocalFractionNO2Option.safeValueOf(map.get(Option.ROAD_LOCAL_FRACTION_NO2_RECEPTORS_OPTION)));
     options.setRoadLocalFractionNO2PointsOption(RoadLocalFractionNO2Option.safeValueOf(map.get(Option.ROAD_LOCAL_FRACTION_NO2_POINTS_OPTION)));
     if (options.getRoadLocalFractionNO2ReceptorsOption() == RoadLocalFractionNO2Option.ONE_CUSTOM_VALUE
@@ -259,7 +263,7 @@ public final class OptionsMetadataUtil {
       admsOptions.setMetSiteId(Integer.parseInt(map.get(Option.ADMS_MET_SITE_ID)));
       admsOptions.setMetSiteLatitude(Optional.ofNullable(map.get(Option.ADMS_MET_SITE_LATITUDE)).map(Double::parseDouble).orElse(0.0));
       admsOptions.setMetDatasetType(MetDatasetType.safeValueOf(map.get(Option.ADMS_MET_DATASET_TYPE)));
-      ncaParseMetYears(admsOptions, map);
+      parseListOption(Option.ADMS_MET_YEARS, map, admsOptions::setMetYears);
       ncaMetSiteOptions(prefixedOptionsMap, admsOptions, map);
     }
     admsOptions.setPlumeDepletionNH3(isOrDefault(map, Option.ADMS_PLUME_DEPLETION_NH3, ADMS_PLUME_DEPLETION_NH3_DEFAULT));
@@ -305,12 +309,12 @@ public final class OptionsMetadataUtil {
     return Optional.ofNullable(map.get(option)).map(Boolean::parseBoolean).orElse(defaultValue);
   }
 
-  private static void ncaParseMetYears(final ADMSOptions admsOptions, final Map<Option, String> map) {
-    final String metYearString = map.get(Option.ADMS_MET_YEARS);
-    if (metYearString != null && !metYearString.isBlank()) {
-      final String[] meteoYears = metYearString.split(METEO_YEARS_SEPARATOR);
-      if (meteoYears.length > 0) {
-        admsOptions.setMetYears(Arrays.asList(meteoYears));
+  private static void parseListOption(final Option key, final Map<Option, String> map, final Consumer<List<String>> setter) {
+    final String value = map.get(key);
+    if (value != null && !value.isBlank()) {
+      final String[] splitOption = value.split(LIST_OPTION_SEPARATOR);
+      if (splitOption.length > 0) {
+        setter.accept(Arrays.asList(splitOption));
       }
     }
   }
@@ -318,8 +322,12 @@ public final class OptionsMetadataUtil {
   private static void ncaOptionsToMap(final Map<String, String> mapToAddTo, final NCACalculationOptions options, final boolean addDefaults) {
     if (options != null) {
       addValue(mapToAddTo, Option.ADMS_VERSION, options.getAdmsVersion(), addDefaults);
-      addValue(mapToAddTo, Option.ADMS_PROJECT_CATEGORY, options.getProjectCategory(), addDefaults);
-      addValue(mapToAddTo, Option.ADMS_PERMIT_AREA, options.getPermitArea(), addDefaults);
+      addValue(mapToAddTo, Option.PROJECT_CATEGORY, options.getProjectCategory(), addDefaults);
+      addValue(mapToAddTo, Option.PERMIT_AREA, options.getPermitArea(), addDefaults);
+      if (!options.getDevelopmentPressureSourceIds().isEmpty()) {
+        addValue(mapToAddTo, Option.DEVELOPMENT_PRESSURE_SOURCE_IDS,
+            String.join(LIST_OPTION_SEPARATOR, options.getDevelopmentPressureSourceIds()), addDefaults);
+      }
       addValue(mapToAddTo, Option.ROAD_LOCAL_FRACTION_NO2_RECEPTORS_OPTION, options.getRoadLocalFractionNO2ReceptorsOption(), addDefaults);
       addValue(mapToAddTo, Option.ROAD_LOCAL_FRACTION_NO2_POINTS_OPTION, options.getRoadLocalFractionNO2PointsOption(), addDefaults);
       if (options.getRoadLocalFractionNO2ReceptorsOption() == RoadLocalFractionNO2Option.ONE_CUSTOM_VALUE
@@ -354,7 +362,7 @@ public final class OptionsMetadataUtil {
   private static void ncaAddMetSite(final Map<String, String> mapToAddTo, final boolean addDefaults, final ADMSOptions adms) {
     final List<String> metYears = adms.getMetYears();
     if (!metYears.isEmpty()) {
-      addValue(mapToAddTo, Option.ADMS_MET_YEARS, String.join(METEO_YEARS_SEPARATOR, metYears), addDefaults);
+      addValue(mapToAddTo, Option.ADMS_MET_YEARS, String.join(LIST_OPTION_SEPARATOR, metYears), addDefaults);
     }
     if (metYears.size() > 1) {
       for (final String metYear : metYears) {

@@ -20,7 +20,10 @@ import java.util.Locale;
 
 /**
  * The project category the calculation is for.
+ *
+ * @Deprecated To be replaced with database-backed category.
  */
+@Deprecated
 public enum ProjectCategory {
   AGRICULTURE,
   COMBUSTION_PLANT,
