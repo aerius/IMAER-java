@@ -300,6 +300,10 @@ class ADMSRoadEmissionsCalculatorTest {
     valuesPerVehicleType.setVehiclesPerTimeUnit(2000);
     final String vehicleType = "HEAVY_FREIGHT";
     vehicles.getValuesPerVehicleTypes().put(vehicleType, valuesPerVehicleType);
+    final ValuesPerVehicleType valuesPerVehicleTypeZeroVehicles = new ValuesPerVehicleType();
+    valuesPerVehicleTypeZeroVehicles.setVehiclesPerTimeUnit(0);
+    final String vehicleTypeZeroVehicles = "TAXI";
+    vehicles.getValuesPerVehicleTypes().put(vehicleTypeZeroVehicles, valuesPerVehicleTypeZeroVehicles);
     final boolean strictEnforcement = vehicles.getStrictEnforcement();
     final int maximumSpeed = vehicles.getMaximumSpeed();
     final int gradientMatch = (int) gradient;
