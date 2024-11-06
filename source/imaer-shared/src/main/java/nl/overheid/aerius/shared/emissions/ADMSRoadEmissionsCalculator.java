@@ -84,7 +84,9 @@ class ADMSRoadEmissionsCalculator extends BaseRoadEmissionsCalculator<ADMSRoadEm
     final TrafficDirection direction = roadEmissionSource.getTrafficDirection();
     // ADMSRoad does not use stagnation (this is incorporated into the speed used).
     // However, the gradient depends on the direction
-    if (direction == TrafficDirection.A_TO_B) {
+    if (BigDecimal.ZERO.compareTo(numberOfVehiclesPerDay) == 0) {
+      results = new EnumMap<>(Substance.class);
+    } else if (direction == TrafficDirection.A_TO_B) {
       // If A to B, all vehicles go that way, calculate appropriately
       results = calculateAtoBEmissions(standardVehicles, standardVehicleCode, numberOfVehiclesPerDay, roadEmissionSource);
     } else if (direction == TrafficDirection.B_TO_A) {
