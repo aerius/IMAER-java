@@ -113,6 +113,9 @@ public final class OptionsMetadataUtil {
     PERMIT_AREA,
     DEVELOPMENT_PRESSURE_SOURCE_IDS,
 
+    /* Calculated snapshot values related */
+    DEVELOPMENT_PRESSURE_CLASSIFICATION,
+
     /* Road NOX - NO2 calculation related */
     ROAD_LOCAL_FRACTION_NO2_RECEPTORS_OPTION,
     ROAD_LOCAL_FRACTION_NO2_POINTS_OPTION,
@@ -179,6 +182,7 @@ public final class OptionsMetadataUtil {
     if (theme == Theme.NCA) {
       final NCACalculationOptions ncaCalculationOptions = options.getNcaCalculationOptions();
       ncaOptionsFromMap(ncaCalculationOptions, map, prefixedOptionsMap);
+      options.getCalculatedSnapshotValues().setDevelopmentPressureClassification(map.get(Option.DEVELOPMENT_PRESSURE_CLASSIFICATION));
     }
   }
 
@@ -193,6 +197,8 @@ public final class OptionsMetadataUtil {
       addIntValue(mapToAddTo, Option.MONITOR_SRM2_YEAR, options.getRblCalculationOptions().getMonitorSrm2Year(), addDefaults);
     } else if (theme == Theme.NCA) {
       ncaOptionsToMap(mapToAddTo, options.getNcaCalculationOptions(), addDefaults);
+      addValue(mapToAddTo, Option.DEVELOPMENT_PRESSURE_CLASSIFICATION, options.getCalculatedSnapshotValues().getDevelopmentPressureClassification(),
+          addDefaults);
     }
     addConnectSuppliedOptions(options.getConnectSuppliedOptions(), mapToAddTo, addDefaults);
     return mapToAddTo;

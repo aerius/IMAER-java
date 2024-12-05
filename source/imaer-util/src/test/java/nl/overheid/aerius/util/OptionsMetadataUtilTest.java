@@ -224,6 +224,7 @@ class OptionsMetadataUtilTest {
         .priestleyTaylorParameter(1.3)
         .build();
     adms.setMetSiteCharacteristics(Map.of("2022", msc, "2023", msc));
+    options.getCalculatedSnapshotValues().setDevelopmentPressureClassification("SOME_CLASS");
     final Map<String, String> result = OptionsMetadataUtil.optionsToMap(Theme.NCA, options, false);
 
     assertEquals("5.0.0.1", result.get("adms_version"), "adms_version should be set");
@@ -248,6 +249,7 @@ class OptionsMetadataUtilTest {
         "road_local_fraction_no2_receptors_option should be set");
     assertEquals("ONE_CUSTOM_VALUE", result.get("road_local_fraction_no2_points_option"), "road_local_fraction_no2_points_option should be set");
     assertEquals("0.4", result.get("road_local_fraction_no2_custom_value"), "road_local_fraction_no2 should be set");
+    assertEquals("SOME_CLASS", result.get("development_pressure_classification"), "development_pressure_classification should be set");
   }
 
   @Test
@@ -309,6 +311,7 @@ class OptionsMetadataUtilTest {
         .priestleyTaylorParameter(1.3)
         .build();
     adms.setMetSiteCharacteristics(Map.of("2022", msc, "2023", msc));
+    options.getCalculatedSnapshotValues().setDevelopmentPressureClassification("SOME_CLASS");
 
     final Map<String, String> result1 = OptionsMetadataUtil.optionsToMap(Theme.NCA, options, false);
     final CalculationSetOptions roundTripOptions = new CalculationSetOptions();

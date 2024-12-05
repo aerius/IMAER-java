@@ -29,7 +29,7 @@ import nl.overheid.aerius.shared.domain.result.EmissionResultKey;
  */
 public class CalculationSetOptions implements Serializable {
 
-  private static final long serialVersionUID = 5L;
+  private static final long serialVersionUID = 6L;
 
   private int calculationSetOptionsId;
   private CalculationMethod calculationMethod = CalculationMethod.FORMAL_ASSESSMENT;
@@ -41,6 +41,7 @@ public class CalculationSetOptions implements Serializable {
   private OwN2000CalculationOptions owN2000CalculationOptions = new OwN2000CalculationOptions();
   private RBLCalculationOptions rblCalculationOptions = new RBLCalculationOptions();
   private NCACalculationOptions ncaCalculationOptions = new NCACalculationOptions();
+  private CalculatedSnapshotValues calculatedSnapshotValues = new CalculatedSnapshotValues();
   private Serializable experimentalOptions;
 
   /**
@@ -144,6 +145,10 @@ public class CalculationSetOptions implements Serializable {
 
   public NCACalculationOptions getNcaCalculationOptions() {
     return ncaCalculationOptions;
+  }
+
+  public CalculatedSnapshotValues getCalculatedSnapshotValues() {
+    return calculatedSnapshotValues;
   }
 
   /**
