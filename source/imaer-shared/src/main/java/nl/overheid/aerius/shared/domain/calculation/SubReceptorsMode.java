@@ -16,6 +16,10 @@
  */
 package nl.overheid.aerius.shared.domain.calculation;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Different modes we support for calculations with subreceptors.
  */
@@ -24,30 +28,46 @@ public enum SubReceptorsMode {
   /**
    * Never use subreceptors
    */
-  DISABLED(false, false, true),
+  DISABLED(),
+  /**
+   * Always use subreceptors, but only inside relevant habitats.
+   */
+  ENABLED(Option.ENALBED, Option.ONLY_INSIDE_HABITATS),
   /**
    * Always use subreceptors
+   * Only include subreceptors when inside nature area
    */
-  ENABLED(true, false, true),
+  ENABLED_INSIDE_NATURE_AREAS(Option.ENALBED, Option.ONLY_INSIDE_NATURE_AREAS),
   /**
    * Use subreceptors only when calculating receptors
    * Do not use subreceptors when calculating custom points
    */
-  ENABLED_RECEPTORS_ONLY(true, true, true),
+  ENABLED_RECEPTORS_ONLY(Option.ENALBED, Option.RECEPTORS_ONLY, Option.ONLY_INSIDE_HABITATS),
   /**
    * Always use subreceptors
    * Also include subreceptors outside relevant habitat areas
    */
-  ENABLED_OUTSIDE_HABITATS(true, false, false);
+  ENABLED_OUTSIDE_HABITATS(Option.ENALBED);
+
+  private enum Option {
+    ENALBED,
+    ONLY_INSIDE_NATURE_AREAS,
+    ONLY_INSIDE_HABITATS,
+    RECEPTORS_ONLY,
+  }
 
   private final boolean enabled;
-  private final boolean receptorsOnly;
   private final boolean onlyInsideHabitats;
+  private final boolean onlyInsideNatureAreas;
+  private final boolean receptorsOnly;
 
-  SubReceptorsMode(final boolean enabled, final boolean receptorsOnly, final boolean onlyInsideHabitats) {
-    this.enabled = enabled;
-    this.receptorsOnly = receptorsOnly;
-    this.onlyInsideHabitats = onlyInsideHabitats;
+  SubReceptorsMode(final Option ...options) {
+    final Set<Option> set = new HashSet<>(Arrays.asList(options));
+
+    this.enabled = set.contains(Option.ENALBED);
+    this.onlyInsideHabitats = set.contains(Option.ONLY_INSIDE_HABITATS);
+    this.onlyInsideNatureAreas = set.contains(Option.ONLY_INSIDE_NATURE_AREAS);
+    this.receptorsOnly = set.contains(Option.RECEPTORS_ONLY);
   }
 
   /**
@@ -72,6 +92,14 @@ public enum SubReceptorsMode {
    */
   public boolean isEnabledForPoints() {
     return enabled && !receptorsOnly;
+  }
+
+  /**
+   * Whether subreceptors should only be placed inside nature areas
+   * @return true if subreceptors should only be placed inside nature areas
+   */
+  public boolean isOnlyInsideNatureAreas() {
+    return onlyInsideNatureAreas;
   }
 
   /**
