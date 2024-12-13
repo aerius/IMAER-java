@@ -28,11 +28,15 @@ public interface ValidationHelper {
     return OPSLimits.INSTANCE;
   }
 
-  FarmLodgingValidationHelper farmLodgingValidation();
-
-  default FarmAnimalHousingValidationHelper farmAnimalHousingValidation() {
+  /**
+   * @Deprecated up for removal in near future
+   */
+  @Deprecated
+  default FarmLodgingValidationHelper farmLodgingValidation() {
     return null;
   }
+
+  FarmAnimalHousingValidationHelper farmAnimalHousingValidation();
 
   FarmlandValidationHelper farmlandValidation();
 

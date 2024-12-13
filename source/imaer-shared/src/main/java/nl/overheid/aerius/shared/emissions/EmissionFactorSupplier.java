@@ -21,11 +21,15 @@ package nl.overheid.aerius.shared.emissions;
  */
 public interface EmissionFactorSupplier {
 
-  FarmLodgingEmissionFactorSupplier farmLodging();
-
-  default FarmAnimalHousingEmissionFactorSupplier farmAnimalHousing() {
+  /**
+   * @Deprecated up for removal in near future
+   */
+  @Deprecated
+  default FarmLodgingEmissionFactorSupplier farmLodging() {
     return null;
   }
+
+  FarmAnimalHousingEmissionFactorSupplier farmAnimalHousing();
 
   FarmlandEmissionFactorSupplier farmland();
 
