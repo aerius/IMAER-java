@@ -32,25 +32,25 @@ public enum SubReceptorsMode {
   /**
    * Always use subreceptors, but only inside relevant habitats.
    */
-  ENABLED(Option.ENALBED, Option.ONLY_INSIDE_HABITATS),
+  ENABLED(Option.ENABLED, Option.ONLY_INSIDE_HABITATS),
   /**
    * Always use subreceptors
    * Only include subreceptors when inside nature area
    */
-  ENABLED_INSIDE_NATURE_AREAS(Option.ENALBED, Option.ONLY_INSIDE_NATURE_AREAS),
+  ENABLED_INSIDE_NATURE_AREAS(Option.ENABLED, Option.ONLY_INSIDE_NATURE_AREAS),
   /**
    * Use subreceptors only when calculating receptors
    * Do not use subreceptors when calculating custom points
    */
-  ENABLED_RECEPTORS_ONLY(Option.ENALBED, Option.RECEPTORS_ONLY, Option.ONLY_INSIDE_HABITATS),
+  ENABLED_RECEPTORS_ONLY(Option.ENABLED, Option.RECEPTORS_ONLY, Option.ONLY_INSIDE_HABITATS),
   /**
    * Always use subreceptors
    * Also include subreceptors outside relevant habitat areas
    */
-  ENABLED_OUTSIDE_HABITATS(Option.ENALBED);
+  ENABLED_OUTSIDE_HABITATS(Option.ENABLED);
 
   private enum Option {
-    ENALBED,
+    ENABLED,
     ONLY_INSIDE_NATURE_AREAS,
     ONLY_INSIDE_HABITATS,
     RECEPTORS_ONLY,
@@ -64,7 +64,7 @@ public enum SubReceptorsMode {
   SubReceptorsMode(final Option ...options) {
     final Set<Option> set = new HashSet<>(Arrays.asList(options));
 
-    this.enabled = set.contains(Option.ENALBED);
+    this.enabled = set.contains(Option.ENABLED);
     this.onlyInsideHabitats = set.contains(Option.ONLY_INSIDE_HABITATS);
     this.onlyInsideNatureAreas = set.contains(Option.ONLY_INSIDE_NATURE_AREAS);
     this.receptorsOnly = set.contains(Option.RECEPTORS_ONLY);
