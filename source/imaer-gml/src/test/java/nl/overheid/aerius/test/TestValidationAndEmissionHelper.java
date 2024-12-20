@@ -48,7 +48,6 @@ import nl.overheid.aerius.shared.emissions.ColdStartEmissionFactorSupplier;
 import nl.overheid.aerius.shared.emissions.EmissionFactorSupplier;
 import nl.overheid.aerius.shared.emissions.FarmAnimalHousingEmissionFactorSupplier;
 import nl.overheid.aerius.shared.emissions.FarmEmissionFactorType;
-import nl.overheid.aerius.shared.emissions.FarmLodgingEmissionFactorSupplier;
 import nl.overheid.aerius.shared.emissions.FarmlandEmissionFactorSupplier;
 import nl.overheid.aerius.shared.emissions.InlandShippingEmissionFactorSupplier;
 import nl.overheid.aerius.shared.emissions.ManureStorageEmissionFactorSupplier;
@@ -61,7 +60,6 @@ import nl.overheid.aerius.shared.emissions.shipping.ShippingLaden;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.validation.ColdStartValidationHelper;
 import nl.overheid.aerius.validation.FarmAnimalHousingValidationHelper;
-import nl.overheid.aerius.validation.FarmLodgingValidationHelper;
 import nl.overheid.aerius.validation.FarmlandValidationHelper;
 import nl.overheid.aerius.validation.InlandShippingValidationHelper;
 import nl.overheid.aerius.validation.ManureStorageValidationHelper;
@@ -74,9 +72,9 @@ import nl.overheid.aerius.validation.ValidationHelper;
  * Test data for validation.
  */
 public class TestValidationAndEmissionHelper implements ValidationHelper, EmissionFactorSupplier,
-    FarmLodgingEmissionFactorSupplier, FarmAnimalHousingEmissionFactorSupplier, FarmlandEmissionFactorSupplier, ManureStorageEmissionFactorSupplier,
+    FarmAnimalHousingEmissionFactorSupplier, FarmlandEmissionFactorSupplier, ManureStorageEmissionFactorSupplier,
     OffRoadMobileEmissionFactorSupplier, ColdStartEmissionFactorSupplier, RoadEmissionFactorSupplier, InlandShippingEmissionFactorSupplier,
-    MaritimeShippingEmissionFactorSupplier, FarmLodgingValidationHelper, FarmAnimalHousingValidationHelper, FarmlandValidationHelper,
+    MaritimeShippingEmissionFactorSupplier, FarmAnimalHousingValidationHelper, FarmlandValidationHelper,
     ManureStorageValidationHelper, OffRoadValidationHelper, ColdStartValidationHelper, RoadValidationHelper, InlandShippingValidationHelper,
     MaritimeShippingValidationHelper {
 
@@ -561,11 +559,6 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
   }
 
   @Override
-  public FarmLodgingEmissionFactorSupplier farmLodging() {
-    return this;
-  }
-
-  @Override
   public FarmAnimalHousingEmissionFactorSupplier farmAnimalHousing() {
     return this;
   }
@@ -602,11 +595,6 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
 
   @Override
   public MaritimeShippingEmissionFactorSupplier maritimeShipping() {
-    return this;
-  }
-
-  @Override
-  public FarmLodgingValidationHelper farmLodgingValidation() {
     return this;
   }
 
@@ -651,18 +639,6 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
   }
 
   @Override
-  public Map<Substance, Double> getLodgingEmissionFactors(final String lodgingCode) {
-    return farmLodging(lodgingCode)
-        .map(c -> Map.of(Substance.NH3, c.emissionFactor))
-        .orElse(Map.of());
-  }
-
-  @Override
-  public FarmEmissionFactorType getLodgingEmissionFactorType(final String lodgingCode) {
-    return FarmEmissionFactorType.PER_ANIMAL_PER_YEAR;
-  }
-
-  @Override
   public FarmEmissionFactorType getAnimalHousingEmissionFactorType(final String animalHousingCode) {
     return FarmEmissionFactorType.PER_ANIMAL_PER_YEAR;
   }
@@ -702,102 +678,6 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
     default:
       return FarmEmissionFactorType.PER_TONNES_PER_YEAR;
     }
-  }
-
-  @Override
-  public boolean canLodgingEmissionFactorsBeConstrained(final String lodgingCode) {
-    return false;
-  }
-
-  @Override
-  public boolean isAdditionalSystemScrubber(final String additionalSystemCode) {
-    return farmAdditionalSystem(additionalSystemCode).map(c -> c.scrubber).orElse(false);
-  }
-
-  @Override
-  public boolean isReductiveSystemScrubber(final String reductiveSystemCode) {
-    return farmReductiveSystem(reductiveSystemCode).map(c -> c.scrubber).orElse(false);
-  }
-
-  @Override
-  public Map<Substance, Double> getLodgingConstrainedEmissionFactors(final String lodgingCode) {
-    return farmLodging(lodgingCode)
-        .map(c -> Map.of(Substance.NH3, c.emissionFactor))
-        .orElse(Map.of());
-  }
-
-  @Override
-  public Map<Substance, Double> getAdditionalSystemEmissionFactors(final String additionalSystemCode) {
-    return farmAdditionalSystem(additionalSystemCode)
-        .map(c -> Map.of(Substance.NH3, c.emissionFactor))
-        .orElse(Map.of());
-  }
-
-  @Override
-  public Map<Substance, Double> getReductiveSystemRemainingFractions(final String reductiveSystemCode) {
-    return farmReductiveSystem(reductiveSystemCode)
-        .map(c -> Map.of(Substance.NH3, 1 - c.emissionFactor))
-        .orElse(Map.of());
-  }
-
-  @Override
-  public Map<Substance, Double> getFodderRemainingFractionTotal(final String fodderMeasureCode) {
-    return farmFodderMeasure(fodderMeasureCode)
-        .map(c -> Map.of(Substance.NH3, 1 - c.reductionTotal))
-        .orElse(Map.of());
-  }
-
-  @Override
-  public boolean canFodderApplyToLodging(final String fodderMeasureCode, final String lodgingCode) {
-    return farmFodderMeasure(fodderMeasureCode).map(c -> c.matchLodging).orElse(false);
-  }
-
-  @Override
-  public Map<Substance, Double> getFodderProportionFloor(final String fodderMeasureCode, final String lodgingCode) {
-    return farmFodderMeasure(fodderMeasureCode)
-        .map(c -> Map.of(Substance.NH3, c.proportionFloor))
-        .orElse(Map.of());
-  }
-
-  @Override
-  public Map<Substance, Double> getFodderProportionCellar(final String fodderMeasureCode, final String lodgingCode) {
-    return farmFodderMeasure(fodderMeasureCode)
-        .map(c -> Map.of(Substance.NH3, c.proportionCellar))
-        .orElse(Map.of());
-  }
-
-  @Override
-  public Map<Substance, Double> getFodderRemainingFractionFloor(final String fodderMeasureCode) {
-    return farmFodderMeasure(fodderMeasureCode)
-        .map(c -> Map.of(Substance.NH3, 1 - c.reductionFloor))
-        .orElse(Map.of());
-  }
-
-  @Override
-  public Map<Substance, Double> getFodderRemainingFractionCellar(final String fodderMeasureCode) {
-    return farmFodderMeasure(fodderMeasureCode)
-        .map(c -> Map.of(Substance.NH3, 1 - c.reductionCellar))
-        .orElse(Map.of());
-  }
-
-  @Override
-  public boolean isValidFarmLodgingCode(final String lodgingCode) {
-    return farmLodging(lodgingCode).isPresent();
-  }
-
-  @Override
-  public boolean isValidFarmLodgingAdditionalSystemCode(final String systemCode) {
-    return farmAdditionalSystem(systemCode).isPresent();
-  }
-
-  @Override
-  public boolean isValidFarmLodgingReductiveSystemCode(final String systemCode) {
-    return farmReductiveSystem(systemCode).isPresent();
-  }
-
-  @Override
-  public boolean isValidFarmLodgingFodderMeasureCode(final String fodderMeasureCode) {
-    return farmFodderMeasure(fodderMeasureCode).isPresent();
   }
 
   @Override
