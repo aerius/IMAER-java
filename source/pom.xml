@@ -18,8 +18,14 @@
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
+  
+  <parent>
+    <groupId>nl.aerius</groupId>
+    <artifactId>aerius-root-pom</artifactId>
+    <version>1.1.0-SNAPSHOT</version>
+    <relativePath /> <!-- lookup parent from repository -->
+  </parent>
 
-  <groupId>nl.aerius</groupId>
   <artifactId>imaer-parent</artifactId>
   <version>6.0.0-5-SNAPSHOT</version>
   <packaging>pom</packaging>
@@ -45,36 +51,11 @@
     <url>https://github.com/AERIUS/IMAER-java</url>
   </scm>
 
-  <distributionManagement>
-    <repository>
-      <id>aerius-nexus</id>
-      <url>https://nexus.aerius.nl/repository/maven-releases/</url>
-    </repository>
-    <snapshotRepository>
-      <id>aerius-nexus</id>
-      <url>https://nexus.aerius.nl/repository/maven-snapshots/</url>
-    </snapshotRepository>
-  </distributionManagement>
-
   <properties>
-    <maven.compiler.source>17</maven.compiler.source>
-    <maven.compiler.target>17</maven.compiler.target>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
-    <validation-api.version>2.0.1.Final</validation-api.version>
-    <jackson.version>2.14.0</jackson.version>
-
-    <maven.surefire.plugin.version>2.22.2</maven.surefire.plugin.version>
-    <aerius-tools.version>1.2.0</aerius-tools.version>
-    <spotless.version>2.27.2</spotless.version>
-    <docker.maven.plugin.version>0.30.0</docker.maven.plugin.version>
-
-    <sonar.language>java</sonar.language>
-    <sonar.maven.plugin.version>3.9.1.2184</sonar.maven.plugin.version>
+    <gwt-maven-plugin.version>1.1.0</gwt-maven-plugin.version>
+  
     <sonar.projectKey>aerius_imaer-java</sonar.projectKey>
     <sonar.moduleKey>${project.artifactId}</sonar.moduleKey>
-    <sonar.organization>aerius</sonar.organization>
-    <sonar.host.url>https://sonarcloud.io</sonar.host.url>
 
     <aggregate.report.dir>imaer-sonar-report/target/site/jacoco-aggregate/jacoco.xml</aggregate.report.dir>
     <sonar.coverage.jacoco.xmlReportPaths>${basedir}/../${aggregate.report.dir}</sonar.coverage.jacoco.xmlReportPaths>
@@ -101,69 +82,12 @@
     </pluginRepository>
   </pluginRepositories>
 
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>org.slf4j</groupId>
-        <artifactId>slf4j-api</artifactId>
-        <version>2.0.4</version>
-      </dependency>
-      <dependency>
-        <groupId>ch.qos.logback</groupId>
-        <artifactId>logback-classic</artifactId>
-        <version>1.4.5</version>
-      </dependency>
-      <dependency>
-        <groupId>org.junit.jupiter</groupId>
-        <artifactId>junit-jupiter</artifactId>
-        <version>5.9.1</version>
-      </dependency>
-      <dependency>
-        <groupId>org.junit.jupiter</groupId>
-        <artifactId>junit-jupiter-params</artifactId>
-        <version>5.9.1</version>
-      </dependency>
-      <dependency>
-        <groupId>org.mockito</groupId>
-        <artifactId>mockito-core</artifactId>
-        <version>4.9.0</version>
-      </dependency>
-      <dependency>
-        <groupId>org.mockito</groupId>
-        <artifactId>mockito-junit-jupiter</artifactId>
-        <version>4.9.0</version>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
-
   <build>
     <pluginManagement>
       <plugins>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-surefire-plugin</artifactId>
-          <version>${maven.surefire.plugin.version}</version>
-          <configuration>
-            <reuseForks>false</reuseForks>
-          </configuration>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-jar-plugin</artifactId>
-          <version>3.3.0</version>
-          <configuration>
-            <archive>
-              <manifestEntries>
-                <Implementation-Version>${project.version}</Implementation-Version>
-              </manifestEntries>
-            </archive>
-          </configuration>
-        </plugin>
-
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-war-plugin</artifactId>
-          <version>3.3.2</version>
           <configuration>
             <archive>
               <manifestEntries>
@@ -174,259 +98,23 @@
         </plugin>
 
         <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-dependency-plugin</artifactId>
-          <version>3.3.0</version>
-        </plugin>
-
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-shade-plugin</artifactId>
-          <version>3.4.1</version>
-        </plugin>
-
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.10.1</version>
-        </plugin>
-
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-resources-plugin</artifactId>
-          <version>3.3.0</version>
-        </plugin>
-
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-clean-plugin</artifactId>
-          <version>3.2.0</version>
-        </plugin>
-
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-deploy-plugin</artifactId>
-          <version>3.0.0</version>
-        </plugin>
-
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-install-plugin</artifactId>
-          <version>3.1.0</version>
-        </plugin>
-
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-site-plugin</artifactId>
-          <version>3.12.1</version>
-        </plugin>
-
-        <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>exec-maven-plugin</artifactId>
-          <version>3.1.0</version>
-        </plugin>
-
-        <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>build-helper-maven-plugin</artifactId>
-          <version>3.3.0</version>
-        </plugin>
-
-        <plugin>
           <groupId>net.ltgt.gwt.maven</groupId>
           <artifactId>gwt-maven-plugin</artifactId>
-          <version>1.1.0</version>
-        </plugin>
-
-        <plugin>
-          <groupId>org.sonarsource.scanner.maven</groupId>
-          <artifactId>sonar-maven-plugin</artifactId>
-          <version>${sonar.maven.plugin.version}</version>
-          <configuration>
-            <reuse>true</reuse>
-          </configuration>
-        </plugin>
-
-        <plugin>
-          <groupId>org.jacoco</groupId>
-          <artifactId>jacoco-maven-plugin</artifactId>
-          <version>0.8.8</version>
-        </plugin>
-
-        <plugin>
-          <groupId>com.diffplug.spotless</groupId>
-          <artifactId>spotless-maven-plugin</artifactId>
-          <version>${spotless.version}</version>
-          <configuration>
-            <formats>
-              <format>
-                <includes>
-                  <include>pom.xml</include>
-                </includes>
-                <licenseHeader>
-                  <file>pom-xml-header.txt</file>
-                  <delimiter>&lt;project</delimiter>
-                </licenseHeader>
-                <trimTrailingWhitespace />
-                <endWithNewline />
-                <eclipseWtp>
-                  <type>XML</type>
-                  <files>
-                    <file>pom-xml.prefs</file>
-                  </files>
-                </eclipseWtp>
-              </format>
-            </formats>
-            <java>
-              <includes>
-                <include>src/*/java/nl/overheid/aerius/**/*.java</include>
-              </includes>
-              <licenseHeader>
-                <file>checkstyle-header.txt</file>
-              </licenseHeader>
-              <eclipse>
-                <file>eclipse_code_formatter_profile.xml</file>
-              </eclipse>
-              <importOrder>
-                <file>eclipse.importorder</file>
-              </importOrder>
-            </java>
-          </configuration>
-
-          <dependencies>
-            <dependency>
-              <groupId>nl.aerius</groupId>
-              <artifactId>tools</artifactId>
-              <version>${aerius-tools.version}</version>
-            </dependency>
-          </dependencies>
-        </plugin>
-
-        <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>buildnumber-maven-plugin</artifactId>
-          <version>3.0.0</version>
-          <executions>
-            <execution>
-              <id>generate-buildDateTime</id>
-              <phase>validate</phase>
-              <goals>
-                <goal>create</goal>
-              </goals>
-              <configuration>
-                <format>{0,date,yyyyMMdd}</format>
-                <items>
-                  <item>timestamp</item>
-                </items>
-                <buildNumberPropertyName>buildDateTime</buildNumberPropertyName>
-              </configuration>
-            </execution>
-            <execution>
-              <id>generate-buildRevision</id>
-              <phase>validate</phase>
-              <goals>
-                <goal>create</goal>
-              </goals>
-              <configuration>
-                <doCheck>false</doCheck>
-                <doUpdate>false</doUpdate>
-                <shortRevisionLength>10</shortRevisionLength>
-                <buildNumberPropertyName>buildRevision</buildNumberPropertyName>
-              </configuration>
-            </execution>
-          </executions>
-        </plugin>
-
-        <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>versions-maven-plugin</artifactId>
-          <version>2.13.0</version>
-          <configuration>
-            <rulesUri>classpath:///versions_maven_plugin_rules.xml</rulesUri>
-          </configuration>
-          <dependencies>
-            <dependency>
-              <groupId>nl.aerius</groupId>
-              <artifactId>tools</artifactId>
-              <version>${aerius-tools.version}</version>
-            </dependency>
-          </dependencies>
-        </plugin>
-
-        <plugin>
-          <groupId>org.owasp</groupId>
-          <artifactId>dependency-check-maven</artifactId>
-          <version>7.3.2</version>
+          <version>${gwt-maven-plugin.version}</version>
         </plugin>
       </plugins>
     </pluginManagement>
 
     <plugins>
       <plugin>
-        <groupId>com.mycila</groupId>
-        <artifactId>license-maven-plugin</artifactId>
-        <version>4.1</version>
-        <configuration>
-          <licenseSets>
-            <licenseSet>
-              <header>license-header.txt</header>
-
-              <includes>
-                <include>**/*.java</include>
-                <include>**/pom.xml</include>
-              </includes>
-
-              <excludes>
-                <!-- External source code present in our source code -->
-                <exclude>**/src/main/java/com/**/*.java</exclude>
-                <exclude>**/src/main/resources/nl/overheid/aerius/super/java/time/LocalDate.java</exclude>
-              </excludes>
-            </licenseSet>
-          </licenseSets>
-          <mapping>
-            <java>SLASHSTAR_STYLE</java>
-          </mapping>
-        </configuration>
-        <dependencies>
-          <dependency>
-            <groupId>nl.aerius</groupId>
-            <artifactId>tools</artifactId>
-            <version>${aerius-tools.version}</version>
-          </dependency>
-        </dependencies>
-      </plugin>
-      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-source-plugin</artifactId>
-        <version>3.2.1</version>
         <executions>
           <execution>
             <id>attach-sources</id>
             <goals>
               <goal>jar</goal>
             </goals>
-          </execution>
-        </executions>
-      </plugin>
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-enforcer-plugin</artifactId>
-        <version>3.1.0</version>
-        <executions>
-          <execution>
-            <id>enforce-maven</id>
-            <goals>
-              <goal>enforce</goal>
-            </goals>
-            <configuration>
-              <rules>
-                <requireMavenVersion>
-                  <version>[3.6.3,)</version>
-                </requireMavenVersion>
-              </rules>
-            </configuration>
           </execution>
         </executions>
       </plugin>
@@ -472,23 +160,6 @@
             <groupId>org.owasp</groupId>
             <artifactId>dependency-check-maven</artifactId>
             <inherited>false</inherited>
-            <executions>
-              <execution>
-                <goals>
-                  <goal>aggregate</goal>
-                </goals>
-              </execution>
-            </executions>
-            <configuration>
-              <!-- If we ever want to fail on high CVSS scores, this is an example how -->
-              <!-- <failBuildOnCVSS>8</failBuildOnCVSS> -->
-              <!-- Generate all report formats -->
-              <format>ALL</format>
-              <!-- Don't use Nexus Analyzer -->
-              <centralAnalyzerEnabled>false</centralAnalyzerEnabled>
-              <!-- Am I the latest version? -->
-              <versionCheckEnabled>true</versionCheckEnabled>
-            </configuration>
           </plugin>
         </plugins>
       </build>
