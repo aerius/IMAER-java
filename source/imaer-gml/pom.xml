@@ -29,12 +29,6 @@
   <name>IMAER :: GML Reader/Writer</name>
   <description>GML Reader and Writer of IMAER GML's</description>
 
-  <properties>
-    <gml-schema.version>5.0.1</gml-schema.version>
-    <streamflyer.version>1.2.0</streamflyer.version>
-    <xml-resolver.version>1.2</xml-resolver.version>
-  </properties>
-
   <dependencies>
     <dependency>
       <groupId>nl.aerius</groupId>
