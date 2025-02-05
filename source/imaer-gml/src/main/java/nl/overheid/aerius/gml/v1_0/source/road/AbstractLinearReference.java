@@ -16,12 +16,12 @@
  */
 package nl.overheid.aerius.gml.v1_0.source.road;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlSeeAlso;
-import javax.xml.bind.annotation.XmlTransient;
-import javax.xml.bind.annotation.XmlType;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlSeeAlso;
+import jakarta.xml.bind.annotation.XmlTransient;
+import jakarta.xml.bind.annotation.XmlType;
 
-import net.opengis.gml.v_3_2_1.LengthType;
+import net.opengis.gml.v_3_2.LengthType;
 
 import nl.overheid.aerius.gml.base.source.road.IsGmlLinearReference;
 import nl.overheid.aerius.gml.v1_0.base.CalculatorSchema;

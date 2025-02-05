@@ -24,17 +24,17 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.math.BigInteger;
 import java.util.Arrays;
 
-import javax.xml.bind.JAXBElement;
+import jakarta.xml.bind.JAXBElement;
 
 import org.junit.jupiter.api.Test;
 
-import net.opengis.gml.v_3_2_1.AbstractRingPropertyType;
-import net.opengis.gml.v_3_2_1.DirectPositionListType;
-import net.opengis.gml.v_3_2_1.DirectPositionType;
-import net.opengis.gml.v_3_2_1.LinearRingType;
-import net.opengis.gml.v_3_2_1.ObjectFactory;
-import net.opengis.gml.v_3_2_1.PointType;
-import net.opengis.gml.v_3_2_1.PolygonType;
+import net.opengis.gml.v_3_2.AbstractRingPropertyType;
+import net.opengis.gml.v_3_2.DirectPositionListType;
+import net.opengis.gml.v_3_2.DirectPositionType;
+import net.opengis.gml.v_3_2.LinearRingType;
+import net.opengis.gml.v_3_2.ObjectFactory;
+import net.opengis.gml.v_3_2.PointType;
+import net.opengis.gml.v_3_2.PolygonType;
 
 import nl.overheid.aerius.gml.base.geo.Geo2GeometryUtil;
 import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;

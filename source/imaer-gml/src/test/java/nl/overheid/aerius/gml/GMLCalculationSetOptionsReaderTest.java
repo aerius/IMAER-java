@@ -180,7 +180,7 @@ class GMLCalculationSetOptionsReaderTest {
    * @param spatiallyVaryingRoughness Test spatiallyVaryingRoughness. if null it should be true, else follow boolean value
    */
   @ParameterizedTest
-  @CsvSource("null,TRUE,FALSE")
+  @CsvSource(nullValues = "null", value = "null,TRUE,FALSE")
   void testNCAReadCalculationSetOptions(final Boolean spatiallyVaryingRoughness) {
     final FeatureCollection featureCollection = mock(FeatureCollection.class);
     final MetaData metaData = mock(MetaData.class);

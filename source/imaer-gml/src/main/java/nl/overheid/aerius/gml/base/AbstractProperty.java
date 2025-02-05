@@ -16,7 +16,7 @@
  */
 package nl.overheid.aerius.gml.base;
 
-import javax.xml.bind.annotation.XmlTransient;
+import jakarta.xml.bind.annotation.XmlTransient;
 
 /**
  * @param <T> The class that this property is wrapping.

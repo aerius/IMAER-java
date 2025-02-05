@@ -16,7 +16,7 @@
  */
 package nl.overheid.aerius.gml.v1_1.base;
 
-import javax.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlAttribute;
 
 import nl.overheid.aerius.gml.base.XLinkSchema;
 

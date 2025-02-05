@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.xml.bind.JAXBElement;
+import jakarta.xml.bind.JAXBElement;
 
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
@@ -28,12 +28,12 @@ import org.locationtech.jts.geom.LinearRing;
 import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.geom.PrecisionModel;
 
-import net.opengis.gml.v_3_2_1.AbstractGeometryType;
-import net.opengis.gml.v_3_2_1.AbstractRingPropertyType;
-import net.opengis.gml.v_3_2_1.LineStringType;
-import net.opengis.gml.v_3_2_1.LinearRingType;
-import net.opengis.gml.v_3_2_1.PointType;
-import net.opengis.gml.v_3_2_1.PolygonType;
+import net.opengis.gml.v_3_2.AbstractGeometryType;
+import net.opengis.gml.v_3_2.AbstractRingPropertyType;
+import net.opengis.gml.v_3_2.LineStringType;
+import net.opengis.gml.v_3_2.LinearRingType;
+import net.opengis.gml.v_3_2.PointType;
+import net.opengis.gml.v_3_2.PolygonType;
 
 import nl.overheid.aerius.gml.base.GMLSchema;
 import nl.overheid.aerius.shared.domain.v2.geojson.LineString;

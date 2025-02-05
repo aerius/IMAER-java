@@ -18,7 +18,7 @@ package nl.overheid.aerius.shared.domain.v2.geojson;
 
 import java.io.Serializable;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 public class Feature<T extends Serializable, G extends Geometry> implements Serializable, IsFeature {
 

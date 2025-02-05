@@ -16,8 +16,8 @@
  */
 package nl.overheid.aerius.gml.v5_0.source.characteristics;
 
-import javax.xml.bind.annotation.XmlSeeAlso;
-import javax.xml.bind.annotation.XmlType;
+import jakarta.xml.bind.annotation.XmlSeeAlso;
+import jakarta.xml.bind.annotation.XmlType;
 
 import nl.overheid.aerius.gml.base.characteristics.IsGmlTimeVaryingProfile;
 import nl.overheid.aerius.gml.v5_0.base.CalculatorSchema;

@@ -16,10 +16,10 @@
  */
 package nl.overheid.aerius.gml.v5_0.source.mobile;
 
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
+import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlType;
 
 import nl.overheid.aerius.gml.base.source.mobile.v40.IsGmlStandardOffRoadMobileSource;
 import nl.overheid.aerius.gml.v5_0.base.CalculatorSchema;

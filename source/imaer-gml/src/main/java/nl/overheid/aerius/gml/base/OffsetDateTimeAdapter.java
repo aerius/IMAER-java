@@ -19,7 +19,7 @@ package nl.overheid.aerius.gml.base;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 
-import javax.xml.bind.annotation.adapters.XmlAdapter;
+import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 
 /**
  *

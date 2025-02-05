@@ -19,11 +19,11 @@
     @XmlNs(prefix = GMLSchema.PREFIX, namespaceURI = GMLSchema.NAMESPACE),
     @XmlNs(prefix = XLinkSchema.PREFIX, namespaceURI = XLinkSchema.NAMESPACE),
     @XmlNs(prefix = "xsi", namespaceURI = "http://www.w3.org/2001/XMLSchema-instance")
-}, elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED, location = CalculatorSchema.PUBLIC_SCHEMA_LOCATION)
+}, elementFormDefault = jakarta.xml.bind.annotation.XmlNsForm.QUALIFIED, location = CalculatorSchema.PUBLIC_SCHEMA_LOCATION)
 package nl.overheid.aerius.gml.v1_1.base;
 
-import javax.xml.bind.annotation.XmlNs;
-import javax.xml.bind.annotation.XmlSchema;
+import jakarta.xml.bind.annotation.XmlNs;
+import jakarta.xml.bind.annotation.XmlSchema;
 
 import nl.overheid.aerius.gml.base.GMLSchema;
 import nl.overheid.aerius.gml.base.XLinkSchema;

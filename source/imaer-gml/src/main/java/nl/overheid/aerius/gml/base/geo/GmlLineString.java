@@ -16,7 +16,7 @@
  */
 package nl.overheid.aerius.gml.base.geo;
 
-import net.opengis.gml.v_3_2_1.LineStringType;
+import net.opengis.gml.v_3_2.LineStringType;
 
 public interface GmlLineString {
 
