@@ -56,7 +56,8 @@
     <gml-schema.version>5.0.1</gml-schema.version>
     <streamflyer.version>1.2.0</streamflyer.version>
     <xml-resolver.version>1.2</xml-resolver.version>
-    <jts.version>1.20.0</jts.version>
+    <!-- Switching to JTS 1.20.0 introduces a change in results (length of geometries rounding) -->
+    <jts.version>1.19.0</jts.version>
     <jsinterop-annotations.version>2.1.0</jsinterop-annotations.version>
   
     <sonar.projectKey>aerius_imaer-java</sonar.projectKey>
