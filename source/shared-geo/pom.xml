@@ -28,6 +28,11 @@
   <artifactId>shared-geo</artifactId>
   <name>Shared :: geo utils</name>
 
+  <properties>
+    <!-- For GWT, keep target java version on 17 to avoid using unusable language features -->
+    <java.version>17</java.version>
+  </properties>
+
   <dependencies>
     <dependency>
       <groupId>jakarta.validation</groupId>
