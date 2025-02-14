@@ -19,8 +19,8 @@ package nl.overheid.aerius.gml.v3_0.source.ship;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlType;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlType;
 
 import nl.overheid.aerius.gml.base.source.ship.v31.IsGmlMooringInlandShipping;
 import nl.overheid.aerius.gml.v3_0.base.CalculatorSchema;

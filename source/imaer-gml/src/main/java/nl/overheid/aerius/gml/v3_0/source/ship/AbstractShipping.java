@@ -16,8 +16,8 @@
  */
 package nl.overheid.aerius.gml.v3_0.source.ship;
 
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlElement;
 
 import nl.overheid.aerius.gml.base.source.ship.v31.IsGmlShipping;
 import nl.overheid.aerius.gml.v3_0.base.CalculatorSchema;

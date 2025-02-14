@@ -16,8 +16,8 @@
  */
 package nl.overheid.aerius.gml.v3_0.source.lodging;
 
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
+import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlType;
 
 import nl.overheid.aerius.gml.base.source.lodging.IsGmlReductiveLodgingSystem;
 import nl.overheid.aerius.gml.v3_0.base.CalculatorSchema;

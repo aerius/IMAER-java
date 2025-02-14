@@ -16,10 +16,10 @@
  */
 package nl.overheid.aerius.gml.v2_0.geo;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlType;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlType;
 
-import net.opengis.gml.v_3_2_1.LineStringType;
+import net.opengis.gml.v_3_2.LineStringType;
 
 import nl.overheid.aerius.gml.base.GMLSchema;
 import nl.overheid.aerius.gml.base.geo.GmlLineString;

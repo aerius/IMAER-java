@@ -19,9 +19,9 @@ package nl.overheid.aerius.gml.v1_1.source.road;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlType;
 
 import nl.overheid.aerius.gml.base.source.road.IsGmlCustomVehicle;
 import nl.overheid.aerius.gml.v1_1.base.CalculatorSchema;

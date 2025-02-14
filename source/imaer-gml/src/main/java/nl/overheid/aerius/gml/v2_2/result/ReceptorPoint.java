@@ -16,8 +16,8 @@
  */
 package nl.overheid.aerius.gml.v2_2.result;
 
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlType;
+import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlType;
 
 import nl.overheid.aerius.gml.base.result.IsGmlReceptorPoint;
 import nl.overheid.aerius.gml.v2_2.base.CalculatorSchema;

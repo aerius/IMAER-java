@@ -24,10 +24,10 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
-import javax.xml.bind.ValidationEvent;
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Unmarshaller;
+import jakarta.xml.bind.ValidationEvent;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
@@ -35,7 +35,7 @@ import javax.xml.stream.XMLStreamReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.opengis.gml.v_3_2_1.ObjectFactory;
+import net.opengis.gml.v_3_2.ObjectFactory;
 
 import nl.overheid.aerius.gml.base.FeatureCollection;
 import nl.overheid.aerius.gml.base.GMLHelper;

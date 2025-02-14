@@ -18,8 +18,8 @@ package nl.overheid.aerius.gml.v5_1.result;
 
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlType;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlType;
 
 import nl.overheid.aerius.gml.base.IsGmlProperty;
 import nl.overheid.aerius.gml.base.result.IsGmlEntityReference;

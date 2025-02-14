@@ -16,8 +16,8 @@
  */
 package nl.overheid.aerius.gml.v6_0.source.housing;
 
-import javax.xml.bind.annotation.XmlSeeAlso;
-import javax.xml.bind.annotation.XmlType;
+import jakarta.xml.bind.annotation.XmlSeeAlso;
+import jakarta.xml.bind.annotation.XmlType;
 
 import nl.overheid.aerius.gml.base.source.housing.IsGmlAdditionalHousingSystem;
 import nl.overheid.aerius.gml.v6_0.base.CalculatorSchema;

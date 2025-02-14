@@ -19,8 +19,8 @@ package nl.overheid.aerius.gml.v3_1.measure;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlType;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlType;
 
 import nl.overheid.aerius.gml.base.measure.v40.IsGmlSRM1RoadMeasure;
 import nl.overheid.aerius.gml.v3_1.base.CalculatorSchema;

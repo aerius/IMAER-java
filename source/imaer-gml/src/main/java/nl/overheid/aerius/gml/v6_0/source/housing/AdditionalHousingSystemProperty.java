@@ -16,7 +16,7 @@
  */
 package nl.overheid.aerius.gml.v6_0.source.housing;
 
-import javax.xml.bind.annotation.XmlElementRef;
+import jakarta.xml.bind.annotation.XmlElementRef;
 
 import nl.overheid.aerius.gml.base.AbstractProperty;
 import nl.overheid.aerius.gml.base.IsGmlProperty;

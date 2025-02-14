@@ -16,9 +16,9 @@
  */
 package nl.overheid.aerius.gml.v3_0.metadata;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlTransient;
-import javax.xml.bind.annotation.XmlType;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlTransient;
+import jakarta.xml.bind.annotation.XmlType;
 
 import nl.overheid.aerius.gml.v3_0.base.CalculatorSchema;
 
