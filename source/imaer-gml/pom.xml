@@ -78,6 +78,17 @@
       <groupId>com.github.rwitzel.streamflyer</groupId>
       <artifactId>streamflyer-core</artifactId>
       <version>${streamflyer.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>commons-io</groupId>
+          <artifactId>commons-io</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>${commons-io.version}</version>
     </dependency>
 
     <!-- Unit Test -->
