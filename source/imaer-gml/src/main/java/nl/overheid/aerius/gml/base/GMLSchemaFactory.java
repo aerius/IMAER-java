@@ -55,7 +55,8 @@ public final class GMLSchemaFactory {
       sf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
       sf.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, "");
       // Explicitly allow file, as we're referencing some other local files.
-      sf.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "file");
+      // Also allow nested use, as this is also used in some of the referenced schemas.
+      sf.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "file,nested");
       // use a catalogresolver to avoid calling non-local xsd's
       sf.setResourceResolver(catalogResolver);
       return sf.newSchema(xsdURL);
