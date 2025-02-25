@@ -29,6 +29,7 @@ public class ArchiveMetaData implements Serializable {
   private static final long serialVersionUID = 1L;
 
   private OffsetDateTime retrievalDateTime;
+  private ArchiveType archiveType;
   private List<ArchiveProject> archiveProjects = new ArrayList<>();
 
   public OffsetDateTime getRetrievalDateTime() {
@@ -37,6 +38,14 @@ public class ArchiveMetaData implements Serializable {
 
   public void setRetrievalDateTime(final OffsetDateTime retrievalDateTime) {
     this.retrievalDateTime = retrievalDateTime;
+  }
+
+  public ArchiveType getArchiveType() {
+    return archiveType;
+  }
+
+  public void setArchiveType(final ArchiveType archiveType) {
+    this.archiveType = archiveType;
   }
 
   public List<ArchiveProject> getArchiveProjects() {

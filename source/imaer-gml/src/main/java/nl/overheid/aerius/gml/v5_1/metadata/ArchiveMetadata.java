@@ -76,4 +76,11 @@ public class ArchiveMetadata implements IsArchiveMetadata {
             .collect(Collectors.toList());
   }
 
+  @Override
+  @XmlTransient
+  public String getArchiveType() {
+    // Not available in this version
+    return null;
+  }
+
 }

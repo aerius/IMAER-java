@@ -14,20 +14,24 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.gml.base;
+package nl.overheid.aerius.shared.domain.v2.archive;
 
-import java.time.OffsetDateTime;
-import java.util.List;
+import java.util.Locale;
 
 /**
- * Interface for an AERIUS archive metadata object
+ * Types of information retrieved from the archive.
  */
-public interface IsArchiveMetadata {
+public enum ArchiveType {
 
-  OffsetDateTime getRetrievalDateTime();
+  IN_COMBINATION_PROCESS_CONTRIBUTION,
+  DEVELOPMENT_PRESSURE_SEARCH;
 
-  String getArchiveType();
-
-  List<IsArchiveProject> getArchiveProjects();
+  public static ArchiveType safeValueOf(final String value) {
+    try {
+      return value == null ? null : valueOf(value.toUpperCase(Locale.ROOT));
+    } catch (final IllegalArgumentException e) {
+      return null;
+    }
+  }
 
 }
