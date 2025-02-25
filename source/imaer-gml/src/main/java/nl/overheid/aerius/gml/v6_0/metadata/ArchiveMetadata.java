@@ -34,10 +34,12 @@ import nl.overheid.aerius.gml.v6_0.base.CalculatorSchema;
 /**
  *
  */
-@XmlType(name = "ArchiveMetadataType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"retrievalDateTime", "archiveProjectProperties"})
+@XmlType(name = "ArchiveMetadataType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"retrievalDateTime", "archiveType",
+    "archiveProjectProperties"})
 public class ArchiveMetadata implements IsArchiveMetadata {
 
   private OffsetDateTime retrievalDateTime;
+  private String archiveType;
   private List<ArchiveProjectProperty> archiveProjects = new ArrayList<>();
 
   @Override
@@ -49,6 +51,16 @@ public class ArchiveMetadata implements IsArchiveMetadata {
 
   public void setRetrievalDateTime(final OffsetDateTime retrievalDateTime) {
     this.retrievalDateTime = retrievalDateTime;
+  }
+
+  @Override
+  @XmlElement(namespace = CalculatorSchema.NAMESPACE)
+  public String getArchiveType() {
+    return archiveType;
+  }
+
+  public void setArchiveType(final String archiveType) {
+    this.archiveType = archiveType;
   }
 
   @XmlElement(name = "project", namespace = CalculatorSchema.NAMESPACE)

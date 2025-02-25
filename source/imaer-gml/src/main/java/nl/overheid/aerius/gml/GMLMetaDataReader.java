@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import nl.overheid.aerius.gml.base.FeatureCollection;
 import nl.overheid.aerius.gml.base.GMLConversionData;
@@ -33,6 +34,7 @@ import nl.overheid.aerius.gml.base.source.IsGmlEmission;
 import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.v2.archive.ArchiveMetaData;
 import nl.overheid.aerius.shared.domain.v2.archive.ArchiveProject;
+import nl.overheid.aerius.shared.domain.v2.archive.ArchiveType;
 import nl.overheid.aerius.shared.domain.v2.scenario.ScenarioMetaData;
 import nl.overheid.aerius.shared.exception.AeriusException;
 
@@ -80,6 +82,9 @@ public class GMLMetaDataReader {
     final ArchiveMetaData archiveMetaData = new ArchiveMetaData();
     final IsArchiveMetadata gmlMetaData = featureCollection.getMetaData().getArchive();
     archiveMetaData.setRetrievalDateTime(gmlMetaData.getRetrievalDateTime());
+    final ArchiveType archiveType = Optional.ofNullable(ArchiveType.safeValueOf(gmlMetaData.getArchiveType()))
+        .orElse(ArchiveType.IN_COMBINATION_PROCESS_CONTRIBUTION);
+    archiveMetaData.setArchiveType(archiveType);
     final List<ArchiveProject> archiveProjects = new ArrayList<>();
     for (final IsArchiveProject gmlProject : gmlMetaData.getArchiveProjects()) {
       archiveProjects.add(mapProject(gmlProject));

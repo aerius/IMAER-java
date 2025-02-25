@@ -16,6 +16,7 @@
             <imaer:archive>
                 <imaer:ArchiveMetadata>
                     <imaer:retrievalDateTime>2023-10-30T09:30:10+02:00</imaer:retrievalDateTime>
+                    <imaer:archiveType>IN_COMBINATION_PROCESS_CONTRIBUTION</imaer:archiveType>
                     <imaer:project>
                         <imaer:ArchiveProject>
                             <imaer:id>some-unique-id</imaer:id>

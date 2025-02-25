@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.Set;
 
 import nl.overheid.aerius.gml.base.AeriusGMLVersion;
@@ -57,6 +58,7 @@ import nl.overheid.aerius.shared.domain.geo.HexagonZoomLevel;
 import nl.overheid.aerius.shared.domain.result.EmissionResultKey;
 import nl.overheid.aerius.shared.domain.result.EmissionResultType;
 import nl.overheid.aerius.shared.domain.v2.archive.ArchiveProject;
+import nl.overheid.aerius.shared.domain.v2.archive.ArchiveType;
 import nl.overheid.aerius.shared.domain.v2.building.BuildingFeature;
 import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKCorrection;
 import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKDispersionLineFeature;
@@ -212,6 +214,7 @@ public class GMLVersionWriterV60 implements GMLVersionWriter {
     } else {
       archive = new ArchiveMetadata();
       archive.setRetrievalDateTime(input.getArchiveMetaData().getRetrievalDateTime());
+      archive.setArchiveType(Optional.ofNullable(input.getArchiveMetaData().getArchiveType()).map(ArchiveType::name).orElse(null));
       archive.setArchiveProjects(archiveProjects2GML(input.getArchiveMetaData().getArchiveProjects()));
     }
     return archive;

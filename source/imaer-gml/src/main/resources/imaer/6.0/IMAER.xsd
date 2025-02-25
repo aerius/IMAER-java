@@ -460,6 +460,11 @@ This metadata object can be used to store archive related data.</documentation>
           <documentation>Date and time of retrieval of the archive information.</documentation>
         </annotation>
       </element>
+      <element minOccurs="0" name="archiveType" type="string">
+        <annotation>
+          <documentation>Type of the archive information.</documentation>
+        </annotation>
+      </element>
       <element maxOccurs="unbounded" minOccurs="0" name="project" type="IMAER:ArchiveProjectPropertyType">
         <annotation>
           <documentation>The projects that are part of this archive retrieval.</documentation>
