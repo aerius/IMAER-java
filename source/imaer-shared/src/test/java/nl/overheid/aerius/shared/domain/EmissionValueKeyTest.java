@@ -16,6 +16,7 @@
  */
 package nl.overheid.aerius.shared.domain;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -34,5 +35,24 @@ public class EmissionValueKeyTest {
     assertFalse(new EmissionValueKey(Substance.NH3).equals(new EmissionValueKey(2020, Substance.NH3)), "No equal year");
     assertFalse(new EmissionValueKey(Substance.NH3).equals(new EmissionValueKey(Substance.NOX)), "No equal substance");
     assertFalse(new EmissionValueKey(Substance.NH3).equals(new EmissionValueKey()), "Nothing equal");
+  }
+
+  @Test
+  public void testValueConversion() {
+    final EmissionValueKey original = new EmissionValueKey(2024, Substance.NOX);
+    final String serialized = original.toStringValue();
+    final EmissionValueKey deserialized = EmissionValueKey.fromStringValue(serialized);
+
+    assertTrue(original.equals(deserialized), "Converted object should equal original");
+    assertEquals("2024:NOX", serialized, "String representation should match expected format");
+    assertEquals(2024, deserialized.getYear(), "Year should be preserved");
+    assertEquals(Substance.NOX, deserialized.getSubstance(), "Substance should be preserved");
+  }
+
+  @Test
+  public void testToString() {
+    final EmissionValueKey key = new EmissionValueKey(2024, Substance.NOX);
+    assertEquals("EmissionValueKey [year=2024, substance=NOX]", key.toString(),
+        "toString should match expected debug format");
   }
 }
