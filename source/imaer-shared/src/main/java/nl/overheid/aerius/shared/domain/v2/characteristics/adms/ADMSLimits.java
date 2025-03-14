@@ -135,7 +135,7 @@ public final class ADMSLimits implements BuildingLimits {
 
   public static final int MAX_POLYGON_CONVEX_VERTICES = 50;
 
-  private static final int ADMS_MAX_BUILDINGS_PER_SITUATION = 50;
+  private static final int ADMS_MAX_BUILDINGS_PER_SITUATION = 25;
 
   public static final ADMSLimits INSTANCE = new ADMSLimits();
 
