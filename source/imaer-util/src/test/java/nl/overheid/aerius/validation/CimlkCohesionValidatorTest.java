@@ -197,7 +197,7 @@ class CimlkCohesionValidatorTest {
 
   @Test
   void testDispersionLineCorrect() {
-    final Scenario scenario = new Scenario(Theme.RBL);
+    final Scenario scenario = new Scenario(Theme.CIMLK);
     final ScenarioSituation situation = new ScenarioSituation();
     final CIMLKDispersionLine dispersionLine = new CIMLKDispersionLine();
     dispersionLine.setCalculationPointGmlId(DEFAULT_POINT_ID);
@@ -222,7 +222,7 @@ class CimlkCohesionValidatorTest {
 
   @Test
   void testDispersionLineWithSrm2Road() {
-    final Scenario scenario = new Scenario(Theme.RBL);
+    final Scenario scenario = new Scenario(Theme.CIMLK);
     final ScenarioSituation situation = new ScenarioSituation();
     final CIMLKDispersionLine dispersionLine = new CIMLKDispersionLine();
     dispersionLine.setCalculationPointGmlId(DEFAULT_POINT_ID);
@@ -247,7 +247,7 @@ class CimlkCohesionValidatorTest {
 
   @Test
   void testDispersionLineWithWrongRoad() {
-    final Scenario scenario = new Scenario(Theme.RBL);
+    final Scenario scenario = new Scenario(Theme.CIMLK);
     final ScenarioSituation situation = new ScenarioSituation();
     final CIMLKDispersionLine dispersionLine = new CIMLKDispersionLine();
     dispersionLine.setCalculationPointGmlId(DEFAULT_POINT_ID);
@@ -272,7 +272,7 @@ class CimlkCohesionValidatorTest {
 
   @Test
   void testDispersionLineWithWrongPoint() {
-    final Scenario scenario = new Scenario(Theme.RBL);
+    final Scenario scenario = new Scenario(Theme.CIMLK);
     final ScenarioSituation situation = new ScenarioSituation();
     final CIMLKDispersionLine dispersionLine = new CIMLKDispersionLine();
     dispersionLine.setCalculationPointGmlId(DEFAULT_POINT_ID);
@@ -297,7 +297,7 @@ class CimlkCohesionValidatorTest {
 
   @Test
   void testDispersionLineNotPerpendicular() {
-    final Scenario scenario = new Scenario(Theme.RBL);
+    final Scenario scenario = new Scenario(Theme.CIMLK);
     final ScenarioSituation situation = new ScenarioSituation();
     final CIMLKDispersionLine dispersionLine = new CIMLKDispersionLine();
     dispersionLine.setCalculationPointGmlId(DEFAULT_POINT_ID);
@@ -323,7 +323,7 @@ class CimlkCohesionValidatorTest {
 
   @Test
   void testSrm1RoadWithoutDispersionLine() {
-    final Scenario scenario = new Scenario(Theme.RBL);
+    final Scenario scenario = new Scenario(Theme.CIMLK);
     final ScenarioSituation situation = new ScenarioSituation();
     final EmissionSourceFeature road = exampleSrm1Source(DEFAULT_ROAD_ID);
     final List<EmissionSourceFeature> sourceList = List.of(road);
@@ -342,7 +342,7 @@ class CimlkCohesionValidatorTest {
 
   @Test
   void testDuplicateDispersionLinesInSameImport() {
-    final Scenario scenario = new Scenario(Theme.RBL);
+    final Scenario scenario = new Scenario(Theme.CIMLK);
     final ScenarioSituation situation = new ScenarioSituation();
     final CIMLKDispersionLine dispersionLine1 = new CIMLKDispersionLine();
     dispersionLine1.setCalculationPointGmlId(DEFAULT_POINT_ID);
@@ -373,7 +373,7 @@ class CimlkCohesionValidatorTest {
 
   @Test
   void testDuplicateDispersionLinesDifferentImport() {
-    final Scenario scenario = new Scenario(Theme.RBL);
+    final Scenario scenario = new Scenario(Theme.CIMLK);
     final ScenarioSituation situation1 = new ScenarioSituation();
     final CIMLKDispersionLine dispersionLine1 = new CIMLKDispersionLine();
     dispersionLine1.setCalculationPointGmlId(DEFAULT_POINT_ID);
@@ -407,7 +407,7 @@ class CimlkCohesionValidatorTest {
 
   @Test
   void testCorrectionCorrect() {
-    final Scenario scenario = new Scenario(Theme.RBL);
+    final Scenario scenario = new Scenario(Theme.CIMLK);
     final ScenarioSituation situation = new ScenarioSituation();
     final CIMLKCorrection correction = new CIMLKCorrection();
     correction.setCalculationPointGmlId(DEFAULT_POINT_ID);
@@ -425,7 +425,7 @@ class CimlkCohesionValidatorTest {
 
   @Test
   void testCorrectionWithWrongPoint() {
-    final Scenario scenario = new Scenario(Theme.RBL);
+    final Scenario scenario = new Scenario(Theme.CIMLK);
     final ScenarioSituation situation = new ScenarioSituation();
     final CIMLKCorrection correction = new CIMLKCorrection();
     correction.setCalculationPointGmlId(DEFAULT_POINT_ID);
@@ -452,7 +452,7 @@ class CimlkCohesionValidatorTest {
   }
 
   private void check(final ScenarioSituation... situations) {
-    final Scenario scenario = new Scenario(Theme.RBL);
+    final Scenario scenario = new Scenario(Theme.CIMLK);
     Stream.of(situations).forEach(s -> scenario.getSituations().add(s));
     check(scenario);
   }
