@@ -18,7 +18,6 @@ package nl.overheid.aerius.validation;
 
 import java.util.List;
 
-import nl.overheid.aerius.shared.domain.ops.OPSLimits;
 import nl.overheid.aerius.shared.domain.v2.building.Building;
 import nl.overheid.aerius.shared.domain.v2.building.BuildingFeature;
 import nl.overheid.aerius.shared.domain.v2.building.BuildingLimits;
@@ -33,16 +32,6 @@ public final class BuildingValidator {
     // Util class
   }
 
-  /**
-   * @Deprecated Use the variant with a BuildingLimits parameter instead.
-   * This version uses OPS buildings limits as default.
-   */
-  @Deprecated
-  public static void validateBuildings(final List<BuildingFeature> buildings, final List<AeriusException> errors,
-      final List<AeriusException> warnings) {
-    validateBuildings(buildings, OPSLimits.INSTANCE, errors, warnings);
-  }
-
   public static void validateBuildings(final List<BuildingFeature> buildings, final BuildingLimits buildingLimits,
       final List<AeriusException> errors, final List<AeriusException> warnings) {
     checkBuildingCount(buildings, buildingLimits, errors);
@@ -53,9 +42,11 @@ public final class BuildingValidator {
     }
   }
 
-  private static void checkBuildingCount(final List<BuildingFeature> buildings, final BuildingLimits buildingLimits, final List<AeriusException> errors) {
+  private static void checkBuildingCount(final List<BuildingFeature> buildings, final BuildingLimits buildingLimits,
+      final List<AeriusException> errors) {
     if (buildings.size() > buildingLimits.buildingMaximumPerSituation()) {
-      errors.add(new AeriusException(ImaerExceptionReason.TOO_MANY_BUILDINGS_IN_SITUATION, String.valueOf(buildingLimits.buildingMaximumPerSituation())));
+      errors.add(new AeriusException(ImaerExceptionReason.TOO_MANY_BUILDINGS_IN_SITUATION,
+          String.valueOf(buildingLimits.buildingMaximumPerSituation())));
     }
   }
 

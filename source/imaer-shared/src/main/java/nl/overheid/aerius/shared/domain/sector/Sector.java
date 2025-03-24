@@ -35,16 +35,6 @@ public class Sector implements HasName, Serializable {
   public static final int DEFAULT_SECTOR_ID = 1800;
 
   /**
-   * Sector Farmlodge sector id.
-   */
-  public static final int FARM_LODGE_SECTOR_ID = 4110;
-
-  /**
-   * Sector Farmland sector id.
-   */
-  public static final int FARMLAND_SECTOR_ID = 4150;
-
-  /**
    * Sector for case where no sector is specified yet. UNDEFINED MEANS UNDEFINED so don't change it into a defined sector without modifying the
    * behavior of the application!
    */

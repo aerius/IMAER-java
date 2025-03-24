@@ -17,13 +17,13 @@
 package nl.overheid.aerius.test;
 
 import java.util.Arrays;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.OptionalDouble;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
 import nl.overheid.aerius.gml.base.GMLLegacyCodeConverter.Conversion;
 import nl.overheid.aerius.gml.base.GMLLegacyCodeConverter.GMLLegacyCodeType;
@@ -77,34 +77,6 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
     MaritimeShippingEmissionFactorSupplier, FarmAnimalHousingValidationHelper, FarmlandValidationHelper,
     ManureStorageValidationHelper, OffRoadValidationHelper, ColdStartValidationHelper, RoadValidationHelper, InlandShippingValidationHelper,
     MaritimeShippingValidationHelper {
-
-  private static final List<FarmConstructHelper> FARM_LODGING_CATEGORIES = Arrays.asList(
-      new FarmConstructHelper("A1.4", 9.2, false),
-      new FarmConstructHelper("B1.100", 0.7, false),
-      new FarmConstructHelper("C1.100", 1.9, false),
-      new FarmConstructHelper("D3.1", 4.5, false),
-      new FarmConstructHelper("D1.3.3", 2.5, false),
-      new FarmConstructHelper("D3.2.7.2.1", 1.5, false),
-      new FarmConstructHelper("F4.4", 0.2, true),
-      new FarmConstructHelper("A4.2", 1.1, true),
-      new FarmConstructHelper("A3.100", 4.4, false),
-      new FarmConstructHelper("A2.100", 4.1, false),
-      new FarmConstructHelper("A1.1", 5.7, false),
-      new FarmConstructHelper("A1.28", 4.1, false),
-      new FarmConstructHelper("A1.100", 4.1, false));
-
-  private static final List<FarmConstructHelper> FARM_ADDITIONAL_SYSTEM_CATEGORIES = Arrays.asList(
-      new FarmConstructHelper("E6.1.a", 0.01, false),
-      new FarmConstructHelper("E6.5.b", 0.015, true));
-
-  private static final List<FarmConstructHelper> FARM_REDUCTIVE_SYSTEM_CATEGORIES = Arrays.asList(
-      new FarmConstructHelper("A4.3", 0.7, true),
-      new FarmConstructHelper("G2.1.2", 0.7, true));
-
-  private static final List<FarmFodderConstructHelper> FARM_FODDER_MEASURE_CATEGORIES = Arrays.asList(
-      new FarmFodderConstructHelper("PAS2015.01-01", 0.16, 0.16, 0.16, 0.3, 0.7, true),
-      new FarmFodderConstructHelper("PAS2015.05-01", 0.2, 0.2, 0.2, 0.3, 0.7, true),
-      new FarmFodderConstructHelper("PAS2015.04-01", 0.1, 0.1, 0.1, 0.3, 0.7, false));
 
   private static final List<String> FARM_ANIMAL_CATEGORIES = Arrays.asList(
       "HA1",
@@ -369,7 +341,7 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
     }
 
     Map<Substance, Double> toEmissions() {
-      final Map<Substance, Double> emissions = new HashMap<>();
+      final Map<Substance, Double> emissions = new EnumMap<>(Substance.class);
       if (emissionFactorNOx != 0) {
         emissions.put(Substance.NOX, emissionFactorNOx);
       }
@@ -466,35 +438,13 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
     }
   }
 
-  private static class FarmFodderConstructHelper {
-
-    final String code;
-    final double reductionTotal;
-    final double reductionFloor;
-    final double reductionCellar;
-    final double proportionFloor;
-    final double proportionCellar;
-    final boolean matchLodging;
-
-    FarmFodderConstructHelper(final String code, final double reductionTotal, final double reductionFloor, final double reductionCellar,
-        final double proportionFloor, final double proportionCellar, final boolean matchLodging) {
-      this.code = code;
-      this.reductionTotal = reductionTotal;
-      this.reductionFloor = reductionFloor;
-      this.reductionCellar = reductionCellar;
-      this.proportionFloor = proportionFloor;
-      this.proportionCellar = proportionCellar;
-      this.matchLodging = matchLodging;
-    }
-  }
-
   private static record FarmLodgingOldCodesHelper(String oldCode, String newAnimalTypeCode, String newAnimalHousingCode,
       String newAdditionalSystemCode) {
 
   }
 
   public static Map<GMLLegacyCodeType, Map<String, Conversion>> legacyCodes() {
-    final Map<GMLLegacyCodeType, Map<String, Conversion>> legacyCodes = new HashMap<>();
+    final Map<GMLLegacyCodeType, Map<String, Conversion>> legacyCodes = new EnumMap<>(GMLLegacyCodeType.class);
     final Map<String, Conversion> onroadConversions = new HashMap<>();
     onroadConversions.put("27", new Conversion("BA-L-E5", true));
     legacyCodes.put(GMLLegacyCodeType.ON_ROAD_MOBILE_SOURCE, onroadConversions);
@@ -943,30 +893,6 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
     return null;
   }
 
-  private Optional<FarmConstructHelper> farmLodging(final String farmLodgingCode) {
-    return FARM_LODGING_CATEGORIES.stream()
-        .filter(c -> c.code.equalsIgnoreCase(farmLodgingCode))
-        .findFirst();
-  }
-
-  private Optional<FarmConstructHelper> farmAdditionalSystem(final String additionalSystemCode) {
-    return FARM_ADDITIONAL_SYSTEM_CATEGORIES.stream()
-        .filter(c -> c.code.equalsIgnoreCase(additionalSystemCode))
-        .findFirst();
-  }
-
-  private Optional<FarmConstructHelper> farmReductiveSystem(final String reductiveSystemCode) {
-    return FARM_REDUCTIVE_SYSTEM_CATEGORIES.stream()
-        .filter(c -> c.code.equalsIgnoreCase(reductiveSystemCode))
-        .findFirst();
-  }
-
-  private Optional<FarmFodderConstructHelper> farmFodderMeasure(final String fodderMeasureCode) {
-    return FARM_FODDER_MEASURE_CATEGORIES.stream()
-        .filter(c -> c.code.equalsIgnoreCase(fodderMeasureCode))
-        .findFirst();
-  }
-
   private Optional<String> farmAnimal(final String farmAnimalCode) {
     return FARM_ANIMAL_CATEGORIES.stream()
         .filter(c -> c.equalsIgnoreCase(farmAnimalCode))
@@ -1015,7 +941,7 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
             && c.roadType.equals(emissionFactorsKey.getRoadTypeCode())
             && c.strictEnforcement == (emissionFactorsKey.getStrictEnforcement() == null ? false
                 : emissionFactorsKey.getStrictEnforcement().booleanValue()))
-        .collect(Collectors.toList());
+        .toList();
     if (applicable.isEmpty()) {
       return Optional.empty();
     } else if (applicable.size() == 1) {
@@ -1024,7 +950,7 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
       final List<RoadConstructHelper> nextApplicable = applicable.stream()
           .filter(c -> c.maximumSpeed >= (emissionFactorsKey.getMaximumSpeed() == null ? 0 : emissionFactorsKey.getMaximumSpeed()))
           .sorted((a, b) -> Integer.compare(a.maximumSpeed, b.maximumSpeed))
-          .collect(Collectors.toList());
+          .toList();
       if (nextApplicable.isEmpty()) {
         return applicable.stream()
             .sorted((a, b) -> Integer.compare(b.maximumSpeed, a.maximumSpeed))

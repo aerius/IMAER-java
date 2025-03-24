@@ -25,7 +25,6 @@ import nl.overheid.aerius.shared.domain.v2.source.ColdStartEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceFeature;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceVisitor;
 import nl.overheid.aerius.shared.domain.v2.source.FarmAnimalHousingEmissionSource;
-import nl.overheid.aerius.shared.domain.v2.source.FarmLodgingEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.FarmlandEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.GenericEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.InlandShippingEmissionSource;
@@ -70,11 +69,6 @@ public class ValidationVisitor implements EmissionSourceVisitor<Boolean> {
       }
     }
     sources.removeAll(invalid);
-  }
-
-  @Override
-  public Boolean visit(final FarmLodgingEmissionSource emissionSource, final IsFeature feature) throws AeriusException {
-    return new FarmLodgingValidator(errors, warnings, validationHelper.farmLodgingValidation()).validate(emissionSource, feature);
   }
 
   @Override

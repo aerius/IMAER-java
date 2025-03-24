@@ -81,12 +81,6 @@ public enum ImportOption {
   VALIDATE_METADATA,
   /**
    * If set, validates the cohesion of input files related to CIMLK required data restrictions.
-   * @deprecated Replaced with VALIDATE_CIMLK_COHESION
-   */
-  @Deprecated
-  VALIDATE_RBL_COHESION,
-  /**
-   * If set, validates the cohesion of input files related to CIMLK required data restrictions.
    */
   VALIDATE_CIMLK_COHESION,
   /**

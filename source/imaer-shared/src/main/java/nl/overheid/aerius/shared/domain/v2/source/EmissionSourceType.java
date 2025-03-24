@@ -21,12 +21,6 @@ import jsinterop.annotations.JsType;
 @JsType
 public enum EmissionSourceType {
   /**
-   * Farm Lodge emission values.
-   * @Deprecated Replaced by Animal Housing approach
-   */
-  @Deprecated
-  FARM_LODGE(Names.FARM_LODGE),
-  /**
    * Farm animal housing emission values.
    */
   FARM_ANIMAL_HOUSING(Names.FARM_ANIMAL_HOUSING),
@@ -88,7 +82,6 @@ public enum EmissionSourceType {
   SHIPPING_MARITIME_MARITIME(Names.SHIPPING_MARITIME_MARITIME);
 
   public static final class Names {
-    public static final String FARM_LODGE = "FARM_LODGE";
     public static final String FARM_ANIMAL_HOUSING = "FARM_ANIMAL_HOUSING";
     public static final String FARMLAND = "FARMLAND";
     public static final String MANURE_STORAGE = "MANURE_STORAGE";

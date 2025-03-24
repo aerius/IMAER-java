@@ -19,9 +19,6 @@ package nl.overheid.aerius.gml.v5_1.togml;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import nl.overheid.aerius.gml.base.FeatureMember;
 import nl.overheid.aerius.gml.base.geo.Geometry2GML;
 import nl.overheid.aerius.gml.v5_1.source.Emission;
@@ -38,7 +35,6 @@ import nl.overheid.aerius.shared.domain.v2.source.EmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceFeature;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceVisitor;
 import nl.overheid.aerius.shared.domain.v2.source.FarmAnimalHousingEmissionSource;
-import nl.overheid.aerius.shared.domain.v2.source.FarmLodgingEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.FarmlandEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.GenericEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.InlandShippingEmissionSource;
@@ -56,8 +52,6 @@ import nl.overheid.aerius.util.gml.GMLIdUtil;
  * Util class to convert {@link EmissionSource} to GML object.
  */
 final class Source2GML implements EmissionSourceVisitor<nl.overheid.aerius.gml.v5_1.source.EmissionSource> {
-
-  private static final Logger LOG = LoggerFactory.getLogger(Source2GML.class);
 
   private final Geometry2GML geometry2gml;
 
@@ -164,12 +158,6 @@ final class Source2GML implements EmissionSourceVisitor<nl.overheid.aerius.gml.v
   public nl.overheid.aerius.gml.v5_1.source.EmissionSource visit(final OffRoadMobileEmissionSource emissionSource, final IsFeature feature)
       throws AeriusException {
     return new OffRoad2GML().convert(emissionSource);
-  }
-
-  @Override
-  public nl.overheid.aerius.gml.v5_1.source.EmissionSource visit(final FarmLodgingEmissionSource emissionSource, final IsFeature feature)
-      throws AeriusException {
-    return new Farm2GML().convert(emissionSource);
   }
 
   @Override

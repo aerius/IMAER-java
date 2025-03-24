@@ -32,7 +32,6 @@ import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
 import nl.overheid.aerius.shared.domain.v2.geojson.IsFeature;
 import nl.overheid.aerius.shared.domain.v2.source.FarmAnimalHousingEmissionSource;
-import nl.overheid.aerius.shared.domain.v2.source.FarmLodgingEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.FarmlandEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.GenericEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.InlandShippingEmissionSource;
@@ -48,7 +47,6 @@ import nl.overheid.aerius.shared.exception.AeriusException;
 @ExtendWith(MockitoExtension.class)
 class EmissionsCalculatorTest {
 
-  @Mock FarmLodgingEmissionsCalculator farmLodgingCalculator;
   @Mock FarmAnimalHousingEmissionsCalculator farmAnimalHousingCalculator;
   @Mock FarmlandEmissionsCalculator farmlandCalculator;
   @Mock ManureStorageEmissionsCalculator manureStorageCalculator;
@@ -64,21 +62,9 @@ class EmissionsCalculatorTest {
   @BeforeEach
   void beforeEach() throws AeriusException {
     emissionsCalculator =
-        new EmissionsCalculator(farmLodgingCalculator, farmAnimalHousingCalculator, farmlandCalculator, manureStorageCalculator,
+        new EmissionsCalculator(farmAnimalHousingCalculator, farmlandCalculator, manureStorageCalculator,
             offRoadMobileCalculator, coldStartEmissionsCalculator, srmRoadCalculator, admsRoadCalculator, inlandShippingCalculator,
             maritimeShippingCalculator);
-  }
-
-  @Test
-  void testVisitFarmLodging() throws AeriusException {
-    final Map<Substance, Double> calculatedEmissions = Map.of(Substance.NH3, 324.0);
-    final FarmLodgingEmissionSource emissionSource = mock(FarmLodgingEmissionSource.class);
-    when(farmLodgingCalculator.calculateEmissions(emissionSource)).thenReturn(calculatedEmissions);
-
-    final Map<Substance, Double> result = emissionsCalculator.visit(emissionSource, null);
-
-    assertEquals(calculatedEmissions, result,
-        "Calculated emission values from FarmLodgingEmissionsCalculator should be returned for farm lodging source");
   }
 
   @Test

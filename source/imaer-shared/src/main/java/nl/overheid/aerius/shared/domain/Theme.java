@@ -35,19 +35,7 @@ public enum Theme {
   /**
    * Dutch Omgevingswet Natura 2000 stikstof.
    */
-  OWN2000,
-  /**
-   * Dutch Regeling Beoordeling Luchtkwaliteit (RBL).
-   * @deprecated Replaced by CIMLK
-   */
-  @Deprecated
-  RBL,
-  /**
-   * Dutch Wet NatuurBescherming (WNB)
-   * @deprecated Replaced with OWN2000
-   */
-  @Deprecated
-  WNB;
+  OWN2000;
 
   public String getKey() {
     return name().toLowerCase(Locale.ROOT);

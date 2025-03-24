@@ -35,7 +35,6 @@ import nl.overheid.aerius.shared.domain.v2.source.EmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceFeature;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceVisitor;
 import nl.overheid.aerius.shared.domain.v2.source.FarmAnimalHousingEmissionSource;
-import nl.overheid.aerius.shared.domain.v2.source.FarmLodgingEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.FarmlandEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.GenericEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.InlandShippingEmissionSource;
@@ -159,13 +158,6 @@ final class Source2GML implements EmissionSourceVisitor<nl.overheid.aerius.gml.v
   public nl.overheid.aerius.gml.v6_0.source.EmissionSource visit(final OffRoadMobileEmissionSource emissionSource, final IsFeature feature)
       throws AeriusException {
     return new OffRoad2GML().convert(emissionSource);
-  }
-
-  @Override
-  public nl.overheid.aerius.gml.v6_0.source.EmissionSource visit(final FarmLodgingEmissionSource emissionSource, final IsFeature feature)
-      throws AeriusException {
-    // Not supported from 6.0 onwards, just return a generic emission source.
-    return new nl.overheid.aerius.gml.v6_0.source.EmissionSource();
   }
 
   @Override
