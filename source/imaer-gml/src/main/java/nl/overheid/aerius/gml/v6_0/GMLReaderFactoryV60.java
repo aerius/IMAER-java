@@ -21,13 +21,10 @@ import nl.overheid.aerius.gml.base.GMLConversionData;
 import nl.overheid.aerius.gml.base.GMLLegacyCodesSupplier;
 import nl.overheid.aerius.gml.base.GMLVersionReader;
 import nl.overheid.aerius.gml.base.GMLVersionReaderFactory;
-import nl.overheid.aerius.gml.base.characteristics.GML2ADMSSourceCharacteristics;
 import nl.overheid.aerius.gml.base.characteristics.GML2OPSSourceCharacteristics;
 import nl.overheid.aerius.gml.base.characteristics.GML2SourceCharacteristics;
 import nl.overheid.aerius.gml.v6_0.base.CalculatorSchema;
 import nl.overheid.aerius.gml.v6_0.collection.FeatureCollectionImpl;
-import nl.overheid.aerius.shared.domain.v2.characteristics.CharacteristicsType;
-import nl.overheid.aerius.shared.domain.v2.characteristics.SourceCharacteristics;
 import nl.overheid.aerius.shared.exception.AeriusException;
 
 /**
@@ -37,6 +34,7 @@ public class GMLReaderFactoryV60 extends GMLVersionReaderFactory {
 
   /**
    * Constructor.
+   *
    * @param legacyCodesSupplier
    * @throws AeriusException error
    */
@@ -45,24 +43,12 @@ public class GMLReaderFactoryV60 extends GMLVersionReaderFactory {
   }
 
   @Override
-  public GMLVersionReader createReader(final GMLConversionData conversionData) {
-    return createReader(conversionData, gml2SourceCharacteristics(conversionData));
+  public GMLVersionReader createReader(final GMLConversionData conversionData, final GML2SourceCharacteristics<?> sourceCharacteristics) {
+    return new GMLReader<>(conversionData, sourceCharacteristics);
   }
 
-  private static <T extends SourceCharacteristics> GMLReader<T> createReader(final GMLConversionData conversionData,
-      final GML2SourceCharacteristics<T> gml2SourceCharacteristics) {
-    return new GMLReader<>(conversionData, gml2SourceCharacteristics);
-  }
-
-  private static GML2SourceCharacteristics<? extends SourceCharacteristics> gml2SourceCharacteristics(final GMLConversionData conversionData) {
-    final CharacteristicsType ct = conversionData.getCharacteristicsType();
-
-    if (ct == CharacteristicsType.OPS) {
-      return new GML2OPSSourceCharacteristics(conversionData);
-    } else if (ct == CharacteristicsType.ADMS) {
-      return new GML2ADMSSourceCharacteristics(conversionData);
-    } else {
-      throw new IllegalArgumentException("Can't read GML for characteristics of type " + ct + ". This is not implemented.");
-    }
+  @Override
+  protected GML2OPSSourceCharacteristics createGML2OPSSourceCharacteristics(final GMLConversionData conversionData) {
+    return new GML2OPSSourceCharacteristics(conversionData, true);
   }
 }

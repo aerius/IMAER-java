@@ -41,14 +41,14 @@ public abstract class GML2SourceCharacteristics<T extends SourceCharacteristics>
 
   public T fromGML(final IsGmlSourceCharacteristics characteristics, final T sectorCharacteristics,
       final Geometry geometry) throws AeriusException {
-    final T returnCharacteristics = fromGMLSpecific(characteristics, sectorCharacteristics);
+    final T returnCharacteristics = fromGMLSpecific(characteristics, sectorCharacteristics, geometry);
 
     fromGMLToBuildingProperties(characteristics, returnCharacteristics, geometry);
     return returnCharacteristics;
   }
 
-  protected abstract T fromGMLSpecific(final IsGmlSourceCharacteristics characteristics,
-      final T sectorCharacteristics) throws AeriusException;
+  protected abstract T fromGMLSpecific(final IsGmlSourceCharacteristics characteristics, final T sectorCharacteristics, Geometry geometry)
+      throws AeriusException;
 
   private void fromGMLToBuildingProperties(final IsGmlSourceCharacteristics characteristics,
       final SourceCharacteristics returnCharacteristics, final Geometry geometry) throws AeriusException {
