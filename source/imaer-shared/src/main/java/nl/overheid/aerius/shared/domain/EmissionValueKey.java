@@ -45,7 +45,9 @@ public class EmissionValueKey implements Comparable<EmissionValueKey>, Serializa
   }
 
   /**
-   * Initialize {@link EmissionValueKey} for substance, with year initialized as having no year.
+   * Initialize {@link EmissionValueKey} for substance, with year initialized as
+   * having no year.
+   * 
    * @param substance substance
    */
   public EmissionValueKey(final Substance substance) {
@@ -54,7 +56,8 @@ public class EmissionValueKey implements Comparable<EmissionValueKey>, Serializa
 
   /**
    * Initialize {@link EmissionValueKey} for substance and year.
-   * @param year year
+   * 
+   * @param year      year
    * @param substance substance
    */
   public EmissionValueKey(final int year, final Substance substance) {
@@ -80,10 +83,13 @@ public class EmissionValueKey implements Comparable<EmissionValueKey>, Serializa
   }
 
   /**
-   * Hack to make sure NO2 emission values are also included. since the callers only set NOx.
+   * Hack to make sure NO2 emission values are also included. since the callers
+   * only set NOx.
+   * 
    * @param keys current list of keys to calculate
    * @return same list with NO2 added if not already present
-   * @deprecated FIXME Find fix to make sure NO2 substance is also included in list of substances when calculating NOx.
+   * @deprecated FIXME Find fix to make sure NO2 substance is also included in
+   *             list of substances when calculating NOx.
    */
   @Deprecated
   private static ArrayList<EmissionValueKey> fixNO2Keys(final ArrayList<EmissionValueKey> keys) {
@@ -139,7 +145,8 @@ public class EmissionValueKey implements Comparable<EmissionValueKey>, Serializa
 
   /**
    * Returns the {@link EmissionValueKey} wrapped in an {@link ArrayList}.
-   * Or, in the case of a NH3+NOx key, an ArrayList of a separate NH3 key and NOx key.
+   * Or, in the case of a NH3+NOx key, an ArrayList of a separate NH3 key and NOx
+   * key.
    *
    * @return collection
    */
@@ -164,7 +171,9 @@ public class EmissionValueKey implements Comparable<EmissionValueKey>, Serializa
   }
 
   /**
-   * From right to left: 12 bits for year, 12 bits for substance, and 4 bits for result type.
+   * From right to left: 12 bits for year, 12 bits for substance, and 4 bits for
+   * result type.
+   * 
    * @return hash code
    */
   @Override
@@ -185,8 +194,35 @@ public class EmissionValueKey implements Comparable<EmissionValueKey>, Serializa
     this.substance = substance;
   }
 
+  /**
+   * Converts this EmissionValueKey to a parseable string representation in the
+   * format "year:substance".
+   * This format is compatible with {@link #fromStringValue(String)} for
+   * serialization/deserialization.
+   * 
+   * @return String representation in format "year:substance"
+   * @see #fromStringValue(String)
+   */
+  public String toStringValue() {
+    return year + ":" + substance.name();
+  }
+
+  /**
+   * Creates an EmissionValueKey from its string representation.
+   * Expects input in the format "year:substance" as produced by
+   * {@link #toStringValue()}.
+   * 
+   * @param value The string representation in format "year:substance"
+   * @return A new EmissionValueKey instance
+   * @see #toStringValue()
+   */
+  public static EmissionValueKey fromStringValue(final String value) {
+    final String[] parts = value.split(":");
+    return new EmissionValueKey(Integer.parseInt(parts[0]), Substance.valueOf(parts[1]));
+  }
+
   @Override
   public String toString() {
-    return "EmissionValueKey [year=" + year + ", substance=" + substance + "]";
+    return "EmissionValueKey [year=" + year + ", substance=" + substance.name() + "]";
   }
 }
