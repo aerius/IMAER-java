@@ -192,7 +192,7 @@ public final class OptionsMetadataUtil {
     if (options.getCalculationJobType() == CalculationJobType.IN_COMBINATION_PROCESS_CONTRIBUTION) {
       addBooleanValue(mapToAddTo, Option.USE_IN_COMBINATION_ARCHIVE, options.isUseInCombinationArchive(), addDefaults);
     }
-    if (theme == null || theme == Theme.OWN2000 || theme == Theme.RBL || theme == Theme.CIMLK) {
+    if (theme == null || theme == Theme.OWN2000 || theme == Theme.CIMLK) {
       own2000OptionsToMap(mapToAddTo, options.getOwN2000CalculationOptions(), addDefaults);
       addIntValue(mapToAddTo, Option.MONITOR_SRM2_YEAR, options.getRblCalculationOptions().getMonitorSrm2Year(), addDefaults);
     } else if (theme == Theme.NCA) {

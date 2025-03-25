@@ -71,7 +71,6 @@ class JsonRoundTripTest {
   @ValueSource(strings = {
       "GenericEmissionSource.json",
       "GenericADMSEmissionSource.json",
-      "FarmLodgingEmissionSource.json",
       "FarmAnimalHousingEmissionSource.json",
       "FarmlandEmissionSource.json",
       "OffRoadMobileEmissionSource.json",

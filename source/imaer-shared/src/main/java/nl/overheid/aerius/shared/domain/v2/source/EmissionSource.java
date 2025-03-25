@@ -35,7 +35,6 @@ import nl.overheid.aerius.shared.exception.AeriusException;
 @JsonTypeInfo(property = "emissionSourceType", use = Id.NAME)
 @JsonSubTypes({
     @Type(value = GenericEmissionSource.class, name = EmissionSourceType.Names.GENERIC),
-    @Type(value = FarmLodgingEmissionSource.class, name = EmissionSourceType.Names.FARM_LODGE),
     @Type(value = FarmAnimalHousingEmissionSource.class, name = EmissionSourceType.Names.FARM_ANIMAL_HOUSING),
     @Type(value = FarmlandEmissionSource.class, name = EmissionSourceType.Names.FARMLAND),
     @Type(value = ManureStorageEmissionSource.class, name = EmissionSourceType.Names.MANURE_STORAGE),

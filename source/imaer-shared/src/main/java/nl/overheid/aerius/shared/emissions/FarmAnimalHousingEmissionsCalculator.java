@@ -90,7 +90,7 @@ public class FarmAnimalHousingEmissionsCalculator {
   }
 
   Map<Substance, BigDecimal> calculateEmissions(final StandardFarmAnimalHousing standardAnimalHousing) throws AeriusException {
-    // Get emission of base lodging type
+    // Get emission of base housing type
     final Map<Substance, BigDecimal> emissions = getFlatEmission(standardAnimalHousing);
 
     // Reduce emissions based on additional systems
@@ -129,8 +129,8 @@ public class FarmAnimalHousingEmissionsCalculator {
     }
   }
 
-  private boolean isAnyAdditionalSystemScrubber(final StandardFarmAnimalHousing standardLodging) {
-    for (final AdditionalHousingSystem additionalSystem : standardLodging.getAdditionalSystems()) {
+  private boolean isAnyAdditionalSystemScrubber(final StandardFarmAnimalHousing standardHousing) {
+    for (final AdditionalHousingSystem additionalSystem : standardHousing.getAdditionalSystems()) {
       if (isAdditionalSystemScrubber(additionalSystem)) {
         return true;
       }

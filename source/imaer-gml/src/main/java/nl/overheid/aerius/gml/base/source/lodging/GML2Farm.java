@@ -31,17 +31,10 @@ import nl.overheid.aerius.gml.base.source.IsGmlEmission;
 import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.FarmAnimalHousingEmissionSource;
-import nl.overheid.aerius.shared.domain.v2.source.FarmLodgingEmissionSource;
-import nl.overheid.aerius.shared.domain.v2.source.farm.AdditionalLodgingSystem;
 import nl.overheid.aerius.shared.domain.v2.source.farm.CustomFarmAnimalHousing;
-import nl.overheid.aerius.shared.domain.v2.source.farm.CustomFarmLodging;
 import nl.overheid.aerius.shared.domain.v2.source.farm.FarmAnimalHousing;
-import nl.overheid.aerius.shared.domain.v2.source.farm.FarmLodging;
-import nl.overheid.aerius.shared.domain.v2.source.farm.LodgingFodderMeasure;
-import nl.overheid.aerius.shared.domain.v2.source.farm.ReductiveLodgingSystem;
 import nl.overheid.aerius.shared.domain.v2.source.farm.StandardAdditionalHousingSystem;
 import nl.overheid.aerius.shared.domain.v2.source.farm.StandardFarmAnimalHousing;
-import nl.overheid.aerius.shared.domain.v2.source.farm.StandardFarmLodging;
 import nl.overheid.aerius.shared.emissions.FarmEmissionFactorType;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
@@ -61,17 +54,6 @@ public class GML2Farm<T extends IsGmlFarmLodgingEmissionSource> extends Abstract
 
   @Override
   public EmissionSource convert(final T source) throws AeriusException {
-    final EmissionSource converted;
-    if (getConversionData().hasFarmLodgingConversions()) {
-      converted = convertToAnimalHousing(source);
-    } else {
-      // Temporary while we implement this in a feature branch. Once upstream main is set, we can remove this along with the deprecated class.
-      converted = convertLegacy(source);
-    }
-    return converted;
-  }
-
-  private FarmAnimalHousingEmissionSource convertToAnimalHousing(final T source) throws AeriusException {
     final FarmAnimalHousingEmissionSource animalHousingSource = new FarmAnimalHousingEmissionSource();
     for (final IsGmlProperty<IsGmlFarmLodging> lodging : source.getFarmLodgings()) {
       animalHousingSource.getSubSources().add(getAnimalHousing(lodging.getProperty(), source));
@@ -171,42 +153,6 @@ public class GML2Farm<T extends IsGmlFarmLodgingEmissionSource> extends Abstract
     return value == null ? "" : value;
   }
 
-  public FarmLodgingEmissionSource convertLegacy(final T source) throws AeriusException {
-    final FarmLodgingEmissionSource emissionValues = new FarmLodgingEmissionSource();
-    for (final IsGmlProperty<IsGmlFarmLodging> lodging : source.getFarmLodgings()) {
-      emissionValues.getSubSources().add(getFarmLodging(lodging.getProperty(), source.getId()));
-    }
-    emissionValues.setEstablished(source.getEstablished());
-    return emissionValues;
-  }
-
-  private FarmLodging getFarmLodging(final IsGmlFarmLodging lodging, final String sourceId) throws AeriusException {
-    final FarmLodging returnLodging;
-    if (lodging instanceof final IsGmlCustomFarmLodging customLodging) {
-      returnLodging = convertCustomLegacy(customLodging, sourceId);
-    } else if (lodging instanceof final IsGmlStandardFarmLodging standardLodging) {
-      returnLodging = convertStandardLegacy(standardLodging);
-    } else {
-      LOG.error("Don't know how to treat lodging type: {}", lodging.getClass());
-      throw new AeriusException(ImaerExceptionReason.INTERNAL_ERROR);
-    }
-    returnLodging.setNumberOfAnimals(lodging.getNumberOfAnimals());
-    returnLodging.setNumberOfDays(lodging.getNumberOfDays());
-    return returnLodging;
-  }
-
-  private CustomFarmLodging convertCustomLegacy(final IsGmlCustomFarmLodging customLodging, final String sourceId) throws AeriusException {
-    final CustomFarmLodging customEmissions = new CustomFarmLodging();
-    customEmissions.setAnimalCode(customLodging.getAnimalCode());
-    customEmissions.setDescription(customLodging.getDescription());
-    customEmissions.setFarmEmissionFactorType(determineEmissionFactorType(customLodging.getEmissionFactorType(), sourceId));
-    for (final IsGmlProperty<IsGmlEmission> emissionProperty : customLodging.getEmissionFactors()) {
-      final IsGmlEmission emission = emissionProperty.getProperty();
-      customEmissions.getEmissionFactors().put(emission.getSubstance(), emission.getValue());
-    }
-    return customEmissions;
-  }
-
   private FarmEmissionFactorType determineEmissionFactorType(final String gmlEmissionFactorType, final String sourceId) throws AeriusException {
     if (gmlEmissionFactorType == null) {
       return FarmEmissionFactorType.PER_ANIMAL_PER_YEAR;
@@ -217,62 +163,6 @@ public class GML2Farm<T extends IsGmlFarmLodgingEmissionSource> extends Abstract
     }
 
     return type;
-  }
-
-  private StandardFarmLodging convertStandardLegacy(final IsGmlStandardFarmLodging standardLodging) {
-    final StandardFarmLodging standardEmissions = new StandardFarmLodging();
-    final String categoryCode = standardLodging.getCode();
-
-    standardEmissions.setFarmLodgingCode(categoryCode);
-    handleLodgingSystems(standardLodging, standardEmissions);
-    handleFodderMeasures(standardLodging, standardEmissions);
-
-    //handle BWL code bit. Ït's OK if it's null.
-    standardEmissions.setSystemDefinitionCode(standardLodging.getLodgingSystemDefinitionCode());
-
-    return standardEmissions;
-  }
-
-  private void handleLodgingSystems(final IsGmlStandardFarmLodging lodging, final StandardFarmLodging standardEmissions) {
-    for (final IsGmlProperty<IsGmlLodgingSystem> lodgingSystemProperty : lodging.getLodgingSystems()) {
-      final IsGmlLodgingSystem lodgingSystem = lodgingSystemProperty.getProperty();
-      if (lodgingSystem instanceof IsGmlAdditionalLodgingSystem) {
-        final AdditionalLodgingSystem resultSystem = getAdditionalSystem((IsGmlAdditionalLodgingSystem) lodgingSystem);
-        standardEmissions.getAdditionalLodgingSystems().add(resultSystem);
-      } else if (lodgingSystem instanceof IsGmlReductiveLodgingSystem) {
-        final ReductiveLodgingSystem resultSystem = getReductiveSystem((IsGmlReductiveLodgingSystem) lodgingSystem);
-        standardEmissions.getReductiveLodgingSystems().add(resultSystem);
-      }
-    }
-  }
-
-  private void handleFodderMeasures(final IsGmlStandardFarmLodging lodging, final StandardFarmLodging standardEmissions) {
-    for (final IsGmlProperty<IsGmlLodgingFodderMeasure> fodderMeasure : lodging.getFodderMeasures()) {
-      final LodgingFodderMeasure resultSystem = getFodderMeasure(fodderMeasure.getProperty());
-      standardEmissions.getFodderMeasures().add(resultSystem);
-    }
-  }
-
-  private AdditionalLodgingSystem getAdditionalSystem(final IsGmlAdditionalLodgingSystem additionalSystem) {
-    final AdditionalLodgingSystem resultSystem = new AdditionalLodgingSystem();
-    resultSystem.setNumberOfAnimals(additionalSystem.getNumberOfAnimals());
-
-    resultSystem.setLodgingSystemCode(additionalSystem.getCode());
-    resultSystem.setSystemDefinitionCode(additionalSystem.getLodgingSystemDefinitionCode());
-    return resultSystem;
-  }
-
-  private ReductiveLodgingSystem getReductiveSystem(final IsGmlReductiveLodgingSystem reductiveSystem) {
-    final ReductiveLodgingSystem resultSystem = new ReductiveLodgingSystem();
-    resultSystem.setLodgingSystemCode(reductiveSystem.getCode());
-    resultSystem.setSystemDefinitionCode(reductiveSystem.getLodgingSystemDefinitionCode());
-    return resultSystem;
-  }
-
-  private LodgingFodderMeasure getFodderMeasure(final IsGmlLodgingFodderMeasure fodderMeasure) {
-    final LodgingFodderMeasure resultMeasure = new LodgingFodderMeasure();
-    resultMeasure.setFodderMeasureCode(fodderMeasure.getCode());
-    return resultMeasure;
   }
 
 }

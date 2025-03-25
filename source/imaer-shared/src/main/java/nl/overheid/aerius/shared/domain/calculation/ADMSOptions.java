@@ -22,8 +22,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 /**
  * Contains ADMS specific options for a calculation.
  */
@@ -118,54 +116,6 @@ public class ADMSOptions implements Serializable {
 
   public void setMetSiteLatitude(final double metSiteLatitude) {
     this.metSiteLatitude = metSiteLatitude;
-  }
-
-  @Deprecated
-  @JsonIgnore
-  public double getMsRoughness() {
-    return getLegacyMetSiteCharacteristics().getRoughness();
-  }
-
-  @Deprecated
-  @JsonIgnore
-  public void setMsRoughness(final double msRoughness) {
-    getLegacyMetSiteCharacteristics().setRoughness(msRoughness);
-  }
-
-  @Deprecated
-  @JsonIgnore
-  public double getMsMinMoninObukhovLength() {
-    return getLegacyMetSiteCharacteristics().getMinMoninObukhovLength();
-  }
-
-  @Deprecated
-  @JsonIgnore
-  public void setMsMinMoninObukhovLength(final double msMinMoninObukhovLength) {
-    getLegacyMetSiteCharacteristics().setMinMoninObukhovLength(msMinMoninObukhovLength);
-  }
-
-  @Deprecated
-  @JsonIgnore
-  public double getMsSurfaceAlbedo() {
-    return getLegacyMetSiteCharacteristics().getSurfaceAlbedo();
-  }
-
-  @Deprecated
-  @JsonIgnore
-  public void setMsSurfaceAlbedo(final double msSurfaceAlbedo) {
-    getLegacyMetSiteCharacteristics().setSurfaceAlbedo(msSurfaceAlbedo);
-  }
-
-  @Deprecated
-  @JsonIgnore
-  public double getMsPriestleyTaylorParameter() {
-    return getLegacyMetSiteCharacteristics().getPriestleyTaylorParameter();
-  }
-
-  @Deprecated
-  @JsonIgnore
-  public void setMsPriestleyTaylorParameter(final double msPriestleyTaylorParameter) {
-    getLegacyMetSiteCharacteristics().setPriestleyTaylorParameter(msPriestleyTaylorParameter);
   }
 
   private MetSurfaceCharacteristics getLegacyMetSiteCharacteristics() {
