@@ -18,6 +18,8 @@ package nl.overheid.aerius.shared.domain.sector;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import nl.overheid.aerius.shared.domain.HasName;
 import nl.overheid.aerius.shared.domain.v2.characteristics.OPSSourceCharacteristics;
 
@@ -94,7 +96,7 @@ public class Sector implements HasName, Serializable {
   }
 
   @Override
-  @JsonIgnoregs
+  @JsonIgnore
   public String getName() {
     return description;
   }
