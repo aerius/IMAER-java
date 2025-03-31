@@ -170,12 +170,6 @@ public class EmissionValueKey implements Comparable<EmissionValueKey>, Serializa
     return substance;
   }
 
-  /**
-   * From right to left: 12 bits for year, 12 bits for substance, and 4 bits for
-   * result type.
-   * 
-   * @return hash code
-   */
   @Override
   public int hashCode() {
     final int randomNr = 4096;
@@ -214,11 +208,38 @@ public class EmissionValueKey implements Comparable<EmissionValueKey>, Serializa
    * 
    * @param value The string representation in format "year:substance"
    * @return A new EmissionValueKey instance
+   * @throws IllegalArgumentException if the input is null, empty, or has invalid
+   *                                  format
+   * @throws NumberFormatException    if the year part cannot be parsed as an
+   *                                  integer
    * @see #toStringValue()
    */
   public static EmissionValueKey fromStringValue(final String value) {
+    if (value == null || value.trim().isEmpty()) {
+      throw new IllegalArgumentException("Input value cannot be null or empty");
+    }
+
     final String[] parts = value.split(":");
-    return new EmissionValueKey(Integer.parseInt(parts[0]), Substance.valueOf(parts[1]));
+    if (parts.length != 2) {
+      throw new IllegalArgumentException("Input must be in format 'year:substance', got: " + value);
+    }
+
+    final String yearStr = parts[0].trim();
+    final String substanceStr = parts[1].trim();
+
+    if (yearStr.isEmpty() || substanceStr.isEmpty()) {
+      throw new IllegalArgumentException("Year and substance cannot be empty");
+    }
+
+    try {
+      final int year = Integer.parseInt(yearStr);
+      final Substance substance = Substance.valueOf(substanceStr);
+      return new EmissionValueKey(year, substance);
+    } catch (NumberFormatException e) {
+      throw new NumberFormatException("Invalid year format: " + yearStr);
+    } catch (IllegalArgumentException e) {
+      throw new IllegalArgumentException("Invalid substance: " + substanceStr);
+    }
   }
 
   @Override
