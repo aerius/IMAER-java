@@ -220,15 +220,15 @@ public class EmissionValueKey implements Comparable<EmissionValueKey>, Serializa
     }
 
     final String[] parts = value.split(":");
-    if (parts.length != 2) {
-      throw new IllegalArgumentException("Input must be in format 'year:substance', got: " + value);
-    }
-
-    final String yearStr = parts[0].trim();
-    final String substanceStr = parts[1].trim();
+    final String yearStr = parts.length > 0 ? parts[0].trim() : "";
+    final String substanceStr = parts.length > 1 ? parts[1].trim() : "";
 
     if (yearStr.isEmpty() || substanceStr.isEmpty()) {
       throw new IllegalArgumentException("Year and substance cannot be empty, got: '" + value + "'");
+    }
+
+    if (parts.length != 2) {
+      throw new IllegalArgumentException("Input must be in format 'year:substance', got: " + value);
     }
 
     try {
