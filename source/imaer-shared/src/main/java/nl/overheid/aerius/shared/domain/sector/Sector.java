@@ -30,18 +30,21 @@ public class Sector implements HasName, Serializable {
   private static final long serialVersionUID = 4L;
 
   /**
-   * Sector default is the sector in case no specific sector is specified, because it's unknown. Therefore the sector industry generic can be used.
+   * Sector default is the sector in case no specific sector is specified, because
+   * it's unknown. Therefore the sector industry generic can be used.
    */
   public static final int DEFAULT_SECTOR_ID = 1800;
 
   /**
-   * Sector for case where no sector is specified yet. UNDEFINED MEANS UNDEFINED so don't change it into a defined sector without modifying the
-   * behavior of the application!
+   * Sector for case where no sector is specified yet. UNDEFINED MEANS UNDEFINED
+   * so don't change it into a defined sector without modifying the behavior of
+   * the application!
    */
   public static final Sector SECTOR_UNDEFINED = new Sector(0, null, "");
 
   /**
-   * Sector default is the sector in case no specific sector is specified, because it's unknown. Therefore the sector industry generic can be used.
+   * Sector default is the sector in case no specific sector is specified, because
+   * it's unknown. Therefore the sector industry generic can be used.
    */
   public static final Sector SECTOR_DEFAULT = new Sector(DEFAULT_SECTOR_ID, SectorGroup.INDUSTRY, "");
 
@@ -91,6 +94,7 @@ public class Sector implements HasName, Serializable {
   }
 
   @Override
+  @JsonIgnoregs
   public String getName() {
     return description;
   }
