@@ -21,6 +21,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonKey;
 
 /**
  * EmissionSource objects keep track of multiple emission values,
@@ -176,6 +179,7 @@ public class EmissionValueKey implements Comparable<EmissionValueKey>, Serializa
     return year + (randomNr * substance.getId());
   }
 
+  @JsonIgnore
   public boolean isNoYear() {
     return year == NO_YEAR;
   }
@@ -197,6 +201,7 @@ public class EmissionValueKey implements Comparable<EmissionValueKey>, Serializa
    * @return String representation in format "year:substance"
    * @see #fromStringValue(String)
    */
+  @JsonKey
   public String toStringValue() {
     return year + ":" + substance.name();
   }
