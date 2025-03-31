@@ -22,8 +22,8 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonKey;
+import com.fasterxml.jackson.annotation.JsonKey;
+import com.fasterxml.jackson.annotation.JsonCreator;
 
 /**
  * EmissionSource objects keep track of multiple emission values,
@@ -219,6 +219,7 @@ public class EmissionValueKey implements Comparable<EmissionValueKey>, Serializa
    *                                  integer
    * @see #toStringValue()
    */
+  @JsonCreator
   public static EmissionValueKey fromStringValue(final String value) {
     if (value == null || value.trim().isEmpty()) {
       throw new IllegalArgumentException("Input value cannot be null or empty");
