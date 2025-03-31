@@ -29,7 +29,7 @@ import nl.overheid.aerius.shared.domain.v2.geojson.Point;
  * This means the application should pass the desired spread value.
  * For older IMAER versions (prior to 6) for point sources it means that value is derived from the emission height.
  * Even if the spread value of a point source is set in the IMAER file it will be ignored.
- * For none point sources and if spread was not set in older IMAER versions (< 6.0)the sector default will be used.
+ * For non-point/line sources and if spread was not set in older IMAER versions (< 6.0), the sector default will be used.
  * This is compatible with how it worked prior to this change.
  * For newer IMAER versions (>= 6.0) if the spread is not present it will be half of the emission height.
  */
