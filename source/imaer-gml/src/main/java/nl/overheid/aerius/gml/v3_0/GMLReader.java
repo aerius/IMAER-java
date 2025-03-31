@@ -37,7 +37,7 @@ import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceFeature;
 /**
  * {@link GMLVersionReader} for AERIUS GML version 3.0.
  */
-public class GMLReader implements GMLVersionReader {
+final class GMLReader implements GMLVersionReader {
 
   private final GML2Source gml2Source;
   private final GML2Result gml2Result;

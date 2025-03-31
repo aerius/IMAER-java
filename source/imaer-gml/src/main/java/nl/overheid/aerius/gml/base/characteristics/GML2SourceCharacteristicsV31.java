@@ -30,7 +30,7 @@ public class GML2SourceCharacteristicsV31 extends GML2OPSSourceCharacteristics {
   private static final double EMISSION_TEMPERATURE_DEFAULT = 11.85;
 
   public GML2SourceCharacteristicsV31(final GMLConversionData conversionData) {
-    super(conversionData);
+    super(conversionData, true);
   }
 
   @Override

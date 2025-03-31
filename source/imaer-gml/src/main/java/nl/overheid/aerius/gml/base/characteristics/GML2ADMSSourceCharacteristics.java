@@ -24,6 +24,7 @@ import nl.overheid.aerius.shared.domain.v2.characteristics.adms.BuoyancyType;
 import nl.overheid.aerius.shared.domain.v2.characteristics.adms.EffluxType;
 import nl.overheid.aerius.shared.domain.v2.characteristics.adms.ReleaseTemperatureAndPressure;
 import nl.overheid.aerius.shared.domain.v2.characteristics.adms.SourceType;
+import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 
@@ -40,7 +41,7 @@ public class GML2ADMSSourceCharacteristics
   @Override
   protected nl.overheid.aerius.shared.domain.v2.characteristics.ADMSSourceCharacteristics fromGMLSpecific(
       final IsGmlSourceCharacteristics characteristics,
-      final nl.overheid.aerius.shared.domain.v2.characteristics.ADMSSourceCharacteristics sectorCharacteristics) throws AeriusException {
+      final nl.overheid.aerius.shared.domain.v2.characteristics.ADMSSourceCharacteristics sectorCharacteristics, Geometry geometry) throws AeriusException {
     final IsGmlADMSSourceCharacteristics gmlADMSCharacteristics = (IsGmlADMSSourceCharacteristics) characteristics;
     final ADMSSourceCharacteristics returnCharacteristics = getDefaultCharacteristics();
     returnCharacteristics.setHeight(gmlADMSCharacteristics.getHeight());
