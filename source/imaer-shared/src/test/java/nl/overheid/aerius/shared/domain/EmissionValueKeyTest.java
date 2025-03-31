@@ -122,6 +122,26 @@ class EmissionValueKeyTest {
     }
 
     @Test
+    @DisplayName("should throw exception for empty year")
+    void testEmptyYear() {
+      final IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+          () -> EmissionValueKey.fromStringValue(":NOX"),
+          "Should throw exception for empty year");
+      assertEquals("Year and substance cannot be empty, got: ':NOX'", exception.getMessage(),
+          "Should have correct error message for empty year");
+    }
+
+    @Test
+    @DisplayName("should throw exception for empty substance")
+    void testEmptySubstance() {
+      final IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+          () -> EmissionValueKey.fromStringValue("2024:"),
+          "Should throw exception for empty substance");
+      assertEquals("Year and substance cannot be empty, got: '2024:'", exception.getMessage(),
+          "Should have correct error message for empty substance");
+    }
+
+    @Test
     @DisplayName("should throw exception for invalid format")
     void testInvalidFormat() {
       assertThrows(IllegalArgumentException.class, () -> EmissionValueKey.fromStringValue("invalid:format"),
@@ -140,20 +160,6 @@ class EmissionValueKeyTest {
     void testMultipleSeparators() {
       assertThrows(IllegalArgumentException.class, () -> EmissionValueKey.fromStringValue("2024:NOX:extra"),
           "Should throw exception for multiple separators");
-    }
-
-    @Test
-    @DisplayName("should throw exception for empty year")
-    void testEmptyYear() {
-      assertThrows(IllegalArgumentException.class, () -> EmissionValueKey.fromStringValue(":NOX"),
-          "Should throw exception for empty year");
-    }
-
-    @Test
-    @DisplayName("should throw exception for empty substance")
-    void testEmptySubstance() {
-      assertThrows(IllegalArgumentException.class, () -> EmissionValueKey.fromStringValue("2024:"),
-          "Should throw exception for empty substance");
     }
 
     @Test

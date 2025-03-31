@@ -228,7 +228,7 @@ public class EmissionValueKey implements Comparable<EmissionValueKey>, Serializa
     final String substanceStr = parts[1].trim();
 
     if (yearStr.isEmpty() || substanceStr.isEmpty()) {
-      throw new IllegalArgumentException("Year and substance cannot be empty");
+      throw new IllegalArgumentException("Year and substance cannot be empty, got: '" + value + "'");
     }
 
     try {
