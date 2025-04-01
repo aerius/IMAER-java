@@ -18,8 +18,6 @@ package nl.overheid.aerius.shared.domain.sector;
 
 import java.io.Serializable;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import nl.overheid.aerius.shared.domain.HasName;
 import nl.overheid.aerius.shared.domain.v2.characteristics.OPSSourceCharacteristics;
 
@@ -37,9 +35,7 @@ public class Sector implements HasName, Serializable {
   public static final int DEFAULT_SECTOR_ID = 1800;
 
   /**
-   * Sector for case where no sector is specified yet. UNDEFINED MEANS UNDEFINED
-   * so don't change it into a defined sector without modifying the behavior of
-   * the application!
+   * Sector for case where no sector is specified yet. UNDEFINED MEANS UNDEFINED so don't change it into a defined sector without modifying the behavior of the application!
    */
   public static final Sector SECTOR_UNDEFINED = new Sector(0, null, "");
 
