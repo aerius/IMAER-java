@@ -48,8 +48,7 @@ public class EmissionValueKey implements Comparable<EmissionValueKey>, Serializa
   }
 
   /**
-   * Initialize {@link EmissionValueKey} for substance, with year initialized as
-   * having no year.
+   * Initialize {@link EmissionValueKey} for substance, with year initialized as having no year.
    * 
    * @param substance substance
    */
@@ -60,7 +59,7 @@ public class EmissionValueKey implements Comparable<EmissionValueKey>, Serializa
   /**
    * Initialize {@link EmissionValueKey} for substance and year.
    * 
-   * @param year      year
+   * @param year year
    * @param substance substance
    */
   public EmissionValueKey(final int year, final Substance substance) {
@@ -86,13 +85,11 @@ public class EmissionValueKey implements Comparable<EmissionValueKey>, Serializa
   }
 
   /**
-   * Hack to make sure NO2 emission values are also included. since the callers
-   * only set NOx.
+   * Hack to make sure NO2 emission values are also included. since the callers only set NOx.
    * 
    * @param keys current list of keys to calculate
    * @return same list with NO2 added if not already present
-   * @deprecated FIXME Find fix to make sure NO2 substance is also included in
-   *             list of substances when calculating NOx.
+   * @deprecated FIXME Find fix to make sure NO2 substance is also included in list of substances when calculating NOx.
    */
   @Deprecated
   private static ArrayList<EmissionValueKey> fixNO2Keys(final ArrayList<EmissionValueKey> keys) {
@@ -148,8 +145,7 @@ public class EmissionValueKey implements Comparable<EmissionValueKey>, Serializa
 
   /**
    * Returns the {@link EmissionValueKey} wrapped in an {@link ArrayList}.
-   * Or, in the case of a NH3+NOx key, an ArrayList of a separate NH3 key and NOx
-   * key.
+   * Or, in the case of a NH3+NOx key, an ArrayList of a separate NH3 key and NOx key.
    *
    * @return collection
    */
