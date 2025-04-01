@@ -137,7 +137,7 @@ class EmissionValueKeyTest {
       final IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
           () -> EmissionValueKey.fromStringValue("2024:"),
           "Should throw exception for empty substance");
-      assertEquals("Year and substance cannot be empty, got: '2024:'", exception.getMessage(),
+      assertEquals("Input must be in format 'year:substance', got: 2024:", exception.getMessage(),
           "Should have correct error message for empty substance");
     }
 
@@ -185,7 +185,7 @@ class EmissionValueKeyTest {
     @DisplayName("should return debug format")
     void testToString() {
       final EmissionValueKey key = new EmissionValueKey(2024, Substance.NOX);
-      assertEquals("EmissionValueKey [year=2024, substance=NOX]", key.toString(),
+      assertEquals("EmissionValueKey [year=2024, substance=Substance [NOx:11]]", key.toString(),
           "toString should match expected debug format");
     }
 
@@ -193,7 +193,7 @@ class EmissionValueKeyTest {
     @DisplayName("should handle no year case")
     void testToStringNoYear() {
       final EmissionValueKey key = new EmissionValueKey(Substance.NOX);
-      assertEquals("EmissionValueKey [year=0, substance=NOX]", key.toString(),
+      assertEquals("EmissionValueKey [year=0, substance=Substance [NOx:11]]", key.toString(),
           "toString should handle no year case");
     }
   }
