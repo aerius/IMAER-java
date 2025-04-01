@@ -28,7 +28,7 @@
   <artifactId>imaer-shared</artifactId>
   <name>IMAER :: Shared Data</name>
   <description>All data objects of IMAER shared data objects</description>
-  
+
   <properties>
     <!-- For GWT, keep target java version on 17 to avoid using unusable language features -->
     <java.version>17</java.version>
@@ -43,6 +43,10 @@
     <dependency>
       <groupId>jakarta.validation</groupId>
       <artifactId>jakarta.validation-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
     </dependency>
 
     <dependency>

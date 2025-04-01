@@ -18,6 +18,8 @@ package nl.overheid.aerius.geo.shared;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import nl.overheid.aerius.shared.domain.v2.geojson.Point;
 
 /**
@@ -76,10 +78,12 @@ public class BBox implements Serializable {
     return new BBox(minX, minY, maxX, maxY);
   }
 
+  @JsonIgnore
   public double getWidth() {
     return getMaxX() - getMinX();
   }
 
+  @JsonIgnore
   public double getHeight() {
     return getMaxY() - getMinY();
   }
@@ -100,10 +104,12 @@ public class BBox implements Serializable {
     return maxY;
   }
 
+  @JsonIgnore
   public double getMidX() {
     return (maxX + minX) / 2;
   }
 
+  @JsonIgnore
   public double getMidY() {
     return (maxY + minY) / 2;
   }

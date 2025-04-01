@@ -21,6 +21,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonKey;
+import com.fasterxml.jackson.annotation.JsonCreator;
 
 /**
  * EmissionSource objects keep track of multiple emission values,
@@ -163,16 +166,13 @@ public class EmissionValueKey implements Comparable<EmissionValueKey>, Serializa
     return substance;
   }
 
-  /**
-   * From right to left: 12 bits for year, 12 bits for substance, and 4 bits for result type.
-   * @return hash code
-   */
   @Override
   public int hashCode() {
     final int randomNr = 4096;
     return year + (randomNr * substance.getId());
   }
 
+  @JsonIgnore
   public boolean isNoYear() {
     return year == NO_YEAR;
   }
@@ -183,6 +183,61 @@ public class EmissionValueKey implements Comparable<EmissionValueKey>, Serializa
 
   public void setSubstance(final Substance substance) {
     this.substance = substance;
+  }
+
+  /**
+   * Converts this EmissionValueKey to a parseable string representation in the
+   * format "year:substance".
+   * This format is compatible with {@link #fromStringValue(String)} for
+   * serialization/deserialization.
+   * 
+   * @return String representation in format "year:substance"
+   * @see #fromStringValue(String)
+   */
+  @JsonKey
+  public String toStringValue() {
+    return year + ":" + substance.name();
+  }
+
+  /**
+   * Creates an EmissionValueKey from its string representation.
+   * Expects input in the format "year:substance" as produced by
+   * {@link #toStringValue()}.
+   * 
+   * @param value The string representation in format "year:substance"
+   * @return A new EmissionValueKey instance
+   * @throws IllegalArgumentException if the input is null, empty, or has invalid
+   *                                  format
+   * @throws NumberFormatException    if the year part cannot be parsed as an
+   *                                  integer
+   * @see #toStringValue()
+   */
+  @JsonCreator
+  public static EmissionValueKey fromStringValue(final String value) {
+    if (value == null || value.trim().isEmpty()) {
+      throw new IllegalArgumentException("Input value cannot be null or empty");
+    }
+
+    final String[] parts = value.split(":");
+    if (parts.length != 2) {
+      throw new IllegalArgumentException("Input must be in format 'year:substance', got: " + value);
+    } 
+
+    final String yearStr = parts.length > 0 ? parts[0].trim() : "";
+    final String substanceStr = parts.length > 1 ? parts[1].trim() : "";
+    if (yearStr.isEmpty() || substanceStr.isEmpty()) {
+      throw new IllegalArgumentException("Year and substance cannot be empty, got: '" + value + "'");
+    }
+
+    try {
+      final int year = Integer.parseInt(yearStr);
+      final Substance substance = Substance.valueOf(substanceStr);
+      return new EmissionValueKey(year, substance);
+    } catch (NumberFormatException e) {
+      throw new NumberFormatException("Invalid year format: " + yearStr);
+    } catch (IllegalArgumentException e) {
+      throw new IllegalArgumentException("Invalid substance: " + substanceStr);
+    }
   }
 
   @Override
