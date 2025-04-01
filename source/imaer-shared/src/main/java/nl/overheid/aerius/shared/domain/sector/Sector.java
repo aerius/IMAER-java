@@ -94,7 +94,6 @@ public class Sector implements HasName, Serializable {
   }
 
   @Override
-  @JsonIgnore
   public String getName() {
     return description;
   }
