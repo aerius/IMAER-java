@@ -49,7 +49,6 @@ public class EmissionValueKey implements Comparable<EmissionValueKey>, Serializa
 
   /**
    * Initialize {@link EmissionValueKey} for substance, with year initialized as having no year.
-   * 
    * @param substance substance
    */
   public EmissionValueKey(final Substance substance) {
@@ -58,7 +57,6 @@ public class EmissionValueKey implements Comparable<EmissionValueKey>, Serializa
 
   /**
    * Initialize {@link EmissionValueKey} for substance and year.
-   * 
    * @param year year
    * @param substance substance
    */
@@ -86,7 +84,6 @@ public class EmissionValueKey implements Comparable<EmissionValueKey>, Serializa
 
   /**
    * Hack to make sure NO2 emission values are also included. since the callers only set NOx.
-   * 
    * @param keys current list of keys to calculate
    * @return same list with NO2 added if not already present
    * @deprecated FIXME Find fix to make sure NO2 substance is also included in list of substances when calculating NOx.
