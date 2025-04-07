@@ -18,6 +18,8 @@ package nl.overheid.aerius.shared.domain.geo;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
 * The piece of ASCII genius below depicts a normal hexagon, with horizontal
 * top- and bottom-axes, and corners on the right and left. This format of a
@@ -53,8 +55,8 @@ public class HexagonZoomLevel implements Serializable {
   private double hexagonSurface;
   private double hexagonRadius;
   private double hexagonHeight;
-  private double[] horizontal = new double[HEXAGON_CORNERS];
-  private double[] vertical = new double[HEXAGON_CORNERS];
+  private final double[] horizontal = new double[HEXAGON_CORNERS];
+  private final double[] vertical = new double[HEXAGON_CORNERS];
 
   /**
    * Initializes a HexagonZoomLevel for the given level.
@@ -97,6 +99,7 @@ public class HexagonZoomLevel implements Serializable {
    *
    * @return surface in square meters
    */
+  @JsonIgnore
   public double getHexagonSurface() {
     return hexagonSurface;
   }
@@ -106,6 +109,7 @@ public class HexagonZoomLevel implements Serializable {
    *
    * @return height of hexagon in meters
    */
+  @JsonIgnore
   public double getHexagonHeight() {
     return hexagonHeight;
   }
@@ -115,14 +119,17 @@ public class HexagonZoomLevel implements Serializable {
    *
    * @return radius of hexagon in meters
    */
+  @JsonIgnore
   public double getHexagonRadius() {
     return hexagonRadius;
   }
 
+  @JsonIgnore
   public double[] getHorizontal() {
     return horizontal;
   }
 
+  @JsonIgnore
   public double[] getVertical() {
     return vertical;
   }
