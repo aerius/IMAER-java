@@ -55,8 +55,8 @@ public class HexagonZoomLevel implements Serializable {
   private double hexagonSurface;
   private double hexagonRadius;
   private double hexagonHeight;
-  private final double[] horizontal = new double[HEXAGON_CORNERS];
-  private final double[] vertical = new double[HEXAGON_CORNERS];
+  private double[] horizontal = new double[HEXAGON_CORNERS];
+  private double[] vertical = new double[HEXAGON_CORNERS];
 
   /**
    * Initializes a HexagonZoomLevel for the given level.
