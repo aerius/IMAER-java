@@ -29,12 +29,13 @@ import nl.overheid.aerius.shared.domain.result.EmissionResultKey;
  */
 public class CalculationSetOptions implements Serializable {
 
-  private static final long serialVersionUID = 6L;
+  private static final long serialVersionUID = 7L;
 
   private int calculationSetOptionsId;
   private CalculationMethod calculationMethod = CalculationMethod.FORMAL_ASSESSMENT;
   private CalculationJobType calculationJobType;
   private double calculateMaximumRange;
+  private boolean maximumRangeRelevant;
   private boolean useInCombinationArchive;
   private final ArrayList<Substance> substances = new ArrayList<>();
   private final Set<EmissionResultKey> emissionResultKeys = new HashSet<>();
@@ -91,12 +92,15 @@ public class CalculationSetOptions implements Serializable {
   }
 
   /**
-   * Returns true if the maximum range value is used by the calculation method. Meaning those types use the maximum range value to determine the
-   * distance to calculate.
+   * Returns true if the maximum range is relevant for the calculation.
    * @return true if relevant
    */
   public boolean isMaximumRangeRelevant() {
-    return calculationMethod == CalculationMethod.NATURE_AREA || calculationMethod == CalculationMethod.QUICK_RUN;
+    return maximumRangeRelevant;
+  }
+
+  public void setMaximumRangeRelevant(final boolean maximumRangeRelevant) {
+    this.maximumRangeRelevant = maximumRangeRelevant;
   }
 
   /**

@@ -118,7 +118,7 @@ class GMLWriterTest {
         "Emissionsource not allowed to have no geometry.");
 
     final List<EmissionSourceFeature> sources2 = getExampleEmissionSources();
-    ((GenericEmissionSource) sources2.get(0).getProperties()).getEmissions().clear();
+    sources2.get(0).getProperties().getEmissions().clear();
     //source has no emission, it'll just be exported with 0.0 emissions for all substances.
     //this used to be an error situation, now it's treated as a work-in-progress export.
     assertNotNull(getConversionResult(converter, sources2), "Expect source to be written to file while having no emissions");
@@ -183,6 +183,7 @@ class GMLWriterTest {
   private CalculationSetOptions getCalculationOptions() {
     final CalculationSetOptions options = new CalculationSetOptions();
     options.setCalculationMethod(CalculationMethod.NATURE_AREA);
+    options.setMaximumRangeRelevant(true);
     options.setCalculateMaximumRange(3);
     options.getRblCalculationOptions().setMonitorSrm2Year(2030);
     options.getSubstances().add(Substance.NOX);
