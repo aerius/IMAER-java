@@ -58,7 +58,7 @@ public class GMLCalculationSetOptionsReader {
     if (calculationMetaData.getOptions() != null) {
       final Map<String, String> optionsMap = new HashMap<>();
 
-      // Use forEach to remove duplicate entries.
+      // Add to map to remove duplicate entries.
       calculationMetaData.getOptions().stream()
           .map(IsGmlProperty::getProperty)
           .forEach(p -> optionsMap.put(p.getKey(), p.getValue()));
@@ -67,6 +67,7 @@ public class GMLCalculationSetOptionsReader {
     setCalculationMethod(calculationMetaData, options);
     setCalculationJobType(calculationMetaData, options);
     options.setCalculateMaximumRange(calculationMetaData.getMaximumRange() == null ? 0.0 : calculationMetaData.getMaximumRange());
+    options.setMaximumRangeRelevant(calculationMetaData.getMaximumRange() != null);
     return options;
   }
 
