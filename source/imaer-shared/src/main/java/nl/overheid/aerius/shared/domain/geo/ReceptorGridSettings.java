@@ -16,7 +16,6 @@
  */
 package nl.overheid.aerius.shared.domain.geo;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,9 +27,15 @@ import nl.overheid.aerius.shared.geo.EPSG;
 /**
  * Application settings related to the variables of the receptor grid used as basis of the application.
  */
-public final class ReceptorGridSettings implements Serializable {
-
-  private static final long serialVersionUID = 1L;
+public enum ReceptorGridSettings {
+  /**
+   * The Netherlands
+   */
+  NL(EPSG.RDNEW, 1529, 5, 10_000, new BBox(3604.0, 296800.0, 287959.0, 629300.0)),
+  /**
+   * United Kingdom
+   */
+  UK(EPSG.BNG, 1785, 7, 40_000, new BBox(-4_000.0, 4_000.0, 660_000.0, 1_222_000.0));
 
   private BBox boundingBox;
   private EPSG epsg;
@@ -45,21 +50,31 @@ public final class ReceptorGridSettings implements Serializable {
   /**
    * Constructor
    *
-   * @param boundingBox Bounding box of the receptor grid
    * @param epsg EPSG code of the receptor grid
    * @param hexagonHorizontal Number of horizontal hexagons
-   * @param hexagonZoomLevels Number of hexagon zoom levels
+   * @param maxZoomLevels Maximum number of zoom levels
+   * @param minSurfaceArea Minimum surface are of zoom level 1
+   * @param boundingBox Bounding box of the receptor grid
    */
-  public ReceptorGridSettings(final BBox boundingBox, final EPSG epsg, final int hexagonHorizontal,
-      final ArrayList<HexagonZoomLevel> hexagonZoomLevels) {
-    this.boundingBox = boundingBox;
+  ReceptorGridSettings(final EPSG epsg, final int hexagonHorizontal, final int maxZoomLevels, final int minSurfaceArea, final BBox boundingBox) {
+    final List<HexagonZoomLevel> zoomLevels = new ArrayList<>();
+
+    for (int i = 1; i <= maxZoomLevels; i++) {
+      zoomLevels.add(new HexagonZoomLevel(i, minSurfaceArea));
+    }
     this.epsg = epsg;
     this.hexHor = hexagonHorizontal;
-    this.hexagonZoomLevels = hexagonZoomLevels;
+    this.hexagonZoomLevels = zoomLevels;
+    this.boundingBox = boundingBox;
   }
 
-  /** Needed for GWT. */
-  protected ReceptorGridSettings() {
+  public static ReceptorGridSettings valueByEPSG(final EPSG epsg) {
+    for (final ReceptorGridSettings rgs : values()) {
+      if (rgs.getEPSG() == epsg) {
+        return rgs;
+      }
+    }
+    return null;
   }
 
   /**
