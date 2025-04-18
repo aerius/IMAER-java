@@ -20,7 +20,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 import org.junit.jupiter.api.Assertions;
@@ -28,13 +27,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import nl.overheid.aerius.geo.shared.BBox;
 import nl.overheid.aerius.shared.domain.geo.HexagonZoomLevel;
 import nl.overheid.aerius.shared.domain.geo.ReceptorGridSettings;
 import nl.overheid.aerius.shared.domain.v2.geojson.Point;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPointFeature;
 import nl.overheid.aerius.shared.domain.v2.point.ReceptorPoint;
-import nl.overheid.aerius.shared.geo.EPSG;
 
 /**
  * Test class for {@link ReceptorUtil}.
@@ -54,12 +51,8 @@ class ReceptorUtilTest {
       {4706906, 123279.78488053002, 462176.3125076431},
       {9184376, 227135.287156324, 619493.35052661}};
 
-  private static final HexagonZoomLevel ZOOM_LEVEL_1 = new HexagonZoomLevel(1, 10_000);
-  private static final BBox RECEPTOR_BBOX = new BBox(3604, 296800, 287959, 629300);
-
-  private static final ArrayList<HexagonZoomLevel> hexagonZoomLevels = createZoomLevels();
-  private static final ReceptorGridSettings RGS = new ReceptorGridSettings(RECEPTOR_BBOX, EPSG.RDNEW, 1529, hexagonZoomLevels);
-  private static final ReceptorUtil RECEPTOR_UTIL = new ReceptorUtil(RGS);
+  private static final ReceptorUtil RECEPTOR_UTIL = new ReceptorUtil(ReceptorGridSettings.NL);
+  private static final HexagonZoomLevel ZOOM_LEVEL_1 = ReceptorGridSettings.NL.getZoomLevel1();
 
   @Test
   void testRPFromAndToRandom() {
@@ -91,16 +84,6 @@ class ReceptorUtilTest {
       Assertions.assertEquals(r4.getX(), r4.getX(), ZOOM_LEVEL_1.getHexagonRadius(), "Random check for values X coord (exact)");
       Assertions.assertEquals(r4.getY(), r4.getY(), ZOOM_LEVEL_1.getHexagonHeight() / 2, "Random check for values Y coord (exact)");
     }
-  }
-
-  private static ArrayList<HexagonZoomLevel> createZoomLevels() {
-    final ArrayList<HexagonZoomLevel> zoomLevels = new ArrayList<>();
-    zoomLevels.add(ZOOM_LEVEL_1);
-    zoomLevels.add(new HexagonZoomLevel(2, 40_000));
-    zoomLevels.add(new HexagonZoomLevel(3, 160_000));
-    zoomLevels.add(new HexagonZoomLevel(4, 640_000));
-    zoomLevels.add(new HexagonZoomLevel(5, 2_560_000));
-    return zoomLevels;
   }
 
   @Test
@@ -184,8 +167,8 @@ class ReceptorUtilTest {
 
     for (int i = 2; i < 5; i++) {
       final HexagonZoomLevel zoomLevel = new HexagonZoomLevel(i, ZOOM_LEVEL_1.getSurfaceLevel1());
-      assertTrue(RECEPTOR_UTIL.isReceptorAtZoomLevel(inPoint, zoomLevel), "Point should be return as a receptor at zoomLevel " + i);
-      assertFalse(RECEPTOR_UTIL.isReceptorAtZoomLevel(outPoint, zoomLevel), "Point should be return not as a receptor at zoomLevel " + i);
+      assertTrue(RECEPTOR_UTIL.isReceptorAtZoomLevel(inPoint, zoomLevel), "Point should return as a receptor at zoomLevel " + i);
+      assertFalse(RECEPTOR_UTIL.isReceptorAtZoomLevel(outPoint, zoomLevel), "Point should not return as a receptor at zoomLevel " + i);
     }
   }
 

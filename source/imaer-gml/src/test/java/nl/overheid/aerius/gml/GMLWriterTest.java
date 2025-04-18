@@ -86,12 +86,10 @@ class GMLWriterTest {
   private static final String SITUATION_REFERENCE = "SomeReference001";
   private static final SituationType SITUATION_TYPE = SituationType.PROPOSED;
 
-  private static final ReceptorGridSettings RECEPTOR_GRID_SETTINGS = GMLTestDomain.getExampleGridSettings();
-
   @ParameterizedTest
   @ValueSource(strings = {SOURCES_ONLY_FILE, SOURCES_ONLY_FILE_UNFORMATTED})
   void testConvertSources(final String gmlFilename) throws IOException, AeriusException {
-    final GMLWriter builder = new GMLWriter(RECEPTOR_GRID_SETTINGS, GMLTestDomain.TEST_REFERENCE_GENERATOR);
+    final GMLWriter builder = new GMLWriter(ReceptorGridSettings.NL, GMLTestDomain.TEST_REFERENCE_GENERATOR);
     builder.setFormattedOutput(SOURCES_ONLY_FILE.equals(gmlFilename));
     final List<EmissionSourceFeature> sources = getExampleEmissionSources();
     final String result = getConversionResult(builder, sources);
@@ -108,7 +106,7 @@ class GMLWriterTest {
 
   @Test
   void testConvertInvalidSources() throws IOException, AeriusException {
-    final GMLWriter converter = new GMLWriter(RECEPTOR_GRID_SETTINGS, GMLTestDomain.TEST_REFERENCE_GENERATOR);
+    final GMLWriter converter = new GMLWriter(ReceptorGridSettings.NL, GMLTestDomain.TEST_REFERENCE_GENERATOR);
     final List<EmissionSourceFeature> sources1 = getExampleEmissionSources();
     sources1.get(0).setGeometry(null);
 
@@ -126,7 +124,7 @@ class GMLWriterTest {
 
   @Test
   void testConvertMetaData() throws IOException, AeriusException {
-    final GMLWriter writer = new GMLWriter(RECEPTOR_GRID_SETTINGS, r -> Optional.of("test"));
+    final GMLWriter writer = new GMLWriter(ReceptorGridSettings.NL, r -> Optional.of("test"));
     final ScenarioMetaData metaData = getScenarioMetaData();
     final String originalReference = SITUATION_REFERENCE;
     final List<EmissionSourceFeature> sourceList = new ArrayList<>();
@@ -240,7 +238,7 @@ class GMLWriterTest {
     metaDataInput.setReference(null);
     metaDataInput.setSituationType(null);
     metaDataInput.setResultsIncluded(true);
-    final GMLWriter writer = new GMLWriter(RECEPTOR_GRID_SETTINGS, GMLTestDomain.TEST_REFERENCE_GENERATOR);
+    final GMLWriter writer = new GMLWriter(ReceptorGridSettings.NL, GMLTestDomain.TEST_REFERENCE_GENERATOR);
     if (ConvertReceptorsOptions.NO_REPRESENTATION.in(options)) {
       writer.setNoReceptorRepresentation();
     }
@@ -369,7 +367,7 @@ class GMLWriterTest {
 
   @Test
   void testConvertMixedFeatures() throws IOException, AeriusException {
-    final GMLWriter builder = new GMLWriter(RECEPTOR_GRID_SETTINGS, GMLTestDomain.TEST_REFERENCE_GENERATOR);
+    final GMLWriter builder = new GMLWriter(ReceptorGridSettings.NL, GMLTestDomain.TEST_REFERENCE_GENERATOR);
     final List<EmissionSourceFeature> emissionSources = getExampleEmissionSources();
     final ArrayList<CalculationPointFeature> receptors = getExampleAeriusPoints(true, false, false);
     String result;
