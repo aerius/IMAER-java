@@ -31,7 +31,7 @@ public enum ReceptorGridSettings {
   /**
    * The Netherlands
    */
-  NL(EPSG.RDNEW, 1529, 5, 10_000, new BBox(3604.0, 296800.0, 287959.0, 629300.0)),
+  NL(EPSG.RDNEW, 1529, 5, 10_000, new BBox(3_604.0, 296_800.0, 287_959.0, 629_300.0)),
   /**
    * United Kingdom
    */
