@@ -19,6 +19,7 @@ package nl.overheid.aerius.shared.domain.v2.building;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
@@ -35,10 +36,12 @@ import nl.overheid.aerius.shared.domain.v2.characteristics.adms.ADMSLimits;
 })
 public interface BuildingLimits extends Serializable {
 
+  @JsonIgnore
   default boolean isCircularBuildingSupported() {
     return false;
   }
 
+  @JsonIgnore
   default boolean isBuildingUpperLimitWarning() {
     return false;
   }
