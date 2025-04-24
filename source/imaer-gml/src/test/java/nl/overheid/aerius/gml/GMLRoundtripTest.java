@@ -47,7 +47,6 @@ import nl.overheid.aerius.importer.ImportOption;
 import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.Theme;
 import nl.overheid.aerius.shared.domain.calculation.CalculationSetOptions;
-import nl.overheid.aerius.shared.domain.geo.ReceptorGridSettings;
 import nl.overheid.aerius.shared.domain.result.EmissionResultKey;
 import nl.overheid.aerius.shared.domain.result.EmissionResultType;
 import nl.overheid.aerius.shared.domain.scenario.SituationType;
@@ -260,7 +259,7 @@ class GMLRoundtripTest {
       final AeriusGMLVersion targetGMLVersion) {
     try {
       final ImportParcel result = getImportResult(versionString, TEST_FOLDER, file, ct, file.contains("archive"));
-      final GMLWriter gmlc = new GMLWriter(ReceptorGridSettings.NL, GMLTestDomain.TEST_REFERENCE_GENERATOR, targetGMLVersion);
+      final GMLWriter gmlc = new GMLWriter(GMLTestDomain.getExampleGridSettings(), GMLTestDomain.TEST_REFERENCE_GENERATOR, targetGMLVersion);
       revertAutoCorrections(result);
       final GMLScenario scenario = GMLScenario.Builder
           .create(result, result.getSituation())

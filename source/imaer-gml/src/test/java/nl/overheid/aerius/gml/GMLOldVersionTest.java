@@ -45,13 +45,13 @@ import org.slf4j.LoggerFactory;
 import nl.overheid.aerius.gml.base.AeriusGMLVersion;
 import nl.overheid.aerius.gml.base.MetaDataInput;
 import nl.overheid.aerius.shared.domain.Substance;
-import nl.overheid.aerius.shared.domain.geo.ReceptorGridSettings;
 import nl.overheid.aerius.shared.domain.scenario.SituationType;
 import nl.overheid.aerius.shared.domain.v2.importer.ImportParcel;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceFeature;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
+import nl.overheid.aerius.test.GMLTestDomain;
 
 /**
  * Test class that reads an old version GML and compares it to the current version of that same GML.
@@ -179,7 +179,7 @@ class GMLOldVersionTest {
       }
     }
     //for good measure, try to export to a current-gen version
-    final GMLWriter writer = new GMLWriter(ReceptorGridSettings.NL, r -> Optional.empty());
+    final GMLWriter writer = new GMLWriter(GMLTestDomain.getExampleGridSettings(), r -> Optional.empty());
     try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
       writer.writeEmissionSources(bos, oldSources, getMetaDataInput(oldResult));
     }

@@ -95,6 +95,8 @@ public final class AssertGML {
 
   private static final String REGEX_FEATURE_COLLECTION_ELEMENT = "<imaer:FeatureCollectionCalculator[^>]*>";
 
+  private static final ReceptorGridSettings RECEPTOR_GRID_SETTINGS = GMLTestDomain.getExampleGridSettings();
+
   /**
    * Due to {@link GMLReaderFactory}'s instance aproach, we need to keep a static reference to the current characteristics type.
    */
@@ -199,7 +201,7 @@ public final class AssertGML {
   static GMLHelper mockGMLHelper(final CharacteristicsType ct) throws AeriusException {
     final GMLHelper gmlHelper = mock(GMLHelper.class);
     currentCharacteristicsType = ct;
-    when(gmlHelper.getReceptorGridSettings()).thenReturn(ReceptorGridSettings.NL);
+    when(gmlHelper.getReceptorGridSettings()).thenReturn(RECEPTOR_GRID_SETTINGS);
     mockEmissionSourceGeometryLimits(gmlHelper);
     when(gmlHelper.getCharacteristicsType()).thenAnswer((i) -> currentCharacteristicsType);
     final TestValidationAndEmissionHelper valiationAndEmissionHelper = new TestValidationAndEmissionHelper(
