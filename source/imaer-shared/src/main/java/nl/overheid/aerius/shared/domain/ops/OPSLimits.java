@@ -443,6 +443,7 @@ public final class OPSLimits implements BuildingLimits {
   public static final OPSLimits INSTANCE = new OPSLimits();
 
   private OPSLimits() {
+    // Static constants class.
   }
 
   @Override

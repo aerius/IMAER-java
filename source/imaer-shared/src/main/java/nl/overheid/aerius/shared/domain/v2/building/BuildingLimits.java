@@ -19,9 +19,20 @@ package nl.overheid.aerius.shared.domain.v2.building;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
+import nl.overheid.aerius.shared.domain.ops.OPSLimits;
+import nl.overheid.aerius.shared.domain.v2.characteristics.adms.ADMSLimits;
+
 /**
  * Interface for Building limits.
  */
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = ADMSLimits.class, name = "adms"),
+    @JsonSubTypes.Type(value = OPSLimits.class, name = "ops")
+})
 public interface BuildingLimits extends Serializable {
 
   default boolean isCircularBuildingSupported() {
