@@ -557,7 +557,6 @@ public enum ImaerExceptionReason implements Reason {
    */
   GEOMETRY_TOO_MANY_VERTICES(5271),
 
-
   // Cohesion (between files) errors.
 
   /**
@@ -585,6 +584,18 @@ public enum ImaerExceptionReason implements Reason {
    * @param 1 the road segment (source) id of the duplicate dispersion line.
    */
   COHESION_DUPLICATE_DISPERSION_LINES(5504),
+  /**
+   * Duplicate building IDs found.
+   *
+   * @param 0 the id that was duplicate.
+   */
+  COHESION_DUPLICATE_BUILDING_IDS(5505),
+  /**
+   * Duplicate time varying profile IDs found.
+   *
+   * @param 0 the id that was duplicate.
+   */
+  COHESION_DUPLICATE_TIME_VARYING_PROFILE_IDS(5506),
   /**
    * Missing a road referenced by dispersion line.
    *
@@ -625,6 +636,13 @@ public enum ImaerExceptionReason implements Reason {
    * @param 0 ID of the building that was referred but not found.
    */
   COHESION_REFERENCE_MISSING_BUILDING(5521),
+
+  /**
+   * Missing a time varying profile referenced by source (characteristics).
+   *
+   * @param 0 ID of the time varying profile that was referred but not found.
+   */
+  COHESION_REFERENCE_MISSING_TIME_VARYING_PROFILE(5522),
 
   /**
    * Buildingheight is 0.
