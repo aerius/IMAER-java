@@ -500,6 +500,61 @@ public enum ImaerExceptionReason implements Reason {
    */
   GML_UNKNOWN_COLD_START_CATEGORY(5239),
   /**
+   * Buildingheight is 0.
+   *
+   * @param 0 Label of the building that has height = 0.
+   */
+  BUILDING_HEIGHT_ZERO(5241),
+
+  /**
+   * Buildingheight is too low.
+   *
+   * @param 0 Label of the building that has too low a height (model-dependent).
+   */
+  BUILDING_HEIGHT_TOO_LOW(5242),
+
+  /**
+   * Circular building with a incorrect diameter (negative or 0).
+   *
+   * @param 0 Label of the circular building that has an incorrect diameter.
+   */
+  CIRCULAR_BUILDING_INCORRECT_DIAMETER(5243),
+
+  /**
+   * Buildingheight is too high.
+   *
+   * @param 0 Label of the building that has too high a height (model-dependent).
+   */
+  BUILDING_HEIGHT_TOO_HIGH(5244),
+
+  /**
+   * There are more buildings in a situation than the maximum
+   *
+   * @param 0 The maximum number of allowed buildings
+   */
+  TOO_MANY_BUILDINGS_IN_SITUATION(5245),
+
+  /**
+   * Value is <= 0.
+   *
+   * @param 0 Label of the object that has an unexpected negative value.
+   */
+  UNEXPECTED_NEGATIVE_VALUE(5251),
+  /**
+   * Fraction value is unexpected: it is either negative or higher than 1.
+   *
+   * @param 0 Label of the object that has an unexpected fraction value.
+   */
+  UNEXPECTED_FRACTION_VALUE(5252),
+
+  /**
+   * Warning: the emission values of a subsource are zero.
+   *
+   * @param 0 The label of the source that has a subsource with zero emissions.
+   */
+  SUB_SOURCE_NO_EMISSION(5253),
+
+  /**
    * GML contains a unknown animal housing code.
    *
    * @param 0 the id of the object containing the error.
@@ -643,61 +698,6 @@ public enum ImaerExceptionReason implements Reason {
    * @param 0 ID of the time varying profile that was referred but not found.
    */
   COHESION_REFERENCE_MISSING_TIME_VARYING_PROFILE(5522),
-
-  /**
-   * Buildingheight is 0.
-   *
-   * @param 0 Label of the building that has height = 0.
-   */
-  BUILDING_HEIGHT_ZERO(5241),
-
-  /**
-   * Buildingheight is too low.
-   *
-   * @param 0 Label of the building that has too low a height (model-dependent).
-   */
-  BUILDING_HEIGHT_TOO_LOW(5242),
-
-  /**
-   * Circular building with a incorrect diameter (negative or 0).
-   *
-   * @param 0 Label of the circular building that has an incorrect diameter.
-   */
-  CIRCULAR_BUILDING_INCORRECT_DIAMETER(5243),
-
-  /**
-   * Buildingheight is too high.
-   *
-   * @param 0 Label of the building that has too high a height (model-dependent).
-   */
-  BUILDING_HEIGHT_TOO_HIGH(5244),
-
-  /**
-   * There are more buildings in a situation than the maximum
-   *
-   * @param 0 The maximum number of allowed buildings
-   */
-  TOO_MANY_BUILDINGS_IN_SITUATION(5245),
-
-  /**
-   * Value is <= 0.
-   *
-   * @param 0 Label of the object that has an unexpected negative value.
-   */
-  UNEXPECTED_NEGATIVE_VALUE(5251),
-  /**
-   * Fraction value is unexpected: it is either negative or higher than 1.
-   *
-   * @param 0 Label of the object that has an unexpected fraction value.
-   */
-  UNEXPECTED_FRACTION_VALUE(5252),
-
-  /**
-   * Warning: the emission values of a subsource are zero.
-   *
-   * @param 0 The label of the source that has a subsource with zero emissions.
-   */
-  SUB_SOURCE_NO_EMISSION(5253),
 
   // SRM related errors.
 

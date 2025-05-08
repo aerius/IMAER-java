@@ -26,8 +26,6 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 import nl.overheid.aerius.shared.domain.v2.building.Building;
 import nl.overheid.aerius.shared.domain.v2.building.BuildingFeature;
@@ -44,7 +42,6 @@ import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 /**
  * Tests for {@link SituationCohesionValidator}
  */
-@ExtendWith(MockitoExtension.class)
 class SituationCohesionValidatorTest {
 
   private static final String HOURLY_PROFILE_ID = "hourly-id";
