@@ -29,9 +29,9 @@
   <packaging>war</packaging>
 
   <properties>
-    <tomcat-standalone.version>1.2.6</tomcat-standalone.version>
+    <tomcat-standalone.version>1.2.8</tomcat-standalone.version>
   </properties>
-  
+
   <!-- Ensure correct tomcat dependencies get used for standalone, rather than what spring boot adds in root pom -->
   <dependencyManagement>
     <dependencies>
