@@ -26,6 +26,7 @@ import nl.overheid.aerius.gml.base.IsGmlProperty;
 import nl.overheid.aerius.gml.base.characteristics.GML2SourceCharacteristics;
 import nl.overheid.aerius.gml.base.geo.GML2Geometry;
 import nl.overheid.aerius.gml.base.source.IsGmlEmission;
+import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceFeature;
 import nl.overheid.aerius.shared.domain.v2.source.GenericEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.OffRoadMobileEmissionSource;
@@ -98,15 +99,16 @@ public class GML2OffRoad<T extends IsGmlOffRoadMobileEmissionSource> extends Abs
     final int sectorId = getConversionData().getSectorId(source.getSectorId(), source.getLabel());
     newSource.setSectorId(sectorId);
     newSource.setLabel(constructLabel(source.getLabel(), customMobileSource.getDescription()));
+    final Geometry geometry = gml2Geometry.getGeometry(source);
     newSource.setCharacteristics(gml2SourceCharacteristics.fromGML(customMobileSource.getCharacteristics(),
-        getConversionData().determineDefaultCharacteristicsBySectorId(sectorId), null));
+        getConversionData().determineDefaultCharacteristicsBySectorId(sectorId, geometry.type()), null));
     for (final IsGmlProperty<IsGmlEmission> emissionProperty : customMobileSource.getEmissions()) {
       final IsGmlEmission emission = emissionProperty.getProperty();
       newSource.getEmissions().put(emission.getSubstance(), emission.getValue());
     }
     final EmissionSourceFeature feature = new EmissionSourceFeature();
     feature.setProperties(newSource);
-    feature.setGeometry(gml2Geometry.getGeometry(source));
+    feature.setGeometry(geometry);
     getConversionData().getExtraSources().add(feature);
   }
 
