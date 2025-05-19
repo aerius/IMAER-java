@@ -18,6 +18,7 @@ package nl.overheid.aerius.gml.base;
 
 import nl.overheid.aerius.shared.domain.v2.characteristics.CharacteristicsType;
 import nl.overheid.aerius.shared.domain.v2.characteristics.SourceCharacteristics;
+import nl.overheid.aerius.shared.domain.v2.geojson.GeometryType;
 
 /**
  * Supplier for Source characteristics.
@@ -26,8 +27,20 @@ public interface GMLCharacteristicsSupplier {
 
   /**
    * Determine the default characteristics for a sector (based on AERIUS sector ID).
+   *
+   * @deprecated use/implement the version with geometry type, this version will be removed in a future version
    */
-  <S extends SourceCharacteristics> S determineDefaultCharacteristicsBySectorId(int sectorId);
+  @Deprecated
+  default <S extends SourceCharacteristics> S determineDefaultCharacteristicsBySectorId(final int sectorId) {
+    return null;
+  }
+
+  /**
+   * Determine the default characteristics for a sector (based on AERIUS sector ID and geometry type).
+   */
+  default <S extends SourceCharacteristics> S determineDefaultCharacteristicsBySectorId(final int sectorId, final GeometryType geometryType) {
+    return determineDefaultCharacteristicsBySectorId(sectorId);
+  }
 
   /**
    * @return returns the data type of the characteristics.
