@@ -16,11 +16,14 @@
  */
 package nl.overheid.aerius.shared.domain.v2.characteristics.adms;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import nl.overheid.aerius.shared.domain.v2.building.BuildingLimits;
 
 /**
  * Class of ADMS minimum, maximum and default values.
  */
+@JsonSerialize(as = BuildingLimits.class)
 public final class ADMSLimits implements BuildingLimits {
 
   private static final long serialVersionUID = 1L;
