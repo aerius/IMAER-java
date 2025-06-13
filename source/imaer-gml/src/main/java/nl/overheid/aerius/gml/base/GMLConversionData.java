@@ -205,6 +205,9 @@ public class GMLConversionData {
     case OFF_ROAD_MOBILE_SOURCE:
       reason = ImaerExceptionReason.GML_OFF_ROAD_CATEGORY_CONVERTED;
       break;
+    case SECTOR:
+      reason = ImaerExceptionReason.GML_SECTOR_OUT_OF_DATE;
+      break;
     default:
       reason = ImaerExceptionReason.GML_INVALID_CATEGORY_MATCH;
       break;

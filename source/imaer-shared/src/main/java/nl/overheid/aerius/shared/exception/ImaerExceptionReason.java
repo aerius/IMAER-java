@@ -606,6 +606,14 @@ public enum ImaerExceptionReason implements Reason {
    */
   GML_CONVERTED_LODGING_TO_CUSTOM(5265),
   /**
+  * GML contains a source with a sector only supported in an older version of AERIUS. The outdated sector ID has been converted to the new supported sector ID.
+  *
+  * @param 0 old sector ID
+  * @param 1 new sector ID
+  * @param 2 source name
+  */
+  GML_SECTOR_OUT_OF_DATE(5266),
+  /**
    * Geometry contains too many vertices.
    *
    * @param 0 the ID of the source with too many vertices.
