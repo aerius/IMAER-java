@@ -23,11 +23,8 @@ import nl.overheid.aerius.gml.base.AbstractGML2Specific;
 import nl.overheid.aerius.gml.base.GMLConversionData;
 import nl.overheid.aerius.gml.base.IsGmlProperty;
 import nl.overheid.aerius.gml.base.characteristics.GML2SourceCharacteristics;
-import nl.overheid.aerius.gml.base.characteristics.IsGmlHeatContent;
-import nl.overheid.aerius.gml.base.characteristics.IsGmlSpecifiedHeatContent;
 import nl.overheid.aerius.gml.base.geo.GML2Geometry;
 import nl.overheid.aerius.gml.base.source.IsGmlEmission;
-import nl.overheid.aerius.shared.domain.v2.characteristics.OPSSourceCharacteristics;
 import nl.overheid.aerius.shared.domain.v2.source.OffRoadMobileEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.offroad.CustomOffRoadMobileSource;
 import nl.overheid.aerius.shared.domain.v2.source.offroad.OffRoadMobileSource;
@@ -88,13 +85,8 @@ public class GML2OffRoad<T extends IsGmlOffRoadMobileEmissionSource> extends Abs
     final CustomOffRoadMobileSource customVehicleEmissionValues = new CustomOffRoadMobileSource();
     customVehicleEmissionValues.setDescription(customMobileSource.getDescription());
 
-    final OPSSourceCharacteristics opsCharacteristics = new OPSSourceCharacteristics();
-    final IsGmlHeatContent gmlHeatContent = customMobileSource.getCharacteristics().getHeatContent();
-    opsCharacteristics.setEmissionHeight(customMobileSource.getCharacteristics().getEmissionHeight());
-    opsCharacteristics.setHeatContent(((IsGmlSpecifiedHeatContent) gmlHeatContent).getValue());
-    opsCharacteristics.setSpread(customMobileSource.getCharacteristics().getSpread());
-
-    customVehicleEmissionValues.setCharacteristics(opsCharacteristics);
+    customVehicleEmissionValues.setCharacteristics(gml2SourceCharacteristics.fromGML(customMobileSource.getCharacteristics(),
+        null, null));
 
     for (final IsGmlProperty<IsGmlEmission> emissionProperty : customMobileSource.getEmissions()) {
       final IsGmlEmission emission = emissionProperty.getProperty();

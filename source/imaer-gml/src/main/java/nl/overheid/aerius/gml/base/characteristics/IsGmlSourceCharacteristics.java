@@ -21,10 +21,4 @@ package nl.overheid.aerius.gml.base.characteristics;
  */
 public interface IsGmlSourceCharacteristics {
 
-  IsGmlHeatContent getHeatContent();
-
-  double getEmissionHeight();
-
-  Double getSpread();
-
 }
