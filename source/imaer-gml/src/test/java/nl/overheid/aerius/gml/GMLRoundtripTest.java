@@ -109,6 +109,7 @@ class GMLRoundtripTest {
       {"offroad_idle_and_nh3", CharacteristicsType.OPS, EnumSet.of(ImaerExceptionReason.GML_OFF_ROAD_CATEGORY_CONVERTED)},
       {"offroad_non_idle", CharacteristicsType.OPS, EnumSet.of(ImaerExceptionReason.GML_OFF_ROAD_CATEGORY_CONVERTED)},
       {"offroad_adblue", CharacteristicsType.OPS},
+      {"offroad_standard_and_custom", CharacteristicsType.OPS},
       {"plan", CharacteristicsType.OPS,},
       {"road", CharacteristicsType.OPS,},
       {"road_non_urban", CharacteristicsType.OPS,},
