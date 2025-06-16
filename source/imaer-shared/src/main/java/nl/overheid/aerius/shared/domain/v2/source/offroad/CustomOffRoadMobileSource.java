@@ -16,19 +16,19 @@
  */
 package nl.overheid.aerius.shared.domain.v2.source.offroad;
 
-import nl.overheid.aerius.shared.domain.v2.characteristics.SourceCharacteristics;
+import nl.overheid.aerius.shared.domain.v2.characteristics.OPSSourceCharacteristics;
 
 public class CustomOffRoadMobileSource extends OffRoadMobileSource {
 
   private static final long serialVersionUID = 2L;
 
-  private SourceCharacteristics characteristics;
+  private OPSSourceCharacteristics characteristics;
 
-  public SourceCharacteristics getCharacteristics() {
+  public OPSSourceCharacteristics getCharacteristics() {
     return characteristics;
   }
 
-  public void setCharacteristics(final SourceCharacteristics characteristics) {
+  public void setCharacteristics(final OPSSourceCharacteristics characteristics) {
     this.characteristics = characteristics;
   }
 
