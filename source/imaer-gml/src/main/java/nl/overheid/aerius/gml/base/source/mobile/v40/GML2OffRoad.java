@@ -23,12 +23,13 @@ import nl.overheid.aerius.gml.base.AbstractGML2Specific;
 import nl.overheid.aerius.gml.base.GMLConversionData;
 import nl.overheid.aerius.gml.base.IsGmlProperty;
 import nl.overheid.aerius.gml.base.characteristics.GML2SourceCharacteristics;
+import nl.overheid.aerius.gml.base.characteristics.IsGmlHeatContent;
+import nl.overheid.aerius.gml.base.characteristics.IsGmlSpecifiedHeatContent;
 import nl.overheid.aerius.gml.base.geo.GML2Geometry;
 import nl.overheid.aerius.gml.base.source.IsGmlEmission;
-import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
-import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceFeature;
-import nl.overheid.aerius.shared.domain.v2.source.GenericEmissionSource;
+import nl.overheid.aerius.shared.domain.v2.characteristics.OPSSourceCharacteristics;
 import nl.overheid.aerius.shared.domain.v2.source.OffRoadMobileEmissionSource;
+import nl.overheid.aerius.shared.domain.v2.source.offroad.CustomOffRoadMobileSource;
 import nl.overheid.aerius.shared.domain.v2.source.offroad.OffRoadMobileSource;
 import nl.overheid.aerius.shared.domain.v2.source.offroad.StandardOffRoadMobileSource;
 import nl.overheid.aerius.shared.exception.AeriusException;
@@ -54,8 +55,7 @@ public class GML2OffRoad<T extends IsGmlOffRoadMobileEmissionSource> extends Abs
   }
 
   @Override
-  public OffRoadMobileEmissionSource convert(final T source)
-      throws AeriusException {
+  public OffRoadMobileEmissionSource convert(final T source) throws AeriusException {
     final OffRoadMobileEmissionSource emissionSource = new OffRoadMobileEmissionSource();
 
     for (final IsGmlProperty<IsGmlOffRoadMobileSource> offRoadMobileSourceProperty : source.getOffRoadMobileSources()) {
@@ -63,15 +63,13 @@ public class GML2OffRoad<T extends IsGmlOffRoadMobileEmissionSource> extends Abs
       if (offRoadMobileSource instanceof IsGmlStandardOffRoadMobileSource) {
         emissionSource.getSubSources().add(convert((IsGmlStandardOffRoadMobileSource) offRoadMobileSource));
       } else if (offRoadMobileSource instanceof IsGmlCustomOffRoadMobileSource) {
-        convert(source, (IsGmlCustomOffRoadMobileSource) offRoadMobileSource,
-            source.getOffRoadMobileSources().indexOf(offRoadMobileSourceProperty));
+        emissionSource.getSubSources().add(convert((IsGmlCustomOffRoadMobileSource) offRoadMobileSource));
       } else {
         LOG.error("Don't know how to treat offroad mobile source type: {}", offRoadMobileSource.getClass());
         throw new AeriusException(ImaerExceptionReason.INTERNAL_ERROR);
       }
     }
 
-    // If all subsources were custom, no subsources will be left and there is no point in returning the emission source.
     return emissionSource.getSubSources().isEmpty() ? null : emissionSource;
   }
 
@@ -86,27 +84,24 @@ public class GML2OffRoad<T extends IsGmlOffRoadMobileEmissionSource> extends Abs
     return vehicleEmissionValues;
   }
 
-  private void convert(final T source, final IsGmlCustomOffRoadMobileSource customMobileSource, final int index) throws AeriusException {
-    final GenericEmissionSource newSource = new GenericEmissionSource();
-    newSource.setGmlId(source.getId() + "_" + index);
-    final int sectorId = getConversionData().getSectorId(source.getSectorId(), source.getLabel());
-    newSource.setSectorId(sectorId);
-    newSource.setLabel(constructLabel(source.getLabel(), customMobileSource.getDescription()));
-    final Geometry geometry = gml2Geometry.getGeometry(source);
-    newSource.setCharacteristics(gml2SourceCharacteristics.fromGML(customMobileSource.getCharacteristics(),
-        getConversionData().determineDefaultCharacteristicsBySectorId(sectorId, geometry.type()), null));
+  private OffRoadMobileSource convert(final IsGmlCustomOffRoadMobileSource customMobileSource) throws AeriusException {
+    final CustomOffRoadMobileSource customVehicleEmissionValues = new CustomOffRoadMobileSource();
+    customVehicleEmissionValues.setDescription(customMobileSource.getDescription());
+
+    final OPSSourceCharacteristics opsCharacteristics = new OPSSourceCharacteristics();
+    final IsGmlHeatContent gmlHeatContent = customMobileSource.getCharacteristics().getHeatContent();
+    opsCharacteristics.setEmissionHeight(customMobileSource.getCharacteristics().getEmissionHeight());
+    opsCharacteristics.setHeatContent(((IsGmlSpecifiedHeatContent) gmlHeatContent).getValue());
+    opsCharacteristics.setSpread(customMobileSource.getCharacteristics().getSpread());
+
+    customVehicleEmissionValues.setCharacteristics(opsCharacteristics);
+
     for (final IsGmlProperty<IsGmlEmission> emissionProperty : customMobileSource.getEmissions()) {
       final IsGmlEmission emission = emissionProperty.getProperty();
-      newSource.getEmissions().put(emission.getSubstance(), emission.getValue());
+      customVehicleEmissionValues.getEmissions().put(emission.getSubstance(), emission.getValue());
     }
-    final EmissionSourceFeature feature = new EmissionSourceFeature();
-    feature.setProperties(newSource);
-    feature.setGeometry(geometry);
-    getConversionData().getExtraSources().add(feature);
-  }
 
-  private String constructLabel(final String sourceLabel, final String subSourceDescription) {
-    return constructLabelOf(sourceLabel, subSourceDescription);
+    return customVehicleEmissionValues;
   }
 
 }

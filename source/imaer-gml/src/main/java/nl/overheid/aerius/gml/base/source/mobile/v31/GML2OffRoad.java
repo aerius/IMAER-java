@@ -71,7 +71,6 @@ public class GML2OffRoad<T extends IsGmlOffRoadMobileEmissionSource> extends Abs
       }
     }
 
-    // If all subsources were custom, no subsources will be left and there is no point in returning the emission source.
     return emissionSource.getSubSources().isEmpty() ? null : emissionSource;
   }
 
@@ -104,7 +103,7 @@ public class GML2OffRoad<T extends IsGmlOffRoadMobileEmissionSource> extends Abs
     opsCharacteristics.setSpread(customMobileSource.getCharacteristics().getSpread());
 
     customVehicleEmissionValues.setCharacteristics(opsCharacteristics);
-    
+
     for (final IsGmlProperty<IsGmlEmission> emissionProperty : customMobileSource.getEmissions()) {
       final IsGmlEmission emission = emissionProperty.getProperty();
       customVehicleEmissionValues.getEmissions().put(emission.getSubstance(), emission.getValue());
