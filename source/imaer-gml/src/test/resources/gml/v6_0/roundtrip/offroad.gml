@@ -11,6 +11,7 @@
             <imaer:situation>
                 <imaer:SituationMetadata>
                     <imaer:name>Situatie 1</imaer:name>
+                    <imaer:reference>RpN7o3P6EDZv</imaer:reference>
                     <imaer:situationType>PROPOSED</imaer:situationType>
                 </imaer:SituationMetadata>
             </imaer:situation>
