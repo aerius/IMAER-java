@@ -84,7 +84,6 @@ public class GML2OffRoad<T extends IsGmlOffRoadMobileEmissionSource> extends Abs
   private OffRoadMobileSource convert(final IsGmlCustomOffRoadMobileSource customMobileSource) throws AeriusException {
     final CustomOffRoadMobileSource customVehicleEmissionValues = new CustomOffRoadMobileSource();
     customVehicleEmissionValues.setDescription(customMobileSource.getDescription());
-
     customVehicleEmissionValues.setCharacteristics(gml2SourceCharacteristics.fromGML(customMobileSource.getCharacteristics(),
         null, null));
 
