@@ -170,6 +170,11 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
       new OffRoadOldCodesHelper("S2F", "SII75560DSN", 19.54),
       new OffRoadOldCodesHelper("SVM4C30", "B4T", 2.44),
       new OffRoadOldCodesHelper("P1980", "SI75560DSN", 19.54));
+  
+  private static final List<String> OFF_ROAD_MOBILE_SOURCE_OLD_SECTOR_IDS = Arrays.asList(
+      "3210", "3220", "3530");
+  
+  private static final String OFF_ROAD_MOBILE_SOURCE_NEW_SECTOR_ID = "3300";
 
   private static final List<GenericConstructHelper> OLD_PLAN_CATEGORIES = Arrays.asList(
       new GenericConstructHelper("PHA", new EmissionHelper(1.10997, 0.0)),
@@ -461,6 +466,14 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
     sectorConversions.put("3113", new Conversion("3100", false));
     legacyCodes.put(GMLLegacyCodeType.SECTOR, sectorConversions);
     return legacyCodes;
+  }
+  
+  public static Map<String, Conversion> legacySectorIds() {
+    final Map<String, Conversion> sectorConversions = new HashMap<>();
+    OFF_ROAD_MOBILE_SOURCE_OLD_SECTOR_IDS.forEach(sectorId -> {
+      sectorConversions.put(sectorId, new Conversion(OFF_ROAD_MOBILE_SOURCE_NEW_SECTOR_ID, false));
+    });
+    return sectorConversions;
   }
 
   public static Map<String, MobileSourceOffRoadConversion> legacyMobileSourceOffRoadConversions() {

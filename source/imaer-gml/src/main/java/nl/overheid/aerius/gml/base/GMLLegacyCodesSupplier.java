@@ -42,6 +42,14 @@ public interface GMLLegacyCodesSupplier {
   Map<GMLLegacyCodeType, Map<String, Conversion>> getLegacyCodes(AeriusGMLVersion version) throws AeriusException;
 
   /**
+   * Returns a map with old sector IDs and the new replacing sector ID.
+   *
+   * @return mapping of the sector IDs
+   * @throws AeriusException
+   */
+  Map<String, Conversion> legacySectorIds() throws AeriusException;
+  
+  /**
    * Returns a map with old codes and the values to use for conversion for old offroad mobile sources.
    *
    * @return mapping of the codes

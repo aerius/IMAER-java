@@ -215,6 +215,7 @@ public final class AssertGML {
     }).when(gmlHelper).enforceEmissions(anyInt(), any());
     when(gmlHelper.suggestInlandShippingWaterway(any())).thenAnswer(invocation -> suggest((Geometry) invocation.getArgument(0)));
     when(gmlHelper.getLegacyCodes(any())).thenReturn(TestValidationAndEmissionHelper.legacyCodes());
+    when(gmlHelper.legacySectorIds()).thenReturn(TestValidationAndEmissionHelper.legacySectorIds());
     when(gmlHelper.getLegacyMobileSourceOffRoadConversions()).thenReturn(TestValidationAndEmissionHelper.legacyMobileSourceOffRoadConversions());
     when(gmlHelper.getLegacyPlanConversions()).thenReturn(TestValidationAndEmissionHelper.legacyPlanConversions());
     when(gmlHelper.getLegacyFarmLodgingConversions()).thenReturn(TestValidationAndEmissionHelper.legacyFarmLodgingConversions());
