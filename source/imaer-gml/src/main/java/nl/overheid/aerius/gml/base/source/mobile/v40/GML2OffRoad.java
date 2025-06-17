@@ -81,6 +81,7 @@ public class GML2OffRoad<T extends IsGmlOffRoadMobileEmissionSource> extends Abs
     return vehicleEmissionValues;
   }
 
+  @SuppressWarnings("unchecked")
   private OffRoadMobileSource convert(final IsGmlCustomOffRoadMobileSource customMobileSource) throws AeriusException {
     final CustomOffRoadMobileSource customVehicleEmissionValues = new CustomOffRoadMobileSource();
     customVehicleEmissionValues.setDescription(customMobileSource.getDescription());
