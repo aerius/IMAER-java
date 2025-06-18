@@ -109,6 +109,11 @@ class GMLValidateWarningsTest {
     assertResult("warning_1005_limit_polygon_surface_exceeded", "GML polygon surface exceeds limit",
         ImaerExceptionReason.LIMIT_POLYGON_SURFACE_EXCEEDED);
   }
+  
+  @Test
+  void testOldOffRoadMobileSector() throws IOException, AeriusException {
+    assertResult("warning_5266_sector_out_of_date", "GML source sector is out of date", ImaerExceptionReason.GML_SECTOR_OUT_OF_DATE);
+  }
 
   private static void assertResult(final String fileName, final String expectedReasonTxt, final Reason expectedReason)
       throws IOException, AeriusException {
