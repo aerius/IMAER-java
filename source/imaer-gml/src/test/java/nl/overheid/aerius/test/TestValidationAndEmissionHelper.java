@@ -464,6 +464,7 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
     sectorConversions.put("3111", new Conversion("3100", false));
     sectorConversions.put("3112", new Conversion("3100", false));
     sectorConversions.put("3113", new Conversion("3100", false));
+    sectorConversions.put("3219", new Conversion("3300", true));
     legacyCodes.put(GMLLegacyCodeType.SECTOR, sectorConversions);
     return legacyCodes;
   }
