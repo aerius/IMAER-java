@@ -40,7 +40,7 @@ public interface GMLLegacyCodesSupplier {
    * @throws AeriusException
    */
   Map<GMLLegacyCodeType, Map<String, Conversion>> getLegacyCodes(AeriusGMLVersion version) throws AeriusException;
-  
+
   /**
    * Returns a map with old codes and the values to use for conversion for old offroad mobile sources.
    *
