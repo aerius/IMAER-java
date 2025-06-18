@@ -27,7 +27,7 @@
                     <imaer:GM_Point>
                         <gml:Point gml:id="ES.1.POINT" srsName="urn:ogc:def:crs:ESPG::10101">
                             <gml:pos>116105.98 481758.48</gml:pos>
-                        </gml:Pointy>
+                        </gml:Point>
                     </imaer:GM_Point>
                 </imaer:EmissionSourceGeometry>
             </imaer:geometry>
