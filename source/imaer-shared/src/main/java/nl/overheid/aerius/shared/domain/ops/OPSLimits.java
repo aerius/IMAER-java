@@ -16,11 +16,14 @@
  */
 package nl.overheid.aerius.shared.domain.ops;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import nl.overheid.aerius.shared.domain.v2.building.BuildingLimits;
 
 /**
  * Contains any limits for input for OPS (Source and Emission files).
  */
+@JsonSerialize(as = BuildingLimits.class)
 public final class OPSLimits implements BuildingLimits {
 
   private static final long serialVersionUID = 1L;
@@ -443,6 +446,7 @@ public final class OPSLimits implements BuildingLimits {
   public static final OPSLimits INSTANCE = new OPSLimits();
 
   private OPSLimits() {
+    // Static constants class.
   }
 
   @Override
