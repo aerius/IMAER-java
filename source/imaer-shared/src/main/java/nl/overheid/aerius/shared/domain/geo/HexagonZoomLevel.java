@@ -50,13 +50,13 @@ public class HexagonZoomLevel implements Serializable {
   private static final double[] HORIZONTAL_HEXAGON_MODS = {0.5, 1.0, 0.5, -0.5, -1, -0.5};
   private static final double[] VERTICAL_HEXAGON_MODS = {1.0, 0.0, -1.0, -1.0, 0.0, 1.0};
 
-  private int level;
-  private int surfaceLevel1;
-  private double hexagonSurface;
-  private double hexagonRadius;
-  private double hexagonHeight;
-  private double[] horizontal = new double[HEXAGON_CORNERS];
-  private double[] vertical = new double[HEXAGON_CORNERS];
+  private final int level;
+  private final int surfaceLevel1;
+  private final double hexagonSurface;
+  private final double hexagonRadius;
+  private final double hexagonHeight;
+  private final double[] horizontal = new double[HEXAGON_CORNERS];
+  private final double[] vertical = new double[HEXAGON_CORNERS];
 
   /**
    * Initializes a HexagonZoomLevel for the given level.
@@ -70,10 +70,6 @@ public class HexagonZoomLevel implements Serializable {
     hexagonRadius = calculateRadius(hexagonSurface);
     hexagonHeight = calculateHexagonHeight(hexagonRadius);
     fillCorners(hexagonRadius, hexagonHeight);
-  }
-
-  public HexagonZoomLevel() {
-    // needed for GWT.
   }
 
   @Override
