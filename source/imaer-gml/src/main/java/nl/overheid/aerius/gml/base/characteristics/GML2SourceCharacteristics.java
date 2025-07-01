@@ -39,7 +39,7 @@ public abstract class GML2SourceCharacteristics<T extends SourceCharacteristics>
     this.conversionData = conversionData;
   }
 
-  public T fromGML(final IsGmlSourceCharacteristics characteristics, final T sectorCharacteristics,
+  public final T fromGML(final IsGmlSourceCharacteristics characteristics, final T sectorCharacteristics,
       final Geometry geometry) throws AeriusException {
     final T returnCharacteristics = fromGMLSpecific(characteristics, sectorCharacteristics, geometry);
 
@@ -47,6 +47,15 @@ public abstract class GML2SourceCharacteristics<T extends SourceCharacteristics>
     return returnCharacteristics;
   }
 
+  /**
+   * Get source characteristics from GML data
+   *
+   * @param characteristics the GML data
+   * @param sectorCharacteristics data with sector specific characteristics defaults
+   * @param geometry geometry of the source the characteristics are for
+   * @return the read source characteristics
+   * @throws AeriusException
+   */
   protected abstract T fromGMLSpecific(final IsGmlSourceCharacteristics characteristics, final T sectorCharacteristics, Geometry geometry)
       throws AeriusException;
 

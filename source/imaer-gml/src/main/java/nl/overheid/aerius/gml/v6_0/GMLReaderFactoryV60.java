@@ -16,13 +16,13 @@
  */
 package nl.overheid.aerius.gml.v6_0;
 
+import nl.overheid.aerius.gml.GMLMetaDataReader;
 import nl.overheid.aerius.gml.base.AeriusGMLVersion;
 import nl.overheid.aerius.gml.base.GMLConversionData;
 import nl.overheid.aerius.gml.base.GMLLegacyCodesSupplier;
 import nl.overheid.aerius.gml.base.GMLVersionReader;
 import nl.overheid.aerius.gml.base.GMLVersionReaderFactory;
-import nl.overheid.aerius.gml.base.characteristics.GML2OPSSourceCharacteristics;
-import nl.overheid.aerius.gml.base.characteristics.GML2SourceCharacteristics;
+import nl.overheid.aerius.gml.base.characteristics.GML2SourceCharacteristicsAdapter;
 import nl.overheid.aerius.gml.v6_0.base.CalculatorSchema;
 import nl.overheid.aerius.gml.v6_0.collection.FeatureCollectionImpl;
 import nl.overheid.aerius.shared.exception.AeriusException;
@@ -31,6 +31,8 @@ import nl.overheid.aerius.shared.exception.AeriusException;
  * {@link GMLVersionReaderFactory} for AERIUS GML version 6.0.
  */
 public class GMLReaderFactoryV60 extends GMLVersionReaderFactory {
+
+  private static final String AERIUS_LEGACY_SPREAD_VERSION = "2024";
 
   /**
    * Constructor.
@@ -43,12 +45,13 @@ public class GMLReaderFactoryV60 extends GMLVersionReaderFactory {
   }
 
   @Override
-  public GMLVersionReader createReader(final GMLConversionData conversionData, final GML2SourceCharacteristics<?> sourceCharacteristics) {
-    return new GMLReader<>(conversionData, sourceCharacteristics);
+  public GMLVersionReader createReader(final GMLConversionData conversionData, final GMLMetaDataReader metaDataReader) {
+    return new GMLReader<>(conversionData, new GML2SourceCharacteristicsAdapter<>(conversionData, isLegacy(metaDataReader)));
   }
 
-  @Override
-  protected GML2OPSSourceCharacteristics createGML2OPSSourceCharacteristics(final GMLConversionData conversionData) {
-    return new GML2OPSSourceCharacteristics(conversionData, true);
+  private boolean isLegacy(final GMLMetaDataReader metaDataReader) {
+    final String aeriusVersion = metaDataReader.readAeriusVersion();
+
+    return aeriusVersion == null || aeriusVersion.startsWith(AERIUS_LEGACY_SPREAD_VERSION);
   }
 }

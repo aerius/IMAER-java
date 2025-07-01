@@ -69,7 +69,7 @@ public final class GMLReader {
     conversionData = new GMLConversionData(gmlHelper, factory.getLegacyCodeConverter(), errors, warnings);
     metaDataReader = new GMLMetaDataReader(featureCollection, conversionData);
     calculationSetOptionsReader = new GMLCalculationSetOptionsReader(featureCollection);
-    versionReader = factory.createReader(conversionData);
+    versionReader = factory.createReader(conversionData, metaDataReader);
   }
 
   public AeriusGMLVersion getVersion() {
