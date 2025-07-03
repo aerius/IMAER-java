@@ -43,6 +43,7 @@
                         </imaer:CalculatedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>9.0</imaer:emissionHeight>
+                    <imaer:spread>4.5</imaer:spread>
                     <imaer:timeVaryingProfile>
                         <imaer:StandardTimeVaryingProfile>
                             <imaer:standardType>SPACE_HEATING_WITHOUT_SEASONAL_CORRECTION</imaer:standardType>
@@ -98,6 +99,7 @@
                         </imaer:SpecifiedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>12.0</imaer:emissionHeight>
+                    <imaer:spread>6.0</imaer:spread>
                     <imaer:timeVaryingProfile>
                         <imaer:StandardTimeVaryingProfile>
                             <imaer:standardType>SPACE_HEATING_WITHOUT_SEASONAL_CORRECTION</imaer:standardType>
@@ -238,6 +240,7 @@
                         </imaer:SpecifiedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>9.0</imaer:emissionHeight>
+                    <imaer:spread>4.5</imaer:spread>
                     <imaer:timeVaryingProfile>
                         <imaer:StandardTimeVaryingProfile>
                             <imaer:standardType>SPACE_HEATING_WITHOUT_SEASONAL_CORRECTION</imaer:standardType>
@@ -293,6 +296,7 @@
                         </imaer:SpecifiedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>12.0</imaer:emissionHeight>
+                    <imaer:spread>6.0</imaer:spread>
                     <imaer:timeVaryingProfile>
                         <imaer:StandardTimeVaryingProfile>
                             <imaer:standardType>SPACE_HEATING_WITHOUT_SEASONAL_CORRECTION</imaer:standardType>

@@ -18,10 +18,7 @@ package nl.overheid.aerius.gml.base;
 
 import javax.xml.validation.Schema;
 
-import nl.overheid.aerius.gml.base.characteristics.GML2ADMSSourceCharacteristics;
-import nl.overheid.aerius.gml.base.characteristics.GML2OPSSourceCharacteristics;
-import nl.overheid.aerius.gml.base.characteristics.GML2SourceCharacteristics;
-import nl.overheid.aerius.shared.domain.v2.characteristics.CharacteristicsType;
+import nl.overheid.aerius.gml.GMLMetaDataReader;
 import nl.overheid.aerius.shared.exception.AeriusException;
 
 /**
@@ -84,31 +81,11 @@ public abstract class GMLVersionReaderFactory {
     return schema;
   }
 
-  public GMLVersionReader createReader(final GMLConversionData conversionData) {
-    return createReader(conversionData, gml2SourceCharacteristics(conversionData));
+  public GMLVersionReader createReader(final GMLConversionData conversionData, final GMLMetaDataReader metaDataReader) {
+    return createReader(conversionData);
   }
 
-  protected GMLVersionReader createReader(final GMLConversionData conversionData, final GML2SourceCharacteristics<?> sourceCharacteristics) {
+  protected GMLVersionReader createReader(final GMLConversionData conversionData) {
     throw new UnsupportedOperationException("Either override this createReader, or the calling createReader method");
-  }
-
-  protected GML2SourceCharacteristics<?> gml2SourceCharacteristics(final GMLConversionData conversionData) {
-    final CharacteristicsType ct = conversionData.getCharacteristicsType();
-
-    if (ct == CharacteristicsType.OPS) {
-      return createGML2OPSSourceCharacteristics(conversionData);
-    } else if (ct == CharacteristicsType.ADMS) {
-      return createGML2ADMSSourceCharacteristics(conversionData);
-    } else {
-      throw new IllegalArgumentException("Can't read GML for characteristics of type " + ct + ". This is not implemented.");
-    }
-  }
-
-  protected GML2OPSSourceCharacteristics createGML2OPSSourceCharacteristics(final GMLConversionData conversionData) {
-    return new GML2OPSSourceCharacteristics(conversionData, false);
-  }
-
-  protected GML2ADMSSourceCharacteristics createGML2ADMSSourceCharacteristics(final GMLConversionData conversionData) {
-    return new GML2ADMSSourceCharacteristics(conversionData);
   }
 }

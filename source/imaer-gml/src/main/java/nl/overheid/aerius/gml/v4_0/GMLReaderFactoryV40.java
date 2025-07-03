@@ -21,8 +21,7 @@ import nl.overheid.aerius.gml.base.GMLConversionData;
 import nl.overheid.aerius.gml.base.GMLLegacyCodesSupplier;
 import nl.overheid.aerius.gml.base.GMLVersionReader;
 import nl.overheid.aerius.gml.base.GMLVersionReaderFactory;
-import nl.overheid.aerius.gml.base.characteristics.GML2OPSSourceCharacteristics;
-import nl.overheid.aerius.gml.base.characteristics.GML2SourceCharacteristics;
+import nl.overheid.aerius.gml.base.characteristics.GML2SourceCharacteristicsAdapter;
 import nl.overheid.aerius.gml.v4_0.base.CalculatorSchema;
 import nl.overheid.aerius.gml.v4_0.collection.FeatureCollectionImpl;
 import nl.overheid.aerius.shared.exception.AeriusException;
@@ -42,12 +41,7 @@ public class GMLReaderFactoryV40 extends GMLVersionReaderFactory {
   }
 
   @Override
-  protected GMLVersionReader createReader(final GMLConversionData conversionData, final GML2SourceCharacteristics<?> sourceCharacteristics) {
-    return new GMLReader<>(conversionData, sourceCharacteristics);
-  }
-
-  @Override
-  protected GML2OPSSourceCharacteristics createGML2OPSSourceCharacteristics(final GMLConversionData conversionData) {
-    return new GML2OPSSourceCharacteristics(conversionData, true);
+  public GMLVersionReader createReader(final GMLConversionData conversionData) {
+    return new GMLReader<>(conversionData, new GML2SourceCharacteristicsAdapter<>(conversionData, true));
   }
 }

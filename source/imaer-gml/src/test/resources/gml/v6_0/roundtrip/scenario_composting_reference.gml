@@ -103,6 +103,7 @@
                         </imaer:CalculatedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>1.5</imaer:emissionHeight>
+                    <imaer:spread>0.75</imaer:spread>
                     <imaer:timeVaryingProfile>
                         <imaer:StandardTimeVaryingProfile>
                             <imaer:standardType>INDUSTRIAL_ACTIVITY</imaer:standardType>
@@ -162,6 +163,7 @@
                         </imaer:CalculatedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>1.5</imaer:emissionHeight>
+                    <imaer:spread>0.75</imaer:spread>
                     <imaer:timeVaryingProfile>
                         <imaer:StandardTimeVaryingProfile>
                             <imaer:standardType>INDUSTRIAL_ACTIVITY</imaer:standardType>
@@ -221,6 +223,7 @@
                         </imaer:CalculatedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>1.5</imaer:emissionHeight>
+                    <imaer:spread>0.75</imaer:spread>
                     <imaer:timeVaryingProfile>
                         <imaer:StandardTimeVaryingProfile>
                             <imaer:standardType>INDUSTRIAL_ACTIVITY</imaer:standardType>
@@ -280,6 +283,7 @@
                         </imaer:CalculatedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>1.5</imaer:emissionHeight>
+                    <imaer:spread>0.75</imaer:spread>
                     <imaer:timeVaryingProfile>
                         <imaer:StandardTimeVaryingProfile>
                             <imaer:standardType>INDUSTRIAL_ACTIVITY</imaer:standardType>
@@ -339,6 +343,7 @@
                         </imaer:CalculatedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>2.7</imaer:emissionHeight>
+                    <imaer:spread>1.35</imaer:spread>
                     <imaer:timeVaryingProfile>
                         <imaer:StandardTimeVaryingProfile>
                             <imaer:standardType>INDUSTRIAL_ACTIVITY</imaer:standardType>
@@ -1552,6 +1557,7 @@
                         </imaer:CalculatedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>2.0</imaer:emissionHeight>
+                    <imaer:spread>1.0</imaer:spread>
                     <imaer:timeVaryingProfile>
                         <imaer:StandardTimeVaryingProfile>
                             <imaer:standardType>CONTINUOUS</imaer:standardType>
@@ -1611,6 +1617,7 @@
                         </imaer:CalculatedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>2.0</imaer:emissionHeight>
+                    <imaer:spread>1.0</imaer:spread>
                     <imaer:timeVaryingProfile>
                         <imaer:StandardTimeVaryingProfile>
                             <imaer:standardType>CONTINUOUS</imaer:standardType>
@@ -1670,6 +1677,7 @@
                         </imaer:CalculatedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>12.0</imaer:emissionHeight>
+                    <imaer:spread>6.0</imaer:spread>
                     <imaer:timeVaryingProfile>
                         <imaer:StandardTimeVaryingProfile>
                             <imaer:standardType>CONTINUOUS</imaer:standardType>

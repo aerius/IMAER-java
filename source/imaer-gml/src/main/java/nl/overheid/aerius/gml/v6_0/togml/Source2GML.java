@@ -28,7 +28,6 @@ import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.v2.characteristics.ADMSSourceCharacteristics;
 import nl.overheid.aerius.shared.domain.v2.characteristics.OPSSourceCharacteristics;
 import nl.overheid.aerius.shared.domain.v2.geojson.IsFeature;
-import nl.overheid.aerius.shared.domain.v2.geojson.Point;
 import nl.overheid.aerius.shared.domain.v2.source.ADMSRoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.ColdStartEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSource;
@@ -108,10 +107,6 @@ final class Source2GML implements EmissionSourceVisitor<nl.overheid.aerius.gml.v
       final nl.overheid.aerius.gml.v6_0.source.EmissionSource returnSource) throws AeriusException {
     if (source.getCharacteristics() instanceof final OPSSourceCharacteristics opsCharacteristics) {
       returnSource.setCharacteristics(SourceCharacteristics2GML.toGML(opsCharacteristics, true));
-      //ensure spread isn't exported for pointsources.
-      if (sourceFeature.getGeometry() instanceof Point) {
-        ((EmissionSourceCharacteristics) returnSource.getCharacteristics()).setSpread(null);
-      }
       //ensure time varying profile isn't exported for sources other then generic ones.
       if (!(source instanceof GenericEmissionSource)) { //
         ((EmissionSourceCharacteristics) returnSource.getCharacteristics()).setTimeVaryingProfile(null);

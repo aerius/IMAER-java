@@ -42,6 +42,9 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Locale;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import nl.overheid.aerius.gml.base.GMLHelper;
 import nl.overheid.aerius.importer.ImaerImporter;
 import nl.overheid.aerius.importer.ImportOption;
@@ -80,6 +83,8 @@ import nl.overheid.aerius.validation.ValidationVisitor;
  * Convenience class for tests in this package.
  */
 public final class AssertGML {
+
+  private static final Logger LOG = LoggerFactory.getLogger(AssertGML.class);
 
   /**
    * Due to linebreak interpretation differences between linux/windows and a randomness in attribute order for the collection,
@@ -170,13 +175,18 @@ public final class AssertGML {
 
   static URL getFileResource(final String relativePath, final String fileName) {
     final String file = getFullPath(relativePath, fileName);
+    final URL resource = AssertGML.class.getResource(file);
 
-    return AssertGML.class.getResource(file);
+    if (resource == null) {
+      LOG.debug("Could not find file " + file);
+    }
+    return resource;
   }
 
   static InputStream getFileInputStream(final String relativePath, final String fileName) throws FileNotFoundException {
     final String file = getFullPath(relativePath, fileName);
     final InputStream is = AssertGML.class.getResourceAsStream(file);
+
     if (is == null) {
       throw new FileNotFoundException("Input file not found:" + file);
     }
