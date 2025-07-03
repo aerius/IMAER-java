@@ -37,11 +37,11 @@ class GMLLegacySpreadV6Test {
   private static final String LEGACY_2025 = "test_legacy_spread_2025";
 
   @ParameterizedTest
-  @CsvSource(
+  @CsvSource({
       // Legacy created with AERIUS 2024 should return calculated spread (= half height)
-      {LEGACY_2024 + ", 40.0",
+      LEGACY_2024 + ",40",
       // GML created with AERIUS 2025 (or newer) should return the spread set in the IMAER file.
-      LEGACY_2025 + ",33.0"})
+      LEGACY_2025 + ",33"})
   void testLegacySpread2024(final String filename, final double expectedSpread) throws IOException, AeriusException {
     final ImportParcel parcel = AssertGML.getImportResult(V6_0, filename);
     final OPSSourceCharacteristics characteristics = (OPSSourceCharacteristics) parcel.getSituation().getEmissionSourcesList().get(0).getProperties()
@@ -49,4 +49,5 @@ class GMLLegacySpreadV6Test {
 
     assertEquals(expectedSpread, characteristics.getSpread(), 0.0001, "Not the expected spread for " + filename);
   }
+
 }
