@@ -26,6 +26,8 @@ import nl.overheid.aerius.gml.base.IsGmlProperty;
 import nl.overheid.aerius.gml.base.characteristics.GML2SourceCharacteristics;
 import nl.overheid.aerius.gml.base.geo.GML2Geometry;
 import nl.overheid.aerius.gml.base.source.IsGmlEmission;
+import nl.overheid.aerius.shared.domain.ops.DiurnalVariation;
+import nl.overheid.aerius.shared.domain.v2.characteristics.OPSSourceCharacteristics;
 import nl.overheid.aerius.shared.domain.v2.source.OffRoadMobileEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.offroad.CustomOffRoadMobileSource;
 import nl.overheid.aerius.shared.domain.v2.source.offroad.OffRoadMobileSource;
@@ -94,8 +96,10 @@ public class GML2OffRoad<T extends IsGmlOffRoadMobileEmissionSource> extends Abs
     final CustomOffRoadMobileSource customVehicleEmissionValues = new CustomOffRoadMobileSource();
     customVehicleEmissionValues.setDescription(customMobileSource.getDescription());
 
-    customVehicleEmissionValues.setCharacteristics(gml2SourceCharacteristics.fromGML(customMobileSource.getCharacteristics(),
-        null, null));
+    final OPSSourceCharacteristics gmlCharacteristics = (OPSSourceCharacteristics) gml2SourceCharacteristics.fromGML(
+        customMobileSource.getCharacteristics(), null, null);
+    gmlCharacteristics.setDiurnalVariation(DiurnalVariation.INDUSTRIAL_ACTIVITY);
+    customVehicleEmissionValues.setCharacteristics(gmlCharacteristics);
 
     for (final IsGmlProperty<IsGmlEmission> emissionProperty : customMobileSource.getEmissions()) {
       final IsGmlEmission emission = emissionProperty.getProperty();
