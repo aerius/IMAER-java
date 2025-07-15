@@ -99,12 +99,10 @@ public class GML2OffRoad<T extends IsGmlOffRoadMobileEmissionSource> extends Abs
 
     final SourceCharacteristics characteristics = gml2SourceCharacteristics.fromGML(
         customMobileSource.getCharacteristics(), null, null);
-    if (characteristics instanceof OPSSourceCharacteristics opsCharacteristics) {
+    if (characteristics instanceof final OPSSourceCharacteristics opsCharacteristics) {
       opsCharacteristics.setDiurnalVariation(DiurnalVariation.INDUSTRIAL_ACTIVITY);
-      customVehicleEmissionValues.setCharacteristics(opsCharacteristics);
-    } else {
-      customVehicleEmissionValues.setCharacteristics(characteristics);
     }
+    customVehicleEmissionValues.setCharacteristics(characteristics);
 
     for (final IsGmlProperty<IsGmlEmission> emissionProperty : customMobileSource.getEmissions()) {
       final IsGmlEmission emission = emissionProperty.getProperty();
