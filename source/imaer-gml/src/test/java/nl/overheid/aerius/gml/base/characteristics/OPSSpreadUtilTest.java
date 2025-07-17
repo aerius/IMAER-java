@@ -17,7 +17,6 @@
 package nl.overheid.aerius.gml.base.characteristics;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.lenient;
 
 import java.util.List;
@@ -40,10 +39,10 @@ import nl.overheid.aerius.shared.domain.v2.geojson.Polygon;
 @ExtendWith(MockitoExtension.class)
 class OPSSpreadUtilTest {
 
-  // Note. For this test: SPREAD != HALF_EMISSION_HEIGHT != DEFAULT_SPREAD
+  // Note. For this test: SPREAD != NO_SPREAD != DEFAULT_SPREAD
   private static final double SPREAD = 3.0;
   private static final double EMISSION_HEIGHT = 50.0;
-  private static final double HALF_EMISSION_HEIGHT = EMISSION_HEIGHT / 2.0;
+  private static final double NO_SPREAD = 0.0;
   private static final Double DEFAULT_SPREAD = 10.0;
 
   private @Mock IsGmlBaseOPSSourceCharacteristics characteristics;
@@ -53,7 +52,7 @@ class OPSSpreadUtilTest {
   void testLegacySpread(final Double spread, final boolean legacySpread, final Geometry geometry, final double expected) {
     final OPSSpreadUtil util = new OPSSpreadUtil(legacySpread);
     lenient().doReturn(EMISSION_HEIGHT).when(characteristics).getEmissionHeight();
-    doReturn(spread).when(characteristics).getSpread();
+    lenient().doReturn(spread).when(characteristics).getSpread();
     final Double computedSpread = util.getSpread(characteristics, DEFAULT_SPREAD, geometry);
 
     assertEquals(expected, computedSpread, 0.0001, "Not the expected spread value");
@@ -61,25 +60,25 @@ class OPSSpreadUtilTest {
 
   private static List<Arguments> data() {
     return List.of(
-        // No Legacy, no spread -> spread derived from emission height
-        Arguments.of(null, false, new Point(), HALF_EMISSION_HEIGHT),
-        Arguments.of(null, false, new LineString(), HALF_EMISSION_HEIGHT),
-        Arguments.of(null, false, new Polygon(), HALF_EMISSION_HEIGHT),
-        // No legacy but with spread value -> take spread value
+        // No Legacy, no spread -> point and line spread will be 0.0.
+        Arguments.of(null, false, new Point(), NO_SPREAD),
+        Arguments.of(null, false, new LineString(), NO_SPREAD),
+        // No Legacy, no spread -> default spread for polygon.
+        Arguments.of(null, false, new Polygon(), DEFAULT_SPREAD),
+        // No legacy but with spread value -> take spread value.
         Arguments.of(SPREAD, false, new Point(), SPREAD),
         Arguments.of(SPREAD, false, new LineString(), SPREAD),
         Arguments.of(SPREAD, false, new Polygon(), SPREAD),
-        // Legacy, and no spread. For point/line there was no value set in the past
-        // and we now need to derive it ourselves from emission height
-        Arguments.of(null, true, new Point(), HALF_EMISSION_HEIGHT),
-        Arguments.of(null, true, new LineString(), HALF_EMISSION_HEIGHT),
-        // Legacy but for polygon, when no spread set it used to take sector default
+        // Legacy, and no spread. For point/line spread will be 0.0.
+        Arguments.of(null, true, new Point(), NO_SPREAD),
+        Arguments.of(null, true, new LineString(), NO_SPREAD),
+        // Legacy but for polygon, when no spread set it used to take sector default.
         Arguments.of(null, true, new Polygon(), DEFAULT_SPREAD),
-        // Legacy and spread value set, but for point/line was not supported
-        // Therefore we ignore spread and calculate it based on emission height.
-        Arguments.of(SPREAD, true, new Point(), HALF_EMISSION_HEIGHT),
-        Arguments.of(SPREAD, true, new LineString(), HALF_EMISSION_HEIGHT),
-        // Legacy with spread and polygon -> take the given spread
+        // Legacy and spread value set, but for point/line was not supported.
+        // Therefore we ignore spread and set spread will be 0.0.
+        Arguments.of(SPREAD, true, new Point(), NO_SPREAD),
+        Arguments.of(SPREAD, true, new LineString(), NO_SPREAD),
+        // Legacy with spread and polygon -> take the given spread.
         Arguments.of(SPREAD, true, new Polygon(), SPREAD));
   }
 }

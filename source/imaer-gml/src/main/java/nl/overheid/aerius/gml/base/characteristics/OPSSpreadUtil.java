@@ -23,15 +23,14 @@ import nl.overheid.aerius.shared.domain.v2.geojson.Point;
 /**
  * Utility to handle the legacy variant of handling the OPS spread value.
  *
- * In older versions of OPS the spread parameter in the input data for point sources was ignored and calculated within OPS as being half the
- * emission height.
- * With newer OPS versions (since 5.3.1) the spread value in the OPS input file is read and not calculated.
+ * In older versions of OPS the spread parameter in the input data for point sources was ignored, meaning 0.
+ * With newer OPS versions (since 5.3.1) the spread value in the OPS input file is used.
  * This means the application should pass the desired spread value.
- * For older IMAER versions (prior to 6) for point sources it means that value is derived from the emission height.
+ * For older IMAER versions (prior to 6) for point sources it means that value should be set to 0.
  * Even if the spread value of a point source is set in the IMAER file it will be ignored.
  * For non-point/line sources and if spread was not set in older IMAER versions (< 6.0), the sector default will be used.
  * This is compatible with how it worked prior to this change.
- * For newer IMAER versions (>= 6.0) if the spread is not present it will be half of the emission height.
+ * For newer IMAER versions (>= 6.0) if the spread is not present for point/line sources it will be set to 0.0.
  */
 final class OPSSpreadUtil {
 
@@ -42,27 +41,22 @@ final class OPSSpreadUtil {
   }
 
   public Double getSpread(final IsGmlBaseOPSSourceCharacteristics characteristics, final Double defaultSpread, final Geometry geometry) {
-    final Double spread = characteristics.getSpread();
-    final double emissionHeight = characteristics.getEmissionHeight();
+    final boolean pointLine = geometry instanceof Point || geometry instanceof LineString;
 
-    if (legacySpread) {
-      if (geometry instanceof Point || geometry instanceof LineString) {
-        return getSourceSpread(null, emissionHeight, defaultSpread);
+    if (pointLine) {
+      if (legacySpread) {
+        return 0.0;
       } else {
-        return getLegacySpread(characteristics, defaultSpread);
+        return getSpreadOrDefault(characteristics, 0.0);
       }
     } else {
-      return getSourceSpread(spread, emissionHeight, defaultSpread);
+      return getSpreadOrDefault(characteristics, defaultSpread);
     }
   }
 
-  private static Double getLegacySpread(final IsGmlBaseOPSSourceCharacteristics characteristics, final Double defaultSpread) {
+  private static Double getSpreadOrDefault(final IsGmlBaseOPSSourceCharacteristics characteristics, final Double defaultSpread) {
     final Double spread = characteristics.getSpread();
 
     return spread == null ? defaultSpread : spread;
-  }
-
-  private static Double getSourceSpread(final Double spread, final double emissionHeight, final Double defaultSpread) {
-    return spread == null ? (emissionHeight > 0 ? emissionHeight / 2.0 : defaultSpread) : spread;
   }
 }

@@ -42,7 +42,7 @@
             </imaer:SpecifiedHeatContent>
           </imaer:heatContent>
           <imaer:emissionHeight>80.0</imaer:emissionHeight>
-          <imaer:spread>33.0</imaer:spread>
+          <imaer:spread>40.0</imaer:spread>
           <imaer:timeVaryingProfile>
             <imaer:StandardTimeVaryingProfile>
               <imaer:standardType>CONTINUOUS</imaer:standardType>

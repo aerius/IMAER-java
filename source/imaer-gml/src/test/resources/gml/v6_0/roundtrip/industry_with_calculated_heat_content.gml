@@ -44,7 +44,7 @@
                         </imaer:CalculatedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>35.0</imaer:emissionHeight>
-                    <imaer:spread>17.5</imaer:spread>
+                    <imaer:spread>0.0</imaer:spread>
                     <imaer:timeVaryingProfile>
                         <imaer:StandardTimeVaryingProfile>
                             <imaer:standardType>INDUSTRIAL_ACTIVITY</imaer:standardType>
