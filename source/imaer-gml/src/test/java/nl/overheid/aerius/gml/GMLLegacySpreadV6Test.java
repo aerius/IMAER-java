@@ -38,8 +38,8 @@ class GMLLegacySpreadV6Test {
 
   @ParameterizedTest
   @CsvSource({
-      // Legacy created with AERIUS 2024 should return calculated spread (= half height)
-      LEGACY_2024 + ",40",
+      // Legacy created with AERIUS 2024 should return calculated spread (= 0)
+      LEGACY_2024 + ",0",
       // GML created with AERIUS 2025 (or newer) should return the spread set in the IMAER file.
       LEGACY_2025 + ",33"})
   void testLegacySpread2024(final String filename, final double expectedSpread) throws IOException, AeriusException {

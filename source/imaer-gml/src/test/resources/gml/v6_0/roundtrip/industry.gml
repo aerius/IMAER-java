@@ -40,7 +40,7 @@
                         </imaer:SpecifiedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>35.0</imaer:emissionHeight>
-                    <imaer:spread>17.5</imaer:spread>
+                    <imaer:spread>0.0</imaer:spread>
                     <imaer:timeVaryingProfile>
                         <imaer:StandardTimeVaryingProfile>
                             <imaer:standardType>INDUSTRIAL_ACTIVITY</imaer:standardType>
@@ -96,7 +96,7 @@
                         </imaer:SpecifiedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>40.0</imaer:emissionHeight>
-                    <imaer:spread>20.0</imaer:spread>
+                    <imaer:spread>0.0</imaer:spread>
                     <imaer:timeVaryingProfile>
                         <imaer:StandardTimeVaryingProfile>
                             <imaer:standardType>INDUSTRIAL_ACTIVITY</imaer:standardType>
@@ -212,7 +212,7 @@
                         </imaer:SpecifiedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>75.0</imaer:emissionHeight>
-                    <imaer:spread>37.5</imaer:spread>
+                    <imaer:spread>0.0</imaer:spread>
                     <imaer:timeVaryingProfile>
                         <imaer:StandardTimeVaryingProfile>
                             <imaer:standardType>INDUSTRIAL_ACTIVITY</imaer:standardType>
@@ -388,7 +388,7 @@
                         </imaer:SpecifiedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>75.0</imaer:emissionHeight>
-                    <imaer:spread>37.5</imaer:spread>
+                    <imaer:spread>0.0</imaer:spread>
                     <imaer:timeVaryingProfile>
                         <imaer:StandardTimeVaryingProfile>
                             <imaer:standardType>INDUSTRIAL_ACTIVITY</imaer:standardType>
@@ -444,7 +444,7 @@
                         </imaer:SpecifiedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>0.5</imaer:emissionHeight>
-                    <imaer:spread>0.25</imaer:spread>
+                    <imaer:spread>0.0</imaer:spread>
                     <imaer:timeVaryingProfile>
                         <imaer:StandardTimeVaryingProfile>
                             <imaer:standardType>FERTILISER</imaer:standardType>
@@ -500,7 +500,7 @@
                         </imaer:SpecifiedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>3.5</imaer:emissionHeight>
-                    <imaer:spread>1.75</imaer:spread>
+                    <imaer:spread>0.0</imaer:spread>
                     <imaer:timeVaryingProfile>
                         <imaer:StandardTimeVaryingProfile>
                             <imaer:standardType>CONTINUOUS</imaer:standardType>

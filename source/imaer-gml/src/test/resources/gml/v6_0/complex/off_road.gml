@@ -78,7 +78,7 @@
                                 </imaer:SpecifiedHeatContent>
                             </imaer:heatContent>
                             <imaer:emissionHeight>10.0</imaer:emissionHeight>
-                            <imaer:spread>5.0</imaer:spread>
+                            <imaer:spread>0.0</imaer:spread>
                         </imaer:EmissionSourceCharacteristics>
                     </imaer:emissionSourceCharacteristics>
                 </imaer:CustomOffRoadMobileSource>
