@@ -620,6 +620,14 @@ public enum ImaerExceptionReason implements Reason {
    */
   GEOMETRY_TOO_MANY_VERTICES(5271),
 
+  /**
+   * No emission factor is available for the specified source in the selected calculation year.
+   *
+   * @param 0 the id/label of the source
+   * @param 1 the calculation year
+   */
+  GML_NO_EMISSION_FACTORS_FOR_YEAR(5272),
+
   // Cohesion (between files) errors.
 
   /**
