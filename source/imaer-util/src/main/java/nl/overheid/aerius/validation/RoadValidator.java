@@ -164,7 +164,7 @@ class RoadValidator extends SourceValidator<RoadEmissionSource> {
       }
       try {
         validationHelper.assertRoadStandardEmissionFactorsAvailable(
-            new RoadStandardEmissionFactorsKey(roadAreaCode, roadTypeCode, vehicleType, maximumSpeed, strictEnforcement, null), sourceLabel);
+            new RoadStandardEmissionFactorsKey(roadAreaCode, roadTypeCode, vehicleType, maximumSpeed, strictEnforcement, 0.0), sourceLabel);
       } catch (final AeriusException e) {
         getErrors().add(e);
         valid = false;
