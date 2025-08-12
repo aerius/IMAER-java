@@ -127,7 +127,7 @@ class RoadValidator extends SourceValidator<RoadEmissionSource> {
     }
 
     if (vehicleEmissions instanceof SpecificVehicles) {
-      valid = validateSpecificVehicles((SpecificVehicles) vehicleEmissions, sourceLabel) && valid;
+      valid = validateSpecificVehicles(source, (SpecificVehicles) vehicleEmissions, sourceLabel) && valid;
     } else if (vehicleEmissions instanceof StandardVehicles) {
       valid = validateStandardVehicles(source, (StandardVehicles) vehicleEmissions, sourceLabel) && valid;
     }
@@ -162,6 +162,13 @@ class RoadValidator extends SourceValidator<RoadEmissionSource> {
             String.valueOf(maximumSpeed), String.valueOf(strictEnforcement), vehicleType));
         valid = false;
       }
+      try {
+        validationHelper.assertRoadStandardEmissionFactorsAvailable(
+            new RoadStandardEmissionFactorsKey(roadAreaCode, roadTypeCode, vehicleType, maximumSpeed, strictEnforcement, 0.0), sourceLabel);
+      } catch (final AeriusException e) {
+        getErrors().add(e);
+        valid = false;
+      }
       if (entry.getValue().getStagnationFraction() < 0 || entry.getValue().getStagnationFraction() > 1) {
         getErrors().add(new AeriusException(ImaerExceptionReason.UNEXPECTED_FRACTION_VALUE, sourceLabel));
         valid = false;
@@ -170,11 +177,17 @@ class RoadValidator extends SourceValidator<RoadEmissionSource> {
     return valid;
   }
 
-  private boolean validateSpecificVehicles(final SpecificVehicles vehicles, final String sourceLabel) {
+  private boolean validateSpecificVehicles(final RoadEmissionSource source, final SpecificVehicles vehicles, final String sourceLabel) {
     final String vehicleCode = vehicles.getVehicleCode();
     boolean valid = true;
     if (!validationHelper.isValidRoadSpecificVehicleCode(vehicleCode)) {
       getErrors().add(new AeriusException(ImaerExceptionReason.GML_UNKNOWN_MOBILE_SOURCE_CODE, sourceLabel, vehicleCode));
+      valid = false;
+    }
+    try {
+      validationHelper.assertRoadSpecificEmissionFactorsAvailable(vehicleCode, source.getRoadTypeCode(), sourceLabel);
+    } catch (final AeriusException e) {
+      getErrors().add(e);
       valid = false;
     }
     return valid;

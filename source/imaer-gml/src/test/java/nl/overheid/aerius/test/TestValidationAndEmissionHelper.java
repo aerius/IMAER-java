@@ -797,6 +797,18 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
   }
 
   @Override
+  public void assertRoadSpecificEmissionFactorsAvailable(final String specificVehicleCode, final String roadTypeCode, final String sourceLabel)
+      throws AeriusException {
+    // Test helper always has factors available
+  }
+
+  @Override
+  public void assertRoadStandardEmissionFactorsAvailable(final RoadStandardEmissionFactorsKey emissionFactorsKey, final String sourceLabel)
+      throws AeriusException {
+    // Test helper always has factors available
+  }
+
+  @Override
   public Map<Substance, Double> getRoadStandardVehicleEmissionFactors(final RoadStandardEmissionFactorsKey emissionFactorsKey) {
     return roadStandard(emissionFactorsKey)
         .map(c -> c.emissions.toEmissions())
