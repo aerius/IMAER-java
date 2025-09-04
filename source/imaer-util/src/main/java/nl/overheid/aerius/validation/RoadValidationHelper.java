@@ -25,8 +25,12 @@ public interface RoadValidationHelper {
 
   boolean isValidRoadStandardVehicleCombination(RoadStandardEmissionFactorsKey emissionFactorsKey);
 
-  void assertRoadSpecificEmissionFactorsAvailable(String specificVehicleCode, String roadTypeCode, String sourceLabel) throws AeriusException;
+  default void assertRoadSpecificEmissionFactorsAvailable(final String specificVehicleCode, final String roadTypeCode, final String sourceLabel)
+      throws AeriusException {
+  }
 
-  void assertRoadStandardEmissionFactorsAvailable(RoadStandardEmissionFactorsKey emissionFactorsKey, String sourceLabel) throws AeriusException;
+  default void assertRoadStandardEmissionFactorsAvailable(final RoadStandardEmissionFactorsKey emissionFactorsKey, final String sourceLabel)
+      throws AeriusException {
+  }
 
 }
