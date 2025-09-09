@@ -20,9 +20,9 @@ import java.io.Serializable;
 
 import jakarta.validation.Valid;
 
-public class Feature<T extends Serializable, G extends Geometry> implements Serializable, IsFeature {
+public class Feature<T extends GmlIdProperties, G extends Geometry> implements Serializable, IsFeature {
 
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 2L;
 
   private String type = "Feature";
   private String id;

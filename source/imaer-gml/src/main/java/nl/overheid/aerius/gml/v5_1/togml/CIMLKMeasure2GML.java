@@ -29,7 +29,6 @@ import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKMeasure;
 import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKMeasureFeature;
 import nl.overheid.aerius.shared.domain.v2.source.road.StandardVehicleMeasure;
 import nl.overheid.aerius.shared.exception.AeriusException;
-import nl.overheid.aerius.util.gml.GMLIdUtil;
 
 /**
  *
@@ -51,10 +50,9 @@ final class CIMLKMeasure2GML {
   public SRM1RoadMeasureArea toGML(final CIMLKMeasureFeature feature) throws AeriusException {
     final SRM1RoadMeasureArea gmlMeasure = new SRM1RoadMeasureArea();
     final CIMLKMeasure measure = feature.getProperties();
-    final String id = GMLIdUtil.toValidGmlId(measure.getGmlId(), GMLIdUtil.MEASURE_PREFIX);
 
     gmlMeasure.setGeometry(geometry2gml, feature.getGeometry());
-    gmlMeasure.setId(id);
+    gmlMeasure.setId(measure.getGmlId());
     gmlMeasure.setDescription(measure.getDescription());
     gmlMeasure.setLabel(measure.getLabel());
     gmlMeasure.setJurisdictionId(measure.getJurisdictionId());

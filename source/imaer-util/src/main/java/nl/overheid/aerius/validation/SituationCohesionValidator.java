@@ -21,8 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.function.Function;
-import java.util.stream.Collectors;
+import java.util.Objects;
 
 import nl.overheid.aerius.shared.domain.v2.building.Building;
 import nl.overheid.aerius.shared.domain.v2.building.BuildingFeature;
@@ -41,7 +40,7 @@ import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 public final class SituationCohesionValidator {
 
   private static final class CohesionTracker {
-    private final Map<String, EmissionSourceFeature> sources = new HashMap<>();
+    private final List<EmissionSourceFeature> sources = new ArrayList<>();
 
     private final Map<String, Integer> sourceIds = new HashMap<>();
     private final Map<String, Integer> buildingIds = new HashMap<>();
@@ -63,8 +62,7 @@ public final class SituationCohesionValidator {
     }
 
     private void addSources(final List<EmissionSourceFeature> sourcesToAdd) {
-      sources.putAll(sourcesToAdd.stream()
-          .collect(Collectors.toMap(feature -> feature.getProperties().getGmlId(), Function.identity(), (oldValue, value) -> oldValue)));
+      sources.addAll(sourcesToAdd);
       sourcesToAdd.stream()
           .map(EmissionSourceFeature::getProperties)
           .map(EmissionSource::getGmlId)
@@ -136,7 +134,7 @@ public final class SituationCohesionValidator {
   }
 
   private static void checkReferencesForSources(final CohesionTracker tracker) {
-    for (final EmissionSourceFeature source : tracker.sources.values()) {
+    for (final EmissionSourceFeature source : tracker.sources) {
       if (source.getProperties() == null || source.getProperties().getCharacteristics() == null) {
         continue;
       }

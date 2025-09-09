@@ -16,7 +16,6 @@
  */
 package nl.overheid.aerius.shared.domain.v2.point;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,6 +26,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 
 import nl.overheid.aerius.shared.domain.result.EmissionResultKey;
+import nl.overheid.aerius.shared.domain.v2.geojson.GmlIdProperties;
 import nl.overheid.aerius.shared.domain.v2.geojson.IsFeature;
 import nl.overheid.aerius.shared.exception.AeriusException;
 
@@ -38,9 +38,9 @@ import nl.overheid.aerius.shared.exception.AeriusException;
     @Type(value = CIMLKCalculationPoint.class, name = CalculationPointType.Names.NSL_CALCULATION_POINT),
     @Type(value = SubPoint.class, name = CalculationPointType.Names.SUB_POINT)
 })
-public abstract class CalculationPoint implements Serializable {
+public abstract class CalculationPoint implements GmlIdProperties {
 
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 2L;
 
   private String gmlId;
   private String label;
@@ -48,10 +48,12 @@ public abstract class CalculationPoint implements Serializable {
   private Integer jurisdictionId;
   private Map<EmissionResultKey, Double> results = new HashMap<>();
 
+  @Override
   public String getGmlId() {
     return gmlId;
   }
 
+  @Override
   public void setGmlId(final String gmlId) {
     this.gmlId = gmlId;
   }
