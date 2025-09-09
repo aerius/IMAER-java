@@ -16,11 +16,8 @@
  */
 package nl.overheid.aerius.shared.domain.v2.source;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
-
-import jakarta.validation.Valid;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
@@ -29,8 +26,11 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 
 import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.v2.characteristics.SourceCharacteristics;
+import nl.overheid.aerius.shared.domain.v2.geojson.GmlIdProperties;
 import nl.overheid.aerius.shared.domain.v2.geojson.IsFeature;
 import nl.overheid.aerius.shared.exception.AeriusException;
+
+import jakarta.validation.Valid;
 
 @JsonTypeInfo(property = "emissionSourceType", use = Id.NAME)
 @JsonSubTypes({
@@ -49,9 +49,9 @@ import nl.overheid.aerius.shared.exception.AeriusException;
     @Type(value = MaritimeMaritimeShippingEmissionSource.class, name = EmissionSourceType.Names.SHIPPING_MARITIME_MARITIME),
     @Type(value = MooringMaritimeShippingEmissionSource.class, name = EmissionSourceType.Names.SHIPPING_MARITIME_DOCKED),
 })
-public abstract class EmissionSource implements Serializable {
+public abstract class EmissionSource implements GmlIdProperties {
 
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 2L;
 
   private String gmlId;
   private int sectorId;
@@ -61,10 +61,12 @@ public abstract class EmissionSource implements Serializable {
   private SourceCharacteristics characteristics;
   private Map<Substance, Double> emissions = new HashMap<>();
 
+  @Override
   public String getGmlId() {
     return gmlId;
   }
 
+  @Override
   public void setGmlId(final String gmlId) {
     this.gmlId = gmlId;
   }

@@ -16,15 +16,15 @@
  */
 package nl.overheid.aerius.shared.domain.v2.cimlk;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import nl.overheid.aerius.shared.domain.v2.geojson.GmlIdProperties;
 import nl.overheid.aerius.shared.domain.v2.source.road.StandardVehicleMeasure;
 
-public class CIMLKMeasure implements Serializable {
+public class CIMLKMeasure implements GmlIdProperties {
 
-  private static final long serialVersionUID = 3L;
+  private static final long serialVersionUID = 4L;
 
   private String gmlId;
   private Integer jurisdictionId;
@@ -33,10 +33,12 @@ public class CIMLKMeasure implements Serializable {
 
   private List<StandardVehicleMeasure> vehicleMeasures = new ArrayList<>();
 
+  @Override
   public String getGmlId() {
     return gmlId;
   }
 
+  @Override
   public void setGmlId(final String gmlId) {
     this.gmlId = gmlId;
   }

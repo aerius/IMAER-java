@@ -45,10 +45,11 @@ final class CIMLKDispersionLine2GML {
     final SRM1RoadDispersionLine gmlDispersionLine = new SRM1RoadDispersionLine();
     final CIMLKDispersionLine dispersionLine = dispersionLineFeature.getProperties();
     final String calculationPointId = GMLIdUtil.toValidGmlId(dispersionLine.getCalculationPointGmlId(), GMLIdUtil.POINT_PREFIX);
-    final String roadId = GMLIdUtil.toValidGmlId(dispersionLine.getRoadGmlId(), GMLIdUtil.SOURCE_PREFIX);
+    final String roadId = GMLIdUtil.toValidGmlId(dispersionLine.getGmlId(), GMLIdUtil.SOURCE_PREFIX);
     final String id = "DL." + calculationPointId + "." + roadId;
 
     gmlDispersionLine.setId(id);
+    dispersionLine.setGmlId(id);
     gmlDispersionLine.setDescription(dispersionLine.getDescription());
     gmlDispersionLine.setLabel(dispersionLine.getLabel());
     gmlDispersionLine.setJurisdictionId(dispersionLine.getJurisdictionId());

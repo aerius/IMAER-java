@@ -20,7 +20,6 @@ import nl.overheid.aerius.gml.base.geo.Geometry2GML;
 import nl.overheid.aerius.gml.v5_1.building.Building;
 import nl.overheid.aerius.shared.domain.v2.building.BuildingFeature;
 import nl.overheid.aerius.shared.exception.AeriusException;
-import nl.overheid.aerius.util.gml.GMLIdUtil;
 
 /**
  *
@@ -42,10 +41,9 @@ final class Building2GML {
   public Building toGML(final BuildingFeature feature) throws AeriusException {
     final Building gmlBuilding = new Building();
     final nl.overheid.aerius.shared.domain.v2.building.Building building = feature.getProperties();
-    final String id = GMLIdUtil.toValidGmlId(building.getGmlId(), GMLIdUtil.BUILDING_PREFIX);
 
     gmlBuilding.setGeometry(geometry2gml, feature.getGeometry());
-    gmlBuilding.setId(id);
+    gmlBuilding.setId(building.getGmlId());
     gmlBuilding.setLabel(building.getLabel());
     gmlBuilding.setHeight(building.getHeight());
     gmlBuilding.setDiameter(building.isCircle() ? building.getDiameter() : null);

@@ -57,6 +57,7 @@ import nl.overheid.aerius.shared.domain.v2.point.CalculationPointFeature;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceFeature;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
+import nl.overheid.aerius.util.gml.GMLIdUtil;
 
 /**
  * Class to create GML content from data objects.
@@ -221,6 +222,8 @@ final class InternalGMLWriter {
 
   List<FeatureMember> emissionSourcesToFeatures(final List<EmissionSourceFeature> sources)
       throws AeriusException {
+    GMLIdUtil.toValidGmlIds(sources, GMLIdUtil.SOURCE_PREFIX);
+
     final List<FeatureMember> featureMembers = new ArrayList<>();
     for (final EmissionSourceFeature source : sources) {
       featureMembers.addAll(writer.source2GML(source, EMISSION_SUBSTANCES));
@@ -230,6 +233,8 @@ final class InternalGMLWriter {
 
   List<FeatureMember> buildingsToFeatures(final List<BuildingFeature> buildings)
       throws AeriusException {
+    GMLIdUtil.toValidGmlIds(buildings, GMLIdUtil.BUILDING_PREFIX);
+
     final List<FeatureMember> featureMembers = new ArrayList<>(buildings.size());
     for (final BuildingFeature building : buildings) {
       featureMembers.add(writer.building2GML(building));
@@ -239,6 +244,8 @@ final class InternalGMLWriter {
 
   List<FeatureMember> cimlkMeasuresToFeatures(final List<CIMLKMeasureFeature> measures)
       throws AeriusException {
+    GMLIdUtil.toValidGmlIds(measures, GMLIdUtil.MEASURE_PREFIX);
+
     final List<FeatureMember> featureMembers = new ArrayList<>(measures.size());
     for (final CIMLKMeasureFeature measure : measures) {
       featureMembers.add(writer.cimlkMeasure2GML(measure));

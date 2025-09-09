@@ -16,11 +16,11 @@
  */
 package nl.overheid.aerius.shared.domain.v2.cimlk;
 
-import java.io.Serializable;
+import nl.overheid.aerius.shared.domain.v2.geojson.GmlIdProperties;
 
-public class CIMLKDispersionLine implements Serializable {
+public class CIMLKDispersionLine implements GmlIdProperties {
 
-  private static final long serialVersionUID = 3L;
+  private static final long serialVersionUID = 4L;
 
   private String roadGmlId;
   private String calculationPointGmlId;
@@ -30,11 +30,29 @@ public class CIMLKDispersionLine implements Serializable {
   private CIMLKTreeProfile treeProfile;
   private String description;
 
+  /**
+   * @deprecated use {@link #getGmlId()}.
+   */
+  @Deprecated
   public String getRoadGmlId() {
+    return getGmlId();
+  }
+
+  @Override
+  public String getGmlId() {
     return roadGmlId;
   }
 
+  /**
+   * @deprecated use {@link #setGmlId(String)}.
+   */
+  @Deprecated
   public void setRoadGmlId(final String roadGmlId) {
+    setGmlId(roadGmlId);
+  }
+
+  @Override
+  public void setGmlId(final String roadGmlId) {
     this.roadGmlId = roadGmlId;
   }
 

@@ -36,6 +36,7 @@ import nl.overheid.aerius.shared.domain.v2.point.CalculationPointFeature;
 import nl.overheid.aerius.shared.domain.v2.scenario.Definitions;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceFeature;
 import nl.overheid.aerius.shared.exception.AeriusException;
+import nl.overheid.aerius.util.gml.GMLIdUtil;
 
 /**
  * Class to read data from a feature collection that was created from an IMAER GML.
@@ -138,6 +139,7 @@ public final class GMLReader {
       emissionSourceList.addAll(conversionData.getMaritimeInlandRoutes().keySet());
       emissionSourceList.addAll(conversionData.getMaritimeMaritimeRoutes().keySet());
     }
+    GMLIdUtil.toValidGmlIds(emissionSourceList, GMLIdUtil.SOURCE_PREFIX);
     return emissionSourceList;
   }
 

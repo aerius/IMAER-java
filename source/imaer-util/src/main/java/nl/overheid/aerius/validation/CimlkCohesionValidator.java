@@ -126,10 +126,10 @@ public class CimlkCohesionValidator {
           .toList();
       // Use a fake ID in this case to simulate the composite ID.
       importedDispersionLines.stream()
-          .map(dispersionLine -> dispersionLine.getCalculationPointGmlId() + ID_SEPARATOR + dispersionLine.getRoadGmlId())
+          .map(dispersionLine -> dispersionLine.getCalculationPointGmlId() + ID_SEPARATOR + dispersionLine.getGmlId())
           .forEach(dispersionId -> dispersionLineIds.merge(dispersionId, 1, (oldValue, value) -> oldValue + value));
       importedDispersionLines.stream()
-          .map(CIMLKDispersionLine::getRoadGmlId)
+          .map(CIMLKDispersionLine::getGmlId)
           .forEach(roadId -> dispersionLinesPerRoadId.merge(roadId, 1, (oldValue, value) -> oldValue + value));
       this.dispersionLines.addAll(importedDispersionLines);
     }
@@ -199,29 +199,29 @@ public class CimlkCohesionValidator {
     for (final CIMLKDispersionLine dispersionLineWithoutPoint : dispersionLineWithoutPoints) {
       tracker.addError(new AeriusException(ImaerExceptionReason.COHESION_REFERENCE_DISPERSION_LINE_MISSING_POINT,
           dispersionLineWithoutPoint.getCalculationPointGmlId(),
-          dispersionLineWithoutPoint.getRoadGmlId()));
+          dispersionLineWithoutPoint.getGmlId()));
     }
     final List<CIMLKDispersionLine> dispersionLineWithoutSegments = tracker.dispersionLines.stream()
-        .filter(dispersionLine -> !tracker.srm1SourceIds.contains(dispersionLine.getRoadGmlId()))
+        .filter(dispersionLine -> !tracker.srm1SourceIds.contains(dispersionLine.getGmlId()))
         .collect(Collectors.toList());
     for (final CIMLKDispersionLine dispersionLineWithoutSegment : dispersionLineWithoutSegments) {
       tracker.addError(new AeriusException(ImaerExceptionReason.COHESION_REFERENCE_DISPERSION_LINE_MISSING_ROAD,
           dispersionLineWithoutSegment.getCalculationPointGmlId(),
-          dispersionLineWithoutSegment.getRoadGmlId()));
+          dispersionLineWithoutSegment.getGmlId()));
     }
     tracker.dispersionLines.forEach(dispersionLine -> checkDispersionlinePerpendicular(dispersionLine, tracker));
   }
 
   private static void checkDispersionlinePerpendicular(final CIMLKDispersionLine dispersionLine,
       final CohesionTracker tracker) {
-    final EmissionSourceFeature sourceFeature = tracker.sources.get(dispersionLine.getRoadGmlId());
+    final EmissionSourceFeature sourceFeature = tracker.sources.get(dispersionLine.getGmlId());
     final CalculationPointFeature pointFeature = tracker.points.get(dispersionLine.getCalculationPointGmlId());
     try {
       if (sourceFeature != null && pointFeature != null && isSrm1Source(sourceFeature.getProperties())
           && !GeometryUtil.isPerpendicularAlongLine(GeometryUtil.getGeometry(sourceFeature.getGeometry()), pointFeature.getGeometry())) {
         tracker.addWarning(new AeriusException(ImaerExceptionReason.COHESION_DISPERSION_LINE_NOT_PERPENDICULAR,
             dispersionLine.getCalculationPointGmlId(),
-            dispersionLine.getRoadGmlId()));
+            dispersionLine.getGmlId()));
       }
     } catch (final AeriusException e) {
       tracker.addError(e);

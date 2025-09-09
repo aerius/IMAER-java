@@ -159,7 +159,8 @@
         "label" : "Some dispersion line",
         "roadProfile" : "ONE_SIDE_BUILDINGS",
         "treeProfile" : "SEPARATED",
-        "description" : "this is optional"
+        "description" : "this is optional",
+        "gmlId" : "ES.1"
       }
     } ]
   }
