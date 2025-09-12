@@ -38,9 +38,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.EnumMap;
 import java.util.EnumSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -100,10 +103,8 @@ public final class AssertGML {
 
   private static final String REGEX_FEATURE_COLLECTION_ELEMENT = "<imaer:FeatureCollectionCalculator[^>]*>";
 
-  /**
-   * Due to {@link GMLReaderFactory}'s instance aproach, we need to keep a static reference to the current characteristics type.
-   */
-  private static CharacteristicsType currentCharacteristicsType = CharacteristicsType.OPS;
+  private static final Map<GMLHelper, GMLReaderFactory> HELPER_FACTORY_MAP = new LinkedHashMap<>();
+  private static final Map<CharacteristicsType, GMLHelper> ENUM_HELPER_MAP = new EnumMap<>(CharacteristicsType.class);
 
   private AssertGML() {
     //util convenience class.
@@ -111,6 +112,30 @@ public final class AssertGML {
 
   static void assertEqualsGML(final String expected, final String actual, final String gmlName) {
     assertEquals(getCleanGML(expected), getCleanGML(actual), "GML (" + gmlName + ") content is not the same.");
+  }
+
+  static public GMLReaderFactory getCachedFactory(final GMLHelper mockGMLHelper) throws AeriusException {
+    GMLReaderFactory readerFactory;
+    if (HELPER_FACTORY_MAP.containsKey(mockGMLHelper)) {
+      readerFactory = HELPER_FACTORY_MAP.get(mockGMLHelper);
+    }
+    else {
+      readerFactory = new GMLReaderFactory(mockGMLHelper);
+      HELPER_FACTORY_MAP.put(mockGMLHelper, readerFactory);
+    }
+    return readerFactory;
+  }
+
+  public static GMLHelper getCachedHelper(final CharacteristicsType ct) throws AeriusException {
+    final GMLHelper helper;
+    if (ENUM_HELPER_MAP.containsKey(ct)) {
+      helper = ENUM_HELPER_MAP.get(ct);
+    }
+    else {
+      helper = mockGMLHelper(ct);
+      ENUM_HELPER_MAP.put(ct, helper);
+    }
+    return helper;
   }
 
   private static String getCleanGML(final String gml) {
@@ -156,13 +181,13 @@ public final class AssertGML {
 
   static ImportParcel getImportResult(final String relativePath, final String fileName)
       throws IOException, AeriusException {
-    return getImportResult(relativePath, fileName, ImportOption.getDefaultOptions(), AssertGML.mockGMLHelper());
+    return getImportResult(relativePath, fileName, ImportOption.getDefaultOptions(), getDefaultGMLHelper());
   }
 
   static ImportParcel getImportResult(final String relativePath, final String fileName, final EnumSet<ImportOption> importOptions,
       final GMLHelper mockGMLHelper) throws IOException, AeriusException {
     final File file = getFile(relativePath, fileName);
-    final ImaerImporter importer = new ImaerImporter(mockGMLHelper);
+    final ImaerImporter importer = new ImaerImporter(mockGMLHelper, getCachedFactory(mockGMLHelper));
     final ImportParcel result = new ImportParcel();
     try (final InputStream inputStream = new BufferedInputStream(new FileInputStream(file))) {
       importer.importStream(inputStream, importOptions, result);
@@ -172,6 +197,7 @@ public final class AssertGML {
     }
     return result;
   }
+
 
   static URL getFileResource(final String relativePath, final String fileName) {
     final String file = getFullPath(relativePath, fileName);
@@ -202,23 +228,26 @@ public final class AssertGML {
     return "/gml/" + actualRelativePath + fileName + extension;
   }
 
+  static GMLHelper getDefaultGMLHelper() throws AeriusException {
+    return getCachedHelper(CharacteristicsType.OPS);
+  }
+
   static GMLHelper mockGMLHelper() throws AeriusException {
     return mockGMLHelper(CharacteristicsType.OPS);
   }
 
   static GMLHelper mockGMLHelper(final CharacteristicsType ct) throws AeriusException {
     final GMLHelper gmlHelper = mock(GMLHelper.class);
-    currentCharacteristicsType = ct;
     when(gmlHelper.getReceptorGridSettings()).thenReturn(ReceptorGridSettings.NL);
     mockEmissionSourceGeometryLimits(gmlHelper);
-    when(gmlHelper.getCharacteristicsType()).thenAnswer((i) -> currentCharacteristicsType);
-    final TestValidationAndEmissionHelper valiationAndEmissionHelper = new TestValidationAndEmissionHelper(
-        () -> currentCharacteristicsType);
+    when(gmlHelper.getCharacteristicsType()).thenReturn(ct);
+    final TestValidationAndEmissionHelper validationAndEmissionHelper = new TestValidationAndEmissionHelper(
+        () -> ct);
     doAnswer(invocation -> {
       final List<EmissionSourceFeature> arg1 = (List<EmissionSourceFeature>) invocation.getArgument(1);
 
       for (final EmissionSourceFeature source : arg1) {
-        mockEnforce(valiationAndEmissionHelper, source);
+        mockEnforce(validationAndEmissionHelper, source);
       }
 
       return null;
@@ -228,8 +257,8 @@ public final class AssertGML {
     when(gmlHelper.getLegacyMobileSourceOffRoadConversions()).thenReturn(TestValidationAndEmissionHelper.legacyMobileSourceOffRoadConversions());
     when(gmlHelper.getLegacyPlanConversions()).thenReturn(TestValidationAndEmissionHelper.legacyPlanConversions());
     when(gmlHelper.getLegacyFarmLodgingConversions()).thenReturn(TestValidationAndEmissionHelper.legacyFarmLodgingConversions());
-    when(gmlHelper.determineDefaultCharacteristicsBySectorId(anyInt(), any())).thenAnswer((i) -> determineDefaultCharacteristics());
-    when(gmlHelper.getValidationHelper()).thenReturn(valiationAndEmissionHelper);
+    when(gmlHelper.determineDefaultCharacteristicsBySectorId(anyInt(), any())).thenReturn(determineDefaultCharacteristics(ct));
+    when(gmlHelper.getValidationHelper()).thenReturn(validationAndEmissionHelper);
     when(gmlHelper.getDefaultSector()).thenReturn(new Sector(GMLTestDomain.DEFAULT_SECTOR_ID, SectorGroup.INDUSTRY, ""));
     when(gmlHelper.isValidSectorId(anyInt())).thenReturn(true);
     return gmlHelper;
@@ -244,8 +273,8 @@ public final class AssertGML {
     when(gmlHelper.getEmissionSourceGeometryLimits()).thenReturn(emissionSourceGeometryLimits);
   }
 
-  private static SourceCharacteristics determineDefaultCharacteristics() {
-    if (currentCharacteristicsType == CharacteristicsType.ADMS) {
+  private static SourceCharacteristics determineDefaultCharacteristics(final CharacteristicsType ct) {
+    if (ct == CharacteristicsType.ADMS) {
       return mock(ADMSSourceCharacteristics.class);
     } else {
       return mock(OPSSourceCharacteristics.class);

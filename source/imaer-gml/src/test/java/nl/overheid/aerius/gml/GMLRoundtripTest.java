@@ -41,6 +41,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import nl.overheid.aerius.gml.base.AeriusGMLVersion;
+import nl.overheid.aerius.gml.base.GMLHelper;
 import nl.overheid.aerius.gml.base.MetaDataInput;
 import nl.overheid.aerius.importer.ImaerImporter;
 import nl.overheid.aerius.importer.ImportOption;
@@ -365,7 +366,9 @@ class GMLRoundtripTest {
       final boolean includeResults) throws IOException, AeriusException {
     final String relativePath = getRelativePath(versionString, testFolder);
     final AtomicReference<String> readVersion = new AtomicReference<>();
-    final ImaerImporter importer = new ImaerImporter(AssertGML.mockGMLHelper(ct)) {
+    final GMLHelper gmlHelper = AssertGML.getCachedHelper(ct);
+    final GMLReaderFactory factory = AssertGML.getCachedFactory(gmlHelper); // new GMLReaderFactory(gmlHelper); //
+    final ImaerImporter importer = new ImaerImporter(gmlHelper, factory) {
       @Override
       protected GMLReader createGMLReader(final InputStream inputStream, final Set<ImportOption> importOptions, final ImportParcel result)
           throws AeriusException {
