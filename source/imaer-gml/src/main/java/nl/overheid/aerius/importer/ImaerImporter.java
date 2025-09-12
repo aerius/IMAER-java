@@ -76,10 +76,25 @@ public class ImaerImporter {
   private final EPSG epsg;
   private final EmissionSourceLimits limits;
 
-  public ImaerImporter(final GMLHelper gmlHelper) throws AeriusException {
-    factory = GMLReaderFactory.getFactory(gmlHelper);
+  /**
+   * This constructor should be used for tests where control of the gmlReaderFactory is more important than speed.
+   * @param gmlHelper
+   * @param gmlReaderFactory
+   * @throws AeriusException
+   */
+  public ImaerImporter(final GMLHelper gmlHelper, final GMLReaderFactory gmlReaderFactory) throws AeriusException {
+    factory = gmlReaderFactory;
     epsg = gmlHelper.getReceptorGridSettings().getEPSG();
     limits = gmlHelper.getEmissionSourceGeometryLimits();
+  }
+
+  /**
+   * Use this constructor by default.
+   * @param gmlHelper
+   * @throws AeriusException
+   */
+  public ImaerImporter(final GMLHelper gmlHelper) throws AeriusException {
+    this(gmlHelper, GMLReaderFactory.getFactory(gmlHelper));
   }
 
   /**
