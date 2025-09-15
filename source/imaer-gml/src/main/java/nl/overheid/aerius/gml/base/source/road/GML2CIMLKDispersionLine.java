@@ -54,7 +54,7 @@ public class GML2CIMLKDispersionLine {
     final String roadId = gmlDispersionLine.getRoad().getReferredId();
     final String calculationPointId = gmlDispersionLine.getCalculationPoint().getReferredId();
 
-    dispersionLine.setRoadGmlId(roadId);
+    dispersionLine.setGmlId(roadId);
     dispersionLine.setCalculationPointGmlId(calculationPointId);
 
     final CIMLKDispersionLineFeature feature = new CIMLKDispersionLineFeature();

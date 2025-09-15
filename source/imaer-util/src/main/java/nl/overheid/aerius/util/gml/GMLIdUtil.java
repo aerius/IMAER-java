@@ -16,8 +16,12 @@
  */
 package nl.overheid.aerius.util.gml;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import nl.overheid.aerius.shared.domain.v2.geojson.Feature;
+import nl.overheid.aerius.shared.domain.v2.geojson.GmlIdProperties;
 
 /**
  * Util class for working with GML ids.
@@ -36,6 +40,18 @@ public final class GMLIdUtil {
 
   private GMLIdUtil() {
     // Util class
+  }
+
+  /**
+   * Util to force a GML id on all features in the list if they don't have a GML id yet.
+   *
+   * @param features feature to set the gml id on
+   * @param prefix prefix related to the typo of feature
+   */
+  public static <T extends GmlIdProperties, F extends Feature<T, ?>> void toValidGmlIds(final List<F> features, final String prefix) {
+    for (final F feature : features) {
+      feature.getProperties().setGmlId(GMLIdUtil.toValidGmlId(feature.getProperties().getGmlId(), prefix, feature.getId()));
+    }
   }
 
   /**

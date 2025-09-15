@@ -46,7 +46,6 @@ import nl.overheid.aerius.shared.domain.v2.source.OffRoadMobileEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.SRM1RoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.SRM2RoadEmissionSource;
 import nl.overheid.aerius.shared.exception.AeriusException;
-import nl.overheid.aerius.util.gml.GMLIdUtil;
 
 /**
  * Util class to convert {@link EmissionSource} to GML object.
@@ -80,13 +79,10 @@ final class Source2GML implements EmissionSourceVisitor<nl.overheid.aerius.gml.v
   private nl.overheid.aerius.gml.v5_1.source.EmissionSource toGMLDefault(final EmissionSourceFeature sourceFeature,
       final Substance[] substances) throws AeriusException {
     final EmissionSource source = sourceFeature.getProperties();
-    //use a specific prefix for ID to achieve unique IDs
-    final String gmlId = GMLIdUtil.toValidGmlId(source.getGmlId(), GMLIdUtil.SOURCE_PREFIX, sourceFeature.getId());
-    source.setGmlId(gmlId);
     final nl.overheid.aerius.gml.v5_1.source.EmissionSource returnSource = sourceFeature.accept(this);
     //set the generic properties.
     returnSource.setGeometry(geometry2gml, sourceFeature.getGeometry());
-    returnSource.setId(gmlId);
+    returnSource.setId(source.getGmlId());
 
     returnSource.setLabel(source.getLabel());
     returnSource.setDescription(source.getDescription());

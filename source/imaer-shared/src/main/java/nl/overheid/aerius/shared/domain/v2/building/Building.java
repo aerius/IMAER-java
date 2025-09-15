@@ -16,11 +16,11 @@
  */
 package nl.overheid.aerius.shared.domain.v2.building;
 
-import java.io.Serializable;
+import nl.overheid.aerius.shared.domain.v2.geojson.GmlIdProperties;
 
-public class Building implements Serializable {
+public class Building implements GmlIdProperties {
 
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 2L;
 
   private String gmlId;
   private String label;
@@ -33,10 +33,12 @@ public class Building implements Serializable {
    */
   private double diameter;
 
+  @Override
   public String getGmlId() {
     return gmlId;
   }
 
+  @Override
   public void setGmlId(final String gmlId) {
     this.gmlId = gmlId;
   }
