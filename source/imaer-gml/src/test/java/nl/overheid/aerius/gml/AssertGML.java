@@ -114,16 +114,8 @@ public final class AssertGML {
     assertEquals(getCleanGML(expected), getCleanGML(actual), "GML (" + gmlName + ") content is not the same.");
   }
 
-  static public GMLReaderFactory getCachedFactory(final GMLHelper mockGMLHelper) throws AeriusException {
-    GMLReaderFactory readerFactory;
-    if (HELPER_FACTORY_MAP.containsKey(mockGMLHelper)) {
-      readerFactory = HELPER_FACTORY_MAP.get(mockGMLHelper);
-    }
-    else {
-      readerFactory = new GMLReaderFactory(mockGMLHelper);
-      HELPER_FACTORY_MAP.put(mockGMLHelper, readerFactory);
-    }
-    return readerFactory;
+  static public GMLReaderFactory getCachedFactory(final CharacteristicsType ct) throws AeriusException {
+    return GML_READER_FACTORY_MAP.computeIfAbsent(ct, k -> new GMLReaderFactory(getCachedHelper(k)));
   }
 
   public static GMLHelper getCachedHelper(final CharacteristicsType ct) throws AeriusException {
