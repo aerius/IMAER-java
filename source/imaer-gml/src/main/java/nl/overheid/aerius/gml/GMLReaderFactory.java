@@ -58,7 +58,7 @@ public final class GMLReaderFactory {
   private final GMLReaderProxy readerProxy;
   private final GMLHelper gmlHelper;
 
-  GMLReaderFactory(final GMLHelper gmlHelper) throws AeriusException {
+  public GMLReaderFactory(final GMLHelper gmlHelper) throws AeriusException {
     this(gmlHelper, new GMLReaderProxy(gmlHelper));
   }
 
