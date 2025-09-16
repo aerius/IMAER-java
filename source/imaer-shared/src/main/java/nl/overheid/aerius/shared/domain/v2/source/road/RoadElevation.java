@@ -55,4 +55,12 @@ public enum RoadElevation {
   public double getHeightFactor() {
     return this.heightFactor;
   }
+
+  /**
+   * Default tunnelfactor = 1.0 (normal road).
+   * 0 would mean it is actually a tunnel (no emission).
+   * Any other value would mean the road(section) is connected to a tunnel.
+   * Tunnel should be > 100m long however to get a tunnelfactor.
+   */
+  public static final double TUNNEL_FACTOR = 1L;
 }
