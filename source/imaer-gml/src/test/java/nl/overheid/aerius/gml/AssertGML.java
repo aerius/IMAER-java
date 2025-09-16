@@ -40,7 +40,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.EnumSet;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -115,11 +114,25 @@ public final class AssertGML {
   }
 
   static public GMLReaderFactory getCachedFactory(final CharacteristicsType ct) throws AeriusException {
-    return GML_READER_FACTORY_MAP.computeIfAbsent(ct, k -> new GMLReaderFactory(getCachedHelper(k)));
+    final GMLReaderFactory readerFactory;
+    if (GML_READER_FACTORY_MAP.containsKey(ct)) {
+      readerFactory = GML_READER_FACTORY_MAP.get(ct);
+    } else {
+      readerFactory = new GMLReaderFactory(getCachedHelper(ct));
+      GML_READER_FACTORY_MAP.put(ct, readerFactory);
+    }
+    return readerFactory;
   }
 
   public static GMLHelper getCachedHelper(final CharacteristicsType ct) throws AeriusException {
-    return GML_HELPER_MAP.computeIfAbsent(ct, k -> mockGMLHelper(k));
+    final GMLHelper helper;
+    if (GML_HELPER_MAP.containsKey(ct)) {
+      helper = GML_HELPER_MAP.get(ct);
+    } else {
+      helper = mockGMLHelper(ct);
+      GML_HELPER_MAP.put(ct, helper);
+    }
+    return helper;
   }
 
   private static String getCleanGML(final String gml) {
@@ -171,7 +184,7 @@ public final class AssertGML {
   static ImportParcel getImportResult(final String relativePath, final String fileName, final EnumSet<ImportOption> importOptions,
       final GMLHelper mockGMLHelper) throws IOException, AeriusException {
     final File file = getFile(relativePath, fileName);
-    final ImaerImporter importer = new ImaerImporter(mockGMLHelper, getCachedFactory(mockGMLHelper));
+    final ImaerImporter importer = new ImaerImporter(mockGMLHelper, getCachedFactory(mockGMLHelper.getCharacteristicsType()));
     final ImportParcel result = new ImportParcel();
     try (final InputStream inputStream = new BufferedInputStream(new FileInputStream(file))) {
       importer.importStream(inputStream, importOptions, result);

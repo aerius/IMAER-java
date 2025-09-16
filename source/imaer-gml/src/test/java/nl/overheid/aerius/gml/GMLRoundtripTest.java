@@ -367,7 +367,7 @@ class GMLRoundtripTest {
     final String relativePath = getRelativePath(versionString, testFolder);
     final AtomicReference<String> readVersion = new AtomicReference<>();
     final GMLHelper gmlHelper = AssertGML.getCachedHelper(ct);
-    final GMLReaderFactory factory = AssertGML.getCachedFactory(gmlHelper);
+    final GMLReaderFactory factory = AssertGML.getCachedFactory(ct);
     final ImaerImporter importer = new ImaerImporter(gmlHelper, factory) {
       @Override
       protected GMLReader createGMLReader(final InputStream inputStream, final Set<ImportOption> importOptions, final ImportParcel result)
