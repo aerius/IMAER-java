@@ -62,5 +62,5 @@ public enum RoadElevation {
    * Any other value would mean the road(section) is connected to a tunnel.
    * Tunnel should be > 100m long however to get a tunnelfactor.
    */
-  public static final double TUNNEL_FACTOR = 1L;
+  public static final double TUNNEL_FACTOR = 1.0;
 }
