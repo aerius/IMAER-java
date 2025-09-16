@@ -104,7 +104,7 @@ public final class AssertGML {
   private static final String REGEX_FEATURE_COLLECTION_ELEMENT = "<imaer:FeatureCollectionCalculator[^>]*>";
 
   private static final Map<CharacteristicsType, GMLReaderFactory> GML_READER_FACTORY_MAP = new EnumMap<>(CharacteristicsType.class);
-  private static final Map<CharacteristicsType, GMLHelper> ENUM_HELPER_MAP = new EnumMap<>(CharacteristicsType.class);
+  private static final Map<CharacteristicsType, GMLHelper> GML_HELPER_MAP = new EnumMap<>(CharacteristicsType.class);
 
   private AssertGML() {
     //util convenience class.
