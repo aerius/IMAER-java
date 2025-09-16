@@ -119,15 +119,7 @@ public final class AssertGML {
   }
 
   public static GMLHelper getCachedHelper(final CharacteristicsType ct) throws AeriusException {
-    final GMLHelper helper;
-    if (ENUM_HELPER_MAP.containsKey(ct)) {
-      helper = ENUM_HELPER_MAP.get(ct);
-    }
-    else {
-      helper = mockGMLHelper(ct);
-      ENUM_HELPER_MAP.put(ct, helper);
-    }
-    return helper;
+    return GML_HELPER_MAP.computeIfAbsent(ct, k -> mockGMLHelper(k));
   }
 
   private static String getCleanGML(final String gml) {
