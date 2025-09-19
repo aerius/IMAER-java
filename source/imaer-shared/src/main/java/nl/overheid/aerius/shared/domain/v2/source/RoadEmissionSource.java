@@ -16,6 +16,7 @@
  */
 package nl.overheid.aerius.shared.domain.v2.source;
 
+import nl.overheid.aerius.shared.domain.v2.source.road.RoadElevation;
 import nl.overheid.aerius.shared.domain.v2.source.road.RoadManager;
 import nl.overheid.aerius.shared.domain.v2.source.road.TrafficDirection;
 import nl.overheid.aerius.shared.domain.v2.source.road.Vehicles;
@@ -36,13 +37,7 @@ public abstract class RoadEmissionSource extends EmissionSourceWithSubSources<Ve
    */
   private String roadTypeCode;
 
-  /**
-   * Default tunnelfactor = 1.0 (normal road).
-   * 0 would mean it is actually a tunnel (no emission).
-   * Any other value would mean the road(section) is connected to a tunnel.
-   * Tunnel should be > 100m long however to get a tunnelfactor.
-   */
-  private double tunnelFactor = 1.0;
+  private double tunnelFactor = RoadElevation.TUNNEL_FACTOR;
 
   private RoadManager roadManager;
 
