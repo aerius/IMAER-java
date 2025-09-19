@@ -82,11 +82,6 @@ class InvalidGMLTest {
   }
 
   @Test
-  void testInvalidYear() throws IOException, AeriusException {
-    assertResult("invalid_year", "Expected incorrect year message", ImaerExceptionReason.GML_VALIDATION_FAILED);
-  }
-
-  @Test
   void testUnsupportedAeriusGMLVersion() throws IOException, AeriusException {
     assertResult("unsupported_aerius_gml_version", "", ImaerExceptionReason.GML_VERSION_NOT_SUPPORTED);
   }

@@ -27,9 +27,6 @@ import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 
 public final class GMLValidator {
 
-  private static final int YEAR_LOWER_BOUNDARY = 1900;
-  private static final int YEAR_UPPER_BOUNDARY = 2100;
-
   private GMLValidator() {
     // Util class
   }
@@ -37,14 +34,6 @@ public final class GMLValidator {
   public static void validateGMLVersion(final AeriusGMLVersion version, final List<AeriusException> warnings) {
     if (GMLWriter.LATEST_WRITER_VERSION != version) {
       warnings.add(new AeriusException(ImaerExceptionReason.GML_VERSION_NOT_LATEST, version.toString(), GMLWriter.LATEST_WRITER_VERSION.toString()));
-    }
-  }
-
-  public static void validateYear(final int year, final List<AeriusException> exceptions) {
-    if (year < YEAR_LOWER_BOUNDARY) {
-      exceptions.add(new AeriusException(ImaerExceptionReason.GML_VALIDATION_FAILED, "year must be greater than " + YEAR_LOWER_BOUNDARY));
-    } else if (year > YEAR_UPPER_BOUNDARY) {
-      exceptions.add(new AeriusException(ImaerExceptionReason.GML_VALIDATION_FAILED, "year must be less than " + YEAR_UPPER_BOUNDARY));
     }
   }
 

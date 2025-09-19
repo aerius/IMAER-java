@@ -236,6 +236,7 @@ public final class AssertGML {
   static GMLHelper mockGMLHelper(final CharacteristicsType ct) throws AeriusException {
     final GMLHelper gmlHelper = mock(GMLHelper.class);
     when(gmlHelper.getReceptorGridSettings()).thenReturn(ReceptorGridSettings.NL);
+    when(gmlHelper.yearToUseForImport(any(), anyInt(), any())).thenCallRealMethod();
     mockEmissionSourceGeometryLimits(gmlHelper);
     when(gmlHelper.getCharacteristicsType()).thenReturn(ct);
     final TestValidationAndEmissionHelper validationAndEmissionHelper = new TestValidationAndEmissionHelper(

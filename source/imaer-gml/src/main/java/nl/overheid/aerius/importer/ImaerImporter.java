@@ -73,6 +73,7 @@ public class ImaerImporter {
   private static final Logger LOGGER = LoggerFactory.getLogger(ImaerImporter.class);
 
   private final GMLReaderFactory factory;
+  private final GMLHelper gmlHelper;
   private final EPSG epsg;
   private final EmissionSourceLimits limits;
 
@@ -83,6 +84,7 @@ public class ImaerImporter {
    * @throws AeriusException
    */
   public ImaerImporter(final GMLHelper gmlHelper, final GMLReaderFactory gmlReaderFactory) throws AeriusException {
+    this.gmlHelper = gmlHelper;
     factory = gmlReaderFactory;
     epsg = gmlHelper.getReceptorGridSettings().getEPSG();
     limits = gmlHelper.getEmissionSourceGeometryLimits();
@@ -146,14 +148,13 @@ public class ImaerImporter {
     }
 
     final AeriusGMLVersion version = reader.getVersion();
-    setImportResultMetaData(result, reader);
+    setImportResultMetaData(result, reader, importYear);
     GMLValidator.validateMetaData(result.getImportedMetaData(), result.getExceptions(), ImportOption.VALIDATE_METADATA.in(importOptions)
         && result.getArchiveMetaData() == null);
-    GMLValidator.validateYear(result.getSituation().getYear(), result.getExceptions());
     GMLValidator.validateGMLVersion(version, result.getWarnings());
 
     final ScenarioSituation situation = addSituationProperties(reader, result);
-    addEmissionSources(reader, importOptions, result, importYear);
+    addEmissionSources(reader, importOptions, result);
     addAeriusPoints(reader, importOptions, result);
     addCimlkMeasures(reader, importOptions, result, situation);
     addCimlkDispersionLines(reader, importOptions, situation);
@@ -194,15 +195,14 @@ public class ImaerImporter {
         result.getExceptions(), result.getWarnings());
   }
 
-  private void addEmissionSources(final GMLReader reader, final Set<ImportOption> importOptions, final ImportParcel result,
-      final Optional<Integer> importYear) throws AeriusException {
+  private void addEmissionSources(final GMLReader reader, final Set<ImportOption> importOptions, final ImportParcel result) throws AeriusException {
     if (ImportOption.INCLUDE_SOURCES.in(importOptions)) {
       final List<EmissionSourceFeature> sources = reader.readEmissionSourceList();
       if (ImportOption.VALIDATE_SOURCES.in(importOptions)) {
         EmissionSourceValidator.validateSources(sources, result.getExceptions(), result.getWarnings(),
             factory.createValidationHelper());
       }
-      reader.enforceEmissions(sources, importYear.orElse(result.getSituation().getYear()));
+      reader.enforceEmissions(sources, result.getSituation().getYear());
       if (ImportOption.VALIDATE_SOURCES.in(importOptions)) {
         EmissionSourceValidator.validateSourcesWithEmissions(sources, result.getExceptions(), result.getWarnings());
       }
@@ -324,9 +324,9 @@ public class ImaerImporter {
     return list;
   }
 
-  private static void setImportResultMetaData(final ImportParcel result, final GMLReader reader) throws AeriusException {
+  private void setImportResultMetaData(final ImportParcel result, final GMLReader reader, final Optional<Integer> importYear) throws AeriusException {
     final GMLMetaDataReader metaDataReader = reader.metaDataReader();
-    result.getSituation().setYear(metaDataReader.readYear());
+    result.getSituation().setYear(gmlHelper.yearToUseForImport(importYear, reader.metaDataReader().readYear(), result.getWarnings()));
     result.setVersion(metaDataReader.readAeriusVersion());
     result.setDatabaseVersion(metaDataReader.readDatabaseVersion());
     result.setGmlCreator(metaDataReader.readGmlCreator());

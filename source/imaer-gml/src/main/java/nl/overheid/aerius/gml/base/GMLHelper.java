@@ -17,6 +17,7 @@
 package nl.overheid.aerius.gml.base;
 
 import java.util.List;
+import java.util.Optional;
 
 import nl.overheid.aerius.gml.base.source.ship.v31.GMLInlandShippingSupplier;
 import nl.overheid.aerius.shared.domain.geo.ReceptorGridSettings;
@@ -56,5 +57,20 @@ public interface GMLHelper extends GMLInlandShippingSupplier, GMLLegacyCodesSupp
   default EmissionSourceLimits getEmissionSourceGeometryLimits() {
     // Added default for backward compatibility. Will be removed when used in Calculator.
     return null;
+  }
+
+  /**
+   * Returns the year to use for importing and the year that will be used for calculation emissions.
+   * Default implementation uses importYear or if not set the situationYear.
+   * Overriding implementations can force the year to be a year within the range of years emission values are available for.
+   * And to add a warning in case the year was changed.
+   *
+   * @param importYear year specified as being imported
+   * @param situationYear year as specified in the situation
+   * @param warnings list to add warnings in case the year is different from specified years.
+   * @return the year to use for import
+   */
+  default int yearToUseForImport(final Optional<Integer> importYear, final int situationYear, final List<AeriusException> warnings) {
+    return importYear.orElse(situationYear);
   }
 }

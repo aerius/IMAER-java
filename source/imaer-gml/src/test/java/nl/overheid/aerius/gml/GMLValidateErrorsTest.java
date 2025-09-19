@@ -234,18 +234,6 @@ class GMLValidateErrorsTest {
   }
 
   @Test
-  void testGMLYear2100() throws IOException {
-    assertResult("fout_year_over_2100", "GML year greater than", ImaerExceptionReason.GML_VALIDATION_FAILED,
-        e -> assertEquals("year must be less than 2100", e.getArgs()[0], "Year invalid"));
-  }
-
-  @Test
-  void testGMLYear1900() throws IOException {
-    assertResult("fout_year_under_1900", "GML year under than", ImaerExceptionReason.GML_VALIDATION_FAILED,
-        e -> assertEquals("year must be greater than 1900", e.getArgs()[0], "Year invalid"));
-  }
-
-  @Test
   void testGMLCustomTimeVaryingProfileUnknownType() throws IOException {
     assertResult("fout_1023_custom_time_varying_profile", "GML custom time-varying profile type",
         ImaerExceptionReason.CUSTOM_TIME_VARYING_PROFILE_TYPE_UNKNOWN,
