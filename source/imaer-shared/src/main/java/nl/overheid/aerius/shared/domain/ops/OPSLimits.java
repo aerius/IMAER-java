@@ -178,10 +178,10 @@ public final class OPSLimits implements BuildingLimits {
   public static final int SOURCE_SPREAD_MINIMUM = 0;
 
   /**
-   * source spread or source height distribution(s): fortran notation: F6.1 -> 9999.9 max.
-   * TODO: maximum is actually the height of the source. How to validate that?
+   * source spread or source height distribution(s): fortran notation: F6.1.
+   * OPS v5.3.1.0 enforces a maximum of 5000.0 m.
    */
-  public static final int SOURCE_SPREAD_MAXIMUM = 9999;
+  public static final int SOURCE_SPREAD_MAXIMUM = 4999;
 
   /**
    * The number of digits after the decimal point for spread.
