@@ -181,7 +181,7 @@ public final class OPSLimits implements BuildingLimits {
    * source spread or source height distribution(s): fortran notation: F6.1.
    * OPS v5.3.1.0 enforces a maximum of 5000.0 m.
    */
-  public static final int SOURCE_SPREAD_MAXIMUM = 5000;
+  public static final int SOURCE_SPREAD_MAXIMUM = 4999;
 
   /**
    * The number of digits after the decimal point for spread.
