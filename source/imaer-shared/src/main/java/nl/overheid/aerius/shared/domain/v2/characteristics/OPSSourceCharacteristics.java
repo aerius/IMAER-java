@@ -19,6 +19,7 @@ package nl.overheid.aerius.shared.domain.v2.characteristics;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.AssertTrue;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -96,14 +97,27 @@ public class OPSSourceCharacteristics extends SourceCharacteristics {
     this.heatContentType = heatContentType;
   }
 
-  @Min(value = OPSLimits.SOURCE_HEAT_CONTENT_MINIMUM, message = "ops heat_content > " + OPSLimits.SOURCE_HEAT_CONTENT_MINIMUM)
-  @Max(value = OPSLimits.SOURCE_HEAT_CONTENT_MAXIMUM, message = "ops heat_content < " + OPSLimits.SOURCE_HEAT_CONTENT_MAXIMUM)
   public Double getHeatContent() {
     return heatContent;
   }
 
   public void setHeatContent(final Double heatContent) {
     this.heatContent = heatContent;
+  }
+
+  @JsonIgnore
+  @AssertTrue(message = "for NOT_FORCED heat content types, ops heat_content must be present and between "
+      + OPSLimits.SOURCE_HEAT_CONTENT_MINIMUM + " and " + OPSLimits.SOURCE_HEAT_CONTENT_MAXIMUM + " (both inclusive)")
+  public boolean isHeatContentValid() {
+    if (heatContentType == HeatContentType.FORCED) {
+      return true;
+    }
+    if (heatContent == null) {
+      return false;
+    }
+    final boolean withinMinimum = heatContent >= OPSLimits.SOURCE_HEAT_CONTENT_MINIMUM;
+    final boolean withinMaximum = heatContent <= OPSLimits.SOURCE_HEAT_CONTENT_MAXIMUM;
+    return withinMinimum && withinMaximum;
   }
 
   public Double getEmissionTemperature() {
