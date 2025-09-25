@@ -128,9 +128,9 @@ public final class OPSLimits implements BuildingLimits {
   public static final int SOURCE_EMISSION_HEIGHT_MINIMUM = 0;
 
   /**
-   * source height(h): fortran notation: F6.1 -> 9999.9 max.
+   * source height(h): fortran notation: F6.1 -> 5000 m max.
    */
-  public static final int SOURCE_EMISSION_HEIGHT_MAXIMUM = 4999;
+  public static final int SOURCE_EMISSION_HEIGHT_MAXIMUM = 5000;
 
   /**
    * Minimum value for scope of ops for outflow height.
@@ -181,7 +181,7 @@ public final class OPSLimits implements BuildingLimits {
    * source spread or source height distribution(s): fortran notation: F6.1.
    * OPS v5.3.1.0 enforces a maximum of 5000.0 m.
    */
-  public static final int SOURCE_SPREAD_MAXIMUM = 4999;
+  public static final int SOURCE_SPREAD_MAXIMUM = 5000;
 
   /**
    * The number of digits after the decimal point for spread.
