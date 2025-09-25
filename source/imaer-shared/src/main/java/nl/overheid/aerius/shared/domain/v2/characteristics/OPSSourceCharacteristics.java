@@ -107,7 +107,7 @@ public class OPSSourceCharacteristics extends SourceCharacteristics {
 
   @JsonIgnore
   @AssertTrue(message = "for NOT_FORCED heat content types, ops heat_content must be present and between "
-      + OPSLimits.SOURCE_HEAT_CONTENT_MINIMUM + " and " + OPSLimits.SOURCE_HEAT_CONTENT_MAXIMUM)
+      + OPSLimits.SOURCE_HEAT_CONTENT_MINIMUM + " and " + OPSLimits.SOURCE_HEAT_CONTENT_MAXIMUM + " (both inclusive)")
   public boolean isHeatContentValid() {
     if (heatContentType == HeatContentType.FORCED) {
       return true;
