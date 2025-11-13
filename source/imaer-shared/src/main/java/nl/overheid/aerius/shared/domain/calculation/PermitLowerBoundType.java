@@ -16,27 +16,30 @@
  */
 package nl.overheid.aerius.shared.domain.calculation;
 
+import java.util.Locale;
+
 /**
- * Whether to use roadOPS, from 5km or entire calculation.
+ * Enum for identifying calculation lower bounds for permit calculations.
  */
-public enum CalculationRoadOPS {
-
+public enum PermitLowerBoundType {
   /**
-   * Default option, use normal calculation settings.
+   * Arithmetic limitations lower bound.
    */
-  DEFAULT,
-
+  ARITHMETIC,
   /**
-   * Use OPS to calculate from 5km distance.
-   *
-   * @deprecated By {@link DEFAULT} OPS is used to calculate from the 5km distance.
+   * Policy lower bound.
    */
-  @Deprecated
-  OPS_ROAD,
+  POLICY;
 
-  /**
-   * Use OPS to calculate for the entire calculation.
-   * This gives results outside the scope of OWN2000.
-   */
-  OPS_ALL
+  public String toDatabaseString() {
+    return name().toLowerCase(Locale.ROOT);
+  }
+
+  public static PermitLowerBoundType safeValueOf(final String value) {
+    try {
+      return value == null ? null : valueOf(value.toUpperCase(Locale.ROOT));
+    } catch (final IllegalArgumentException e) {
+      return null;
+    }
+  }
 }
