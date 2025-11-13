@@ -20,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
@@ -48,6 +49,7 @@ import nl.overheid.aerius.shared.domain.calculation.CalculationSetOptions;
 import nl.overheid.aerius.shared.domain.calculation.MetDatasetType;
 import nl.overheid.aerius.shared.domain.calculation.MetSurfaceCharacteristics;
 import nl.overheid.aerius.shared.domain.calculation.NCACalculationOptions;
+import nl.overheid.aerius.shared.domain.calculation.PermitLowerBoundType;
 import nl.overheid.aerius.shared.domain.v2.characteristics.adms.ADMSLimits;
 
 /**
@@ -176,6 +178,25 @@ class GMLCalculationSetOptionsReaderTest {
     assertEquals("somewhere else", options.getNcaCalculationOptions().getPermitArea(), "PermitArea");
   }
 
+  @Test
+  void testOWN2000ReadCalculationSetOptions() {
+    final FeatureCollection featureCollection = mock(FeatureCollection.class);
+    final MetaData metaData = mock(MetaData.class);
+    final IsCalculationMetaData calculationMetaData = mock(IsCalculationMetaData.class);
+    final List<IsGmlProperty<IsCalculationOption>> suppliedOptions = new ArrayList<>();
+
+    suppliedOptions.add(mockCalculationOption("permit_lower_bound", "policy"));
+    when(featureCollection.getMetaData()).thenReturn(metaData);
+    when(calculationMetaData.getOptions()).thenAnswer(a -> suppliedOptions);
+    when(metaData.getCalculation()).thenReturn(calculationMetaData);
+    final GMLCalculationSetOptionsReader reader = new GMLCalculationSetOptionsReader(featureCollection);
+
+    final CalculationSetOptions options = reader.readCalculationSetOptions(Theme.OWN2000);
+    assertNotNull(options, "returned options shouldn't be null");
+    assertSame(PermitLowerBoundType.POLICY, options.getOwN2000CalculationOptions().getPermitLowerBoundType(),
+        "Should have read the Permit Lower Bound.");
+  }
+
   /**
    * @param spatiallyVaryingRoughness Test spatiallyVaryingRoughness. if null it should be true, else follow boolean value
    */
@@ -279,7 +300,7 @@ class GMLCalculationSetOptionsReaderTest {
   }
 
   @Test
-  void testReadCalculationSetOptionsWnb() {
+  void testNCAReadCalculationSetOptions() {
     final FeatureCollection featureCollection = mock(FeatureCollection.class);
     final MetaData metaData = mock(MetaData.class);
     final IsCalculationMetaData calculationMetaData = mock(IsCalculationMetaData.class);
