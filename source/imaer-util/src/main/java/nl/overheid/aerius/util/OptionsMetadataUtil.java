@@ -16,15 +16,11 @@
  */
 package nl.overheid.aerius.util;
 
-import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Optional;
-import java.util.function.Consumer;
 
 import nl.overheid.aerius.shared.domain.Theme;
 import nl.overheid.aerius.shared.domain.calculation.CalculationJobType;
@@ -34,10 +30,7 @@ import nl.overheid.aerius.shared.domain.calculation.ConnectSuppliedOptions;
 /**
  * Utility class to convert calculation options to metadata.
  */
-public final class OptionsMetadataUtil {
-
-  static final String LIST_OPTION_SEPARATOR = ",";
-  static final String OPTION_KEY_SPLIT = "-";
+public final class OptionsMetadataUtil extends OptionsMetadataUtilBase {
 
   public enum Option {
     // @formatter:off
@@ -186,8 +179,6 @@ public final class OptionsMetadataUtil {
     return mapToAddTo;
   }
 
-
-
   private static void addConnectSuppliedOptions(final ConnectSuppliedOptions connectSuppliedOptions, final Map<String, String> mapToAddTo,
       final boolean addDefaults) {
     if (connectSuppliedOptions != null) {
@@ -195,55 +186,4 @@ public final class OptionsMetadataUtil {
       addValue(mapToAddTo, Option.RECEPTOR_SET, connectSuppliedOptions.getReceptorSetName(), addDefaults);
     }
   }
-
-
-  static double getOrDefault(final Map<Option, String> map, final Option option, final double defaultValue) {
-    return Optional.ofNullable(map.get(option)).map(Double::parseDouble).orElse(defaultValue);
-  }
-
-  static boolean isOrDefault(final Map<Option, String> map, final Option option, final boolean defaultValue) {
-    return Optional.ofNullable(map.get(option)).map(Boolean::parseBoolean).orElse(defaultValue);
-  }
-
-  static void parseListOption(final Option key, final Map<Option, String> map, final Consumer<List<String>> setter) {
-    final String value = map.get(key);
-    if (value != null && !value.isBlank()) {
-      final String[] splitOption = value.split(LIST_OPTION_SEPARATOR);
-      if (splitOption.length > 0) {
-        setter.accept(Arrays.asList(splitOption));
-      }
-    }
-  }
-
-  static void addValue(final Map<String, String> mapToAddTo, final Option key, final Object value, final boolean addDefaults) {
-    addValue(mapToAddTo, key.toKey(), value, addDefaults);
-  }
-
-  static void addValue(final Map<String, String> mapToAddTo, final String key, final Object value, final boolean addDefaults) {
-    // false should be the default value, so only add if value is true, or if defaults should be added anyway.
-    if (value != null) {
-      mapToAddTo.put(key, value.toString());
-    } else if (addDefaults) {
-      mapToAddTo.put(key, "");
-    }
-  }
-
-  static void addIntValue(final Map<String, String> mapToAddTo, final Option key, final int value, final boolean addDefaults) {
-    addIntValue(mapToAddTo, key, value, addDefaults, 0);
-  }
-
-  static void addIntValue(final Map<String, String> mapToAddTo, final Option key, final int value, final boolean addDefaults,
-      final int defaultValue) {
-    if (addDefaults || value != defaultValue) {
-      mapToAddTo.put(key.toKey(), String.valueOf(value));
-    }
-  }
-
-  static void addBooleanValue(final Map<String, String> mapToAddTo, final Option key, final boolean value, final boolean addDefaults) {
-    // false should be the default value, so only add if value is true, or if defaults should be added anyway.
-    if (addDefaults || value) {
-      mapToAddTo.put(key.toKey(), String.valueOf(value));
-    }
-  }
-
 }

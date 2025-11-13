@@ -24,14 +24,6 @@ import static nl.overheid.aerius.shared.domain.v2.characteristics.adms.ADMSLimit
 import static nl.overheid.aerius.shared.domain.v2.characteristics.adms.ADMSLimits.ROUGHNESS_DEFAULT;
 import static nl.overheid.aerius.shared.domain.v2.characteristics.adms.ADMSLimits.SPATIALLY_VARYING_ROUGHNESS_DEFAULT;
 import static nl.overheid.aerius.shared.domain.v2.characteristics.adms.ADMSLimits.SURFACE_ALBEDO_DEFAULT;
-import static nl.overheid.aerius.util.OptionsMetadataUtil.LIST_OPTION_SEPARATOR;
-import static nl.overheid.aerius.util.OptionsMetadataUtil.OPTION_KEY_SPLIT;
-import static nl.overheid.aerius.util.OptionsMetadataUtil.addBooleanValue;
-import static nl.overheid.aerius.util.OptionsMetadataUtil.addIntValue;
-import static nl.overheid.aerius.util.OptionsMetadataUtil.addValue;
-import static nl.overheid.aerius.util.OptionsMetadataUtil.getOrDefault;
-import static nl.overheid.aerius.util.OptionsMetadataUtil.isOrDefault;
-import static nl.overheid.aerius.util.OptionsMetadataUtil.parseListOption;
 
 import java.util.List;
 import java.util.Map;
@@ -48,7 +40,7 @@ import nl.overheid.aerius.util.OptionsMetadataUtil.Option;
 /**
  * Util class to read/write NCA theme meta data options from/to a map into/from the CalculationSetOptions object.
  */
-final class NcaOptionsMetadataUtil {
+final class NcaOptionsMetadataUtil extends OptionsMetadataUtilBase {
 
   private NcaOptionsMetadataUtil() {
     // Util class
@@ -57,7 +49,7 @@ final class NcaOptionsMetadataUtil {
   /**
    * Reads the NCA specific {@link CalculationSetOptions} from a map.
    *
-   * @param map The map t read the options from
+   * @param map The map to read the options from
    * @param prefixedOptionsMap map of options that have a prefixed key
    * @param options The object to set the options in
    */

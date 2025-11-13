@@ -16,10 +16,6 @@
  */
 package nl.overheid.aerius.util;
 
-import static nl.overheid.aerius.util.OptionsMetadataUtil.addBooleanValue;
-import static nl.overheid.aerius.util.OptionsMetadataUtil.addIntValue;
-import static nl.overheid.aerius.util.OptionsMetadataUtil.addValue;
-
 import java.util.Map;
 import java.util.Optional;
 
@@ -33,7 +29,7 @@ import nl.overheid.aerius.util.OptionsMetadataUtil.Option;
 /**
  * Util class to read/write Own2000 theme meta data options from/to a map into/from the CalculationSetOptions object.
  */
-final class Own2000OptionsMetadataUtil {
+final class Own2000OptionsMetadataUtil extends OptionsMetadataUtilBase {
 
   private Own2000OptionsMetadataUtil() {
     // Util class

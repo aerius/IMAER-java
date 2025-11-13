@@ -44,14 +44,14 @@ public class OwN2000CalculationOptions implements Serializable {
   private int splitSubReceptorWorkDistance;
 
   /**
-   * @return Returns the lower bound used for permit calculations.
+   * @return Returns the lower bound type used for permit calculations.
    */
   public PermitLowerBoundType getPermitLowerBoundType() {
     return permitLowerBoundType;
   }
 
   /**
-   * Set the lower bound used for permit calculations.
+   * Set the lower bound type used for permit calculations.
    */
   public void setPermitLowerBoundType(final PermitLowerBoundType permitLowerBoundType) {
     this.permitLowerBoundType = permitLowerBoundType;

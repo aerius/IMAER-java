@@ -179,7 +179,7 @@ class GMLCalculationSetOptionsReaderTest {
   }
 
   @Test
-  void testOWN2000ReadCalculationSetOptions() {
+  void testOwN2000ReadCalculationSetOptions() {
     final FeatureCollection featureCollection = mock(FeatureCollection.class);
     final MetaData metaData = mock(MetaData.class);
     final IsCalculationMetaData calculationMetaData = mock(IsCalculationMetaData.class);
