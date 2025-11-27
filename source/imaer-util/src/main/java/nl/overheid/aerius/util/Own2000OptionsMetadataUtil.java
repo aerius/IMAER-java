@@ -101,6 +101,7 @@ final class Own2000OptionsMetadataUtil extends OptionsMetadataUtilBase {
       addValue(mapToAddTo, Option.OPS_CONV_RATE, options.getConvRate(), addDefaults);
       addValue(mapToAddTo, Option.OPS_ROUGHNESS, options.getRoughness(), addDefaults);
       addValue(mapToAddTo, Option.OPS_ROADS, options.getRoads(), addDefaults);
+      addValue(mapToAddTo, Option.OPS_ROADS_OPT, options.getRoadsOpt(), addDefaults);
     }
   }
 }
