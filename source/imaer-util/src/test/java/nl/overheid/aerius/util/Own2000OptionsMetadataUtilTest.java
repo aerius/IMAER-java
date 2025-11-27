@@ -41,7 +41,7 @@ class Own2000OptionsMetadataUtilTest {
 
   private static final int BASIC_OPTIONS = 10;
   private static final int CONNECT_OPTIONS = 2;
-  private static final int OPS_OPTIONS = 12;
+  private static final int OPS_OPTIONS = 13;
 
   @Test
   void testDefaultOptionsWithoutAddingDefaults() {
@@ -172,6 +172,7 @@ class Own2000OptionsMetadataUtilTest {
     opsOptions.setRoughness(8.19);
     opsOptions.setChemistry(OPSOptions.Chemistry.PROGNOSIS);
     opsOptions.setRoads("3030");
+    opsOptions.setRoadsOpt("0 1");
     options.getOwN2000CalculationOptions().setOpsOptions(opsOptions);
 
     final Map<String, String> result = OptionsMetadataUtil.optionsToMap(Theme.OWN2000, options, false);
@@ -189,5 +190,6 @@ class Own2000OptionsMetadataUtilTest {
     assertEquals("8.19", result.get("ops_roughness"), "ops_roughness should be set");
     assertEquals("PROGNOSIS", result.get("ops_chemistry"), "ops_chemistry should be set");
     assertEquals("3030", result.get("ops_roads"), "ops_roads should be set");
+    assertEquals("0 1", result.get("ops_roads_opt"), "ops_roads_opt should be set");
   }
 }

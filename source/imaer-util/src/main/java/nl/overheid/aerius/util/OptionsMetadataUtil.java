@@ -66,6 +66,7 @@ public final class OptionsMetadataUtil extends OptionsMetadataUtilBase {
     OPS_ROUGHNESS,
     OPS_CHEMISTRY,
     OPS_ROADS,
+    OPS_ROADS_OPT,
 
     /* ADMS options related */
     ADMS_VERSION,

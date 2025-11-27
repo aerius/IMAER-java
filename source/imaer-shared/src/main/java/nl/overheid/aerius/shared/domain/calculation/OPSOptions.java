@@ -33,6 +33,7 @@ public class OPSOptions implements Serializable {
   private String washout;
   private String convRate;
   private String roads;
+  private String roadsOpt;
   private Double roughness;
   private Chemistry chemistry;
 
@@ -48,7 +49,7 @@ public class OPSOptions implements Serializable {
     return compCode;
   }
 
-  public void setCompCode(Integer compCode) {
+  public void setCompCode(final Integer compCode) {
     this.compCode = compCode;
   }
 
@@ -71,7 +72,7 @@ public class OPSOptions implements Serializable {
     return chemistry;
   }
 
-  public void setChemistry(Chemistry chemistry) {
+  public void setChemistry(final Chemistry chemistry) {
     this.chemistry = chemistry;
   }
 
@@ -157,6 +158,17 @@ public class OPSOptions implements Serializable {
 
   public void setRoads(final String roads) {
     this.roads = roads;
+  }
+
+  /**
+   * OPS .ctr variable: ROADSopt
+   */
+  public String getRoadsOpt() {
+    return roadsOpt;
+  }
+
+  public void setRoadsOpt(final String roadsOpt) {
+    this.roadsOpt = roadsOpt;
   }
 
   /**
