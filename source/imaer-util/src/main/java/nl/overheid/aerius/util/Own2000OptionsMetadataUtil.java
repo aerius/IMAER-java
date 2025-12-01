@@ -76,6 +76,7 @@ final class Own2000OptionsMetadataUtil extends OptionsMetadataUtilBase {
     if (options.isSplitSubReceptorWork()) {
       addValue(mapToAddTo, Option.SPLIT_SUB_RECEPTOR_WORK_DISTANCE, options.getSplitSubReceptorWorkDistance(), addDefaults);
     }
+    addBooleanValue(mapToAddTo, Option.REPOSITION_SUB_RECEPTORS, options.isRepositionSubReceptors(), addDefaults);
     opsOptionsToMap(options.getOpsOptions(), mapToAddTo, addDefaults);
   }
 

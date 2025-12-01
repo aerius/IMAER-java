@@ -25,7 +25,7 @@ import nl.overheid.aerius.shared.domain.meteo.Meteo;
  */
 public class OwN2000CalculationOptions implements Serializable {
 
-  private static final long serialVersionUID = 2L;
+  private static final long serialVersionUID = 3L;
 
   private CalculationRoadOPS roadOPS = CalculationRoadOPS.DEFAULT;
   private PermitLowerBoundType permitLowerBoundType;
@@ -42,6 +42,7 @@ public class OwN2000CalculationOptions implements Serializable {
   private Integer subReceptorZoomLevel;
   private boolean splitSubReceptorWork;
   private int splitSubReceptorWorkDistance;
+  private boolean repositionSubReceptors = true;
 
   /**
    * @return Returns the lower bound type used for permit calculations.
@@ -210,6 +211,14 @@ public class OwN2000CalculationOptions implements Serializable {
    */
   public void setSplitSubReceptorWorkDistance(final int distance) {
     this.splitSubReceptorWorkDistance = distance;
+  }
+
+  public boolean isRepositionSubReceptors() {
+    return repositionSubReceptors;
+  }
+
+  public void setRepositionSubReceptors(final boolean repositionSubReceptors) {
+    this.repositionSubReceptors = repositionSubReceptors;
   }
 
   /**

@@ -17,7 +17,6 @@
 package nl.overheid.aerius.util;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Map;
 
@@ -39,7 +38,8 @@ import nl.overheid.aerius.shared.domain.meteo.Meteo;
  */
 class Own2000OptionsMetadataUtilTest {
 
-  private static final int BASIC_OPTIONS = 10;
+  private static final int DEFAULT_OPTIONS = 1;
+  private static final int BASIC_OPTIONS = DEFAULT_OPTIONS + 10;
   private static final int CONNECT_OPTIONS = 2;
   private static final int OPS_OPTIONS = 13;
 
@@ -49,7 +49,8 @@ class Own2000OptionsMetadataUtilTest {
 
     final Map<String, String> result = OptionsMetadataUtil.optionsToMap(Theme.OWN2000, options, false);
 
-    assertTrue(result.isEmpty(), "With default options and not adding defaults to map, the map should be empty");
+    assertEquals(1, result.size(), "With default options and not adding defaults to map, the map only contain 1 entry");
+    assertEquals("true", result.get("reposition_sub_receptors"), "Should contain 'reposition_sub_receptors'");
   }
 
   @Test
@@ -113,7 +114,8 @@ class Own2000OptionsMetadataUtilTest {
 
     final Map<String, String> result = OptionsMetadataUtil.optionsToMap(Theme.OWN2000, options, true);
 
-    assertEquals(BASIC_OPTIONS + CONNECT_OPTIONS, result.size(), "Number of options when connectOptions is supplied and when adding defaults to map");
+    assertEquals(BASIC_OPTIONS + CONNECT_OPTIONS, result.size(),
+        "Number of options when connectOptions is supplied and when adding defaults to map");
     assertEquals("", result.get("calculation_year"), "calculation_year should be empty");
     assertEquals("", result.get("receptor_set"), "receptor_set should be empty");
   }
@@ -128,7 +130,7 @@ class Own2000OptionsMetadataUtilTest {
 
     final Map<String, String> result = OptionsMetadataUtil.optionsToMap(Theme.OWN2000, options, false);
 
-    assertEquals(CONNECT_OPTIONS, result.size(), "Number of options when connectOptions is supplied with non default values");
+    assertEquals(DEFAULT_OPTIONS + CONNECT_OPTIONS, result.size(), "Number of options when connectOptions is supplied with non default values");
     assertEquals("1999", result.get("calculation_year"), "Invalide calculation_year option");
     assertEquals("SomeRecept or name", result.get("receptor_set"), "Invalide receptor_set option");
   }
@@ -155,7 +157,6 @@ class Own2000OptionsMetadataUtilTest {
     assertEquals("", result.get("ops_chemistry"), "ops_chemistry should be empty");
   }
 
-
   @Test
   void testNonDefaultOptionsOps() {
     final CalculationSetOptions options = new CalculationSetOptions();
@@ -177,7 +178,7 @@ class Own2000OptionsMetadataUtilTest {
 
     final Map<String, String> result = OptionsMetadataUtil.optionsToMap(Theme.OWN2000, options, false);
 
-    assertEquals(OPS_OPTIONS, result.size(), "Number of options when opsOptions is supplied with non default values");
+    assertEquals(OPS_OPTIONS + DEFAULT_OPTIONS, result.size(), "Number of options when opsOptions is supplied with non default values");
     assertEquals("true", result.get("ops_raw_input"), "ops_raw_input should be true");
     assertEquals("1881", result.get("ops_year"), "ops_year should be set");
     assertEquals("20", result.get("ops_comp_code"), "ops_comp_code should be set");
