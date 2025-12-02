@@ -47,6 +47,7 @@ public final class OptionsMetadataUtil extends OptionsMetadataUtilBase {
     SUB_RECEPTOR_ZOOM_LEVEL,
     SPLIT_SUB_RECEPTOR_WORK,
     SPLIT_SUB_RECEPTOR_WORK_DISTANCE,
+    REPOSITION_SUB_RECEPTORS,
     USE_IN_COMBINATION_ARCHIVE,
 
     /* ConnectSuppliedOptions related */

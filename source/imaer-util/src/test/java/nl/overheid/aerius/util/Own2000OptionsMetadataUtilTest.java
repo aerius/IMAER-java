@@ -39,7 +39,7 @@ import nl.overheid.aerius.shared.domain.meteo.Meteo;
  */
 class Own2000OptionsMetadataUtilTest {
 
-  private static final int BASIC_OPTIONS = 10;
+  private static final int BASIC_OPTIONS = 11;
   private static final int CONNECT_OPTIONS = 2;
   private static final int OPS_OPTIONS = 13;
 
@@ -85,6 +85,7 @@ class Own2000OptionsMetadataUtilTest {
     options.setSubReceptorZoomLevel(1);
     options.setSplitSubReceptorWork(true);
     options.setSplitSubReceptorWorkDistance(1000);
+    options.setRepositionSubReceptors(true);
     cso.getRblCalculationOptions().setMonitorSrm2Year(2023);
 
     final Map<String, String> result = OptionsMetadataUtil.optionsToMap(Theme.OWN2000, cso, false);
@@ -103,6 +104,7 @@ class Own2000OptionsMetadataUtilTest {
     assertEquals("2023", result.get("monitor_srm2_year"), "Invalid monitor_srm2 option");
     assertEquals("true", result.get("split_sub_receptor_work"), "Invalid split_sub_receptor_work option");
     assertEquals("1000", result.get("split_sub_receptor_work_distance"), "Invalid split_sub_receptor_work_distance option");
+    assertEquals("true", result.get("reposition_sub_receptors"), "Invalid reposition_sub_receptor option");
   }
 
   @Test
