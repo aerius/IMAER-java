@@ -35,12 +35,6 @@
                     <imaer:maximumRange>3.0</imaer:maximumRange>
                     <imaer:option>
                         <imaer:CalculationOption>
-                            <imaer:key>reposition_sub_receptors</imaer:key>
-                            <imaer:value>true</imaer:value>
-                        </imaer:CalculationOption>
-                    </imaer:option>
-                    <imaer:option>
-                        <imaer:CalculationOption>
                             <imaer:key>monitor_srm2_year</imaer:key>
                             <imaer:value>2030</imaer:value>
                         </imaer:CalculationOption>

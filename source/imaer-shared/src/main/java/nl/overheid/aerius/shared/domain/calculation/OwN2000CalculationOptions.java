@@ -42,7 +42,7 @@ public class OwN2000CalculationOptions implements Serializable {
   private Integer subReceptorZoomLevel;
   private boolean splitSubReceptorWork;
   private int splitSubReceptorWorkDistance;
-  private boolean repositionSubReceptors = true;
+  private boolean repositionSubReceptors;
 
   /**
    * @return Returns the lower bound type used for permit calculations.
