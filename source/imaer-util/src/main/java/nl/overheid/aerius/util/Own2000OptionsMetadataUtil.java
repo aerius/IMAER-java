@@ -68,7 +68,8 @@ final class Own2000OptionsMetadataUtil extends OptionsMetadataUtilBase {
     }
     addBooleanValue(mapToAddTo, Option.FORCED_AGGREGATION, options.isForceAggregation(), addDefaults);
     addBooleanValue(mapToAddTo, Option.USE_RECEPTOR_HEIGHT, options.isUseReceptorHeights(), addDefaults);
-    addPermitLowerBound(mapToAddTo, options);
+    // TODO AER-4028: re-add permitLowerBound when parameter returns to Connect API
+    // addPermitLowerBound(mapToAddTo, options);
     addBooleanValue(mapToAddTo, Option.WITH_MAX_DISTANCE, options.isUseMaxDistance(), addDefaults);
     addValue(mapToAddTo, Option.SUB_RECEPTORS_MODE, options.getSubReceptorsMode(), addDefaults);
     addValue(mapToAddTo, Option.SUB_RECEPTOR_ZOOM_LEVEL, options.getSubReceptorZoomLevel(), addDefaults);

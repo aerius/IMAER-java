@@ -89,11 +89,9 @@ class Own2000OptionsMetadataUtilTest {
     cso.getRblCalculationOptions().setMonitorSrm2Year(2023);
 
     final Map<String, String> result = OptionsMetadataUtil.optionsToMap(Theme.OWN2000, cso, false);
-    // is BASIC_OPTIONS + 3 because SplitSubReceptorWorkDistance is by default not set when SplitSubReceptorWork is false
-    // Also PermitLowerBound options are optional.
-    assertEquals(BASIC_OPTIONS + 3, result.size(), "Number of options when options are not default");
-    assertEquals("POLICY", result.get("permit_lower_bound"), "Permit Lower Bound invalid");
-    assertEquals("123.0", result.get("permit_lower_bound_value"), "Permit Lower Bound valueinvalid");
+    // is BASIC_OPTIONS + 1 because SplitSubReceptorWorkDistance is by default not set when SplitSubReceptorWork is false
+    // TODO AER-4028: PermitLowerBound options temporarily not written to GML
+    assertEquals(BASIC_OPTIONS + 1, result.size(), "Number of options when options are not default");
     assertEquals("2020", result.get("meteo_year"), "Invalid meteo year option");
     assertEquals("true", result.get("without_source_stacking"), "Invalid without_source_stacking option");
     assertEquals("OPS_ROAD", result.get("ops_road"), "Invalid ops_road option");
