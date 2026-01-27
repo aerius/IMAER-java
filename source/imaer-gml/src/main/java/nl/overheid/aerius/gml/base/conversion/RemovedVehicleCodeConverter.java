@@ -20,7 +20,6 @@ import java.util.List;
 import java.util.Set;
 
 import nl.overheid.aerius.shared.domain.v2.source.ColdStartEmissionSource;
-import nl.overheid.aerius.shared.domain.v2.source.EmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceFeature;
 import nl.overheid.aerius.shared.domain.v2.source.RoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.road.CustomVehicles;
@@ -55,11 +54,10 @@ public class RemovedVehicleCodeConverter {
    */
   public void convertRemovedVehicleCodes(final List<EmissionSourceFeature> emissionSourceList) {
     for (final EmissionSourceFeature feature : emissionSourceList) {
-      final EmissionSource source = feature.getProperties();
-      if (source instanceof final RoadEmissionSource roadSource) {
-        convertSubSources(roadSource.getSubSources(), source.getLabel());
-      } else if (source instanceof final ColdStartEmissionSource coldStartSource) {
-        convertSubSources(coldStartSource.getSubSources(), source.getLabel());
+      if (feature.getProperties() instanceof final RoadEmissionSource roadSource) {
+        convertSubSources(roadSource.getSubSources(), roadSource.getLabel());
+      } else if (feature.getProperties() instanceof final ColdStartEmissionSource coldStartSource) {
+        convertSubSources(coldStartSource.getSubSources(), coldStartSource.getLabel());
       }
     }
   }
@@ -89,8 +87,4 @@ public class RemovedVehicleCodeConverter {
     return custom;
   }
 
-  /** Checks if a given vehicle code is a removed code. */
-  public boolean isRemovedVehicleCode(final String code) {
-    return removedVehicleCodes.contains(code);
-  }
 }

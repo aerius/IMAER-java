@@ -22,9 +22,7 @@ import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import nl.overheid.aerius.shared.domain.v2.base.TimeUnit;
 import nl.overheid.aerius.shared.domain.v2.source.ColdStartEmissionSource;
@@ -112,17 +110,6 @@ class RemovedVehicleCodeConverterTest {
     // Verify warning was added
     assertEquals(1, warnings.size());
     assertEquals(ImaerExceptionReason.GML_UNKNOWN_MOBILE_SOURCE_CODE, warnings.get(0).getReason());
-  }
-
-  @Test
-  void testIsRemovedVehicleCode() {
-    final Set<String> removedCodes = Set.of(REMOVED_CODE);
-    final List<AeriusException> warnings = new ArrayList<>();
-    final RemovedVehicleCodeConverter converter =
-        new RemovedVehicleCodeConverter(removedCodes, warnings);
-
-    assertTrue(converter.isRemovedVehicleCode(REMOVED_CODE));
-    assertFalse(converter.isRemovedVehicleCode(UNKNOWN_CODE));
   }
 
   private EmissionSourceFeature createRoadSourceWithSpecificVehicle(final String vehicleCode) {
