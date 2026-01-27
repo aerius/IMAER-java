@@ -32,9 +32,9 @@ import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 /**
  * Converts {@link SpecificVehicles} with removed vehicle codes to {@link CustomVehicles} with zero
  * emissions. This handles backward compatibility when importing old GML files containing vehicle
- * codes (e.g., euro classes) that have been removed from the database.
+ * codes (e.g., euro classes) that are no longer valid.
  *
- * <p>Only vehicle codes that are explicitly marked as "removed" in the database will be converted.
+ * <p>Only vehicle codes that are explicitly supplied as "removed" will be converted.
  * Unknown codes that are not in the removed codes list will still produce validation errors.
  */
 public class RemovedVehicleCodeConverter {
