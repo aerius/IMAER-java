@@ -58,7 +58,7 @@ final class Own2000OptionsMetadataUtil extends OptionsMetadataUtilBase {
    */
   static void own2000CalculationSetOptionsToMap(final CalculationSetOptions options, final Map<String, String> mapToAddTo, final boolean addDefaults) {
     own2000OptionsToMap(mapToAddTo, options.getOwN2000CalculationOptions(), addDefaults);
-    addIntValue(mapToAddTo, Option.MONITOR_SRM2_YEAR, options.getRblCalculationOptions().getMonitorSrm2Year(), addDefaults);
+    addIntValue(mapToAddTo, Option.MONITOR_SRM2_YEAR, options.getCimlkCalculationOptions().getMonitorSrm2Year(), addDefaults);
   }
 
   private static void own2000OptionsToMap(final Map<String, String> mapToAddTo, final OwN2000CalculationOptions options, final boolean addDefaults) {

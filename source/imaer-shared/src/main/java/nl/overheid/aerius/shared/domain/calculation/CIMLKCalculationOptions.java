@@ -19,9 +19,9 @@ package nl.overheid.aerius.shared.domain.calculation;
 import java.io.Serializable;
 
 /**
- * Calculation options related to the RBL theme.
+ * Calculation options related to the CIMLK theme.
  */
-public class RBLCalculationOptions implements Serializable {
+public class CIMLKCalculationOptions implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
@@ -45,7 +45,7 @@ public class RBLCalculationOptions implements Serializable {
     return srmVersion;
   }
 
-  public void setSrmVersion(String srmVersion) {
+  public void setSrmVersion(final String srmVersion) {
     this.srmVersion = srmVersion;
   }
 }

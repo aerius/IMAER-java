@@ -86,7 +86,7 @@ class Own2000OptionsMetadataUtilTest {
     options.setSplitSubReceptorWork(true);
     options.setSplitSubReceptorWorkDistance(1000);
     options.setRepositionSubReceptors(true);
-    cso.getRblCalculationOptions().setMonitorSrm2Year(2023);
+    cso.getCimlkCalculationOptions().setMonitorSrm2Year(2023);
 
     final Map<String, String> result = OptionsMetadataUtil.optionsToMap(Theme.OWN2000, cso, false);
     // is BASIC_OPTIONS + 1 because SplitSubReceptorWorkDistance is by default not set when SplitSubReceptorWork is false
