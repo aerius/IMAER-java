@@ -183,7 +183,7 @@ class GMLWriterTest {
     options.setCalculationMethod(CalculationMethod.NATURE_AREA);
     options.setMaximumRangeRelevant(true);
     options.setCalculateMaximumRange(3);
-    options.getRblCalculationOptions().setMonitorSrm2Year(2030);
+    options.getCimlkCalculationOptions().setMonitorSrm2Year(2030);
     options.getSubstances().add(Substance.NOX);
     options.getSubstances().add(Substance.NH3);
     options.getSubstances().add(Substance.NO2);
