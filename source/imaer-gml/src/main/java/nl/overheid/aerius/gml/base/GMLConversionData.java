@@ -28,6 +28,7 @@ import nl.overheid.aerius.gml.base.GMLLegacyCodeConverter.GMLLegacyCodeType;
 import nl.overheid.aerius.gml.base.conversion.FarmLodgingConversion;
 import nl.overheid.aerius.gml.base.conversion.MobileSourceOffRoadConversion;
 import nl.overheid.aerius.gml.base.conversion.PlanConversion;
+import nl.overheid.aerius.gml.base.conversion.RemovedVehicleCodeConverter;
 import nl.overheid.aerius.gml.base.source.ship.v31.InlandShippingUtil;
 import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.v2.building.BuildingFeature;
@@ -245,5 +246,16 @@ public class GMLConversionData {
 
   public <S extends SourceCharacteristics> S determineDefaultCharacteristicsBySectorId(final int sectorId, final GeometryType geometryType) {
     return characteristicsSupplier.determineDefaultCharacteristicsBySectorId(sectorId, geometryType);
+  }
+
+  /**
+   * Creates a converter that handles removed vehicle codes by converting them to custom vehicles
+   * with zero emissions.
+   *
+   * @return the removed vehicle code converter
+   * @throws AeriusException if the removed codes cannot be retrieved
+   */
+  public RemovedVehicleCodeConverter createRemovedVehicleCodeConverter() throws AeriusException {
+    return new RemovedVehicleCodeConverter(helper.getRemovedVehicleCodes(), warnings);
   }
 }

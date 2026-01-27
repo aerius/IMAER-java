@@ -25,6 +25,7 @@ import nl.overheid.aerius.gml.base.GMLConversionData;
 import nl.overheid.aerius.gml.base.GMLHelper;
 import nl.overheid.aerius.gml.base.GMLVersionReader;
 import nl.overheid.aerius.gml.base.GMLVersionReaderFactory;
+import nl.overheid.aerius.gml.base.conversion.RemovedVehicleCodeConverter;
 import nl.overheid.aerius.shared.domain.Theme;
 import nl.overheid.aerius.shared.domain.calculation.CalculationSetOptions;
 import nl.overheid.aerius.shared.domain.scenario.SituationType;
@@ -107,6 +108,18 @@ public final class GMLReader {
   public void enforceEmissions(final List<EmissionSourceFeature> emissionSourceList, final int year) throws AeriusException {
     //ensure emissions are set (where needed)
     gmlHelper.enforceEmissions(year, emissionSourceList);
+  }
+
+  /**
+   * Converts any SpecificVehicles with removed vehicle codes to CustomVehicles with zero emissions.
+   * This should be called after reading emission sources and before validation.
+   *
+   * @param emissionSourceList List of sources to convert
+   * @throws AeriusException error
+   */
+  public void convertRemovedVehicleCodes(final List<EmissionSourceFeature> emissionSourceList) throws AeriusException {
+    final RemovedVehicleCodeConverter converter = conversionData.createRemovedVehicleCodeConverter();
+    converter.convertRemovedVehicleCodes(emissionSourceList);
   }
 
   /**

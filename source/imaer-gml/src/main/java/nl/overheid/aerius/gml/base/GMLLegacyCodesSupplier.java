@@ -17,6 +17,7 @@
 package nl.overheid.aerius.gml.base;
 
 import java.util.Map;
+import java.util.Set;
 
 import nl.overheid.aerius.gml.base.GMLLegacyCodeConverter.Conversion;
 import nl.overheid.aerius.gml.base.GMLLegacyCodeConverter.GMLLegacyCodeType;
@@ -67,6 +68,17 @@ public interface GMLLegacyCodesSupplier {
    */
   default Map<String, FarmLodgingConversion> getLegacyFarmLodgingConversions() throws AeriusException {
     return Map.of();
+  }
+
+  /**
+   * Returns a set of removed vehicle codes.
+   * Sources with these codes will be converted to custom vehicles with zero emissions during import.
+   *
+   * @return set of removed vehicle codes
+   * @throws AeriusException
+   */
+  default Set<String> getRemovedVehicleCodes() throws AeriusException {
+    return Set.of();
   }
 
 }
