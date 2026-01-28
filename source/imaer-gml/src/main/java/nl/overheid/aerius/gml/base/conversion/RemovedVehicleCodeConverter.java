@@ -53,6 +53,9 @@ public class RemovedVehicleCodeConverter {
    * CustomVehicles with zero emissions.
    */
   public void convertRemovedVehicleCodes(final List<EmissionSourceFeature> emissionSourceList) {
+    if (removedVehicleCodes.isEmpty()) {
+      return;
+    }
     for (final EmissionSourceFeature feature : emissionSourceList) {
       if (feature.getProperties() instanceof final RoadEmissionSource roadSource) {
         convertSubSources(roadSource.getSubSources(), roadSource.getLabel());

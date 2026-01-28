@@ -198,6 +198,7 @@ public class ImaerImporter {
   private void addEmissionSources(final GMLReader reader, final Set<ImportOption> importOptions, final ImportParcel result) throws AeriusException {
     if (ImportOption.INCLUDE_SOURCES.in(importOptions)) {
       final List<EmissionSourceFeature> sources = reader.readEmissionSourceList();
+      reader.convertRemovedVehicleCodes(sources);
       if (ImportOption.VALIDATE_SOURCES.in(importOptions)) {
         EmissionSourceValidator.validateSources(sources, result.getExceptions(), result.getWarnings(),
             factory.createValidationHelper());
