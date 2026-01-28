@@ -70,7 +70,7 @@ abstract class GML2Road<T extends IsGmlRoadEmissionSource, S extends RoadEmissio
   protected abstract void setOptionalVariables(T source, S emissionSource) throws AeriusException;
 
   protected void addVehicleEmissions(final List<Vehicles> addToVehicles, final T source, final IsGmlProperty<IsGmlVehicle> vp,
-      final List<StandardVehicles> mergingStandardVehicles) {
+      final List<StandardVehicles> mergingStandardVehicles) throws AeriusException {
     final IsGmlVehicle av = vp.getProperty();
     if (av instanceof final IsGmlStandardVehicle standardVehicle) {
       addEmissionValues(addToVehicles, source, standardVehicle, mergingStandardVehicles);

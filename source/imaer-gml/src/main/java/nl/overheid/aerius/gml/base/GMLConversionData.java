@@ -28,7 +28,6 @@ import nl.overheid.aerius.gml.base.GMLLegacyCodeConverter.GMLLegacyCodeType;
 import nl.overheid.aerius.gml.base.conversion.FarmLodgingConversion;
 import nl.overheid.aerius.gml.base.conversion.MobileSourceOffRoadConversion;
 import nl.overheid.aerius.gml.base.conversion.PlanConversion;
-import nl.overheid.aerius.gml.base.conversion.RemovedVehicleCodeConverter;
 import nl.overheid.aerius.gml.base.source.ship.v31.InlandShippingUtil;
 import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.v2.building.BuildingFeature;
@@ -249,13 +248,19 @@ public class GMLConversionData {
   }
 
   /**
-   * Creates a converter that handles removed vehicle codes by converting them to custom vehicles
-   * with zero emissions.
+   * Checks if the given code is a removed code and adds a warning if so.
    *
-   * @return the removed vehicle code converter
+   * @param type the type of legacy code
+   * @param code the code to check
+   * @param sourceLabel the label of the source for warning messages
+   * @return true if the code is a removed code, false otherwise
    * @throws AeriusException if the removed codes cannot be retrieved
    */
-  public RemovedVehicleCodeConverter createRemovedVehicleCodeConverter() throws AeriusException {
-    return new RemovedVehicleCodeConverter(helper.getRemovedVehicleCodes(), warnings);
+  public boolean warnIfRemovedCode(final GMLLegacyCodeType type, final String code, final String sourceLabel) throws AeriusException {
+    if (helper.getRemovedCodes().getOrDefault(type, Set.of()).contains(code)) {
+      warnings.add(new AeriusException(ImaerExceptionReason.GML_UNKNOWN_MOBILE_SOURCE_CODE, sourceLabel, code));
+      return true;
+    }
+    return false;
   }
 }

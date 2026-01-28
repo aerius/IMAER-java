@@ -24,11 +24,13 @@ import static org.mockito.Mockito.when;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.EnumSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
 import nl.overheid.aerius.gml.base.GMLHelper;
+import nl.overheid.aerius.gml.base.GMLLegacyCodeConverter.GMLLegacyCodeType;
 import nl.overheid.aerius.importer.ImaerImporter;
 import nl.overheid.aerius.importer.ImportOption;
 import nl.overheid.aerius.shared.domain.v2.importer.ImportParcel;
@@ -47,7 +49,7 @@ class RemovedVehicleCodeImportTest {
   @Test
   void testRemovedVehicleCodeIsConvertedDuringImport() throws IOException, AeriusException {
     final GMLHelper mockHelper = AssertGML.mockGMLHelper();
-    when(mockHelper.getRemovedVehicleCodes()).thenReturn(Set.of(REMOVED_CODE));
+    when(mockHelper.getRemovedCodes()).thenReturn(Map.of(GMLLegacyCodeType.ON_ROAD_MOBILE_SOURCE, Set.of(REMOVED_CODE)));
 
     // Create fresh factory with our mock helper (not cached) so getRemovedVehicleCodes is used
     final GMLReaderFactory factory = new GMLReaderFactory(mockHelper);

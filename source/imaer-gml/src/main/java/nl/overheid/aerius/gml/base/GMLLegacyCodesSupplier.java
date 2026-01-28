@@ -71,14 +71,14 @@ public interface GMLLegacyCodesSupplier {
   }
 
   /**
-   * Returns a set of removed vehicle codes.
-   * Sources with these codes will be converted to custom vehicles with zero emissions during import.
+   * Returns a map of removed codes by type.
+   * Sources with these codes will be converted to alternative representations during import.
    *
-   * @return set of removed vehicle codes
+   * @return map of code type to set of removed codes
    * @throws AeriusException
    */
-  default Set<String> getRemovedVehicleCodes() throws AeriusException {
-    return Set.of();
+  default Map<GMLLegacyCodeType, Set<String>> getRemovedCodes() throws AeriusException {
+    return Map.of();
   }
 
 }

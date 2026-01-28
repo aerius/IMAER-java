@@ -256,7 +256,7 @@ public final class AssertGML {
     when(gmlHelper.getLegacyMobileSourceOffRoadConversions()).thenReturn(TestValidationAndEmissionHelper.legacyMobileSourceOffRoadConversions());
     when(gmlHelper.getLegacyPlanConversions()).thenReturn(TestValidationAndEmissionHelper.legacyPlanConversions());
     when(gmlHelper.getLegacyFarmLodgingConversions()).thenReturn(TestValidationAndEmissionHelper.legacyFarmLodgingConversions());
-    when(gmlHelper.getRemovedVehicleCodes()).thenReturn(Set.of());
+    when(gmlHelper.getRemovedCodes()).thenReturn(Map.of());
     when(gmlHelper.determineDefaultCharacteristicsBySectorId(anyInt(), any())).thenReturn(determineDefaultCharacteristics(ct));
     when(gmlHelper.getValidationHelper()).thenReturn(validationAndEmissionHelper);
     when(gmlHelper.getDefaultSector()).thenReturn(new Sector(GMLTestDomain.DEFAULT_SECTOR_ID, SectorGroup.INDUSTRY, ""));
