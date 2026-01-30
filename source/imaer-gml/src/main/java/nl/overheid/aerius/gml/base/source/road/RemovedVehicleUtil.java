@@ -39,7 +39,7 @@ public final class RemovedVehicleUtil {
     final CustomVehicles custom = new CustomVehicles();
     custom.setTimeUnit(TimeUnit.valueOf(sv.getTimeUnit().name()));
     custom.setVehiclesPerTimeUnit(sv.getVehiclesPerTimeUnit());
-    custom.setDescription("Voormalig " + vehicleCode);
+    custom.setDescription(vehicleCode);
     return custom;
   }
 

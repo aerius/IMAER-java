@@ -57,7 +57,7 @@ class GML2VehicleUtilTest {
   }
 
   @Test
-  void testValidCodeRoutesToSpecificVehicles() throws AeriusException {
+  void testUnknownCodeStaysSpecificVehicle() throws AeriusException {
     final GMLConversionData conversionData = mock(GMLConversionData.class);
     when(conversionData.getCode(GMLLegacyCodeType.ON_ROAD_MOBILE_SOURCE, VALID_CODE, SOURCE_LABEL))
         .thenReturn(VALID_CODE);

@@ -63,13 +63,13 @@ class RemovedVehicleCodeImportTest {
 
     assertEquals(0, result.getExceptions().size(), "Expected no exceptions");
     assertTrue(result.getWarnings().stream()
-        .anyMatch(w -> w.getReason() == ImaerExceptionReason.GML_UNKNOWN_MOBILE_SOURCE_CODE),
+        .anyMatch(w -> w.getReason() == ImaerExceptionReason.GML_REMOVED_CODE_CONVERTED),
         "Expected warning for removed vehicle code");
 
     final SRM2RoadEmissionSource roadSource =
         (SRM2RoadEmissionSource) result.getSituation().getEmissionSourcesList().get(0).getProperties();
     final CustomVehicles converted = assertInstanceOf(CustomVehicles.class, roadSource.getSubSources().get(0));
-    assertEquals("Voormalig " + REMOVED_CODE, converted.getDescription());
+    assertEquals(REMOVED_CODE, converted.getDescription());
   }
 
 }

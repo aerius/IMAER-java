@@ -53,7 +53,7 @@ class RemovedVehicleUtilTest {
 
     final CustomVehicles result = RemovedVehicleUtil.toCustomVehicles(vehicle, "BABCEUR4");
 
-    assertEquals("Voormalig BABCEUR4", result.getDescription());
+    assertEquals("BABCEUR4", result.getDescription());
   }
 
   @Test

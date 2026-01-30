@@ -81,7 +81,7 @@ abstract class GML2SRMRoad<T extends IsGmlRoadEmissionSource, S extends RoadEmis
   protected abstract void setOptionalVariables(T source, S emissionSource) throws AeriusException;
 
   protected void addVehicleEmissions(final List<Vehicles> addToVehicles, final T source, final IsGmlProperty<IsGmlVehicle> vp,
-      final List<StandardVehicles> mergingStandardVehicles) throws AeriusException {
+      final List<StandardVehicles> mergingStandardVehicles) {
     final IsGmlVehicle av = vp.getProperty();
     if (av instanceof IsGmlStandardVehicle) {
       addEmissionValues(addToVehicles, source, (IsGmlStandardVehicle) av, mergingStandardVehicles);
@@ -121,7 +121,7 @@ abstract class GML2SRMRoad<T extends IsGmlRoadEmissionSource, S extends RoadEmis
         .findFirst();
   }
 
-  protected void addEmissionValues(final List<Vehicles> addToVehicles, final T source, final IsGmlSpecificVehicle sv) throws AeriusException {
+  protected void addEmissionValues(final List<Vehicles> addToVehicles, final T source, final IsGmlSpecificVehicle sv) {
     final String vehicleCode = getConversionData().getCode(GMLLegacyCodeType.ON_ROAD_MOBILE_SOURCE, sv.getCode(), source.getLabel());
 
     if (getConversionData().warnIfRemovedCode(GMLLegacyCodeType.ON_ROAD_MOBILE_SOURCE, vehicleCode, source.getLabel())) {

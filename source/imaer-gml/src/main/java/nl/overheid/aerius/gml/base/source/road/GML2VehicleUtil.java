@@ -27,7 +27,6 @@ import nl.overheid.aerius.shared.domain.v2.base.TimeUnit;
 import nl.overheid.aerius.shared.domain.v2.source.road.CustomVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.SpecificVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.Vehicles;
-import nl.overheid.aerius.shared.exception.AeriusException;
 
 /**
  *
@@ -39,7 +38,7 @@ class GML2VehicleUtil {
   }
 
   static void addEmissionValuesSpecific(final List<Vehicles> addToVehicles, final IsGmlEmissionSource source, final IsGmlSpecificVehicle sv,
-      final GMLConversionData conversionData) throws AeriusException {
+      final GMLConversionData conversionData) {
     final String vehicleCode = conversionData.getCode(GMLLegacyCodeType.ON_ROAD_MOBILE_SOURCE, sv.getCode(), source.getLabel());
 
     if (conversionData.warnIfRemovedCode(GMLLegacyCodeType.ON_ROAD_MOBILE_SOURCE, vehicleCode, source.getLabel())) {
