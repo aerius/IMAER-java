@@ -43,6 +43,7 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -255,6 +256,7 @@ public final class AssertGML {
     when(gmlHelper.getLegacyMobileSourceOffRoadConversions()).thenReturn(TestValidationAndEmissionHelper.legacyMobileSourceOffRoadConversions());
     when(gmlHelper.getLegacyPlanConversions()).thenReturn(TestValidationAndEmissionHelper.legacyPlanConversions());
     when(gmlHelper.getLegacyFarmLodgingConversions()).thenReturn(TestValidationAndEmissionHelper.legacyFarmLodgingConversions());
+    when(gmlHelper.getRemovedCodes()).thenReturn(Map.of());
     when(gmlHelper.determineDefaultCharacteristicsBySectorId(anyInt(), any())).thenReturn(determineDefaultCharacteristics(ct));
     when(gmlHelper.getValidationHelper()).thenReturn(validationAndEmissionHelper);
     when(gmlHelper.getDefaultSector()).thenReturn(new Sector(GMLTestDomain.DEFAULT_SECTOR_ID, SectorGroup.INDUSTRY, ""));
