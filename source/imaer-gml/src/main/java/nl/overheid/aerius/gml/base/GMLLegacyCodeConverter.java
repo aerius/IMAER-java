@@ -17,6 +17,7 @@
 package nl.overheid.aerius.gml.base;
 
 import java.util.Map;
+import java.util.Set;
 
 import nl.overheid.aerius.gml.base.conversion.FarmLodgingConversion;
 import nl.overheid.aerius.gml.base.conversion.MobileSourceOffRoadConversion;
@@ -42,20 +43,24 @@ public class GMLLegacyCodeConverter {
   private final Map<String, MobileSourceOffRoadConversion> mobileSourceOffRoadConversions;
   private final Map<String, PlanConversion> planConversions;
   private final Map<String, FarmLodgingConversion> farmLodgingConversions;
+  private final Map<GMLLegacyCodeType, Set<String>> removedCodes;
 
   /**
    * @param codeMaps The &lt;OldCode, NewCode&gt; maps to use for each legacy code type.
    * @param mobileSourceOffRoadConversions The &lt;OldCode, ConversionValues&gt; to use for mobile sources.
    * @param planConversions The &lt;OldCode, ConversionValues&gt; to use for plan activities.
    * @param farmLodgingConversions The &lt;OldCode, ConversionValues&gt; to use for farm lodgings.
+   * @param removedCodes The removed codes by type.
    */
   public GMLLegacyCodeConverter(final Map<GMLLegacyCodeType, Map<String, Conversion>> codeMaps,
       final Map<String, MobileSourceOffRoadConversion> mobileSourceOffRoadConversions,
-      final Map<String, PlanConversion> planConversions, final Map<String, FarmLodgingConversion> farmLodgingConversions) {
+      final Map<String, PlanConversion> planConversions, final Map<String, FarmLodgingConversion> farmLodgingConversions,
+      final Map<GMLLegacyCodeType, Set<String>> removedCodes) {
     this.codeMaps = safe(codeMaps);
     this.mobileSourceOffRoadConversions = safe(mobileSourceOffRoadConversions);
     this.planConversions = safe(planConversions);
     this.farmLodgingConversions = safe(farmLodgingConversions);
+    this.removedCodes = safe(removedCodes);
   }
 
   private static <S, Y> Map<S, Y> safe(final Map<S, Y> map) {
@@ -87,6 +92,16 @@ public class GMLLegacyCodeConverter {
 
   protected FarmLodgingConversion getFarmLodgingConversion(final String oldCode) {
     return farmLodgingConversions.get(oldCode);
+  }
+
+  /**
+   * Check if a code is a removed code.
+   * @param type The type of legacy code.
+   * @param code The code to check.
+   * @return true if the code is a removed code, false otherwise.
+   */
+  protected boolean isRemovedCode(final GMLLegacyCodeType type, final String code) {
+    return removedCodes.getOrDefault(type, Set.of()).contains(code);
   }
 
   /**

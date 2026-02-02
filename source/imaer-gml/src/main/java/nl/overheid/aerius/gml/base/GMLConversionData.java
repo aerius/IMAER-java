@@ -246,4 +246,20 @@ public class GMLConversionData {
   public <S extends SourceCharacteristics> S determineDefaultCharacteristicsBySectorId(final int sectorId, final GeometryType geometryType) {
     return characteristicsSupplier.determineDefaultCharacteristicsBySectorId(sectorId, geometryType);
   }
+
+  /**
+   * Checks if the given code is a removed code and adds a warning if so.
+   *
+   * @param type the type of legacy code
+   * @param code the code to check
+   * @param sourceLabel the label of the source for warning messages
+   * @return true if the code is a removed code, false otherwise
+   */
+  public boolean warnIfRemovedCode(final GMLLegacyCodeType type, final String code, final String sourceLabel) {
+    if (legacyCodeConverter.isRemovedCode(type, code)) {
+      warnings.add(new AeriusException(ImaerExceptionReason.GML_REMOVED_CODE_CONVERTED, sourceLabel, code));
+      return true;
+    }
+    return false;
+  }
 }

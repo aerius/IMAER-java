@@ -50,7 +50,7 @@ public abstract class GMLVersionReaderFactory {
     schema = GMLSchemaFactory.createSchema(schemaLocation);
     legacyCodeConverter = new GMLLegacyCodeConverter(legacyCodeSupplier.getLegacyCodes(version),
         legacyCodeSupplier.getLegacyMobileSourceOffRoadConversions(), legacyCodeSupplier.getLegacyPlanConversions(),
-        legacyCodeSupplier.getLegacyFarmLodgingConversions());
+        legacyCodeSupplier.getLegacyFarmLodgingConversions(), legacyCodeSupplier.getRemovedCodes());
   }
 
   /**

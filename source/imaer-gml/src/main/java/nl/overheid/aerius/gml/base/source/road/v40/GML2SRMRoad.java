@@ -29,6 +29,7 @@ import nl.overheid.aerius.gml.base.source.IsGmlEmission;
 import nl.overheid.aerius.gml.base.source.road.IsGmlCustomVehicle;
 import nl.overheid.aerius.gml.base.source.road.IsGmlSpecificVehicle;
 import nl.overheid.aerius.gml.base.source.road.IsGmlVehicle;
+import nl.overheid.aerius.gml.base.source.road.RemovedVehicleUtil;
 import nl.overheid.aerius.shared.domain.v2.base.TimeUnit;
 import nl.overheid.aerius.shared.domain.v2.source.RoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.road.CustomVehicles;
@@ -121,8 +122,14 @@ abstract class GML2SRMRoad<T extends IsGmlRoadEmissionSource, S extends RoadEmis
   }
 
   protected void addEmissionValues(final List<Vehicles> addToVehicles, final T source, final IsGmlSpecificVehicle sv) {
-    final SpecificVehicles vse = new SpecificVehicles();
     final String vehicleCode = getConversionData().getCode(GMLLegacyCodeType.ON_ROAD_MOBILE_SOURCE, sv.getCode(), source.getLabel());
+
+    if (getConversionData().warnIfRemovedCode(GMLLegacyCodeType.ON_ROAD_MOBILE_SOURCE, vehicleCode, source.getLabel())) {
+      addToVehicles.add(RemovedVehicleUtil.toCustomVehicles(sv, vehicleCode));
+      return;
+    }
+
+    final SpecificVehicles vse = new SpecificVehicles();
     vse.setVehicleCode(vehicleCode);
     vse.setTimeUnit(TimeUnit.valueOf(sv.getTimeUnit().name()));
     vse.setVehiclesPerTimeUnit(sv.getVehiclesPerTimeUnit());
