@@ -16,7 +16,8 @@
  */
 package nl.overheid.aerius.shared.domain.geo;
 
-import nl.overheid.aerius.shared.MathUtil;
+import java.util.function.DoubleUnaryOperator;
+
 import nl.overheid.aerius.shared.domain.v2.geojson.Point;
 import nl.overheid.aerius.shared.domain.v2.geojson.Polygon;
 
@@ -26,6 +27,15 @@ import nl.overheid.aerius.shared.domain.v2.geojson.Polygon;
 public final class HexagonUtil {
 
   private HexagonUtil() {}
+
+  /**
+   * Returns a Geometry with a hexagon conforming to the given Point, and rounds the points of the hexagon
+   *
+   * @see #createHexagon(Point, HexagonZoomLevel, boolean)
+   */
+  public static Polygon createHexagon(final Point point, final HexagonZoomLevel config) {
+    return createHexagon(point, config, Math::round);
+  }
 
   /**
    * Returns a Geometry with a hexagon conforming to the given Point and
@@ -43,9 +53,10 @@ public final class HexagonUtil {
    *
    * @param point Center of the hexagon
    * @param config the hexagon zoom level for level 1
+   * @param roundFunction function to round the coordinates of the hexagon with
    * @return Returns the hexagon as an AERIUS polygon
    */
-  public static Polygon createHexagon(final Point point, final HexagonZoomLevel config) {
+  public static Polygon createHexagon(final Point point, final HexagonZoomLevel config, final DoubleUnaryOperator roundFunction) {
     // Store hexagon values
     final double[] horizontal = config.getHorizontal();
     final double[] vertical = config.getVertical();
@@ -54,16 +65,16 @@ public final class HexagonUtil {
     // Iterate over the number of corners in a hexagon
     for (int i = 0; i < HexagonZoomLevel.HEXAGON_CORNERS; i++) {
       final double[] coordinate = new double[] {
-          MathUtil.round(point.getX() + horizontal[i]),
-          MathUtil.round(point.getY() + vertical[i])
+          roundFunction.applyAsDouble(point.getX() + horizontal[i]),
+          roundFunction.applyAsDouble(point.getY() + vertical[i])
       };
       coordinates[i] = coordinate;
     }
 
     // Polygon first and last point need to be the same
     final double[] lastCoordinate = new double[] {
-        MathUtil.round(point.getX() + horizontal[0]),
-        MathUtil.round(point.getY() + vertical[0])
+        roundFunction.applyAsDouble(point.getX() + horizontal[0]),
+        roundFunction.applyAsDouble(point.getY() + vertical[0])
     };
     coordinates[HexagonZoomLevel.HEXAGON_CORNERS] = lastCoordinate;
     final Polygon polygon = new Polygon();
