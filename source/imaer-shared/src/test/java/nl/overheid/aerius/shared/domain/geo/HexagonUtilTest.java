@@ -40,13 +40,13 @@ class HexagonUtilTest {
 
   @ParameterizedTest
   @MethodSource("createHexagon")
-  void testCreateHexagon(final boolean round, final double[][][] results) {
+  void testCreateHexagon(final boolean useDefaultMethod, final double[][][] results) {
     final Point point = new Point(ZOOM_LEVEL_1.getHexagonRadius(), ZOOM_LEVEL_1.getHexagonHeight() / 2);
     // When round use the default createHexagon method to test, otherwise the version with roundingFunction
-    final Polygon polygon = round
+    final Polygon polygon = useDefaultMethod
         ? HexagonUtil.createHexagon(point, ZOOM_LEVEL_1)
         : HexagonUtil.createHexagon(point, ZOOM_LEVEL_1, d -> BigDecimal.valueOf(d).setScale(3, RoundingMode.HALF_UP).doubleValue());
-    System.out.println(polygon);
+
     Assertions.assertArrayEquals(results, polygon.getCoordinates(), "createHexagon zoom level 1");
   }
 

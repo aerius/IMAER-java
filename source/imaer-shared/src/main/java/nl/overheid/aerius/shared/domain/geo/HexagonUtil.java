@@ -18,6 +18,7 @@ package nl.overheid.aerius.shared.domain.geo;
 
 import java.util.function.DoubleUnaryOperator;
 
+import nl.overheid.aerius.shared.MathUtil;
 import nl.overheid.aerius.shared.domain.v2.geojson.Point;
 import nl.overheid.aerius.shared.domain.v2.geojson.Polygon;
 
@@ -31,10 +32,10 @@ public final class HexagonUtil {
   /**
    * Returns a Geometry with a hexagon conforming to the given Point, and rounds the points of the hexagon
    *
-   * @see #createHexagon(Point, HexagonZoomLevel, boolean)
+   * @see #createHexagon(Point, HexagonZoomLevel, DoubleUnaryOperator)
    */
   public static Polygon createHexagon(final Point point, final HexagonZoomLevel config) {
-    return createHexagon(point, config, Math::round);
+    return createHexagon(point, config, MathUtil::round);
   }
 
   /**
