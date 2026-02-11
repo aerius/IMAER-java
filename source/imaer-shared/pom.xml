@@ -32,6 +32,7 @@
   <properties>
     <!-- For GWT, keep target java version on 17 to avoid using unusable language features -->
     <java.version>17</java.version>
+    <maven.compiler.release>${java.version}</maven.compiler.release>
   </properties>
 
   <dependencies>
