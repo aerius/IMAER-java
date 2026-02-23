@@ -16,18 +16,12 @@
  */
 package nl.overheid.aerius.gml.base.source.road;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import nl.overheid.aerius.gml.base.GMLConversionData;
 import nl.overheid.aerius.gml.base.GMLLegacyCodeConverter.GMLLegacyCodeType;
@@ -43,28 +37,18 @@ class GML2VehicleUtilTest {
   private static final String VALID_CODE = "VALID_CODE";
   private static final String SOURCE_LABEL = "Test source";
 
-  @ParameterizedTest
-  @ValueSource(booleans = {true, false})
-  void testRemovedCodeRoutesToCustomVehicles(final boolean vehicleBasedCharacteristics) {
+  @Test
+  void testRemovedCodeRoutesToCustomVehicles() {
     final GMLConversionData conversionData = mock(GMLConversionData.class);
     when(conversionData.getCode(GMLLegacyCodeType.ON_ROAD_MOBILE_SOURCE, REMOVED_CODE, SOURCE_LABEL))
         .thenReturn(REMOVED_CODE);
     when(conversionData.warnIfRemovedCode(GMLLegacyCodeType.ON_ROAD_MOBILE_SOURCE, REMOVED_CODE, SOURCE_LABEL))
         .thenReturn(true);
 
-    final List<Vehicles> vehicles = new ArrayList<>();
-    GML2VehicleUtil.addEmissionValuesSpecific(vehicles, mockSource(), mockSpecificVehicle(REMOVED_CODE),
-        conversionData, vehicleBasedCharacteristics);
+    final Vehicles vehicle = GML2VehicleUtil.convertEmissionValuesSpecific(mockSource(), mockSpecificVehicle(REMOVED_CODE), conversionData);
 
-    assertEquals(1, vehicles.size(), "One vehicle should be added");
-    assertInstanceOf(CustomVehicles.class, vehicles.get(0), "Added vehicle should be custom");
-    if (vehicleBasedCharacteristics) {
-      assertEquals("LIGHT_TRAFFIC", ((CustomVehicles) vehicles.get(0)).getVehicleType(),
-          "Vehicle type should be set for vehicle based characteristics");
-    } else {
-      assertNull(((CustomVehicles) vehicles.get(0)).getVehicleType(),
-          "Vehicle type should not be set for non-vehicle based characteristics");
-    }
+    assertInstanceOf(CustomVehicles.class, vehicle, "Returned vehicle should be custom");
+    assertNull(((CustomVehicles) vehicle).getVehicleType(), "Vehicle type should not be set by this conversion");
   }
 
   @Test
@@ -75,11 +59,9 @@ class GML2VehicleUtilTest {
     when(conversionData.warnIfRemovedCode(GMLLegacyCodeType.ON_ROAD_MOBILE_SOURCE, VALID_CODE, SOURCE_LABEL))
         .thenReturn(false);
 
-    final List<Vehicles> vehicles = new ArrayList<>();
-    GML2VehicleUtil.addEmissionValuesSpecific(vehicles, mockSource(), mockSpecificVehicle(VALID_CODE), conversionData, true);
+    final Vehicles vehicle = GML2VehicleUtil.convertEmissionValuesSpecific(mockSource(), mockSpecificVehicle(VALID_CODE), conversionData);
 
-    assertEquals(1, vehicles.size(), "One vehicle should be added");
-    assertInstanceOf(SpecificVehicles.class, vehicles.get(0), "Added vehicle should be custom");
+    assertInstanceOf(SpecificVehicles.class, vehicle, "Returned vehicle should be specific");
   }
 
   private IsGmlEmissionSource mockSource() {
