@@ -28,21 +28,24 @@ import nl.overheid.aerius.shared.domain.v2.source.road.CustomVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.SpecificVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.Vehicles;
 
-/**
- *
- */
-class GML2VehicleUtil {
+final class GML2VehicleUtil {
+
+  private static final String COLD_START_CONVERSION_VEHICLE_TYPE = "LIGHT_TRAFFIC";
 
   private GML2VehicleUtil() {
     // Util class
   }
 
   static void addEmissionValuesSpecific(final List<Vehicles> addToVehicles, final IsGmlEmissionSource source, final IsGmlSpecificVehicle sv,
-      final GMLConversionData conversionData) {
+      final GMLConversionData conversionData, final boolean includeVehicleType) {
     final String vehicleCode = conversionData.getCode(GMLLegacyCodeType.ON_ROAD_MOBILE_SOURCE, sv.getCode(), source.getLabel());
 
     if (conversionData.warnIfRemovedCode(GMLLegacyCodeType.ON_ROAD_MOBILE_SOURCE, vehicleCode, source.getLabel())) {
-      addToVehicles.add(RemovedVehicleUtil.toCustomVehicles(sv, vehicleCode));
+      final CustomVehicles customVehicle = RemovedVehicleUtil.toCustomVehicles(sv, vehicleCode);
+      if (includeVehicleType) {
+        customVehicle.setVehicleType(COLD_START_CONVERSION_VEHICLE_TYPE);
+      }
+      addToVehicles.add(customVehicle);
       return;
     }
 

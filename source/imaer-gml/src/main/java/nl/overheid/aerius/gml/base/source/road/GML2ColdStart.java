@@ -64,7 +64,7 @@ public class GML2ColdStart<T extends IsGmlColdStartSource> extends AbstractGML2S
     if (av instanceof final IsGmlColdStartStandardVehicle standardVehicle) {
       addEmissionValues(addToVehicles, source, standardVehicle, mergingStandardVehicles);
     } else if (av instanceof final IsGmlSpecificVehicle specificVehicle) {
-      GML2VehicleUtil.addEmissionValuesSpecific(addToVehicles, source, specificVehicle, getConversionData());
+      GML2VehicleUtil.addEmissionValuesSpecific(addToVehicles, source, specificVehicle, getConversionData(), source.isVehicleBasedCharacteristics());
     } else if (av instanceof final IsGmlCustomVehicle customVehicle) {
       GML2VehicleUtil.addEmissionValuesCustom(addToVehicles, customVehicle, source.isVehicleBasedCharacteristics());
     } else {

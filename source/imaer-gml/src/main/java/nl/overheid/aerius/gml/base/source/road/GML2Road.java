@@ -75,7 +75,7 @@ abstract class GML2Road<T extends IsGmlRoadEmissionSource, S extends RoadEmissio
     if (av instanceof final IsGmlStandardVehicle standardVehicle) {
       addEmissionValues(addToVehicles, source, standardVehicle, mergingStandardVehicles);
     } else if (av instanceof final IsGmlSpecificVehicle specificVehicle) {
-      GML2VehicleUtil.addEmissionValuesSpecific(addToVehicles, source, specificVehicle, getConversionData());
+      GML2VehicleUtil.addEmissionValuesSpecific(addToVehicles, source, specificVehicle, getConversionData(), false);
     } else if (av instanceof final IsGmlCustomVehicle customVehicle) {
       GML2VehicleUtil.addEmissionValuesCustom(addToVehicles, customVehicle, false);
     } else {
