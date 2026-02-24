@@ -16,13 +16,10 @@
  */
 package nl.overheid.aerius.gml.base.source.road;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
@@ -33,7 +30,6 @@ import nl.overheid.aerius.gml.base.source.IsGmlTimeUnit;
 import nl.overheid.aerius.shared.domain.v2.source.road.CustomVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.SpecificVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.Vehicles;
-import nl.overheid.aerius.shared.exception.AeriusException;
 
 class GML2VehicleUtilTest {
 
@@ -42,33 +38,30 @@ class GML2VehicleUtilTest {
   private static final String SOURCE_LABEL = "Test source";
 
   @Test
-  void testRemovedCodeRoutesToCustomVehicles() throws AeriusException {
+  void testRemovedCodeRoutesToCustomVehicles() {
     final GMLConversionData conversionData = mock(GMLConversionData.class);
     when(conversionData.getCode(GMLLegacyCodeType.ON_ROAD_MOBILE_SOURCE, REMOVED_CODE, SOURCE_LABEL))
         .thenReturn(REMOVED_CODE);
     when(conversionData.warnIfRemovedCode(GMLLegacyCodeType.ON_ROAD_MOBILE_SOURCE, REMOVED_CODE, SOURCE_LABEL))
         .thenReturn(true);
 
-    final List<Vehicles> vehicles = new ArrayList<>();
-    GML2VehicleUtil.addEmissionValuesSpecific(vehicles, mockSource(), mockSpecificVehicle(REMOVED_CODE), conversionData);
+    final Vehicles vehicle = GML2VehicleUtil.convertEmissionValuesSpecific(mockSource(), mockSpecificVehicle(REMOVED_CODE), conversionData);
 
-    assertEquals(1, vehicles.size());
-    assertInstanceOf(CustomVehicles.class, vehicles.get(0));
+    assertInstanceOf(CustomVehicles.class, vehicle, "Returned vehicle should be custom");
+    assertNull(((CustomVehicles) vehicle).getVehicleType(), "Vehicle type should not be set by this conversion");
   }
 
   @Test
-  void testUnknownCodeStaysSpecificVehicle() throws AeriusException {
+  void testUnknownCodeStaysSpecificVehicle() {
     final GMLConversionData conversionData = mock(GMLConversionData.class);
     when(conversionData.getCode(GMLLegacyCodeType.ON_ROAD_MOBILE_SOURCE, VALID_CODE, SOURCE_LABEL))
         .thenReturn(VALID_CODE);
     when(conversionData.warnIfRemovedCode(GMLLegacyCodeType.ON_ROAD_MOBILE_SOURCE, VALID_CODE, SOURCE_LABEL))
         .thenReturn(false);
 
-    final List<Vehicles> vehicles = new ArrayList<>();
-    GML2VehicleUtil.addEmissionValuesSpecific(vehicles, mockSource(), mockSpecificVehicle(VALID_CODE), conversionData);
+    final Vehicles vehicle = GML2VehicleUtil.convertEmissionValuesSpecific(mockSource(), mockSpecificVehicle(VALID_CODE), conversionData);
 
-    assertEquals(1, vehicles.size());
-    assertInstanceOf(SpecificVehicles.class, vehicles.get(0));
+    assertInstanceOf(SpecificVehicles.class, vehicle, "Returned vehicle should be specific");
   }
 
   private IsGmlEmissionSource mockSource() {

@@ -16,8 +16,6 @@
  */
 package nl.overheid.aerius.gml.base.source.road;
 
-import java.util.List;
-
 import nl.overheid.aerius.gml.base.GMLConversionData;
 import nl.overheid.aerius.gml.base.GMLLegacyCodeConverter.GMLLegacyCodeType;
 import nl.overheid.aerius.gml.base.IsGmlProperty;
@@ -28,32 +26,28 @@ import nl.overheid.aerius.shared.domain.v2.source.road.CustomVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.SpecificVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.Vehicles;
 
-/**
- *
- */
-class GML2VehicleUtil {
+final class GML2VehicleUtil {
 
   private GML2VehicleUtil() {
     // Util class
   }
 
-  static void addEmissionValuesSpecific(final List<Vehicles> addToVehicles, final IsGmlEmissionSource source, final IsGmlSpecificVehicle sv,
+  static Vehicles convertEmissionValuesSpecific(final IsGmlEmissionSource source, final IsGmlSpecificVehicle sv,
       final GMLConversionData conversionData) {
     final String vehicleCode = conversionData.getCode(GMLLegacyCodeType.ON_ROAD_MOBILE_SOURCE, sv.getCode(), source.getLabel());
 
     if (conversionData.warnIfRemovedCode(GMLLegacyCodeType.ON_ROAD_MOBILE_SOURCE, vehicleCode, source.getLabel())) {
-      addToVehicles.add(RemovedVehicleUtil.toCustomVehicles(sv, vehicleCode));
-      return;
+      return RemovedVehicleUtil.toCustomVehicles(sv, vehicleCode);
     }
 
     final SpecificVehicles vse = new SpecificVehicles();
     vse.setVehicleCode(vehicleCode);
     vse.setTimeUnit(TimeUnit.valueOf(sv.getTimeUnit().name()));
     vse.setVehiclesPerTimeUnit(sv.getVehiclesPerTimeUnit());
-    addToVehicles.add(vse);
+    return vse;
   }
 
-  static void addEmissionValuesCustom(final List<Vehicles> addToVehicles, final IsGmlCustomVehicle cv, final boolean includeVehicleType) {
+  static Vehicles convertEmissionValuesCustom(final IsGmlCustomVehicle cv) {
     final CustomVehicles vce = new CustomVehicles();
     vce.setDescription(cv.getDescription());
     for (final IsGmlProperty<IsGmlEmission> e : cv.getEmissionFactors()) {
@@ -62,10 +56,7 @@ class GML2VehicleUtil {
     }
     vce.setTimeUnit(TimeUnit.valueOf(cv.getTimeUnit().name()));
     vce.setVehiclesPerTimeUnit(cv.getVehiclesPerTimeUnit());
-    if (includeVehicleType) {
-      vce.setVehicleType(cv.getVehicleType());
-    }
-    addToVehicles.add(vce);
+    return vce;
   }
 
 }

@@ -19,6 +19,7 @@ package nl.overheid.aerius.gml.base.source.road;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +29,7 @@ import nl.overheid.aerius.gml.base.GMLConversionData;
 import nl.overheid.aerius.gml.base.IsGmlProperty;
 import nl.overheid.aerius.shared.domain.v2.base.TimeUnit;
 import nl.overheid.aerius.shared.domain.v2.source.ColdStartEmissionSource;
+import nl.overheid.aerius.shared.domain.v2.source.road.CustomVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.StandardColdStartVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.Vehicles;
 import nl.overheid.aerius.shared.exception.AeriusException;
@@ -39,6 +41,13 @@ import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 public class GML2ColdStart<T extends IsGmlColdStartSource> extends AbstractGML2Specific<T, ColdStartEmissionSource> {
 
   private static final Logger LOG = LoggerFactory.getLogger(GML2ColdStart.class);
+
+  /**
+   * When a specific vehicle is converted to a custom vehicle, and the source has vehicle based characteristics,
+   * the vehicle type of that sub source is set to this value.
+   * Its up to the user to check if this is correct, and change it if needed.
+   */
+  private static final String REMOVED_CODE_CONVERSION_VEHICLE_TYPE = "LIGHT_TRAFFIC";
 
   /**
    * @param conversionData The conversion data to use.
@@ -64,12 +73,22 @@ public class GML2ColdStart<T extends IsGmlColdStartSource> extends AbstractGML2S
     if (av instanceof final IsGmlColdStartStandardVehicle standardVehicle) {
       addEmissionValues(addToVehicles, source, standardVehicle, mergingStandardVehicles);
     } else if (av instanceof final IsGmlSpecificVehicle specificVehicle) {
-      GML2VehicleUtil.addEmissionValuesSpecific(addToVehicles, source, specificVehicle, getConversionData());
+      final Vehicles converted = GML2VehicleUtil.convertEmissionValuesSpecific(source, specificVehicle, getConversionData());
+      checkVehicleType(source, converted, () -> REMOVED_CODE_CONVERSION_VEHICLE_TYPE);
+      addToVehicles.add(converted);
     } else if (av instanceof final IsGmlCustomVehicle customVehicle) {
-      GML2VehicleUtil.addEmissionValuesCustom(addToVehicles, customVehicle, source.isVehicleBasedCharacteristics());
+      final Vehicles converted = GML2VehicleUtil.convertEmissionValuesCustom(customVehicle);
+      checkVehicleType(source, converted, customVehicle::getVehicleType);
+      addToVehicles.add(converted);
     } else {
       LOG.error("Don't know how to treat cold start vehicle type: {}", av.getClass());
       throw new AeriusException(ImaerExceptionReason.INTERNAL_ERROR);
+    }
+  }
+
+  private void checkVehicleType(final T source, final Vehicles converted, final Supplier<String> vehicleTypeSupplier) {
+    if (converted instanceof final CustomVehicles convertedCustom && source.isVehicleBasedCharacteristics()) {
+      convertedCustom.setVehicleType(vehicleTypeSupplier.get());
     }
   }
 
