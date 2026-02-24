@@ -42,6 +42,11 @@ public class GML2ColdStart<T extends IsGmlColdStartSource> extends AbstractGML2S
 
   private static final Logger LOG = LoggerFactory.getLogger(GML2ColdStart.class);
 
+  /**
+   * When a specific vehicle is converted to a custom vehicle, and the source has vehicle based characteristics,
+   * the vehicle type of that sub source is set to this value.
+   * Its up to the user to check if this is correct, and change it if needed.
+   */
   private static final String REMOVED_CODE_CONVERSION_VEHICLE_TYPE = "LIGHT_TRAFFIC";
 
   /**
