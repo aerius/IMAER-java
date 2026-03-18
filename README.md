@@ -6,7 +6,7 @@ Library for IMAER - Java, as used by various AERIUS products.
 
 ### Disclaimer
 
-Although the source code published here is of the AERIUS products no rights are granted. The owner of AERIUS assumes no liability. AERIUS is a registered trademark in the Benelux. All rights not expressly granted herein are reserved.
+Although the source code published here is part of the AERIUS products no rights are granted. The owner of AERIUS assumes no liability. AERIUS is a registered trademark in the Benelux. All rights not expressly granted herein are reserved.
 
 ### LICENSE
 
