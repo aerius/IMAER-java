@@ -38,13 +38,16 @@ jobs:
         run: |
           mvn --batch-mode versions:set \
             -DnewVersion=${{ github.event.inputs.release_version }} \
-            -DgenerateBackupPoms=false
+            -DgenerateBackupPoms=false \
+            -Psonar
 
       # At this point, all internal SNAPSHOT refs should be resolved and updated to the release version.
       # Any remaining SNAPSHOT are genuine external dependencies that should not be a snapshot.
       - name: Check for SNAPSHOT dependencies
         run: |
-          mvn --batch-mode enforcer:enforce -Denforcer.rules=requireReleaseDeps
+          mvn --batch-mode enforcer:enforce \
+          -Denforcer.rules=requireReleaseDeps \
+          -Psonar
 
       - name: Commit release version
         run: |
@@ -62,7 +65,8 @@ jobs:
         run: |
           mvn --batch-mode versions:set \
             -DnewVersion=${{ github.event.inputs.next_dev_version }} \
-            -DgenerateBackupPoms=false
+            -DgenerateBackupPoms=false \
+            -Psonar
 
       - name: Commit next development version
         run: |
