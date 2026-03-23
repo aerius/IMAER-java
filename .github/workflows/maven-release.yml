@@ -18,12 +18,12 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
       - name: Set up Java & Maven
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           java-version: '21'
           distribution: 'temurin'
@@ -36,18 +36,22 @@ jobs:
 
       - name: Set release version
         run: |
-          mvn --batch-mode versions:set \
+          mvn --batch-mode --no-transfer-progress \
             -DnewVersion=${{ github.event.inputs.release_version }} \
             -DgenerateBackupPoms=false \
-            -Psonar
+            -Psonar \
+            -f source/pom.xml \
+            versions:set
 
       # At this point, all internal SNAPSHOT refs should be resolved and updated to the release version.
       # Any remaining SNAPSHOT are genuine external dependencies that should not be a snapshot.
       - name: Check for SNAPSHOT dependencies
         run: |
-          mvn --batch-mode enforcer:enforce \
+          mvn --batch-mode --no-transfer-progress \
           -Denforcer.rules=requireReleaseDeps \
-          -Psonar
+          -Psonar \
+          -f source/pom.xml \
+           enforcer:enforce
 
       - name: Commit release version
         run: |
@@ -55,18 +59,22 @@ jobs:
           git commit -m "Release: set version to ${{ github.event.inputs.release_version }}"
           git push origin HEAD
 
-      - name: Tag release commit
+      - name: Create release in github, tagging the commit.
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: |
-          git tag -a "${{ github.event.inputs.release_version }}" \
-            -m "Release ${{ github.event.inputs.release_version }}"
-          git push origin "${{ github.event.inputs.release_version }}"
+          gh release create ${{ github.event.inputs.release_version }} \
+            -t "Release ${{ github.event.inputs.release_version }}" \
+            --generate-notes
 
       - name: Set next development version
         run: |
-          mvn --batch-mode versions:set \
+          mvn --batch-mode --no-transfer-progress \
             -DnewVersion=${{ github.event.inputs.next_dev_version }} \
             -DgenerateBackupPoms=false \
-            -Psonar
+            -Psonar \
+            -f source/pom.xml \
+            versions:set
 
       - name: Commit next development version
         run: |
