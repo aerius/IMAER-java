@@ -36,10 +36,11 @@ import nl.overheid.aerius.shared.exception.AeriusException;
  */
 public class ImportParcel implements Serializable {
 
-  private static final long serialVersionUID = 2L;
+  private static final long serialVersionUID = 3L;
 
   private String version;
   private String databaseVersion;
+  private String fileVersion;
   private String gmlCreator;
   private ScenarioMetaData importedMetaData;
   private ArchiveMetaData archiveMetaData;
@@ -64,6 +65,14 @@ public class ImportParcel implements Serializable {
 
   public void setDatabaseVersion(final String databaseVersion) {
     this.databaseVersion = databaseVersion;
+  }
+
+  public String getFileVersion() {
+    return fileVersion;
+  }
+
+  public void setFileVersion(final String fileVersion) {
+    this.fileVersion = fileVersion;
   }
 
   public ScenarioMetaData getImportedMetaData() {
