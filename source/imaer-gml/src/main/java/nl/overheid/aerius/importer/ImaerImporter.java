@@ -144,8 +144,9 @@ public class ImaerImporter {
     if (reader == null) {
       return;
     }
-
     final AeriusGMLVersion version = reader.getVersion();
+
+    result.setFileVersion("IMAER_" + version.name());
     setImportResultMetaData(result, reader, importYear);
     GMLValidator.validateMetaData(result.getImportedMetaData(), result.getExceptions(), ImportOption.VALIDATE_METADATA.in(importOptions)
         && result.getArchiveMetaData() == null);
