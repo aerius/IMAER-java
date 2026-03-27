@@ -16,6 +16,7 @@
  */
 package nl.overheid.aerius.importer;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -24,16 +25,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.regex.Pattern;
 
 import org.apache.commons.io.input.ReaderInputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.github.rwitzel.streamflyer.core.ModifyingReader;
-import com.github.rwitzel.streamflyer.regex.RegexModifier;
-
 import nl.overheid.aerius.gml.GMLMetaDataReader;
+import nl.overheid.aerius.gml.filter.ReceptorFilteringReader;
 import nl.overheid.aerius.gml.GMLReader;
 import nl.overheid.aerius.gml.GMLReaderFactory;
 import nl.overheid.aerius.gml.GMLValidator;
@@ -243,17 +241,26 @@ public class ImaerImporter {
    *
    * @param inputStream stream to filter.
    * @param importOptions determine if we want to filer out.
-   * @return
-   * @throws AeriusException
+   * @return filtered input stream
+   * @throws AeriusException when an I/O error occurs during filtering setup
    */
-  private static InputStream filterResults(final InputStream inputStream, final Set<ImportOption> importOptions) {
+  private static InputStream filterResults(final InputStream inputStream, final Set<ImportOption> importOptions) throws AeriusException {
     if (importOptions.contains(ImportOption.INCLUDE_RESULTS)) {
       return inputStream;
     } else {
-      final RegexModifier myModifier = new RegexModifier("<imaer:featureMember>[\n].+<imaer:Receptor.*>([\\s\\S]*?)<\\/imaer:featureMember>",
-          Pattern.CASE_INSENSITIVE, "");
-      final Reader reader = new ModifyingReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8), myModifier);
-      return new ReaderInputStream(reader, StandardCharsets.UTF_8);
+      final Reader sourceReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
+      final Reader filteringReader = new ReceptorFilteringReader(sourceReader);
+      try {
+        return ReaderInputStream.builder()
+            .setReader(filteringReader)
+            .setCharset(StandardCharsets.UTF_8)
+            .get();
+      } catch (final IOException e) {
+        final AeriusException aeriusException = new AeriusException(ImaerExceptionReason.INTERNAL_ERROR,
+            "Failed to create filtering input stream: " + e.getMessage());
+        aeriusException.initCause(e);
+        throw aeriusException;
+      }
     }
   }
 
