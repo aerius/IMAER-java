@@ -1,0 +1,84 @@
+name: Maven Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_version:
+        description: 'Release version (e.g. 6.0.1-7)'
+        required: true
+      next_dev_version:
+        description: 'Next development version (e.g. 6.0.1-8-SNAPSHOT)'
+        required: true
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          ssh-key: ${{ secrets.DEPLOY_KEY }}
+
+      - name: Set up Java & Maven
+        uses: actions/setup-java@v5
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Configure git author
+        run: |
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"
+
+      - name: Set release version
+        run: |
+          mvn --batch-mode --no-transfer-progress \
+            -DnewVersion=${{ github.event.inputs.release_version }} \
+            -DgenerateBackupPoms=false \
+            -Psonar \
+            -f source/pom.xml \
+            versions:set
+
+      # At this point, all internal SNAPSHOT refs should be resolved and updated to the release version.
+      # Any remaining SNAPSHOT are genuine external dependencies that should not be a snapshot.
+      - name: Check for SNAPSHOT dependencies
+        run: |
+          mvn --batch-mode --no-transfer-progress \
+          -Denforcer.rules=requireReleaseDeps \
+          -Psonar \
+          -f source/pom.xml \
+           enforcer:enforce
+
+      - name: Commit release version
+        run: |
+          git add -A
+          git commit -m "Release: set version to ${{ github.event.inputs.release_version }}"
+          git push origin HEAD
+
+      - name: Create release in github, tagging the commit.
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          gh release create ${{ github.event.inputs.release_version }} \
+            -t "Release ${{ github.event.inputs.release_version }}" \
+            --generate-notes
+
+      - name: Set next development version
+        run: |
+          mvn --batch-mode --no-transfer-progress \
+            -DnewVersion=${{ github.event.inputs.next_dev_version }} \
+            -DgenerateBackupPoms=false \
+            -Psonar \
+            -f source/pom.xml \
+            versions:set
+
+      - name: Commit next development version
+        run: |
+          git add -A
+          git commit -m "Release: set next development version to ${{ github.event.inputs.next_dev_version }}"
+          git push origin HEAD
