@@ -51,7 +51,7 @@ public enum RoadSpeedType {
    *
    * Typisch buitenwegverkeer op een nationale weg.
    */
-  NATIONAL_ROAD("NATIONAL_ROAD", "NON_URBAN_ROAD_NATIONAL");
+  NATIONAL_ROAD("NATIONAL_ROAD", "NON_URBAN_ROAD_GENERAL");
 
   private final String legacyValue;
   private final String roadTypeCode;

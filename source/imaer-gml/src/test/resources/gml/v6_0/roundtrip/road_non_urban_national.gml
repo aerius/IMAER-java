@@ -24,7 +24,7 @@
         </imaer:AeriusCalculatorMetadata>
     </imaer:metadata>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.1">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.1">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -77,7 +77,6 @@
                     <imaer:vehiclesPerTimeUnit>15000.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.1</imaer:stagnationFactor>
-                    <imaer:maximumSpeed>80</imaer:maximumSpeed>
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:elevation>NORMAL</imaer:elevation>

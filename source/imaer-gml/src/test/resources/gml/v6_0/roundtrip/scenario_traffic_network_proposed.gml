@@ -23,7 +23,7 @@
         </imaer:AeriusCalculatorMetadata>
     </imaer:metadata>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.8641">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.8641">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -108,7 +108,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.8647">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.8647">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -193,7 +193,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.6262">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.6262">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -278,7 +278,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.8645">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.8645">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -1539,7 +1539,7 @@
         </imaer:SRM1Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.1531">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.1531">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -2464,7 +2464,7 @@
         </imaer:SRM1Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.1532">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.1532">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -2549,7 +2549,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.2370">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.2370">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -2634,7 +2634,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.2379">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.2379">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -3055,7 +3055,7 @@
         </imaer:SRM1Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.1049">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.1049">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -3140,7 +3140,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.1050">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.1050">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -3225,7 +3225,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.2023">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.2023">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -3310,7 +3310,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.2025">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.2025">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -3395,7 +3395,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.2027">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.2027">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -3480,7 +3480,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.2038">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.2038">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -4573,7 +4573,7 @@
         </imaer:SRM1Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.1869">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.1869">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -5093,7 +5093,7 @@
         </imaer:SRM1Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.2030">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.2030">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -5178,7 +5178,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.2031">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.2031">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -5851,7 +5851,7 @@
         </imaer:SRM1Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.1053">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.1053">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -5936,7 +5936,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.1054">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.1054">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -6881,7 +6881,7 @@
         </imaer:SRM1Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.2499">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.2499">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -6966,7 +6966,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.2587">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.2587">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -7471,7 +7471,7 @@
         </imaer:SRM1Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.2438">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.2438">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -7556,7 +7556,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.2533">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.2533">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -7641,7 +7641,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.2751">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.2751">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -7726,7 +7726,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.2774">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.2774">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -8063,7 +8063,7 @@
         </imaer:SRM1Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.1903">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.1903">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -8736,7 +8736,7 @@
         </imaer:SRM1Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.1902">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.1902">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -8821,7 +8821,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.1905">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.1905">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -8906,7 +8906,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.2927">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.2927">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -8991,7 +8991,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.2953">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.2953">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -9076,7 +9076,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.2965">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.2965">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -9161,7 +9161,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.2992">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.2992">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -9246,7 +9246,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.3023">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.3023">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -9331,7 +9331,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.3081">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.3081">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -10088,7 +10088,7 @@
         </imaer:SRM1Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.2746">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.2746">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -10173,7 +10173,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.2773">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.2773">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -10258,7 +10258,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.8763">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.8763">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -10511,7 +10511,7 @@
         </imaer:SRM1Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.876">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.876">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -10596,7 +10596,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.878">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.878">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -10681,7 +10681,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.879">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.879">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -10766,7 +10766,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.880">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.880">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -10851,7 +10851,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.881">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.881">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -12033,7 +12033,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.2001">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.2001">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -12118,7 +12118,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.2022">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.2022">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -12539,7 +12539,7 @@
         </imaer:SRM1Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.6274">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.6274">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -12792,7 +12792,7 @@
         </imaer:SRM1Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.2437">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.2437">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -12877,7 +12877,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.2477">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.2477">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -15240,7 +15240,7 @@
         </imaer:SRM1Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM1Road roadAreaType="NL" roadType="NON_URBAN_ROAD_GENERAL" sectorId="3100" gml:id="ES.9145">
+        <imaer:SRM1Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.9145">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -15324,7 +15324,7 @@
         </imaer:SRM1Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM1Road roadAreaType="NL" roadType="NON_URBAN_ROAD_GENERAL" sectorId="3100" gml:id="ES.9154">
+        <imaer:SRM1Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.9154">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -15408,7 +15408,7 @@
         </imaer:SRM1Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM1Road roadAreaType="NL" roadType="NON_URBAN_ROAD_GENERAL" sectorId="3100" gml:id="ES.9155">
+        <imaer:SRM1Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.9155">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -15492,7 +15492,7 @@
         </imaer:SRM1Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM1Road roadAreaType="NL" roadType="NON_URBAN_ROAD_GENERAL" sectorId="3100" gml:id="ES.9156">
+        <imaer:SRM1Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.9156">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -15576,7 +15576,7 @@
         </imaer:SRM1Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM1Road roadAreaType="NL" roadType="NON_URBAN_ROAD_GENERAL" sectorId="3100" gml:id="ES.9157">
+        <imaer:SRM1Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.9157">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -15660,7 +15660,7 @@
         </imaer:SRM1Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM1Road roadAreaType="NL" roadType="NON_URBAN_ROAD_GENERAL" sectorId="3100" gml:id="ES.9158">
+        <imaer:SRM1Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.9158">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -17459,7 +17459,7 @@
         </imaer:SRM1Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.369">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.369">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -17544,7 +17544,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.378">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.378">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -17629,7 +17629,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.394">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.394">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -17714,7 +17714,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.413">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.413">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -17799,7 +17799,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.418">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.418">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -17884,7 +17884,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.6353">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.6353">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -17969,7 +17969,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.6380">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.6380">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -18642,7 +18642,7 @@
         </imaer:SRM1Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.6354">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.6354">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -22745,7 +22745,7 @@
         </imaer:SRM1Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.8778">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.8778">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -22830,7 +22830,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.8780">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.8780">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -24348,7 +24348,7 @@
         </imaer:SRM1Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.2017">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.2017">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -24433,7 +24433,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.5305">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.5305">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -24518,7 +24518,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.5306">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.5306">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -24603,7 +24603,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.5307">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.5307">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -24688,7 +24688,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.5308">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.5308">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -26117,7 +26117,7 @@
         </imaer:SRM1Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.8722">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.8722">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -26202,7 +26202,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.8724">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.8724">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -26287,7 +26287,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.8634">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.8634">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -26876,7 +26876,7 @@
         </imaer:SRM1Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.5290">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.5290">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -27213,7 +27213,7 @@
         </imaer:SRM1Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.8781">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.8781">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -27298,7 +27298,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.8784">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.8784">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -27645,7 +27645,7 @@
         </imaer:SRM1Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.8762">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.8762">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -27898,7 +27898,7 @@
         </imaer:SRM1Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM1Road roadAreaType="NL" roadType="NON_URBAN_ROAD_GENERAL" sectorId="3100" gml:id="ES.9162">
+        <imaer:SRM1Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.9162">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -28580,7 +28580,7 @@
         </imaer:SRM1Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.9139">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.9139">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -28665,7 +28665,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.8822">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.8822">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -29442,7 +29442,7 @@
         </imaer:SRM1Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.877">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.877">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -29527,7 +29527,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.8712">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.8712">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -29612,7 +29612,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.5257">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.5257">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -29781,7 +29781,7 @@
         </imaer:SRM1Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.5291">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.5291">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -29866,7 +29866,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.8481">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.8481">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -29951,7 +29951,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.8482">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.8482">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -31588,7 +31588,7 @@
         </imaer:SRM1Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.1056">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.1056">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -31673,7 +31673,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.1971">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.1971">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -31758,7 +31758,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.1972">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.1972">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -31843,7 +31843,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.8796">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.8796">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -31928,7 +31928,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.8797">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.8797">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -32013,7 +32013,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.8828">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.8828">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -32098,7 +32098,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.8829">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.8829">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -34071,7 +34071,7 @@
         </imaer:SRM1Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.8779">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.8779">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -34156,7 +34156,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.8798">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.8798">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -34997,7 +34997,7 @@
         </imaer:SRM1Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.8838">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.8838">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -35873,7 +35873,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.26">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.26">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -35958,7 +35958,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.9084">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.9084">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -36043,7 +36043,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.9085">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.9085">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -36128,7 +36128,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.865">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.865">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -36465,7 +36465,7 @@
         </imaer:SRM1Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.8841">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.8841">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -37069,7 +37069,7 @@
         </imaer:SRM1Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.6475">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.6475">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -37154,7 +37154,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.8483">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.8483">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -37911,7 +37911,7 @@
         </imaer:SRM1Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.862">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.862">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -37996,7 +37996,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.863">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.863">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -38081,7 +38081,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.864">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.864">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -38784,7 +38784,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.1057">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.1057">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -40184,7 +40184,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.8830">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.8830">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -40353,7 +40353,7 @@
         </imaer:SRM1Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.8772">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.8772">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -40438,7 +40438,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.8770">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.8770">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -40523,7 +40523,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.8771">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.8771">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -40786,7 +40786,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.8713">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.8713">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -41222,7 +41222,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.3071">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.3071">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -41307,7 +41307,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.3092">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.3092">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -41392,7 +41392,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.3128">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.3128">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -41477,7 +41477,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.3239">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.3239">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -41562,7 +41562,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.3300">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.3300">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -41647,7 +41647,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.3344">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.3344">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -42088,7 +42088,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.8773">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.8773">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -42173,7 +42173,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.2966">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.2966">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -42258,7 +42258,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.2972">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.2972">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -42343,7 +42343,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.3004">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.3004">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -42428,7 +42428,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.3067">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.3067">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -42513,7 +42513,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.3068">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.3068">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -42598,7 +42598,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.8795">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.8795">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -43662,7 +43662,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.3358">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.3358">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -43747,7 +43747,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.3431">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.3431">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -43832,7 +43832,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.3432">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.3432">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -43917,7 +43917,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.8468">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.8468">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -52101,7 +52101,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.6961">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.6961">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -52186,7 +52186,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.6962">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.6962">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -52271,7 +52271,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.8632">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.8632">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -52356,7 +52356,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.8633">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.8633">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -53153,7 +53153,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.6063">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.6063">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -53238,7 +53238,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.6985">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.6985">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>
@@ -53323,7 +53323,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.8624">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.8624">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>

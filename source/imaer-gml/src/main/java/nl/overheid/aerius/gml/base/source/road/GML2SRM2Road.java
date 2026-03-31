@@ -22,6 +22,7 @@ import java.util.List;
 import nl.overheid.aerius.gml.base.GMLConversionData;
 import nl.overheid.aerius.gml.base.IsGmlProperty;
 import nl.overheid.aerius.shared.domain.v2.source.SRM2RoadEmissionSource;
+import nl.overheid.aerius.shared.domain.v2.source.road.RoadType;
 import nl.overheid.aerius.shared.domain.v2.source.road.SRM2LinearReference;
 import nl.overheid.aerius.shared.domain.v2.source.road.SRM2RoadSideBarrier;
 import nl.overheid.aerius.shared.exception.AeriusException;
@@ -43,6 +44,17 @@ public class GML2SRM2Road<T extends IsGmlSRM2Road> extends GML2Road<T, SRM2RoadE
   @Override
   protected SRM2RoadEmissionSource construct() {
     return new SRM2RoadEmissionSource();
+  }
+
+  /**
+   * Returns the converted road type code set in the GML to the internal road type to use.
+   * In case of SRM2 roads and NON_URBAN_ROADS. It should always use NON_URBAN_ROAD_NATIONAL.
+   */
+  @Override
+  protected String convertRoadTypeCode(final String roadTypeCode) {
+    return roadTypeCode != null && roadTypeCode.startsWith(RoadType.NON_URBAN_ROAD.name())
+        ? "NON_URBAN_ROAD_NATIONAL"
+        : roadTypeCode;
   }
 
   @Override

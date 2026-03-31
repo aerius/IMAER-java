@@ -18,6 +18,7 @@ package nl.overheid.aerius.gml.v6_0.togml;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import nl.overheid.aerius.gml.v6_0.source.TimeUnit;
@@ -45,6 +46,7 @@ import nl.overheid.aerius.shared.domain.v2.source.road.ADMSRoadSideBarrier;
 import nl.overheid.aerius.shared.domain.v2.source.road.ADMSRoadSideBarrierType;
 import nl.overheid.aerius.shared.domain.v2.source.road.CustomVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.RoadElevation;
+import nl.overheid.aerius.shared.domain.v2.source.road.RoadType;
 import nl.overheid.aerius.shared.domain.v2.source.road.SRM1LinearReference;
 import nl.overheid.aerius.shared.domain.v2.source.road.SRM2LinearReference;
 import nl.overheid.aerius.shared.domain.v2.source.road.SRM2RoadSideBarrier;
@@ -76,7 +78,7 @@ class Road2GML extends SpecificSource2GML<nl.overheid.aerius.shared.domain.v2.so
     return returnSource;
   }
 
-  private ADMSRoad convertAdms(final ADMSRoadEmissionSource emissionSource) {
+  private static ADMSRoad convertAdms(final ADMSRoadEmissionSource emissionSource) {
     final ADMSRoad returnSource = new ADMSRoad();
 
     returnSource.setVehicles(toVehicleProperties(emissionSource.getSubSources()));
@@ -92,7 +94,7 @@ class Road2GML extends SpecificSource2GML<nl.overheid.aerius.shared.domain.v2.so
     return returnSource;
   }
 
-  private SRM2Road convertSrm2(final SRM2RoadEmissionSource emissionSource) {
+  private static SRM2Road convertSrm2(final SRM2RoadEmissionSource emissionSource) {
     final SRM2Road returnSource = new SRM2Road();
 
     returnSource.setVehicles(toVehicleProperties(emissionSource.getSubSources()));
@@ -107,7 +109,7 @@ class Road2GML extends SpecificSource2GML<nl.overheid.aerius.shared.domain.v2.so
     return returnSource;
   }
 
-  private SRM1Road convertSrm1(final SRM1RoadEmissionSource emissionSource) {
+  private static SRM1Road convertSrm1(final SRM1RoadEmissionSource emissionSource) {
     final SRM1Road returnSource = new SRM1Road();
 
     returnSource.setVehicles(toVehicleProperties(emissionSource.getSubSources()));
@@ -120,7 +122,7 @@ class Road2GML extends SpecificSource2GML<nl.overheid.aerius.shared.domain.v2.so
     return returnSource;
   }
 
-  private List<VehiclesProperty> toVehicleProperties(final List<Vehicles> vehicleGroups) {
+  private static List<VehiclesProperty> toVehicleProperties(final List<Vehicles> vehicleGroups) {
     final List<VehiclesProperty> vehiclesList = new ArrayList<>(vehicleGroups.size());
 
     for (final Vehicles vehicleGroup : vehicleGroups) {
@@ -137,34 +139,46 @@ class Road2GML extends SpecificSource2GML<nl.overheid.aerius.shared.domain.v2.so
     return vehiclesList;
   }
 
-  private void handleGenericProperties(final nl.overheid.aerius.shared.domain.v2.source.RoadEmissionSource emissionSource,
+  private static void handleGenericProperties(final nl.overheid.aerius.shared.domain.v2.source.RoadEmissionSource emissionSource,
       final RoadEmissionSource returnSource) {
     handleRoadCodes(emissionSource, returnSource);
     handleRoadManager(emissionSource, returnSource);
     handleTrafficDirection(emissionSource, returnSource);
   }
 
-  private void handleRoadCodes(final nl.overheid.aerius.shared.domain.v2.source.RoadEmissionSource emissionSource,
+  private static void handleRoadCodes(final nl.overheid.aerius.shared.domain.v2.source.RoadEmissionSource emissionSource,
       final RoadEmissionSource returnSource) {
     returnSource.setRoadAreaCode(emissionSource.getRoadAreaCode());
-    returnSource.setRoadTypeCode(emissionSource.getRoadTypeCode());
+    returnSource.setRoadTypeCode(gmlRoadTypeCode(emissionSource.getRoadTypeCode(), emissionSource.getSubSources()));
   }
 
-  private void handleTunnel(final nl.overheid.aerius.shared.domain.v2.source.RoadEmissionSource emissionSource, final SRM2Road returnSource) {
+  private static String gmlRoadTypeCode(final String roadTypeCode, final List<Vehicles> vehicles) {
+    // If there are standard vehicles with no speed set keep the original road type code for non urban roads.
+    // This to be backward compatible for when the code is used in combination with data not yet supporting non urban roads with max speed.
+    // Because if NON_URBAN_ROAD would be used in combination with no speed, it would mean it would be interpreted as having 0 speed,
+    // and it could mean using an invalid speed category because it would have been expected the speed to be 80 km/h.
+    final boolean maxSpeedNotSet =  vehicles.stream().filter(StandardVehicles.class::isInstance).map(StandardVehicles.class::cast)
+        .anyMatch(e -> Optional.ofNullable(e.getMaximumSpeed()).orElse(0) == 0);
+
+    return !maxSpeedNotSet && roadTypeCode.startsWith(RoadType.NON_URBAN_ROAD.name()) ? RoadType.NON_URBAN_ROAD.name() : roadTypeCode;
+  }
+
+  private static void handleTunnel(final nl.overheid.aerius.shared.domain.v2.source.RoadEmissionSource emissionSource, final SRM2Road returnSource) {
     //don't return tunnel factor if it's the default value.
     if (Double.doubleToLongBits(emissionSource.getTunnelFactor()) != Double.doubleToLongBits(1.0)) {
       returnSource.setTunnelFactor(emissionSource.getTunnelFactor());
     }
   }
 
-  private void handleTunnel(final nl.overheid.aerius.shared.domain.v2.source.SRM1RoadEmissionSource emissionSource, final SRM1Road returnSource) {
+  private static void handleTunnel(final nl.overheid.aerius.shared.domain.v2.source.SRM1RoadEmissionSource emissionSource,
+      final SRM1Road returnSource) {
     //don't return tunnel factor if it's the default value.
     if (Double.doubleToLongBits(emissionSource.getTunnelFactor()) != Double.doubleToLongBits(1.0)) {
       returnSource.setTunnelFactor(emissionSource.getTunnelFactor());
     }
   }
 
-  private void handleElevation(final SRM2RoadEmissionSource emissionSource, final SRM2Road returnSource) {
+  private static void handleElevation(final SRM2RoadEmissionSource emissionSource, final SRM2Road returnSource) {
     returnSource.setElevation(emissionSource.getElevation());
     //don't set the elevation height if it's normal elevation.
     if (returnSource.getElevation() != RoadElevation.NORMAL) {
@@ -172,7 +186,7 @@ class Road2GML extends SpecificSource2GML<nl.overheid.aerius.shared.domain.v2.so
     }
   }
 
-  private void handleBarriers(final SRM2RoadEmissionSource emissionSource, final SRM2Road returnSource) {
+  private static void handleBarriers(final SRM2RoadEmissionSource emissionSource, final SRM2Road returnSource) {
     if (emissionSource.getBarrierLeft() != null) {
       returnSource.setBarrierLeft(toGMLRoadSideBarrier(emissionSource.getBarrierLeft()));
     }
@@ -181,7 +195,7 @@ class Road2GML extends SpecificSource2GML<nl.overheid.aerius.shared.domain.v2.so
     }
   }
 
-  private RoadSideBarrierProperty toGMLRoadSideBarrier(final SRM2RoadSideBarrier barrier) {
+  private static RoadSideBarrierProperty toGMLRoadSideBarrier(final SRM2RoadSideBarrier barrier) {
     final nl.overheid.aerius.gml.v6_0.source.road.RoadSideBarrier gmlBarrier = new nl.overheid.aerius.gml.v6_0.source.road.RoadSideBarrier();
     gmlBarrier.setBarrierType(barrier.getBarrierType());
     gmlBarrier.setHeight(barrier.getHeight());
@@ -189,7 +203,7 @@ class Road2GML extends SpecificSource2GML<nl.overheid.aerius.shared.domain.v2.so
     return new RoadSideBarrierProperty(gmlBarrier);
   }
 
-  private void handleBarriers(final ADMSRoadEmissionSource emissionSource, final ADMSRoad returnSource) {
+  private static void handleBarriers(final ADMSRoadEmissionSource emissionSource, final ADMSRoad returnSource) {
     if (emissionSource.getBarrierLeft() != null && emissionSource.getBarrierLeft().getBarrierType() != ADMSRoadSideBarrierType.NONE) {
       returnSource.setBarrierLeft(toGMLRoadSideBarrier(emissionSource.getBarrierLeft()));
     }
@@ -198,7 +212,7 @@ class Road2GML extends SpecificSource2GML<nl.overheid.aerius.shared.domain.v2.so
     }
   }
 
-  private void handleTimeVaryingProfile(final ADMSRoadEmissionSource emissionSource, final ADMSRoad returnSource) {
+  private static void handleTimeVaryingProfile(final ADMSRoadEmissionSource emissionSource, final ADMSRoad returnSource) {
     if (emissionSource.getCharacteristics() instanceof ADMSSourceCharacteristics) {
       final ADMSSourceCharacteristics characteristics = (ADMSSourceCharacteristics) emissionSource.getCharacteristics();
       final AbstractTimeVaryingProfile hourlyProfile = ToGMLUtil.determineTimeVaryingProfile(
@@ -212,7 +226,7 @@ class Road2GML extends SpecificSource2GML<nl.overheid.aerius.shared.domain.v2.so
     }
   }
 
-  private ADMSRoadSideBarrierProperty toGMLRoadSideBarrier(final ADMSRoadSideBarrier barrier) {
+  private static ADMSRoadSideBarrierProperty toGMLRoadSideBarrier(final ADMSRoadSideBarrier barrier) {
     final nl.overheid.aerius.gml.v6_0.source.road.ADMSRoadSideBarrier gmlBarrier = new nl.overheid.aerius.gml.v6_0.source.road.ADMSRoadSideBarrier();
     gmlBarrier.setBarrierType(barrier.getBarrierType());
     gmlBarrier.setDistance(barrier.getWidth());
@@ -223,17 +237,17 @@ class Road2GML extends SpecificSource2GML<nl.overheid.aerius.shared.domain.v2.so
     return new ADMSRoadSideBarrierProperty(gmlBarrier);
   }
 
-  private void handleRoadManager(final nl.overheid.aerius.shared.domain.v2.source.RoadEmissionSource emissionSource,
+  private static void handleRoadManager(final nl.overheid.aerius.shared.domain.v2.source.RoadEmissionSource emissionSource,
       final RoadEmissionSource returnSource) {
     returnSource.setRoadManager(emissionSource.getRoadManager());
   }
 
-  private void handleTrafficDirection(final nl.overheid.aerius.shared.domain.v2.source.RoadEmissionSource emissionSource,
+  private static void handleTrafficDirection(final nl.overheid.aerius.shared.domain.v2.source.RoadEmissionSource emissionSource,
       final RoadEmissionSource returnSource) {
     returnSource.setTrafficDirection(emissionSource.getTrafficDirection());
   }
 
-  private void addVehicleEmissionSource(final List<VehiclesProperty> vehiclesList, final StandardVehicles vse) {
+  private static void addVehicleEmissionSource(final List<VehiclesProperty> vehiclesList, final StandardVehicles vse) {
     // Loop over all vehicle types in the valuesPerVehicleTypes map, but sort them first to get predictable order.
     final List<String> vehicleTypes = vse.getValuesPerVehicleTypes().keySet().stream().sorted().collect(Collectors.toList());
     for (final String vehicleType : vehicleTypes) {
@@ -251,7 +265,7 @@ class Road2GML extends SpecificSource2GML<nl.overheid.aerius.shared.domain.v2.so
     }
   }
 
-  private void addVehicleEmissionSource(final List<VehiclesProperty> vehiclesList, final SpecificVehicles vse) {
+  private static void addVehicleEmissionSource(final List<VehiclesProperty> vehiclesList, final SpecificVehicles vse) {
     final SpecificVehicle sv = new SpecificVehicle();
 
     sv.setCode(vse.getVehicleCode());
@@ -260,7 +274,7 @@ class Road2GML extends SpecificSource2GML<nl.overheid.aerius.shared.domain.v2.so
     vehiclesList.add(new VehiclesProperty(sv));
   }
 
-  private void addVehicleEmissionSource(final List<VehiclesProperty> vehiclesList, final CustomVehicles vce) {
+  private static void addVehicleEmissionSource(final List<VehiclesProperty> vehiclesList, final CustomVehicles vce) {
     final CustomVehicle cv = new CustomVehicle();
     cv.setDescription(vce.getDescription());
     cv.setEmissionFactors(getEmissions(vce.getEmissionFactors(), Substance.NOX));
@@ -269,7 +283,7 @@ class Road2GML extends SpecificSource2GML<nl.overheid.aerius.shared.domain.v2.so
     vehiclesList.add(new VehiclesProperty(cv));
   }
 
-  private List<SRM2RoadLinearReferenceProperty> getSrm2DynamicSegments(final SRM2RoadEmissionSource emissionSource) {
+  private static List<SRM2RoadLinearReferenceProperty> getSrm2DynamicSegments(final SRM2RoadEmissionSource emissionSource) {
     final List<SRM2RoadLinearReferenceProperty> partialChangeProperties = new ArrayList<>();
     if (emissionSource.getPartialChanges() != null && !emissionSource.getPartialChanges().isEmpty()) {
       for (final SRM2LinearReference dynamicSegment : emissionSource.getPartialChanges()) {
@@ -280,7 +294,7 @@ class Road2GML extends SpecificSource2GML<nl.overheid.aerius.shared.domain.v2.so
     return partialChangeProperties;
   }
 
-  private void addSrm2PartialChanges(final SRM2LinearReference dynamicSegment,
+  private static void addSrm2PartialChanges(final SRM2LinearReference dynamicSegment,
       final List<SRM2RoadLinearReferenceProperty> partialChangeProperties) {
     final SRM2RoadLinearReference dynamicSegmentGML = new SRM2RoadLinearReference();
 
@@ -301,8 +315,9 @@ class Road2GML extends SpecificSource2GML<nl.overheid.aerius.shared.domain.v2.so
     partialChangeProperties.add(new SRM2RoadLinearReferenceProperty(dynamicSegmentGML));
   }
 
-  private List<SRM1RoadLinearReferenceProperty> getSrm1DynamicSegments(final SRM1RoadEmissionSource emissionSource) {
+  private static List<SRM1RoadLinearReferenceProperty> getSrm1DynamicSegments(final SRM1RoadEmissionSource emissionSource) {
     final List<SRM1RoadLinearReferenceProperty> partialChangeProperties = new ArrayList<>();
+
     if (emissionSource.getPartialChanges() != null && !emissionSource.getPartialChanges().isEmpty()) {
       for (final SRM1LinearReference dynamicSegment : emissionSource.getPartialChanges()) {
         addSrm1PartialChanges(dynamicSegment, partialChangeProperties);
@@ -312,7 +327,7 @@ class Road2GML extends SpecificSource2GML<nl.overheid.aerius.shared.domain.v2.so
     return partialChangeProperties;
   }
 
-  private void addSrm1PartialChanges(final SRM1LinearReference dynamicSegment,
+  private static void addSrm1PartialChanges(final SRM1LinearReference dynamicSegment,
       final List<SRM1RoadLinearReferenceProperty> partialChangeProperties) {
     final SRM1RoadLinearReference dynamicSegmentGML = new SRM1RoadLinearReference();
 
