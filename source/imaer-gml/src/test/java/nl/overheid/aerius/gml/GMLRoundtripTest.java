@@ -180,7 +180,7 @@ class GMLRoundtripTest {
 
   private static final List<Substance> SUBSTANCES = List.of(Substance.NOX, Substance.NO2, Substance.NH3);
 
-  private static final Set<AeriusGMLVersion> SUPPORTED_GML_WRITER_VERSIONS = EnumSet.of(AeriusGMLVersion.V6_0, AeriusGMLVersion.V5_1);
+  private static final Set<AeriusGMLVersion> SUPPORTED_GML_WRITER_VERSIONS = EnumSet.of(AeriusGMLVersion.V6_0);
 
   static List<Object[]> data() throws FileNotFoundException {
     final List<Object[]> files = new ArrayList<>();
