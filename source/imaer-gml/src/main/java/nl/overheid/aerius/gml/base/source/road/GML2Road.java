@@ -48,13 +48,15 @@ abstract class GML2Road<T extends IsGmlRoadEmissionSource, S extends RoadEmissio
   public S convert(final T source) throws AeriusException {
     final S emissionSource = construct();
     final List<StandardVehicles> mergingStandardVehicles = new ArrayList<>();
+    final String roadTypeCode = source.getRoadTypeCode();
+
     for (final IsGmlProperty<IsGmlVehicle> vp : source.getVehicles()) {
-      addVehicleEmissions(emissionSource.getSubSources(), source, vp, mergingStandardVehicles);
+      addVehicleEmissions(source.getRoadTypeCode(), emissionSource.getSubSources(), source, vp, mergingStandardVehicles);
     }
     emissionSource.setTrafficDirection(source.getTrafficDirection());
     emissionSource.setRoadManager(source.getRoadManager());
     emissionSource.setRoadAreaCode(source.getRoadAreaCode());
-    emissionSource.setRoadTypeCode(source.getRoadTypeCode());
+    emissionSource.setRoadTypeCode(roadTypeCode);
 
     setSpecificVariables(source, emissionSource);
 
@@ -69,25 +71,27 @@ abstract class GML2Road<T extends IsGmlRoadEmissionSource, S extends RoadEmissio
 
   protected abstract void setOptionalVariables(T source, S emissionSource) throws AeriusException;
 
-  protected void addVehicleEmissions(final List<Vehicles> addToVehicles, final T source, final IsGmlProperty<IsGmlVehicle> vp,
+  protected void addVehicleEmissions(final String gmlRoadTypeCode, final List<Vehicles> addToVehicles, final T source,
+      final IsGmlProperty<IsGmlVehicle> vp,
       final List<StandardVehicles> mergingStandardVehicles) {
     final IsGmlVehicle av = vp.getProperty();
-    if (av instanceof final IsGmlStandardVehicle standardVehicle) {
-      addEmissionValues(addToVehicles, source, standardVehicle, mergingStandardVehicles);
-    } else if (av instanceof final IsGmlSpecificVehicle specificVehicle) {
+
+    switch (av) {
+      case final IsGmlStandardVehicle standardVehicle ->
+      addEmissionValues(gmlRoadTypeCode, addToVehicles, source, standardVehicle, mergingStandardVehicles);
+      case final IsGmlSpecificVehicle specificVehicle ->
       addToVehicles.add(GML2VehicleUtil.convertEmissionValuesSpecific(source, specificVehicle, getConversionData()));
-    } else if (av instanceof final IsGmlCustomVehicle customVehicle) {
-      addToVehicles.add(GML2VehicleUtil.convertEmissionValuesCustom(customVehicle));
-    } else {
-      throw new IllegalArgumentException("Instance not supported:" + av.getClass().getCanonicalName());
+      case final IsGmlCustomVehicle customVehicle -> addToVehicles.add(GML2VehicleUtil.convertEmissionValuesCustom(customVehicle));
+      default -> throw new IllegalArgumentException("Instance not supported:" + av.getClass().getCanonicalName());
     }
   }
 
-  private void addEmissionValues(final List<Vehicles> addToVehicles, final T source, final IsGmlStandardVehicle sv,
+  private void addEmissionValues(final String gmlRoadTypeCode, final List<Vehicles> addToVehicles, final T source, final IsGmlStandardVehicle sv,
       final List<StandardVehicles> mergingStandardVehicles) {
     final StandardVehicles standardVehicle = findExistingMatch(sv, mergingStandardVehicles).orElseGet(() -> {
       final StandardVehicles vse = new StandardVehicles();
-      vse.setMaximumSpeed(sv.getMaximumSpeed());
+
+      vse.setMaximumSpeed(getMaximumSpeed(gmlRoadTypeCode, sv.getMaximumSpeed()));
       vse.setStrictEnforcement(sv.isStrictEnforcement());
       vse.setTimeUnit(TimeUnit.valueOf(sv.getTimeUnit().name()));
       mergingStandardVehicles.add(vse);
@@ -98,6 +102,26 @@ abstract class GML2Road<T extends IsGmlRoadEmissionSource, S extends RoadEmissio
     valuesPerVehicleType.setStagnationFraction(sv.getStagnationFactor());
     valuesPerVehicleType.setVehiclesPerTimeUnit(sv.getVehiclesPerTimeUnit());
     standardVehicle.getValuesPerVehicleTypes().put(sv.getVehicleType(), valuesPerVehicleType);
+  }
+
+  /**
+   * Get the maximum speed value. For NON_URBAN_ROAD_NATIONAL and NON_URBAN_ROAD_GENERAL fill in the speed in case of missing speed.
+   * NATIONAL is representative for roads with speed >= 80 km/h. Therefore 80 is set. GENERAL represented roads with average speed of 60 km/h.
+   * Therefore 60 is set.
+   *
+   * @param gmlRoadTypeCode the road type code as set in the GML
+   * @param maximumSpeed optional max speed set in the GML
+   * @return the maximum speed to use.
+   */
+  private static Integer getMaximumSpeed(final String gmlRoadTypeCode, final Integer maximumSpeed) {
+    if (maximumSpeed != null && maximumSpeed != 0) {
+      return maximumSpeed;
+    }
+    return switch (gmlRoadTypeCode) {
+      case "NON_URBAN_ROAD_NATIONAL" -> Integer.valueOf(80);
+      case "NON_URBAN_ROAD_GENERAL" -> Integer.valueOf(60);
+      default -> maximumSpeed;
+    };
   }
 
   private Optional<StandardVehicles> findExistingMatch(final IsGmlStandardVehicle sv, final List<StandardVehicles> mergingStandardVehicles) {
