@@ -59,16 +59,13 @@ abstract class GML2SRMRoad<T extends IsGmlRoadEmissionSource, S extends RoadEmis
     final List<StandardVehicles> mergingStandardVehicles = new ArrayList<>();
     final RoadType roadType = RoadType.valueFromSectorId(source.getSectorId());
 
-    emissionSource.setRoadTypeCode(convertRoadTypeCode(roadType));
+    emissionSource.setRoadTypeCode(convertRoadTypeCode(source, roadType));
     for (final IsGmlProperty<IsGmlVehicle> vp : source.getVehicles()) {
       addVehicleEmissions(roadType, emissionSource.getSubSources(), source, vp, mergingStandardVehicles);
     }
     emissionSource.setTrafficDirection(source.getTrafficDirection());
     emissionSource.setRoadManager(source.getRoadManager());
     emissionSource.setRoadAreaCode("NL");
-    // Ensure road type get set before specific, as it's overwritten by SRM1
-
-    setSpecificVariables(source, emissionSource);
 
     setOptionalVariables(source, emissionSource);
 
@@ -77,11 +74,9 @@ abstract class GML2SRMRoad<T extends IsGmlRoadEmissionSource, S extends RoadEmis
 
   protected abstract S construct();
 
-  protected abstract String convertRoadTypeCode(RoadType roadType);
+  protected abstract String convertRoadTypeCode(T source, RoadType roadType);
 
   protected abstract Integer getMaximumSpeed(final RoadType roadType, final Integer maximumSpeed);
-
-  protected abstract void setSpecificVariables(T source, S emissionSource);
 
   protected abstract void setOptionalVariables(T source, S emissionSource) throws AeriusException;
 
@@ -97,7 +92,6 @@ abstract class GML2SRMRoad<T extends IsGmlRoadEmissionSource, S extends RoadEmis
     } else {
       throw new IllegalArgumentException("Instance not supported:" + av.getClass().getCanonicalName());
     }
-
   }
 
   protected void addEmissionValues(final RoadType roadType, final List<Vehicles> addToVehicles, final T source, final IsGmlStandardVehicle sv,
@@ -117,7 +111,6 @@ abstract class GML2SRMRoad<T extends IsGmlRoadEmissionSource, S extends RoadEmis
     valuesPerVehicleType.setVehiclesPerTimeUnit(sv.getVehiclesPerTimeUnit());
     standardVehicle.getValuesPerVehicleTypes().put(sv.getVehicleType().getStandardVehicleCode(), valuesPerVehicleType);
   }
-
 
   protected Optional<StandardVehicles> findExistingMatch(final IsGmlStandardVehicle sv, final List<StandardVehicles> mergingStandardVehicles) {
     return mergingStandardVehicles.stream()

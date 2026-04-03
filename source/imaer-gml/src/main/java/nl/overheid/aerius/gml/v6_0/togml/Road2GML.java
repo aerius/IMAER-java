@@ -157,10 +157,10 @@ class Road2GML extends SpecificSource2GML<nl.overheid.aerius.shared.domain.v2.so
     // This to be backward compatible for when the code is used in combination with data not yet supporting non urban roads with max speed.
     // Because if NON_URBAN_ROAD would be used in combination with no speed, it would mean it would be interpreted as having 0 speed,
     // and it could mean using an invalid speed category because it would have been expected the speed to be 80 km/h.
-    final boolean maxSpeedNotSet =  vehicles.stream().filter(StandardVehicles.class::isInstance).map(StandardVehicles.class::cast)
-        .anyMatch(e -> Optional.ofNullable(e.getMaximumSpeed()).orElse(0) == 0);
+    final boolean allHaveMaxSpeed =  vehicles.stream().filter(StandardVehicles.class::isInstance).map(StandardVehicles.class::cast)
+        .allMatch(e -> Optional.ofNullable(e.getMaximumSpeed()).orElse(0) > 0);
 
-    return !maxSpeedNotSet && roadTypeCode.startsWith(RoadType.NON_URBAN_ROAD.name()) ? RoadType.NON_URBAN_ROAD.name() : roadTypeCode;
+    return allHaveMaxSpeed && roadTypeCode.startsWith(RoadType.NON_URBAN_ROAD.name()) ? RoadType.NON_URBAN_ROAD.name() : roadTypeCode;
   }
 
   private static void handleTunnel(final nl.overheid.aerius.shared.domain.v2.source.RoadEmissionSource emissionSource, final SRM2Road returnSource) {

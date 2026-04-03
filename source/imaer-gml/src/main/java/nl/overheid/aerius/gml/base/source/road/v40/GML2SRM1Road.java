@@ -46,19 +46,13 @@ public class GML2SRM1Road<T extends IsGmlSRM1Road> extends GML2SRMRoad<T, SRM1Ro
   }
 
   @Override
-  protected String convertRoadTypeCode(final RoadType roadType) {
-    return roadType == RoadType.NON_URBAN_ROAD ? "NON_URBAN_ROAD_GENERAL" : roadType.getRoadTypeCode();
+  protected String convertRoadTypeCode(final IsGmlSRM1Road source, final RoadType roadType) {
+    return source.getSpeedProfile().getRoadTypeCode();
   }
 
   @Override
   protected Integer getMaximumSpeed(final RoadType roadType, final Integer maximumSpeed) {
     return (maximumSpeed == null || maximumSpeed == 0) && roadType == RoadType.NON_URBAN_ROAD ? Integer.valueOf(60) : maximumSpeed;
-  }
-
-  @Override
-  protected void setSpecificVariables(final IsGmlSRM1Road source, final SRM1RoadEmissionSource emissionSource) {
-    // Overwrite the road type based on sector with the one based on speed profile
-    emissionSource.setRoadTypeCode(source.getSpeedProfile().getRoadTypeCode());
   }
 
   @Override

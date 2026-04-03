@@ -49,18 +49,13 @@ public class GML2SRM2Road<T extends IsGmlSRM2Road> extends GML2SRMRoad<T, SRM2Ro
   }
 
   @Override
-  protected String convertRoadTypeCode(final RoadType roadType) {
+  protected String convertRoadTypeCode(final T source, final RoadType roadType) {
     return roadType == null ?  null : roadType.getRoadTypeCode();
   }
 
   @Override
   protected Integer getMaximumSpeed(final RoadType roadType, final Integer maximumSpeed) {
     return (maximumSpeed == null || maximumSpeed == 0) && roadType == RoadType.NON_URBAN_ROAD ? Integer.valueOf(80) : maximumSpeed;
-  }
-
-  @Override
-  protected void setSpecificVariables(final T source, final SRM2RoadEmissionSource emissionSource) {
-    // NO-OP
   }
 
   @Override
