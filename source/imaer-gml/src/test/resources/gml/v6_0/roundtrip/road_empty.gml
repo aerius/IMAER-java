@@ -94,7 +94,7 @@
         </imaer:SRM2Road>
     </imaer:featureMember>
     <imaer:featureMember>
-        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD" sectorId="3100" gml:id="ES.2">
+        <imaer:SRM2Road roadAreaType="NL" roadType="NON_URBAN_ROAD_NATIONAL" sectorId="3100" gml:id="ES.2">
             <imaer:identifier>
                 <imaer:NEN3610ID>
                     <imaer:namespace>NL.IMAER</imaer:namespace>

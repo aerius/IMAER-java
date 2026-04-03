@@ -47,11 +47,6 @@ public class GML2ADMSRoad<T extends IsGmlADMSRoad> extends GML2Road<T, ADMSRoadE
   }
 
   @Override
-  protected String convertRoadTypeCode(final String roadTypeCode) {
-    return roadTypeCode;
-  }
-
-  @Override
   protected void setSpecificVariables(final T source, final ADMSRoadEmissionSource emissionSource) {
     emissionSource.setWidth(source.getWidth());
     emissionSource.setElevation(source.getElevation());

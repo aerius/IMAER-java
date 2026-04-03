@@ -18,7 +18,6 @@ package nl.overheid.aerius.gml.v6_0.togml;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import nl.overheid.aerius.gml.v6_0.source.TimeUnit;
@@ -46,7 +45,6 @@ import nl.overheid.aerius.shared.domain.v2.source.road.ADMSRoadSideBarrier;
 import nl.overheid.aerius.shared.domain.v2.source.road.ADMSRoadSideBarrierType;
 import nl.overheid.aerius.shared.domain.v2.source.road.CustomVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.RoadElevation;
-import nl.overheid.aerius.shared.domain.v2.source.road.RoadType;
 import nl.overheid.aerius.shared.domain.v2.source.road.SRM1LinearReference;
 import nl.overheid.aerius.shared.domain.v2.source.road.SRM2LinearReference;
 import nl.overheid.aerius.shared.domain.v2.source.road.SRM2RoadSideBarrier;
@@ -149,18 +147,7 @@ class Road2GML extends SpecificSource2GML<nl.overheid.aerius.shared.domain.v2.so
   private static void handleRoadCodes(final nl.overheid.aerius.shared.domain.v2.source.RoadEmissionSource emissionSource,
       final RoadEmissionSource returnSource) {
     returnSource.setRoadAreaCode(emissionSource.getRoadAreaCode());
-    returnSource.setRoadTypeCode(gmlRoadTypeCode(emissionSource.getRoadTypeCode(), emissionSource.getSubSources()));
-  }
-
-  private static String gmlRoadTypeCode(final String roadTypeCode, final List<Vehicles> vehicles) {
-    // If there are standard vehicles with no speed set keep the original road type code for non urban roads.
-    // This to be backward compatible for when the code is used in combination with data not yet supporting non urban roads with max speed.
-    // Because if NON_URBAN_ROAD would be used in combination with no speed, it would mean it would be interpreted as having 0 speed,
-    // and it could mean using an invalid speed category because it would have been expected the speed to be 80 km/h.
-    final boolean allHaveMaxSpeed =  vehicles.stream().filter(StandardVehicles.class::isInstance).map(StandardVehicles.class::cast)
-        .allMatch(e -> Optional.ofNullable(e.getMaximumSpeed()).orElse(0) > 0);
-
-    return allHaveMaxSpeed && roadTypeCode.startsWith(RoadType.NON_URBAN_ROAD.name()) ? RoadType.NON_URBAN_ROAD.name() : roadTypeCode;
+    returnSource.setRoadTypeCode(emissionSource.getRoadTypeCode());
   }
 
   private static void handleTunnel(final nl.overheid.aerius.shared.domain.v2.source.RoadEmissionSource emissionSource, final SRM2Road returnSource) {

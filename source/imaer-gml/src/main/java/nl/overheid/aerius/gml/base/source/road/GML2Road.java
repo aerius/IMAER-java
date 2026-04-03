@@ -48,7 +48,7 @@ abstract class GML2Road<T extends IsGmlRoadEmissionSource, S extends RoadEmissio
   public S convert(final T source) throws AeriusException {
     final S emissionSource = construct();
     final List<StandardVehicles> mergingStandardVehicles = new ArrayList<>();
-    final String roadTypeCode = convertRoadTypeCode(source.getRoadTypeCode());
+    final String roadTypeCode = source.getRoadTypeCode();
 
     for (final IsGmlProperty<IsGmlVehicle> vp : source.getVehicles()) {
       addVehicleEmissions(source.getRoadTypeCode(), emissionSource.getSubSources(), source, vp, mergingStandardVehicles);
@@ -66,14 +66,6 @@ abstract class GML2Road<T extends IsGmlRoadEmissionSource, S extends RoadEmissio
   }
 
   protected abstract S construct();
-
-  /**
-   * Returns the internal representative road type code given the road type in the GML.
-   *
-   * @param roadTypeCode road type in the GML
-   * @return internally to be used road type code
-   */
-  protected abstract String convertRoadTypeCode(String roadTypeCode);
 
   protected abstract void setSpecificVariables(T source, S emissionSource);
 
@@ -114,8 +106,8 @@ abstract class GML2Road<T extends IsGmlRoadEmissionSource, S extends RoadEmissio
 
   /**
    * Get the maximum speed value. For NON_URBAN_ROAD_NATIONAL and NON_URBAN_ROAD_GENERAL fill in the speed in case of missing speed.
-   * These two codes are used in older versions of IMAER. In those cases speed was not set for NON_URBAN_ROAD. NATIONAL is representative for roads
-   * with speed >= 80 km/h. Therefore 80 is set. GENERAL represented roads with average speed of 60 km/h. Therefore 60 is set.
+   * NATIONAL is representative for roads with speed >= 80 km/h. Therefore 80 is set. GENERAL represented roads with average speed of 60 km/h.
+   * Therefore 60 is set.
    *
    * @param gmlRoadTypeCode the road type code as set in the GML
    * @param maximumSpeed optional max speed set in the GML
