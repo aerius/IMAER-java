@@ -51,7 +51,7 @@ abstract class GML2Road<T extends IsGmlRoadEmissionSource, S extends RoadEmissio
     final String roadTypeCode = source.getRoadTypeCode();
 
     for (final IsGmlProperty<IsGmlVehicle> vp : source.getVehicles()) {
-      addVehicleEmissions(source.getRoadTypeCode(), emissionSource.getSubSources(), source, vp, mergingStandardVehicles);
+      addVehicleEmissions(roadTypeCode, emissionSource.getSubSources(), source, vp, mergingStandardVehicles);
     }
     emissionSource.setTrafficDirection(source.getTrafficDirection());
     emissionSource.setRoadManager(source.getRoadManager());
