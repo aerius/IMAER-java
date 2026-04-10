@@ -22,6 +22,7 @@ import java.util.List;
 import nl.overheid.aerius.gml.base.GMLConversionData;
 import nl.overheid.aerius.gml.base.IsGmlProperty;
 import nl.overheid.aerius.shared.domain.v2.source.SRM1RoadEmissionSource;
+import nl.overheid.aerius.shared.domain.v2.source.road.RoadType;
 import nl.overheid.aerius.shared.domain.v2.source.road.SRM1LinearReference;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
@@ -45,9 +46,13 @@ public class GML2SRM1Road<T extends IsGmlSRM1Road> extends GML2SRMRoad<T, SRM1Ro
   }
 
   @Override
-  protected void setSpecificVariables(final IsGmlSRM1Road source, final SRM1RoadEmissionSource emissionSource) {
-    // Overwrite the road type based on sector with the one based on speed profile
-    emissionSource.setRoadTypeCode(source.getSpeedProfile().getRoadTypeCode());
+  protected String convertRoadTypeCode(final IsGmlSRM1Road source, final RoadType roadType) {
+    return source.getSpeedProfile().getRoadTypeCode();
+  }
+
+  @Override
+  protected Integer getMaximumSpeed(final RoadType roadType, final Integer maximumSpeed) {
+    return (maximumSpeed == null || maximumSpeed == 0) && roadType == RoadType.NON_URBAN_ROAD ? Integer.valueOf(60) : maximumSpeed;
   }
 
   @Override
