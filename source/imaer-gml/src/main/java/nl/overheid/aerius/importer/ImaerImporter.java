@@ -31,12 +31,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import nl.overheid.aerius.gml.GMLMetaDataReader;
-import nl.overheid.aerius.gml.filter.ReceptorFilteringReader;
 import nl.overheid.aerius.gml.GMLReader;
 import nl.overheid.aerius.gml.GMLReaderFactory;
 import nl.overheid.aerius.gml.GMLValidator;
 import nl.overheid.aerius.gml.base.AeriusGMLVersion;
 import nl.overheid.aerius.gml.base.GMLHelper;
+import nl.overheid.aerius.gml.filter.ReceptorFilteringReader;
 import nl.overheid.aerius.shared.domain.Theme;
 import nl.overheid.aerius.shared.domain.scenario.SituationType;
 import nl.overheid.aerius.shared.domain.v2.building.BuildingFeature;
