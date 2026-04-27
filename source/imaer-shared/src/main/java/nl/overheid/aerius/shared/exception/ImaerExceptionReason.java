@@ -614,6 +614,13 @@ public enum ImaerExceptionReason implements Reason {
   */
   GML_SECTOR_OUT_OF_DATE(5266),
   /**
+   * GML contains a source with a removed vehicle code that has been converted.
+   *
+   * @param 0 the label of the source.
+   * @param 1 the old code.
+   */
+  GML_REMOVED_CODE_CONVERTED(5267),
+  /**
    * Geometry contains too many vertices.
    *
    * @param 0 the ID of the source with too many vertices.

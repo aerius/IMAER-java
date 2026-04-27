@@ -37,6 +37,7 @@ import nl.overheid.aerius.gml.GMLReaderFactory;
 import nl.overheid.aerius.gml.GMLValidator;
 import nl.overheid.aerius.gml.base.AeriusGMLVersion;
 import nl.overheid.aerius.gml.base.GMLHelper;
+import nl.overheid.aerius.gml.filter.ReceptorFilteringReader;
 import nl.overheid.aerius.shared.domain.Theme;
 import nl.overheid.aerius.shared.domain.scenario.SituationType;
 import nl.overheid.aerius.shared.domain.v2.building.BuildingFeature;
@@ -144,8 +145,9 @@ public class ImaerImporter {
     if (reader == null) {
       return;
     }
-
     final AeriusGMLVersion version = reader.getVersion();
+
+    result.setFileVersion("IMAER_" + version.name());
     setImportResultMetaData(result, reader, importYear);
     GMLValidator.validateMetaData(result.getImportedMetaData(), result.getExceptions(), ImportOption.VALIDATE_METADATA.in(importOptions)
         && result.getArchiveMetaData() == null);

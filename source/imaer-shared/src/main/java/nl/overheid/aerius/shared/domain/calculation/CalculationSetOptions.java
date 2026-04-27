@@ -40,7 +40,7 @@ public class CalculationSetOptions implements Serializable {
   private final ArrayList<Substance> substances = new ArrayList<>();
   private final Set<EmissionResultKey> emissionResultKeys = new HashSet<>();
   private OwN2000CalculationOptions owN2000CalculationOptions = new OwN2000CalculationOptions();
-  private RBLCalculationOptions rblCalculationOptions = new RBLCalculationOptions();
+  private CIMLKCalculationOptions cimlkCalculationOptions = new CIMLKCalculationOptions();
   private NCACalculationOptions ncaCalculationOptions = new NCACalculationOptions();
   private CalculatedSnapshotValues calculatedSnapshotValues = new CalculatedSnapshotValues();
   private Serializable experimentalOptions;
@@ -143,8 +143,8 @@ public class CalculationSetOptions implements Serializable {
     return owN2000CalculationOptions;
   }
 
-  public RBLCalculationOptions getRblCalculationOptions() {
-    return rblCalculationOptions;
+  public CIMLKCalculationOptions getCimlkCalculationOptions() {
+    return cimlkCalculationOptions;
   }
 
   public NCACalculationOptions getNcaCalculationOptions() {
@@ -174,6 +174,6 @@ public class CalculationSetOptions implements Serializable {
     return "CalculationSetOptions [calculationSetOptionsId=" + calculationSetOptionsId + ", calculationMethod=" + calculationMethod
         + ", calculateMaximumRange=" + calculateMaximumRange + ", substances=" + substances + ", emissionResultKeys=" + emissionResultKeys
         + ", stacking=" + stacking + ", connectSuppliedOptions=" + connectSuppliedOptions + ", own2000CalculationOptions=" + owN2000CalculationOptions
-        + ", rblCalculationOptions=" + rblCalculationOptions + ", ncaCalculationOptions=" + ncaCalculationOptions + "]";
+        + ", cimlkCalculationOptions=" + cimlkCalculationOptions + ", ncaCalculationOptions=" + ncaCalculationOptions + "]";
   }
 }

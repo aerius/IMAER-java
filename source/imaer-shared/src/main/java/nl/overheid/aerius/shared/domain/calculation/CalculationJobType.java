@@ -45,23 +45,23 @@ public enum CalculationJobType {
    * Exactly 1 Project scenario
    * Optional: 1 off site reduction
    * Optional: 1 Reference
-   * NO other scenario types
+   * Optional: one or more off site reductions
    */
   PROCESS_CONTRIBUTION(
       new HashSet<>(Arrays.asList(SituationType.PROPOSED)),
       new HashSet<>(Arrays.asList(SituationType.REFERENCE, SituationType.OFF_SITE_REDUCTION)),
-      new HashSet<>()),
+      new HashSet<>(Arrays.asList(SituationType.OFF_SITE_REDUCTION))),
 
   /**
    * At least one temporary scenario (checkboxes)
    * Optional: 1 off site reduction
    * Optional: 1 Reference
-   * NO other scenario types
+   * Optional: one or more off site reductions
    */
   MAX_TEMPORARY_EFFECT(
       new HashSet<>(Arrays.asList(SituationType.TEMPORARY)),
       new HashSet<>(Arrays.asList(SituationType.REFERENCE, SituationType.OFF_SITE_REDUCTION)),
-      new HashSet<>(Arrays.asList(SituationType.TEMPORARY))),
+      new HashSet<>(Arrays.asList(SituationType.TEMPORARY, SituationType.OFF_SITE_REDUCTION))),
 
   /**
    * Exactly 1 Project scenario
@@ -69,12 +69,13 @@ public enum CalculationJobType {
    * Optional: 1 Reference
    * Optional: one or more ‘In combination_project’ scenarios
    * Optional: one or more ‘in combination reference’ scenarios
+   * Optional: one or more off site reductions
    */
   IN_COMBINATION_PROCESS_CONTRIBUTION(
       new HashSet<>(Arrays.asList(SituationType.PROPOSED)),
       new HashSet<>(Arrays.asList(SituationType.REFERENCE, SituationType.OFF_SITE_REDUCTION, SituationType.COMBINATION_REFERENCE,
           SituationType.COMBINATION_PROPOSED)),
-      new HashSet<>(Arrays.asList(SituationType.COMBINATION_PROPOSED, SituationType.COMBINATION_REFERENCE))),
+      new HashSet<>(Arrays.asList(SituationType.COMBINATION_PROPOSED, SituationType.COMBINATION_REFERENCE, SituationType.OFF_SITE_REDUCTION))),
 
   /**
    * Only 1 Reference scenario
