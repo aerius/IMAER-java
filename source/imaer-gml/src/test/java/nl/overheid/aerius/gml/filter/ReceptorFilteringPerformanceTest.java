@@ -27,10 +27,13 @@ import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Locale;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Performance and memory benchmark for the receptor filtering implementation.
@@ -41,6 +44,8 @@ import org.junit.jupiter.api.io.TempDir;
  */
 @Disabled("Performance benchmark — run manually")
 class ReceptorFilteringPerformanceTest {
+
+  private static final Logger LOG = LoggerFactory.getLogger(ReceptorFilteringPerformanceTest.class);
 
   private static final int WARMUP_ITERATIONS = 3;
   private static final int MEASURE_ITERATIONS = 5;
@@ -58,12 +63,12 @@ class ReceptorFilteringPerformanceTest {
   void testBenchmarkFilteringReaderFromFile() throws IOException {
     final int[] receptorCounts = {100, 1_000, 5_000, 10_000, 50_000, 100_000, 250_000};
 
-    System.out.println();
-    System.out.println("=== ReceptorFilteringReader File-Based Benchmark ===");
-    System.out.println("Memory columns show sampled heap usage DURING filtering (not before/after delta).");
-    System.out.println("If the sliding window is bounded, Mem Min-Max should stay in a fixed band as input grows.");
-    System.out.printf("%-12s %-12s %-15s %-15s %-12s %-12s %-12s%n",
-        "Receptors", "Input MB", "Avg Time ms", "Throughput MB/s", "Mem Min MB", "Mem Avg MB", "Mem Max MB");
+    LOG.info("");
+    LOG.info("=== ReceptorFilteringReader File-Based Benchmark ===");
+    LOG.info("Memory columns show sampled heap usage DURING filtering (not before/after delta).");
+    LOG.info("If the sliding window is bounded, Mem Min-Max should stay in a fixed band as input grows.");
+    LOG.info(String.format("%-12s %-12s %-15s %-15s %-12s %-12s %-12s",
+        "Receptors", "Input MB", "Avg Time ms", "Throughput MB/s", "Mem Min MB", "Mem Avg MB", "Mem Max MB"));
 
     for (final int count : receptorCounts) {
       final Path gmlFile = tempDir.resolve("bench_" + count + ".gml");
@@ -79,7 +84,6 @@ class ReceptorFilteringPerformanceTest {
       // Measure — fewer iterations for large inputs to keep total runtime reasonable
       final int iterations = count > 10_000 ? 2 : MEASURE_ITERATIONS;
       long totalTimeNanos = 0;
-      // Aggregate memory samples across iterations
       long sampleMin = Long.MAX_VALUE;
       long sampleMax = Long.MIN_VALUE;
       long sampleSum = 0;
@@ -89,22 +93,17 @@ class ReceptorFilteringPerformanceTest {
         forceGc();
 
         final long start = System.nanoTime();
-        final long[] memSamples = consumeFilteredFileWithMemorySampling(gmlFile);
+        final MemorySamples memorySamples = consumeFilteredFileWithMemorySampling(gmlFile);
         final long elapsed = System.nanoTime() - start;
 
         totalTimeNanos += elapsed;
 
-        // memSamples: [min, max, sum, count, outputChars]
-        if (memSamples[0] < sampleMin) {
-          sampleMin = memSamples[0];
-        }
-        if (memSamples[1] > sampleMax) {
-          sampleMax = memSamples[1];
-        }
-        sampleSum += memSamples[2];
-        sampleCount += memSamples[3];
+        sampleMin = Math.min(memorySamples.sampleMin(), sampleMin);
+        sampleMax = Math.max(memorySamples.sampleMax(), sampleMax);
+        sampleSum += memorySamples.sampleSum();
+        sampleCount += memorySamples.sampleCount();
 
-        assertTrue(memSamples[4] < inputSizeBytes, "Filtered output should be smaller than input");
+        assertTrue(memorySamples.outputChars() < inputSizeBytes, "Filtered output should be smaller than input");
       }
 
       final double avgTimeMs = ((double) totalTimeNanos / iterations) / 1_000_000.0;
@@ -112,27 +111,23 @@ class ReceptorFilteringPerformanceTest {
       final double throughputMBs = inputMb / (avgTimeMs / 1000.0);
 
       if (sampleCount > 0) {
-        System.out.printf("%-12d %-12.1f %-15.2f %-15.2f %-12.2f %-12.2f %-12.2f%n",
+        LOG.info(String.format("%-12d %-12.1f %-15.2f %-15.2f %-12.2f %-12.2f %-12.2f",
             count, inputMb, avgTimeMs, throughputMBs,
             sampleMin / (1024.0 * 1024.0),
             (sampleSum / sampleCount) / (1024.0 * 1024.0),
-            sampleMax / (1024.0 * 1024.0));
+            sampleMax / (1024.0 * 1024.0)));
       } else {
-        System.out.printf("%-12d %-12.1f %-15.2f %-15.2f %-12s %-12s %-12s%n",
-            count, inputMb, avgTimeMs, throughputMBs, "N/A", "N/A", "N/A");
+        LOG.info(String.format("%-12d %-12.1f %-15.2f %-15.2f %-12s %-12s %-12s",
+            count, inputMb, avgTimeMs, throughputMBs, "N/A", "N/A", "N/A"));
       }
     }
-    System.out.println();
+    LOG.info("");
   }
 
-  // --- Helper methods ---
+  private record MemorySamples(long sampleMin, long sampleMax, long sampleSum, long sampleCount, long outputChars) {
+  }
 
-  /**
-   * Reads through the filter and samples memory every 500 read() calls.
-   *
-   * @return long array: [sampleMin, sampleMax, sampleSum, sampleCount, outputChars]
-   */
-  private long[] consumeFilteredFileWithMemorySampling(final Path gmlFile) throws IOException {
+  private MemorySamples consumeFilteredFileWithMemorySampling(final Path gmlFile) throws IOException {
     long totalChars = 0;
     long sampleMin = Long.MAX_VALUE;
     long sampleMax = Long.MIN_VALUE;
@@ -147,21 +142,15 @@ class ReceptorFilteringPerformanceTest {
         totalChars += read;
         if (++readCounter % 10 == 0) {
           final long mem = usedMemory();
-          if (mem < sampleMin) {
-            sampleMin = mem;
-          }
-          if (mem > sampleMax) {
-            sampleMax = mem;
-          }
+          sampleMin = Math.min(mem, sampleMin);
+          sampleMax = Math.max(mem, sampleMax);
           sampleSum += mem;
           sampleCount++;
         }
       }
     }
-    return new long[] {sampleMin, sampleMax, sampleSum, sampleCount, totalChars};
+    return new MemorySamples(sampleMin, sampleMax, sampleSum, sampleCount, totalChars);
   }
-
-  // --- GML generation: writes directly to file/writer, never holding full content in memory ---
 
   private static void writeGmlToFile(final Path file, final int receptorCount) throws IOException {
     try (final BufferedWriter writer = Files.newBufferedWriter(file, StandardCharsets.UTF_8)) {
@@ -174,54 +163,51 @@ class ReceptorFilteringPerformanceTest {
   }
 
   private static void writeGmlHeader(final Writer writer) throws IOException {
-    writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n");
-    writer.write("<imaer:FeatureCollectionCalculator xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" ");
-    writer.write("xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns:gml=\"http://www.opengis.net/gml/3.2\" ");
-    writer.write("xmlns:imaer=\"http://imaer.aerius.nl/6.0\" gml:id=\"NL.IMAER.Collection\" ");
-    writer.write("xsi:schemaLocation=\"http://imaer.aerius.nl/6.0 https://imaer.aerius.nl/6.0/IMAER.xsd\">\n");
-    writer.write("    <imaer:metadata>\n");
-    writer.write("        <imaer:AeriusCalculatorMetadata>\n");
-    writer.write("            <imaer:project><imaer:ProjectMetadata><imaer:year>2013</imaer:year></imaer:ProjectMetadata></imaer:project>\n");
-    writer.write("            <imaer:calculation><imaer:CalculationMetadata><imaer:method>NATURE_AREA</imaer:method>");
-    writer.write("<imaer:substance>NOX</imaer:substance><imaer:substance>NH3</imaer:substance>");
-    writer.write("<imaer:resultType>DEPOSITION</imaer:resultType></imaer:CalculationMetadata></imaer:calculation>\n");
-    writer.write("            <imaer:version><imaer:VersionMetadata><imaer:aeriusVersion>V1.1</imaer:aeriusVersion>");
-    writer.write("<imaer:databaseVersion>SomeDBVersion</imaer:databaseVersion></imaer:VersionMetadata></imaer:version>\n");
-    writer.write("        </imaer:AeriusCalculatorMetadata>\n");
-    writer.write("    </imaer:metadata>\n");
+    writer.write("""
+        <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+        <imaer:FeatureCollectionCalculator xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            xmlns:gml="http://www.opengis.net/gml/3.2"
+            xmlns:imaer="http://imaer.aerius.nl/6.0"
+            gml:id="NL.IMAER.Collection"
+            xsi:schemaLocation="http://imaer.aerius.nl/6.0 https://imaer.aerius.nl/6.0/IMAER.xsd">
+            <imaer:metadata>
+                <imaer:AeriusCalculatorMetadata>
+                    <imaer:project><imaer:ProjectMetadata><imaer:year>2013</imaer:year></imaer:ProjectMetadata></imaer:project>
+                    <imaer:calculation><imaer:CalculationMetadata><imaer:method>NATURE_AREA</imaer:method><imaer:substance>NOX</imaer:substance><imaer:substance>NH3</imaer:substance><imaer:resultType>DEPOSITION</imaer:resultType></imaer:CalculationMetadata></imaer:calculation>
+                    <imaer:version><imaer:VersionMetadata><imaer:aeriusVersion>V1.1</imaer:aeriusVersion><imaer:databaseVersion>SomeDBVersion</imaer:databaseVersion></imaer:VersionMetadata></imaer:version>
+                </imaer:AeriusCalculatorMetadata>
+            </imaer:metadata>
+        """);
   }
 
   private static void writeReceptorPoint(final Writer writer, final int index) throws IOException {
-    writer.write("    <imaer:featureMember>\n");
-    writer.write("        <imaer:ReceptorPoint receptorPointId=\"" + index + "\" gml:id=\"CP." + index + "\">\n");
-    writer.write("            <imaer:identifier><imaer:NEN3610ID><imaer:namespace>NL.IMAER</imaer:namespace>");
-    writer.write("<imaer:localId>CP." + index + "</imaer:localId></imaer:NEN3610ID></imaer:identifier>\n");
-    writer.write("            <imaer:GM_Point><gml:Point srsName=\"urn:ogc:def:crs:EPSG::28992\" gml:id=\"CP." + index + ".POINT\">");
-    writer.write("<gml:pos>" + (137558 + index) + ".0 " + (456251 + index) + ".0</gml:pos></gml:Point></imaer:GM_Point>\n");
-    writer.write("            <imaer:representation><gml:Polygon srsName=\"urn:ogc:def:crs:EPSG::28992\" gml:id=\"NL.IMAER.REPR." + index + "\">");
-    writer.write("<gml:exterior><gml:LinearRing><gml:posList>137589.0 456305.0 137620.0 456251.0 137589.0 456197.0 ");
-    writer.write("137527.0 456197.0 137496.0 456251.0 137527.0 456305.0 137589.0 456305.0</gml:posList>");
-    writer.write("</gml:LinearRing></gml:exterior></gml:Polygon></imaer:representation>\n");
-    writer.write("            <imaer:result><imaer:CalculationResult resultType=\"DEPOSITION\" substance=\"NH3\">");
-    writer.write("<imaer:value>" + (8546.77 + index * 0.01) + "</imaer:value></imaer:CalculationResult></imaer:result>\n");
-    writer.write("            <imaer:result><imaer:CalculationResult resultType=\"DEPOSITION\" substance=\"NOX\">");
-    writer.write("<imaer:value>" + (968.3 + index * 0.01) + "</imaer:value></imaer:CalculationResult></imaer:result>\n");
-    writer.write("        </imaer:ReceptorPoint>\n");
-    writer.write("    </imaer:featureMember>\n");
+    writer.write(String.format(Locale.ROOT, """
+                <imaer:featureMember>
+                    <imaer:ReceptorPoint receptorPointId="%d" gml:id="CP.%d">
+                        <imaer:identifier><imaer:NEN3610ID><imaer:namespace>NL.IMAER</imaer:namespace><imaer:localId>CP.%d</imaer:localId></imaer:NEN3610ID></imaer:identifier>
+                        <imaer:GM_Point><gml:Point srsName="urn:ogc:def:crs:EPSG::28992" gml:id="CP.%d.POINT"><gml:pos>%d.0 %d.0</gml:pos></gml:Point></imaer:GM_Point>
+                        <imaer:representation><gml:Polygon srsName="urn:ogc:def:crs:EPSG::28992" gml:id="NL.IMAER.REPR.%d"><gml:exterior><gml:LinearRing><gml:posList>137589.0 456305.0 137620.0 456251.0 137589.0 456197.0 137527.0 456197.0 137496.0 456251.0 137527.0 456305.0 137589.0 456305.0</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon></imaer:representation>
+                        <imaer:result><imaer:CalculationResult resultType="DEPOSITION" substance="NH3"><imaer:value>%s</imaer:value></imaer:CalculationResult></imaer:result>
+                        <imaer:result><imaer:CalculationResult resultType="DEPOSITION" substance="NOX"><imaer:value>%s</imaer:value></imaer:CalculationResult></imaer:result>
+                    </imaer:ReceptorPoint>
+                </imaer:featureMember>
+            """, index, index, index, index, 137558 + index, 456251 + index, index,
+        Double.toString(8546.77 + index * 0.01), Double.toString(968.3 + index * 0.01)));
   }
 
   private static void writeGmlFooter(final Writer writer, final int receptorCount) throws IOException {
     for (int i = 1; i <= 2; i++) {
       final int id = receptorCount + i;
-      writer.write("    <imaer:featureMember>\n");
-      writer.write("        <imaer:CalculationPoint gml:id=\"CP." + id + "\">\n");
-      writer.write("            <imaer:identifier><imaer:NEN3610ID><imaer:namespace>NL.IMAER</imaer:namespace>");
-      writer.write("<imaer:localId>CP." + id + "</imaer:localId></imaer:NEN3610ID></imaer:identifier>\n");
-      writer.write("            <imaer:GM_Point><gml:Point srsName=\"urn:ogc:def:crs:EPSG::28992\" gml:id=\"CP." + id + ".POINT\">");
-      writer.write("<gml:pos>207413.0 475162.0</gml:pos></gml:Point></imaer:GM_Point>\n");
-      writer.write("            <imaer:label>Calc point " + i + "</imaer:label>\n");
-      writer.write("        </imaer:CalculationPoint>\n");
-      writer.write("    </imaer:featureMember>\n");
+      writer.write(String.format(Locale.ROOT, """
+              <imaer:featureMember>
+                  <imaer:CalculationPoint gml:id="CP.%d">
+                      <imaer:identifier><imaer:NEN3610ID><imaer:namespace>NL.IMAER</imaer:namespace><imaer:localId>CP.%d</imaer:localId></imaer:NEN3610ID></imaer:identifier>
+                      <imaer:GM_Point><gml:Point srsName="urn:ogc:def:crs:EPSG::28992" gml:id="CP.%d.POINT"><gml:pos>207413.0 475162.0</gml:pos></gml:Point></imaer:GM_Point>
+                      <imaer:label>Calc point %d</imaer:label>
+                  </imaer:CalculationPoint>
+              </imaer:featureMember>
+          """, id, id, id, i));
     }
     writer.write("</imaer:FeatureCollectionCalculator>\n");
   }
