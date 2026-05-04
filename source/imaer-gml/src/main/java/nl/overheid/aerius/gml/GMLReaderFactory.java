@@ -20,6 +20,7 @@ import java.io.InputStream;
 import java.io.UTFDataFormatException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -173,17 +174,19 @@ public final class GMLReaderFactory {
 
   private static List<AeriusException> newValidationFailed(final List<ValidationEvent> list) {
     final Map<String, List<ValidationEvent>> grouped = new LinkedHashMap<>();
+    final Map<String, String> prefixByKey = new HashMap<>();
     for (final ValidationEvent event : list) {
-      grouped.computeIfAbsent(locationKey(event.getLocator()), k -> new ArrayList<>()).add(event);
+      final String key = locationKey(event.getLocator());
+      grouped.computeIfAbsent(key, k -> new ArrayList<>()).add(event);
+      prefixByKey.computeIfAbsent(key, k -> locationPrefix(event.getLocator()));
     }
 
     final List<AeriusException> errors = new ArrayList<>();
-    for (final List<ValidationEvent> group : grouped.values()) {
-      final List<ValidationEvent> kept = discardRedundantLowerSeverityEvents(group);
-      final String body = kept.stream()
+    for (final Map.Entry<String, List<ValidationEvent>> entry : grouped.entrySet()) {
+      final String body = discardRedundantLowerSeverityEvents(entry.getValue()).stream()
           .map(e -> e.getMessage().trim())
           .collect(Collectors.joining(" "));
-      final String message = locationPrefix(kept.get(0).getLocator()) + body;
+      final String message = prefixByKey.get(entry.getKey()) + body;
       errors.add(new AeriusException(ImaerExceptionReason.GML_VALIDATION_FAILED, message));
       LOG.debug("validation error: {}", message);
     }
