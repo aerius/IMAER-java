@@ -204,13 +204,16 @@ public final class GMLReaderFactory {
     }
 
     String prefix() {
-      if (line < 0 && column < 0) {
-        return "";
-      }
       if (line >= 0 && column >= 0) {
-        return "[line " + line + ", col " + column + "] ";
+        return "[line %d, col %d] ".formatted(line, column);
       }
-      return line >= 0 ? "[line " + line + "] " : "[col " + column + "] ";
+      if (line >= 0) {
+        return "[line %d] ".formatted(line);
+      }
+      if (column >= 0) {
+        return "[col %d] ".formatted(column);
+      }
+      return "";
     }
   }
 }
