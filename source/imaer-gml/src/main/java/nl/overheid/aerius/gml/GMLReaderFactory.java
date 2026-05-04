@@ -20,17 +20,22 @@ import java.io.InputStream;
 import java.io.UTFDataFormatException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
 
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Unmarshaller;
 import jakarta.xml.bind.ValidationEvent;
-import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamReader;
+import jakarta.xml.bind.ValidationEventLocator;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -167,13 +172,44 @@ public final class GMLReaderFactory {
   }
 
   private static List<AeriusException> newValidationFailed(final List<ValidationEvent> list) {
-    final List<AeriusException> errors = new ArrayList<>();
+    // Group events that share a source location (line + column). Within each group keep only the
+    // events at the highest severity and combine their messages, so a single bad value (e.g. a
+    // type mismatch surfacing as separate datatype + element validation events at the same spot)
+    // produces one error instead of several. Prefix the combined message with the location so the
+    // user can find it in the file.
+    final Map<LocationKey, List<ValidationEvent>> grouped = new LinkedHashMap<>();
     for (final ValidationEvent event : list) {
-      final String errorMessage = event.getMessage().trim();
-      final AeriusException error = new AeriusException(ImaerExceptionReason.GML_VALIDATION_FAILED, errorMessage);
-      errors.add(error);
-      LOG.debug("validation error: {}", errorMessage);
+      grouped.computeIfAbsent(LocationKey.of(event.getLocator()), k -> new ArrayList<>()).add(event);
+    }
+
+    final List<AeriusException> errors = new ArrayList<>();
+    for (final Map.Entry<LocationKey, List<ValidationEvent>> entry : grouped.entrySet()) {
+      final List<ValidationEvent> group = entry.getValue();
+      final int maxSeverity = group.stream().mapToInt(ValidationEvent::getSeverity).max().orElse(0);
+      final String body = group.stream()
+          .filter(e -> e.getSeverity() == maxSeverity)
+          .map(e -> e.getMessage().trim())
+          .collect(Collectors.joining(" "));
+      final String message = entry.getKey().prefix() + body;
+      errors.add(new AeriusException(ImaerExceptionReason.GML_VALIDATION_FAILED, message));
+      LOG.debug("validation error: {}", message);
     }
     return errors;
+  }
+
+  private record LocationKey(int line, int column) {
+    static LocationKey of(final ValidationEventLocator locator) {
+      return locator == null ? new LocationKey(-1, -1) : new LocationKey(locator.getLineNumber(), locator.getColumnNumber());
+    }
+
+    String prefix() {
+      if (line < 0 && column < 0) {
+        return "";
+      }
+      if (line >= 0 && column >= 0) {
+        return "[line " + line + ", col " + column + "] ";
+      }
+      return line >= 0 ? "[line " + line + "] " : "[col " + column + "] ";
+    }
   }
 }
