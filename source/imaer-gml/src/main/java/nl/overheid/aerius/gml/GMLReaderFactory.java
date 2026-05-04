@@ -172,11 +172,11 @@ public final class GMLReaderFactory {
   }
 
   private static List<AeriusException> newValidationFailed(final List<ValidationEvent> list) {
-    // Group events that share a source location (line + column). Within each group keep only the
-    // events at the highest severity and combine their messages, so a single bad value (e.g. a
-    // type mismatch surfacing as separate datatype + element validation events at the same spot)
-    // produces one error instead of several. Prefix the combined message with the location so the
-    // user can find it in the file.
+    // Group events that share a source location (line + column) and combine their messages, so a
+    // single bad value (e.g. a type mismatch surfacing as separate datatype + element validation
+    // events at the same spot) produces one error instead of several. Every event's message is
+    // preserved in document order - no events are dropped, so no information is lost. Each
+    // combined message is prefixed with [line N, col M] so users can find the offending value.
     final Map<LocationKey, List<ValidationEvent>> grouped = new LinkedHashMap<>();
     for (final ValidationEvent event : list) {
       grouped.computeIfAbsent(LocationKey.of(event.getLocator()), k -> new ArrayList<>()).add(event);
@@ -184,10 +184,7 @@ public final class GMLReaderFactory {
 
     final List<AeriusException> errors = new ArrayList<>();
     for (final Map.Entry<LocationKey, List<ValidationEvent>> entry : grouped.entrySet()) {
-      final List<ValidationEvent> group = entry.getValue();
-      final int maxSeverity = group.stream().mapToInt(ValidationEvent::getSeverity).max().orElse(0);
-      final String body = group.stream()
-          .filter(e -> e.getSeverity() == maxSeverity)
+      final String body = entry.getValue().stream()
           .map(e -> e.getMessage().trim())
           .collect(Collectors.joining(" "));
       final String message = entry.getKey().prefix() + body;
