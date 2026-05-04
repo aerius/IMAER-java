@@ -92,13 +92,13 @@ class GMLValidateErrorsTest {
 
   @Test
   void testGMLMultipleErrors() throws IOException, AeriusException {
-    // Events sharing a source location are grouped and joined into one message in document
-    // order, prefixed with [line N, col M] so the user can locate the offending value. No events
-    // are dropped. The first group includes the bare "None" from JAXB's NumberFormatException
-    // alongside the two FATAL_ERROR XSD events at the same location.
+    // Events sharing a source location are grouped; within each group lower-severity events are
+    // dropped (see discardRedundantLowerSeverityEvents) and the survivors are joined into one
+    // message, prefixed with [line N, col M]. The vehiclesPerTimeUnit group's bare "None" from
+    // JAXB's NumberFormatException is dropped in favour of the FATAL_ERROR XSD events at the
+    // same location.
     final List<String> expectedErrors = List.of(
-        "[line 33, col 80] None"
-            + " cvc-datatype-valid.1.2.1: 'None' is not a valid value for 'double'."
+        "[line 33, col 80] cvc-datatype-valid.1.2.1: 'None' is not a valid value for 'double'."
             + " cvc-type.3.1.3: The value 'None' of element 'imaer:vehiclesPerTimeUnit' is not valid.",
         "[line 34, col 58] cvc-enumeration-valid: Value 'None' is not facet-valid with respect to enumeration '[HOUR, DAY, MONTH, YEAR]'."
             + " It must be a value from the enumeration."

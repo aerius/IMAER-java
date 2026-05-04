@@ -172,11 +172,10 @@ public final class GMLReaderFactory {
   }
 
   private static List<AeriusException> newValidationFailed(final List<ValidationEvent> list) {
-    // Group events that share a source location (line + column) and combine their messages, so a
-    // single bad value (e.g. a type mismatch surfacing as separate datatype + element validation
-    // events at the same spot) produces one error instead of several. Every event's message is
-    // preserved in document order - no events are dropped, so no information is lost. Each
-    // combined message is prefixed with [line N, col M] so users can find the offending value.
+    // Group events that share a source location (line + column), discard the ones whose
+    // information is already covered by a higher-severity event at the same location, then
+    // combine the survivors into one message per location. Each combined message is prefixed
+    // with [line N, col M] so users can find the offending value.
     final Map<LocationKey, List<ValidationEvent>> grouped = new LinkedHashMap<>();
     for (final ValidationEvent event : list) {
       grouped.computeIfAbsent(LocationKey.of(event.getLocator()), k -> new ArrayList<>()).add(event);
@@ -184,7 +183,8 @@ public final class GMLReaderFactory {
 
     final List<AeriusException> errors = new ArrayList<>();
     for (final Map.Entry<LocationKey, List<ValidationEvent>> entry : grouped.entrySet()) {
-      final String body = entry.getValue().stream()
+      final List<ValidationEvent> kept = discardRedundantLowerSeverityEvents(entry.getValue());
+      final String body = kept.stream()
           .map(e -> e.getMessage().trim())
           .collect(Collectors.joining(" "));
       final String message = entry.getKey().prefix() + body;
@@ -192,6 +192,32 @@ public final class GMLReaderFactory {
       LOG.debug("validation error: {}", message);
     }
     return errors;
+  }
+
+  /**
+   * Drops events at a single source location whose severity is below the maximum present in the
+   * group. <strong>This is a deliberate, lossy step</strong>: the dropped events are not surfaced
+   * to the user.
+   *
+   * <p>What gets dropped, concretely: when JAXB fails to parse a primitive value (e.g. {@code
+   * "None"} where a {@code double} is expected), the validator reports it twice for the same
+   * location:
+   * <ul>
+   *   <li>a severity-1 ({@code ERROR}) event whose message is just the offending value, e.g.
+   *       {@code "None"}, originating from the wrapped {@code NumberFormatException};</li>
+   *   <li>one or more severity-2 ({@code FATAL_ERROR}) {@code cvc-*} events from the XSD
+   *       validator, e.g. {@code "cvc-datatype-valid.1.2.1: 'None' is not a valid value for
+   *       'double'."} and {@code "cvc-type.3.1.3: The value 'None' of element 'imaer:foo' is not
+   *       valid."}.</li>
+   * </ul>
+   * The lower-severity message conveys nothing the higher-severity ones don't already say
+   * (offending value, element, expected type), so dropping it removes only redundant noise.
+   */
+  private static List<ValidationEvent> discardRedundantLowerSeverityEvents(final List<ValidationEvent> sameLocation) {
+    final int maxSeverity = sameLocation.stream().mapToInt(ValidationEvent::getSeverity).max().orElse(0);
+    return sameLocation.stream()
+        .filter(e -> e.getSeverity() == maxSeverity)
+        .toList();
   }
 
   private record LocationKey(int line, int column) {
