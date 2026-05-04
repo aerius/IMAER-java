@@ -172,18 +172,18 @@ public final class GMLReaderFactory {
   }
 
   private static List<AeriusException> newValidationFailed(final List<ValidationEvent> list) {
-    final Map<LocationKey, List<ValidationEvent>> grouped = new LinkedHashMap<>();
+    final Map<String, List<ValidationEvent>> grouped = new LinkedHashMap<>();
     for (final ValidationEvent event : list) {
-      grouped.computeIfAbsent(LocationKey.of(event.getLocator()), k -> new ArrayList<>()).add(event);
+      grouped.computeIfAbsent(locationKey(event.getLocator()), k -> new ArrayList<>()).add(event);
     }
 
     final List<AeriusException> errors = new ArrayList<>();
-    for (final Map.Entry<LocationKey, List<ValidationEvent>> entry : grouped.entrySet()) {
-      final List<ValidationEvent> kept = discardRedundantLowerSeverityEvents(entry.getValue());
+    for (final List<ValidationEvent> group : grouped.values()) {
+      final List<ValidationEvent> kept = discardRedundantLowerSeverityEvents(group);
       final String body = kept.stream()
           .map(e -> e.getMessage().trim())
           .collect(Collectors.joining(" "));
-      final String message = entry.getKey().prefix() + body;
+      final String message = locationPrefix(kept.get(0).getLocator()) + body;
       errors.add(new AeriusException(ImaerExceptionReason.GML_VALIDATION_FAILED, message));
       LOG.debug("validation error: {}", message);
     }
@@ -198,22 +198,28 @@ public final class GMLReaderFactory {
         .toList();
   }
 
-  private record LocationKey(int line, int column) {
-    static LocationKey of(final ValidationEventLocator locator) {
-      return locator == null ? new LocationKey(-1, -1) : new LocationKey(locator.getLineNumber(), locator.getColumnNumber());
+  private static String locationKey(final ValidationEventLocator locator) {
+    if (locator == null) {
+      return "-1:-1";
     }
+    return locator.getLineNumber() + ":" + locator.getColumnNumber();
+  }
 
-    String prefix() {
-      if (line >= 0 && column >= 0) {
-        return "[line %d, col %d] ".formatted(line, column);
-      }
-      if (line >= 0) {
-        return "[line %d] ".formatted(line);
-      }
-      if (column >= 0) {
-        return "[col %d] ".formatted(column);
-      }
+  private static String locationPrefix(final ValidationEventLocator locator) {
+    if (locator == null) {
       return "";
     }
+    final int line = locator.getLineNumber();
+    final int col = locator.getColumnNumber();
+    if (line >= 0 && col >= 0) {
+      return "[line %d, col %d] ".formatted(line, col);
+    }
+    if (line >= 0) {
+      return "[line %d] ".formatted(line);
+    }
+    if (col >= 0) {
+      return "[col %d] ".formatted(col);
+    }
+    return "";
   }
 }
