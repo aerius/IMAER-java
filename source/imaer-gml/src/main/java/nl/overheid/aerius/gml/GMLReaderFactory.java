@@ -172,10 +172,6 @@ public final class GMLReaderFactory {
   }
 
   private static List<AeriusException> newValidationFailed(final List<ValidationEvent> list) {
-    // Group events that share a source location (line + column), discard the ones whose
-    // information is already covered by a higher-severity event at the same location, then
-    // combine the survivors into one message per location. Each combined message is prefixed
-    // with [line N, col M] so users can find the offending value.
     final Map<LocationKey, List<ValidationEvent>> grouped = new LinkedHashMap<>();
     for (final ValidationEvent event : list) {
       grouped.computeIfAbsent(LocationKey.of(event.getLocator()), k -> new ArrayList<>()).add(event);
@@ -194,25 +190,7 @@ public final class GMLReaderFactory {
     return errors;
   }
 
-  /**
-   * Drops events at a single source location whose severity is below the maximum present in the
-   * group. <strong>This is a deliberate, lossy step</strong>: the dropped events are not surfaced
-   * to the user.
-   *
-   * <p>What gets dropped, concretely: when JAXB fails to parse a primitive value (e.g. {@code
-   * "None"} where a {@code double} is expected), the validator reports it twice for the same
-   * location:
-   * <ul>
-   *   <li>a severity-1 ({@code ERROR}) event whose message is just the offending value, e.g.
-   *       {@code "None"}, originating from the wrapped {@code NumberFormatException};</li>
-   *   <li>one or more severity-2 ({@code FATAL_ERROR}) {@code cvc-*} events from the XSD
-   *       validator, e.g. {@code "cvc-datatype-valid.1.2.1: 'None' is not a valid value for
-   *       'double'."} and {@code "cvc-type.3.1.3: The value 'None' of element 'imaer:foo' is not
-   *       valid."}.</li>
-   * </ul>
-   * The lower-severity message conveys nothing the higher-severity ones don't already say
-   * (offending value, element, expected type), so dropping it removes only redundant noise.
-   */
+  /** Lossy: drops events below the group's max severity (e.g. JAXB's bare "None" when a cvc-* FATAL covers it). */
   private static List<ValidationEvent> discardRedundantLowerSeverityEvents(final List<ValidationEvent> sameLocation) {
     final int maxSeverity = sameLocation.stream().mapToInt(ValidationEvent::getSeverity).max().orElse(0);
     return sameLocation.stream()
