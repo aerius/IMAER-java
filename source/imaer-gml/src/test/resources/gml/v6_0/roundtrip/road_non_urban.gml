@@ -54,24 +54,32 @@
             </imaer:geometry>
             <imaer:emission>
                 <imaer:Emission substance="NH3">
-                    <imaer:value>24.525329736565443</imaer:value>
+                    <imaer:value>54.36755426564444</imaer:value>
                 </imaer:Emission>
             </imaer:emission>
             <imaer:emission>
                 <imaer:Emission substance="NOX">
-                    <imaer:value>95.61190577751265</imaer:value>
+                    <imaer:value>1013.5599616318192</imaer:value>
                 </imaer:Emission>
             </imaer:emission>
             <imaer:emission>
                 <imaer:Emission substance="PM10">
-                    <imaer:value>13.553471696523006</imaer:value>
+                    <imaer:value>37.34119753123686</imaer:value>
                 </imaer:Emission>
             </imaer:emission>
             <imaer:emission>
                 <imaer:Emission substance="NO2">
-                    <imaer:value>19.73090437453009</imaer:value>
+                    <imaer:value>62.60413116965389</imaer:value>
                 </imaer:Emission>
             </imaer:emission>
+            <imaer:vehicles>
+                <imaer:StandardVehicle vehicleType="HEAVY_FREIGHT">
+                    <imaer:vehiclesPerTimeUnit>5000.0</imaer:vehiclesPerTimeUnit>
+                    <imaer:timeUnit>DAY</imaer:timeUnit>
+                    <imaer:stagnationFactor>0.2</imaer:stagnationFactor>
+                    <imaer:maximumSpeed>80</imaer:maximumSpeed>
+                </imaer:StandardVehicle>
+            </imaer:vehicles>
             <imaer:vehicles>
                 <imaer:StandardVehicle vehicleType="LIGHT_TRAFFIC">
                     <imaer:vehiclesPerTimeUnit>15000.0</imaer:vehiclesPerTimeUnit>

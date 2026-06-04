@@ -68,6 +68,12 @@
                 </imaer:Emission>
             </imaer:emission>
             <imaer:vehicles>
+                <imaer:StandardVehicle vehicleType="HEAVY_FREIGHT">
+                    <imaer:vehiclesPerDay>5000.0</imaer:vehiclesPerDay>
+                    <imaer:stagnationFactor>0.2</imaer:stagnationFactor>
+                </imaer:StandardVehicle>
+            </imaer:vehicles>
+            <imaer:vehicles>
                 <imaer:StandardVehicle vehicleType="LIGHT_TRAFFIC">
                     <imaer:vehiclesPerDay>15000.0</imaer:vehiclesPerDay>
                     <imaer:stagnationFactor>0.1</imaer:stagnationFactor>
