@@ -92,16 +92,23 @@ abstract class GML2Road<T extends IsGmlRoadEmissionSource, S extends RoadEmissio
       final StandardVehicles vse = new StandardVehicles();
 
       vse.setMaximumSpeed(getMaximumSpeed(gmlRoadTypeCode, sv.getMaximumSpeed()));
-      vse.setStrictEnforcement(sv.isStrictEnforcement());
       vse.setTimeUnit(TimeUnit.valueOf(sv.getTimeUnit().name()));
       mergingStandardVehicles.add(vse);
       addToVehicles.add(vse);
       return vse;
     });
-    final ValuesPerVehicleType valuesPerVehicleType = new ValuesPerVehicleType();
-    valuesPerVehicleType.setStagnationFraction(sv.getStagnationFactor());
-    valuesPerVehicleType.setVehiclesPerTimeUnit(sv.getVehiclesPerTimeUnit());
-    standardVehicle.getValuesPerVehicleTypes().put(sv.getVehicleType(), valuesPerVehicleType);
+
+    if (sv.isStrictEnforcement() != null) {
+      // Set strict enforcement to handle case were both null and false strict enforcement would be present, in which case false should be set.
+      standardVehicle.setStrictEnforcement(sv.isStrictEnforcement());
+    }
+    final ValuesPerVehicleType vpvt = standardVehicle.getValuesPerVehicleTypes().computeIfAbsent(sv.getVehicleType(), t -> {
+      final ValuesPerVehicleType valuesPerVehicleType = new ValuesPerVehicleType();
+
+      valuesPerVehicleType.setStagnationFraction(sv.getStagnationFactor());
+      return valuesPerVehicleType;
+    });
+    vpvt.setVehiclesPerTimeUnit(sv.getVehiclesPerTimeUnit() + vpvt.getVehiclesPerTimeUnit());
   }
 
   /**
@@ -128,10 +135,9 @@ abstract class GML2Road<T extends IsGmlRoadEmissionSource, S extends RoadEmissio
       final String gmlRoadTypeCode) {
     return mergingStandardVehicles.stream()
         .filter(x -> Objects.equals(x.getMaximumSpeed(), getMaximumSpeed(gmlRoadTypeCode, sv.getMaximumSpeed())))
-        .filter(x -> Objects.equals(x.getStrictEnforcement(), sv.isStrictEnforcement()))
+        .filter(x -> Boolean.TRUE.equals(x.getStrictEnforcement()) == Boolean.TRUE.equals((sv.isStrictEnforcement())))
         .filter(x -> x.getTimeUnit() == TimeUnit.valueOf(sv.getTimeUnit().name()))
         .filter(x -> !x.getValuesPerVehicleTypes().containsKey(sv.getVehicleType()))
         .findFirst();
   }
-
 }
