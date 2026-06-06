@@ -78,9 +78,9 @@ abstract class GML2Road<T extends IsGmlRoadEmissionSource, S extends RoadEmissio
 
     switch (av) {
       case final IsGmlStandardVehicle standardVehicle ->
-      addEmissionValues(gmlRoadTypeCode, addToVehicles, source, standardVehicle, mergingStandardVehicles);
+        addEmissionValues(gmlRoadTypeCode, addToVehicles, source, standardVehicle, mergingStandardVehicles);
       case final IsGmlSpecificVehicle specificVehicle ->
-      addToVehicles.add(GML2VehicleUtil.convertEmissionValuesSpecific(source, specificVehicle, getConversionData()));
+        addToVehicles.add(GML2VehicleUtil.convertEmissionValuesSpecific(source, specificVehicle, getConversionData()));
       case final IsGmlCustomVehicle customVehicle -> addToVehicles.add(GML2VehicleUtil.convertEmissionValuesCustom(customVehicle));
       default -> throw new IllegalArgumentException("Instance not supported:" + av.getClass().getCanonicalName());
     }
@@ -88,20 +88,27 @@ abstract class GML2Road<T extends IsGmlRoadEmissionSource, S extends RoadEmissio
 
   private void addEmissionValues(final String gmlRoadTypeCode, final List<Vehicles> addToVehicles, final T source, final IsGmlStandardVehicle sv,
       final List<StandardVehicles> mergingStandardVehicles) {
-    final StandardVehicles standardVehicle = findExistingMatch(sv, mergingStandardVehicles).orElseGet(() -> {
+    final StandardVehicles standardVehicle = findExistingMatch(sv, mergingStandardVehicles, gmlRoadTypeCode).orElseGet(() -> {
       final StandardVehicles vse = new StandardVehicles();
 
       vse.setMaximumSpeed(getMaximumSpeed(gmlRoadTypeCode, sv.getMaximumSpeed()));
-      vse.setStrictEnforcement(sv.isStrictEnforcement());
       vse.setTimeUnit(TimeUnit.valueOf(sv.getTimeUnit().name()));
       mergingStandardVehicles.add(vse);
       addToVehicles.add(vse);
       return vse;
     });
-    final ValuesPerVehicleType valuesPerVehicleType = new ValuesPerVehicleType();
-    valuesPerVehicleType.setStagnationFraction(sv.getStagnationFactor());
-    valuesPerVehicleType.setVehiclesPerTimeUnit(sv.getVehiclesPerTimeUnit());
-    standardVehicle.getValuesPerVehicleTypes().put(sv.getVehicleType(), valuesPerVehicleType);
+
+    if (sv.isStrictEnforcement() != null) {
+      // Set strict enforcement to handle case were both null and false strict enforcement would be present, in which case false should be set.
+      standardVehicle.setStrictEnforcement(sv.isStrictEnforcement());
+    }
+    final ValuesPerVehicleType vpvt = standardVehicle.getValuesPerVehicleTypes().computeIfAbsent(sv.getVehicleType(), t -> {
+      final ValuesPerVehicleType valuesPerVehicleType = new ValuesPerVehicleType();
+
+      valuesPerVehicleType.setStagnationFraction(sv.getStagnationFactor());
+      return valuesPerVehicleType;
+    });
+    vpvt.setVehiclesPerTimeUnit(sv.getVehiclesPerTimeUnit() + vpvt.getVehiclesPerTimeUnit());
   }
 
   /**
@@ -124,13 +131,13 @@ abstract class GML2Road<T extends IsGmlRoadEmissionSource, S extends RoadEmissio
     };
   }
 
-  private Optional<StandardVehicles> findExistingMatch(final IsGmlStandardVehicle sv, final List<StandardVehicles> mergingStandardVehicles) {
+  private Optional<StandardVehicles> findExistingMatch(final IsGmlStandardVehicle sv, final List<StandardVehicles> mergingStandardVehicles,
+      final String gmlRoadTypeCode) {
     return mergingStandardVehicles.stream()
-        .filter(x -> Objects.equals(x.getMaximumSpeed(), sv.getMaximumSpeed()))
-        .filter(x -> Objects.equals(x.getStrictEnforcement(), sv.isStrictEnforcement()))
+        .filter(x -> Objects.equals(x.getMaximumSpeed(), getMaximumSpeed(gmlRoadTypeCode, sv.getMaximumSpeed())))
+        .filter(x -> Boolean.TRUE.equals(x.getStrictEnforcement()) == Boolean.TRUE.equals((sv.isStrictEnforcement())))
         .filter(x -> x.getTimeUnit() == TimeUnit.valueOf(sv.getTimeUnit().name()))
         .filter(x -> !x.getValuesPerVehicleTypes().containsKey(sv.getVehicleType()))
         .findFirst();
   }
-
 }
