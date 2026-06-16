@@ -28,7 +28,7 @@ import nl.overheid.aerius.shared.domain.v2.source.offroad.StandardOffRoadMobileS
 /**
  * Convert GML Off road to internal OffRoad data structure.
  */
-public class GML2OffRoad<T extends IsGmlOffRoadMobileEmissionSource> extends AbstractGML2OffRoad<IsGmlStandardOffRoadMobileBaseSource, T> {
+public class GML2OffRoad<T extends IsGmlOffRoadMobileEmissionSource> extends AbstractGML2OffRoad<T, IsGmlStandardOffRoadMobileBaseSource> {
 
   /**
    * @param conversionData The conversionData to use.

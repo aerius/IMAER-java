@@ -36,11 +36,11 @@ import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 /**
  * Base class for converting OffRoad mobile from GML to internal data object.
  *
- * @param <S> sub class of the standard offroad mobile sources
  * @param <T> sub class of the off road mobile source
+ * @param <S> sub class of the standard off road mobile sub source
  */
-public abstract class AbstractGML2OffRoad<S extends IsGmlStandardOffRoadMobileBaseSource, T extends IsGmlOffRoadMobileEmissionSource>
-extends AbstractGML2Specific<T, OffRoadMobileEmissionSource> {
+public abstract class AbstractGML2OffRoad<T extends IsGmlOffRoadMobileEmissionSource, S extends IsGmlStandardOffRoadMobileBaseSource>
+    extends AbstractGML2Specific<T, OffRoadMobileEmissionSource> {
 
   private static final Logger LOG = LoggerFactory.getLogger(AbstractGML2OffRoad.class);
 
@@ -70,7 +70,13 @@ extends AbstractGML2Specific<T, OffRoadMobileEmissionSource> {
     return emissionSource.getSubSources().isEmpty() ? null : emissionSource;
   }
 
-  protected abstract OffRoadMobileSource convertStandard(S offRoadMobileSource);
+  /**
+   * Convert Standard OffRoad source to an {@link OffRoadMobileSource}.
+   *
+   * @param standardOffRoad Standard Offroad to convert
+   * @return Convert object
+   */
+  protected abstract OffRoadMobileSource convertStandard(S standardOffRoad);
 
   @SuppressWarnings("unchecked")
   private OffRoadMobileSource convert(final IsGmlCustomOffRoadMobileSource customMobileSource) throws AeriusException {
