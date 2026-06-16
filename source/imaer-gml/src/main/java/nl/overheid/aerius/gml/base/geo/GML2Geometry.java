@@ -54,6 +54,8 @@ public final class GML2Geometry {
       } else {
         throw e;
       }
+    } catch (final RuntimeException e) {
+      throw new AeriusException(ImaerExceptionReason.GML_GEOMETRY_INVALID, fm.getId());
     }
     return geometry;
   }
@@ -73,8 +75,7 @@ public final class GML2Geometry {
     return geometry;
   }
 
-  private void isValidGeometry(final FeatureMember fm, final Geometry geometry)
-      throws AeriusException {
+  private static void isValidGeometry(final FeatureMember fm, final Geometry geometry) throws AeriusException {
     // check if the geometry is actually valid for this type of feature member.
     if (!fm.isValidGeometry(geometry.type())) {
       throw new AeriusException(ImaerExceptionReason.GML_GEOMETRY_NOT_PERMITTED, fm.getId());

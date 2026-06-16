@@ -232,11 +232,6 @@ class GMLValidateErrorsTest {
   }
 
   @Test
-  void testGMLUnknownError() throws IOException {
-    assertResult("fout_666_unknown_error", "GML Unknown error", ImaerExceptionReason.INTERNAL_ERROR, IllegalArgumentException.class);
-  }
-
-  @Test
   void testGMLCustomTimeVaryingProfileUnknownType() throws IOException {
     assertResult("fout_1023_custom_time_varying_profile", "GML custom time-varying profile type",
         ImaerExceptionReason.CUSTOM_TIME_VARYING_PROFILE_TYPE_UNKNOWN,
