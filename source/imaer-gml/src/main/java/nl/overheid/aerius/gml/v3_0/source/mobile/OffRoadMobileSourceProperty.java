@@ -21,7 +21,7 @@ import jakarta.xml.bind.annotation.XmlType;
 
 import nl.overheid.aerius.gml.base.AbstractProperty;
 import nl.overheid.aerius.gml.base.IsGmlProperty;
-import nl.overheid.aerius.gml.base.source.mobile.v31.IsGmlOffRoadMobileSource;
+import nl.overheid.aerius.gml.base.source.mobile.IsGmlOffRoadMobileSource;
 import nl.overheid.aerius.gml.v3_0.base.CalculatorSchema;
 
 /**

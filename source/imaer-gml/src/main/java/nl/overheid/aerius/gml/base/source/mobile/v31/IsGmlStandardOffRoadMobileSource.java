@@ -16,11 +16,9 @@
  */
 package nl.overheid.aerius.gml.base.source.mobile.v31;
 
-public interface IsGmlStandardOffRoadMobileSource extends IsGmlOffRoadMobileSource {
+import nl.overheid.aerius.gml.base.source.mobile.IsGmlStandardOffRoadMobileBaseSource;
 
-  int getLiterFuelPerYear();
-
-  String getCode();
+public interface IsGmlStandardOffRoadMobileSource extends IsGmlStandardOffRoadMobileBaseSource {
 
   Integer getHoursIdlePerYear();
 

@@ -32,18 +32,18 @@ import nl.overheid.aerius.gml.v3_1.base.CalculatorSchema;
     "engineDisplacement"})
 public class OffRoadMobileSource extends AbstractOffRoadMobileSource implements IsGmlStandardOffRoadMobileSource {
 
-  private int literFuelPerYear;
+  private Integer literFuelPerYear;
   private String code;
   private Integer hoursIdlePerYear;
   private Double engineDisplacement;
 
   @Override
   @XmlElement(namespace = CalculatorSchema.NAMESPACE)
-  public int getLiterFuelPerYear() {
+  public Integer getLiterFuelPerYear() {
     return literFuelPerYear;
   }
 
-  public void setLiterFuelPerYear(final int literFuelPerYear) {
+  public void setLiterFuelPerYear(final Integer literFuelPerYear) {
     this.literFuelPerYear = literFuelPerYear;
   }
 

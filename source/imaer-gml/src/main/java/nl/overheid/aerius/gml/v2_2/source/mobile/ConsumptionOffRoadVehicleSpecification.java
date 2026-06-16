@@ -23,7 +23,7 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 import jakarta.xml.bind.annotation.XmlTransient;
 import jakarta.xml.bind.annotation.XmlType;
 
-import nl.overheid.aerius.gml.base.source.mobile.v31.IsGmlConsumptionOffRoadVehicleSpecification;
+import nl.overheid.aerius.gml.base.source.mobile.IsGmlConsumptionOffRoadVehicleSpecification;
 import nl.overheid.aerius.gml.v2_2.base.CalculatorSchema;
 import nl.overheid.aerius.gml.v2_2.source.Emission;
 import nl.overheid.aerius.gml.v2_2.source.EmissionProperty;

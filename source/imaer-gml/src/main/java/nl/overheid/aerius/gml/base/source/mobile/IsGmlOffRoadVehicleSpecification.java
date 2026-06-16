@@ -14,19 +14,10 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.gml.base.source.mobile.v31;
+package nl.overheid.aerius.gml.base.source.mobile;
 
-import java.util.List;
+public interface IsGmlOffRoadVehicleSpecification {
 
-import nl.overheid.aerius.gml.base.IsGmlProperty;
-import nl.overheid.aerius.gml.base.source.IsGmlEmission;
-
-public interface IsGmlConsumptionOffRoadVehicleSpecification extends IsGmlOffRoadVehicleSpecification {
-
-  List<? extends IsGmlProperty<IsGmlEmission>> getEmissionFactors();
-
-  int getEnergyEfficiency();
-
-  int getConsumption();
+  String getFuelCode();
 
 }

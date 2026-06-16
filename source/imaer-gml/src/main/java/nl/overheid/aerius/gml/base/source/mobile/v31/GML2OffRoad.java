@@ -16,65 +16,30 @@
  */
 package nl.overheid.aerius.gml.base.source.mobile.v31;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import nl.overheid.aerius.gml.base.AbstractGML2Specific;
 import nl.overheid.aerius.gml.base.GMLConversionData;
 import nl.overheid.aerius.gml.base.GMLLegacyCodeConverter.GMLLegacyCodeType;
-import nl.overheid.aerius.gml.base.IsGmlProperty;
 import nl.overheid.aerius.gml.base.characteristics.GML2SourceCharacteristics;
-import nl.overheid.aerius.gml.base.geo.GML2Geometry;
-import nl.overheid.aerius.gml.base.source.IsGmlEmission;
-import nl.overheid.aerius.shared.domain.ops.DiurnalVariation;
-import nl.overheid.aerius.shared.domain.v2.characteristics.OPSSourceCharacteristics;
-import nl.overheid.aerius.shared.domain.v2.characteristics.SourceCharacteristics;
-import nl.overheid.aerius.shared.domain.v2.source.OffRoadMobileEmissionSource;
-import nl.overheid.aerius.shared.domain.v2.source.offroad.CustomOffRoadMobileSource;
+import nl.overheid.aerius.gml.base.source.mobile.AbstractGML2OffRoad;
+import nl.overheid.aerius.gml.base.source.mobile.IsGmlOffRoadMobileEmissionSource;
+import nl.overheid.aerius.gml.base.source.mobile.IsGmlStandardOffRoadMobileBaseSource;
 import nl.overheid.aerius.shared.domain.v2.source.offroad.OffRoadMobileSource;
 import nl.overheid.aerius.shared.domain.v2.source.offroad.StandardOffRoadMobileSource;
-import nl.overheid.aerius.shared.exception.AeriusException;
-import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 
 /**
- *
+ * Convert GML Off road to internal OffRoad data structure.
  */
-public class GML2OffRoad<T extends IsGmlOffRoadMobileEmissionSource> extends AbstractGML2Specific<T, OffRoadMobileEmissionSource> {
-
-  private static final Logger LOG = LoggerFactory.getLogger(GML2OffRoad.class);
-
-  private final GML2SourceCharacteristics gml2SourceCharacteristics;
-  private final GML2Geometry gml2Geometry;
+public class GML2OffRoad<T extends IsGmlOffRoadMobileEmissionSource> extends AbstractGML2OffRoad<T, IsGmlStandardOffRoadMobileBaseSource> {
 
   /**
    * @param conversionData The conversionData to use.
+   * @param gml2SourceCharacteristics util class
    */
   public GML2OffRoad(final GMLConversionData conversionData, final GML2SourceCharacteristics gml2SourceCharacteristics) {
-    super(conversionData);
-    this.gml2SourceCharacteristics = gml2SourceCharacteristics;
-    this.gml2Geometry = new GML2Geometry(conversionData.getSrid());
+    super(conversionData, gml2SourceCharacteristics);
   }
 
   @Override
-  public OffRoadMobileEmissionSource convert(final T source) throws AeriusException {
-    final OffRoadMobileEmissionSource emissionSource = new OffRoadMobileEmissionSource();
-
-    for (final IsGmlProperty<IsGmlOffRoadMobileSource> offRoadMobileSourceProperty : source.getOffRoadMobileSources()) {
-      final IsGmlOffRoadMobileSource offRoadMobileSource = offRoadMobileSourceProperty.getProperty();
-      if (offRoadMobileSource instanceof IsGmlStandardOffRoadMobileSource) {
-        emissionSource.getSubSources().add(convert((IsGmlStandardOffRoadMobileSource) offRoadMobileSource));
-      } else if (offRoadMobileSource instanceof IsGmlCustomOffRoadMobileSource) {
-        emissionSource.getSubSources().add(convert((IsGmlCustomOffRoadMobileSource) offRoadMobileSource));
-      } else {
-        LOG.error("Don't know how to treat offroad mobile source type: {}", offRoadMobileSource.getClass());
-        throw new AeriusException(ImaerExceptionReason.INTERNAL_ERROR);
-      }
-    }
-
-    return emissionSource.getSubSources().isEmpty() ? null : emissionSource;
-  }
-
-  private OffRoadMobileSource convert(final IsGmlStandardOffRoadMobileSource mobileSource) {
+  protected OffRoadMobileSource convertStandard(final IsGmlStandardOffRoadMobileBaseSource mobileSource) {
     final StandardOffRoadMobileSource vehicleEmissionValues = new StandardOffRoadMobileSource();
     vehicleEmissionValues.setDescription(mobileSource.getDescription());
     vehicleEmissionValues.setLiterFuelPerYear(mobileSource.getLiterFuelPerYear());
@@ -91,25 +56,4 @@ public class GML2OffRoad<T extends IsGmlOffRoadMobileEmissionSource> extends Abs
 
     return vehicleEmissionValues;
   }
-
-  @SuppressWarnings("unchecked")
-  private OffRoadMobileSource convert(final IsGmlCustomOffRoadMobileSource customMobileSource) throws AeriusException {
-    final CustomOffRoadMobileSource customVehicleEmissionValues = new CustomOffRoadMobileSource();
-    customVehicleEmissionValues.setDescription(customMobileSource.getDescription());
-
-    final SourceCharacteristics characteristics = gml2SourceCharacteristics.fromGML(
-        customMobileSource.getCharacteristics(), null, null);
-    if (characteristics instanceof final OPSSourceCharacteristics opsCharacteristics) {
-      opsCharacteristics.setDiurnalVariation(DiurnalVariation.INDUSTRIAL_ACTIVITY);
-    }
-    customVehicleEmissionValues.setCharacteristics(characteristics);
-
-    for (final IsGmlProperty<IsGmlEmission> emissionProperty : customMobileSource.getEmissions()) {
-      final IsGmlEmission emission = emissionProperty.getProperty();
-      customVehicleEmissionValues.getEmissions().put(emission.getSubstance(), emission.getValue());
-    }
-
-    return customVehicleEmissionValues;
-  }
-
 }
