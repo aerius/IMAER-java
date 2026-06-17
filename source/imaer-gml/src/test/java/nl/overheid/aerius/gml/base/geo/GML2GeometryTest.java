@@ -69,7 +69,7 @@ class GML2GeometryTest {
   }
 
   @Test
-  void testPointInValid() {
+  void testPointInvalid() {
     mockPoint(List.of(1.0, 2.0), false);
 
     assertGeoFail(ImaerExceptionReason.GML_GEOMETRY_NOT_PERMITTED, "Expected to give the reason point geometry not permitted.");
@@ -83,7 +83,7 @@ class GML2GeometryTest {
   }
 
   @Test
-  void testLineStringInValid() {
+  void testLineStringInvalid() {
     mockLineString(List.of(1.0, 2.0, 2.0, 1.0), false);
 
     assertGeoFail(ImaerExceptionReason.GML_GEOMETRY_NOT_PERMITTED, "Expected to give the reason line geometry not permitted.");
@@ -97,7 +97,7 @@ class GML2GeometryTest {
   }
 
   @Test
-  void testPolygonInValid() {
+  void testPolygonInvalid() {
     mockPolygon(List.of(1.0, 2.0, 2.0, 1.0, 1.0, 2.0), false);
 
     assertGeoFail(ImaerExceptionReason.GML_GEOMETRY_NOT_PERMITTED, "Expected to give the reason geometry not permitted.");

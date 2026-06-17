@@ -49,10 +49,8 @@ class GMLValidateErrorsTest {
     assertResult("fout_5201_projectiesysteem", "GML Invalid projectiesystem", ImaerExceptionReason.GML_VALIDATION_FAILED,
         e -> {
           assertFalse(e.getArgs()[0].isEmpty(), "Should show list of possible options");
-          assertTrue(e.getArgs()[0].contains("Invalid content was found starting with element '"),
-              "Invalid content was found");
-          assertTrue(e.getArgs()[0].contains("Pointy"),
-              "Invalid content was found");
+          assertContains(e, "Invalid content was found starting with element '");
+          assertContains(e, "Pointy");
         });
   }
 
@@ -61,10 +59,8 @@ class GMLValidateErrorsTest {
     assertResult("fout_5202_projectiesysteem", "GML Invalid geometry", ImaerExceptionReason.GML_VALIDATION_FAILED,
         e -> {
           assertFalse(e.getArgs()[0].isEmpty(), "Should show list of possible options");
-          assertTrue(e.getArgs()[0].contains("Invalid content was found starting with element '"),
-              "Invalid content was found");
-          assertTrue(e.getArgs()[0].contains(":GM_SQUARE"),
-              "Invalid content was found");
+          assertContains(e, "Invalid content was found starting with element '");
+          assertContains(e, ":GM_SQUARE");
         });
   }
 
@@ -73,10 +69,8 @@ class GMLValidateErrorsTest {
     assertResult("fout_5203_unsupported_character", "GML Incorrect encoding", ImaerExceptionReason.GML_VALIDATION_FAILED,
         e -> {
           assertFalse(e.getArgs()[0].isEmpty(), "Should show list of possible options");
-          assertTrue(e.getArgs()[0].contains("Invalid content was found starting with element '"),
-              "Invalid content was found");
-          assertTrue(e.getArgs()[0].contains("GM_SURFACE"),
-              "Invalid content was found");
+          assertContains(e, "Invalid content was found starting with element '");
+          assertContains(e, "GM_SURFACE");
         });
   }
 
@@ -111,8 +105,7 @@ class GMLValidateErrorsTest {
     assertResult("fout_5206_unsupported_geometry", "GML Geometry unkown", ImaerExceptionReason.GML_VALIDATION_FAILED,
         e -> {
           assertFalse(e.getArgs()[0].isEmpty(), "Should show list of possible options");
-          assertTrue(e.getArgs()[0].contains("The value of {abstract} in the element declaration for 'gml:AbstractRing' must be false"),
-              "Invalid content was found");
+          assertContains(e, "The value of {abstract} in the element declaration for 'gml:AbstractRing' must be false");
         });
   }
 
@@ -189,14 +182,13 @@ class GMLValidateErrorsTest {
 
   @Test
   void testGMLInvalidRoadCategoryMatch() throws IOException {
-    assertResult("fout_5219_obsolete_roadsource", "GML Invalid road category match",
-        ImaerExceptionReason.GML_INVALID_ROAD_CATEGORY_MATCH);
+    assertResult("fout_5219_obsolete_roadsource", "GML Invalid road category match", ImaerExceptionReason.GML_INVALID_ROAD_CATEGORY_MATCH);
   }
 
   @Test
   void testGMLIdNotUnique() throws IOException {
     assertResult("fout_5220_conflicting_id", "GML Id not unique", ImaerExceptionReason.GML_VALIDATION_FAILED,
-        e -> assertTrue(e.getArgs()[0].contains("There are multiple occurrences of ID value 'ES.1'"), "Contains error"));
+        e -> assertContains(e, "There are multiple occurrences of ID value 'ES.1'"));
   }
 
   @Test
@@ -208,8 +200,8 @@ class GMLValidateErrorsTest {
   void testGMLMetaDataEmpty() throws IOException {
     assertResult("fout_5222_missing_metadata", "GML Metadata empty", ImaerExceptionReason.GML_VALIDATION_FAILED,
         e -> {
-          assertTrue(e.getArgs()[0].contains("Invalid content was found starting with element '"), "Contains error");
-          assertTrue(e.getArgs()[0].contains(":version"), "Contains error");
+          assertContains(e, "Invalid content was found starting with element '");
+          assertContains(e, ":version");
         });
   }
 
@@ -229,6 +221,12 @@ class GMLValidateErrorsTest {
   @Test
   void testGMLMissingNettingFactor() throws IOException {
     assertResult("fout_5235_netting_without_factor", "GML missing netting factor", ImaerExceptionReason.GML_MISSING_NETTING_FACTOR);
+  }
+
+  @Test
+  void testGMLInvalidGeometry() throws IOException {
+    assertResult("fout_5202_invalid_geometry", "GML invalid geomerty", ImaerExceptionReason.GML_GEOMETRY_INVALID,
+        e -> assertContains(e, "ES.1"));
   }
 
   @Test
@@ -343,6 +341,12 @@ class GMLValidateErrorsTest {
       assertEquals(expectedReasonsTxt.get(i), aeriusException.getArgs()[0], "Reason texts should match");
       assertEquals(expectedReason, aeriusException.getReason(), "Reasons should match");
     }
+  }
+
+  private static void assertContains(final AeriusException e, final String containsText) {
+    final String exceptionText = e.getArgs()[0];
+
+    assertTrue(exceptionText.contains(containsText), "Exception didn't match expected text, was:" + exceptionText);
   }
 
   private static ImportParcel getImportResult(final String relativePath, final String fileName)
