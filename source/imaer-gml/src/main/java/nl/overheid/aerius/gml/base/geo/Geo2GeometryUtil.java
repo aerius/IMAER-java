@@ -45,7 +45,7 @@ import nl.overheid.aerius.util.GeometryUtil;
 /**
  * Class to convert gml geometry objects to data geometry objects.
  */
-public final class Geo2GeometryUtil {
+final class Geo2GeometryUtil {
 
   private final int srid;
   private final GeometryFactory geometryFactory;

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-package nl.overheid.aerius.gml.base;
+package nl.overheid.aerius.gml.base.geo;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.math.BigInteger;
-import java.util.Arrays;
+import java.util.List;
 
 import jakarta.xml.bind.JAXBElement;
 
@@ -36,7 +36,6 @@ import net.opengis.gml.v_3_2.ObjectFactory;
 import net.opengis.gml.v_3_2.PointType;
 import net.opengis.gml.v_3_2.PolygonType;
 
-import nl.overheid.aerius.gml.base.geo.Geo2GeometryUtil;
 import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
 import nl.overheid.aerius.shared.domain.v2.geojson.Point;
 import nl.overheid.aerius.shared.domain.v2.geojson.Polygon;
@@ -47,54 +46,34 @@ import nl.overheid.aerius.shared.geo.EPSG;
 /**
  * Test class for {@link Geo2GeometryUtil}.
  */
-public class Geo2GeometryUtilTest {
+class Geo2GeometryUtilTest {
 
   private final Geo2GeometryUtil geo2GeometryUtil = new Geo2GeometryUtil(EPSG.RDNEW.getSrid());
 
   @Test
-  public void testPoint() throws AeriusException {
+  void testPoint() throws AeriusException {
     final PointType pointType = createPoint();
     final Geometry geometry = geo2GeometryUtil.fromXMLPoint(pointType);
     assertTrue(geometry instanceof Point, "Not a point");
   }
 
   @Test
-  public void testPolygon() throws AeriusException {
-    final DirectPositionListType coordList = new DirectPositionListType();
-
-    // this polygon is closed
-    coordList.getValue().add(100.0); // X
-    coordList.getValue().add(20.0); // Y
-    coordList.getValue().add(400.0);
-    coordList.getValue().add(50.0);
-    coordList.getValue().add(600.0);
-    coordList.getValue().add(70.0);
-    coordList.getValue().add(100.0);
-    coordList.getValue().add(20.0);
-
-    final PolygonType polygonType = createPolygon(coordList);
+  void testPolygon() throws AeriusException {
+    final PolygonType polygonType = createPolygon(List.of(100.0, 20.0, 400.0, 50.0, 600.0, 70.0, 100.0, 20.0));
     final Geometry geometry = geo2GeometryUtil.fromXMLPolygon(polygonType);
+
     assertTrue(geometry instanceof Polygon, "Not a polygon");
   }
 
   @Test
-  public void testPolygonNotClosed() {
-    final DirectPositionListType coordList = new DirectPositionListType();
+  void testPolygonNotClosed() {
+    final PolygonType polygonType = createPolygon(List.of(100.0, 20.0, 400.0, 50.0, 600.0, 70.0));
 
-    // this polygon is not closed
-    coordList.getValue().add(100.0); // X
-    coordList.getValue().add(20.0); // Y
-    coordList.getValue().add(400.0);
-    coordList.getValue().add(50.0);
-    coordList.getValue().add(600.0);
-    coordList.getValue().add(70.0);
-
-    final PolygonType polygonType = createPolygon(coordList);
     assertThrows(AeriusException.class, () -> geo2GeometryUtil.fromXMLPolygon(polygonType));
   }
 
   @Test
-  public void testInvalidSRS() throws AeriusException {
+  void testInvalidSRS() throws AeriusException {
     final PointType pointType = createPoint();
     pointType.setSrsName("unknown");
     pointType.setSrsDimension(BigInteger.TEN);
@@ -106,7 +85,7 @@ public class Geo2GeometryUtilTest {
   }
 
   @Test
-  public void testEmptySRS() throws AeriusException {
+  void testEmptySRS() throws AeriusException {
     final PointType pointType = createPoint();
     pointType.setSrsDimension(BigInteger.TEN);
     pointType.setSrsName(null);
@@ -115,22 +94,29 @@ public class Geo2GeometryUtilTest {
     assertNotNull(geo2GeometryUtil.fromXMLPoint(pointType), "Should just return the point on empty");
   }
 
-  private PointType createPoint() {
+  private static PointType createPoint() {
+    return createPoint(List.of(1.0, 1.0));
+  }
+
+  public static PointType createPoint(final List<Double> numbers) {
     final PointType pointType = new PointType();
     final DirectPositionType value = new DirectPositionType();
-    value.setValue(Arrays.asList(new Double[] {1.0, 1.0}));
+
+    value.setValue(numbers);
     pointType.setPos(value);
     return pointType;
   }
 
-  private PolygonType createPolygon(final DirectPositionListType directPositionListType) {
+  public static PolygonType createPolygon(final List<Double> numbers) {
     final ObjectFactory factory = new ObjectFactory();
 
     final PolygonType polygonType = new PolygonType();
     final AbstractRingPropertyType abstractRingPropertyType = factory.createAbstractRingPropertyType();
     final JAXBElement<LinearRingType> linearRingType = factory.createLinearRing(factory.createLinearRingType());
+    final DirectPositionListType coordList = new DirectPositionListType();
 
-    linearRingType.getValue().setPosList(directPositionListType);
+    coordList.setValue(numbers);
+    linearRingType.getValue().setPosList(coordList);
     abstractRingPropertyType.setAbstractRing(linearRingType);
     polygonType.setExterior(abstractRingPropertyType);
     return polygonType;
