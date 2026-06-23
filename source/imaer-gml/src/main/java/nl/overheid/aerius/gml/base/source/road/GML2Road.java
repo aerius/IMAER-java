@@ -30,6 +30,7 @@ import nl.overheid.aerius.shared.domain.v2.source.road.StandardVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.ValuesPerVehicleType;
 import nl.overheid.aerius.shared.domain.v2.source.road.Vehicles;
 import nl.overheid.aerius.shared.exception.AeriusException;
+import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 
 /**
  *
@@ -91,7 +92,7 @@ abstract class GML2Road<T extends IsGmlRoadEmissionSource, S extends RoadEmissio
     final StandardVehicles standardVehicle = findExistingMatch(sv, mergingStandardVehicles, gmlRoadTypeCode).orElseGet(() -> {
       final StandardVehicles vse = new StandardVehicles();
 
-      vse.setMaximumSpeed(getMaximumSpeed(gmlRoadTypeCode, sv.getMaximumSpeed()));
+      vse.setMaximumSpeed(getMaximumSpeed(source.getId(), true, gmlRoadTypeCode, sv.getMaximumSpeed()));
       vse.setTimeUnit(TimeUnit.valueOf(sv.getTimeUnit().name()));
       mergingStandardVehicles.add(vse);
       addToVehicles.add(vse);
@@ -116,25 +117,37 @@ abstract class GML2Road<T extends IsGmlRoadEmissionSource, S extends RoadEmissio
    * NATIONAL is representative for roads with speed >= 80 km/h. Therefore 80 is set. GENERAL represented roads with average speed of 60 km/h.
    * Therefore 60 is set.
    *
+   * @param sourceId The id of the source
+   * @param warn if set it will report a warning message in case a default speed is set
    * @param gmlRoadTypeCode the road type code as set in the GML
    * @param maximumSpeed optional max speed set in the GML
    * @return the maximum speed to use.
    */
-  private static Integer getMaximumSpeed(final String gmlRoadTypeCode, final Integer maximumSpeed) {
+  private Integer getMaximumSpeed(final String sourceId, final boolean warn, final String gmlRoadTypeCode, final Integer maximumSpeed) {
     if (maximumSpeed != null && maximumSpeed != 0) {
       return maximumSpeed;
     }
     return switch (gmlRoadTypeCode) {
-      case "NON_URBAN_ROAD_NATIONAL" -> Integer.valueOf(80);
-      case "NON_URBAN_ROAD_GENERAL" -> Integer.valueOf(60);
+      case "NON_URBAN_ROAD_NATIONAL" -> getDefaultSpeed(sourceId, warn);
+      case "NON_URBAN_ROAD_GENERAL" -> getDefaultSpeed(sourceId, warn);
       default -> maximumSpeed;
     };
+  }
+
+  private Integer getDefaultSpeed(final String sourceId, final boolean warn) {
+    final Integer speed = GMLConversionData.NON_URBAN_ROAD_DEFAULT_SPEED;
+
+    if (warn) {
+      getConversionData().getWarnings().add(
+          new AeriusException(ImaerExceptionReason.GML_NON_URBAN_ROAD_DEFAULT_SPEED, sourceId, String.valueOf(speed)));
+    }
+    return speed;
   }
 
   private Optional<StandardVehicles> findExistingMatch(final IsGmlStandardVehicle sv, final List<StandardVehicles> mergingStandardVehicles,
       final String gmlRoadTypeCode) {
     return mergingStandardVehicles.stream()
-        .filter(x -> Objects.equals(x.getMaximumSpeed(), getMaximumSpeed(gmlRoadTypeCode, sv.getMaximumSpeed())))
+        .filter(x -> Objects.equals(x.getMaximumSpeed(), getMaximumSpeed(null, false, gmlRoadTypeCode, sv.getMaximumSpeed())))
         .filter(x -> Boolean.TRUE.equals(x.getStrictEnforcement()) == Boolean.TRUE.equals((sv.isStrictEnforcement())))
         .filter(x -> x.getTimeUnit() == TimeUnit.valueOf(sv.getTimeUnit().name()))
         .filter(x -> !x.getValuesPerVehicleTypes().containsKey(sv.getVehicleType()))

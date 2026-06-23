@@ -17,10 +17,14 @@
 package nl.overheid.aerius.gml.base.source.road;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.lenient;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -28,47 +32,161 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import nl.overheid.aerius.gml.base.GMLConversionData;
+import nl.overheid.aerius.gml.base.IsGmlProperty;
+import nl.overheid.aerius.gml.base.source.road.v10.GML2SRM2RoadV10;
+import nl.overheid.aerius.gml.base.source.road.v40.GML2SRM2RoadV40;
 import nl.overheid.aerius.gml.v6_0.source.TimeUnit;
 import nl.overheid.aerius.gml.v6_0.source.road.SRM2Road;
 import nl.overheid.aerius.gml.v6_0.source.road.StandardVehicle;
 import nl.overheid.aerius.gml.v6_0.source.road.VehiclesProperty;
 import nl.overheid.aerius.shared.domain.v2.source.SRM2RoadEmissionSource;
+import nl.overheid.aerius.shared.domain.v2.source.road.StandardVehicles;
+import nl.overheid.aerius.shared.domain.v2.source.road.VehicleType;
 import nl.overheid.aerius.shared.exception.AeriusException;
+import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 
 /**
  * Unit test to test merging of standardVehicle sub sources.
+ *
+ * Test also include testing older GML versions.
  */
 @ExtendWith(MockitoExtension.class)
 class GML2RoadTest {
 
-  private @Mock GMLConversionData conversionData;
-
-  /**
-   * Test merging sub sources. vehicle types with the same configuration can be joined into a single sub source.
-   */
-  @ParameterizedTest
-  @CsvSource({"NON_URBAN_ROAD_NATIONAL", "Other"})
-  void testStandardVehicleMerge(final String roadTypeCode) throws AeriusException {
-    final SRM2Road gmlRoad = new SRM2Road();
-    gmlRoad.setRoadTypeCode(roadTypeCode);
-    gmlRoad.getVehicles().addAll(generateAllCombinations());
-
-    final SRM2RoadEmissionSource converted = new GML2SRM2Road<>(conversionData).convert(gmlRoad);
-    assertEquals(24, converted.getSubSources().size(), "Merging sub sources did not give the expected number of sub sources ");
+  private interface VehicleCreator<T extends IsGmlProperty<IsGmlVehicle>> {
+    T create(final String vehicleType, final String timeUnit, final Boolean strictEnforcement, final Integer maxSpeed);
   }
 
-  private static List<VehiclesProperty> generateAllCombinations() {
-    final TimeUnit[] timeUnits = {TimeUnit.DAY, TimeUnit.YEAR};
-    final Boolean[] strictEnforcements = {null, false, true};
-    final Integer[] maxSpeeds = {null, 0, 80, 100};
-    final String[] vehicleTypes = {"A", "B"};
-    final List<VehiclesProperty> subSources = new ArrayList<>();
+  private List<AeriusException> warnings;
 
-    for (final TimeUnit second : timeUnits) {
-      for (final Boolean third : strictEnforcements) {
-        for (final Integer fourth : maxSpeeds) {
-          for (final String first : vehicleTypes) {
-            subSources.add(createStandardVehicle(first, second, third, fourth));
+  private @Mock GMLConversionData conversionData;
+
+  @BeforeEach
+  void beforeEach() {
+    warnings = new ArrayList<>();
+    lenient().doReturn(warnings).when(conversionData).getWarnings();
+  }
+
+  // Test for GML version 1.0 and below.
+
+  @ParameterizedTest
+  @CsvSource({"3112,80,6,0", "3112,0,3,3", "3112,,3,3", "3111,100,6,0"})
+  void testStandardVehicleV10Merge(final int sectorId, final Integer maxSpeed, final int expectedSubSources, final int expectedNrOfWarnings)
+      throws AeriusException {
+    final nl.overheid.aerius.gml.v1_0.source.road.SRM2RoadEmissionSource gmlRoad = createV10Road(sectorId, maxSpeed,
+        generateAllCombinations(GML2RoadTest::createStandardVehicleV10));
+    final SRM2RoadEmissionSource converted = new GML2SRM2RoadV10<>(conversionData).convert(gmlRoad);
+
+    assertStandardVehicleMerge(converted, expectedSubSources, expectedNrOfWarnings);
+  }
+
+  @Test
+  void testStandardVehicleV10SpeedSet() throws AeriusException {
+    final nl.overheid.aerius.gml.v1_0.source.road.SRM2RoadEmissionSource gmlRoad = createV10Road(3112, 0,
+        List.of(createStandardVehicleV10("LIGHT_TRAFFIC", "DAY", null, null)));
+    final SRM2RoadEmissionSource converted = new GML2SRM2RoadV10<>(conversionData).convert(gmlRoad);
+
+    assertEquals(60, ((StandardVehicles) converted.getSubSources().get(0)).getMaximumSpeed(), "Expected the speed for version 1.0 to be set");
+  }
+
+  private static nl.overheid.aerius.gml.v1_0.source.road.SRM2RoadEmissionSource createV10Road(final int sectorId, final Integer maxSpeed,
+      final List<nl.overheid.aerius.gml.v1_0.source.road.VehiclesProperty> vehicles) {
+    final nl.overheid.aerius.gml.v1_0.source.road.SRM2RoadEmissionSource gmlRoad = new nl.overheid.aerius.gml.v1_0.source.road.SRM2RoadEmissionSource();
+
+    gmlRoad.setId("123");
+    gmlRoad.setSectorId(sectorId);
+    gmlRoad.setMaximumSpeed(maxSpeed);
+    gmlRoad.getVehicles().addAll(vehicles);
+    return gmlRoad;
+  }
+
+  // Test for GML version 1.1 to 4.0.
+
+  @ParameterizedTest
+  @CsvSource({"3112,12", "3111,0"})
+  void testStandardVehicleV40Merge(final int sectorId, final int expectedNrOfWarnings) throws AeriusException {
+    final nl.overheid.aerius.gml.v4_0.source.road.SRM2Road gmlRoad = createV40Road(sectorId,
+        generateAllCombinations(GML2RoadTest::createStandardVehicleV40));
+    final SRM2RoadEmissionSource converted = new GML2SRM2RoadV40<>(conversionData).convert(gmlRoad);
+
+    assertStandardVehicleMerge(converted, 24, expectedNrOfWarnings);
+  }
+
+  @ParameterizedTest
+  @CsvSource({",", "0"})
+  void testStandardVehicleV40SpeedSet(final Integer speed) throws AeriusException {
+    final nl.overheid.aerius.gml.v4_0.source.road.SRM2Road gmlRoad = createV40Road(3112,
+        List.of(createStandardVehicleV40("LIGHT_TRAFFIC", "DAY", true, speed)));
+    final SRM2RoadEmissionSource converted = new GML2SRM2RoadV40<>(conversionData).convert(gmlRoad);
+
+    assertEquals(60, ((StandardVehicles) converted.getSubSources().get(0)).getMaximumSpeed(), "Expected the speed for versrion 4.0 to be set");
+  }
+
+  private static nl.overheid.aerius.gml.v4_0.source.road.SRM2Road createV40Road(final int sectorId,
+      final List<nl.overheid.aerius.gml.v4_0.source.road.VehiclesProperty> vehicles) {
+    final nl.overheid.aerius.gml.v4_0.source.road.SRM2Road gmlRoad = new nl.overheid.aerius.gml.v4_0.source.road.SRM2Road();
+
+    gmlRoad.setId("123");
+    gmlRoad.setSectorId(sectorId);
+    gmlRoad.getVehicles().addAll(vehicles);
+    return gmlRoad;
+  }
+  // Tests for GML version beyond version 4.0.
+
+  @ParameterizedTest
+  @CsvSource({"NON_URBAN_ROAD_NATIONAL,12", "Other,0"})
+  void testStandardVehicleMerge(final String roadTypeCode, final int expectedNrOfWarnings) throws AeriusException {
+    final SRM2Road gmlRoad = createRoad(roadTypeCode, generateAllCombinations(GML2RoadTest::createStandardVehicle));
+    final SRM2RoadEmissionSource converted = new GML2SRM2Road<>(conversionData).convert(gmlRoad);
+
+    assertStandardVehicleMerge(converted, 24, expectedNrOfWarnings);
+  }
+
+  @ParameterizedTest
+  @CsvSource({",", "0"})
+  void testStandardVehicleSpeedSet(final Integer speed) throws AeriusException {
+    final SRM2Road gmlRoad = createRoad("NON_URBAN_ROAD_NATIONAL", List.of(createStandardVehicle("LIGHT_TRAFFIC", "DAY", true, speed)));
+    final SRM2RoadEmissionSource converted = new GML2SRM2Road<>(conversionData).convert(gmlRoad);
+
+    assertEquals(60, ((StandardVehicles) converted.getSubSources().get(0)).getMaximumSpeed(), "Expected the speed to be set");
+  }
+
+  private static SRM2Road createRoad(final String roadTypeCode, final List<VehiclesProperty> vehicles) {
+    final SRM2Road gmlRoad = new SRM2Road();
+    gmlRoad.setId("123");
+    gmlRoad.setRoadTypeCode(roadTypeCode);
+    gmlRoad.getVehicles().addAll(vehicles);
+    return gmlRoad;
+  }
+
+  // Generic methods
+
+  private void assertStandardVehicleMerge(final SRM2RoadEmissionSource source, final int expectedSubSources, final int expectedNrOfWarnings)
+      throws AeriusException {
+    assertEquals(expectedSubSources, source.getSubSources().size(), "Merging sub sources did not give the expected number of sub sources ");
+    assertEquals(expectedNrOfWarnings, conversionData.getWarnings().size(), "Not the expected number of warnings");
+    conversionData.getWarnings().stream().forEach(e -> {
+      assertEquals(e.getReason(), ImaerExceptionReason.GML_NON_URBAN_ROAD_DEFAULT_SPEED,
+          "Not the expected warning reason code GML_NON_URBAN_ROAD_DEFAULT_SPEED");
+      assertEquals("123", e.getArgs()[0], "Source is doesn't match");
+      assertEquals("60", e.getArgs()[1], "Not the expected default speed");
+    });
+  }
+
+  private static <T extends IsGmlProperty<IsGmlVehicle>> List<T> generateAllCombinations(final VehicleCreator<T> creator) {
+    final String[] timeUnits = {TimeUnit.DAY.name(), TimeUnit.YEAR.name()};
+    final Boolean[] strictEnforcements = {null, false, true};
+    final Integer[] maxSpeeds = {null, 0, 60, 100};
+    final String[] vehicleTypes = {"LIGHT_TRAFFIC", "NORMAL_FREIGHT"};
+    final List<T> subSources = new ArrayList<>();
+
+    for (final String timeUnit : timeUnits) {
+      for (final Boolean strictEnforcement : strictEnforcements) {
+        for (final Integer maxSpeed : maxSpeeds) {
+          for (final String vehicleType : vehicleTypes) {
+            // null objects can be returned for input values that do not give a distinct source.
+            // Because older GML versions don't support all input values and therefore would not give a different vehicle for certain values.
+            Optional.ofNullable(creator.create(vehicleType, timeUnit, strictEnforcement, maxSpeed)).ifPresent(subSources::add);
           }
         }
       }
@@ -76,12 +194,41 @@ class GML2RoadTest {
     return subSources;
   }
 
-  private static VehiclesProperty createStandardVehicle(final String vehicleType, final TimeUnit timeUnit, final Boolean strictEnforcement,
+  private static nl.overheid.aerius.gml.v1_0.source.road.VehiclesProperty createStandardVehicleV10(final String vehicleType, final String timeUnit,
+      final Boolean strictEnforcement, final Integer maxSpeed) {
+    // V10 doesn't support time units, and max speed was on the road object, not the sub sources.
+    // It was always the number of units per day. Therefore these vehicles are not added to the test.
+    if (timeUnit == "YEAR" || maxSpeed != null) {
+      return null;
+    }
+    final nl.overheid.aerius.gml.v1_0.source.road.StandardVehicle vehicle = new nl.overheid.aerius.gml.v1_0.source.road.StandardVehicle();
+    vehicle.setVehicleType(VehicleType.safeValueOf(vehicleType));
+    vehicle.setStagnationFactor(20);
+    final nl.overheid.aerius.gml.v1_0.source.road.VehiclesProperty vp = new nl.overheid.aerius.gml.v1_0.source.road.VehiclesProperty();
+
+    vp.setProperty(vehicle);
+    return vp;
+  }
+
+  private static nl.overheid.aerius.gml.v4_0.source.road.VehiclesProperty createStandardVehicleV40(final String vehicleType, final String timeUnit,
+      final Boolean strictEnforcement, final Integer maxSpeed) {
+    final nl.overheid.aerius.gml.v4_0.source.road.StandardVehicle vehicle = new nl.overheid.aerius.gml.v4_0.source.road.StandardVehicle();
+
+    vehicle.setVehicleType(VehicleType.safeValueOf(vehicleType));
+    vehicle.setTimeUnit(nl.overheid.aerius.gml.v4_0.source.TimeUnit.valueOf(timeUnit));
+    vehicle.setStrictEnforcement(strictEnforcement);
+    vehicle.setMaximumSpeed(maxSpeed);
+    vehicle.setVehiclesPerTimeUnit(10);
+    vehicle.setStagnationFactor(20);
+    return new nl.overheid.aerius.gml.v4_0.source.road.VehiclesProperty(vehicle);
+  }
+
+  private static VehiclesProperty createStandardVehicle(final String vehicleType, final String timeUnit, final Boolean strictEnforcement,
       final Integer maxSpeed) {
     final StandardVehicle vehicle = new StandardVehicle();
 
     vehicle.setVehicleType(vehicleType);
-    vehicle.setTimeUnit(timeUnit);
+    vehicle.setTimeUnit(TimeUnit.valueOf(timeUnit));
     vehicle.setStrictEnforcement(strictEnforcement);
     vehicle.setMaximumSpeed(maxSpeed);
     vehicle.setVehiclesPerTimeUnit(10);

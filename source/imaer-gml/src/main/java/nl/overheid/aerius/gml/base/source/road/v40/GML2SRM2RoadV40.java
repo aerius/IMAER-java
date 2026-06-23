@@ -33,13 +33,13 @@ import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 /**
  *
  */
-public class GML2SRM2Road<T extends IsGmlSRM2Road> extends GML2SRMRoad<T, SRM2RoadEmissionSource> {
+public class GML2SRM2RoadV40<T extends IsGmlSRM2Road> extends GML2SRMRoad<T, SRM2RoadEmissionSource> {
 
   /**
    * @param conversionData
    *          The conversion data to use.
    */
-  public GML2SRM2Road(final GMLConversionData conversionData) {
+  public GML2SRM2RoadV40(final GMLConversionData conversionData) {
     super(conversionData);
   }
 
@@ -50,12 +50,7 @@ public class GML2SRM2Road<T extends IsGmlSRM2Road> extends GML2SRMRoad<T, SRM2Ro
 
   @Override
   protected String convertRoadTypeCode(final T source, final RoadType roadType) {
-    return roadType == null ?  null : roadType.getRoadTypeCode();
-  }
-
-  @Override
-  protected Integer getMaximumSpeed(final RoadType roadType, final Integer maximumSpeed) {
-    return (maximumSpeed == null || maximumSpeed == 0) && roadType == RoadType.NON_URBAN_ROAD ? Integer.valueOf(80) : maximumSpeed;
+    return roadType == null ? null : roadType.getRoadTypeCode();
   }
 
   @Override

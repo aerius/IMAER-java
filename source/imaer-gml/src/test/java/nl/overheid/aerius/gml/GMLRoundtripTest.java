@@ -112,9 +112,11 @@ class GMLRoundtripTest {
       {"offroad_adblue", CharacteristicsType.OPS},
       {"plan", CharacteristicsType.OPS,},
       {"road", CharacteristicsType.OPS,},
-      {"road_non_urban", CharacteristicsType.OPS,},
+      {"road_non_urban", CharacteristicsType.OPS, EnumSet.of(ImaerExceptionReason.GML_NON_URBAN_ROAD_DEFAULT_SPEED)},
       {"road_dynamic_segmentation", CharacteristicsType.OPS,},
-      {"road_empty", CharacteristicsType.OPS, EnumSet.of(ImaerExceptionReason.SRM2_SOURCE_NO_VEHICLES, ImaerExceptionReason.GML_SOURCE_NO_EMISSION)},
+      {"road_empty", CharacteristicsType.OPS,
+          EnumSet.of(ImaerExceptionReason.SRM2_SOURCE_NO_VEHICLES, ImaerExceptionReason.GML_SOURCE_NO_EMISSION,
+              ImaerExceptionReason.GML_NON_URBAN_ROAD_DEFAULT_SPEED)},
       {"road_direction", CharacteristicsType.OPS},
       {"road_specific_and_custom", CharacteristicsType.OPS},
       {"coldstart_with_characteristics", CharacteristicsType.OPS},
@@ -141,16 +143,13 @@ class GMLRoundtripTest {
       {"adms_road", CharacteristicsType.ADMS},
       {"adms_road_with_custom_diurnal_variation", CharacteristicsType.ADMS},
       {"adms_manure_storage", CharacteristicsType.ADMS},
-      {"scenario_composting_proposed", CharacteristicsType.OPS},
-      {"scenario_composting_reference", CharacteristicsType.OPS},
+      {"scenario_composting_proposed", CharacteristicsType.OPS, EnumSet.of(ImaerExceptionReason.GML_NON_URBAN_ROAD_DEFAULT_SPEED)},
+      {"scenario_composting_reference", CharacteristicsType.OPS, EnumSet.of(ImaerExceptionReason.GML_NON_URBAN_ROAD_DEFAULT_SPEED)},
       {"scenario_greenhouse_reference", CharacteristicsType.OPS},
       {"scenario_greenhouse_proposed", CharacteristicsType.OPS},
-      {"scenario_livestock_farming_proposed", CharacteristicsType.OPS,
-          EnumSet.of(ImaerExceptionReason.GML_CONVERTED_LODGING), true},
-      {"scenario_livestock_farming_reference", CharacteristicsType.OPS,
-          EnumSet.of(ImaerExceptionReason.GML_CONVERTED_LODGING), true},
-      {"scenario_livestock_farming_netting", CharacteristicsType.OPS,
-          EnumSet.noneOf(ImaerExceptionReason.class), true},
+      {"scenario_livestock_farming_proposed", CharacteristicsType.OPS, EnumSet.of(ImaerExceptionReason.GML_CONVERTED_LODGING), true},
+      {"scenario_livestock_farming_reference", CharacteristicsType.OPS, EnumSet.of(ImaerExceptionReason.GML_CONVERTED_LODGING), true},
+      {"scenario_livestock_farming_netting", CharacteristicsType.OPS, EnumSet.noneOf(ImaerExceptionReason.class), true},
       {"scenario_powerplant", CharacteristicsType.OPS, EnumSet.of(ImaerExceptionReason.GML_SOURCE_NO_EMISSION)},
       {"scenario_smokehouse_proposed", CharacteristicsType.OPS},
       {"scenario_smokehouse_reference", CharacteristicsType.OPS},
@@ -241,6 +240,11 @@ class GMLRoundtripTest {
     if (warnings.contains(ImaerExceptionReason.GML_CONVERTED_LODGING_TO_CUSTOM) && version.ordinal() <= AeriusGMLVersion.V6_0.ordinal()) {
       warnings.remove(ImaerExceptionReason.GML_CONVERTED_LODGING_TO_CUSTOM);
     }
+    // GML GML_NON_URBAN_ROAD_DEFAULT_SPEED is a warning for gmls with no speed set. Since 6.0 speed because required for non urban road.
+    // Therefore speed is always present in the test gmls since.
+    if (warnings.contains(ImaerExceptionReason.GML_NON_URBAN_ROAD_DEFAULT_SPEED) && version.ordinal() <= AeriusGMLVersion.V6_0.ordinal()) {
+      warnings.remove(ImaerExceptionReason.GML_NON_URBAN_ROAD_DEFAULT_SPEED);
+    }
     return warnings;
   }
 
@@ -253,8 +257,8 @@ class GMLRoundtripTest {
     final ImportParcel result = importAndCompare(versionString, fileVersion, file, ct, targetGMLVersion);
 
     assertNoExceptions(result.getExceptions(), fileVersion);
-    assertExpectedWarnings(result.getWarnings(), expectedWarnings);
-    assertUnExpectedWarnings(result.getWarnings(), expectedWarnings);
+    assertExpectedWarnings(result.getWarnings(), expectedWarnings, fileVersion);
+    assertUnExpectedWarnings(result.getWarnings(), expectedWarnings, fileVersion);
   }
 
   private ImportParcel importAndCompare(final String versionString, final String fileVersion, final String file, final CharacteristicsType ct,
@@ -289,9 +293,8 @@ class GMLRoundtripTest {
 
   /**
    * Expected warnings check.
-   * @param expectedWarnings
    */
-  private void assertExpectedWarnings(final List<AeriusException> warnings, final Set<Reason> expectedWarnings) {
+  private void assertExpectedWarnings(final List<AeriusException> warnings, final Set<Reason> expectedWarnings, final String fileVersion) {
     for (final Reason warning : expectedWarnings) {
       boolean contains = false;
       for (final AeriusException ae : warnings) {
@@ -299,17 +302,17 @@ class GMLRoundtripTest {
           contains = true;
         }
       }
-      assertTrue(contains, "Expected warning " + warning + " not found");
+      assertTrue(contains, "Expected warning " + warning + " not found in file " + fileVersion);
     }
   }
 
   /**
    * Test unexpected warnings.
    */
-  void assertUnExpectedWarnings(final List<AeriusException> warnings, final Set<Reason> expectedWarnings) {
+  void assertUnExpectedWarnings(final List<AeriusException> warnings, final Set<Reason> expectedWarnings, final String fileVersion) {
     for (final AeriusException warning : warnings) {
       if (!expectedWarnings.contains(warning.getReason())) {
-        fail("Not expected warning, got " + warning.getReason() + " " + warning.getMessage());
+        fail("Not expected warning in file " + fileVersion + ", got " + warning.getReason() + " " + warning.getMessage());
       }
     }
   }

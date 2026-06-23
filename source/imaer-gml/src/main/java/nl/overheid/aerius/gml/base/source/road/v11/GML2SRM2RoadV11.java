@@ -17,7 +17,7 @@
 package nl.overheid.aerius.gml.base.source.road.v11;
 
 import nl.overheid.aerius.gml.base.GMLConversionData;
-import nl.overheid.aerius.gml.base.source.road.v40.GML2SRM2Road;
+import nl.overheid.aerius.gml.base.source.road.v40.GML2SRM2RoadV40;
 import nl.overheid.aerius.gml.base.source.road.v40.IsGmlSRM2Road;
 import nl.overheid.aerius.shared.ImaerConstants;
 
@@ -25,7 +25,7 @@ import nl.overheid.aerius.shared.ImaerConstants;
  * Version of GML2SRM2Road that handles dynamic segmentation for older versions (IMAER 1.1 and older),
  * where from and to positions were defined in percentages instead of fractions.
  */
-public class GML2SRM2RoadV11<T extends IsGmlSRM2Road> extends GML2SRM2Road<T> {
+public class GML2SRM2RoadV11<T extends IsGmlSRM2Road> extends GML2SRM2RoadV40<T> {
 
   /**
    * @param conversionData

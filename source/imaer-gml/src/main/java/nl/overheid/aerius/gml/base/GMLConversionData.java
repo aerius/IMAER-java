@@ -51,6 +51,8 @@ import nl.overheid.aerius.shared.geometry.ReceptorUtil;
  */
 public class GMLConversionData {
 
+  public static final Integer NON_URBAN_ROAD_DEFAULT_SPEED = 60;
+
   private final List<AeriusException> errors;
   private final List<AeriusException> warnings;
   private final Set<String> idMap = new HashSet<>();

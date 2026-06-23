@@ -73,8 +73,8 @@
                 </imaer:Emission>
             </imaer:emission>
             <imaer:vehicles>
-                <imaer:StandardVehicle vehicleType="HEAVY_FREIGHT">
-                    <imaer:vehiclesPerTimeUnit>200.0</imaer:vehiclesPerTimeUnit>
+                <imaer:StandardVehicle vehicleType="LIGHT_TRAFFIC">
+                    <imaer:vehiclesPerTimeUnit>980.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.2</imaer:stagnationFactor>
                     <imaer:maximumSpeed>100</imaer:maximumSpeed>
@@ -82,8 +82,8 @@
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:vehicles>
-                <imaer:StandardVehicle vehicleType="LIGHT_TRAFFIC">
-                    <imaer:vehiclesPerTimeUnit>980.0</imaer:vehiclesPerTimeUnit>
+                <imaer:StandardVehicle vehicleType="HEAVY_FREIGHT">
+                    <imaer:vehiclesPerTimeUnit>200.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.2</imaer:stagnationFactor>
                     <imaer:maximumSpeed>100</imaer:maximumSpeed>
