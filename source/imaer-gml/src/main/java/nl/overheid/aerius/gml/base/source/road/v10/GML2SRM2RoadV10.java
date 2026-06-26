@@ -17,7 +17,6 @@
 package nl.overheid.aerius.gml.base.source.road.v10;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 import nl.overheid.aerius.gml.base.GMLConversionData;
@@ -66,9 +65,6 @@ public class GML2SRM2RoadV10<T extends IsGmlSRM2RoadOld> extends GML2SRM2RoadV11
   protected Optional<StandardVehicles> findExistingMatch(final IsGmlStandardVehicle sv, final RoadType roadType,
       final List<StandardVehicles> mergingStandardVehicles) {
     return mergingStandardVehicles.stream()
-        .filter(x -> Objects.equals(x.getMaximumSpeed(), getMaximumSpeed(null, false, roadType, sv.getMaximumSpeed())))
-        .filter(x -> Boolean.TRUE.equals(x.getStrictEnforcement()) == Boolean.TRUE.equals((sv.isStrictEnforcement())))
-        .filter(x -> x.getTimeUnit() == TimeUnit.valueOf(sv.getTimeUnit().name()))
         .filter(x -> !x.getValuesPerVehicleTypes().containsKey(sv.getVehicleType().getStandardVehicleCode()))
         .findFirst();
   }
