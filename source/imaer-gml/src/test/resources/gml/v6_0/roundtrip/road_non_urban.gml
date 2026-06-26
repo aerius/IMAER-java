@@ -77,7 +77,7 @@
                     <imaer:vehiclesPerTimeUnit>5000.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.2</imaer:stagnationFactor>
-                    <imaer:maximumSpeed>80</imaer:maximumSpeed>
+                    <imaer:maximumSpeed>60</imaer:maximumSpeed>
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:vehicles>
@@ -85,7 +85,7 @@
                     <imaer:vehiclesPerTimeUnit>15000.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.1</imaer:stagnationFactor>
-                    <imaer:maximumSpeed>80</imaer:maximumSpeed>
+                    <imaer:maximumSpeed>60</imaer:maximumSpeed>
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:elevation>NORMAL</imaer:elevation>

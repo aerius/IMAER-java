@@ -346,7 +346,7 @@ class GMLValidateErrorsTest {
   private static void assertContains(final AeriusException e, final String containsText) {
     final String exceptionText = e.getArgs()[0];
 
-    assertTrue(exceptionText.contains(containsText), "Exception didn't match expected text, was:" + exceptionText);
+    assertTrue(exceptionText.contains(containsText), "Exception doesn't contain the expected text. The text was:" + exceptionText);
   }
 
   private static ImportParcel getImportResult(final String relativePath, final String fileName)

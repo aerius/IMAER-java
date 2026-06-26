@@ -27,7 +27,7 @@ import nl.overheid.aerius.gml.base.source.lodging.GML2Farm;
 import nl.overheid.aerius.gml.base.source.mobile.v31.GML2OffRoad;
 import nl.overheid.aerius.gml.base.source.plan.GML2Plan;
 import nl.overheid.aerius.gml.base.source.road.v40.GML2SRM1Road;
-import nl.overheid.aerius.gml.base.source.road.v40.GML2SRM2Road;
+import nl.overheid.aerius.gml.base.source.road.v40.GML2SRM2RoadV40;
 import nl.overheid.aerius.gml.base.source.ship.v31.GML2InlandMooring;
 import nl.overheid.aerius.gml.base.source.ship.v31.GML2InlandRoute;
 import nl.overheid.aerius.gml.base.source.ship.v31.GML2MaritimeMooring;
@@ -62,7 +62,7 @@ class GML2SourceVisitor implements IsGML2SourceVisitor<EmissionSource> {
     handlers.put(MaritimeShippingEmissionSource.class, new GML2MaritimeRoute<MaritimeShippingEmissionSource>(conversionData));
     handlers.put(OffRoadMobileEmissionSource.class, new GML2OffRoad<OffRoadMobileEmissionSource>(conversionData, gml2SourceCharacteristics));
     handlers.put(PlanEmissionSource.class, new GML2Plan<PlanEmissionSource>(conversionData));
-    handlers.put(SRM2Road.class, new GML2SRM2Road<SRM2Road>(conversionData));
+    handlers.put(SRM2Road.class, new GML2SRM2RoadV40<SRM2Road>(conversionData));
     handlers.put(SRM1Road.class, new GML2SRM1Road<SRM1Road>(conversionData));
   }
 

@@ -39,6 +39,7 @@ import nl.overheid.aerius.shared.domain.v2.source.road.StandardVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.ValuesPerVehicleType;
 import nl.overheid.aerius.shared.domain.v2.source.road.Vehicles;
 import nl.overheid.aerius.shared.exception.AeriusException;
+import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 
 /**
  *
@@ -76,7 +77,18 @@ abstract class GML2SRMRoad<T extends IsGmlRoadEmissionSource, S extends RoadEmis
 
   protected abstract String convertRoadTypeCode(T source, RoadType roadType);
 
-  protected abstract Integer getMaximumSpeed(final RoadType roadType, final Integer maximumSpeed);
+  protected Integer getMaximumSpeed(final String sourceId, final boolean warn, final RoadType roadType, final Integer maximumSpeed) {
+    if ((maximumSpeed == null || maximumSpeed == 0) && roadType == RoadType.NON_URBAN_ROAD) {
+      final Integer speed = GMLConversionData.NON_URBAN_ROAD_DEFAULT_SPEED;
+      if (warn) {
+        getConversionData().getWarnings().add(
+            new AeriusException(ImaerExceptionReason.GML_NON_URBAN_ROAD_DEFAULT_SPEED, sourceId, String.valueOf(speed)));
+      }
+      return speed;
+    } else {
+      return maximumSpeed;
+    }
+  }
 
   protected abstract void setOptionalVariables(T source, S emissionSource) throws AeriusException;
 
@@ -96,10 +108,10 @@ abstract class GML2SRMRoad<T extends IsGmlRoadEmissionSource, S extends RoadEmis
 
   protected void addEmissionValues(final RoadType roadType, final List<Vehicles> addToVehicles, final T source, final IsGmlStandardVehicle sv,
       final List<StandardVehicles> mergingStandardVehicles) {
-    final StandardVehicles standardVehicle = findExistingMatch(sv, mergingStandardVehicles).orElseGet(() -> {
+    final StandardVehicles standardVehicle = findExistingMatch(sv, roadType, mergingStandardVehicles).orElseGet(() -> {
       final StandardVehicles vse = new StandardVehicles();
 
-      vse.setMaximumSpeed(getMaximumSpeed(roadType, sv.getMaximumSpeed()));
+      vse.setMaximumSpeed(getMaximumSpeed(source.getId(), true, roadType, sv.getMaximumSpeed()));
       vse.setStrictEnforcement(sv.isStrictEnforcement());
       vse.setTimeUnit(TimeUnit.valueOf(sv.getTimeUnit().name()));
       mergingStandardVehicles.add(vse);
@@ -112,10 +124,11 @@ abstract class GML2SRMRoad<T extends IsGmlRoadEmissionSource, S extends RoadEmis
     standardVehicle.getValuesPerVehicleTypes().put(sv.getVehicleType().getStandardVehicleCode(), valuesPerVehicleType);
   }
 
-  protected Optional<StandardVehicles> findExistingMatch(final IsGmlStandardVehicle sv, final List<StandardVehicles> mergingStandardVehicles) {
+  protected Optional<StandardVehicles> findExistingMatch(final IsGmlStandardVehicle sv, final RoadType roadType,
+      final List<StandardVehicles> mergingStandardVehicles) {
     return mergingStandardVehicles.stream()
-        .filter(x -> Objects.equals(x.getMaximumSpeed(), sv.getMaximumSpeed()))
-        .filter(x -> Objects.equals(x.getStrictEnforcement(), sv.isStrictEnforcement()))
+        .filter(x -> Objects.equals(x.getMaximumSpeed(), getMaximumSpeed(null, false, roadType, sv.getMaximumSpeed())))
+        .filter(x -> Boolean.TRUE.equals(x.getStrictEnforcement()) == Boolean.TRUE.equals((sv.isStrictEnforcement())))
         .filter(x -> x.getTimeUnit() == TimeUnit.valueOf(sv.getTimeUnit().name()))
         .filter(x -> !x.getValuesPerVehicleTypes().containsKey(sv.getVehicleType().getStandardVehicleCode()))
         .findFirst();

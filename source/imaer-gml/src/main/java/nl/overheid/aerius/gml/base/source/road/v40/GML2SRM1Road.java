@@ -51,11 +51,6 @@ public class GML2SRM1Road<T extends IsGmlSRM1Road> extends GML2SRMRoad<T, SRM1Ro
   }
 
   @Override
-  protected Integer getMaximumSpeed(final RoadType roadType, final Integer maximumSpeed) {
-    return (maximumSpeed == null || maximumSpeed == 0) && roadType == RoadType.NON_URBAN_ROAD ? Integer.valueOf(60) : maximumSpeed;
-  }
-
-  @Override
   protected void setOptionalVariables(final IsGmlSRM1Road source, final SRM1RoadEmissionSource emissionSource) throws AeriusException {
     if (source.getTunnelFactor() != null) {
       emissionSource.setTunnelFactor(source.getTunnelFactor());

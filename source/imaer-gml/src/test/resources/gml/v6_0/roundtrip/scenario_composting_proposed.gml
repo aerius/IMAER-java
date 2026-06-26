@@ -436,7 +436,7 @@
                     <imaer:vehiclesPerTimeUnit>422.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.0</imaer:stagnationFactor>
-                    <imaer:maximumSpeed>80</imaer:maximumSpeed>
+                    <imaer:maximumSpeed>60</imaer:maximumSpeed>
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:trafficDirection>BOTH</imaer:trafficDirection>
@@ -497,7 +497,7 @@
                     <imaer:vehiclesPerTimeUnit>818.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.0</imaer:stagnationFactor>
-                    <imaer:maximumSpeed>80</imaer:maximumSpeed>
+                    <imaer:maximumSpeed>60</imaer:maximumSpeed>
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:trafficDirection>BOTH</imaer:trafficDirection>
@@ -558,7 +558,7 @@
                     <imaer:vehiclesPerTimeUnit>236.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.0</imaer:stagnationFactor>
-                    <imaer:maximumSpeed>80</imaer:maximumSpeed>
+                    <imaer:maximumSpeed>60</imaer:maximumSpeed>
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:trafficDirection>BOTH</imaer:trafficDirection>
@@ -619,7 +619,7 @@
                     <imaer:vehiclesPerTimeUnit>9.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.0</imaer:stagnationFactor>
-                    <imaer:maximumSpeed>80</imaer:maximumSpeed>
+                    <imaer:maximumSpeed>60</imaer:maximumSpeed>
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:trafficDirection>BOTH</imaer:trafficDirection>
@@ -680,7 +680,7 @@
                     <imaer:vehiclesPerTimeUnit>9.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.0</imaer:stagnationFactor>
-                    <imaer:maximumSpeed>80</imaer:maximumSpeed>
+                    <imaer:maximumSpeed>60</imaer:maximumSpeed>
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:trafficDirection>BOTH</imaer:trafficDirection>
@@ -741,7 +741,7 @@
                     <imaer:vehiclesPerTimeUnit>490.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.0</imaer:stagnationFactor>
-                    <imaer:maximumSpeed>80</imaer:maximumSpeed>
+                    <imaer:maximumSpeed>60</imaer:maximumSpeed>
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:trafficDirection>BOTH</imaer:trafficDirection>
@@ -802,7 +802,7 @@
                     <imaer:vehiclesPerTimeUnit>328.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.0</imaer:stagnationFactor>
-                    <imaer:maximumSpeed>80</imaer:maximumSpeed>
+                    <imaer:maximumSpeed>60</imaer:maximumSpeed>
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:trafficDirection>BOTH</imaer:trafficDirection>
@@ -863,7 +863,7 @@
                     <imaer:vehiclesPerTimeUnit>162.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.0</imaer:stagnationFactor>
-                    <imaer:maximumSpeed>80</imaer:maximumSpeed>
+                    <imaer:maximumSpeed>60</imaer:maximumSpeed>
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:trafficDirection>BOTH</imaer:trafficDirection>
@@ -924,7 +924,7 @@
                     <imaer:vehiclesPerTimeUnit>46.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.0</imaer:stagnationFactor>
-                    <imaer:maximumSpeed>80</imaer:maximumSpeed>
+                    <imaer:maximumSpeed>60</imaer:maximumSpeed>
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:trafficDirection>BOTH</imaer:trafficDirection>
@@ -985,7 +985,7 @@
                     <imaer:vehiclesPerTimeUnit>376.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.0</imaer:stagnationFactor>
-                    <imaer:maximumSpeed>80</imaer:maximumSpeed>
+                    <imaer:maximumSpeed>60</imaer:maximumSpeed>
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:trafficDirection>BOTH</imaer:trafficDirection>
@@ -1046,7 +1046,7 @@
                     <imaer:vehiclesPerTimeUnit>140.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.0</imaer:stagnationFactor>
-                    <imaer:maximumSpeed>80</imaer:maximumSpeed>
+                    <imaer:maximumSpeed>60</imaer:maximumSpeed>
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:trafficDirection>BOTH</imaer:trafficDirection>
@@ -1107,7 +1107,7 @@
                     <imaer:vehiclesPerTimeUnit>18.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.0</imaer:stagnationFactor>
-                    <imaer:maximumSpeed>80</imaer:maximumSpeed>
+                    <imaer:maximumSpeed>60</imaer:maximumSpeed>
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:trafficDirection>BOTH</imaer:trafficDirection>
@@ -1168,7 +1168,7 @@
                     <imaer:vehiclesPerTimeUnit>56.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.0</imaer:stagnationFactor>
-                    <imaer:maximumSpeed>80</imaer:maximumSpeed>
+                    <imaer:maximumSpeed>60</imaer:maximumSpeed>
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:trafficDirection>BOTH</imaer:trafficDirection>
@@ -1229,7 +1229,7 @@
                     <imaer:vehiclesPerTimeUnit>23.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.0</imaer:stagnationFactor>
-                    <imaer:maximumSpeed>80</imaer:maximumSpeed>
+                    <imaer:maximumSpeed>60</imaer:maximumSpeed>
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:trafficDirection>BOTH</imaer:trafficDirection>
@@ -1290,7 +1290,7 @@
                     <imaer:vehiclesPerTimeUnit>310.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.0</imaer:stagnationFactor>
-                    <imaer:maximumSpeed>80</imaer:maximumSpeed>
+                    <imaer:maximumSpeed>60</imaer:maximumSpeed>
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:vehicles>
@@ -1298,7 +1298,7 @@
                     <imaer:vehiclesPerTimeUnit>6.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.0</imaer:stagnationFactor>
-                    <imaer:maximumSpeed>80</imaer:maximumSpeed>
+                    <imaer:maximumSpeed>60</imaer:maximumSpeed>
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:trafficDirection>BOTH</imaer:trafficDirection>
@@ -1359,7 +1359,7 @@
                     <imaer:vehiclesPerTimeUnit>929.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.0</imaer:stagnationFactor>
-                    <imaer:maximumSpeed>80</imaer:maximumSpeed>
+                    <imaer:maximumSpeed>60</imaer:maximumSpeed>
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:vehicles>
@@ -1367,7 +1367,7 @@
                     <imaer:vehiclesPerTimeUnit>18.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.0</imaer:stagnationFactor>
-                    <imaer:maximumSpeed>80</imaer:maximumSpeed>
+                    <imaer:maximumSpeed>60</imaer:maximumSpeed>
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:trafficDirection>BOTH</imaer:trafficDirection>
@@ -1428,7 +1428,7 @@
                     <imaer:vehiclesPerTimeUnit>66.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.0</imaer:stagnationFactor>
-                    <imaer:maximumSpeed>80</imaer:maximumSpeed>
+                    <imaer:maximumSpeed>60</imaer:maximumSpeed>
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:trafficDirection>BOTH</imaer:trafficDirection>
@@ -1489,7 +1489,7 @@
                     <imaer:vehiclesPerTimeUnit>2.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.0</imaer:stagnationFactor>
-                    <imaer:maximumSpeed>80</imaer:maximumSpeed>
+                    <imaer:maximumSpeed>60</imaer:maximumSpeed>
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:trafficDirection>BOTH</imaer:trafficDirection>
@@ -1550,7 +1550,7 @@
                     <imaer:vehiclesPerTimeUnit>16.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.0</imaer:stagnationFactor>
-                    <imaer:maximumSpeed>80</imaer:maximumSpeed>
+                    <imaer:maximumSpeed>60</imaer:maximumSpeed>
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:trafficDirection>BOTH</imaer:trafficDirection>

@@ -608,9 +608,9 @@ public enum ImaerExceptionReason implements Reason {
   /**
   * GML contains a source with a sector only supported in an older version of AERIUS. The outdated sector ID has been converted to the new supported sector ID.
   *
-  * @param 0 old sector ID
-  * @param 1 new sector ID
-  * @param 2 source name
+  * @param 0 old sector ID.
+  * @param 1 new sector ID.
+  * @param 2 source name.
   */
   GML_SECTOR_OUT_OF_DATE(5266),
   /**
@@ -626,6 +626,14 @@ public enum ImaerExceptionReason implements Reason {
    * @param 0 the ID of the source with too many vertices.
    */
   GEOMETRY_TOO_MANY_VERTICES(5271),
+
+  /**
+   * Default road speed is set for non urban road.
+   *
+   * @param 0 the id of the source.
+   * @param 1 the set speed value.
+   */
+  GML_NON_URBAN_ROAD_DEFAULT_SPEED(5272),
 
   // Cohesion (between files) errors.
 
