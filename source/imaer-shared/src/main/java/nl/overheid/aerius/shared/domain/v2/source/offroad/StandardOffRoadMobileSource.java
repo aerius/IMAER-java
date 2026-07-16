@@ -16,14 +16,29 @@
  */
 package nl.overheid.aerius.shared.domain.v2.source.offroad;
 
+/**
+ * Standard off road mobile sources can have different ways to calculate emissions.
+ * The most common emission calculation methods are related to Stage mobile equipment.
+ * For stage classes there are 2 methods:
+ *
+ * <ol>
+ * <li>Adblue(adblue) Uren(operation hours) Brandstof(fuel) or AUB-method.
+ * <li>Uren(operation hours) or U-method, which is based on machine power(kW).
+ * </ol>
+ *
+ * The convention for calculating emissions for this object is as follows for off road categories that support both power and fuel bases emissions.
+ * If the power is specified the power value should be used. Otherwise the fuel value will be used.
+ */
 public class StandardOffRoadMobileSource extends OffRoadMobileSource {
 
   private static final long serialVersionUID = 2L;
 
   private String offRoadMobileSourceCode;
+
   private Integer literFuelPerYear;
   private Integer operatingHoursPerYear;
   private Integer literAdBluePerYear;
+  private Integer power;
 
   public String getOffRoadMobileSourceCode() {
     return offRoadMobileSourceCode;
@@ -55,6 +70,14 @@ public class StandardOffRoadMobileSource extends OffRoadMobileSource {
 
   public void setLiterAdBluePerYear(final Integer literAdBluePerYear) {
     this.literAdBluePerYear = literAdBluePerYear;
+  }
+
+  public Integer getPower() {
+    return power;
+  }
+
+  public void setPower(final Integer power) {
+    this.power = power;
   }
 
 }

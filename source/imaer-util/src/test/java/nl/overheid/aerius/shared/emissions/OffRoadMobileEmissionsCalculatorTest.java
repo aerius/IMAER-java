@@ -62,21 +62,20 @@ class OffRoadMobileEmissionsCalculatorTest {
     final StandardOffRoadMobileSource mobileSource3 = createOnlyFuel();
     emissionSource.getSubSources().add(mobileSource3);
 
-    // Custom vehicles directly use the emissions map (for now), so don't expect those to be empty.
-    assertTrue(mobileSource3.getEmissions().isEmpty());
+    assertTrue(mobileSource3.getEmissions().isEmpty(), "Custom vehicles directly use the emissions map (for now), so don't expect those to be empty");
 
     final Map<Substance, Double> results = emissionsCalculator.calculateEmissions(emissionSource);
 
     // Check total emissions
-    assertEquals(104.8 + 12.50, results.get(Substance.NOX));
-    assertEquals(23.7, results.get(Substance.NH3));
+    assertEquals(104.8 + 12.50, results.get(Substance.NOX), "Not the expected total emission");
+    assertEquals(23.7, results.get(Substance.NH3), "Not the expected NH3 emission");
     // Check emissions per subsource (should be set during calculation)
-    assertEquals(88.6, mobileSource1.getEmissions().get(Substance.NOX));
-    assertEquals(16.2, mobileSource2.getEmissions().get(Substance.NOX));
-    assertEquals(12.5, mobileSource3.getEmissions().get(Substance.NOX));
-    assertNull(mobileSource1.getEmissions().get(Substance.NH3));
-    assertEquals(23.7, mobileSource2.getEmissions().get(Substance.NH3));
-    assertNull(mobileSource3.getEmissions().get(Substance.NH3));
+    assertEquals(88.6, mobileSource1.getEmissions().get(Substance.NOX), "Not the expected NOx emission for source 1");
+    assertEquals(16.2, mobileSource2.getEmissions().get(Substance.NOX), "Not the expected NOx emission for source 2");
+    assertEquals(12.5, mobileSource3.getEmissions().get(Substance.NOX), "Not the expected NOx emission for source 3");
+    assertNull(mobileSource1.getEmissions().get(Substance.NH3), "There should not be NH3 emission for source 1");
+    assertEquals(23.7, mobileSource2.getEmissions().get(Substance.NH3), "Not the expected NH3 emission for source 2");
+    assertNull(mobileSource3.getEmissions().get(Substance.NH3), "There should not be NH3 emission for source 3");
   }
 
   @Test
@@ -86,7 +85,17 @@ class OffRoadMobileEmissionsCalculatorTest {
 
     final Map<Substance, BigDecimal> results = emissionsCalculator.calculateEmissions(mobileSource);
 
-    assertEquals(BigDecimal.valueOf(12.34567), results.get(Substance.NOX));
+    assertEquals(BigDecimal.valueOf(12.34567), results.get(Substance.NOX), "Not the expected NOx emission");
+  }
+
+  @Test
+  void testCalculateEmissionsPower() {
+    final StandardOffRoadMobileSource mobileSource = createPower();
+
+    final Map<Substance, BigDecimal> results = emissionsCalculator.calculateEmissions(mobileSource);
+    // Power = 0.033 * 365 hours * 500 kW / 1000 = 6.0225;
+    assertEquals(new BigDecimal("6.0225"), results.get(Substance.NOX).stripTrailingZeros(),
+        "Not the expected calculated emission based on power input");
   }
 
   @Test
@@ -95,7 +104,7 @@ class OffRoadMobileEmissionsCalculatorTest {
 
     final Map<Substance, BigDecimal> results = emissionsCalculator.calculateEmissions(mobileSource);
 
-    assertEquals(new BigDecimal("12.500"), results.get(Substance.NOX));
+    assertEquals(new BigDecimal("12.500"), results.get(Substance.NOX), "Not the expected calculated emission based on fuel input");
   }
 
   @Test
@@ -104,7 +113,7 @@ class OffRoadMobileEmissionsCalculatorTest {
 
     final Map<Substance, BigDecimal> results = emissionsCalculator.calculateEmissions(mobileSource);
 
-    assertEquals(new BigDecimal("0.600"), results.get(Substance.NOX));
+    assertEquals(new BigDecimal("0.600"), results.get(Substance.NOX), "Not the expected calculated emission based on operating hours input");
   }
 
   @Test
@@ -113,7 +122,7 @@ class OffRoadMobileEmissionsCalculatorTest {
 
     final Map<Substance, BigDecimal> results = emissionsCalculator.calculateEmissions(mobileSource);
 
-    assertEquals(new BigDecimal("10.660"), results.get(Substance.NOX));
+    assertEquals(new BigDecimal("10.660"), results.get(Substance.NOX), "Not the expected calculated emission with AdBlue input");
   }
 
   @Test
@@ -128,7 +137,7 @@ class OffRoadMobileEmissionsCalculatorTest {
     // Max adBlue (due to ratio): 500 * 0.04 = 20
     // AdBlue emissions: 20 * -0.46 = -9.2
     // Total (all values summed) = 3.3
-    assertEquals(new BigDecimal("3.3000"), results.get(Substance.NOX));
+    assertEquals(new BigDecimal("3.3000"), results.get(Substance.NOX), "Not the expected calculated emission too much AdBlue input");
   }
 
   @Test
@@ -141,7 +150,19 @@ class OffRoadMobileEmissionsCalculatorTest {
     // Operating hour emissions: 120 * 0.005 = 0.6
     // AdBlue emissions: 4 * -0.46 = -1.84
     // Total (all values summed) = 11.26
-    assertEquals(new BigDecimal("11.260"), results.get(Substance.NOX));
+    assertEquals(new BigDecimal("11.260"), results.get(Substance.NOX), "Not the expected calculated emission with both fuel and AdBlue");
+  }
+
+  private StandardOffRoadMobileSource createPower() {
+    final StandardOffRoadMobileSource mobileSource = new StandardOffRoadMobileSource();
+    mobileSource.setPower(500);
+    mobileSource.setOperatingHoursPerYear(365);
+    final String mobileSourceCode = "ABC";
+    mobileSource.setOffRoadMobileSourceCode(mobileSourceCode);
+
+    mockPower(mobileSourceCode);
+
+    return mobileSource;
   }
 
   private StandardOffRoadMobileSource createOnlyFuel() {
@@ -192,6 +213,11 @@ class OffRoadMobileEmissionsCalculatorTest {
     mockAdBlue(mobileSourceCode);
 
     return mobileSource;
+  }
+
+  private void mockPower(final String mobileSourceCode) {
+    final Map<Substance, Double> emissionFactorsPerKW = Map.of(Substance.NOX, 0.033);
+    when(emissionFactorSupplier.getOffRoadMobileEmissionFactorsPerKW(mobileSourceCode)).thenReturn(emissionFactorsPerKW);
   }
 
   private void mockFuel(final String mobileSourceCode) {

@@ -149,21 +149,20 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
       "S30000");
 
   private static final List<OffRoadConstructHelper> OFF_ROAD_MOBILE_SOURCE_CATEGORIES = Arrays.asList(
-      new OffRoadConstructHelper("SI75560DSN", new EmissionHelper(0.03, 0.0000075), new EmissionHelper(0.005, 0.0), null),
-      new OffRoadConstructHelper("SII75560DSN", new EmissionHelper(0.02, 0.0000075), new EmissionHelper(0.005, 0.0), null),
-      new OffRoadConstructHelper("B4T", new EmissionHelper(0.004, 0.0000075), null, null),
-      new OffRoadConstructHelper("SI75560DSN", new EmissionHelper(0.03, 0.0000075), new EmissionHelper(0.005, 0.0), null),
-      new OffRoadConstructHelper("SV560DSJ", new EmissionHelper(0.025, 0.00024),
-          new EmissionHelper(0.005, 0.0),
-          new EmissionHelper(-0.46, 0.0)),
-      new OffRoadConstructHelper("SIIIA5675DSN", new EmissionHelper(0.025, 0.00024), new EmissionHelper(0.005, 0.0), null),
-      new OffRoadConstructHelper("SIIIB5675DSN", new EmissionHelper(0.027, 0.00024), new EmissionHelper(0.005, 0.0), null),
-      new OffRoadConstructHelper("SIIIA75560DSN", new EmissionHelper(0.002, 0.00024), new EmissionHelper(0.005, 0.0), null),
-      new OffRoadConstructHelper("SII5675DSN", new EmissionHelper(0.005, 0.00024), new EmissionHelper(0.005, 0.0), null),
-      new OffRoadConstructHelper("SI5675DSN", new EmissionHelper(0.035, 0.00024), new EmissionHelper(0.005, 0.0), null),
-      new OffRoadConstructHelper("SI56DSN", new EmissionHelper(0.045, 0.00024), new EmissionHelper(0.005, 0.0), null),
-      new OffRoadConstructHelper("SIV75560DSJ", new EmissionHelper(0.055, 0.00024), new EmissionHelper(0.005, 0.0), null),
-      new OffRoadConstructHelper("SIIIA56DSN", new EmissionHelper(0.040, 0.00024), new EmissionHelper(0.005, 0.0), null));
+      new OffRoadConstructHelper("SI75560DSN", new EmissionHelper(0.03, 0.0000075), new EmissionHelper(0.005, 0.0), null, null),
+      new OffRoadConstructHelper("SII75560DSN", new EmissionHelper(0.02, 0.0000075), new EmissionHelper(0.005, 0.0), null, null),
+      new OffRoadConstructHelper("B4T", new EmissionHelper(0.004, 0.0000075), null, null, null),
+      new OffRoadConstructHelper("SI75560DSN", new EmissionHelper(0.03, 0.0000075), new EmissionHelper(0.005, 0.0), null, null),
+      new OffRoadConstructHelper("SV560DSJ", new EmissionHelper(0.025, 0.00024), new EmissionHelper(0.005, 0.0), new EmissionHelper(-0.46, 0.0),
+          null),
+      new OffRoadConstructHelper("SIIIA5675DSN", new EmissionHelper(0.025, 0.00024), new EmissionHelper(0.005, 0.0), null, null),
+      new OffRoadConstructHelper("SIIIB5675DSN", new EmissionHelper(0.027, 0.00024), new EmissionHelper(0.005, 0.0), null, null),
+      new OffRoadConstructHelper("SIIIA75560DSN", new EmissionHelper(0.002, 0.00024), new EmissionHelper(0.005, 0.0), null, null),
+      new OffRoadConstructHelper("SII5675DSN", new EmissionHelper(0.005, 0.00024), new EmissionHelper(0.005, 0.0), null, null),
+      new OffRoadConstructHelper("SI5675DSN", new EmissionHelper(0.035, 0.00024), new EmissionHelper(0.005, 0.0), null, null),
+      new OffRoadConstructHelper("SI56DSN", new EmissionHelper(0.045, 0.00024), new EmissionHelper(0.005, 0.0), null, null),
+      new OffRoadConstructHelper("SIV75560DSJ", new EmissionHelper(0.055, 0.00024), new EmissionHelper(0.005, 0.0), null, null),
+      new OffRoadConstructHelper("SIIIA56DSN", new EmissionHelper(0.040, 0.00024), new EmissionHelper(0.005, 0.0), null, null));
 
   private static final List<OffRoadOldCodesHelper> OFF_ROAD_MOBILE_SOURCE_OLD_CODES = Arrays.asList(
       new OffRoadOldCodesHelper("S1A", "SI75560DSN", 19.54),
@@ -370,21 +369,8 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
     }
   }
 
-  private static class OffRoadConstructHelper {
-
-    final String code;
-    final EmissionHelper emissionFactorsLiterFuel;
-    final EmissionHelper emissionFactorsOperatingHours;
-    final EmissionHelper emissionFactorsLiterAdBlue;
-
-    public OffRoadConstructHelper(final String code, final EmissionHelper emissionFactorsLiterFuel,
-        final EmissionHelper emissionFactorsOperatingHours, final EmissionHelper emissionFactorsAdBlue) {
-      this.code = code;
-      this.emissionFactorsLiterFuel = emissionFactorsLiterFuel;
-      this.emissionFactorsOperatingHours = emissionFactorsOperatingHours;
-      this.emissionFactorsLiterAdBlue = emissionFactorsAdBlue;
-    }
-
+  private static record OffRoadConstructHelper(String code, EmissionHelper emissionFactorsLiterFuel, EmissionHelper emissionFactorsOperatingHours,
+      EmissionHelper emissionFactorsLiterAdBlue, EmissionHelper emissionFactorsPower) {
   }
 
   private static class OffRoadOldCodesHelper {
@@ -708,14 +694,14 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
   @Override
   public boolean expectsLiterFuelPerYear(final String offRoadMobileSourceCode) {
     return offRoad(offRoadMobileSourceCode)
-        .map(c -> c.emissionFactorsLiterFuel != null)
+        .map(c -> c.emissionFactorsLiterFuel() != null)
         .orElse(false);
   }
 
   @Override
   public boolean expectsOperatingHoursPerYear(final String offRoadMobileSourceCode) {
     return offRoad(offRoadMobileSourceCode)
-        .map(c -> c.emissionFactorsOperatingHours != null)
+        .map(c -> c.emissionFactorsOperatingHours() != null)
         .orElse(false);
   }
 
@@ -727,14 +713,21 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
   @Override
   public boolean expectsLiterAdBluePerYear(final String offRoadMobileSourceCode) {
     return offRoad(offRoadMobileSourceCode)
-        .map(c -> c.emissionFactorsLiterAdBlue != null)
+        .map(c -> c.emissionFactorsLiterAdBlue() != null)
+        .orElse(false);
+  }
+
+  @Override
+  public boolean expectsPower(final String offRoadMobileSourceCode) {
+    return offRoad(offRoadMobileSourceCode)
+        .map(c -> c.emissionFactorsPower() != null)
         .orElse(false);
   }
 
   @Override
   public Map<Substance, Double> getOffRoadMobileEmissionFactorsPerLiterFuel(final String offRoadMobileSourceCode) {
     return offRoad(offRoadMobileSourceCode)
-        .map(c -> c.emissionFactorsLiterFuel)
+        .map(c -> c.emissionFactorsLiterFuel())
         .map(d -> d.toEmissions())
         .orElse(Map.of());
   }
@@ -742,7 +735,7 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
   @Override
   public Map<Substance, Double> getOffRoadMobileEmissionFactorsPerOperatingHour(final String offRoadMobileSourceCode) {
     return offRoad(offRoadMobileSourceCode)
-        .map(c -> c.emissionFactorsOperatingHours)
+        .map(c -> c.emissionFactorsOperatingHours())
         .map(d -> d.toEmissions())
         .orElse(Map.of());
   }
@@ -750,7 +743,15 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
   @Override
   public Map<Substance, Double> getOffRoadMobileEmissionFactorsPerLiterAdBlue(final String offRoadMobileSourceCode) {
     return offRoad(offRoadMobileSourceCode)
-        .map(c -> c.emissionFactorsLiterAdBlue)
+        .map(c -> c.emissionFactorsLiterAdBlue())
+        .map(d -> d.toEmissions())
+        .orElse(Map.of());
+  }
+
+  @Override
+  public Map<Substance, Double> getOffRoadMobileEmissionFactorsPerKW(final String offRoadMobileSourceCode) {
+    return offRoad(offRoadMobileSourceCode)
+        .map(c -> c.emissionFactorsPower())
         .map(d -> d.toEmissions())
         .orElse(Map.of());
   }
@@ -926,7 +927,7 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
 
   private Optional<OffRoadConstructHelper> offRoad(final String offRoadMobileSourceCode) {
     return OFF_ROAD_MOBILE_SOURCE_CATEGORIES.stream()
-        .filter(c -> c.code.equalsIgnoreCase(offRoadMobileSourceCode))
+        .filter(c -> c.code().equalsIgnoreCase(offRoadMobileSourceCode))
         .findFirst();
   }
 

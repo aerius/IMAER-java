@@ -20,6 +20,8 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.when;
 
@@ -39,7 +41,7 @@ import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 
 /**
- *
+ * Test for {@link OffRoadValidator}.
  */
 @ExtendWith(MockitoExtension.class)
 class OffRoadValidatorTest {
@@ -55,15 +57,47 @@ class OffRoadValidatorTest {
     // Should probably have some other stuff set as well but since we're not validating this (yet)...
     source.getSubSources().add(subSource);
 
+    assertNoErrorsOrWarnings(source);
+  }
+
+  @Test
+  void testValidSubSourceOnlyPower() {
+    when(validationHelper.isPowerWithinRange(any(), anyInt())).thenReturn(true);
+    final OffRoadMobileEmissionSource source = createPowerSource();
+
+    assertNoErrorsOrWarnings(source);
+  }
+
+  @Test
+  void testInValidPowerRange() {
+    final String powerRange = "powerRange";
+    when(validationHelper.getPowerRange(any())).thenReturn(powerRange);
+    when(validationHelper.isPowerWithinRange(any(), anyInt())).thenReturn(false);
+    final OffRoadMobileEmissionSource source = createPowerSource();
+
     final List<AeriusException> errors = new ArrayList<>();
     final List<AeriusException> warnings = new ArrayList<>();
     final OffRoadValidator validator = new OffRoadValidator(errors, warnings, validationHelper);
 
     final boolean valid = validator.validate(source);
 
-    assertTrue(valid, "Valid test case");
-    assertEquals(List.of(), errors, "No errors");
+    assertFalse(valid, "Invalid test case");
+    assertEquals(1, errors.size(), "Nr of errors");
+    assertEquals(ImaerExceptionReason.MOBILE_SOURCE_POWER_NOT_WITHIN_RANGE, errors.get(0).getReason(), "Not the expected reason in the exception.");
+    assertArrayEquals(List.of(SUB_SOURCE_DESCRIPTION, powerRange, "200").toArray(), errors.get(0).getArgs(), "Arguments");
     assertEquals(List.of(), warnings, "No warnings");
+  }
+
+  private OffRoadMobileEmissionSource createPowerSource() {
+    final OffRoadMobileEmissionSource source = constructSource();
+    final StandardOffRoadMobileSource subSource = new StandardOffRoadMobileSource();
+    final String code = "PowerOnly";
+    mockCategoryExpectingPowerAndLiterFuel(code);
+    subSource.setDescription(SUB_SOURCE_DESCRIPTION);
+    subSource.setOffRoadMobileSourceCode(code);
+    subSource.setPower(200);
+    source.getSubSources().add(subSource);
+    return source;
   }
 
   @Test
@@ -71,21 +105,13 @@ class OffRoadValidatorTest {
     final OffRoadMobileEmissionSource source = constructSource();
     final StandardOffRoadMobileSource subSource = new StandardOffRoadMobileSource();
     final String code = "LiterFuelOnly";
-    mockCategoryExpectingLiterFuel(code);
+    mockCategoryExpectingPowerAndLiterFuel(code);
     subSource.setDescription(SUB_SOURCE_DESCRIPTION);
     subSource.setOffRoadMobileSourceCode(code);
     subSource.setLiterFuelPerYear(10000);
     source.getSubSources().add(subSource);
 
-    final List<AeriusException> errors = new ArrayList<>();
-    final List<AeriusException> warnings = new ArrayList<>();
-    final OffRoadValidator validator = new OffRoadValidator(errors, warnings, validationHelper);
-
-    final boolean valid = validator.validate(source);
-
-    assertTrue(valid, "Valid test case");
-    assertEquals(List.of(), errors, "No errors");
-    assertEquals(List.of(), warnings, "No warnings");
+    assertNoErrorsOrWarnings(source);
   }
 
   @Test
@@ -99,15 +125,7 @@ class OffRoadValidatorTest {
     subSource.setOperatingHoursPerYear(3000);
     source.getSubSources().add(subSource);
 
-    final List<AeriusException> errors = new ArrayList<>();
-    final List<AeriusException> warnings = new ArrayList<>();
-    final OffRoadValidator validator = new OffRoadValidator(errors, warnings, validationHelper);
-
-    final boolean valid = validator.validate(source);
-
-    assertTrue(valid, "Valid test case");
-    assertEquals(List.of(), errors, "No errors");
-    assertEquals(List.of(), warnings, "No warnings");
+    assertNoErrorsOrWarnings(source);
   }
 
   @Test
@@ -121,15 +139,7 @@ class OffRoadValidatorTest {
     subSource.setLiterAdBluePerYear(500);
     source.getSubSources().add(subSource);
 
-    final List<AeriusException> errors = new ArrayList<>();
-    final List<AeriusException> warnings = new ArrayList<>();
-    final OffRoadValidator validator = new OffRoadValidator(errors, warnings, validationHelper);
-
-    final boolean valid = validator.validate(source);
-
-    assertTrue(valid, "Valid test case");
-    assertEquals(List.of(), errors, "No errors");
-    assertEquals(List.of(), warnings, "No warnings");
+    assertNoErrorsOrWarnings(source);
   }
 
   @Test
@@ -145,15 +155,7 @@ class OffRoadValidatorTest {
     subSource.setLiterAdBluePerYear(500);
     source.getSubSources().add(subSource);
 
-    final List<AeriusException> errors = new ArrayList<>();
-    final List<AeriusException> warnings = new ArrayList<>();
-    final OffRoadValidator validator = new OffRoadValidator(errors, warnings, validationHelper);
-
-    final boolean valid = validator.validate(source);
-
-    assertTrue(valid, "Valid test case");
-    assertEquals(List.of(), errors, "No errors");
-    assertEquals(List.of(), warnings, "No warnings");
+    assertNoErrorsOrWarnings(source);
   }
 
   @Test
@@ -176,10 +178,9 @@ class OffRoadValidatorTest {
 
     assertFalse(valid, "Invalid test case");
     assertEquals(1, errors.size(), "Nr of errors");
-    assertEquals(ImaerExceptionReason.MOBILE_SOURCE_MISSING_LITER_FUEL, errors.get(0).getReason(), "Specific error");
-    assertArrayEquals(new Object[] {
-        SUB_SOURCE_DESCRIPTION
-    }, errors.get(0).getArgs(), "Arguments");
+    assertEquals(ImaerExceptionReason.MOBILE_SOURCE_MISSING_POWER_OR_LITER_FUEL, errors.get(0).getReason(),
+        "Not the expected reason in the exception.");
+    assertArrayEquals(List.of(SUB_SOURCE_DESCRIPTION).toArray(), errors.get(0).getArgs(), "Arguments");
     assertEquals(List.of(), warnings, "No warnings");
   }
 
@@ -203,10 +204,8 @@ class OffRoadValidatorTest {
 
     assertFalse(valid, "Invalid test case");
     assertEquals(1, errors.size(), "Nr of errors");
-    assertEquals(ImaerExceptionReason.MOBILE_SOURCE_MISSING_OPERATING_HOURS, errors.get(0).getReason(), "Specific error");
-    assertArrayEquals(new Object[] {
-        SUB_SOURCE_DESCRIPTION
-    }, errors.get(0).getArgs(), "Arguments");
+    assertEquals(ImaerExceptionReason.MOBILE_SOURCE_MISSING_OPERATING_HOURS, errors.get(0).getReason(), "Not the expected reason in the exception.");
+    assertArrayEquals(List.of(SUB_SOURCE_DESCRIPTION).toArray(), errors.get(0).getArgs(), "Arguments");
     assertEquals(List.of(), warnings, "No warnings");
   }
 
@@ -230,10 +229,8 @@ class OffRoadValidatorTest {
 
     assertFalse(valid, "Invalid test case");
     assertEquals(1, errors.size(), "Nr of errors");
-    assertEquals(ImaerExceptionReason.MOBILE_SOURCE_MISSING_LITER_ADBLUE, errors.get(0).getReason(), "Specific error");
-    assertArrayEquals(new Object[] {
-        SUB_SOURCE_DESCRIPTION
-    }, errors.get(0).getArgs(), "Arguments");
+    assertEquals(ImaerExceptionReason.MOBILE_SOURCE_MISSING_LITER_ADBLUE, errors.get(0).getReason(), "Not the expected reason in the exception.");
+    assertArrayEquals(List.of(SUB_SOURCE_DESCRIPTION).toArray(), errors.get(0).getArgs(), "Arguments");
     assertEquals(List.of(), warnings, "No warnings");
   }
 
@@ -280,10 +277,8 @@ class OffRoadValidatorTest {
 
     assertTrue(valid, "Valid test case");
     assertEquals(1, warnings.size(), "Nr of errors");
-    assertEquals(ImaerExceptionReason.MOBILE_SOURCE_HIGH_ADBLUE_FUEL_RATIO, warnings.get(0).getReason(), "Specific error");
-    assertArrayEquals(new Object[] {
-        SUB_SOURCE_DESCRIPTION, "700.00", "1000"
-    }, warnings.get(0).getArgs(), "Arguments");
+    assertEquals(ImaerExceptionReason.MOBILE_SOURCE_HIGH_ADBLUE_FUEL_RATIO, warnings.get(0).getReason(), "Not the expected reason in the exception.");
+    assertArrayEquals(List.of(SUB_SOURCE_DESCRIPTION, "700.00", "1000").toArray(), warnings.get(0).getArgs(), "Arguments");
     assertEquals(List.of(), errors, "No errors");
   }
 
@@ -294,19 +289,20 @@ class OffRoadValidatorTest {
   }
 
   private void mockCategoryExpectingAll(final String code) {
-    mockCategoryExpectingLiterFuel(code);
+    mockCategoryExpectingPowerAndLiterFuel(code);
     mockCategoryExpectingOperatingHours(code);
     mockCategoryExpectingLiterAdBlue(code);
   }
 
-  private void mockCategoryExpectingLiterFuel(final String code) {
+  private void mockCategoryExpectingPowerAndLiterFuel(final String code) {
     when(validationHelper.isValidOffRoadMobileSourceCode(code)).thenReturn(true);
+    when(validationHelper.expectsPower(code)).thenReturn(true);
     when(validationHelper.expectsLiterFuelPerYear(code)).thenReturn(true);
   }
 
   private void mockCategoryExpectingOperatingHours(final String code) {
     when(validationHelper.isValidOffRoadMobileSourceCode(code)).thenReturn(true);
-    when(validationHelper.expectsOperatingHoursPerYear(code)).thenReturn(true);
+    lenient().when(validationHelper.expectsOperatingHoursPerYear(code)).thenReturn(true);
   }
 
   private void mockCategoryExpectingLiterAdBlue(final String code) {
@@ -315,4 +311,15 @@ class OffRoadValidatorTest {
     lenient().when(validationHelper.getMaxAdBlueFuelRatio(code)).thenReturn(OptionalDouble.of(0.07));
   }
 
+  private void assertNoErrorsOrWarnings(final OffRoadMobileEmissionSource source) {
+    final List<AeriusException> errors = new ArrayList<>();
+    final List<AeriusException> warnings = new ArrayList<>();
+    final OffRoadValidator validator = new OffRoadValidator(errors, warnings, validationHelper);
+
+    final boolean valid = validator.validate(source);
+
+    assertTrue(valid, "Valid test case");
+    assertEquals(List.of(), errors, "No errors");
+    assertEquals(List.of(), warnings, "No warnings");
+  }
 }

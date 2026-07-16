@@ -238,6 +238,22 @@ public enum ImaerExceptionReason implements Reason {
    */
   SOURCE_VOLUME_FLOATING(1040),
 
+  /**
+   * Missing either power or liter fuel property where they are expected.
+   *
+   * @param 0 name of the source
+   */
+  MOBILE_SOURCE_MISSING_POWER_OR_LITER_FUEL(1041),
+
+  /**
+   * The given power value for the mobile source is not within the expected power range for the mobile source category.
+   *
+   * @param 0 name of the source
+   * @param 1 expected power range
+   * @param 2 given power range
+   */
+  MOBILE_SOURCE_POWER_NOT_WITHIN_RANGE(1042),
+
   // Import GML file errors/warnings.
   /**
    * Uploaded file should contain no calculation points.

@@ -19,6 +19,7 @@ package nl.overheid.aerius.shared.emissions;
 import java.math.BigDecimal;
 import java.util.EnumMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.OptionalDouble;
 
@@ -34,6 +35,8 @@ import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
  *
  */
 public class OffRoadMobileEmissionsCalculator {
+
+  private static final int DIVIDE_BY_1000 = 3;
 
   private final OffRoadMobileEmissionFactorSupplier emissionFactorSupplier;
 
@@ -75,38 +78,56 @@ public class OffRoadMobileEmissionsCalculator {
 
   Map<Substance, BigDecimal> calculateEmissions(final StandardOffRoadMobileSource standardSource) {
     final String mobileSourceCode = standardSource.getOffRoadMobileSourceCode();
-
-    final Optional<BigDecimal> literFuelPerYear = Optional.ofNullable(standardSource.getLiterFuelPerYear())
+    final Map<Substance, BigDecimal> emissions;
+    final Optional<BigDecimal> power = Optional.ofNullable(standardSource.getPower())
         .map(BigDecimal::valueOf);
-    final Map<Substance, BigDecimal> emissions = determineFuelEmissions(mobileSourceCode, literFuelPerYear);
 
-    final Map<Substance, BigDecimal> operatingEmissions = determineOperatingEmissions(mobileSourceCode, standardSource.getOperatingHoursPerYear());
-    operatingEmissions.forEach(
-        (key, value) -> emissions.merge(key, value, (v1, v2) -> v1.add(v2)));
+    if (power.isPresent() && power.get().doubleValue() > 0) {
+      emissions = determinePowerEmissions(mobileSourceCode, power, standardSource.getOperatingHoursPerYear());
+    } else {
+      final Optional<BigDecimal> literFuelPerYear = Optional.ofNullable(standardSource.getLiterFuelPerYear())
+          .map(BigDecimal::valueOf);
+      emissions = determineFuelEmissions(mobileSourceCode, literFuelPerYear);
 
-    final Map<Substance, BigDecimal> adBlueEmissions = determineAdBlueEmissions(mobileSourceCode, literFuelPerYear,
-        standardSource.getLiterAdBluePerYear());
-    adBlueEmissions.forEach(
-        (key, value) -> emissions.merge(key, value, (v1, v2) -> v1.add(v2)));
+      final Map<Substance, BigDecimal> operatingEmissions = determineOperatingEmissions(mobileSourceCode, standardSource.getOperatingHoursPerYear());
+      operatingEmissions.forEach((key, value) -> emissions.merge(key, value, (v1, v2) -> v1.add(v2)));
 
-    // AdBlue factors are (/can be) negative. To ensure we don't end up with negative emissions, ensure all negative values are set to 0.
-    // This should have been checked beforehand, so more of a precaution.
-    for (final Substance substance : Substance.values()) {
-      emissions.computeIfPresent(substance, (subst, value) -> value.compareTo(BigDecimal.ZERO) < 0 ? BigDecimal.ZERO : value);
+      final Map<Substance, BigDecimal> adBlueEmissions = determineAdBlueEmissions(mobileSourceCode, literFuelPerYear,
+          standardSource.getLiterAdBluePerYear());
+      adBlueEmissions.forEach((key, value) -> emissions.merge(key, value, (v1, v2) -> v1.add(v2)));
+      // AdBlue factors are (/can be) negative. To ensure we don't end up with negative emissions, ensure all negative values are set to 0.
+      // This should have been checked beforehand, so more of a precaution.
+      for (final Entry<Substance, BigDecimal> emission : emissions.entrySet()) {
+        if (emission.getValue().compareTo(BigDecimal.ZERO) < 0) {
+          emission.setValue(BigDecimal.ZERO);
+        }
+      }
     }
+    return emissions;
+  }
 
+  private Map<Substance, BigDecimal> determinePowerEmissions(final String mobileSourceCode, final Optional<BigDecimal> kWPerYear,
+      final long operatingHours) {
+    final Map<Substance, BigDecimal> emissions = new EnumMap<>(Substance.class);
+
+    kWPerYear.ifPresent(power -> {
+      final BigDecimal operatingHoursDivided = BigDecimal.valueOf(operatingHours).movePointLeft(DIVIDE_BY_1000);
+      final Map<Substance, Double> emissionFactorsPerKW = emissionFactorSupplier.getOffRoadMobileEmissionFactorsPerKW(mobileSourceCode);
+
+      emissionFactorsPerKW.forEach((key, value) ->
+      emissions.put(key, BigDecimal.valueOf(value).multiply(power).multiply(operatingHoursDivided)));
+    });
     return emissions;
   }
 
   private Map<Substance, BigDecimal> determineFuelEmissions(final String mobileSourceCode, final Optional<BigDecimal> fuelLiterPerYear) {
     final Map<Substance, BigDecimal> emissions = new EnumMap<>(Substance.class);
-    if (fuelLiterPerYear.isPresent()) {
-      final BigDecimal fuelLiterPerYearBD = fuelLiterPerYear.get();
-      final Map<Substance, Double> emissionFactorsPerLiterFuel = emissionFactorSupplier
-          .getOffRoadMobileEmissionFactorsPerLiterFuel(mobileSourceCode);
-      emissionFactorsPerLiterFuel.forEach(
-          (key, value) -> emissions.put(key, BigDecimal.valueOf(value).multiply(fuelLiterPerYearBD)));
-    }
+
+    fuelLiterPerYear.ifPresent(fuelLiterPerYearBD -> {
+      final Map<Substance, Double> emissionFactorsPerLiterFuel = emissionFactorSupplier.getOffRoadMobileEmissionFactorsPerLiterFuel(mobileSourceCode);
+
+      emissionFactorsPerLiterFuel.forEach((key, value) -> emissions.put(key, BigDecimal.valueOf(value).multiply(fuelLiterPerYearBD)));
+    });
     return emissions;
   }
 
