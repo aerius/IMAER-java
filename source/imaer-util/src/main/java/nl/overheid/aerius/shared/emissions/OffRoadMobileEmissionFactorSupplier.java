@@ -44,7 +44,7 @@ public interface OffRoadMobileEmissionFactorSupplier {
   Map<Substance, Double> getOffRoadMobileEmissionFactorsPerLiterAdBlue(final String offRoadMobileSourceCode);
 
   /**
-   * Obtain emission factors per engine kiloWatt/hour.
+   * Obtain emission factors per engine kiloWatt and per operating hour (in gram/killowatt/hour).
    */
   default Map<Substance, Double> getOffRoadMobileEmissionFactorsPerKWHour(final String offRoadMobileSourceCode) {
     return Map.of();
