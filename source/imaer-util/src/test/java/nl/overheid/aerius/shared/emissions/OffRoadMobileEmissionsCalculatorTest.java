@@ -216,8 +216,8 @@ class OffRoadMobileEmissionsCalculatorTest {
   }
 
   private void mockPower(final String mobileSourceCode) {
-    final Map<Substance, Double> emissionFactorsPerKW = Map.of(Substance.NOX, 0.033);
-    when(emissionFactorSupplier.getOffRoadMobileEmissionFactorsPerKW(mobileSourceCode)).thenReturn(emissionFactorsPerKW);
+    final Map<Substance, Double> emissionFactorsPerKWHour = Map.of(Substance.NOX, 0.033);
+    when(emissionFactorSupplier.getOffRoadMobileEmissionFactorsPerKWHour(mobileSourceCode)).thenReturn(emissionFactorsPerKWHour);
   }
 
   private void mockFuel(final String mobileSourceCode) {

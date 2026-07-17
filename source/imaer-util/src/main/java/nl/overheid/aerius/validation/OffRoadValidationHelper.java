@@ -16,7 +16,10 @@
  */
 package nl.overheid.aerius.validation;
 
+import java.util.Optional;
 import java.util.OptionalDouble;
+
+import nl.overheid.aerius.shared.domain.IntRange;
 
 /**
  * Interface of Helper class used in off road validation. Helper class should implement checks and data of actual off road data.
@@ -42,24 +45,13 @@ public interface OffRoadValidationHelper {
   }
 
   /**
-   * Returns true if the given power value is within the off road category power range.
+   * Returns the power range for the off road category if there is a power range present, otherwise returns empty Optional.
    *
    * @param offRoadMobileSourceCode code of the off road source
-   * @param powerValue power value to check
-   * @return true if within range
+   * @return the range or empty optional
    */
-  default boolean isPowerWithinRange(final String offRoadMobileSourceCode, final int powerValue) {
-    return false;
-  }
-
-  /**
-   * Returns the power range of the category for the given off road source in human readable format.
-   *
-   * @param offRoadMobileSourceCode code of the off road source
-   * @return the power range
-   */
-  default String getPowerRange(final String offRoadMobileSourceCode) {
-    return "";
+  default Optional<IntRange> getPowerRange(final String offRoadMobileSourceCode) {
+    return Optional.empty();
   }
 
   /**

@@ -18,8 +18,10 @@ package nl.overheid.aerius.validation;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 import java.util.OptionalDouble;
 
+import nl.overheid.aerius.shared.domain.IntRange;
 import nl.overheid.aerius.shared.domain.v2.source.OffRoadMobileEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.offroad.OffRoadMobileSource;
 import nl.overheid.aerius.shared.domain.v2.source.offroad.StandardOffRoadMobileSource;
@@ -63,7 +65,7 @@ class OffRoadValidator extends SourceValidator<OffRoadMobileEmissionSource> {
 
   private boolean validateOffRoadProperties(final StandardOffRoadMobileSource subSource) {
     // Combine all validations in separate statements to make sure each validation is run to collect all validation warnings/errors.
-    boolean valid =  validatePowerOrLiterFuel(subSource);
+    boolean valid = validatePowerOrLiterFuel(subSource);
     valid = validateOffRoadPowerRange(subSource) && valid;
     valid = validateOffRoadOperatingHours(subSource) && valid;
     return validateOffRoadLiterAdBlue(subSource) && valid;
@@ -73,10 +75,11 @@ class OffRoadValidator extends SourceValidator<OffRoadMobileEmissionSource> {
     boolean valid = true;
     final String code = subSource.getOffRoadMobileSourceCode();
     final boolean expectsPower = validationHelper.expectsPower(code);
-    final boolean noPower = expectsPower && subSource.getPower() == null;
     final boolean expectsFuel = validationHelper.expectsLiterFuelPerYear(code);
-    final boolean noFuel = expectsFuel && subSource.getLiterFuelPerYear() == null;
-    if (noPower && noFuel) {
+    final boolean noPowerButExpected = expectsPower && subSource.getPower() == null;
+    final boolean noFuelButExpected = expectsFuel && subSource.getLiterFuelPerYear() == null;
+
+    if ((noPowerButExpected && noFuelButExpected) || (noPowerButExpected && !expectsFuel) || (noFuelButExpected && !expectsPower)) {
       getErrors().add(new AeriusException(ImaerExceptionReason.MOBILE_SOURCE_MISSING_POWER_OR_LITER_FUEL, subSource.getDescription()));
       valid = false;
     }
@@ -92,11 +95,14 @@ class OffRoadValidator extends SourceValidator<OffRoadMobileEmissionSource> {
   private boolean validateOffRoadPowerRange(final StandardOffRoadMobileSource subSource) {
     final String code = subSource.getOffRoadMobileSourceCode();
 
-    if (validationHelper.expectsPower(code) && subSource.getPower() != null && subSource.getPower() > 0
-        && !validationHelper.isPowerWithinRange(code, subSource.getPower())) {
-      getErrors().add(new AeriusException(ImaerExceptionReason.MOBILE_SOURCE_POWER_NOT_WITHIN_RANGE, subSource.getDescription(),
-          validationHelper.getPowerRange(code), String.valueOf(subSource.getPower())));
-      return false;
+    if (validationHelper.expectsPower(code)) {
+      final Optional<IntRange> powerRange = validationHelper.getPowerRange(code);
+
+      if (subSource.getPower() != null && subSource.getPower() > 0 && !powerRange.map(range -> range.inRange(subSource.getPower())).orElse(false)) {
+        getErrors().add(new AeriusException(ImaerExceptionReason.MOBILE_SOURCE_POWER_NOT_WITHIN_RANGE, subSource.getDescription(),
+            powerRange.get().toString(), String.valueOf(subSource.getPower())));
+        return false;
+      }
     }
     return true;
   }

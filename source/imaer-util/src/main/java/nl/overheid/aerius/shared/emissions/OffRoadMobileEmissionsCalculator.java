@@ -112,10 +112,10 @@ public class OffRoadMobileEmissionsCalculator {
 
     kWPerYear.ifPresent(power -> {
       final BigDecimal operatingHoursDivided = BigDecimal.valueOf(operatingHours).movePointLeft(DIVIDE_BY_1000);
-      final Map<Substance, Double> emissionFactorsPerKW = emissionFactorSupplier.getOffRoadMobileEmissionFactorsPerKW(mobileSourceCode);
+      final Map<Substance, Double> emissionFactorsPerKWH = emissionFactorSupplier.getOffRoadMobileEmissionFactorsPerKWHour(mobileSourceCode);
 
-      emissionFactorsPerKW.forEach((key, value) ->
-      emissions.put(key, BigDecimal.valueOf(value).multiply(power).multiply(operatingHoursDivided)));
+      emissionFactorsPerKWH.forEach((key, value) ->
+          emissions.put(key, BigDecimal.valueOf(value).multiply(power).multiply(operatingHoursDivided)));
     });
     return emissions;
   }

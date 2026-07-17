@@ -749,7 +749,7 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
   }
 
   @Override
-  public Map<Substance, Double> getOffRoadMobileEmissionFactorsPerKW(final String offRoadMobileSourceCode) {
+  public Map<Substance, Double> getOffRoadMobileEmissionFactorsPerKWHour(final String offRoadMobileSourceCode) {
     return offRoad(offRoadMobileSourceCode)
         .map(c -> c.emissionFactorsPower())
         .map(d -> d.toEmissions())
