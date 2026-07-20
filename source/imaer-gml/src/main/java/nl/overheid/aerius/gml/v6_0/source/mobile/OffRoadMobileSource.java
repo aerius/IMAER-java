@@ -29,13 +29,14 @@ import nl.overheid.aerius.gml.v6_0.base.CalculatorSchema;
  */
 @XmlRootElement(name = "StandardOffRoadMobileSource", namespace = CalculatorSchema.NAMESPACE)
 @XmlType(name = "StandardOffRoadMobileSourceType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"literFuelPerYear", "operatingHoursPerYear",
-    "literAdBluePerYear"})
+    "literAdBluePerYear", "power"})
 public class OffRoadMobileSource extends AbstractOffRoadMobileSource implements IsGmlStandardOffRoadMobileSource {
 
   private String code;
   private Integer literFuelPerYear;
   private Integer operatingHoursPerYear;
   private Integer literAdBluePerYear;
+  private Integer power;
 
   @Override
   @XmlAttribute(name = "offRoadMobileSourceType")
@@ -76,5 +77,16 @@ public class OffRoadMobileSource extends AbstractOffRoadMobileSource implements 
   public void setLiterAdBluePerYear(final Integer literAdBluePerYear) {
     this.literAdBluePerYear = literAdBluePerYear;
   }
+
+  @Override
+  @XmlElement(namespace = CalculatorSchema.NAMESPACE)
+  public Integer getPower() {
+    return power;
+  }
+
+  public void setPower(final Integer power) {
+    this.power = power;
+  }
+
 
 }

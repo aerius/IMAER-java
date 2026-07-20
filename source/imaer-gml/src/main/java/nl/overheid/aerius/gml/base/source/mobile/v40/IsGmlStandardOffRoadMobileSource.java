@@ -24,4 +24,8 @@ public interface IsGmlStandardOffRoadMobileSource extends IsGmlStandardOffRoadMo
 
   Integer getLiterAdBluePerYear();
 
+  default Integer getPower() {
+    return null;
+  }
+
 }

@@ -30,6 +30,7 @@ import nl.overheid.aerius.gml.base.GMLLegacyCodeConverter.GMLLegacyCodeType;
 import nl.overheid.aerius.gml.base.conversion.FarmLodgingConversion;
 import nl.overheid.aerius.gml.base.conversion.MobileSourceOffRoadConversion;
 import nl.overheid.aerius.gml.base.conversion.PlanConversion;
+import nl.overheid.aerius.shared.domain.IntRange;
 import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.ops.DiurnalVariation;
 import nl.overheid.aerius.shared.domain.ops.OPSLimits;
@@ -162,7 +163,8 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
       new OffRoadConstructHelper("SI5675DSN", new EmissionHelper(0.035, 0.00024), new EmissionHelper(0.005, 0.0), null, null),
       new OffRoadConstructHelper("SI56DSN", new EmissionHelper(0.045, 0.00024), new EmissionHelper(0.005, 0.0), null, null),
       new OffRoadConstructHelper("SIV75560DSJ", new EmissionHelper(0.055, 0.00024), new EmissionHelper(0.005, 0.0), null, null),
-      new OffRoadConstructHelper("SIIIA56DSN", new EmissionHelper(0.040, 0.00024), new EmissionHelper(0.005, 0.0), null, null));
+      new OffRoadConstructHelper("SIIIA56DSN", new EmissionHelper(0.040, 0.00024), new EmissionHelper(0.005, 0.0), null, null),
+      new OffRoadConstructHelper("POWER_BASED", null, null, null, new EmissionHelper(0.123, 0.0056)));
 
   private static final List<OffRoadOldCodesHelper> OFF_ROAD_MOBILE_SOURCE_OLD_CODES = Arrays.asList(
       new OffRoadOldCodesHelper("S1A", "SI75560DSN", 19.54),
@@ -370,8 +372,7 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
   }
 
   private static record OffRoadConstructHelper(String code, EmissionHelper emissionFactorsLiterFuel, EmissionHelper emissionFactorsOperatingHours,
-      EmissionHelper emissionFactorsLiterAdBlue, EmissionHelper emissionFactorsPower) {
-  }
+      EmissionHelper emissionFactorsLiterAdBlue, EmissionHelper emissionFactorsPower) {}
 
   private static class OffRoadOldCodesHelper {
 
@@ -722,6 +723,13 @@ public class TestValidationAndEmissionHelper implements ValidationHelper, Emissi
     return offRoad(offRoadMobileSourceCode)
         .map(c -> c.emissionFactorsPower() != null)
         .orElse(false);
+  }
+
+  @Override
+  public Optional<IntRange> getPowerRange(final String offRoadMobileSourceCode) {
+    return offRoad(offRoadMobileSourceCode)
+        .filter(c -> c.emissionFactorsPower() != null)
+        .map(c -> new IntRange(50, true, 1000, true));
   }
 
   @Override

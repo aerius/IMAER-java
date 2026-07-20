@@ -43,6 +43,7 @@ public class GML2OffRoad<T extends IsGmlOffRoadMobileEmissionSource> extends Abs
     vehicleEmissionValues.setOffRoadMobileSourceCode(mobileSource.getCode());
     vehicleEmissionValues.setOperatingHoursPerYear(mobileSource.getOperatingHoursPerYear());
     vehicleEmissionValues.setLiterAdBluePerYear(mobileSource.getLiterAdBluePerYear());
+    vehicleEmissionValues.setPower(mobileSource.getPower());
 
     return vehicleEmissionValues;
   }

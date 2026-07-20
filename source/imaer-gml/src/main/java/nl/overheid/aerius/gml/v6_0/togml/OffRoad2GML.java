@@ -68,6 +68,7 @@ class OffRoad2GML extends SpecificSource2GML<OffRoadMobileEmissionSource> {
     gmlMobileSource.setLiterFuelPerYear(vehicleEmissionValues.getLiterFuelPerYear());
     gmlMobileSource.setOperatingHoursPerYear(vehicleEmissionValues.getOperatingHoursPerYear());
     gmlMobileSource.setLiterAdBluePerYear(vehicleEmissionValues.getLiterAdBluePerYear());
+    gmlMobileSource.setPower(vehicleEmissionValues.getPower());
     return new OffRoadMobileSourceProperty(gmlMobileSource);
   }
 
