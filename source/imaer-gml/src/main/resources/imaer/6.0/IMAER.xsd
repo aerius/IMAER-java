@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:IMAER="http://imaer.aerius.nl/6.0" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:gmlsf="http://www.opengis.net/gmlsf/2.0" elementFormDefault="qualified" targetNamespace="http://imaer.aerius.nl/6.0" version="6.0.0">
+<?xml version="1.0" encoding="UTF-8"?><schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:IMAER="http://imaer.aerius.nl/6.0" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:gmlsf="http://www.opengis.net/gmlsf/2.0" elementFormDefault="qualified" targetNamespace="http://imaer.aerius.nl/6.0" version="6.0.2">
   <annotation>
     <documentation>This model describes the Information Model for AERius (IMAER). IMAER is the standard data exchange format of AERIUS and is used for importing, exporting and exchanging data with and between the various AERIUS products (including Calculator, Monitor and Register).
 
@@ -3661,6 +3661,11 @@ Mobile tools are described on the basis of a number of characteristics. These ar
           <element minOccurs="0" name="literAdBluePerYear" type="integer">
             <annotation>
               <documentation>Liters of AdBlue (summed) that this type of vehicle uses per year.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="power" type="integer">
+            <annotation>
+              <documentation>The power in kilowatt of this type of vehicle.</documentation>
             </annotation>
           </element>
         </sequence>

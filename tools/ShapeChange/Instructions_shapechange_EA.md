@@ -1,16 +1,27 @@
 # Shapechange instructions IMAER
 
-Currently using ShapeChange-3.0.0 to extract a XSD for our GML from a Enterprise Architect model.
+Currently using ShapeChange-3.1.0 to extract a XSD for our GML from a Enterprise Architect model.
+This requires a 32-bit java version (a Temurin version for this architecture is still available at time of writing for Java 17 at https://adoptium.net/temurin/releases?version=17&os=windows&arch=x32, even though support for it is officially dropped).
+When trying out a 64-bit java version, ran into an issue with `Failed to construct object. Error code: 0x80029c4a` as error message.
+
+Note: there is a version 4.0.0 Shapechange version.
+Did try this version, but could not get it to work: it is compiled for 64-bit java.
+It might be possible to switch to 64-bit java, but then we probably also need to use the 64-bit version of Enterprise Architect, and that wants to convert our EAP file to a newer format.
+The 64-bit version of Enterprise Architect does not support the EAP file format.
 
 ## Shapechange installation
 
-Download the ShapeChange tool from https://shapechange.github.io/ShapeChange
+Download the ShapeChange tool with version 3.1.0 from https://shapechange.github.io/ShapeChange/3.1.0/
 
-Integration of ShapeChange-3.0.0 with Enterprise Architect:
+Integration of ShapeChange-3.1.0 with Enterprise Architect:
 
-To process Enterprise Architect models with ShapeChange, copy the file SSJavaCOM64.dll located in `<EA installation folder>/Java API` to `<Windows folder>/System32` (on a 64-bit machine). If you have a 32 bit system, have a look at the shapechange documentation on how to install.
+To process Enterprise Architect models with ShapeChange, copy the file SSJavaCOM.dll and SSJavaCOM64.dll located in `<EA installation folder>/Java API` to `<Windows folder>/System32` (on a 64-bit machine), and the SJavaCOM.dll file to <Windows folder>/SysWOW64` for good measure.
+It might not be needed to copy SSJavaCOM64.dll, or to copy SSJavaCOM.dll to both locations, but it doesn't seem to hurt either.
 
-source: https://shapechange.github.io/ShapeChange/3.0.0/get%20started/Get_Started.html
+source: https://shapechange.github.io/ShapeChange/3.1.0/get%20started/Get_Started.html
+
+As noted before: The 64-bit version of Enterprise Architect does not support the EAP file format, so you'll need to install the 32-bit version for now.
+The version that did work at time of writing was "Enterprise Architect v17.1.1716 - 32 bit (313 MB, 29-Jan-2026)".
 
 ## Generation of XSD
 
@@ -21,7 +32,7 @@ In Enterprise Architect, right-click `<<applicationSchema>> IMAER` -> `Propertie
 Run ShapeChange with the following command (do not forget to update the paths!) from inside the ShapeChange directory:
 
 ```
-"C:\path\to\java.exe" -jar "C:\ShapeChange-3.0.0\ShapeChange-3.0.0.jar" -Dfile.encoding=UTF-8 -c IMAER-ShapeChangeConfiguration.xml
+"C:\path\to\java.exe" -jar "C:\ShapeChange-3.1.0\ShapeChange-3.1.0.jar" -Dfile.encoding=UTF-8 -c IMAER-ShapeChangeConfiguration.xml
 ```
 
 After generating the XSD, be sure to do the following 2 things:
