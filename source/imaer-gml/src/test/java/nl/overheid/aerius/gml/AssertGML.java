@@ -43,7 +43,6 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -320,6 +319,6 @@ public final class AssertGML {
   }
 
   private static String replaceNewLines(final String string) {
-    return USE_ORIGINAL_GML ? string : string.replaceAll("[\n\r]", "");
+    return USE_ORIGINAL_GML ? string : string.replaceAll("[\n\r]", "").replaceAll(">\s+<", "><");
   }
 }
