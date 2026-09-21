@@ -22,6 +22,8 @@ import java.util.function.BooleanSupplier;
 
 import nl.overheid.aerius.gml.base.MetaDataInput;
 import nl.overheid.aerius.gml.base.OtherSituationMetaData;
+import nl.overheid.aerius.shared.domain.Theme;
+import nl.overheid.aerius.shared.domain.calculation.CalculationSetOptions;
 import nl.overheid.aerius.shared.domain.scenario.IsScenario;
 import nl.overheid.aerius.shared.domain.v2.archive.ArchiveMetaData;
 import nl.overheid.aerius.shared.domain.v2.point.CalculationPointFeature;
@@ -43,13 +45,9 @@ public final class GMLScenarioHelper {
    */
   public static MetaDataInput constructMetaData(final Scenario scenario, final ScenarioSituation situation, final BooleanSupplier resultsIncluded,
       final String aeriusVersion, final String databaseVersion) {
-    final MetaDataInput metaData = new MetaDataInput();
-    metaData.setTheme(scenario.getTheme());
+    final MetaDataInput metaData = constructMetaData(scenario.getTheme(), situation.getYear(), aeriusVersion, databaseVersion, scenario.getOptions());
+
     metaData.setScenarioMetaData(scenario.getMetaData());
-    metaData.setYear(situation.getYear());
-    metaData.setVersion(aeriusVersion);
-    metaData.setDatabaseVersion(databaseVersion);
-    metaData.setOptions(scenario.getOptions());
     metaData.setResultsIncluded(resultsIncluded.getAsBoolean());
     metaData.setReference(situation.getReference());
     scenario.getSituations().stream()
@@ -64,18 +62,26 @@ public final class GMLScenarioHelper {
    */
   public static MetaDataInput constructArchiveMetaData(final Scenario scenario, final int year, final ArchiveMetaData archiveMetaData,
       final String aeriusVersion, final String databaseVersion) {
-    final MetaDataInput metaData = new MetaDataInput();
-    metaData.setTheme(scenario.getTheme());
+    final MetaDataInput metaData = constructMetaData(scenario.getTheme(), year, aeriusVersion, databaseVersion, scenario.getOptions());
+
     metaData.setScenarioMetaData(new ScenarioMetaData());
     metaData.setArchiveMetaData(archiveMetaData);
-    metaData.setYear(year);
-    metaData.setVersion(aeriusVersion);
-    metaData.setDatabaseVersion(databaseVersion);
-    metaData.setOptions(scenario.getOptions());
     metaData.setResultsIncluded(true);
     scenario.getSituations().stream()
         .map(GMLScenarioHelper::otherSituation)
         .forEach(metaData::addOtherSituation);
+    return metaData;
+  }
+
+  public static MetaDataInput constructMetaData(final Theme theme, final int year, final String aeriusVersion, final String databaseVersion,
+      final CalculationSetOptions options) {
+    final MetaDataInput metaData = new MetaDataInput();
+
+    metaData.setTheme(theme);
+    metaData.setYear(year);
+    metaData.setVersion(aeriusVersion);
+    metaData.setDatabaseVersion(databaseVersion);
+    metaData.setOptions(options);
     return metaData;
   }
 
@@ -94,16 +100,7 @@ public final class GMLScenarioHelper {
    * Receptor points can be either with or without results. The custom calculation points in the situation will not be used.
    */
   public static IsScenario constructScenario(final ScenarioSituation situation, final List<CalculationPointFeature> receptorPoints) {
-    return GMLScenario.Builder.create(situation.getName(), situation.getType())
-        .nettingFactor(situation.getNettingFactor())
-        .sources(situation.getSources().getFeatures())
-        .buildings(situation.getBuildingsList())
-        .calculationPoints(receptorPoints)
-        .cimlkDispersionLines(situation.getCimlkDispersionLinesList())
-        .cimlkCorrections(situation.getCimlkCorrections())
-        .cimlkMeasures(situation.getCimlkMeasuresList())
-        .definitions(situation.getDefinitions())
-        .build();
+    return GMLScenario.Builder.create(situation, receptorPoints).build();
   }
 
 }

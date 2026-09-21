@@ -64,12 +64,16 @@ public class GMLScenario implements IsScenario {
     }
 
     public static Builder create(final ImportParcel importParcel, final ScenarioSituation situation) {
+      return create(situation, importParcel.getCalculationPointsList());
+    }
+
+    public static Builder create(final ScenarioSituation situation, final List<CalculationPointFeature> receptorPoints) {
       return new Builder(situation.getName(), situation.getType())
           .nettingFactor(situation.getNettingFactor())
           .definitions(situation.getDefinitions())
           .sources(situation.getEmissionSourcesList())
           .buildings(situation.getBuildingsList())
-          .calculationPoints(importParcel.getCalculationPointsList())
+          .calculationPoints(receptorPoints)
           .cimlkDispersionLines(situation.getCimlkDispersionLinesList())
           .cimlkMeasures(situation.getCimlkMeasuresList())
           .cimlkCorrections(situation.getCimlkCorrections());
