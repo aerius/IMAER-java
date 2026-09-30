@@ -133,13 +133,13 @@
                 </imaer:Emission>
             </imaer:emission>
             <imaer:vehicles>
-                <imaer:StandardVehicle vehicleType="LIGHT_TRAFFIC">
+                <imaer:StandardVehicle vehicleType="HEAVY_FREIGHT">
                     <imaer:vehiclesPerDay>0.0</imaer:vehiclesPerDay>
                     <imaer:stagnationFactor>0.0</imaer:stagnationFactor>
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:vehicles>
-                <imaer:StandardVehicle vehicleType="HEAVY_FREIGHT">
+                <imaer:StandardVehicle vehicleType="LIGHT_TRAFFIC">
                     <imaer:vehiclesPerDay>0.0</imaer:vehiclesPerDay>
                     <imaer:stagnationFactor>0.0</imaer:stagnationFactor>
                 </imaer:StandardVehicle>

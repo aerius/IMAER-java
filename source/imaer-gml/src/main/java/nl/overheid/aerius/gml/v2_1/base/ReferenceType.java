@@ -1,5 +1,5 @@
 /*
- * Copyright the State of the Netherlands
+ * Copyright (c) Contributors to the project
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -16,7 +16,7 @@
  */
 package nl.overheid.aerius.gml.v2_1.base;
 
-import javax.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlAttribute;
 
 import nl.overheid.aerius.gml.base.XLinkSchema;
 

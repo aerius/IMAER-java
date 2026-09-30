@@ -1,5 +1,5 @@
 /*
- * Copyright the State of the Netherlands
+ * Copyright (c) Contributors to the project
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -197,11 +197,11 @@ class CimlkCohesionValidatorTest {
 
   @Test
   void testDispersionLineCorrect() {
-    final Scenario scenario = new Scenario(Theme.RBL);
+    final Scenario scenario = new Scenario(Theme.CIMLK);
     final ScenarioSituation situation = new ScenarioSituation();
     final CIMLKDispersionLine dispersionLine = new CIMLKDispersionLine();
     dispersionLine.setCalculationPointGmlId(DEFAULT_POINT_ID);
-    dispersionLine.setRoadGmlId(DEFAULT_ROAD_ID);
+    dispersionLine.setGmlId(DEFAULT_ROAD_ID);
     final CIMLKDispersionLineFeature dispersionLineFeature = new CIMLKDispersionLineFeature();
     dispersionLineFeature.setProperties(dispersionLine);
     situation.getCimlkDispersionLinesList().add(dispersionLineFeature);
@@ -222,11 +222,11 @@ class CimlkCohesionValidatorTest {
 
   @Test
   void testDispersionLineWithSrm2Road() {
-    final Scenario scenario = new Scenario(Theme.RBL);
+    final Scenario scenario = new Scenario(Theme.CIMLK);
     final ScenarioSituation situation = new ScenarioSituation();
     final CIMLKDispersionLine dispersionLine = new CIMLKDispersionLine();
     dispersionLine.setCalculationPointGmlId(DEFAULT_POINT_ID);
-    dispersionLine.setRoadGmlId(DEFAULT_ROAD_ID);
+    dispersionLine.setGmlId(DEFAULT_ROAD_ID);
     final CIMLKDispersionLineFeature dispersionLineFeature = new CIMLKDispersionLineFeature();
     dispersionLineFeature.setProperties(dispersionLine);
     situation.getCimlkDispersionLinesList().add(dispersionLineFeature);
@@ -247,11 +247,11 @@ class CimlkCohesionValidatorTest {
 
   @Test
   void testDispersionLineWithWrongRoad() {
-    final Scenario scenario = new Scenario(Theme.RBL);
+    final Scenario scenario = new Scenario(Theme.CIMLK);
     final ScenarioSituation situation = new ScenarioSituation();
     final CIMLKDispersionLine dispersionLine = new CIMLKDispersionLine();
     dispersionLine.setCalculationPointGmlId(DEFAULT_POINT_ID);
-    dispersionLine.setRoadGmlId(DEFAULT_ROAD_ID);
+    dispersionLine.setGmlId(DEFAULT_ROAD_ID);
     final CIMLKDispersionLineFeature dispersionLineFeature = new CIMLKDispersionLineFeature();
     dispersionLineFeature.setProperties(dispersionLine);
     situation.getCimlkDispersionLinesList().add(dispersionLineFeature);
@@ -272,11 +272,11 @@ class CimlkCohesionValidatorTest {
 
   @Test
   void testDispersionLineWithWrongPoint() {
-    final Scenario scenario = new Scenario(Theme.RBL);
+    final Scenario scenario = new Scenario(Theme.CIMLK);
     final ScenarioSituation situation = new ScenarioSituation();
     final CIMLKDispersionLine dispersionLine = new CIMLKDispersionLine();
     dispersionLine.setCalculationPointGmlId(DEFAULT_POINT_ID);
-    dispersionLine.setRoadGmlId(DEFAULT_ROAD_ID);
+    dispersionLine.setGmlId(DEFAULT_ROAD_ID);
     final CIMLKDispersionLineFeature dispersionLineFeature = new CIMLKDispersionLineFeature();
     dispersionLineFeature.setProperties(dispersionLine);
     situation.getCimlkDispersionLinesList().add(dispersionLineFeature);
@@ -297,11 +297,11 @@ class CimlkCohesionValidatorTest {
 
   @Test
   void testDispersionLineNotPerpendicular() {
-    final Scenario scenario = new Scenario(Theme.RBL);
+    final Scenario scenario = new Scenario(Theme.CIMLK);
     final ScenarioSituation situation = new ScenarioSituation();
     final CIMLKDispersionLine dispersionLine = new CIMLKDispersionLine();
     dispersionLine.setCalculationPointGmlId(DEFAULT_POINT_ID);
-    dispersionLine.setRoadGmlId(DEFAULT_ROAD_ID);
+    dispersionLine.setGmlId(DEFAULT_ROAD_ID);
     final CIMLKDispersionLineFeature dispersionLineFeature = new CIMLKDispersionLineFeature();
     dispersionLineFeature.setProperties(dispersionLine);
     situation.getCimlkDispersionLinesList().add(dispersionLineFeature);
@@ -323,7 +323,7 @@ class CimlkCohesionValidatorTest {
 
   @Test
   void testSrm1RoadWithoutDispersionLine() {
-    final Scenario scenario = new Scenario(Theme.RBL);
+    final Scenario scenario = new Scenario(Theme.CIMLK);
     final ScenarioSituation situation = new ScenarioSituation();
     final EmissionSourceFeature road = exampleSrm1Source(DEFAULT_ROAD_ID);
     final List<EmissionSourceFeature> sourceList = List.of(road);
@@ -342,17 +342,17 @@ class CimlkCohesionValidatorTest {
 
   @Test
   void testDuplicateDispersionLinesInSameImport() {
-    final Scenario scenario = new Scenario(Theme.RBL);
+    final Scenario scenario = new Scenario(Theme.CIMLK);
     final ScenarioSituation situation = new ScenarioSituation();
     final CIMLKDispersionLine dispersionLine1 = new CIMLKDispersionLine();
     dispersionLine1.setCalculationPointGmlId(DEFAULT_POINT_ID);
-    dispersionLine1.setRoadGmlId(DEFAULT_ROAD_ID);
+    dispersionLine1.setGmlId(DEFAULT_ROAD_ID);
     final CIMLKDispersionLineFeature dispersionLineFeature1 = new CIMLKDispersionLineFeature();
     dispersionLineFeature1.setProperties(dispersionLine1);
     situation.getCimlkDispersionLinesList().add(dispersionLineFeature1);
     final CIMLKDispersionLine dispersionLine2 = new CIMLKDispersionLine();
     dispersionLine2.setCalculationPointGmlId(DEFAULT_POINT_ID);
-    dispersionLine2.setRoadGmlId(DEFAULT_ROAD_ID);
+    dispersionLine2.setGmlId(DEFAULT_ROAD_ID);
     final CIMLKDispersionLineFeature dispersionLineFeature2 = new CIMLKDispersionLineFeature();
     dispersionLineFeature2.setProperties(dispersionLine2);
     situation.getCimlkDispersionLinesList().add(dispersionLineFeature2);
@@ -373,11 +373,11 @@ class CimlkCohesionValidatorTest {
 
   @Test
   void testDuplicateDispersionLinesDifferentImport() {
-    final Scenario scenario = new Scenario(Theme.RBL);
+    final Scenario scenario = new Scenario(Theme.CIMLK);
     final ScenarioSituation situation1 = new ScenarioSituation();
     final CIMLKDispersionLine dispersionLine1 = new CIMLKDispersionLine();
     dispersionLine1.setCalculationPointGmlId(DEFAULT_POINT_ID);
-    dispersionLine1.setRoadGmlId(DEFAULT_ROAD_ID);
+    dispersionLine1.setGmlId(DEFAULT_ROAD_ID);
     final CIMLKDispersionLineFeature dispersionLineFeature1 = new CIMLKDispersionLineFeature();
     dispersionLineFeature1.setProperties(dispersionLine1);
     situation1.getCimlkDispersionLinesList().add(dispersionLineFeature1);
@@ -386,7 +386,7 @@ class CimlkCohesionValidatorTest {
     final ScenarioSituation situation2 = new ScenarioSituation();
     final CIMLKDispersionLine dispersionLine2 = new CIMLKDispersionLine();
     dispersionLine2.setCalculationPointGmlId(DEFAULT_POINT_ID);
-    dispersionLine2.setRoadGmlId(DEFAULT_ROAD_ID);
+    dispersionLine2.setGmlId(DEFAULT_ROAD_ID);
     final CIMLKDispersionLineFeature dispersionLineFeature2 = new CIMLKDispersionLineFeature();
     dispersionLineFeature2.setProperties(dispersionLine2);
     situation2.getCimlkDispersionLinesList().add(dispersionLineFeature2);
@@ -407,7 +407,7 @@ class CimlkCohesionValidatorTest {
 
   @Test
   void testCorrectionCorrect() {
-    final Scenario scenario = new Scenario(Theme.RBL);
+    final Scenario scenario = new Scenario(Theme.CIMLK);
     final ScenarioSituation situation = new ScenarioSituation();
     final CIMLKCorrection correction = new CIMLKCorrection();
     correction.setCalculationPointGmlId(DEFAULT_POINT_ID);
@@ -425,7 +425,7 @@ class CimlkCohesionValidatorTest {
 
   @Test
   void testCorrectionWithWrongPoint() {
-    final Scenario scenario = new Scenario(Theme.RBL);
+    final Scenario scenario = new Scenario(Theme.CIMLK);
     final ScenarioSituation situation = new ScenarioSituation();
     final CIMLKCorrection correction = new CIMLKCorrection();
     correction.setCalculationPointGmlId(DEFAULT_POINT_ID);
@@ -452,7 +452,7 @@ class CimlkCohesionValidatorTest {
   }
 
   private void check(final ScenarioSituation... situations) {
-    final Scenario scenario = new Scenario(Theme.RBL);
+    final Scenario scenario = new Scenario(Theme.CIMLK);
     Stream.of(situations).forEach(s -> scenario.getSituations().add(s));
     check(scenario);
   }

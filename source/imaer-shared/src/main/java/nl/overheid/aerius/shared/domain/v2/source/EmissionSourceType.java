@@ -1,5 +1,5 @@
 /*
- * Copyright the State of the Netherlands
+ * Copyright (c) Contributors to the project
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -20,12 +20,6 @@ import jsinterop.annotations.JsType;
 
 @JsType
 public enum EmissionSourceType {
-  /**
-   * Farm Lodge emission values.
-   * @Deprecated Replaced by Animal Housing approach
-   */
-  @Deprecated
-  FARM_LODGE(Names.FARM_LODGE),
   /**
    * Farm animal housing emission values.
    */
@@ -88,7 +82,6 @@ public enum EmissionSourceType {
   SHIPPING_MARITIME_MARITIME(Names.SHIPPING_MARITIME_MARITIME);
 
   public static final class Names {
-    public static final String FARM_LODGE = "FARM_LODGE";
     public static final String FARM_ANIMAL_HOUSING = "FARM_ANIMAL_HOUSING";
     public static final String FARMLAND = "FARMLAND";
     public static final String MANURE_STORAGE = "MANURE_STORAGE";

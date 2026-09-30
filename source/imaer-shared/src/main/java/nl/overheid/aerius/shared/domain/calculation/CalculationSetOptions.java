@@ -1,5 +1,5 @@
 /*
- * Copyright the State of the Netherlands
+ * Copyright (c) Contributors to the project
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -21,8 +21,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.result.EmissionResultKey;
 
@@ -31,18 +29,20 @@ import nl.overheid.aerius.shared.domain.result.EmissionResultKey;
  */
 public class CalculationSetOptions implements Serializable {
 
-  private static final long serialVersionUID = 5L;
+  private static final long serialVersionUID = 7L;
 
   private int calculationSetOptionsId;
   private CalculationMethod calculationMethod = CalculationMethod.FORMAL_ASSESSMENT;
   private CalculationJobType calculationJobType;
   private double calculateMaximumRange;
+  private boolean maximumRangeRelevant;
   private boolean useInCombinationArchive;
   private final ArrayList<Substance> substances = new ArrayList<>();
   private final Set<EmissionResultKey> emissionResultKeys = new HashSet<>();
-  private WNBCalculationOptions owN2000CalculationOptions = new WNBCalculationOptions();
-  private RBLCalculationOptions rblCalculationOptions = new RBLCalculationOptions();
+  private OwN2000CalculationOptions owN2000CalculationOptions = new OwN2000CalculationOptions();
+  private CIMLKCalculationOptions cimlkCalculationOptions = new CIMLKCalculationOptions();
   private NCACalculationOptions ncaCalculationOptions = new NCACalculationOptions();
+  private CalculatedSnapshotValues calculatedSnapshotValues = new CalculatedSnapshotValues();
   private Serializable experimentalOptions;
 
   /**
@@ -92,12 +92,15 @@ public class CalculationSetOptions implements Serializable {
   }
 
   /**
-   * Returns true if the maximum range value is used by the calculation method. Meaning those types use the maximum range value to determine the
-   * distance to calculate.
+   * Returns true if the maximum range is relevant for the calculation.
    * @return true if relevant
    */
   public boolean isMaximumRangeRelevant() {
-    return calculationMethod == CalculationMethod.NATURE_AREA || calculationMethod == CalculationMethod.QUICK_RUN;
+    return maximumRangeRelevant;
+  }
+
+  public void setMaximumRangeRelevant(final boolean maximumRangeRelevant) {
+    this.maximumRangeRelevant = maximumRangeRelevant;
   }
 
   /**
@@ -140,21 +143,16 @@ public class CalculationSetOptions implements Serializable {
     return owN2000CalculationOptions;
   }
 
-  /**
-   * @deprecated replace calls with {@link #getOwN2000CalculationOptions()}
-   */
-  @Deprecated
-  @JsonProperty("owN2000CalculationOptions")
-  public WNBCalculationOptions getWnbCalculationOptions() {
-    return owN2000CalculationOptions;
-  }
-
-  public RBLCalculationOptions getRblCalculationOptions() {
-    return rblCalculationOptions;
+  public CIMLKCalculationOptions getCimlkCalculationOptions() {
+    return cimlkCalculationOptions;
   }
 
   public NCACalculationOptions getNcaCalculationOptions() {
     return ncaCalculationOptions;
+  }
+
+  public CalculatedSnapshotValues getCalculatedSnapshotValues() {
+    return calculatedSnapshotValues;
   }
 
   /**
@@ -176,6 +174,6 @@ public class CalculationSetOptions implements Serializable {
     return "CalculationSetOptions [calculationSetOptionsId=" + calculationSetOptionsId + ", calculationMethod=" + calculationMethod
         + ", calculateMaximumRange=" + calculateMaximumRange + ", substances=" + substances + ", emissionResultKeys=" + emissionResultKeys
         + ", stacking=" + stacking + ", connectSuppliedOptions=" + connectSuppliedOptions + ", own2000CalculationOptions=" + owN2000CalculationOptions
-        + ", rblCalculationOptions=" + rblCalculationOptions + ", ncaCalculationOptions=" + ncaCalculationOptions + "]";
+        + ", cimlkCalculationOptions=" + cimlkCalculationOptions + ", ncaCalculationOptions=" + ncaCalculationOptions + "]";
   }
 }

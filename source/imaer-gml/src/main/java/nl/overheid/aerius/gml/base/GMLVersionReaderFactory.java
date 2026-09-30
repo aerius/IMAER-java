@@ -1,5 +1,5 @@
 /*
- * Copyright the State of the Netherlands
+ * Copyright (c) Contributors to the project
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -18,6 +18,7 @@ package nl.overheid.aerius.gml.base;
 
 import javax.xml.validation.Schema;
 
+import nl.overheid.aerius.gml.GMLMetaDataReader;
 import nl.overheid.aerius.shared.exception.AeriusException;
 
 /**
@@ -49,7 +50,7 @@ public abstract class GMLVersionReaderFactory {
     schema = GMLSchemaFactory.createSchema(schemaLocation);
     legacyCodeConverter = new GMLLegacyCodeConverter(legacyCodeSupplier.getLegacyCodes(version),
         legacyCodeSupplier.getLegacyMobileSourceOffRoadConversions(), legacyCodeSupplier.getLegacyPlanConversions(),
-        legacyCodeSupplier.getLegacyFarmLodgingConversions());
+        legacyCodeSupplier.getLegacyFarmLodgingConversions(), legacyCodeSupplier.getRemovedCodes());
   }
 
   /**
@@ -80,10 +81,11 @@ public abstract class GMLVersionReaderFactory {
     return schema;
   }
 
-  /**
-   *
-   * @param conversionData
-   * @return
-   */
-  public abstract GMLVersionReader createReader(final GMLConversionData conversionData);
+  public GMLVersionReader createReader(final GMLConversionData conversionData, final GMLMetaDataReader metaDataReader) {
+    return createReader(conversionData);
+  }
+
+  protected GMLVersionReader createReader(final GMLConversionData conversionData) {
+    throw new UnsupportedOperationException("Either override this createReader, or the calling createReader method");
+  }
 }

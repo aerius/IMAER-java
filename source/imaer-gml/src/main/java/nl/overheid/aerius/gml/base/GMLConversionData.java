@@ -1,5 +1,5 @@
 /*
- * Copyright the State of the Netherlands
+ * Copyright (c) Contributors to the project
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -35,6 +35,7 @@ import nl.overheid.aerius.shared.domain.v2.characteristics.CharacteristicsType;
 import nl.overheid.aerius.shared.domain.v2.characteristics.OPSSourceCharacteristics;
 import nl.overheid.aerius.shared.domain.v2.characteristics.SourceCharacteristics;
 import nl.overheid.aerius.shared.domain.v2.geojson.Geometry;
+import nl.overheid.aerius.shared.domain.v2.geojson.GeometryType;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceFeature;
 import nl.overheid.aerius.shared.domain.v2.source.InlandMaritimeShippingEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.InlandShippingEmissionSource;
@@ -49,6 +50,8 @@ import nl.overheid.aerius.shared.geometry.ReceptorUtil;
  * Data object to keep track of conversion data.
  */
 public class GMLConversionData {
+
+  public static final Integer NON_URBAN_ROAD_DEFAULT_SPEED = 60;
 
   private final List<AeriusException> errors;
   private final List<AeriusException> warnings;
@@ -204,6 +207,9 @@ public class GMLConversionData {
     case OFF_ROAD_MOBILE_SOURCE:
       reason = ImaerExceptionReason.GML_OFF_ROAD_CATEGORY_CONVERTED;
       break;
+    case SECTOR:
+      reason = ImaerExceptionReason.GML_SECTOR_OUT_OF_DATE;
+      break;
     default:
       reason = ImaerExceptionReason.GML_INVALID_CATEGORY_MATCH;
       break;
@@ -237,5 +243,25 @@ public class GMLConversionData {
 
   public <S extends SourceCharacteristics> S determineDefaultCharacteristicsBySectorId(final int sectorId) {
     return characteristicsSupplier.determineDefaultCharacteristicsBySectorId(sectorId);
+  }
+
+  public <S extends SourceCharacteristics> S determineDefaultCharacteristicsBySectorId(final int sectorId, final GeometryType geometryType) {
+    return characteristicsSupplier.determineDefaultCharacteristicsBySectorId(sectorId, geometryType);
+  }
+
+  /**
+   * Checks if the given code is a removed code and adds a warning if so.
+   *
+   * @param type the type of legacy code
+   * @param code the code to check
+   * @param sourceLabel the label of the source for warning messages
+   * @return true if the code is a removed code, false otherwise
+   */
+  public boolean warnIfRemovedCode(final GMLLegacyCodeType type, final String code, final String sourceLabel) {
+    if (legacyCodeConverter.isRemovedCode(type, code)) {
+      warnings.add(new AeriusException(ImaerExceptionReason.GML_REMOVED_CODE_CONVERTED, sourceLabel, code));
+      return true;
+    }
+    return false;
   }
 }

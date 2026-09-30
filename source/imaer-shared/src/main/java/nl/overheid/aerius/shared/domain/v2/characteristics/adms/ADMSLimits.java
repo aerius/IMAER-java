@@ -1,5 +1,5 @@
 /*
- * Crown copyright
+ * Copyright (c) Contributors to the project
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -16,11 +16,14 @@
  */
 package nl.overheid.aerius.shared.domain.v2.characteristics.adms;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import nl.overheid.aerius.shared.domain.v2.building.BuildingLimits;
 
 /**
  * Class of ADMS minimum, maximum and default values.
  */
+@JsonSerialize(as = BuildingLimits.class)
 public final class ADMSLimits implements BuildingLimits {
 
   private static final long serialVersionUID = 1L;
@@ -79,7 +82,7 @@ public final class ADMSLimits implements BuildingLimits {
   public static final long SOURCE_L1_MAXIMUM = 1_000;
   public static final long SOURCE_L1_DEFAULT = 1;
 
-  private static final int BUILDING_DIGITS_PRECISION = 3;
+  private static final int BUILDING_DIGITS_PRECISION = 1;
 
   public static final double BUILDING_HEIGHT_MINIMUM = 0.001;
   public static final double BUILDING_HEIGHT_MAXIMUM = 500;
@@ -135,7 +138,7 @@ public final class ADMSLimits implements BuildingLimits {
 
   public static final int MAX_POLYGON_CONVEX_VERTICES = 50;
 
-  private static final int ADMS_MAX_BUILDINGS_PER_SITUATION = 50;
+  private static final int ADMS_MAX_BUILDINGS_PER_SITUATION = 25;
 
   public static final ADMSLimits INSTANCE = new ADMSLimits();
 

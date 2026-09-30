@@ -40,6 +40,7 @@
                         </imaer:SpecifiedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>7.2</imaer:emissionHeight>
+                    <imaer:spread>0.0</imaer:spread>
                 </imaer:EmissionSourceCharacteristics>
             </imaer:emissionSourceCharacteristics>
             <imaer:geometry>
@@ -160,6 +161,7 @@
                         </imaer:SpecifiedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>10.0</imaer:emissionHeight>
+                    <imaer:spread>0.0</imaer:spread>
                     <imaer:timeVaryingProfile>
                         <imaer:StandardTimeVaryingProfile>
                             <imaer:standardType>CONTINUOUS</imaer:standardType>
@@ -215,7 +217,7 @@
                         </imaer:SpecifiedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>2.5</imaer:emissionHeight>
-                    <imaer:spread>2.5</imaer:spread>
+                    <imaer:spread>0.0</imaer:spread>
                 </imaer:EmissionSourceCharacteristics>
             </imaer:emissionSourceCharacteristics>
             <imaer:geometry>
@@ -292,6 +294,7 @@
                         </imaer:SpecifiedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>2.0</imaer:emissionHeight>
+                    <imaer:spread>0.0</imaer:spread>
                 </imaer:EmissionSourceCharacteristics>
             </imaer:emissionSourceCharacteristics>
             <imaer:geometry>

@@ -1,5 +1,5 @@
 /*
- * Copyright the State of the Netherlands
+ * Copyright (c) Contributors to the project
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -20,22 +20,28 @@ import java.io.InputStream;
 import java.io.UTFDataFormatException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
-import javax.xml.bind.ValidationEvent;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Unmarshaller;
+import jakarta.xml.bind.ValidationEvent;
+import jakarta.xml.bind.ValidationEventLocator;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.opengis.gml.v_3_2_1.ObjectFactory;
+import net.opengis.gml.v_3_2.ObjectFactory;
 
 import nl.overheid.aerius.gml.base.FeatureCollection;
 import nl.overheid.aerius.gml.base.GMLHelper;
@@ -58,7 +64,7 @@ public final class GMLReaderFactory {
   private final GMLReaderProxy readerProxy;
   private final GMLHelper gmlHelper;
 
-  GMLReaderFactory(final GMLHelper gmlHelper) throws AeriusException {
+  public GMLReaderFactory(final GMLHelper gmlHelper) throws AeriusException {
     this(gmlHelper, new GMLReaderProxy(gmlHelper));
   }
 
@@ -167,13 +173,56 @@ public final class GMLReaderFactory {
   }
 
   private static List<AeriusException> newValidationFailed(final List<ValidationEvent> list) {
-    final List<AeriusException> errors = new ArrayList<>();
+    final Map<String, List<ValidationEvent>> grouped = new LinkedHashMap<>();
+    final Map<String, String> prefixByKey = new HashMap<>();
     for (final ValidationEvent event : list) {
-      final String errorMessage = event.getMessage().trim();
-      final AeriusException error = new AeriusException(ImaerExceptionReason.GML_VALIDATION_FAILED, errorMessage);
-      errors.add(error);
-      LOG.debug("validation error: {}", errorMessage);
+      final String key = locationKey(event.getLocator());
+      grouped.computeIfAbsent(key, k -> new ArrayList<>()).add(event);
+      prefixByKey.computeIfAbsent(key, k -> locationPrefix(event.getLocator()));
+    }
+
+    final List<AeriusException> errors = new ArrayList<>();
+    for (final Map.Entry<String, List<ValidationEvent>> entry : grouped.entrySet()) {
+      final String body = discardRedundantLowerSeverityEvents(entry.getValue()).stream()
+          .map(e -> e.getMessage().trim())
+          .collect(Collectors.joining(" "));
+      final String message = prefixByKey.get(entry.getKey()) + body;
+      errors.add(new AeriusException(ImaerExceptionReason.GML_VALIDATION_FAILED, message));
+      LOG.debug("validation error: {}", message);
     }
     return errors;
+  }
+
+  /** Lossy: drops events below the group's max severity (e.g. JAXB's bare "None" when a cvc-* FATAL covers it). */
+  private static List<ValidationEvent> discardRedundantLowerSeverityEvents(final List<ValidationEvent> sameLocation) {
+    final int maxSeverity = sameLocation.stream().mapToInt(ValidationEvent::getSeverity).max().orElse(0);
+    return sameLocation.stream()
+        .filter(e -> e.getSeverity() == maxSeverity)
+        .toList();
+  }
+
+  private static String locationKey(final ValidationEventLocator locator) {
+    if (locator == null) {
+      return "-1:-1";
+    }
+    return locator.getLineNumber() + ":" + locator.getColumnNumber();
+  }
+
+  private static String locationPrefix(final ValidationEventLocator locator) {
+    if (locator == null) {
+      return "";
+    }
+    final int line = locator.getLineNumber();
+    final int col = locator.getColumnNumber();
+    if (line >= 0 && col >= 0) {
+      return "[line %d, col %d] ".formatted(line, col);
+    }
+    if (line >= 0) {
+      return "[line %d] ".formatted(line);
+    }
+    if (col >= 0) {
+      return "[col %d] ".formatted(col);
+    }
+    return "";
   }
 }

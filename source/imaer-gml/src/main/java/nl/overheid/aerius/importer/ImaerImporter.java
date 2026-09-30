@@ -1,5 +1,5 @@
 /*
- * Copyright the State of the Netherlands
+ * Copyright (c) Contributors to the project
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -16,6 +16,7 @@
  */
 package nl.overheid.aerius.importer;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -24,14 +25,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.regex.Pattern;
 
 import org.apache.commons.io.input.ReaderInputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.github.rwitzel.streamflyer.core.ModifyingReader;
-import com.github.rwitzel.streamflyer.regex.RegexModifier;
 
 import nl.overheid.aerius.gml.GMLMetaDataReader;
 import nl.overheid.aerius.gml.GMLReader;
@@ -39,6 +36,7 @@ import nl.overheid.aerius.gml.GMLReaderFactory;
 import nl.overheid.aerius.gml.GMLValidator;
 import nl.overheid.aerius.gml.base.AeriusGMLVersion;
 import nl.overheid.aerius.gml.base.GMLHelper;
+import nl.overheid.aerius.gml.filter.ReceptorFilteringReader;
 import nl.overheid.aerius.shared.domain.Theme;
 import nl.overheid.aerius.shared.domain.scenario.SituationType;
 import nl.overheid.aerius.shared.domain.v2.building.BuildingFeature;
@@ -73,13 +71,30 @@ public class ImaerImporter {
   private static final Logger LOGGER = LoggerFactory.getLogger(ImaerImporter.class);
 
   private final GMLReaderFactory factory;
+  private final GMLHelper gmlHelper;
   private final EPSG epsg;
   private final EmissionSourceLimits limits;
 
-  public ImaerImporter(final GMLHelper gmlHelper) throws AeriusException {
-    factory = GMLReaderFactory.getFactory(gmlHelper);
+  /**
+   * This constructor should be used for tests where control of the gmlReaderFactory is more important than speed.
+   * @param gmlHelper
+   * @param gmlReaderFactory
+   * @throws AeriusException
+   */
+  public ImaerImporter(final GMLHelper gmlHelper, final GMLReaderFactory gmlReaderFactory) throws AeriusException {
+    this.gmlHelper = gmlHelper;
+    factory = gmlReaderFactory;
     epsg = gmlHelper.getReceptorGridSettings().getEPSG();
     limits = gmlHelper.getEmissionSourceGeometryLimits();
+  }
+
+  /**
+   * Use this constructor by default.
+   * @param gmlHelper
+   * @throws AeriusException
+   */
+  public ImaerImporter(final GMLHelper gmlHelper) throws AeriusException {
+    this(gmlHelper, GMLReaderFactory.getFactory(gmlHelper));
   }
 
   /**
@@ -129,16 +144,16 @@ public class ImaerImporter {
     if (reader == null) {
       return;
     }
-
     final AeriusGMLVersion version = reader.getVersion();
-    setImportResultMetaData(result, reader);
+
+    result.setFileVersion("IMAER_" + version.name());
+    setImportResultMetaData(result, reader, importYear);
     GMLValidator.validateMetaData(result.getImportedMetaData(), result.getExceptions(), ImportOption.VALIDATE_METADATA.in(importOptions)
         && result.getArchiveMetaData() == null);
-    GMLValidator.validateYear(result.getSituation().getYear(), result.getExceptions());
     GMLValidator.validateGMLVersion(version, result.getWarnings());
 
     final ScenarioSituation situation = addSituationProperties(reader, result);
-    addEmissionSources(reader, importOptions, result, importYear);
+    addEmissionSources(reader, importOptions, result);
     addAeriusPoints(reader, importOptions, result);
     addCimlkMeasures(reader, importOptions, result, situation);
     addCimlkDispersionLines(reader, importOptions, situation);
@@ -179,15 +194,14 @@ public class ImaerImporter {
         result.getExceptions(), result.getWarnings());
   }
 
-  private void addEmissionSources(final GMLReader reader, final Set<ImportOption> importOptions, final ImportParcel result,
-      final Optional<Integer> importYear) throws AeriusException {
+  private void addEmissionSources(final GMLReader reader, final Set<ImportOption> importOptions, final ImportParcel result) throws AeriusException {
     if (ImportOption.INCLUDE_SOURCES.in(importOptions)) {
       final List<EmissionSourceFeature> sources = reader.readEmissionSourceList();
       if (ImportOption.VALIDATE_SOURCES.in(importOptions)) {
         EmissionSourceValidator.validateSources(sources, result.getExceptions(), result.getWarnings(),
             factory.createValidationHelper());
       }
-      reader.enforceEmissions(sources, importYear.orElse(result.getSituation().getYear()));
+      reader.enforceEmissions(sources, result.getSituation().getYear());
       if (ImportOption.VALIDATE_SOURCES.in(importOptions)) {
         EmissionSourceValidator.validateSourcesWithEmissions(sources, result.getExceptions(), result.getWarnings());
       }
@@ -228,17 +242,26 @@ public class ImaerImporter {
    *
    * @param inputStream stream to filter.
    * @param importOptions determine if we want to filer out.
-   * @return
-   * @throws AeriusException
+   * @return filtered input stream
+   * @throws AeriusException when an I/O error occurs during filtering setup
    */
-  private static InputStream filterResults(final InputStream inputStream, final Set<ImportOption> importOptions) {
+  private static InputStream filterResults(final InputStream inputStream, final Set<ImportOption> importOptions) throws AeriusException {
     if (importOptions.contains(ImportOption.INCLUDE_RESULTS)) {
       return inputStream;
     } else {
-      final RegexModifier myModifier = new RegexModifier("<imaer:featureMember>[\n].+<imaer:Receptor.*>([\\s\\S]*?)<\\/imaer:featureMember>",
-          Pattern.CASE_INSENSITIVE, "");
-      final Reader reader = new ModifyingReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8), myModifier);
-      return new ReaderInputStream(reader, StandardCharsets.UTF_8);
+      final Reader sourceReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
+      final Reader filteringReader = new ReceptorFilteringReader(sourceReader);
+      try {
+        return ReaderInputStream.builder()
+            .setReader(filteringReader)
+            .setCharset(StandardCharsets.UTF_8)
+            .get();
+      } catch (final IOException e) {
+        final AeriusException aeriusException = new AeriusException(ImaerExceptionReason.INTERNAL_ERROR,
+            "Failed to create filtering input stream: " + e.getMessage());
+        aeriusException.initCause(e);
+        throw aeriusException;
+      }
     }
   }
 
@@ -309,9 +332,9 @@ public class ImaerImporter {
     return list;
   }
 
-  private static void setImportResultMetaData(final ImportParcel result, final GMLReader reader) throws AeriusException {
+  private void setImportResultMetaData(final ImportParcel result, final GMLReader reader, final Optional<Integer> importYear) throws AeriusException {
     final GMLMetaDataReader metaDataReader = reader.metaDataReader();
-    result.getSituation().setYear(metaDataReader.readYear());
+    result.getSituation().setYear(gmlHelper.yearToUseForImport(importYear, reader.metaDataReader().readYear(), result.getWarnings()));
     result.setVersion(metaDataReader.readAeriusVersion());
     result.setDatabaseVersion(metaDataReader.readDatabaseVersion());
     result.setGmlCreator(metaDataReader.readGmlCreator());

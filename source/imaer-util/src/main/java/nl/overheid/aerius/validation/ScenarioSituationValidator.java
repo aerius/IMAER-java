@@ -1,5 +1,5 @@
 /*
- * Copyright the State of the Netherlands
+ * Copyright (c) Contributors to the project
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -47,6 +47,7 @@ public final class ScenarioSituationValidator {
     validateBuildings(situation.getBuildingsList(), validationHelper);
     validateCimlkMeasures(situation.getCimlkMeasuresList());
     validateDefinitions(situation.getDefinitions());
+    validateCohesion(situation);
   }
 
   public static void validateSources(final List<EmissionSourceFeature> sources, final ValidationHelper validationHelper) throws AeriusException {
@@ -76,6 +77,14 @@ public final class ScenarioSituationValidator {
   public static void validateDefinitions(final Definitions definitions) throws AeriusException {
     final List<AeriusException> errors = new ArrayList<>();
     DefinitionsValidator.validateDefinitions(definitions, errors, new ArrayList<>());
+    if (!errors.isEmpty()) {
+      throw errors.get(0);
+    }
+  }
+
+  public static void validateCohesion(final ScenarioSituation situation) throws AeriusException {
+    final List<AeriusException> errors = new ArrayList<>();
+    SituationCohesionValidator.checkCohesion(situation, errors, new ArrayList<>());
     if (!errors.isEmpty()) {
       throw errors.get(0);
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright the State of the Netherlands
+ * Copyright (c) Contributors to the project
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -16,10 +16,10 @@
  */
 package nl.overheid.aerius.gml.v6_0.source.mobile;
 
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
+import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlType;
 
 import nl.overheid.aerius.gml.base.source.mobile.v40.IsGmlStandardOffRoadMobileSource;
 import nl.overheid.aerius.gml.v6_0.base.CalculatorSchema;
@@ -29,13 +29,14 @@ import nl.overheid.aerius.gml.v6_0.base.CalculatorSchema;
  */
 @XmlRootElement(name = "StandardOffRoadMobileSource", namespace = CalculatorSchema.NAMESPACE)
 @XmlType(name = "StandardOffRoadMobileSourceType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"literFuelPerYear", "operatingHoursPerYear",
-    "literAdBluePerYear"})
+    "literAdBluePerYear", "power"})
 public class OffRoadMobileSource extends AbstractOffRoadMobileSource implements IsGmlStandardOffRoadMobileSource {
 
   private String code;
   private Integer literFuelPerYear;
   private Integer operatingHoursPerYear;
   private Integer literAdBluePerYear;
+  private Integer power;
 
   @Override
   @XmlAttribute(name = "offRoadMobileSourceType")
@@ -76,5 +77,16 @@ public class OffRoadMobileSource extends AbstractOffRoadMobileSource implements 
   public void setLiterAdBluePerYear(final Integer literAdBluePerYear) {
     this.literAdBluePerYear = literAdBluePerYear;
   }
+
+  @Override
+  @XmlElement(namespace = CalculatorSchema.NAMESPACE)
+  public Integer getPower() {
+    return power;
+  }
+
+  public void setPower(final Integer power) {
+    this.power = power;
+  }
+
 
 }

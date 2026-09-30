@@ -1,5 +1,5 @@
 /*
- * Copyright the State of the Netherlands
+ * Copyright (c) Contributors to the project
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -54,7 +54,7 @@ public class GML2CIMLKDispersionLine {
     final String roadId = gmlDispersionLine.getRoad().getReferredId();
     final String calculationPointId = gmlDispersionLine.getCalculationPoint().getReferredId();
 
-    dispersionLine.setRoadGmlId(roadId);
+    dispersionLine.setGmlId(roadId);
     dispersionLine.setCalculationPointGmlId(calculationPointId);
 
     final CIMLKDispersionLineFeature feature = new CIMLKDispersionLineFeature();

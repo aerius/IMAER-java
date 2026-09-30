@@ -1,0 +1,23 @@
+name: code-push
+
+on:
+  push:
+    branches:
+      - 'main'
+      - '**_fixes'
+
+jobs:
+  job:
+    if: github.repository == 'aerius/IMAER-java'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Init the github-actions repo
+        uses: aerius/github-actions/init@v1.1
+
+      - uses: ./aerius-github-actions/events/push-event-action
+        with:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
+          NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
+          ROOT_POM_DIRECTORY: repo/source

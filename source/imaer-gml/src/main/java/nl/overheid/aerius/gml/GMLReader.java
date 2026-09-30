@@ -1,5 +1,5 @@
 /*
- * Copyright the State of the Netherlands
+ * Copyright (c) Contributors to the project
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -36,6 +36,7 @@ import nl.overheid.aerius.shared.domain.v2.point.CalculationPointFeature;
 import nl.overheid.aerius.shared.domain.v2.scenario.Definitions;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceFeature;
 import nl.overheid.aerius.shared.exception.AeriusException;
+import nl.overheid.aerius.util.gml.GMLIdUtil;
 
 /**
  * Class to read data from a feature collection that was created from an IMAER GML.
@@ -69,7 +70,7 @@ public final class GMLReader {
     conversionData = new GMLConversionData(gmlHelper, factory.getLegacyCodeConverter(), errors, warnings);
     metaDataReader = new GMLMetaDataReader(featureCollection, conversionData);
     calculationSetOptionsReader = new GMLCalculationSetOptionsReader(featureCollection);
-    versionReader = factory.createReader(conversionData);
+    versionReader = factory.createReader(conversionData, metaDataReader);
   }
 
   public AeriusGMLVersion getVersion() {
@@ -138,6 +139,7 @@ public final class GMLReader {
       emissionSourceList.addAll(conversionData.getMaritimeInlandRoutes().keySet());
       emissionSourceList.addAll(conversionData.getMaritimeMaritimeRoutes().keySet());
     }
+    GMLIdUtil.toValidGmlIds(emissionSourceList, GMLIdUtil.SOURCE_PREFIX);
     return emissionSourceList;
   }
 

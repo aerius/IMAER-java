@@ -1,6 +1,6 @@
 <!--
 
-    Copyright the State of the Netherlands
+    Copyright (c) Contributors to the project
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as published by
@@ -20,7 +20,7 @@
   <parent>
     <groupId>nl.aerius</groupId>
     <artifactId>imaer-parent</artifactId>
-    <version>6.0.0-2</version>
+    <version>6.0.2-1</version>
   </parent>
 
   <modelVersion>4.0.0</modelVersion>
@@ -29,8 +29,21 @@
   <packaging>war</packaging>
 
   <properties>
-    <tomcat-standalone.version>1.0.0</tomcat-standalone.version>
+    <tomcat-standalone.version>1.2.8</tomcat-standalone.version>
   </properties>
+
+  <!-- Ensure correct tomcat dependencies get used for standalone, rather than what spring boot adds in root pom -->
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>nl.aerius</groupId>
+        <artifactId>tomcat-standalone-parent</artifactId>
+        <version>${tomcat-standalone.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
   <dependencies>
     <dependency>

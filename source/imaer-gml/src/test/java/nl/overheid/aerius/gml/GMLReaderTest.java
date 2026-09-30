@@ -1,5 +1,5 @@
 /*
- * Copyright the State of the Netherlands
+ * Copyright (c) Contributors to the project
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -36,7 +36,6 @@ import java.util.Map;
 
 import javax.xml.namespace.NamespaceContext;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -84,13 +83,6 @@ class GMLReaderTest {
   private static final String SITUATION_NAME = "Situatie 1";
   private static final SituationType SITUATION_TYPE = SituationType.PROPOSED;
   private static final Integer MONITOR_SRM2_YEAR = 2030;
-
-  private static ReceptorGridSettings gridSettings;
-
-  @BeforeAll
-  static void setUpBeforeClass() throws IOException {
-    gridSettings = GMLTestDomain.getExampleGridSettings();
-  }
 
   @Test
   void testConvertToEmissionSources() throws IOException, AeriusException {
@@ -226,10 +218,10 @@ class GMLReaderTest {
     metaDataInput.setVersion(VERSION);
     metaDataInput.setDatabaseVersion(DATABASE_VERSION);
     metaDataInput.getOptions().setCalculationMethod(CalculationMethod.FORMAL_ASSESSMENT);
-    metaDataInput.getOptions().getRblCalculationOptions().setMonitorSrm2Year(MONITOR_SRM2_YEAR);
+    metaDataInput.getOptions().getCimlkCalculationOptions().setMonitorSrm2Year(MONITOR_SRM2_YEAR);
     metaDataInput.setResultsIncluded(true);
-    final InternalGMLWriter writer = new InternalGMLWriter(gridSettings, GMLTestDomain.TEST_REFERENCE_GENERATOR, Boolean.TRUE,
-        GMLWriter.LATEST_WRITER_VERSION);
+    final InternalGMLWriter writer = new InternalGMLWriter(ReceptorGridSettings.NL, GMLTestDomain.TEST_REFERENCE_GENERATOR, Boolean.TRUE,
+        GMLWriter.LATEST_WRITER_VERSION, true);
     return writer.getWriter().metaData2GML(metaDataInput);
   }
 
@@ -332,7 +324,7 @@ class GMLReaderTest {
     offRoadMobileSourceMap.put("101", new Conversion("BA-B-E3", true));
     codeMaps.put(GMLLegacyCodeType.ON_ROAD_MOBILE_SOURCE, offRoadMobileSourceMap);
     when(mockHelper.getLegacyCodes(any())).thenReturn(codeMaps);
-    when(mockHelper.getReceptorGridSettings()).thenReturn(gridSettings);
+    when(mockHelper.getReceptorGridSettings()).thenReturn(ReceptorGridSettings.NL);
     return mockHelper;
   }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright the State of the Netherlands
+ * Copyright (c) Contributors to the project
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -30,7 +30,7 @@ public class GML2SourceCharacteristicsV31 extends GML2OPSSourceCharacteristics {
   private static final double EMISSION_TEMPERATURE_DEFAULT = 11.85;
 
   public GML2SourceCharacteristicsV31(final GMLConversionData conversionData) {
-    super(conversionData);
+    super(conversionData, true);
   }
 
   @Override

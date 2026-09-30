@@ -1,5 +1,5 @@
 /*
- * Crown copyright
+ * Copyright (c) Contributors to the project
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -25,22 +25,14 @@ import java.util.List;
  */
 public class NCACalculationOptions implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 2L;
+
+  private String projectCategory;
 
   /**
    * Regional area for which a permit calculation would apply to.
    */
   private String permitArea;
-
-  /**
-   * Location of the meteorological site location.
-   */
-  private String meteoSiteLocation;
-
-  /**
-   * List of meteo years to calculate.
-   */
-  private List<String> meteoYears = new ArrayList<>();
 
   /**
    * ADMS version to use.
@@ -61,11 +53,21 @@ public class NCACalculationOptions implements Serializable {
   /**
    * Option on what fNO2 to use when calculating custom calculation points.
    */
-  private RoadLocalFractionNO2Option roadLocalFractionNO2PoinsOption = RoadLocalFractionNO2Option.LOCATION_BASED;
+  private RoadLocalFractionNO2Option roadLocalFractionNO2PointsOption = RoadLocalFractionNO2Option.LOCATION_BASED;
   /**
    * Value for fNO2 when either receptors or points is configured as {@link RoadLocalFractionNO2Option#ONE_CUSTOM_VALUE}.
    */
   private Double roadLocalFractionNO2;
+
+  private List<String> developmentPressureSourceIds = new ArrayList<>();
+
+  public String getProjectCategory() {
+    return projectCategory;
+  }
+
+  public void setProjectCategory(final String projectCategory) {
+    this.projectCategory = projectCategory;
+  }
 
   public String getPermitArea() {
     return permitArea;
@@ -73,38 +75,6 @@ public class NCACalculationOptions implements Serializable {
 
   public void setPermitArea(final String permitArea) {
     this.permitArea = permitArea;
-  }
-
-  /**
-   * @Deprecated Use Met information on ADMSOptions instead.
-   */
-  @Deprecated
-  public String getMeteoSiteLocation() {
-    return meteoSiteLocation;
-  }
-
-  /**
-   * @Deprecated Use Met information on ADMSOptions instead.
-   */
-  @Deprecated
-  public void setMeteoSiteLocation(final String meteoSiteLocation) {
-    this.meteoSiteLocation = meteoSiteLocation;
-  }
-
-  /**
-   * @Deprecated Use Met information on ADMSOptions instead.
-   */
-  @Deprecated
-  public List<String> getMeteoYears() {
-    return meteoYears;
-  }
-
-  /**
-   * @Deprecated Use Met information on ADMSOptions instead.
-   */
-  @Deprecated
-  public void setMeteoYears(final List<String> meteoYears) {
-    this.meteoYears = meteoYears;
   }
 
   public ADMSOptions getAdmsOptions() {
@@ -132,11 +102,11 @@ public class NCACalculationOptions implements Serializable {
   }
 
   public RoadLocalFractionNO2Option getRoadLocalFractionNO2PointsOption() {
-    return roadLocalFractionNO2PoinsOption;
+    return roadLocalFractionNO2PointsOption;
   }
 
   public void setRoadLocalFractionNO2PointsOption(final RoadLocalFractionNO2Option roadLocalFractionNO2PointsOption) {
-    this.roadLocalFractionNO2PoinsOption = roadLocalFractionNO2PointsOption;
+    this.roadLocalFractionNO2PointsOption = roadLocalFractionNO2PointsOption;
   }
 
   public Double getRoadLocalFractionNO2() {
@@ -145,6 +115,14 @@ public class NCACalculationOptions implements Serializable {
 
   public void setRoadLocalFractionNO2(final Double roadLocalFractionNO2) {
     this.roadLocalFractionNO2 = roadLocalFractionNO2;
+  }
+
+  public List<String> getDevelopmentPressureSourceIds() {
+    return developmentPressureSourceIds;
+  }
+
+  public void setDevelopmentPressureSourceIds(final List<String> developmentPressureSourceIds) {
+    this.developmentPressureSourceIds = developmentPressureSourceIds;
   }
 
 }

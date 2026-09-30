@@ -1,5 +1,5 @@
 /*
- * Copyright the State of the Netherlands
+ * Copyright (c) Contributors to the project
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -39,16 +39,25 @@ public abstract class GML2SourceCharacteristics<T extends SourceCharacteristics>
     this.conversionData = conversionData;
   }
 
-  public T fromGML(final IsGmlSourceCharacteristics characteristics, final T sectorCharacteristics,
+  public final T fromGML(final IsGmlSourceCharacteristics characteristics, final T sectorCharacteristics,
       final Geometry geometry) throws AeriusException {
-    final T returnCharacteristics = fromGMLSpecific(characteristics, sectorCharacteristics);
+    final T returnCharacteristics = fromGMLSpecific(characteristics, sectorCharacteristics, geometry);
 
     fromGMLToBuildingProperties(characteristics, returnCharacteristics, geometry);
     return returnCharacteristics;
   }
 
-  protected abstract T fromGMLSpecific(final IsGmlSourceCharacteristics characteristics,
-      final T sectorCharacteristics) throws AeriusException;
+  /**
+   * Get source characteristics from GML data
+   *
+   * @param characteristics the GML data
+   * @param sectorCharacteristics data with sector specific characteristics defaults
+   * @param geometry geometry of the source the characteristics are for
+   * @return the read source characteristics
+   * @throws AeriusException
+   */
+  protected abstract T fromGMLSpecific(final IsGmlSourceCharacteristics characteristics, final T sectorCharacteristics, Geometry geometry)
+      throws AeriusException;
 
   private void fromGMLToBuildingProperties(final IsGmlSourceCharacteristics characteristics,
       final SourceCharacteristics returnCharacteristics, final Geometry geometry) throws AeriusException {

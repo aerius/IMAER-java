@@ -1,5 +1,5 @@
 /*
- * Copyright the State of the Netherlands
+ * Copyright (c) Contributors to the project
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -16,8 +16,7 @@
  */
 package nl.overheid.aerius.gml;
 
-import java.util.EnumMap;
-import java.util.Locale;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -29,7 +28,6 @@ import nl.overheid.aerius.shared.domain.Theme;
 import nl.overheid.aerius.shared.domain.calculation.CalculationJobType;
 import nl.overheid.aerius.shared.domain.calculation.CalculationMethod;
 import nl.overheid.aerius.shared.domain.calculation.CalculationSetOptions;
-import nl.overheid.aerius.shared.domain.calculation.CalculationType;
 import nl.overheid.aerius.shared.domain.v2.scenario.ScenarioMetaData;
 import nl.overheid.aerius.util.OptionsMetadataUtil;
 
@@ -55,24 +53,21 @@ public class GMLCalculationSetOptionsReader {
     }
 
     final IsCalculationMetaData calculationMetaData = optionalCheck.get();
-
     final CalculationSetOptions options = new CalculationSetOptions();
+
     if (calculationMetaData.getOptions() != null) {
-      final Map<OptionsMetadataUtil.Option, String> optionsMap = new EnumMap<>(OptionsMetadataUtil.Option.class);
+      final Map<String, String> optionsMap = new HashMap<>();
+
+      // Add to map to remove duplicate entries.
       calculationMetaData.getOptions().stream()
           .map(IsGmlProperty::getProperty)
-          .forEach(option -> {
-            final OptionsMetadataUtil.Option parsed = OptionsMetadataUtil.Option.safeValueOf(option.getKey().toUpperCase(Locale.ROOT));
-            if (parsed != null) {
-              optionsMap.put(parsed, option.getValue());
-            }
-          });
+          .forEach(p -> optionsMap.put(p.getKey(), p.getValue()));
       OptionsMetadataUtil.addOptionsFromMap(theme, optionsMap, options);
     }
-
     setCalculationMethod(calculationMetaData, options);
     setCalculationJobType(calculationMetaData, options);
     options.setCalculateMaximumRange(calculationMetaData.getMaximumRange() == null ? 0.0 : calculationMetaData.getMaximumRange());
+    options.setMaximumRangeRelevant(calculationMetaData.getMaximumRange() != null);
     return options;
   }
 
@@ -82,7 +77,7 @@ public class GMLCalculationSetOptionsReader {
    * @param calculationMetaData
    * @param options
    */
-  private void setCalculationMethod(final IsCalculationMetaData calculationMetaData, final CalculationSetOptions options) {
+  private static void setCalculationMethod(final IsCalculationMetaData calculationMetaData, final CalculationSetOptions options) {
     final String method = calculationMetaData.getCalculationMethod();
 
     options.setCalculationMethod(
@@ -92,7 +87,7 @@ public class GMLCalculationSetOptionsReader {
   /**
    * Set the calculation job type.
    */
-  private void setCalculationJobType(final IsCalculationMetaData calculationMetaData, final CalculationSetOptions options) {
+  private static void setCalculationJobType(final IsCalculationMetaData calculationMetaData, final CalculationSetOptions options) {
     final String jobType = calculationMetaData.getCalculationJobType();
 
     options.setCalculationJobType(jobType == null ? null : CalculationJobType.safeValueOf(jobType));

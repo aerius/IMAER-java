@@ -1,5 +1,5 @@
 /*
- * Copyright the State of the Netherlands
+ * Copyright (c) Contributors to the project
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -17,6 +17,7 @@
 package nl.overheid.aerius.gml.base;
 
 import java.util.Map;
+import java.util.Set;
 
 import nl.overheid.aerius.gml.base.GMLLegacyCodeConverter.Conversion;
 import nl.overheid.aerius.gml.base.GMLLegacyCodeConverter.GMLLegacyCodeType;
@@ -66,6 +67,17 @@ public interface GMLLegacyCodesSupplier {
    * @throws AeriusException
    */
   default Map<String, FarmLodgingConversion> getLegacyFarmLodgingConversions() throws AeriusException {
+    return Map.of();
+  }
+
+  /**
+   * Returns a map of removed codes by type.
+   * Sources with these codes will be converted to alternative representations during import.
+   *
+   * @return map of code type to set of removed codes
+   * @throws AeriusException
+   */
+  default Map<GMLLegacyCodeType, Set<String>> getRemovedCodes() throws AeriusException {
     return Map.of();
   }
 

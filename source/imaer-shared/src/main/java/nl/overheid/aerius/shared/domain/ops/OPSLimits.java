@@ -1,5 +1,5 @@
 /*
- * Copyright the State of the Netherlands
+ * Copyright (c) Contributors to the project
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -16,11 +16,14 @@
  */
 package nl.overheid.aerius.shared.domain.ops;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import nl.overheid.aerius.shared.domain.v2.building.BuildingLimits;
 
 /**
  * Contains any limits for input for OPS (Source and Emission files).
  */
+@JsonSerialize(as = BuildingLimits.class)
 public final class OPSLimits implements BuildingLimits {
 
   private static final long serialVersionUID = 1L;
@@ -125,9 +128,9 @@ public final class OPSLimits implements BuildingLimits {
   public static final int SOURCE_EMISSION_HEIGHT_MINIMUM = 0;
 
   /**
-   * source height(h): fortran notation: F6.1 -> 9999.9 max.
+   * source height(h): fortran notation: F6.1 -> 5000 m max.
    */
-  public static final int SOURCE_EMISSION_HEIGHT_MAXIMUM = 4999;
+  public static final int SOURCE_EMISSION_HEIGHT_MAXIMUM = 5000;
 
   /**
    * Minimum value for scope of ops for outflow height.
@@ -175,10 +178,10 @@ public final class OPSLimits implements BuildingLimits {
   public static final int SOURCE_SPREAD_MINIMUM = 0;
 
   /**
-   * source spread or source height distribution(s): fortran notation: F6.1 -> 9999.9 max.
-   * TODO: maximum is actually the height of the source. How to validate that?
+   * source spread or source height distribution(s): fortran notation: F6.1.
+   * OPS v5.3.1.0 enforces a maximum of 5000.0 m.
    */
-  public static final int SOURCE_SPREAD_MAXIMUM = 9999;
+  public static final int SOURCE_SPREAD_MAXIMUM = 5000;
 
   /**
    * The number of digits after the decimal point for spread.
@@ -443,6 +446,7 @@ public final class OPSLimits implements BuildingLimits {
   public static final OPSLimits INSTANCE = new OPSLimits();
 
   private OPSLimits() {
+    // Static constants class.
   }
 
   @Override

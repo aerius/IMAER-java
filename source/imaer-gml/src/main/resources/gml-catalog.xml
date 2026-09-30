@@ -1,5 +1,12 @@
 <?xml version="1.0"?>
 <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
-  <system systemId="http://schemas.opengis.net/gml/3.2.1/gml.xsd" uri="gml/3.2.1/gml.xsd" />
-  <system systemId="http://schemas.opengis.net/gmlsfProfile/2.0/gmlsfLevels.xsd" uri="gmlsfProfile/2.0/gmlsfLevels.xsd" />
+  <system systemId="http://www.w3.org/2001/xml.xsd" uri="w3/xml.xsd" />
+  <system systemId="http://www.w3.org/1999/xlink.xsd" uri="w3/xlink.xsd" />
+  <system systemId="http://schemas.opengis.net/gml/3.2.1/gml.xsd" uri="ogc/gml/3.2.1/gml.xsd" />
+  <system systemId="http://schemas.opengis.net/gmlsfProfile/2.0/gmlsfLevels.xsd" uri="ogc/gmlsfProfile/2.0/gmlsfLevels.xsd" />
+  <system systemId="http://schemas.opengis.net/iso/19139/20070417/gmd/gmd.xsd" uri="ogc/iso/19139/20070417/gmd/gmd.xsd" />
+  <system systemId="http://schemas.opengis.net/iso/19139/20070417/gco/gco.xsd" uri="ogc/iso/19139/20070417/gco/gco.xsd" />
+  <system systemId="http://schemas.opengis.net/iso/19139/20070417/gss/gss.xsd" uri="ogc/iso/19139/20070417/gss/gss.xsd" />
+  <system systemId="http://schemas.opengis.net/iso/19139/20070417/gts/gts.xsd" uri="ogc/iso/19139/20070417/gts/gts.xsd" />
+  <system systemId="http://schemas.opengis.net/iso/19139/20070417/gsr/gsr.xsd" uri="ogc/iso/19139/20070417/gsr/gsr.xsd" />
 </catalog>

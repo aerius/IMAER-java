@@ -1,5 +1,5 @@
 /*
- * Copyright the State of the Netherlands
+ * Copyright (c) Contributors to the project
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -237,6 +237,22 @@ public enum ImaerExceptionReason implements Reason {
    * @param 0 id of the object containing the error.
    */
   SOURCE_VOLUME_FLOATING(1040),
+
+  /**
+   * Missing either power or liter fuel property where they are expected.
+   *
+   * @param 0 name of the source
+   */
+  MOBILE_SOURCE_MISSING_POWER_OR_LITER_FUEL(1041),
+
+  /**
+   * The given power value for the mobile source is not within the expected power range for the mobile source category.
+   *
+   * @param 0 name of the source
+   * @param 1 expected power range
+   * @param 2 given power range
+   */
+  MOBILE_SOURCE_POWER_NOT_WITHIN_RANGE(1042),
 
   // Import GML file errors/warnings.
   /**
@@ -500,133 +516,6 @@ public enum ImaerExceptionReason implements Reason {
    */
   GML_UNKNOWN_COLD_START_CATEGORY(5239),
   /**
-   * GML contains a unknown animal housing code.
-   *
-   * @param 0 the id of the object containing the error.
-   * @param 1 The code that is unknown.
-   */
-  GML_UNKNOWN_ANIMAL_HOUSING_CODE(5260),
-  /**
-   * GML contains a unknown animal housing code.
-   *
-   * @param 0 the id of the object containing the error.
-   * @param 1 The first code that does not combine.
-   * @param 2 The second code that does not combine.
-   */
-  GML_UNSUPPORTED_ANIMAL_HOUSING_COMBINATION(5261),
-  /**
-   * GML contains incorrect custom factors.
-   *
-   * @param 0 the id of the object containing the error.
-   */
-  GML_INCORRECT_CUSTOM_FACTORS(5262),
-  /**
-   * GML contained a farm lodging that was converted to standard animal housing.
-   *
-   * @param 0 the id of the object that was converted.
-   * @param 1 the label of the object that was converted.
-   * @param 2 the code of the lodging that was converted.
-   * @param 3 the system definition code of the lodging that was converted.
-   */
-  GML_CONVERTED_LODGING(5263),
-  /**
-   * GML contained a farm lodging that was converted to standard animal housing.
-   * In this case, the lodging contained additional or reductive systems or fodder measures, which were not converted.
-   *
-   * @param 0 the id of the object that was converted.
-   * @param 1 the label of the object that was converted.
-   * @param 2 the code of the lodging that was converted.
-   * @param 3 the system definition code of the lodging that was converted.
-   */
-  GML_CONVERTED_LODGING_WITH_SYSTEMS(5264),
-  /**
-   * GML contained a farm lodging that was converted to custom animal housing.
-   * In this case, the lodging was of a type that could not be converted to animal housing.
-   * A custom animal housing has been created instead, with 0 emission factors.
-   *
-   * @param 0 the id of the object that was converted.
-   * @param 1 the label of the object that was converted.
-   * @param 2 the code of the lodging that was converted.
-   * @param 3 the system definition code of the lodging that was converted.
-   */
-  GML_CONVERTED_LODGING_TO_CUSTOM(5265),
-  /**
-   * Geometry contains too many vertices.
-   *
-   * @param 0 the ID of the source with too many vertices.
-   */
-  GEOMETRY_TOO_MANY_VERTICES(5271),
-
-
-  // Cohesion (between files) errors.
-
-  /**
-   * Duplicate source IDs found.
-   *
-   * @param 0 the id that was duplicate.
-   */
-  COHESION_DUPLICATE_SOURCE_IDS(5501),
-  /**
-   * Duplicate calculation point IDs found.
-   *
-   * @param 0 the id that was duplicate.
-   */
-  COHESION_DUPLICATE_POINT_IDS(5502),
-  /**
-   * Duplicate measure IDs found.
-   *
-   * @param 0 the id that was duplicate.
-   */
-  COHESION_DUPLICATE_MEASURE_IDS(5503),
-  /**
-   * Duplicate dispersion lines found.
-   *
-   * @param 0 the calculation point id of the duplicate dispersion line.
-   * @param 1 the road segment (source) id of the duplicate dispersion line.
-   */
-  COHESION_DUPLICATE_DISPERSION_LINES(5504),
-  /**
-   * Missing a road referenced by dispersion line.
-   *
-   * @param 0 the calculation point id of the dispersion line.
-   * @param 1 the road segment (source) id of the dispersion line.
-   */
-  COHESION_REFERENCE_DISPERSION_LINE_MISSING_ROAD(5511),
-  /**
-   * Missing a calculation point referenced by dispersion line.
-   *
-   * @param 0 the calculation point id of the dispersion line.
-   * @param 1 the road segment (source) id of the dispersion line.
-   */
-  COHESION_REFERENCE_DISPERSION_LINE_MISSING_POINT(5512),
-  /**
-   * Missing a calculation point referenced by correction.
-   *
-   * @param 0 the calculation point id of the correction.
-   */
-  COHESION_REFERENCE_CORRECTION_MISSING_POINT(5513),
-  /**
-   * The line describing the dispersionline is not a perpendicular line that intersects with the road segment.
-   *
-   * @param 0 the calculation point id of the dispersion line.
-   * @param 1 the road segment (source) id of the dispersion line.
-   */
-  COHESION_DISPERSION_LINE_NOT_PERPENDICULAR(5514),
-  /**
-   * The (SRM1) road is missing at least one dispersion line.
-   *
-   * @param 0 the road segment (source) id missing a dispersion line.
-   */
-  COHESION_ROAD_MISSING_DISPERSION_LINE(5515),
-
-  /**
-   * Missing a building referenced by source (characteristics).
-   *
-   * @param 0 ID of the building that was referred but not found.
-   */
-  COHESION_REFERENCE_MISSING_BUILDING(5521),
-
-  /**
    * Buildingheight is 0.
    *
    * @param 0 Label of the building that has height = 0.
@@ -680,6 +569,174 @@ public enum ImaerExceptionReason implements Reason {
    * @param 0 The label of the source that has a subsource with zero emissions.
    */
   SUB_SOURCE_NO_EMISSION(5253),
+
+  /**
+   * GML contains a unknown animal housing code.
+   *
+   * @param 0 the id of the object containing the error.
+   * @param 1 The code that is unknown.
+   */
+  GML_UNKNOWN_ANIMAL_HOUSING_CODE(5260),
+  /**
+   * GML contains a unknown animal housing code.
+   *
+   * @param 0 the id of the object containing the error.
+   * @param 1 The first code that does not combine.
+   * @param 2 The second code that does not combine.
+   */
+  GML_UNSUPPORTED_ANIMAL_HOUSING_COMBINATION(5261),
+  /**
+   * GML contains incorrect custom factors.
+   *
+   * @param 0 the id of the object containing the error.
+   */
+  GML_INCORRECT_CUSTOM_FACTORS(5262),
+  /**
+   * GML contained a farm lodging that was converted to standard animal housing.
+   *
+   * @param 0 the id of the object that was converted.
+   * @param 1 the label of the object that was converted.
+   * @param 2 the code of the lodging that was converted.
+   * @param 3 the system definition code of the lodging that was converted.
+   */
+  GML_CONVERTED_LODGING(5263),
+  /**
+   * GML contained a farm lodging that was converted to standard animal housing.
+   * In this case, the lodging contained additional or reductive systems or fodder measures, which were not converted.
+   *
+   * @param 0 the id of the object that was converted.
+   * @param 1 the label of the object that was converted.
+   * @param 2 the code of the lodging that was converted.
+   * @param 3 the system definition code of the lodging that was converted.
+   */
+  GML_CONVERTED_LODGING_WITH_SYSTEMS(5264),
+  /**
+   * GML contained a farm lodging that was converted to custom animal housing.
+   * In this case, the lodging was of a type that could not be converted to animal housing.
+   * A custom animal housing has been created instead, with 0 emission factors.
+   *
+   * @param 0 the id of the object that was converted.
+   * @param 1 the label of the object that was converted.
+   * @param 2 the code of the lodging that was converted.
+   * @param 3 the system definition code of the lodging that was converted.
+   */
+  GML_CONVERTED_LODGING_TO_CUSTOM(5265),
+  /**
+  * GML contains a source with a sector only supported in an older version of AERIUS. The outdated sector ID has been converted to the new supported sector ID.
+  *
+  * @param 0 old sector ID.
+  * @param 1 new sector ID.
+  * @param 2 source name.
+  */
+  GML_SECTOR_OUT_OF_DATE(5266),
+  /**
+   * GML contains a source with a removed vehicle code that has been converted.
+   *
+   * @param 0 the label of the source.
+   * @param 1 the old code.
+   */
+  GML_REMOVED_CODE_CONVERTED(5267),
+  /**
+   * Geometry contains too many vertices.
+   *
+   * @param 0 the ID of the source with too many vertices.
+   */
+  GEOMETRY_TOO_MANY_VERTICES(5271),
+
+  /**
+   * Default road speed is set for non urban road.
+   *
+   * @param 0 the id of the source.
+   * @param 1 the set speed value.
+   */
+  GML_NON_URBAN_ROAD_DEFAULT_SPEED(5272),
+
+  // Cohesion (between files) errors.
+
+  /**
+   * Duplicate source IDs found.
+   *
+   * @param 0 the id that was duplicate.
+   */
+  COHESION_DUPLICATE_SOURCE_IDS(5501),
+  /**
+   * Duplicate calculation point IDs found.
+   *
+   * @param 0 the id that was duplicate.
+   */
+  COHESION_DUPLICATE_POINT_IDS(5502),
+  /**
+   * Duplicate measure IDs found.
+   *
+   * @param 0 the id that was duplicate.
+   */
+  COHESION_DUPLICATE_MEASURE_IDS(5503),
+  /**
+   * Duplicate dispersion lines found.
+   *
+   * @param 0 the calculation point id of the duplicate dispersion line.
+   * @param 1 the road segment (source) id of the duplicate dispersion line.
+   */
+  COHESION_DUPLICATE_DISPERSION_LINES(5504),
+  /**
+   * Duplicate building IDs found.
+   *
+   * @param 0 the id that was duplicate.
+   */
+  COHESION_DUPLICATE_BUILDING_IDS(5505),
+  /**
+   * Duplicate time varying profile IDs found.
+   *
+   * @param 0 the id that was duplicate.
+   */
+  COHESION_DUPLICATE_TIME_VARYING_PROFILE_IDS(5506),
+  /**
+   * Missing a road referenced by dispersion line.
+   *
+   * @param 0 the calculation point id of the dispersion line.
+   * @param 1 the road segment (source) id of the dispersion line.
+   */
+  COHESION_REFERENCE_DISPERSION_LINE_MISSING_ROAD(5511),
+  /**
+   * Missing a calculation point referenced by dispersion line.
+   *
+   * @param 0 the calculation point id of the dispersion line.
+   * @param 1 the road segment (source) id of the dispersion line.
+   */
+  COHESION_REFERENCE_DISPERSION_LINE_MISSING_POINT(5512),
+  /**
+   * Missing a calculation point referenced by correction.
+   *
+   * @param 0 the calculation point id of the correction.
+   */
+  COHESION_REFERENCE_CORRECTION_MISSING_POINT(5513),
+  /**
+   * The line describing the dispersionline is not a perpendicular line that intersects with the road segment.
+   *
+   * @param 0 the calculation point id of the dispersion line.
+   * @param 1 the road segment (source) id of the dispersion line.
+   */
+  COHESION_DISPERSION_LINE_NOT_PERPENDICULAR(5514),
+  /**
+   * The (SRM1) road is missing at least one dispersion line.
+   *
+   * @param 0 the road segment (source) id missing a dispersion line.
+   */
+  COHESION_ROAD_MISSING_DISPERSION_LINE(5515),
+
+  /**
+   * Missing a building referenced by source (characteristics).
+   *
+   * @param 0 ID of the building that was referred but not found.
+   */
+  COHESION_REFERENCE_MISSING_BUILDING(5521),
+
+  /**
+   * Missing a time varying profile referenced by source (characteristics).
+   *
+   * @param 0 ID of the time varying profile that was referred but not found.
+   */
+  COHESION_REFERENCE_MISSING_TIME_VARYING_PROFILE(5522),
 
   // SRM related errors.
 

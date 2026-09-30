@@ -1,5 +1,5 @@
 /*
- * Copyright the State of the Netherlands
+ * Copyright (c) Contributors to the project
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -71,7 +71,6 @@ class JsonRoundTripTest {
   @ValueSource(strings = {
       "GenericEmissionSource.json",
       "GenericADMSEmissionSource.json",
-      "FarmLodgingEmissionSource.json",
       "FarmAnimalHousingEmissionSource.json",
       "FarmlandEmissionSource.json",
       "OffRoadMobileEmissionSource.json",

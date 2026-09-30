@@ -1,5 +1,5 @@
 /*
- * Copyright the State of the Netherlands
+ * Copyright (c) Contributors to the project
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -28,11 +28,7 @@ public interface ValidationHelper {
     return OPSLimits.INSTANCE;
   }
 
-  FarmLodgingValidationHelper farmLodgingValidation();
-
-  default FarmAnimalHousingValidationHelper farmAnimalHousingValidation() {
-    return null;
-  }
+  FarmAnimalHousingValidationHelper farmAnimalHousingValidation();
 
   FarmlandValidationHelper farmlandValidation();
 

@@ -1,5 +1,5 @@
 /*
- * Copyright the State of the Netherlands
+ * Copyright (c) Contributors to the project
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -17,11 +17,20 @@
 package nl.overheid.aerius.validation;
 
 import nl.overheid.aerius.shared.domain.v2.source.road.RoadStandardEmissionFactorsKey;
+import nl.overheid.aerius.shared.exception.AeriusException;
 
 public interface RoadValidationHelper {
 
   boolean isValidRoadSpecificVehicleCode(String onRoadMobileCode);
 
   boolean isValidRoadStandardVehicleCombination(RoadStandardEmissionFactorsKey emissionFactorsKey);
+
+  default void assertRoadSpecificEmissionFactorsAvailable(final String specificVehicleCode, final String roadTypeCode, final String sourceLabel)
+      throws AeriusException {
+  }
+
+  default void assertRoadStandardEmissionFactorsAvailable(final RoadStandardEmissionFactorsKey emissionFactorsKey, final String sourceLabel)
+      throws AeriusException {
+  }
 
 }

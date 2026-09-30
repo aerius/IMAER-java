@@ -1,5 +1,5 @@
 /*
- * Copyright the State of the Netherlands
+ * Copyright (c) Contributors to the project
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -35,19 +35,7 @@ public enum Theme {
   /**
    * Dutch Omgevingswet Natura 2000 stikstof.
    */
-  OWN2000,
-  /**
-   * Dutch Regeling Beoordeling Luchtkwaliteit (RBL).
-   * @deprecated Replaced by CIMLK
-   */
-  @Deprecated
-  RBL,
-  /**
-   * Dutch Wet NatuurBescherming (WNB)
-   * @deprecated Replaced with OWN2000
-   */
-  @Deprecated
-  WNB;
+  OWN2000;
 
   public String getKey() {
     return name().toLowerCase(Locale.ROOT);

@@ -1,5 +1,5 @@
 /*
- * Copyright the State of the Netherlands
+ * Copyright (c) Contributors to the project
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.Set;
 
 import nl.overheid.aerius.gml.base.AeriusGMLVersion;
@@ -57,6 +58,7 @@ import nl.overheid.aerius.shared.domain.geo.HexagonZoomLevel;
 import nl.overheid.aerius.shared.domain.result.EmissionResultKey;
 import nl.overheid.aerius.shared.domain.result.EmissionResultType;
 import nl.overheid.aerius.shared.domain.v2.archive.ArchiveProject;
+import nl.overheid.aerius.shared.domain.v2.archive.ArchiveType;
 import nl.overheid.aerius.shared.domain.v2.building.BuildingFeature;
 import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKCorrection;
 import nl.overheid.aerius.shared.domain.v2.cimlk.CIMLKDispersionLineFeature;
@@ -81,11 +83,11 @@ public class GMLVersionWriterV60 implements GMLVersionWriter {
   private final CIMLKMeasure2GML measure2gml;
   private final CIMLKDispersionLine2GML dispersionLine2gml;
 
-  public GMLVersionWriterV60(final HexagonZoomLevel zoomLevel1, final String srsName) {
+  public GMLVersionWriterV60(final HexagonZoomLevel zoomLevel1, final String srsName, final boolean withRepresentation) {
     geometry2gml = new Geometry2GML(srsName);
     source2gml = new Source2GML(geometry2gml);
     building2gml = new Building2GML(geometry2gml);
-    result2gml = new Result2GML(geometry2gml, zoomLevel1);
+    result2gml = new Result2GML(geometry2gml, zoomLevel1, withRepresentation);
     measure2gml = new CIMLKMeasure2GML(geometry2gml);
     dispersionLine2gml = new CIMLKDispersionLine2GML(geometry2gml);
   }
@@ -212,6 +214,7 @@ public class GMLVersionWriterV60 implements GMLVersionWriter {
     } else {
       archive = new ArchiveMetadata();
       archive.setRetrievalDateTime(input.getArchiveMetaData().getRetrievalDateTime());
+      archive.setArchiveType(Optional.ofNullable(input.getArchiveMetaData().getArchiveType()).map(ArchiveType::name).orElse(null));
       archive.setArchiveProjects(archiveProjects2GML(input.getArchiveMetaData().getArchiveProjects()));
     }
     return archive;

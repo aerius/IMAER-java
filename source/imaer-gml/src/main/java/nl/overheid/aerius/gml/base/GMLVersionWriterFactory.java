@@ -1,5 +1,5 @@
 /*
- * Copyright the State of the Netherlands
+ * Copyright (c) Contributors to the project
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -18,23 +18,22 @@ package nl.overheid.aerius.gml.base;
 
 import javax.xml.validation.Schema;
 
-import nl.overheid.aerius.gml.v5_1.togml.GMLVersionWriterV51;
 import nl.overheid.aerius.gml.v6_0.togml.GMLVersionWriterV60;
 import nl.overheid.aerius.shared.domain.geo.HexagonZoomLevel;
 import nl.overheid.aerius.shared.exception.AeriusException;
 
-public class GMLVersionWriterFactory {
+public final class GMLVersionWriterFactory {
+
+  private GMLVersionWriterFactory() {
+    // Util class
+  }
 
   public static GMLVersionWriter createGMLVersionWriter(final HexagonZoomLevel zoomLevel1, final String srsName,
-      final AeriusGMLVersion aeriusGMLVersion) {
-    switch (aeriusGMLVersion) {
-    case V5_1:
-      return new GMLVersionWriterV51(zoomLevel1, srsName);
-    case V6_0:
-      return new GMLVersionWriterV60(zoomLevel1, srsName);
-    default:
-      throw new IllegalArgumentException("Aerius GML version is not supported");
-    }
+      final AeriusGMLVersion aeriusGMLVersion, final boolean withRepresentation) {
+    return switch (aeriusGMLVersion) {
+      case V6_0 -> new GMLVersionWriterV60(zoomLevel1, srsName, withRepresentation);
+      default -> throw new IllegalArgumentException("Aerius GML version is not supported");
+    };
   }
 
   public static Schema getSchema(final AeriusGMLVersion aeriusGMLVersion) throws AeriusException {

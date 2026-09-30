@@ -1,5 +1,5 @@
 /*
- * Copyright the State of the Netherlands
+ * Copyright (c) Contributors to the project
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -21,13 +21,15 @@ import java.io.Serializable;
 import nl.overheid.aerius.shared.domain.meteo.Meteo;
 
 /**
- * Calculation options related to the WNB theme.
+ * Calculation options related to the OWN2000 theme.
  */
 public class OwN2000CalculationOptions implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 3L;
 
   private CalculationRoadOPS roadOPS = CalculationRoadOPS.DEFAULT;
+  private PermitLowerBoundType permitLowerBoundType;
+  private double permitLowerBoundValue;
   private boolean useMaxDistance;
   private boolean forceAggregation;
   private Meteo meteo;
@@ -40,6 +42,35 @@ public class OwN2000CalculationOptions implements Serializable {
   private Integer subReceptorZoomLevel;
   private boolean splitSubReceptorWork;
   private int splitSubReceptorWorkDistance;
+  private boolean repositionSubReceptors;
+
+  /**
+   * @return Returns the lower bound type used for permit calculations.
+   */
+  public PermitLowerBoundType getPermitLowerBoundType() {
+    return permitLowerBoundType;
+  }
+
+  /**
+   * Set the lower bound type used for permit calculations.
+   */
+  public void setPermitLowerBoundType(final PermitLowerBoundType permitLowerBoundType) {
+    this.permitLowerBoundType = permitLowerBoundType;
+  }
+
+  /**
+   * @return Returns the lower bound value used for permit calculations.
+   */
+  public double getPermitLowerBoundValue() {
+    return permitLowerBoundValue;
+  }
+
+  /**
+   * Set the lower bound value used for permit calculations.
+   */
+  public void setPermitLowerBoundValue(final double permitLowerBoundValue) {
+    this.permitLowerBoundValue = permitLowerBoundValue;
+  }
 
   /**
    * @return Returns true if OwN2000 maximum distance 25km calculation is to be applied.
@@ -49,10 +80,10 @@ public class OwN2000CalculationOptions implements Serializable {
   }
 
   /**
-   * Set if the WNB 25km calculation distance limit should be applied. Default true for WNB.
+   * Set if the OWN2000 25km calculation distance limit should be applied. Default true for OWN2000.
    */
-  public void setUseMaxDistance(final boolean uswWNBMaxDistance) {
-    this.useMaxDistance = uswWNBMaxDistance;
+  public void setUseMaxDistance(final boolean useMaxDistance) {
+    this.useMaxDistance = useMaxDistance;
   }
 
   /**
@@ -180,6 +211,14 @@ public class OwN2000CalculationOptions implements Serializable {
    */
   public void setSplitSubReceptorWorkDistance(final int distance) {
     this.splitSubReceptorWorkDistance = distance;
+  }
+
+  public boolean isRepositionSubReceptors() {
+    return repositionSubReceptors;
+  }
+
+  public void setRepositionSubReceptors(final boolean repositionSubReceptors) {
+    this.repositionSubReceptors = repositionSubReceptors;
   }
 
   /**

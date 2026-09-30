@@ -1,5 +1,5 @@
 /*
- * Copyright the State of the Netherlands
+ * Copyright (c) Contributors to the project
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -16,11 +16,9 @@
  */
 package nl.overheid.aerius.gml.base.source.mobile.v31;
 
-public interface IsGmlStandardOffRoadMobileSource extends IsGmlOffRoadMobileSource {
+import nl.overheid.aerius.gml.base.source.mobile.IsGmlStandardOffRoadMobileBaseSource;
 
-  int getLiterFuelPerYear();
-
-  String getCode();
+public interface IsGmlStandardOffRoadMobileSource extends IsGmlStandardOffRoadMobileBaseSource {
 
   Integer getHoursIdlePerYear();
 

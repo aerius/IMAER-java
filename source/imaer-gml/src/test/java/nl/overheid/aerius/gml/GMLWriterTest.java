@@ -1,5 +1,5 @@
 /*
- * Copyright the State of the Netherlands
+ * Copyright (c) Contributors to the project
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -28,6 +28,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
@@ -69,6 +70,7 @@ class GMLWriterTest {
   private static final String RECEPTORS_CONCENTRATION_ONLY_FILE = "test_receptors_concentration_only";
   private static final String RECEPTORS_EDGE_EFFECT_FILE = "test_receptors_edge_effect";
   private static final String RECEPTORS_ALL_FILE = "test_receptors";
+  private static final Object RECEPTORS_NO_REPRESENTATION = "test_receptors_no_representation";
   private static final String MIXED_FEATURES_FILE = "test_mixed_features";
   private static final String PATH_CURRENT_VERSION = GMLWriter.LATEST_WRITER_VERSION.name().toLowerCase() + "/";
 
@@ -84,12 +86,10 @@ class GMLWriterTest {
   private static final String SITUATION_REFERENCE = "SomeReference001";
   private static final SituationType SITUATION_TYPE = SituationType.PROPOSED;
 
-  private static final ReceptorGridSettings RECEPTOR_GRID_SETTINGS = GMLTestDomain.getExampleGridSettings();
-
   @ParameterizedTest
   @ValueSource(strings = {SOURCES_ONLY_FILE, SOURCES_ONLY_FILE_UNFORMATTED})
   void testConvertSources(final String gmlFilename) throws IOException, AeriusException {
-    final GMLWriter builder = new GMLWriter(RECEPTOR_GRID_SETTINGS, GMLTestDomain.TEST_REFERENCE_GENERATOR);
+    final GMLWriter builder = new GMLWriter(ReceptorGridSettings.NL, GMLTestDomain.TEST_REFERENCE_GENERATOR);
     builder.setFormattedOutput(SOURCES_ONLY_FILE.equals(gmlFilename));
     final List<EmissionSourceFeature> sources = getExampleEmissionSources();
     final String result = getConversionResult(builder, sources);
@@ -97,7 +97,7 @@ class GMLWriterTest {
     AssertGML.assertEqualsGML(AssertGML.getFileContent(PATH_CURRENT_VERSION, gmlFilename), result, gmlFilename);
   }
 
-  private String getConversionResult(final GMLWriter builder, final List<EmissionSourceFeature> sources) throws IOException, AeriusException {
+  static String getConversionResult(final GMLWriter builder, final List<EmissionSourceFeature> sources) throws IOException, AeriusException {
     try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
       builder.writeEmissionSources(bos, sources, getMetaDataInput(getScenarioMetaData()));
       return bos.toString(StandardCharsets.UTF_8.name());
@@ -106,17 +106,17 @@ class GMLWriterTest {
 
   @Test
   void testConvertInvalidSources() throws IOException, AeriusException {
-    final GMLWriter converter = new GMLWriter(RECEPTOR_GRID_SETTINGS, GMLTestDomain.TEST_REFERENCE_GENERATOR);
+    final GMLWriter converter = new GMLWriter(ReceptorGridSettings.NL, GMLTestDomain.TEST_REFERENCE_GENERATOR);
     final List<EmissionSourceFeature> sources1 = getExampleEmissionSources();
     sources1.get(0).setGeometry(null);
 
-    final IllegalArgumentException e = assertThrows(
+    assertThrows(
         IllegalArgumentException.class,
         () -> getConversionResult(converter, sources1),
         "Emissionsource not allowed to have no geometry.");
 
     final List<EmissionSourceFeature> sources2 = getExampleEmissionSources();
-    ((GenericEmissionSource) sources2.get(0).getProperties()).getEmissions().clear();
+    sources2.get(0).getProperties().getEmissions().clear();
     //source has no emission, it'll just be exported with 0.0 emissions for all substances.
     //this used to be an error situation, now it's treated as a work-in-progress export.
     assertNotNull(getConversionResult(converter, sources2), "Expect source to be written to file while having no emissions");
@@ -124,7 +124,7 @@ class GMLWriterTest {
 
   @Test
   void testConvertMetaData() throws IOException, AeriusException {
-    final GMLWriter writer = new GMLWriter(RECEPTOR_GRID_SETTINGS, r -> Optional.of("test"));
+    final GMLWriter writer = new GMLWriter(ReceptorGridSettings.NL, r -> Optional.of("test"));
     final ScenarioMetaData metaData = getScenarioMetaData();
     final String originalReference = SITUATION_REFERENCE;
     final List<EmissionSourceFeature> sourceList = new ArrayList<>();
@@ -158,11 +158,11 @@ class GMLWriterTest {
     assertTrue(result.contains("<imaer:reference>"), "Should contain reference tag");
   }
 
-  private String getExpectedElement(final String element, final String value) {
+  static String getExpectedElement(final String element, final String value) {
     return "<imaer:" + element + ">" + value + "</imaer:" + element + ">";
   }
 
-  private MetaDataInput getMetaDataInput(final ScenarioMetaData scenarioMetaData) {
+  private static MetaDataInput getMetaDataInput(final ScenarioMetaData scenarioMetaData) {
     final MetaDataInput metaDataInput = new MetaDataInput();
     metaDataInput.setScenarioMetaData(scenarioMetaData);
     metaDataInput.setYear(GML_YEAR);
@@ -178,11 +178,12 @@ class GMLWriterTest {
     return metaDataInput;
   }
 
-  private CalculationSetOptions getCalculationOptions() {
+  private static CalculationSetOptions getCalculationOptions() {
     final CalculationSetOptions options = new CalculationSetOptions();
     options.setCalculationMethod(CalculationMethod.NATURE_AREA);
+    options.setMaximumRangeRelevant(true);
     options.setCalculateMaximumRange(3);
-    options.getRblCalculationOptions().setMonitorSrm2Year(2030);
+    options.getCimlkCalculationOptions().setMonitorSrm2Year(2030);
     options.getSubstances().add(Substance.NOX);
     options.getSubstances().add(Substance.NH3);
     options.getSubstances().add(Substance.NO2);
@@ -216,24 +217,32 @@ class GMLWriterTest {
 
   private static Stream<Arguments> convertReceptorsData() {
     return Stream.of(
-        Arguments.of(RECEPTORS_ALL_FILE, true, true, false),
-        Arguments.of(RECEPTORS_DEPOSITION_ONLY_FILE, true, false, false),
-        Arguments.of(RECEPTORS_CONCENTRATION_ONLY_FILE, false, true, false),
-        Arguments.of(RECEPTORS_EDGE_EFFECT_FILE, true, true, true));
+        Arguments.of(RECEPTORS_ALL_FILE, Set.of(ConvertReceptorsOptions.INCLUDE_DEPOSITION, ConvertReceptorsOptions.INCLUDE_CONCENTRATION)),
+        Arguments.of(RECEPTORS_DEPOSITION_ONLY_FILE, Set.of(ConvertReceptorsOptions.INCLUDE_DEPOSITION)),
+        Arguments.of(RECEPTORS_CONCENTRATION_ONLY_FILE, Set.of(ConvertReceptorsOptions.INCLUDE_CONCENTRATION)),
+        Arguments.of(RECEPTORS_EDGE_EFFECT_FILE, Set.of(ConvertReceptorsOptions.INCLUDE_DEPOSITION, ConvertReceptorsOptions.INCLUDE_CONCENTRATION,
+            ConvertReceptorsOptions.INCLUDE_OVERLAPPING)),
+        Arguments.of(RECEPTORS_NO_REPRESENTATION, Set.of(ConvertReceptorsOptions.INCLUDE_DEPOSITION, ConvertReceptorsOptions.INCLUDE_CONCENTRATION,
+            ConvertReceptorsOptions.NO_REPRESENTATION)));
   }
 
   @ParameterizedTest(name = "Testfile: {0}")
   @MethodSource("convertReceptorsData")
-  void testConvertReceptors(final String receptorFile, final boolean includeDeposition, final boolean includeConcentration,
-      final boolean includeOverlapping) throws IOException, AeriusException {
-    final ArrayList<CalculationPointFeature> receptors = getExampleAeriusPoints(includeDeposition, includeConcentration, includeOverlapping);
+  void testConvertReceptors(final String receptorFile, final Set<ConvertReceptorsOptions> options) throws IOException, AeriusException {
+    final ArrayList<CalculationPointFeature> receptors = getExampleAeriusPoints(
+        ConvertReceptorsOptions.INCLUDE_DEPOSITION.in(options),
+        ConvertReceptorsOptions.INCLUDE_CONCENTRATION.in(options),
+        ConvertReceptorsOptions.INCLUDE_OVERLAPPING.in(options));
     final MetaDataInput metaDataInput = getMetaDataInput(new ScenarioMetaData());
     metaDataInput.setName(null);
     metaDataInput.setReference(null);
     metaDataInput.setSituationType(null);
     metaDataInput.setResultsIncluded(true);
-    final GMLWriter writer = new GMLWriter(RECEPTOR_GRID_SETTINGS, GMLTestDomain.TEST_REFERENCE_GENERATOR);
-    String result;
+    final GMLWriter writer = new GMLWriter(ReceptorGridSettings.NL, GMLTestDomain.TEST_REFERENCE_GENERATOR);
+    if (ConvertReceptorsOptions.NO_REPRESENTATION.in(options)) {
+      writer.setNoReceptorRepresentation();
+    }
+    final String result;
     try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
       writer.writeAeriusPoints(bos, receptors, metaDataInput);
       result = bos.toString(StandardCharsets.UTF_8.name());
@@ -358,7 +367,7 @@ class GMLWriterTest {
 
   @Test
   void testConvertMixedFeatures() throws IOException, AeriusException {
-    final GMLWriter builder = new GMLWriter(RECEPTOR_GRID_SETTINGS, GMLTestDomain.TEST_REFERENCE_GENERATOR);
+    final GMLWriter builder = new GMLWriter(ReceptorGridSettings.NL, GMLTestDomain.TEST_REFERENCE_GENERATOR);
     final List<EmissionSourceFeature> emissionSources = getExampleEmissionSources();
     final ArrayList<CalculationPointFeature> receptors = getExampleAeriusPoints(true, false, false);
     String result;
@@ -376,7 +385,7 @@ class GMLWriterTest {
     AssertGML.assertEqualsGML(AssertGML.getFileContent(PATH_CURRENT_VERSION, MIXED_FEATURES_FILE), result, MIXED_FEATURES_FILE);
   }
 
-  private ScenarioMetaData getScenarioMetaData() {
+  private static ScenarioMetaData getScenarioMetaData() {
     final ScenarioMetaData metaData = new ScenarioMetaData();
     metaData.setCorporation("Big Corp");
     metaData.setProjectName("SomeProject");
@@ -387,4 +396,26 @@ class GMLWriterTest {
     return metaData;
   }
 
+  private enum ConvertReceptorsOptions {
+    /**
+     * Include deposition results.
+     */
+    INCLUDE_DEPOSITION,
+    /**
+     * Include concentration results.
+     */
+    INCLUDE_CONCENTRATION,
+    /**
+     * Include edge effect results.
+     */
+    INCLUDE_OVERLAPPING,
+    /**
+     * Don't include hexagon representation geometry.
+     */
+    NO_REPRESENTATION;
+
+    public boolean in(final Set<ConvertReceptorsOptions> options) {
+      return options.contains(this);
+    }
+  }
 }

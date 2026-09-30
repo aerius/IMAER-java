@@ -1,5 +1,5 @@
 /*
- * Copyright the State of the Netherlands
+ * Copyright (c) Contributors to the project
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -17,9 +17,12 @@
 package nl.overheid.aerius.gml;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -44,7 +47,9 @@ import nl.overheid.aerius.shared.domain.calculation.CalculationJobType;
 import nl.overheid.aerius.shared.domain.calculation.CalculationMethod;
 import nl.overheid.aerius.shared.domain.calculation.CalculationSetOptions;
 import nl.overheid.aerius.shared.domain.calculation.MetDatasetType;
+import nl.overheid.aerius.shared.domain.calculation.MetSurfaceCharacteristics;
 import nl.overheid.aerius.shared.domain.calculation.NCACalculationOptions;
+import nl.overheid.aerius.shared.domain.calculation.PermitLowerBoundType;
 import nl.overheid.aerius.shared.domain.v2.characteristics.adms.ADMSLimits;
 
 /**
@@ -56,7 +61,7 @@ class GMLCalculationSetOptionsReaderTest {
   private static final String CALCULATION_JOB_TYPE = "MAX_TEMPORARY_EFFECT";
 
   @Test
-  void getCalculationMethod() {
+  void testGetCalculationMethod() {
     final FeatureCollection featureCollection = mock(FeatureCollection.class);
     when(featureCollection.getMetaData()).thenReturn(null);
 
@@ -161,8 +166,8 @@ class GMLCalculationSetOptionsReaderTest {
     when(metaData.getCalculation()).thenReturn(calculationMetaData);
 
     final List<IsGmlProperty<IsCalculationOption>> suppliedOptions = new ArrayList<>();
-    suppliedOptions.add(mockCalculationOption("adms_permit_area", "somewhere"));
-    suppliedOptions.add(mockCalculationOption("adms_permit_area", "somewhere else"));
+    suppliedOptions.add(mockCalculationOption("permit_area", "somewhere"));
+    suppliedOptions.add(mockCalculationOption("permit_area", "somewhere else"));
     when(calculationMetaData.getOptions()).thenAnswer(a -> suppliedOptions);
 
     final GMLCalculationSetOptionsReader reader = new GMLCalculationSetOptionsReader(featureCollection);
@@ -173,11 +178,30 @@ class GMLCalculationSetOptionsReaderTest {
     assertEquals("somewhere else", options.getNcaCalculationOptions().getPermitArea(), "PermitArea");
   }
 
+  @Test
+  void testOwN2000ReadCalculationSetOptions() {
+    final FeatureCollection featureCollection = mock(FeatureCollection.class);
+    final MetaData metaData = mock(MetaData.class);
+    final IsCalculationMetaData calculationMetaData = mock(IsCalculationMetaData.class);
+    final List<IsGmlProperty<IsCalculationOption>> suppliedOptions = new ArrayList<>();
+
+    suppliedOptions.add(mockCalculationOption("permit_lower_bound", "policy"));
+    when(featureCollection.getMetaData()).thenReturn(metaData);
+    when(calculationMetaData.getOptions()).thenAnswer(a -> suppliedOptions);
+    when(metaData.getCalculation()).thenReturn(calculationMetaData);
+    final GMLCalculationSetOptionsReader reader = new GMLCalculationSetOptionsReader(featureCollection);
+
+    final CalculationSetOptions options = reader.readCalculationSetOptions(Theme.OWN2000);
+    assertNotNull(options, "returned options shouldn't be null");
+    assertSame(PermitLowerBoundType.POLICY, options.getOwN2000CalculationOptions().getPermitLowerBoundType(),
+        "Should have read the Permit Lower Bound.");
+  }
+
   /**
    * @param spatiallyVaryingRoughness Test spatiallyVaryingRoughness. if null it should be true, else follow boolean value
    */
   @ParameterizedTest
-  @CsvSource("null,TRUE,FALSE")
+  @CsvSource(nullValues = "null", value = "null,TRUE,FALSE")
   void testNCAReadCalculationSetOptions(final Boolean spatiallyVaryingRoughness) {
     final FeatureCollection featureCollection = mock(FeatureCollection.class);
     final MetaData metaData = mock(MetaData.class);
@@ -188,7 +212,7 @@ class GMLCalculationSetOptionsReaderTest {
     when(metaData.getCalculation()).thenReturn(calculationMetaData);
 
     final List<IsGmlProperty<IsCalculationOption>> suppliedOptions = new ArrayList<>();
-    suppliedOptions.add(mockCalculationOption("adms_permit_area", "somewhere"));
+    suppliedOptions.add(mockCalculationOption("permit_area", "somewhere"));
     suppliedOptions.add(mockCalculationOption("adms_meteo_site_location", "some meteo loc"));
     suppliedOptions.add(mockCalculationOption("adms_meteo_years", "2040,2042"));
     suppliedOptions.add(mockCalculationOption("adms_min_monin_obukhov_length", "3.4"));
@@ -196,7 +220,7 @@ class GMLCalculationSetOptionsReaderTest {
     suppliedOptions.add(mockCalculationOption("adms_priestley_taylor_parameter", "5.6"));
     suppliedOptions.add(mockCalculationOption("adms_met_site_id", "939"));
     suppliedOptions.add(mockCalculationOption("adms_met_dataset_type", "OBS_RAW_GT_90PCT"));
-    suppliedOptions.add(mockCalculationOption("adms_met_years", "2022,2023"));
+    suppliedOptions.add(mockCalculationOption("adms_met_years", "2022"));
     suppliedOptions.add(mockCalculationOption("adms_met_site_roughness", "3.1"));
     suppliedOptions.add(mockCalculationOption("adms_met_site_min_monin_obukhov_length", "4.2"));
     suppliedOptions.add(mockCalculationOption("adms_met_site_surface_albedo", "5.3"));
@@ -224,16 +248,17 @@ class GMLCalculationSetOptionsReaderTest {
     assertEquals(5.6, admsOptions.getPriestleyTaylorParameter(), "PriestleyTaylorParameter");
     assertEquals(939, admsOptions.getMetSiteId(), "MetSiteId");
     assertEquals(MetDatasetType.OBS_RAW_GT_90PCT, admsOptions.getMetDatasetType(), "MetDatasetType");
-    assertEquals(List.of("2022", "2023"), admsOptions.getMetYears(), "MetYears");
-    assertEquals(3.1, admsOptions.getMsRoughness(), "MsRoughness");
-    assertEquals(4.2, admsOptions.getMsMinMoninObukhovLength(), "MsMinMoninObukhovLength");
-    assertEquals(5.3, admsOptions.getMsSurfaceAlbedo(), "MsSurfaceAlbedo");
-    assertEquals(6.4, admsOptions.getMsPriestleyTaylorParameter(), "MsPriestleyTaylorParameter");
-    assertEquals(true, admsOptions.isPlumeDepletionNH3(), "PlumeDepletionNH3");
-    assertEquals(true, admsOptions.isPlumeDepletionNOX(), "PlumeDepletionNOX");
+    assertEquals(List.of("2022"), admsOptions.getMetYears(), "MetYears");
+    final MetSurfaceCharacteristics msc = admsOptions.getMetSiteCharacteristics("2022");
+    assertEquals(3.1, msc.getRoughness(), "MsRoughness");
+    assertEquals(4.2, msc.getMinMoninObukhovLength(), "MsMinMoninObukhovLength");
+    assertEquals(5.3, msc.getSurfaceAlbedo(), "MsSurfaceAlbedo");
+    assertEquals(6.4, msc.getPriestleyTaylorParameter(), "MsPriestleyTaylorParameter");
+    assertTrue(admsOptions.isPlumeDepletionNH3(), "PlumeDepletionNH3");
+    assertTrue(admsOptions.isPlumeDepletionNOX(), "PlumeDepletionNOX");
     assertEquals(spatiallyVaryingRoughness == null || spatiallyVaryingRoughness, admsOptions.isSpatiallyVaryingRoughness(),
         "SpatiallyVaryingRoughness");
-    assertEquals(true, admsOptions.isComplexTerrain(), "ComplexTerrain");
+    assertTrue(admsOptions.isComplexTerrain(), "ComplexTerrain");
 
     assertEquals(40.0, options.getCalculateMaximumRange(), "Maximum range read");
   }
@@ -258,8 +283,6 @@ class GMLCalculationSetOptionsReaderTest {
     assertNull(options.getCalculationJobType(), "CalculationJobType");
     final NCACalculationOptions ncaOptions = options.getNcaCalculationOptions();
     assertNull(ncaOptions.getPermitArea(), "PermitArea");
-    assertNull(ncaOptions.getMeteoSiteLocation(), "MeteoSiteLocation");
-    assertEquals(List.of(), ncaOptions.getMeteoYears(), "MeteoYears");
     final ADMSOptions admsOptions = ncaOptions.getAdmsOptions();
     assertEquals(ADMSLimits.MIN_MONIN_OBUKHOV_LENGTH_DEFAULT, admsOptions.getMinMoninObukhovLength(),
         "MinMoninObukhovLength");
@@ -267,20 +290,17 @@ class GMLCalculationSetOptionsReaderTest {
     assertEquals(ADMSLimits.PRIESTLEY_TAYLOR_PARAMETER_DEFAULT, admsOptions.getPriestleyTaylorParameter(),
         "PriestleyTaylorParameter");
     assertEquals(0, admsOptions.getMetSiteId(), "MetSiteId");
-    assertEquals(0.0, admsOptions.getMsRoughness(), "MsRoughness");
-    assertEquals(0.0, admsOptions.getMsMinMoninObukhovLength(), "MsMinMoninObukhovLength");
-    assertEquals(0.0, admsOptions.getMsSurfaceAlbedo(), "MsSurfaceAlbedo");
-    assertEquals(0.0, admsOptions.getMsPriestleyTaylorParameter(), "MsPriestleyTaylorParameter");
-    assertEquals(false, admsOptions.isPlumeDepletionNH3(), "PlumeDepletionNH3");
-    assertEquals(false, admsOptions.isPlumeDepletionNOX(), "PlumeDepletionNOX");
-    assertEquals(true, admsOptions.isSpatiallyVaryingRoughness(), "SpatiallyVaryingRoughness");
-    assertEquals(false, admsOptions.isComplexTerrain(), "ComplexTerrain");
+    assertEquals(List.of(), admsOptions.getMetYears(), "MeteoYears");
+    assertFalse(admsOptions.isPlumeDepletionNH3(), "PlumeDepletionNH3");
+    assertFalse(admsOptions.isPlumeDepletionNOX(), "PlumeDepletionNOX");
+    assertTrue(admsOptions.isSpatiallyVaryingRoughness(), "SpatiallyVaryingRoughness");
+    assertFalse(admsOptions.isComplexTerrain(), "ComplexTerrain");
 
     assertEquals(0.0, options.getCalculateMaximumRange(), "Maximum range read");
   }
 
   @Test
-  void testReadCalculationSetOptionsWnb() {
+  void testNCAReadCalculationSetOptions() {
     final FeatureCollection featureCollection = mock(FeatureCollection.class);
     final MetaData metaData = mock(MetaData.class);
     final IsCalculationMetaData calculationMetaData = mock(IsCalculationMetaData.class);
@@ -314,21 +334,16 @@ class GMLCalculationSetOptionsReaderTest {
     assertEquals(CalculationMethod.FORMAL_ASSESSMENT, options.getCalculationMethod(), "Calculation type should match");
     final NCACalculationOptions ncaOptions = options.getNcaCalculationOptions();
     assertNull(ncaOptions.getPermitArea(), "PermitArea");
-    assertNull(ncaOptions.getMeteoSiteLocation(), "MeteoSiteLocation");
-    assertEquals(List.of(), ncaOptions.getMeteoYears(), "MeteoYears");
     final ADMSOptions admsOptions = ncaOptions.getAdmsOptions();
     assertEquals(0.0, admsOptions.getMinMoninObukhovLength(), "MinMoninObukhovLength");
     assertEquals(0.0, admsOptions.getSurfaceAlbedo(), "SurfaceAlbedo");
     assertEquals(0.0, admsOptions.getPriestleyTaylorParameter(), "PriestleyTaylorParameter");
     assertEquals(0, admsOptions.getMetSiteId(), "MetSiteId");
-    assertEquals(0.0, admsOptions.getMsRoughness(), "MsRoughness");
-    assertEquals(0.0, admsOptions.getMsMinMoninObukhovLength(), "MsMinMoninObukhovLength");
-    assertEquals(0.0, admsOptions.getMsSurfaceAlbedo(), "MsSurfaceAlbedo");
-    assertEquals(0.0, admsOptions.getMsPriestleyTaylorParameter(), "MsPriestleyTaylorParameter");
-    assertEquals(false, admsOptions.isPlumeDepletionNH3(), "PlumeDepletionNH3");
-    assertEquals(false, admsOptions.isPlumeDepletionNOX(), "PlumeDepletionNOX");
-    assertEquals(false, admsOptions.isSpatiallyVaryingRoughness(), "SpatiallyVaryingRoughness");
-    assertEquals(false, admsOptions.isComplexTerrain(), "ComplexTerrain");
+    assertEquals(List.of(), admsOptions.getMetYears(), "MeteoYears");
+    assertFalse(admsOptions.isPlumeDepletionNH3(), "PlumeDepletionNH3");
+    assertFalse(admsOptions.isPlumeDepletionNOX(), "PlumeDepletionNOX");
+    assertFalse(admsOptions.isSpatiallyVaryingRoughness(), "SpatiallyVaryingRoughness");
+    assertFalse(admsOptions.isComplexTerrain(), "ComplexTerrain");
 
     assertEquals(40.0, options.getCalculateMaximumRange(), "Maximum range read");
   }
@@ -357,10 +372,10 @@ class GMLCalculationSetOptionsReaderTest {
     assertNotNull(options, "returned options shouldn't be null");
     final NCACalculationOptions ncaOptions = options.getNcaCalculationOptions();
     final ADMSOptions admsOptions = ncaOptions.getAdmsOptions();
-    assertEquals(false, admsOptions.isPlumeDepletionNH3(), "PlumeDepletionNH3");
-    assertEquals(false, admsOptions.isPlumeDepletionNOX(), "PlumeDepletionNOX");
-    assertEquals(false, admsOptions.isSpatiallyVaryingRoughness(), "SpatiallyVaryingRoughness");
-    assertEquals(false, admsOptions.isComplexTerrain(), "ComplexTerrain");
+    assertFalse(admsOptions.isPlumeDepletionNH3(), "PlumeDepletionNH3");
+    assertFalse(admsOptions.isPlumeDepletionNOX(), "PlumeDepletionNOX");
+    assertFalse(admsOptions.isSpatiallyVaryingRoughness(), "SpatiallyVaryingRoughness");
+    assertFalse(admsOptions.isComplexTerrain(), "ComplexTerrain");
   }
 
   @ParameterizedTest
@@ -379,11 +394,13 @@ class GMLCalculationSetOptionsReaderTest {
       suppliedOptions.add(mockCalculationOption("adms_met_site_id", "1"));
     }
     suppliedOptions.add(mockCalculationOption(key, value));
+    suppliedOptions.add(mockCalculationOption("adms_met_years", "2022"));
     when(calculationMetaData.getOptions()).thenAnswer(a -> suppliedOptions);
 
     final GMLCalculationSetOptionsReader reader = new GMLCalculationSetOptionsReader(featureCollection);
 
-    assertThrows(expectedException, () -> reader.readCalculationSetOptions(Theme.NCA));
+    assertThrows(expectedException, () -> reader.readCalculationSetOptions(Theme.NCA),
+        " Should throw the expected exception because values are not readable.");
   }
 
   private static Stream<Arguments> unparseableValues() {

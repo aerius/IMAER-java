@@ -1,5 +1,5 @@
 /*
- * Copyright the State of the Netherlands
+ * Copyright (c) Contributors to the project
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -79,12 +79,6 @@ public enum ImportOption {
    * added to the errors list.
    */
   VALIDATE_METADATA,
-  /**
-   * If set, validates the cohesion of input files related to CIMLK required data restrictions.
-   * @deprecated Replaced with VALIDATE_CIMLK_COHESION
-   */
-  @Deprecated
-  VALIDATE_RBL_COHESION,
   /**
    * If set, validates the cohesion of input files related to CIMLK required data restrictions.
    */

@@ -40,7 +40,7 @@
                         </imaer:SpecifiedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>22.0</imaer:emissionHeight>
-                    <imaer:spread>11.0</imaer:spread>
+                    <imaer:spread>0.0</imaer:spread>
                 </imaer:EmissionSourceCharacteristics>
             </imaer:emissionSourceCharacteristics>
             <imaer:geometry>
@@ -110,7 +110,7 @@
                         </imaer:SpecifiedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>22.0</imaer:emissionHeight>
-                    <imaer:spread>11.0</imaer:spread>
+                    <imaer:spread>0.0</imaer:spread>
                 </imaer:EmissionSourceCharacteristics>
             </imaer:emissionSourceCharacteristics>
             <imaer:geometry>
@@ -147,6 +147,7 @@
                     <imaer:vehiclesPerTimeUnit>0.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.0</imaer:stagnationFactor>
+                    <imaer:maximumSpeed>60</imaer:maximumSpeed>
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:vehicles>
@@ -154,6 +155,7 @@
                     <imaer:vehiclesPerTimeUnit>0.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.0</imaer:stagnationFactor>
+                    <imaer:maximumSpeed>60</imaer:maximumSpeed>
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:elevation>NORMAL</imaer:elevation>
@@ -176,7 +178,7 @@
                         </imaer:SpecifiedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>22.0</imaer:emissionHeight>
-                    <imaer:spread>11.0</imaer:spread>
+                    <imaer:spread>0.0</imaer:spread>
                 </imaer:EmissionSourceCharacteristics>
             </imaer:emissionSourceCharacteristics>
             <imaer:geometry>

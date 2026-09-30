@@ -1,5 +1,5 @@
 /*
- * Copyright the State of the Netherlands
+ * Copyright (c) Contributors to the project
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -30,6 +30,7 @@ import org.slf4j.LoggerFactory;
 
 import nl.overheid.aerius.gml.base.FeatureMember;
 import nl.overheid.aerius.shared.domain.Substance;
+import nl.overheid.aerius.shared.domain.geo.ReceptorGridSettings;
 import nl.overheid.aerius.shared.domain.v2.base.TimeUnit;
 import nl.overheid.aerius.shared.domain.v2.geojson.LineString;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceFeature;
@@ -49,8 +50,8 @@ class GMLWriterPerformanceTest {
 
   @Test
   void testConvertMetaData() throws IOException, AeriusException {
-    final InternalGMLWriter writer = new InternalGMLWriter(GMLTestDomain.getExampleGridSettings(), GMLTestDomain.TEST_REFERENCE_GENERATOR,
-        Boolean.TRUE, GMLWriter.LATEST_WRITER_VERSION);
+    final InternalGMLWriter writer = new InternalGMLWriter(ReceptorGridSettings.NL, GMLTestDomain.TEST_REFERENCE_GENERATOR, Boolean.TRUE,
+        GMLWriter.LATEST_WRITER_VERSION, true);
 
     final int numberOfSources = 800000;
     final List<EmissionSourceFeature> sourceFeatures = new ArrayList<>(numberOfSources);

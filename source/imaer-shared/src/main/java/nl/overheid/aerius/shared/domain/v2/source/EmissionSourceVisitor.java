@@ -1,5 +1,5 @@
 /*
- * Copyright the State of the Netherlands
+ * Copyright (c) Contributors to the project
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -24,12 +24,6 @@ import nl.overheid.aerius.shared.exception.AeriusException;
  * @param <T> visitor specific data type
  */
 public interface EmissionSourceVisitor<T> {
-
-  /**
-   * @Deprecated Replaced by animal housing, will be removed in the future.
-   */
-  @Deprecated
-  T visit(FarmLodgingEmissionSource emissionSource, IsFeature feature) throws AeriusException;
 
   T visit(FarmAnimalHousingEmissionSource emissionSource, IsFeature feature) throws AeriusException;
 

@@ -129,7 +129,7 @@
                         </imaer:SpecifiedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>2.5</imaer:emissionHeight>
-                    <imaer:spread>2.5</imaer:spread>
+                    <imaer:spread>1.25</imaer:spread>
                 </imaer:EmissionSourceCharacteristics>
             </imaer:emissionSourceCharacteristics>
             <imaer:geometry>

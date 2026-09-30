@@ -1,5 +1,5 @@
 /*
- * Copyright the State of the Netherlands
+ * Copyright (c) Contributors to the project
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -24,17 +24,17 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBElement;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Marshaller;
 import javax.xml.namespace.QName;
 import javax.xml.validation.Schema;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.opengis.gml.v_3_2_1.ObjectFactory;
+import net.opengis.gml.v_3_2.ObjectFactory;
 
 import nl.overheid.aerius.gml.base.AeriusGMLVersion;
 import nl.overheid.aerius.gml.base.Definitions;
@@ -57,6 +57,7 @@ import nl.overheid.aerius.shared.domain.v2.point.CalculationPointFeature;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceFeature;
 import nl.overheid.aerius.shared.exception.AeriusException;
 import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
+import nl.overheid.aerius.util.gml.GMLIdUtil;
 
 /**
  * Class to create GML content from data objects.
@@ -87,8 +88,9 @@ final class InternalGMLWriter {
   private final Boolean formattedOutput;
 
   InternalGMLWriter(final ReceptorGridSettings rgs, final ReferenceGenerator referenceGenerator, final Boolean formattedOutput,
-      final AeriusGMLVersion version) throws AeriusException {
-    writer = GMLVersionWriterFactory.createGMLVersionWriter(rgs.getZoomLevel1(), GMLSchema.getSRSName(rgs.getEPSG().getSrid()), version);
+      final AeriusGMLVersion version, final boolean withRepresentation) throws AeriusException {
+    writer = GMLVersionWriterFactory.createGMLVersionWriter(rgs.getZoomLevel1(), GMLSchema.getSRSName(rgs.getEPSG().getSrid()), version,
+        withRepresentation);
     this.referenceGenerator = referenceGenerator;
     this.schema = GMLVersionWriterFactory.getSchema(version);
     this.formattedOutput = formattedOutput;
@@ -220,6 +222,8 @@ final class InternalGMLWriter {
 
   List<FeatureMember> emissionSourcesToFeatures(final List<EmissionSourceFeature> sources)
       throws AeriusException {
+    GMLIdUtil.toValidGmlIds(sources, GMLIdUtil.SOURCE_PREFIX);
+
     final List<FeatureMember> featureMembers = new ArrayList<>();
     for (final EmissionSourceFeature source : sources) {
       featureMembers.addAll(writer.source2GML(source, EMISSION_SUBSTANCES));
@@ -229,6 +233,8 @@ final class InternalGMLWriter {
 
   List<FeatureMember> buildingsToFeatures(final List<BuildingFeature> buildings)
       throws AeriusException {
+    GMLIdUtil.toValidGmlIds(buildings, GMLIdUtil.BUILDING_PREFIX);
+
     final List<FeatureMember> featureMembers = new ArrayList<>(buildings.size());
     for (final BuildingFeature building : buildings) {
       featureMembers.add(writer.building2GML(building));
@@ -238,6 +244,8 @@ final class InternalGMLWriter {
 
   List<FeatureMember> cimlkMeasuresToFeatures(final List<CIMLKMeasureFeature> measures)
       throws AeriusException {
+    GMLIdUtil.toValidGmlIds(measures, GMLIdUtil.MEASURE_PREFIX);
+
     final List<FeatureMember> featureMembers = new ArrayList<>(measures.size());
     for (final CIMLKMeasureFeature measure : measures) {
       featureMembers.add(writer.cimlkMeasure2GML(measure));

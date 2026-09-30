@@ -1,5 +1,5 @@
 /*
- * Copyright the State of the Netherlands
+ * Copyright (c) Contributors to the project
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -21,10 +21,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlTransient;
-import javax.xml.bind.annotation.XmlType;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlTransient;
+import jakarta.xml.bind.annotation.XmlType;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import nl.overheid.aerius.gml.base.IsArchiveMetadata;
 import nl.overheid.aerius.gml.base.IsArchiveProject;
@@ -34,10 +34,12 @@ import nl.overheid.aerius.gml.v6_0.base.CalculatorSchema;
 /**
  *
  */
-@XmlType(name = "ArchiveMetadataType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"retrievalDateTime", "archiveProjectProperties"})
+@XmlType(name = "ArchiveMetadataType", namespace = CalculatorSchema.NAMESPACE, propOrder = {"retrievalDateTime", "archiveType",
+    "archiveProjectProperties"})
 public class ArchiveMetadata implements IsArchiveMetadata {
 
   private OffsetDateTime retrievalDateTime;
+  private String archiveType;
   private List<ArchiveProjectProperty> archiveProjects = new ArrayList<>();
 
   @Override
@@ -49,6 +51,16 @@ public class ArchiveMetadata implements IsArchiveMetadata {
 
   public void setRetrievalDateTime(final OffsetDateTime retrievalDateTime) {
     this.retrievalDateTime = retrievalDateTime;
+  }
+
+  @Override
+  @XmlElement(namespace = CalculatorSchema.NAMESPACE)
+  public String getArchiveType() {
+    return archiveType;
+  }
+
+  public void setArchiveType(final String archiveType) {
+    this.archiveType = archiveType;
   }
 
   @XmlElement(name = "project", namespace = CalculatorSchema.NAMESPACE)

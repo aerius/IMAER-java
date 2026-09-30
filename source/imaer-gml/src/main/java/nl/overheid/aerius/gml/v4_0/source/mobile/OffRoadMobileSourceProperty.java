@@ -1,5 +1,5 @@
 /*
- * Copyright the State of the Netherlands
+ * Copyright (c) Contributors to the project
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -16,12 +16,12 @@
  */
 package nl.overheid.aerius.gml.v4_0.source.mobile;
 
-import javax.xml.bind.annotation.XmlElementRef;
-import javax.xml.bind.annotation.XmlType;
+import jakarta.xml.bind.annotation.XmlElementRef;
+import jakarta.xml.bind.annotation.XmlType;
 
 import nl.overheid.aerius.gml.base.AbstractProperty;
 import nl.overheid.aerius.gml.base.IsGmlProperty;
-import nl.overheid.aerius.gml.base.source.mobile.v40.IsGmlOffRoadMobileSource;
+import nl.overheid.aerius.gml.base.source.mobile.IsGmlOffRoadMobileSource;
 import nl.overheid.aerius.gml.v4_0.base.CalculatorSchema;
 
 /**

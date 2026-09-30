@@ -1,5 +1,5 @@
 /*
- * Copyright the State of the Netherlands
+ * Copyright (c) Contributors to the project
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -23,6 +23,7 @@ import nl.overheid.aerius.gml.base.GMLConversionData;
 import nl.overheid.aerius.gml.base.source.road.v11.GML2SRM2RoadV11;
 import nl.overheid.aerius.gml.base.source.road.v40.IsGmlStandardVehicle;
 import nl.overheid.aerius.shared.domain.v2.base.TimeUnit;
+import nl.overheid.aerius.shared.domain.v2.source.road.RoadType;
 import nl.overheid.aerius.shared.domain.v2.source.road.StandardVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.ValuesPerVehicleType;
 import nl.overheid.aerius.shared.domain.v2.source.road.Vehicles;
@@ -42,11 +43,12 @@ public class GML2SRM2RoadV10<T extends IsGmlSRM2RoadOld> extends GML2SRM2RoadV11
   }
 
   @Override
-  protected void addEmissionValues(final List<Vehicles> addToVehicles, final T source, final IsGmlStandardVehicle sv,
+  protected void addEmissionValues(final RoadType roadType, final List<Vehicles> addToVehicles, final T source, final IsGmlStandardVehicle sv,
       final List<StandardVehicles> mergingStandardVehicles) {
-    final StandardVehicles standardVehicle = findExistingMatch(sv, mergingStandardVehicles).orElseGet(() -> {
+    final StandardVehicles standardVehicle = findExistingMatch(sv, roadType, mergingStandardVehicles).orElseGet(() -> {
       final StandardVehicles vse = new StandardVehicles();
-      vse.setMaximumSpeed(source.getMaximumSpeed());
+
+      vse.setMaximumSpeed(getMaximumSpeed(source.getId(), true, roadType, source.getMaximumSpeed()));
       vse.setStrictEnforcement(source.isStrictEnforcement());
       vse.setTimeUnit(TimeUnit.valueOf(sv.getTimeUnit().name()));
       mergingStandardVehicles.add(vse);
@@ -60,11 +62,10 @@ public class GML2SRM2RoadV10<T extends IsGmlSRM2RoadOld> extends GML2SRM2RoadV11
   }
 
   @Override
-  protected Optional<StandardVehicles> findExistingMatch(final IsGmlStandardVehicle sv, final List<StandardVehicles> mergingStandardVehicles) {
+  protected Optional<StandardVehicles> findExistingMatch(final IsGmlStandardVehicle sv, final RoadType roadType,
+      final List<StandardVehicles> mergingStandardVehicles) {
     return mergingStandardVehicles.stream()
-        .filter(x -> x.getTimeUnit() == TimeUnit.valueOf(sv.getTimeUnit().name()))
         .filter(x -> !x.getValuesPerVehicleTypes().containsKey(sv.getVehicleType().getStandardVehicleCode()))
         .findFirst();
   }
-
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright the State of the Netherlands
+ * Copyright (c) Contributors to the project
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -16,11 +16,8 @@
  */
 package nl.overheid.aerius.shared.domain.v2.source;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.validation.Valid;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
@@ -29,13 +26,15 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 
 import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.v2.characteristics.SourceCharacteristics;
+import nl.overheid.aerius.shared.domain.v2.geojson.GmlIdProperties;
 import nl.overheid.aerius.shared.domain.v2.geojson.IsFeature;
 import nl.overheid.aerius.shared.exception.AeriusException;
+
+import jakarta.validation.Valid;
 
 @JsonTypeInfo(property = "emissionSourceType", use = Id.NAME)
 @JsonSubTypes({
     @Type(value = GenericEmissionSource.class, name = EmissionSourceType.Names.GENERIC),
-    @Type(value = FarmLodgingEmissionSource.class, name = EmissionSourceType.Names.FARM_LODGE),
     @Type(value = FarmAnimalHousingEmissionSource.class, name = EmissionSourceType.Names.FARM_ANIMAL_HOUSING),
     @Type(value = FarmlandEmissionSource.class, name = EmissionSourceType.Names.FARMLAND),
     @Type(value = ManureStorageEmissionSource.class, name = EmissionSourceType.Names.MANURE_STORAGE),
@@ -50,9 +49,9 @@ import nl.overheid.aerius.shared.exception.AeriusException;
     @Type(value = MaritimeMaritimeShippingEmissionSource.class, name = EmissionSourceType.Names.SHIPPING_MARITIME_MARITIME),
     @Type(value = MooringMaritimeShippingEmissionSource.class, name = EmissionSourceType.Names.SHIPPING_MARITIME_DOCKED),
 })
-public abstract class EmissionSource implements Serializable {
+public abstract class EmissionSource implements GmlIdProperties {
 
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 2L;
 
   private String gmlId;
   private int sectorId;
@@ -62,10 +61,12 @@ public abstract class EmissionSource implements Serializable {
   private SourceCharacteristics characteristics;
   private Map<Substance, Double> emissions = new HashMap<>();
 
+  @Override
   public String getGmlId() {
     return gmlId;
   }
 
+  @Override
   public void setGmlId(final String gmlId) {
     this.gmlId = gmlId;
   }

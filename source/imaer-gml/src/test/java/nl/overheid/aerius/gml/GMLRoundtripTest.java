@@ -1,5 +1,5 @@
 /*
- * Copyright the State of the Netherlands
+ * Copyright (c) Contributors to the project
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -41,12 +41,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import nl.overheid.aerius.gml.base.AeriusGMLVersion;
+import nl.overheid.aerius.gml.base.GMLHelper;
 import nl.overheid.aerius.gml.base.MetaDataInput;
 import nl.overheid.aerius.importer.ImaerImporter;
 import nl.overheid.aerius.importer.ImportOption;
 import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.Theme;
 import nl.overheid.aerius.shared.domain.calculation.CalculationSetOptions;
+import nl.overheid.aerius.shared.domain.geo.ReceptorGridSettings;
 import nl.overheid.aerius.shared.domain.result.EmissionResultKey;
 import nl.overheid.aerius.shared.domain.result.EmissionResultType;
 import nl.overheid.aerius.shared.domain.scenario.SituationType;
@@ -108,11 +110,14 @@ class GMLRoundtripTest {
       {"offroad_idle_and_nh3", CharacteristicsType.OPS, EnumSet.of(ImaerExceptionReason.GML_OFF_ROAD_CATEGORY_CONVERTED)},
       {"offroad_non_idle", CharacteristicsType.OPS, EnumSet.of(ImaerExceptionReason.GML_OFF_ROAD_CATEGORY_CONVERTED)},
       {"offroad_adblue", CharacteristicsType.OPS},
+      {"offroad_power", CharacteristicsType.OPS},
       {"plan", CharacteristicsType.OPS,},
       {"road", CharacteristicsType.OPS,},
-      {"road_non_urban", CharacteristicsType.OPS,},
+      {"road_non_urban", CharacteristicsType.OPS, EnumSet.of(ImaerExceptionReason.GML_NON_URBAN_ROAD_DEFAULT_SPEED)},
       {"road_dynamic_segmentation", CharacteristicsType.OPS,},
-      {"road_empty", CharacteristicsType.OPS, EnumSet.of(ImaerExceptionReason.SRM2_SOURCE_NO_VEHICLES, ImaerExceptionReason.GML_SOURCE_NO_EMISSION)},
+      {"road_empty", CharacteristicsType.OPS,
+          EnumSet.of(ImaerExceptionReason.SRM2_SOURCE_NO_VEHICLES, ImaerExceptionReason.GML_SOURCE_NO_EMISSION,
+              ImaerExceptionReason.GML_NON_URBAN_ROAD_DEFAULT_SPEED)},
       {"road_direction", CharacteristicsType.OPS},
       {"road_specific_and_custom", CharacteristicsType.OPS},
       {"coldstart_with_characteristics", CharacteristicsType.OPS},
@@ -139,16 +144,13 @@ class GMLRoundtripTest {
       {"adms_road", CharacteristicsType.ADMS},
       {"adms_road_with_custom_diurnal_variation", CharacteristicsType.ADMS},
       {"adms_manure_storage", CharacteristicsType.ADMS},
-      {"scenario_composting_proposed", CharacteristicsType.OPS},
-      {"scenario_composting_reference", CharacteristicsType.OPS},
+      {"scenario_composting_proposed", CharacteristicsType.OPS, EnumSet.of(ImaerExceptionReason.GML_NON_URBAN_ROAD_DEFAULT_SPEED)},
+      {"scenario_composting_reference", CharacteristicsType.OPS, EnumSet.of(ImaerExceptionReason.GML_NON_URBAN_ROAD_DEFAULT_SPEED)},
       {"scenario_greenhouse_reference", CharacteristicsType.OPS},
       {"scenario_greenhouse_proposed", CharacteristicsType.OPS},
-      {"scenario_livestock_farming_proposed", CharacteristicsType.OPS,
-          EnumSet.of(ImaerExceptionReason.GML_CONVERTED_LODGING), true},
-      {"scenario_livestock_farming_reference", CharacteristicsType.OPS,
-          EnumSet.of(ImaerExceptionReason.GML_CONVERTED_LODGING), true},
-      {"scenario_livestock_farming_netting", CharacteristicsType.OPS,
-          EnumSet.noneOf(ImaerExceptionReason.class), true},
+      {"scenario_livestock_farming_proposed", CharacteristicsType.OPS, EnumSet.of(ImaerExceptionReason.GML_CONVERTED_LODGING), true},
+      {"scenario_livestock_farming_reference", CharacteristicsType.OPS, EnumSet.of(ImaerExceptionReason.GML_CONVERTED_LODGING), true},
+      {"scenario_livestock_farming_netting", CharacteristicsType.OPS, EnumSet.noneOf(ImaerExceptionReason.class), true},
       {"scenario_powerplant", CharacteristicsType.OPS, EnumSet.of(ImaerExceptionReason.GML_SOURCE_NO_EMISSION)},
       {"scenario_smokehouse_proposed", CharacteristicsType.OPS},
       {"scenario_smokehouse_reference", CharacteristicsType.OPS},
@@ -159,6 +161,8 @@ class GMLRoundtripTest {
       {"nca_calculation_point_entity_references", CharacteristicsType.ADMS},
       {"nca_calculation_options", CharacteristicsType.ADMS},
       {"nca_calculation_options_quick_run", CharacteristicsType.ADMS},
+      {"nca_calculation_options_multi_met_years", CharacteristicsType.ADMS},
+      {"nca_calculation_options_decision_framework", CharacteristicsType.ADMS},
       {"archive_metadata", CharacteristicsType.ADMS},
       {"archive_metadata_extended", CharacteristicsType.ADMS},
       {"farm_animal_housing", CharacteristicsType.OPS},
@@ -176,7 +180,7 @@ class GMLRoundtripTest {
 
   private static final List<Substance> SUBSTANCES = List.of(Substance.NOX, Substance.NO2, Substance.NH3);
 
-  private static final Set<AeriusGMLVersion> SUPPORTED_GML_WRITER_VERSIONS = EnumSet.of(AeriusGMLVersion.V6_0, AeriusGMLVersion.V5_1);
+  private static final Set<AeriusGMLVersion> SUPPORTED_GML_WRITER_VERSIONS = EnumSet.of(AeriusGMLVersion.V6_0);
 
   static List<Object[]> data() throws FileNotFoundException {
     final List<Object[]> files = new ArrayList<>();
@@ -237,6 +241,11 @@ class GMLRoundtripTest {
     if (warnings.contains(ImaerExceptionReason.GML_CONVERTED_LODGING_TO_CUSTOM) && version.ordinal() <= AeriusGMLVersion.V6_0.ordinal()) {
       warnings.remove(ImaerExceptionReason.GML_CONVERTED_LODGING_TO_CUSTOM);
     }
+    // GML GML_NON_URBAN_ROAD_DEFAULT_SPEED is a warning for gmls with no speed set. Since 6.0 speed because required for non urban road.
+    // Therefore speed is always present in the test gmls since.
+    if (warnings.contains(ImaerExceptionReason.GML_NON_URBAN_ROAD_DEFAULT_SPEED) && version.ordinal() <= AeriusGMLVersion.V6_0.ordinal()) {
+      warnings.remove(ImaerExceptionReason.GML_NON_URBAN_ROAD_DEFAULT_SPEED);
+    }
     return warnings;
   }
 
@@ -249,15 +258,15 @@ class GMLRoundtripTest {
     final ImportParcel result = importAndCompare(versionString, fileVersion, file, ct, targetGMLVersion);
 
     assertNoExceptions(result.getExceptions(), fileVersion);
-    assertExpectedWarnings(result.getWarnings(), expectedWarnings);
-    assertUnExpectedWarnings(result.getWarnings(), expectedWarnings);
+    assertExpectedWarnings(result.getWarnings(), expectedWarnings, fileVersion);
+    assertUnExpectedWarnings(result.getWarnings(), expectedWarnings, fileVersion);
   }
 
   private ImportParcel importAndCompare(final String versionString, final String fileVersion, final String file, final CharacteristicsType ct,
       final AeriusGMLVersion targetGMLVersion) {
     try {
       final ImportParcel result = getImportResult(versionString, TEST_FOLDER, file, ct, file.contains("archive"));
-      final GMLWriter gmlc = new GMLWriter(GMLTestDomain.getExampleGridSettings(), GMLTestDomain.TEST_REFERENCE_GENERATOR, targetGMLVersion);
+      final GMLWriter gmlc = new GMLWriter(ReceptorGridSettings.NL, GMLTestDomain.TEST_REFERENCE_GENERATOR, targetGMLVersion);
       revertAutoCorrections(result);
       final GMLScenario scenario = GMLScenario.Builder
           .create(result, result.getSituation())
@@ -285,9 +294,8 @@ class GMLRoundtripTest {
 
   /**
    * Expected warnings check.
-   * @param expectedWarnings
    */
-  private void assertExpectedWarnings(final List<AeriusException> warnings, final Set<Reason> expectedWarnings) {
+  private void assertExpectedWarnings(final List<AeriusException> warnings, final Set<Reason> expectedWarnings, final String fileVersion) {
     for (final Reason warning : expectedWarnings) {
       boolean contains = false;
       for (final AeriusException ae : warnings) {
@@ -295,17 +303,17 @@ class GMLRoundtripTest {
           contains = true;
         }
       }
-      assertTrue(contains, "Expected warning " + warning + " not found");
+      assertTrue(contains, "Expected warning " + warning + " not found in file " + fileVersion);
     }
   }
 
   /**
    * Test unexpected warnings.
    */
-  void assertUnExpectedWarnings(final List<AeriusException> warnings, final Set<Reason> expectedWarnings) {
+  void assertUnExpectedWarnings(final List<AeriusException> warnings, final Set<Reason> expectedWarnings, final String fileVersion) {
     for (final AeriusException warning : warnings) {
       if (!expectedWarnings.contains(warning.getReason())) {
-        fail("Not expected warning, got " + warning.getReason() + " " + warning.getMessage());
+        fail("Not expected warning in file " + fileVersion + ", got " + warning.getReason() + " " + warning.getMessage());
       }
     }
   }
@@ -362,7 +370,9 @@ class GMLRoundtripTest {
       final boolean includeResults) throws IOException, AeriusException {
     final String relativePath = getRelativePath(versionString, testFolder);
     final AtomicReference<String> readVersion = new AtomicReference<>();
-    final ImaerImporter importer = new ImaerImporter(AssertGML.mockGMLHelper(ct)) {
+    final GMLHelper gmlHelper = AssertGML.getCachedHelper(ct);
+    final GMLReaderFactory factory = AssertGML.getCachedFactory(ct);
+    final ImaerImporter importer = new ImaerImporter(gmlHelper, factory) {
       @Override
       protected GMLReader createGMLReader(final InputStream inputStream, final Set<ImportOption> importOptions, final ImportParcel result)
           throws AeriusException {

@@ -1,5 +1,5 @@
 /*
- * Copyright the State of the Netherlands
+ * Copyright (c) Contributors to the project
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -29,7 +29,7 @@ import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceFeature;
 /**
  * {@link GMLVersionReader} for AERIUS GML version 2.1.
  */
-public class GMLReader implements GMLVersionReader {
+final class GMLReader implements GMLVersionReader {
 
   private final GML2Source gml2Source;
   private final GML2Result gml2Result;

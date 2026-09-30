@@ -1,5 +1,5 @@
 /*
- * Copyright the State of the Netherlands
+ * Copyright (c) Contributors to the project
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -42,14 +42,7 @@ public enum CalculationMethod {
   /**
    * Calculates using less detailed (background) data to get indicative results.
    */
-  QUICK_RUN,
-  /**
-   * Calculates using calculation points and settings established by formal assessment.
-   *
-   * @Deprecated Replaced by FORMAL_ASSESSMENT, up for removal.
-   */
-  @Deprecated
-  PERMIT;
+  QUICK_RUN;
 
   /**
    * Safely returns a CalculationMethod. It is case independent and returns null in

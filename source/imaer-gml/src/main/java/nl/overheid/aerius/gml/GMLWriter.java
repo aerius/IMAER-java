@@ -1,5 +1,5 @@
 /*
- * Copyright the State of the Netherlands
+ * Copyright (c) Contributors to the project
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -75,13 +75,13 @@ public class GMLWriter {
   protected static final Logger LOG = LoggerFactory.getLogger(GMLWriter.class);
   private static final String GML_EXTENSION = ".gml";
   private static final String GML_FILE_PREFIX = "AERIUS";
-  private static final String ARCHIVE_FILE_PART = "Archive";
 
   private final ReceptorGridSettings receptorGridSettings;
   private final ReferenceGenerator referenceGenerator;
 
   private final AeriusGMLVersion version;
   private Boolean formattedOutput = Boolean.TRUE;
+  private boolean withRepresentation = true;
 
   public GMLWriter(final ReceptorGridSettings rgs, final ReferenceGenerator referenceGenerator) {
     this(rgs, referenceGenerator, LATEST_WRITER_VERSION);
@@ -100,6 +100,13 @@ public class GMLWriter {
    */
   public void setFormattedOutput(final Boolean formattedOutput) {
     this.formattedOutput = formattedOutput;
+  }
+
+  /**
+   * If called GML Receptors won't be generated with the hexagon representation geometry.
+   */
+  public void setNoReceptorRepresentation() {
+    this.withRepresentation = false;
   }
 
   /**
@@ -188,7 +195,7 @@ public class GMLWriter {
     return gmlPerCorrection;
   }
 
-  private void setGMLFeatureOnObject(final InternalGMLWriter writer, final Object feature, final Consumer<String> consumer)
+  private static void setGMLFeatureOnObject(final InternalGMLWriter writer, final Object feature, final Consumer<String> consumer)
       throws AeriusException {
     try (ByteArrayOutputStream os = new ByteArrayOutputStream()) {
       writer.toXMLString(os, feature, true);
@@ -198,25 +205,6 @@ public class GMLWriter {
       LOG.error("Internal error occurred while encoding feature to GML: {}", feature, e);
       throw new AeriusException(ImaerExceptionReason.GML_CREATION_FAILED);
     }
-  }
-
-  /**
-   * Build archive GML and write it directly to file.
-   * The file will be generated in the supplied directory.
-   *
-   * @param dir The directory to write the file to.
-   * @param points Points including the archive contributions.
-   * @param metaData The metadata to write for this file.
-   * @param fileId The ID that should be reflected in the filename.
-   * @return The file generated.
-   * @throws AeriusException When exception occurred generating the GML.
-   * @deprecated Use version with path argument that directly writes to supplied file instead.
-   */
-  @Deprecated
-  public File writeArchiveContributionsToFile(final File dir, final List<CalculationPointFeature> points, final MetaDataInput metaData,
-      final int fileId) throws AeriusException {
-    final Path file = new File(dir, getFileName(Optional.empty(), fileId, Optional.of(ARCHIVE_FILE_PART), Optional.empty())).toPath();
-    return writeArchiveContributionsToFile(file, points, metaData);
   }
 
   /**
@@ -264,32 +252,6 @@ public class GMLWriter {
 
     LOG.info("File generated for {} to {}.", scenario.getName(), file);
     return file.toFile();
-  }
-
-  /**
-   * Build GML and write it directly to file.
-   * The GML file will be generated in the supplied directory.
-   *
-   * @param dir The directory to write the file to.
-   * @param scenario Scenario containing all scenario related data
-   * @param metaData The metadata to write for this file.
-   * @param fileId The ID that should be reflected in the filename.
-   * @param fileNamePart The optional filename that will be incorporated in the resulting file's name.
-   * @return The file generated.
-   * @throws AeriusException When exception occurred generating the GML.
-   * @deprecated Use {@link #writeToFile(Path, IsScenario, MetaDataInput)}
-   */
-  @Deprecated
-  public File writeToFile(final File dir, final IsScenario scenario, final MetaDataInput metaData, final int fileId,
-      final Optional<String> fileNamePart, final Optional<Date> fileNameDatePart) throws AeriusException {
-    final Path file = new File(dir, getFileName(scenario, fileId, fileNamePart, fileNameDatePart)).toPath();
-    return writeToFile(file, scenario, metaData);
-  }
-
-  @Deprecated
-  protected String getFileName(final IsScenario scenario, final int fileId, final Optional<String> fileNamePart,
-      final Optional<Date> fileNameDatePart) {
-    return getFileName(Optional.of(scenario), fileId, fileNamePart, fileNameDatePart);
   }
 
   protected String getFileName(final Optional<IsScenario> scenario, final int fileId, final Optional<String> fileNamePart,
@@ -359,7 +321,7 @@ public class GMLWriter {
   }
 
   private InternalGMLWriter createInternalWriter() throws AeriusException {
-    return new InternalGMLWriter(receptorGridSettings, referenceGenerator, formattedOutput, version);
+    return new InternalGMLWriter(receptorGridSettings, referenceGenerator, formattedOutput, version, withRepresentation);
   }
 
 }

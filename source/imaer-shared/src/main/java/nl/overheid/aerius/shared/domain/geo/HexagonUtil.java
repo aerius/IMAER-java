@@ -1,5 +1,5 @@
 /*
- * Copyright the State of the Netherlands
+ * Copyright (c) Contributors to the project
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -16,6 +16,8 @@
  */
 package nl.overheid.aerius.shared.domain.geo;
 
+import java.util.function.DoubleUnaryOperator;
+
 import nl.overheid.aerius.shared.MathUtil;
 import nl.overheid.aerius.shared.domain.v2.geojson.Point;
 import nl.overheid.aerius.shared.domain.v2.geojson.Polygon;
@@ -26,6 +28,15 @@ import nl.overheid.aerius.shared.domain.v2.geojson.Polygon;
 public final class HexagonUtil {
 
   private HexagonUtil() {}
+
+  /**
+   * Returns a Geometry with a hexagon conforming to the given Point, and rounds the points of the hexagon
+   *
+   * @see #createHexagon(Point, HexagonZoomLevel, DoubleUnaryOperator)
+   */
+  public static Polygon createHexagon(final Point point, final HexagonZoomLevel config) {
+    return createHexagon(point, config, MathUtil::round);
+  }
 
   /**
    * Returns a Geometry with a hexagon conforming to the given Point and
@@ -43,9 +54,10 @@ public final class HexagonUtil {
    *
    * @param point Center of the hexagon
    * @param config the hexagon zoom level for level 1
+   * @param roundFunction function to round the coordinates of the hexagon with
    * @return Returns the hexagon as an AERIUS polygon
    */
-  public static Polygon createHexagon(final Point point, final HexagonZoomLevel config) {
+  public static Polygon createHexagon(final Point point, final HexagonZoomLevel config, final DoubleUnaryOperator roundFunction) {
     // Store hexagon values
     final double[] horizontal = config.getHorizontal();
     final double[] vertical = config.getVertical();
@@ -54,16 +66,16 @@ public final class HexagonUtil {
     // Iterate over the number of corners in a hexagon
     for (int i = 0; i < HexagonZoomLevel.HEXAGON_CORNERS; i++) {
       final double[] coordinate = new double[] {
-          MathUtil.round(point.getX() + horizontal[i]),
-          MathUtil.round(point.getY() + vertical[i])
+          roundFunction.applyAsDouble(point.getX() + horizontal[i]),
+          roundFunction.applyAsDouble(point.getY() + vertical[i])
       };
       coordinates[i] = coordinate;
     }
 
     // Polygon first and last point need to be the same
     final double[] lastCoordinate = new double[] {
-        MathUtil.round(point.getX() + horizontal[0]),
-        MathUtil.round(point.getY() + vertical[0])
+        roundFunction.applyAsDouble(point.getX() + horizontal[0]),
+        roundFunction.applyAsDouble(point.getY() + vertical[0])
     };
     coordinates[HexagonZoomLevel.HEXAGON_CORNERS] = lastCoordinate;
     final Polygon polygon = new Polygon();
@@ -86,32 +98,5 @@ public final class HexagonUtil {
     // Math.sqrt(4/3) * radius / hexagonHeight
     // sqrt(4/3) would be 1 ( 4 / 3 = 1) however, so use 2/sqrt(3)
     return (int) Math.ceil((2 / Math.sqrt(3)) * radius / zoomLevel.getHexagonHeight());
-  }
-
-  /**
-   * <pre>
-   *       a (radius * 0.5)
-   *                _____
-   *               |    /
-   *               |   /
-   *  (height/2) b |  /  c (radius)
-   *               | /
-   *               |/
-   *
-   * a = x * 0.5;
-   * b = half the hexagon height
-   * c = x
-   *
-   * Therefore b = sqrt((halfHeight ^ 2 * 4) / 3)
-   * </pre>
-   *
-   * Model.
-   *
-   * @param halfHeight of the hexagon
-   *
-   * @return x
-   */
-  public static double convertHalfHeightToRadius(final double halfHeight) {
-    return Math.sqrt((Math.pow(halfHeight, 2) * 4) / 3);
   }
 }

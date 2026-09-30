@@ -103,6 +103,7 @@
                         </imaer:CalculatedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>1.5</imaer:emissionHeight>
+                    <imaer:spread>0.0</imaer:spread>
                     <imaer:timeVaryingProfile>
                         <imaer:StandardTimeVaryingProfile>
                             <imaer:standardType>INDUSTRIAL_ACTIVITY</imaer:standardType>
@@ -162,6 +163,7 @@
                         </imaer:CalculatedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>1.5</imaer:emissionHeight>
+                    <imaer:spread>0.0</imaer:spread>
                     <imaer:timeVaryingProfile>
                         <imaer:StandardTimeVaryingProfile>
                             <imaer:standardType>INDUSTRIAL_ACTIVITY</imaer:standardType>
@@ -221,6 +223,7 @@
                         </imaer:CalculatedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>1.5</imaer:emissionHeight>
+                    <imaer:spread>0.0</imaer:spread>
                     <imaer:timeVaryingProfile>
                         <imaer:StandardTimeVaryingProfile>
                             <imaer:standardType>INDUSTRIAL_ACTIVITY</imaer:standardType>
@@ -280,6 +283,7 @@
                         </imaer:CalculatedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>1.5</imaer:emissionHeight>
+                    <imaer:spread>0.0</imaer:spread>
                     <imaer:timeVaryingProfile>
                         <imaer:StandardTimeVaryingProfile>
                             <imaer:standardType>INDUSTRIAL_ACTIVITY</imaer:standardType>
@@ -339,6 +343,7 @@
                         </imaer:CalculatedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>2.7</imaer:emissionHeight>
+                    <imaer:spread>0.0</imaer:spread>
                     <imaer:timeVaryingProfile>
                         <imaer:StandardTimeVaryingProfile>
                             <imaer:standardType>INDUSTRIAL_ACTIVITY</imaer:standardType>
@@ -394,7 +399,7 @@
                         </imaer:SpecifiedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>2.5</imaer:emissionHeight>
-                    <imaer:spread>2.5</imaer:spread>
+                    <imaer:spread>0.0</imaer:spread>
                 </imaer:EmissionSourceCharacteristics>
             </imaer:emissionSourceCharacteristics>
             <imaer:geometry>
@@ -431,6 +436,7 @@
                     <imaer:vehiclesPerTimeUnit>422.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.0</imaer:stagnationFactor>
+                    <imaer:maximumSpeed>60</imaer:maximumSpeed>
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:trafficDirection>BOTH</imaer:trafficDirection>
@@ -454,7 +460,7 @@
                         </imaer:SpecifiedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>2.5</imaer:emissionHeight>
-                    <imaer:spread>2.5</imaer:spread>
+                    <imaer:spread>0.0</imaer:spread>
                 </imaer:EmissionSourceCharacteristics>
             </imaer:emissionSourceCharacteristics>
             <imaer:geometry>
@@ -491,6 +497,7 @@
                     <imaer:vehiclesPerTimeUnit>818.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.0</imaer:stagnationFactor>
+                    <imaer:maximumSpeed>60</imaer:maximumSpeed>
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:trafficDirection>BOTH</imaer:trafficDirection>
@@ -514,7 +521,7 @@
                         </imaer:SpecifiedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>2.5</imaer:emissionHeight>
-                    <imaer:spread>2.5</imaer:spread>
+                    <imaer:spread>0.0</imaer:spread>
                 </imaer:EmissionSourceCharacteristics>
             </imaer:emissionSourceCharacteristics>
             <imaer:geometry>
@@ -551,6 +558,7 @@
                     <imaer:vehiclesPerTimeUnit>236.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.0</imaer:stagnationFactor>
+                    <imaer:maximumSpeed>60</imaer:maximumSpeed>
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:trafficDirection>BOTH</imaer:trafficDirection>
@@ -574,7 +582,7 @@
                         </imaer:SpecifiedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>2.5</imaer:emissionHeight>
-                    <imaer:spread>2.5</imaer:spread>
+                    <imaer:spread>0.0</imaer:spread>
                 </imaer:EmissionSourceCharacteristics>
             </imaer:emissionSourceCharacteristics>
             <imaer:geometry>
@@ -611,6 +619,7 @@
                     <imaer:vehiclesPerTimeUnit>9.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.0</imaer:stagnationFactor>
+                    <imaer:maximumSpeed>60</imaer:maximumSpeed>
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:trafficDirection>BOTH</imaer:trafficDirection>
@@ -634,7 +643,7 @@
                         </imaer:SpecifiedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>2.5</imaer:emissionHeight>
-                    <imaer:spread>2.5</imaer:spread>
+                    <imaer:spread>0.0</imaer:spread>
                 </imaer:EmissionSourceCharacteristics>
             </imaer:emissionSourceCharacteristics>
             <imaer:geometry>
@@ -671,6 +680,7 @@
                     <imaer:vehiclesPerTimeUnit>9.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.0</imaer:stagnationFactor>
+                    <imaer:maximumSpeed>60</imaer:maximumSpeed>
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:trafficDirection>BOTH</imaer:trafficDirection>
@@ -694,7 +704,7 @@
                         </imaer:SpecifiedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>2.5</imaer:emissionHeight>
-                    <imaer:spread>2.5</imaer:spread>
+                    <imaer:spread>0.0</imaer:spread>
                 </imaer:EmissionSourceCharacteristics>
             </imaer:emissionSourceCharacteristics>
             <imaer:geometry>
@@ -731,6 +741,7 @@
                     <imaer:vehiclesPerTimeUnit>490.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.0</imaer:stagnationFactor>
+                    <imaer:maximumSpeed>60</imaer:maximumSpeed>
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:trafficDirection>BOTH</imaer:trafficDirection>
@@ -754,7 +765,7 @@
                         </imaer:SpecifiedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>2.5</imaer:emissionHeight>
-                    <imaer:spread>2.5</imaer:spread>
+                    <imaer:spread>0.0</imaer:spread>
                 </imaer:EmissionSourceCharacteristics>
             </imaer:emissionSourceCharacteristics>
             <imaer:geometry>
@@ -791,6 +802,7 @@
                     <imaer:vehiclesPerTimeUnit>328.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.0</imaer:stagnationFactor>
+                    <imaer:maximumSpeed>60</imaer:maximumSpeed>
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:trafficDirection>BOTH</imaer:trafficDirection>
@@ -814,7 +826,7 @@
                         </imaer:SpecifiedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>2.5</imaer:emissionHeight>
-                    <imaer:spread>2.5</imaer:spread>
+                    <imaer:spread>0.0</imaer:spread>
                 </imaer:EmissionSourceCharacteristics>
             </imaer:emissionSourceCharacteristics>
             <imaer:geometry>
@@ -851,6 +863,7 @@
                     <imaer:vehiclesPerTimeUnit>162.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.0</imaer:stagnationFactor>
+                    <imaer:maximumSpeed>60</imaer:maximumSpeed>
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:trafficDirection>BOTH</imaer:trafficDirection>
@@ -874,7 +887,7 @@
                         </imaer:SpecifiedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>2.5</imaer:emissionHeight>
-                    <imaer:spread>2.5</imaer:spread>
+                    <imaer:spread>0.0</imaer:spread>
                 </imaer:EmissionSourceCharacteristics>
             </imaer:emissionSourceCharacteristics>
             <imaer:geometry>
@@ -911,6 +924,7 @@
                     <imaer:vehiclesPerTimeUnit>46.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.0</imaer:stagnationFactor>
+                    <imaer:maximumSpeed>60</imaer:maximumSpeed>
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:trafficDirection>BOTH</imaer:trafficDirection>
@@ -934,7 +948,7 @@
                         </imaer:SpecifiedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>2.5</imaer:emissionHeight>
-                    <imaer:spread>2.5</imaer:spread>
+                    <imaer:spread>0.0</imaer:spread>
                 </imaer:EmissionSourceCharacteristics>
             </imaer:emissionSourceCharacteristics>
             <imaer:geometry>
@@ -971,6 +985,7 @@
                     <imaer:vehiclesPerTimeUnit>376.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.0</imaer:stagnationFactor>
+                    <imaer:maximumSpeed>60</imaer:maximumSpeed>
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:trafficDirection>BOTH</imaer:trafficDirection>
@@ -994,7 +1009,7 @@
                         </imaer:SpecifiedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>2.5</imaer:emissionHeight>
-                    <imaer:spread>2.5</imaer:spread>
+                    <imaer:spread>0.0</imaer:spread>
                 </imaer:EmissionSourceCharacteristics>
             </imaer:emissionSourceCharacteristics>
             <imaer:geometry>
@@ -1031,6 +1046,7 @@
                     <imaer:vehiclesPerTimeUnit>140.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.0</imaer:stagnationFactor>
+                    <imaer:maximumSpeed>60</imaer:maximumSpeed>
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:trafficDirection>BOTH</imaer:trafficDirection>
@@ -1054,7 +1070,7 @@
                         </imaer:SpecifiedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>2.5</imaer:emissionHeight>
-                    <imaer:spread>2.5</imaer:spread>
+                    <imaer:spread>0.0</imaer:spread>
                 </imaer:EmissionSourceCharacteristics>
             </imaer:emissionSourceCharacteristics>
             <imaer:geometry>
@@ -1091,6 +1107,7 @@
                     <imaer:vehiclesPerTimeUnit>18.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.0</imaer:stagnationFactor>
+                    <imaer:maximumSpeed>60</imaer:maximumSpeed>
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:trafficDirection>BOTH</imaer:trafficDirection>
@@ -1114,7 +1131,7 @@
                         </imaer:SpecifiedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>2.5</imaer:emissionHeight>
-                    <imaer:spread>2.5</imaer:spread>
+                    <imaer:spread>0.0</imaer:spread>
                 </imaer:EmissionSourceCharacteristics>
             </imaer:emissionSourceCharacteristics>
             <imaer:geometry>
@@ -1151,6 +1168,7 @@
                     <imaer:vehiclesPerTimeUnit>56.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.0</imaer:stagnationFactor>
+                    <imaer:maximumSpeed>60</imaer:maximumSpeed>
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:trafficDirection>BOTH</imaer:trafficDirection>
@@ -1174,7 +1192,7 @@
                         </imaer:SpecifiedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>2.5</imaer:emissionHeight>
-                    <imaer:spread>2.5</imaer:spread>
+                    <imaer:spread>0.0</imaer:spread>
                 </imaer:EmissionSourceCharacteristics>
             </imaer:emissionSourceCharacteristics>
             <imaer:geometry>
@@ -1211,6 +1229,7 @@
                     <imaer:vehiclesPerTimeUnit>23.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.0</imaer:stagnationFactor>
+                    <imaer:maximumSpeed>60</imaer:maximumSpeed>
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:trafficDirection>BOTH</imaer:trafficDirection>
@@ -1234,7 +1253,7 @@
                         </imaer:SpecifiedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>2.5</imaer:emissionHeight>
-                    <imaer:spread>2.5</imaer:spread>
+                    <imaer:spread>0.0</imaer:spread>
                 </imaer:EmissionSourceCharacteristics>
             </imaer:emissionSourceCharacteristics>
             <imaer:geometry>
@@ -1271,6 +1290,7 @@
                     <imaer:vehiclesPerTimeUnit>310.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.0</imaer:stagnationFactor>
+                    <imaer:maximumSpeed>60</imaer:maximumSpeed>
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:vehicles>
@@ -1278,6 +1298,7 @@
                     <imaer:vehiclesPerTimeUnit>6.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.0</imaer:stagnationFactor>
+                    <imaer:maximumSpeed>60</imaer:maximumSpeed>
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:trafficDirection>BOTH</imaer:trafficDirection>
@@ -1301,7 +1322,7 @@
                         </imaer:SpecifiedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>2.5</imaer:emissionHeight>
-                    <imaer:spread>2.5</imaer:spread>
+                    <imaer:spread>0.0</imaer:spread>
                 </imaer:EmissionSourceCharacteristics>
             </imaer:emissionSourceCharacteristics>
             <imaer:geometry>
@@ -1338,6 +1359,7 @@
                     <imaer:vehiclesPerTimeUnit>929.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.0</imaer:stagnationFactor>
+                    <imaer:maximumSpeed>60</imaer:maximumSpeed>
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:vehicles>
@@ -1345,6 +1367,7 @@
                     <imaer:vehiclesPerTimeUnit>18.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.0</imaer:stagnationFactor>
+                    <imaer:maximumSpeed>60</imaer:maximumSpeed>
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:trafficDirection>BOTH</imaer:trafficDirection>
@@ -1368,7 +1391,7 @@
                         </imaer:SpecifiedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>2.5</imaer:emissionHeight>
-                    <imaer:spread>2.5</imaer:spread>
+                    <imaer:spread>0.0</imaer:spread>
                 </imaer:EmissionSourceCharacteristics>
             </imaer:emissionSourceCharacteristics>
             <imaer:geometry>
@@ -1405,6 +1428,7 @@
                     <imaer:vehiclesPerTimeUnit>66.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.0</imaer:stagnationFactor>
+                    <imaer:maximumSpeed>60</imaer:maximumSpeed>
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:trafficDirection>BOTH</imaer:trafficDirection>
@@ -1428,7 +1452,7 @@
                         </imaer:SpecifiedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>2.5</imaer:emissionHeight>
-                    <imaer:spread>2.5</imaer:spread>
+                    <imaer:spread>0.0</imaer:spread>
                 </imaer:EmissionSourceCharacteristics>
             </imaer:emissionSourceCharacteristics>
             <imaer:geometry>
@@ -1465,6 +1489,7 @@
                     <imaer:vehiclesPerTimeUnit>2.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.0</imaer:stagnationFactor>
+                    <imaer:maximumSpeed>60</imaer:maximumSpeed>
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:trafficDirection>BOTH</imaer:trafficDirection>
@@ -1488,7 +1513,7 @@
                         </imaer:SpecifiedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>2.5</imaer:emissionHeight>
-                    <imaer:spread>2.5</imaer:spread>
+                    <imaer:spread>0.0</imaer:spread>
                 </imaer:EmissionSourceCharacteristics>
             </imaer:emissionSourceCharacteristics>
             <imaer:geometry>
@@ -1525,6 +1550,7 @@
                     <imaer:vehiclesPerTimeUnit>16.0</imaer:vehiclesPerTimeUnit>
                     <imaer:timeUnit>DAY</imaer:timeUnit>
                     <imaer:stagnationFactor>0.0</imaer:stagnationFactor>
+                    <imaer:maximumSpeed>60</imaer:maximumSpeed>
                 </imaer:StandardVehicle>
             </imaer:vehicles>
             <imaer:trafficDirection>BOTH</imaer:trafficDirection>
@@ -1552,6 +1578,7 @@
                         </imaer:CalculatedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>2.0</imaer:emissionHeight>
+                    <imaer:spread>0.0</imaer:spread>
                     <imaer:timeVaryingProfile>
                         <imaer:StandardTimeVaryingProfile>
                             <imaer:standardType>CONTINUOUS</imaer:standardType>
@@ -1611,6 +1638,7 @@
                         </imaer:CalculatedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>2.0</imaer:emissionHeight>
+                    <imaer:spread>0.0</imaer:spread>
                     <imaer:timeVaryingProfile>
                         <imaer:StandardTimeVaryingProfile>
                             <imaer:standardType>CONTINUOUS</imaer:standardType>
@@ -1670,6 +1698,7 @@
                         </imaer:CalculatedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>12.0</imaer:emissionHeight>
+                    <imaer:spread>0.0</imaer:spread>
                     <imaer:timeVaryingProfile>
                         <imaer:StandardTimeVaryingProfile>
                             <imaer:standardType>CONTINUOUS</imaer:standardType>
@@ -1725,7 +1754,7 @@
                         </imaer:SpecifiedHeatContent>
                     </imaer:heatContent>
                     <imaer:emissionHeight>2.5</imaer:emissionHeight>
-                    <imaer:spread>2.5</imaer:spread>
+                    <imaer:spread>1.25</imaer:spread>
                     <imaer:timeVaryingProfile>
                         <imaer:StandardTimeVaryingProfile>
                             <imaer:standardType>ANIMAL_HOUSING</imaer:standardType>

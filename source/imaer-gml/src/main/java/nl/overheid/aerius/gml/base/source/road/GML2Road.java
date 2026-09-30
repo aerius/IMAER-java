@@ -1,5 +1,5 @@
 /*
- * Copyright the State of the Netherlands
+ * Copyright (c) Contributors to the project
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -30,6 +30,7 @@ import nl.overheid.aerius.shared.domain.v2.source.road.StandardVehicles;
 import nl.overheid.aerius.shared.domain.v2.source.road.ValuesPerVehicleType;
 import nl.overheid.aerius.shared.domain.v2.source.road.Vehicles;
 import nl.overheid.aerius.shared.exception.AeriusException;
+import nl.overheid.aerius.shared.exception.ImaerExceptionReason;
 
 /**
  *
@@ -48,13 +49,15 @@ abstract class GML2Road<T extends IsGmlRoadEmissionSource, S extends RoadEmissio
   public S convert(final T source) throws AeriusException {
     final S emissionSource = construct();
     final List<StandardVehicles> mergingStandardVehicles = new ArrayList<>();
+    final String roadTypeCode = source.getRoadTypeCode();
+
     for (final IsGmlProperty<IsGmlVehicle> vp : source.getVehicles()) {
-      addVehicleEmissions(emissionSource.getSubSources(), source, vp, mergingStandardVehicles);
+      addVehicleEmissions(roadTypeCode, emissionSource.getSubSources(), source, vp, mergingStandardVehicles);
     }
     emissionSource.setTrafficDirection(source.getTrafficDirection());
     emissionSource.setRoadManager(source.getRoadManager());
     emissionSource.setRoadAreaCode(source.getRoadAreaCode());
-    emissionSource.setRoadTypeCode(source.getRoadTypeCode());
+    emissionSource.setRoadTypeCode(roadTypeCode);
 
     setSpecificVariables(source, emissionSource);
 
@@ -69,44 +72,85 @@ abstract class GML2Road<T extends IsGmlRoadEmissionSource, S extends RoadEmissio
 
   protected abstract void setOptionalVariables(T source, S emissionSource) throws AeriusException;
 
-  protected void addVehicleEmissions(final List<Vehicles> addToVehicles, final T source, final IsGmlProperty<IsGmlVehicle> vp,
+  protected void addVehicleEmissions(final String gmlRoadTypeCode, final List<Vehicles> addToVehicles, final T source,
+      final IsGmlProperty<IsGmlVehicle> vp,
       final List<StandardVehicles> mergingStandardVehicles) {
     final IsGmlVehicle av = vp.getProperty();
-    if (av instanceof final IsGmlStandardVehicle standardVehicle) {
-      addEmissionValues(addToVehicles, source, standardVehicle, mergingStandardVehicles);
-    } else if (av instanceof final IsGmlSpecificVehicle specificVehicle) {
-      GML2VehicleUtil.addEmissionValuesSpecific(addToVehicles, source, specificVehicle, getConversionData());
-    } else if (av instanceof final IsGmlCustomVehicle customVehicle) {
-      GML2VehicleUtil.addEmissionValuesCustom(addToVehicles, customVehicle, false);
-    } else {
-      throw new IllegalArgumentException("Instance not supported:" + av.getClass().getCanonicalName());
+
+    switch (av) {
+      case final IsGmlStandardVehicle standardVehicle ->
+        addEmissionValues(gmlRoadTypeCode, addToVehicles, source, standardVehicle, mergingStandardVehicles);
+      case final IsGmlSpecificVehicle specificVehicle ->
+        addToVehicles.add(GML2VehicleUtil.convertEmissionValuesSpecific(source, specificVehicle, getConversionData()));
+      case final IsGmlCustomVehicle customVehicle -> addToVehicles.add(GML2VehicleUtil.convertEmissionValuesCustom(customVehicle));
+      default -> throw new IllegalArgumentException("Instance not supported:" + av.getClass().getCanonicalName());
     }
   }
 
-  private void addEmissionValues(final List<Vehicles> addToVehicles, final T source, final IsGmlStandardVehicle sv,
+  private void addEmissionValues(final String gmlRoadTypeCode, final List<Vehicles> addToVehicles, final T source, final IsGmlStandardVehicle sv,
       final List<StandardVehicles> mergingStandardVehicles) {
-    final StandardVehicles standardVehicle = findExistingMatch(sv, mergingStandardVehicles).orElseGet(() -> {
+    final StandardVehicles standardVehicle = findExistingMatch(sv, mergingStandardVehicles, gmlRoadTypeCode).orElseGet(() -> {
       final StandardVehicles vse = new StandardVehicles();
-      vse.setMaximumSpeed(sv.getMaximumSpeed());
-      vse.setStrictEnforcement(sv.isStrictEnforcement());
+
+      vse.setMaximumSpeed(getMaximumSpeed(source.getId(), true, gmlRoadTypeCode, sv.getMaximumSpeed()));
       vse.setTimeUnit(TimeUnit.valueOf(sv.getTimeUnit().name()));
       mergingStandardVehicles.add(vse);
       addToVehicles.add(vse);
       return vse;
     });
-    final ValuesPerVehicleType valuesPerVehicleType = new ValuesPerVehicleType();
-    valuesPerVehicleType.setStagnationFraction(sv.getStagnationFactor());
-    valuesPerVehicleType.setVehiclesPerTimeUnit(sv.getVehiclesPerTimeUnit());
-    standardVehicle.getValuesPerVehicleTypes().put(sv.getVehicleType(), valuesPerVehicleType);
+
+    if (sv.isStrictEnforcement() != null) {
+      // Set strict enforcement to handle case were both null and false strict enforcement would be present, in which case false should be set.
+      standardVehicle.setStrictEnforcement(sv.isStrictEnforcement());
+    }
+    final ValuesPerVehicleType vpvt = standardVehicle.getValuesPerVehicleTypes().computeIfAbsent(sv.getVehicleType(), t -> {
+      final ValuesPerVehicleType valuesPerVehicleType = new ValuesPerVehicleType();
+
+      valuesPerVehicleType.setStagnationFraction(sv.getStagnationFactor());
+      return valuesPerVehicleType;
+    });
+    vpvt.setVehiclesPerTimeUnit(sv.getVehiclesPerTimeUnit() + vpvt.getVehiclesPerTimeUnit());
   }
 
-  private Optional<StandardVehicles> findExistingMatch(final IsGmlStandardVehicle sv, final List<StandardVehicles> mergingStandardVehicles) {
+  /**
+   * Get the maximum speed value. For NON_URBAN_ROAD_NATIONAL and NON_URBAN_ROAD_GENERAL fill in the speed in case of missing speed.
+   * NATIONAL is representative for roads with speed >= 80 km/h. Therefore 80 is set. GENERAL represented roads with average speed of 60 km/h.
+   * Therefore 60 is set.
+   *
+   * @param sourceId The id of the source
+   * @param warn if set it will report a warning message in case a default speed is set
+   * @param gmlRoadTypeCode the road type code as set in the GML
+   * @param maximumSpeed optional max speed set in the GML
+   * @return the maximum speed to use.
+   */
+  private Integer getMaximumSpeed(final String sourceId, final boolean warn, final String gmlRoadTypeCode, final Integer maximumSpeed) {
+    if (maximumSpeed != null && maximumSpeed != 0) {
+      return maximumSpeed;
+    }
+    return switch (gmlRoadTypeCode) {
+      case "NON_URBAN_ROAD_NATIONAL" -> getDefaultSpeed(sourceId, warn);
+      case "NON_URBAN_ROAD_GENERAL" -> getDefaultSpeed(sourceId, warn);
+      default -> maximumSpeed;
+    };
+  }
+
+  private Integer getDefaultSpeed(final String sourceId, final boolean warn) {
+    final Integer speed = GMLConversionData.NON_URBAN_ROAD_DEFAULT_SPEED;
+
+    if (warn) {
+      getConversionData().getWarnings().add(
+          new AeriusException(ImaerExceptionReason.GML_NON_URBAN_ROAD_DEFAULT_SPEED, sourceId, String.valueOf(speed)));
+    }
+    return speed;
+  }
+
+  private Optional<StandardVehicles> findExistingMatch(final IsGmlStandardVehicle sv, final List<StandardVehicles> mergingStandardVehicles,
+      final String gmlRoadTypeCode) {
     return mergingStandardVehicles.stream()
-        .filter(x -> Objects.equals(x.getMaximumSpeed(), sv.getMaximumSpeed()))
-        .filter(x -> Objects.equals(x.getStrictEnforcement(), sv.isStrictEnforcement()))
+        .filter(x -> Objects.equals(x.getMaximumSpeed(), getMaximumSpeed(null, false, gmlRoadTypeCode, sv.getMaximumSpeed())))
+        .filter(x -> Boolean.TRUE.equals(x.getStrictEnforcement()) == Boolean.TRUE.equals((sv.isStrictEnforcement())))
         .filter(x -> x.getTimeUnit() == TimeUnit.valueOf(sv.getTimeUnit().name()))
         .filter(x -> !x.getValuesPerVehicleTypes().containsKey(sv.getVehicleType()))
         .findFirst();
   }
-
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright the State of the Netherlands
+ * Copyright (c) Contributors to the project
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -49,10 +49,8 @@ class GMLValidateErrorsTest {
     assertResult("fout_5201_projectiesysteem", "GML Invalid projectiesystem", ImaerExceptionReason.GML_VALIDATION_FAILED,
         e -> {
           assertFalse(e.getArgs()[0].isEmpty(), "Should show list of possible options");
-          assertTrue(e.getArgs()[0].contains("Invalid content was found starting with element '"),
-              "Invalid content was found");
-          assertTrue(e.getArgs()[0].contains("Pointy"),
-              "Invalid content was found");
+          assertContains(e, "Invalid content was found starting with element '");
+          assertContains(e, "Pointy");
         });
   }
 
@@ -61,10 +59,8 @@ class GMLValidateErrorsTest {
     assertResult("fout_5202_projectiesysteem", "GML Invalid geometry", ImaerExceptionReason.GML_VALIDATION_FAILED,
         e -> {
           assertFalse(e.getArgs()[0].isEmpty(), "Should show list of possible options");
-          assertTrue(e.getArgs()[0].contains("Invalid content was found starting with element '"),
-              "Invalid content was found");
-          assertTrue(e.getArgs()[0].contains(":GM_SQUARE"),
-              "Invalid content was found");
+          assertContains(e, "Invalid content was found starting with element '");
+          assertContains(e, ":GM_SQUARE");
         });
   }
 
@@ -73,10 +69,8 @@ class GMLValidateErrorsTest {
     assertResult("fout_5203_unsupported_character", "GML Incorrect encoding", ImaerExceptionReason.GML_VALIDATION_FAILED,
         e -> {
           assertFalse(e.getArgs()[0].isEmpty(), "Should show list of possible options");
-          assertTrue(e.getArgs()[0].contains("Invalid content was found starting with element '"),
-              "Invalid content was found");
-          assertTrue(e.getArgs()[0].contains("GM_SURFACE"),
-              "Invalid content was found");
+          assertContains(e, "Invalid content was found starting with element '");
+          assertContains(e, "GM_SURFACE");
         });
   }
 
@@ -93,13 +87,16 @@ class GMLValidateErrorsTest {
   @Test
   void testGMLMultipleErrors() throws IOException, AeriusException {
     final List<String> expectedErrors = List.of(
-        "None",
-        "cvc-datatype-valid.1.2.1: 'None' is not a valid value for 'double'.",
-        "cvc-type.3.1.3: The value 'None' of element 'imaer:vehiclesPerTimeUnit' is not valid.",
-        "cvc-enumeration-valid: Value 'None' is not facet-valid with respect to enumeration '[HOUR, DAY, MONTH, YEAR]'. It must be a value from the enumeration.",
-        "cvc-type.3.1.3: The value 'None' of element 'imaer:timeUnit' is not valid.",
-        "cvc-complex-type.2.4.b: The content of element 'imaer:CustomVehicle' is not complete. One of '{\"http://imaer.aerius.nl/5.1\":emission}' is expected.",
-        "cvc-complex-type.2.4.a: Invalid content was found starting with element '{\"http://imaer.aerius.nl/5.1\":diurnalVariation}'. One of '{\"http://imaer.aerius.nl/5.1\":vehicles, \"http://imaer.aerius.nl/5.1\":roadManager, \"http://imaer.aerius.nl/5.1\":trafficDirection, \"http://imaer.aerius.nl/5.1\":width}' is expected.");
+        "[line 33, col 80] cvc-datatype-valid.1.2.1: 'None' is not a valid value for 'double'."
+            + " cvc-type.3.1.3: The value 'None' of element 'imaer:vehiclesPerTimeUnit' is not valid.",
+        "[line 34, col 58] cvc-enumeration-valid: Value 'None' is not facet-valid with respect to enumeration '[HOUR, DAY, MONTH, YEAR]'."
+            + " It must be a value from the enumeration."
+            + " cvc-type.3.1.3: The value 'None' of element 'imaer:timeUnit' is not valid.",
+        "[line 36, col 39] cvc-complex-type.2.4.b: The content of element 'imaer:CustomVehicle' is not complete."
+            + " One of '{\"http://imaer.aerius.nl/5.1\":emission}' is expected.",
+        "[line 38, col 37] cvc-complex-type.2.4.a: Invalid content was found starting with element '{\"http://imaer.aerius.nl/5.1\":diurnalVariation}'."
+            + " One of '{\"http://imaer.aerius.nl/5.1\":vehicles, \"http://imaer.aerius.nl/5.1\":roadManager,"
+            + " \"http://imaer.aerius.nl/5.1\":trafficDirection, \"http://imaer.aerius.nl/5.1\":width}' is expected.");
     assertResults("fout_multiple_errors", expectedErrors, ImaerExceptionReason.GML_VALIDATION_FAILED);
   }
 
@@ -108,8 +105,7 @@ class GMLValidateErrorsTest {
     assertResult("fout_5206_unsupported_geometry", "GML Geometry unkown", ImaerExceptionReason.GML_VALIDATION_FAILED,
         e -> {
           assertFalse(e.getArgs()[0].isEmpty(), "Should show list of possible options");
-          assertTrue(e.getArgs()[0].contains("The value of {abstract} in the element declaration for 'gml:AbstractRing' must be false"),
-              "Invalid content was found");
+          assertContains(e, "The value of {abstract} in the element declaration for 'gml:AbstractRing' must be false");
         });
   }
 
@@ -186,14 +182,13 @@ class GMLValidateErrorsTest {
 
   @Test
   void testGMLInvalidRoadCategoryMatch() throws IOException {
-    assertResult("fout_5219_obsolete_roadsource", "GML Invalid road category match",
-        ImaerExceptionReason.GML_INVALID_ROAD_CATEGORY_MATCH);
+    assertResult("fout_5219_obsolete_roadsource", "GML Invalid road category match", ImaerExceptionReason.GML_INVALID_ROAD_CATEGORY_MATCH);
   }
 
   @Test
   void testGMLIdNotUnique() throws IOException {
     assertResult("fout_5220_conflicting_id", "GML Id not unique", ImaerExceptionReason.GML_VALIDATION_FAILED,
-        e -> assertTrue(e.getArgs()[0].contains("There are multiple occurrences of ID value 'ES.1'"), "Contains error"));
+        e -> assertContains(e, "There are multiple occurrences of ID value 'ES.1'"));
   }
 
   @Test
@@ -205,8 +200,8 @@ class GMLValidateErrorsTest {
   void testGMLMetaDataEmpty() throws IOException {
     assertResult("fout_5222_missing_metadata", "GML Metadata empty", ImaerExceptionReason.GML_VALIDATION_FAILED,
         e -> {
-          assertTrue(e.getArgs()[0].contains("Invalid content was found starting with element '"), "Contains error");
-          assertTrue(e.getArgs()[0].contains(":version"), "Contains error");
+          assertContains(e, "Invalid content was found starting with element '");
+          assertContains(e, ":version");
         });
   }
 
@@ -229,20 +224,9 @@ class GMLValidateErrorsTest {
   }
 
   @Test
-  void testGMLUnknownError() throws IOException {
-    assertResult("fout_666_unknown_error", "GML Unknown error", ImaerExceptionReason.INTERNAL_ERROR, IllegalArgumentException.class);
-  }
-
-  @Test
-  void testGMLYear2100() throws IOException {
-    assertResult("fout_year_over_2100", "GML year greater than", ImaerExceptionReason.GML_VALIDATION_FAILED,
-        e -> assertEquals("year must be less than 2100", e.getArgs()[0], "Year invalid"));
-  }
-
-  @Test
-  void testGMLYear1900() throws IOException {
-    assertResult("fout_year_under_1900", "GML year under than", ImaerExceptionReason.GML_VALIDATION_FAILED,
-        e -> assertEquals("year must be greater than 1900", e.getArgs()[0], "Year invalid"));
+  void testGMLInvalidGeometry() throws IOException {
+    assertResult("fout_5202_invalid_geometry", "GML invalid geomerty", ImaerExceptionReason.GML_GEOMETRY_INVALID,
+        e -> assertContains(e, "ES.1"));
   }
 
   @Test
@@ -357,6 +341,12 @@ class GMLValidateErrorsTest {
       assertEquals(expectedReasonsTxt.get(i), aeriusException.getArgs()[0], "Reason texts should match");
       assertEquals(expectedReason, aeriusException.getReason(), "Reasons should match");
     }
+  }
+
+  private static void assertContains(final AeriusException e, final String containsText) {
+    final String exceptionText = e.getArgs()[0];
+
+    assertTrue(exceptionText.contains(containsText), "Exception doesn't contain the expected text. The text was:" + exceptionText);
   }
 
   private static ImportParcel getImportResult(final String relativePath, final String fileName)

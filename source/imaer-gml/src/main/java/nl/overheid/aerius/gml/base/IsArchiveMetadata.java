@@ -1,5 +1,5 @@
 /*
- * Copyright the State of the Netherlands
+ * Copyright (c) Contributors to the project
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -25,6 +25,8 @@ import java.util.List;
 public interface IsArchiveMetadata {
 
   OffsetDateTime getRetrievalDateTime();
+
+  String getArchiveType();
 
   List<IsArchiveProject> getArchiveProjects();
 

@@ -44,14 +44,14 @@
             </imaer:identifier>
             <imaer:GM_Point>
                 <gml:Point srsName="urn:ogc:def:crs:EPSG::28992" gml:id="CP.1.POINT">
-                    <gml:pos>3604.0 287959.0</gml:pos>
+                    <gml:pos>3604.0 296800.0</gml:pos>
                 </gml:Point>
             </imaer:GM_Point>
             <imaer:representation>
                 <gml:Polygon srsName="urn:ogc:def:crs:EPSG::28992" gml:id="NL.IMAER.REPR.1">
                     <gml:exterior>
                         <gml:LinearRing>
-                            <gml:posList>3635.0 288013.0 3666.0 287959.0 3635.0 287905.0 3573.0 287905.0 3542.0 287959.0 3573.0 288013.0 3635.0 288013.0</gml:posList>
+                            <gml:posList>3635.0 296854.0 3666.0 296800.0 3635.0 296746.0 3573.0 296746.0 3542.0 296800.0 3573.0 296854.0 3635.0 296854.0</gml:posList>
                         </gml:LinearRing>
                     </gml:exterior>
                 </gml:Polygon>
@@ -88,14 +88,14 @@
             </imaer:identifier>
             <imaer:GM_Point>
                 <gml:Point srsName="urn:ogc:def:crs:EPSG::28992" gml:id="CP.2.POINT">
-                    <gml:pos>3790.12097182042 287959.0</gml:pos>
+                    <gml:pos>3790.12097182042 296800.0</gml:pos>
                 </gml:Point>
             </imaer:GM_Point>
             <imaer:representation>
                 <gml:Polygon srsName="urn:ogc:def:crs:EPSG::28992" gml:id="NL.IMAER.REPR.2">
                     <gml:exterior>
                         <gml:LinearRing>
-                            <gml:posList>3821.0 288013.0 3852.0 287959.0 3821.0 287905.0 3759.0 287905.0 3728.0 287959.0 3759.0 288013.0 3821.0 288013.0</gml:posList>
+                            <gml:posList>3821.0 296854.0 3852.0 296800.0 3821.0 296746.0 3759.0 296746.0 3728.0 296800.0 3759.0 296854.0 3821.0 296854.0</gml:posList>
                         </gml:LinearRing>
                     </gml:exterior>
                 </gml:Polygon>

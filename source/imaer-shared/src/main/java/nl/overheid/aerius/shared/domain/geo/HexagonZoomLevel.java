@@ -1,5 +1,5 @@
 /*
- * Copyright the State of the Netherlands
+ * Copyright (c) Contributors to the project
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -17,6 +17,8 @@
 package nl.overheid.aerius.shared.domain.geo;
 
 import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
 * The piece of ASCII genius below depicts a normal hexagon, with horizontal
@@ -48,13 +50,13 @@ public class HexagonZoomLevel implements Serializable {
   private static final double[] HORIZONTAL_HEXAGON_MODS = {0.5, 1.0, 0.5, -0.5, -1, -0.5};
   private static final double[] VERTICAL_HEXAGON_MODS = {1.0, 0.0, -1.0, -1.0, 0.0, 1.0};
 
-  private int level;
-  private int surfaceLevel1;
-  private double hexagonSurface;
-  private double hexagonRadius;
-  private double hexagonHeight;
-  private double[] horizontal = new double[HEXAGON_CORNERS];
-  private double[] vertical = new double[HEXAGON_CORNERS];
+  private final int level;
+  private final int surfaceLevel1;
+  private final double hexagonSurface;
+  private final double hexagonRadius;
+  private final double hexagonHeight;
+  private final double[] horizontal = new double[HEXAGON_CORNERS];
+  private final double[] vertical = new double[HEXAGON_CORNERS];
 
   /**
    * Initializes a HexagonZoomLevel for the given level.
@@ -68,10 +70,6 @@ public class HexagonZoomLevel implements Serializable {
     hexagonRadius = calculateRadius(hexagonSurface);
     hexagonHeight = calculateHexagonHeight(hexagonRadius);
     fillCorners(hexagonRadius, hexagonHeight);
-  }
-
-  public HexagonZoomLevel() {
-    // needed for GWT.
   }
 
   @Override
@@ -97,6 +95,7 @@ public class HexagonZoomLevel implements Serializable {
    *
    * @return surface in square meters
    */
+  @JsonIgnore
   public double getHexagonSurface() {
     return hexagonSurface;
   }
@@ -106,6 +105,7 @@ public class HexagonZoomLevel implements Serializable {
    *
    * @return height of hexagon in meters
    */
+  @JsonIgnore
   public double getHexagonHeight() {
     return hexagonHeight;
   }
@@ -115,14 +115,17 @@ public class HexagonZoomLevel implements Serializable {
    *
    * @return radius of hexagon in meters
    */
+  @JsonIgnore
   public double getHexagonRadius() {
     return hexagonRadius;
   }
 
+  @JsonIgnore
   public double[] getHorizontal() {
     return horizontal;
   }
 
+  @JsonIgnore
   public double[] getVertical() {
     return vertical;
   }

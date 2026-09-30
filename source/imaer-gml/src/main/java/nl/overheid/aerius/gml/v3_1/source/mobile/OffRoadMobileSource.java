@@ -1,5 +1,5 @@
 /*
- * Copyright the State of the Netherlands
+ * Copyright (c) Contributors to the project
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -16,10 +16,10 @@
  */
 package nl.overheid.aerius.gml.v3_1.source.mobile;
 
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
+import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlType;
 
 import nl.overheid.aerius.gml.base.source.mobile.v31.IsGmlStandardOffRoadMobileSource;
 import nl.overheid.aerius.gml.v3_1.base.CalculatorSchema;
@@ -32,18 +32,18 @@ import nl.overheid.aerius.gml.v3_1.base.CalculatorSchema;
     "engineDisplacement"})
 public class OffRoadMobileSource extends AbstractOffRoadMobileSource implements IsGmlStandardOffRoadMobileSource {
 
-  private int literFuelPerYear;
+  private Integer literFuelPerYear;
   private String code;
   private Integer hoursIdlePerYear;
   private Double engineDisplacement;
 
   @Override
   @XmlElement(namespace = CalculatorSchema.NAMESPACE)
-  public int getLiterFuelPerYear() {
+  public Integer getLiterFuelPerYear() {
     return literFuelPerYear;
   }
 
-  public void setLiterFuelPerYear(final int literFuelPerYear) {
+  public void setLiterFuelPerYear(final Integer literFuelPerYear) {
     this.literFuelPerYear = literFuelPerYear;
   }
 

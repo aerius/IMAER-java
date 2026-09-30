@@ -1,5 +1,5 @@
 /*
- * Copyright the State of the Netherlands
+ * Copyright (c) Contributors to the project
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -79,11 +79,6 @@ class InvalidGMLTest {
   @Test
   void testInvalidXML3() throws IOException, AeriusException {
     assertResult("invalid_xml_3", "Expected GML parse error", ImaerExceptionReason.GML_VALIDATION_FAILED);
-  }
-
-  @Test
-  void testInvalidYear() throws IOException, AeriusException {
-    assertResult("invalid_year", "Expected incorrect year message", ImaerExceptionReason.GML_VALIDATION_FAILED);
   }
 
   @Test

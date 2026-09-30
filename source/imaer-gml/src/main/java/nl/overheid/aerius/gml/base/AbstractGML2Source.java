@@ -1,5 +1,5 @@
 /*
- * Copyright the State of the Netherlands
+ * Copyright (c) Contributors to the project
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -127,7 +127,7 @@ public abstract class AbstractGML2Source<T extends IsGmlEmissionSource, S extend
         || returnSource instanceof MooringMaritimeShippingEmissionSource
         || returnSource instanceof OffRoadMobileEmissionSource
         || returnSource instanceof ADMSRoadEmissionSource)) {
-      final S sectorCharacteristics = conversionData.determineDefaultCharacteristicsBySectorId(sectorId);
+      final S sectorCharacteristics = conversionData.determineDefaultCharacteristicsBySectorId(sectorId, geometry.type());
       if (returnSource instanceof final ColdStartEmissionSource coldStart && coldStart.isVehicleBasedCharacteristics()) {
         // NO-OP, allow characteristics to be null for cold start
       } else if (source.getCharacteristics() == null) {

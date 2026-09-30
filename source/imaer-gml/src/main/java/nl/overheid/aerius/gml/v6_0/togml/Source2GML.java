@@ -1,5 +1,5 @@
 /*
- * Copyright the State of the Netherlands
+ * Copyright (c) Contributors to the project
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -28,14 +28,12 @@ import nl.overheid.aerius.shared.domain.Substance;
 import nl.overheid.aerius.shared.domain.v2.characteristics.ADMSSourceCharacteristics;
 import nl.overheid.aerius.shared.domain.v2.characteristics.OPSSourceCharacteristics;
 import nl.overheid.aerius.shared.domain.v2.geojson.IsFeature;
-import nl.overheid.aerius.shared.domain.v2.geojson.Point;
 import nl.overheid.aerius.shared.domain.v2.source.ADMSRoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.ColdStartEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceFeature;
 import nl.overheid.aerius.shared.domain.v2.source.EmissionSourceVisitor;
 import nl.overheid.aerius.shared.domain.v2.source.FarmAnimalHousingEmissionSource;
-import nl.overheid.aerius.shared.domain.v2.source.FarmLodgingEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.FarmlandEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.GenericEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.InlandShippingEmissionSource;
@@ -47,7 +45,6 @@ import nl.overheid.aerius.shared.domain.v2.source.OffRoadMobileEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.SRM1RoadEmissionSource;
 import nl.overheid.aerius.shared.domain.v2.source.SRM2RoadEmissionSource;
 import nl.overheid.aerius.shared.exception.AeriusException;
-import nl.overheid.aerius.util.gml.GMLIdUtil;
 
 /**
  * Util class to convert {@link EmissionSource} to GML object.
@@ -81,13 +78,10 @@ final class Source2GML implements EmissionSourceVisitor<nl.overheid.aerius.gml.v
   private nl.overheid.aerius.gml.v6_0.source.EmissionSource toGMLDefault(final EmissionSourceFeature sourceFeature,
       final Substance[] substances) throws AeriusException {
     final EmissionSource source = sourceFeature.getProperties();
-    //use a specific prefix for ID to achieve unique IDs
-    final String gmlId = GMLIdUtil.toValidGmlId(source.getGmlId(), GMLIdUtil.SOURCE_PREFIX, sourceFeature.getId());
-    source.setGmlId(gmlId);
     final nl.overheid.aerius.gml.v6_0.source.EmissionSource returnSource = sourceFeature.accept(this);
     //set the generic properties.
     returnSource.setGeometry(geometry2gml, sourceFeature.getGeometry());
-    returnSource.setId(gmlId);
+    returnSource.setId(source.getGmlId());
 
     returnSource.setLabel(source.getLabel());
     returnSource.setDescription(source.getDescription());
@@ -109,10 +103,6 @@ final class Source2GML implements EmissionSourceVisitor<nl.overheid.aerius.gml.v
       final nl.overheid.aerius.gml.v6_0.source.EmissionSource returnSource) throws AeriusException {
     if (source.getCharacteristics() instanceof final OPSSourceCharacteristics opsCharacteristics) {
       returnSource.setCharacteristics(SourceCharacteristics2GML.toGML(opsCharacteristics, true));
-      //ensure spread isn't exported for pointsources.
-      if (sourceFeature.getGeometry() instanceof Point) {
-        ((EmissionSourceCharacteristics) returnSource.getCharacteristics()).setSpread(null);
-      }
       //ensure time varying profile isn't exported for sources other then generic ones.
       if (!(source instanceof GenericEmissionSource)) { //
         ((EmissionSourceCharacteristics) returnSource.getCharacteristics()).setTimeVaryingProfile(null);
@@ -159,13 +149,6 @@ final class Source2GML implements EmissionSourceVisitor<nl.overheid.aerius.gml.v
   public nl.overheid.aerius.gml.v6_0.source.EmissionSource visit(final OffRoadMobileEmissionSource emissionSource, final IsFeature feature)
       throws AeriusException {
     return new OffRoad2GML().convert(emissionSource);
-  }
-
-  @Override
-  public nl.overheid.aerius.gml.v6_0.source.EmissionSource visit(final FarmLodgingEmissionSource emissionSource, final IsFeature feature)
-      throws AeriusException {
-    // Not supported from 6.0 onwards, just return a generic emission source.
-    return new nl.overheid.aerius.gml.v6_0.source.EmissionSource();
   }
 
   @Override

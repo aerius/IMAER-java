@@ -1,5 +1,5 @@
 /*
- * Copyright the State of the Netherlands
+ * Copyright (c) Contributors to the project
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -18,11 +18,11 @@ package nl.overheid.aerius.shared.domain.v2.geojson;
 
 import java.io.Serializable;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
-public class Feature<T extends Serializable, G extends Geometry> implements Serializable, IsFeature {
+public class Feature<T extends GmlIdProperties, G extends Geometry> implements Serializable, IsFeature {
 
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 2L;
 
   private String type = "Feature";
   private String id;
