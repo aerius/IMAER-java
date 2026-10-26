@@ -106,9 +106,9 @@ public abstract class AbstractGML2Source<T extends IsGmlEmissionSource, S extend
    */
   public EmissionSource toEmissionSource(final T source, final Geometry geometry) throws AeriusException {
     final EmissionSource returnSource = visitor.visit(source);
+
     if (returnSource != null) {
       fromGenericEmissionSource(source, returnSource, geometry);
-      conversionData.putAndTrack(source.getId());
     }
     return returnSource;
   }

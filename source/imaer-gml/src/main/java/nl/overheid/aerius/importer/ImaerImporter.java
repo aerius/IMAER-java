@@ -62,6 +62,7 @@ import nl.overheid.aerius.validation.CIMLKMeasureValidator;
 import nl.overheid.aerius.validation.DefinitionsValidator;
 import nl.overheid.aerius.validation.EmissionSourceLimitValidator;
 import nl.overheid.aerius.validation.EmissionSourceValidator;
+import nl.overheid.aerius.validation.SituationCohesionValidator;
 
 /**
  * Importer for IMAER GML files.
@@ -162,6 +163,7 @@ public class ImaerImporter {
     addDefinitions(reader, importOptions, result, situation);
     setCrs(result);
 
+    SituationCohesionValidator.checkCohesion(situation, result.getExceptions(), result.getWarnings());
     addCalculationSetOptions(theme, reader, result);
     LOGGER.info("GML imported with GML version: {}", version);
   }

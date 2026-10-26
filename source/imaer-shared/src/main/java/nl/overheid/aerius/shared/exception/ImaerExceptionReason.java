@@ -389,13 +389,6 @@ public enum ImaerExceptionReason implements Reason {
   GML_INVALID_ROAD_CATEGORY_MATCH(5219),
 
   /**
-   * The source id string contains a number that already is used on another id, while the string id itself might be unique.
-   *
-   * @param 0 violating id.
-   * @param 1 id that is violated.
-   */
-  GML_ID_NOT_UNIQUE(5220),
-  /**
    * GML contains an unknown combination of road characteristics that don't match a known vehicle category.
    *
    * @param 0 the id of the object containing the error.

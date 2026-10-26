@@ -17,11 +17,9 @@
 package nl.overheid.aerius.gml.base;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import nl.overheid.aerius.gml.base.GMLLegacyCodeConverter.Conversion;
 import nl.overheid.aerius.gml.base.GMLLegacyCodeConverter.GMLLegacyCodeType;
@@ -55,7 +53,6 @@ public class GMLConversionData {
 
   private final List<AeriusException> errors;
   private final List<AeriusException> warnings;
-  private final Set<String> idMap = new HashSet<>();
   private final GMLLegacyCodeConverter legacyCodeConverter;
   private final int srid;
   private final ReceptorUtil receptorUtil;
@@ -111,18 +108,6 @@ public class GMLConversionData {
 
   public CharacteristicsType getCharacteristicsType() {
     return characteristicsSupplier.getCharacteristicsType();
-  }
-
-  /**
-   * Checks if given id is unique and if not adds it to the list of exceptions.
-   * @param gmlId Feature Member String id
-   */
-  public void putAndTrack(final String gmlId) {
-    if (idMap.contains(gmlId)) {
-      errors.add(new AeriusException(ImaerExceptionReason.GML_ID_NOT_UNIQUE, gmlId, gmlId));
-    } else {
-      idMap.add(gmlId);
-    }
   }
 
   /**
