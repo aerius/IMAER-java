@@ -59,7 +59,7 @@ public final class GMLReaderFactory {
   private static final Pattern PARSE_ERROR_PATTERN_2 = Pattern.compile("The element type \"([^\"]+)\"[^\"]+\"([^\"]+)");
   private static final XMLInputFactory XMLINPUT_FACTORY = SafeXMLInputFactory.newFactory();
   private static final Object FACTORY_LOCK = new Object();
-  private static GMLReaderFactory instance;
+  private static GMLReaderProxy sharedReaderProxy;
 
   private final GMLReaderProxy readerProxy;
   private final GMLHelper gmlHelper;
@@ -68,27 +68,25 @@ public final class GMLReaderFactory {
     this(gmlHelper, new GMLReaderProxy(gmlHelper));
   }
 
-  /**
-   * Constructor to use this factory with a specific version reader. Only used in tests.
-   */
   GMLReaderFactory(final GMLHelper gmlHelper, final GMLReaderProxy readerProxy) {
     this.gmlHelper = gmlHelper;
     this.readerProxy = readerProxy;
   }
 
   /**
-   * Returns the static factory instance.
+   * Returns a factory that reads with the given helper. The version readers, with the legacy codes of the first helper, are built once
+   * and shared, as building them is costly.
    * @param gmlHelper
    * @return
    * @throws AeriusException
    */
   public static GMLReaderFactory getFactory(final GMLHelper gmlHelper) throws AeriusException {
     synchronized (FACTORY_LOCK) {
-      if (instance == null) {
-        instance = new GMLReaderFactory(gmlHelper);
+      if (sharedReaderProxy == null) {
+        sharedReaderProxy = new GMLReaderProxy(gmlHelper);
       }
     }
-    return instance;
+    return new GMLReaderFactory(gmlHelper, sharedReaderProxy);
   }
 
   /**
