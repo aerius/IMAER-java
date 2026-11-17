@@ -53,7 +53,7 @@ class RemovedVehicleCodeImportTest {
     when(mockHelper.getRemovedCodes()).thenReturn(Map.of(GMLLegacyCodeType.ON_ROAD_MOBILE_SOURCE, Set.of(REMOVED_CODE)));
 
     // Create fresh factory with our mock helper (not cached) so getRemovedVehicleCodes is used
-    final GMLReaderFactory factory = new GMLReaderFactory(mockHelper);
+    final GMLReaderFactory factory = new GMLReaderFactory(mockHelper, new GMLReaderProxy(mockHelper));
     final ImaerImporter importer = new ImaerImporter(mockHelper, factory);
     final ImportParcel result = new ImportParcel();
 
@@ -80,7 +80,7 @@ class RemovedVehicleCodeImportTest {
     when(mockHelper.getRemovedCodes()).thenReturn(Map.of(GMLLegacyCodeType.ON_ROAD_MOBILE_SOURCE, Set.of(REMOVED_CODE)));
 
     // Create fresh factory with our mock helper (not cached) so getRemovedVehicleCodes is used
-    final GMLReaderFactory factory = new GMLReaderFactory(mockHelper);
+    final GMLReaderFactory factory = new GMLReaderFactory(mockHelper, new GMLReaderProxy(mockHelper));
     final ImaerImporter importer = new ImaerImporter(mockHelper, factory);
     final ImportParcel result = new ImportParcel();
 
