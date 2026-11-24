@@ -118,7 +118,8 @@ public final class AssertGML {
     if (GML_READER_FACTORY_MAP.containsKey(ct)) {
       readerFactory = GML_READER_FACTORY_MAP.get(ct);
     } else {
-      readerFactory = new GMLReaderFactory(getCachedHelper(ct));
+      final GMLHelper helper = getCachedHelper(ct);
+      readerFactory = new GMLReaderFactory(helper, new GMLReaderProxy(helper));
       GML_READER_FACTORY_MAP.put(ct, readerFactory);
     }
     return readerFactory;
